@@ -1,10 +1,8 @@
 <div class="account-content">
   <div class="container">
-    <!-- Account Logo -->
+    <!-- Account Logo /////////////////////////// -->
     <div class="account-logo">
-      <a routerLink="/layout/dashboard/admin"
-        ><img src="assets/img/logo2.png" alt="Dreamguy's Technologies"
-      /></a>
+      <a routerLink="/layout/dashboard/admin"><img src="assets/img/logo2.png" alt="Dreamguy's Technologies" /></a>
     </div>
     <!-- /Account Logo -->
 
@@ -19,14 +17,14 @@
         <form [formGroup]="form" (ngSubmit)="submit()">
           <div class="form-group">
             <label>Email Address</label>
-            <input class="form-control" type="text" formControlName="email" id="email"/>
-              <div *ngIf="f['email'].touched && f['email'].invalid" class="text-danger">
-                  <div *ngIf="f['email'].errors && f['email'].errors['required']">Email is required.</div>
-                  <div *ngIf="f['email'].errors && f['email'].errors['email']">Please, enter valid email address.</div>
-              </div>
-              <div *ngIf='CustomControler !=0' class="text-danger">
-                  {{CustomControler}}
-              </div>
+            <input class="form-control" type="text" formControlName="email" id="email" />
+            <div *ngIf="f['email'].touched && f['email'].invalid" class="text-danger">
+              <div *ngIf="f['email'].errors && f['email'].errors['required']">Email is required.</div>
+              <div *ngIf="f['email'].errors && f['email'].errors['email']">Please, enter valid email address.</div>
+            </div>
+            <div *ngIf='CustomControler !=0' class="text-danger">
+              {{CustomControler}}
+            </div>
           </div>
           <div class="form-group text-center">
             <button class="btn btn-primary account-btn" [disabled]="form.invalid" type="submit">Reset Password</button>
