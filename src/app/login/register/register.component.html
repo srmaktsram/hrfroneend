@@ -1,0 +1,320 @@
+<!-- Main Wrapper -->
+<div class="main-wrapper">
+  <div class="account-content">
+    <div class="container">
+      <!-- Account Logo -->
+      <div class="account-logo">
+        <a routerLink="/layout/dashboard/admin"><img src="assets/img/logo2.png" alt="Dreamguy's Technologies" /></a>
+      </div>
+      <!-- /Account Logo -->
+
+      <div class="account-box">
+        <div class="account-wrapper">
+          <h3 class="account-title">Register</h3>
+          <ng-container *ngIf="showOne==false">
+            <p class="account-subtitle">Company Details</p>
+          </ng-container>
+          <ng-container *ngIf="showTwo==false">
+            <p class="account-subtitle">Peresonal Details</p>
+
+          </ng-container>
+          <ng-container *ngIf="showThree==false">
+            <p class="account-subtitle">Authentication Details</p>
+
+          </ng-container>
+
+
+
+          <!-- Account Form -->
+
+          <form [formGroup]="form" (ngSubmit)="submit()">
+            <div [hidden]="showOne">
+              <div class="form-group">
+                <label>Company Name :<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="companyName" id="companyName" />
+                <div *ngIf="f['companyName'].touched && f['companyName'].invalid" class="text-danger">
+                  <div *ngIf="f['companyName'].errors && f['companyName'].errors['required']">
+                    Company Name is required.
+                  </div>
+                </div>
+                <div *ngIf="CustomControler != 0" class="text-danger">
+                  {{ CustomControler }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Company Site<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="companySite" id="companySite" />
+                <div *ngIf="f['companySite'].touched && f['companySite'].invalid" class="text-danger">
+                  <div *ngIf="
+                      f['companySite'].errors && f['companySite'].errors['required']
+                    ">
+                    Company Site is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Company Email<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="companyEmail" id="companyEmail" />
+                <div *ngIf="
+                    f['companyEmail'].touched && f['companyEmail'].invalid
+                  " class="text-danger">
+                  <div *ngIf="
+                      f['companyEmail'].errors &&
+                      f['companyEmail'].errors['required']
+                    ">
+                    Company Email is required.
+                  </div>
+                </div>
+                <!-- <div *ngIf="isvalidconfirmpassword" class="text-danger">
+                  Password not matching
+                </div> -->
+              </div>
+
+
+
+              <div class="form-group">
+                <label>Phone No<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="phone" id="phone" />
+                <div *ngIf="
+                    f['phone'].touched && f['phone'].invalid
+                  " class="text-danger">
+                  <div *ngIf="
+                      f['phone'].errors &&
+                      f['phone'].errors['required']
+                    ">
+                    Phone No is required.
+                  </div>
+                </div>
+                <!-- <div *ngIf="isvalidconfirmpassword" class="text-danger">
+                  Password not matching
+                </div> -->
+              </div>
+
+              <div class="form-group">
+                <label>Company Address<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="companyAddress" id="companyAddress" />
+                <div *ngIf="
+                    f['companyAddress'].touched && f['companyAddress'].invalid
+                  " class="text-danger">
+                  <div *ngIf="
+                      f['companyAddress'].errors &&
+                      f['companyAddress'].errors['required']
+                    ">
+                    Company Address is required.
+                  </div>
+                </div>
+                <!-- <div *ngIf="isvalidconfirmpassword" class="text-danger">
+                  Password not matching
+                </div> -->
+              </div>
+
+              <div class="form-group">
+                <label>Pin Code<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="pinCode" id="pinCode" />
+                <div *ngIf="
+                    f['pinCode'].touched && f['pinCode'].invalid
+                  " class="text-danger">
+                  <div *ngIf="
+                      f['pinCode'].errors &&
+                      f['pinCode'].errors['required']
+                    ">
+                    PinCode is required.
+                  </div>
+                </div>
+                <!-- <div *ngIf="isvalidconfirmpassword" class="text-danger">
+                  Password not matching
+                </div> -->
+              </div>
+
+
+              <div class="form-group text-center">
+                <button class="btn btn-primary account-btn" type="submit" (click)="hideShow()">
+                  Next
+                </button>
+                <mat-error [hidden]="disable">{{error}}</mat-error>
+              </div>
+              <div class="account-footer">
+                <p>Already have an account? <a routerLink="/login">Login</a></p>
+              </div>
+            </div>
+
+            <!-- ///////////////////////////////////////// -->
+
+            <div [hidden]="showTwo">
+              <div class="form-group">
+                <label>Name<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="name" id="name" />
+                <div *ngIf="f['name'].touched && f['name'].invalid" class="text-danger">
+                  <div *ngIf="f['name'].errors && f['name'].errors['required']">
+                    Name is required.
+                  </div>
+                </div>
+                <div *ngIf="CustomControler != 0" class="text-danger">
+                  {{ CustomControler }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Email<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="email" id="email" />
+                <div *ngIf="f['email'].touched && f['email'].invalid" class="text-danger">
+                  <div *ngIf="
+                      f['email'].errors && f['email'].errors['required']
+                    ">
+                    Email is required.
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Role<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="role" id="role" />
+                <div *ngIf="
+                    f['role'].touched && f['role'].invalid
+                  " class="text-danger">
+                  <div *ngIf="
+                      f['role'].errors &&
+                      f['role'].errors['required']
+                    ">
+                    Role is required.
+                  </div>
+                </div>
+                <!-- <div *ngIf="isvalidconfirmpassword" class="text-danger">
+                  Password not matching
+                </div> -->
+              </div>
+
+              <div class="form-group">
+                <label>Mobile Number<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="mobile" id="mobile" />
+                <div *ngIf="
+                    f['mobile'].touched && f['mobile'].invalid
+                  " class="text-danger">
+                  <div *ngIf="
+                      f['mobile'].errors &&
+                      f['mobile'].errors['required']
+                    ">
+                    Mobile Number is required.
+                  </div>
+                </div>
+                <!-- <div *ngIf="isvalidconfirmpassword" class="text-danger">
+                  Password not matching
+                </div> -->
+              </div>
+
+              <div class="form-group">
+                <label>Address<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="address" id="address" />
+                <div *ngIf="
+                    f['address'].touched && f['address'].invalid
+                  " class="text-danger">
+                  <div *ngIf="
+                      f['address'].errors &&
+                      f['address'].errors['required']
+                    ">
+                    Address is required.
+                  </div>
+                </div>
+                <!-- <div *ngIf="isvalidconfirmpassword" class="text-danger">
+                  Password not matching
+                </div> -->
+              </div>
+
+
+              <div class="form-group">
+                <label>Pin Code<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="code" id="code" />
+                <div *ngIf="
+                    f['code'].touched && f['code'].invalid
+                  " class="text-danger">
+                  <div *ngIf="
+                      f['code'].errors &&
+                      f['code'].errors['required']
+                    ">
+                    Pin Code is required.
+                  </div>
+                </div>
+                <!-- <div *ngIf="isvalidconfirmpassword" class="text-danger">
+                  Password not matching
+                </div> -->
+              </div>
+
+
+
+              <div class="form-group text-center">
+                <button class="btn btn-primary account-btn" type="submit" (click)="hideShowOne()">
+                  Next
+                </button>
+              </div>
+              <div class="account-footer">
+                <p>Already have an account? <a routerLink="/login">Login</a></p>
+              </div>
+            </div>
+
+            <!-- //////////////////////////////////////////////////-->
+
+
+            <div [hidden]="showThree">
+              <div class="form-group">
+                <label>User Name<span class="mandatory">*</span></label>
+                <input class="form-control" type="text" formControlName="userName" id="userName" />
+                <div *ngIf="f['userName'].touched && f['userName'].invalid" class="text-danger">
+                  <div *ngIf="f['userName'].errors && f['userName'].errors['required']">
+                    User Name is required.
+                  </div>
+                </div>
+                <div *ngIf="CustomControler != 0" class="text-danger">
+                  {{ CustomControler }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Password<span class="mandatory">*</span></label>
+                <input class="form-control" type="password" formControlName="password" id="password" />
+                <div *ngIf="f['password'].touched && f['password'].invalid" class="text-danger">
+                  <div *ngIf="
+                      f['password'].errors && f['password'].errors['required']
+                    ">
+                    Password is required.
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Repeat Password<span class="mandatory">*</span></label>
+                <input class="form-control" type="password" formControlName="confirmPassword" id="confirmPassword" />
+                <div *ngIf="
+                    f['confirmPassword'].touched && f['confirmPassword'].invalid
+                  " class="text-danger">
+                  <div *ngIf="
+                      f['confirmPassword'].errors &&
+                      f['confirmPassword'].errors['required']
+                    ">
+                    Confirm Password is required.
+                  </div>
+                </div>
+                <div *ngIf="isvalidconfirmpassword" class="text-danger">
+                  Password not matching
+                </div>
+              </div>
+              <div class="form-group text-center">
+                <button class="btn btn-primary account-btn" type="submit" (click)="finalError()">
+                  Submit
+                </button>
+                <mat-error [hidden]="disable">{{error}}</mat-error>
+
+              </div>
+              <div class="account-footer">
+                <p>Already have an account? <a routerLink="/login">Login</a></p>
+              </div>
+            </div>
+
+          </form>
+
+          <div>
+            <!-- /Account Form -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Main Wrapper -->
+</div>

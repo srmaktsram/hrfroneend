@@ -1,0 +1,30 @@
+# ErrorDocument 404 https://hr.srmakts.com/404/
+Header set Access-Control-Allow-Origin "*"
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^$ http://127.0.0.1:4200/ [P,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ http://127.0.0.1:4200/$1 [P,L]
+
+
+
+ExpiresActive on
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/css "access plus 1 month"
+    
+
+</IfModule>
+
+
+   
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php74 .php .php7 .phtml
+</IfModule>
+
