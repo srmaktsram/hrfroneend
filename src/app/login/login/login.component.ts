@@ -34,12 +34,12 @@ export class LoginComponent implements OnInit {
   ngOnInit() {}
 
   submit() {
-    let userId = this.form.value.email;
+    let email = this.form.value.email;
     let password = this.form.value.password;
     console.log(this.form.valid);
     this.http
       .post("http://localhost:8443/auth/register/login", {
-        userId,
+        email,
         password,
       })
       .subscribe((res: any) => {
