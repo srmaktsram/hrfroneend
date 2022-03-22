@@ -4,6 +4,7 @@ import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 declare const $: any;
 @Component({
   selector: "app-designation",
@@ -15,7 +16,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject();
-  lstDesignation: any[];
+  lstDesignation: any;
   url: any = "designation";
   public tempId: any;
   public editId: any;
@@ -24,11 +25,13 @@ export class DesignationComponent implements OnInit, OnDestroy {
   public srch = [];
   public addDesignationForm: FormGroup;
   public editDesignationForm: FormGroup;
+
   constructor(
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -51,7 +54,8 @@ export class DesignationComponent implements OnInit, OnDestroy {
 
   // Get designation list  Api Call
   LoadDesignation() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/designation/getData").subscribe((data) => {
+      console.log("getapi", data)
       this.lstDesignation = data;
       this.dtTrigger.next();
       this.rows = this.lstDesignation;
@@ -70,7 +74,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
 
   // Add Designation  Modal Api Call
   addDesignation() {
-    if(this.addDesignationForm.invalid){
+    if (this.addDesignationForm.invalid) {
       this.markFormGroupTouched(this.addDesignationForm)
       return
     }
@@ -80,10 +84,16 @@ export class DesignationComponent implements OnInit, OnDestroy {
         departmentName: this.addDesignationForm.value.DepartmentName,
         id: 1,
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/designation/create",
+          obj
+        )
+        .subscribe((res: any) => {
+          console.log("result", res);
+
         });
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
       });
       this.LoadDesignation();
       $("#add_designation").modal("hide");
@@ -93,18 +103,21 @@ export class DesignationComponent implements OnInit, OnDestroy {
   }
 
   editDesignation() {
+    let designationId = this.editId
     if (this.editDesignationForm.valid) {
       let obj = {
         designation: this.editDesignationForm.value.Designation,
         departmentName: this.editDesignationForm.value.DepartmentName,
-        id: this.editId,
+
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+      this.http.patch("http://localhost:8443/admin/designation/update" + "/" + designationId, obj).subscribe((data1) => {
+        console.log("patchapi", data1)
+        this.LoadDesignation();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
       });
-      this.LoadDesignation();
+
       $("#edit_designation").modal("hide");
       this.toastr.success("Department Updated sucessfully...!", "Success");
     }
@@ -114,9 +127,10 @@ export class DesignationComponent implements OnInit, OnDestroy {
   edit(value) {
     this.editId = value;
     const index = this.lstDesignation.findIndex((item) => {
-      return item.id === value;
+      return item.designationId === value;
     });
     let toSetValues = this.lstDesignation[index];
+    console.log(toSetValues)
     this.editDesignationForm.setValue({
       Designation: toSetValues.designation,
       DepartmentName: toSetValues.departmentName,
@@ -126,14 +140,21 @@ export class DesignationComponent implements OnInit, OnDestroy {
   // Delete timedsheet Modal Api Call
 
   deleteDesignation() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    let designationId = this.tempId
+    let obj = {
+      status: 2
+    };
+    this.http.patch("http://localhost:8443/admin/designation/delete" + "/" + designationId, obj).subscribe((data1) => {
+      this.LoadDesignation();
+      console.log("deleteApi", data1)
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
-        this.LoadDesignation();
-        $("#delete_designation").modal("hide");
-        this.toastr.success("Designation deleted sucessfully..!", "Success");
       });
+
+      $("#delete_designation").modal("hide");
+      this.toastr.success("Designation deleted sucessfully..!", "Success");
     });
+
   }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

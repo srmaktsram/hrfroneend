@@ -4,6 +4,8 @@ import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { query } from "@angular/animations";
 declare const $: any;
 @Component({
   selector: "app-departments",
@@ -15,7 +17,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject();
-  public lstDepartment: any[];
+  public lstDepartment: any;
   public url: any = "departments";
   public tempId: any;
   public editId: any;
@@ -23,11 +25,15 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public srch = [];
   public addDepartmentForm: FormGroup;
   public editDepartmentForm: FormGroup;
+  DepartmentName: any;
+
+
   constructor(
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.dtOptions = {
@@ -60,17 +66,22 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
   // Get department list  Api Call
   LoadDepartment() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/department/getData").subscribe((data) => {
       this.lstDepartment = data;
       this.dtTrigger.next();
       this.rows = this.lstDepartment;
       this.srch = [...this.rows];
+
+
+
+      console.log("resultquery", data);
     });
+
   }
 
   // Add Department  Modal Api Call
   addDepartment() {
-    if(this.addDepartmentForm.invalid){
+    if (this.addDepartmentForm.invalid) {
       this.markFormGroupTouched(this.addDepartmentForm)
       return
     }
@@ -79,11 +90,21 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
         departmentName: this.addDepartmentForm.value.DepartmentName,
         id: 0,
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+
+      this.http
+        .post("http://localhost:8443/admin/department/create",
+          obj
+
+        )
+        .subscribe((res: any) => {
+          console.log("result", res);
+
         });
-      });
+      // this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      //     dtInstance.destroy();
+      //   });
+      // });
       this.LoadDepartment();
       $("#add_department").modal("hide");
       this.addDepartmentForm.reset();
@@ -92,17 +113,22 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   }
 
   editDepartment() {
+    let departmentId = this.editId
+
     if (this.editDepartmentForm.valid) {
       let obj = {
         departmentName: this.editDepartmentForm.value.DepartmentName,
-        id: this.editId,
+
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+
+      this.http.patch("http://localhost:8443/admin/department/update" + "/" + departmentId, obj).subscribe((data1) => {
+        this.LoadDepartment();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
+        console.log("data update result", data1)
       });
-      this.LoadDepartment();
+
       $("#edit_department").modal("hide");
       this.toastr.success("Department Updated sucessfully...!", "Success");
     }
@@ -111,10 +137,12 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   // To Get The department Edit Id And Set Values To Edit Modal Form
   edit(value) {
     this.editId = value;
+    // alert(value)
     const index = this.lstDepartment.findIndex((item) => {
-      return item.id === value;
+      return item.departmentId === value;
     });
     let toSetValues = this.lstDepartment[index];
+    console.log(toSetValues)
     this.editDepartmentForm.setValue({
       DepartmentName: toSetValues.departmentName,
     });
@@ -122,11 +150,19 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
 
   deleteDepartment() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    let deparmentId = this.tempId
+    let obj = {
+      status: 2
+    };
+    this.http.patch("http://localhost:8443/admin/department/delete" + "/" + deparmentId, obj).subscribe((data1) => {
+      this.LoadDepartment();
+      console.log("deleteApi", data1)
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
-      this.LoadDepartment();
+
+
+
       $("#delete_department").modal("hide");
       this.toastr.success("Department deleted sucessfully..!", "Success");
     });
