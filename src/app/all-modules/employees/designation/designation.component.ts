@@ -92,12 +92,13 @@ export class DesignationComponent implements OnInit, OnDestroy {
         )
         .subscribe((res: any) => {
           console.log("result", res);
+         this.LoadDesignation();
 
         });
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
-      this.LoadDesignation();
+     
       $("#add_designation").modal("hide");
       this.addDesignationForm.reset();
       this.toastr.success("Desigantion added sucessfully...!", "Success");
