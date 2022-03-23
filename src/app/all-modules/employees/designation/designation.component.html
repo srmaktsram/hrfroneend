@@ -89,11 +89,13 @@
                         <label>Department <span class="text-danger">*</span></label>
                         <select class="form-select form-control" [class.invalid]="addDesignationForm.get('DepartmentName').invalid &&
                             addDesignationForm.get('DepartmentName').touched" formControlName="DepartmentName">
-                            <option>Select Department</option>
-                            <option>Web Development</option>
-                            <option>IT Management</option>
-                            <option> Marketing</option>
+                            <option selected>Select Department</option>
+                            <option *ngFor="let data of dropdownData">
+                                {{data.departmentName}}</option>
+
                         </select>
+
+
                         <div
                             *ngIf="addDesignationForm.get('DepartmentName').invalid && addDesignationForm.get('DepartmentName').touched">
                             <small
@@ -140,10 +142,9 @@
                         <select class="form-select form-control"
                             [class.invalid]="editDesignationForm.get('DepartmentName').invalid && editDesignationForm.get('DepartmentName').touched"
                             formControlName="DepartmentName">
-                            <option>Select Department</option>
-                            <option>Web Development</option>
-                            <option>IT Management</option>
-                            <option>Marketing</option>
+                            <option [value]="null" disabled selected>Select Country</option>
+                            <option *ngFor="let data of dropdownData" [value]="data.departmentName">
+                                {{data.departmentName}}</option>
                         </select>
                         <div
                             *ngIf="editDesignationForm.get('DepartmentName').invalid && editDesignationForm.get('DepartmentName').touched">

@@ -20,7 +20,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
   url: any = "designation";
   public tempId: any;
   public editId: any;
-
+  public dropdownData: any;
   public rows = [];
   public srch = [];
   public addDesignationForm: FormGroup;
@@ -31,7 +31,9 @@ export class DesignationComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) { }
+  ) {
+    this.getDepartmentData()
+  }
 
   ngOnInit() {
     this.dtOptions = {
@@ -159,5 +161,20 @@ export class DesignationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+
+
+  getDepartmentData() {
+    this.http.get("http://localhost:8443/admin/department/getData").subscribe((data) => {
+      console.log("DropdownData", data);
+
+      this.dropdownData = data
+
+      console.log("data==>>", this.dropdownData);
+    });
+
+
+
   }
 }
