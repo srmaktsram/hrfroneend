@@ -22,6 +22,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public tempId: any;
   public editId: any;
   public departments: any;
+  public designations: any;
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
 
@@ -31,13 +32,80 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public DateJoin;
+  Holidays = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Leaves = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Clients = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Projects = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Tasks = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Chats = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Assets = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+
+  TimingSheets = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) {
+    console.log("new", this.Holidays[0].read);
     this.getDepartments();
+    this.getDesignation();
   }
 
   public getDepartments() {
@@ -45,6 +113,13 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/admin/department/getData")
       .subscribe((data) => {
         this.departments = data;
+      });
+  }
+  public getDesignation() {
+    this.http
+      .get("http://localhost:8443/admin/designation/getData")
+      .subscribe((data) => {
+        this.designations = data;
       });
   }
   ngOnInit() {
@@ -103,11 +178,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
     });
+
     this.lstEmployee = [];
     this.loadEmployee();
+    //
+
     setTimeout(() => {
       this.dtTrigger.next();
-    }, 1000);
+    }, 2000);
   }
 
   // Get Employee  Api Call
@@ -129,6 +207,71 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.addEmployeeForm.value.JoinDate,
       "dd-MM-yyyy"
     );
+    this.Holidays = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+
+    this.Leaves = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Clients = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Projects = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Tasks = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Chats = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Assets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.TimingSheets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
     let obj = {
       firstname: this.addEmployeeForm.value.FirstName,
       lastname: this.addEmployeeForm.value.LastName,
@@ -156,70 +299,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
       .subscribe((data) => {
-        this.Holidays = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Leaves = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Clients = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Projects = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Tasks = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Chats = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Assets = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.TimingSheets = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
         console.log(data);
         this.loadEmployee();
         $("#datatable").DataTable().clear();
@@ -257,7 +336,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       designation: this.editEmployeeForm.value.Designation,
       mobile: this.editEmployeeForm.value.mobile,
       role: this.editEmployeeForm.value.role,
-
+      Holidays: this.Holidays,
+      Leaves: this.Leaves,
+      Clients: this.Clients,
+      Projects: this.Projects,
+      Tasks: this.Tasks,
+      Chats: this.Chats,
+      Assets: this.Assets,
+      TimingSheets: this.TimingSheets,
       // id: this.editId,
     };
     // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
@@ -267,70 +353,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((data) => {
-        this.Holidays = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Leaves = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Clients = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Projects = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Tasks = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Chats = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.Assets = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
-        this.TimingSheets = [
-          { id: 0, read: false },
-          { id: 1, write: false },
-          { id: 2, create: false },
-          { id: 3, delete: false },
-          { id: 4, import: false },
-          { id: 5, export: false },
-        ];
         console.log(data);
         this.loadEmployee();
         $("#datatable").DataTable().clear();
@@ -346,8 +368,73 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // To Get The employee Edit Id And Set Values To Edit Modal Form
   edit(value) {
+    this.Holidays = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+
+    this.Leaves = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Clients = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Projects = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Tasks = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Chats = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Assets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.TimingSheets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
     this.editId = value;
-    alert(value);
+
     const index = this.lstEmployee.findIndex((item) => {
       return item.employeeId === value;
     });
@@ -367,6 +454,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       DepartmentName: toSetValues.department,
       Designation: toSetValues.designation,
     });
+    this.Holidays = toSetValues.Holidays;
+    this.Leaves = toSetValues.Leaves;
+    this.Clients = toSetValues.Clients;
+    this.Projects = toSetValues.Projects;
+    this.Tasks = toSetValues.Tasks;
+    this.Chats = toSetValues.Chats;
+    this.Assets = toSetValues.Assets;
+    this.TimingSheets = toSetValues.TimingSheets;
   }
 
   // delete employee data api call
@@ -402,6 +497,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       val = val.toLowerCase();
       return d.employeeId.toLowerCase().indexOf(val) !== -1 || !val;
     });
+    this.rows = [];
     this.rows.push(...temp);
   }
 
@@ -412,6 +508,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       val = val.toLowerCase();
       return d.firstname.toLowerCase().indexOf(val) !== -1 || !val;
     });
+    this.rows = [];
     this.rows.push(...temp);
   }
 
@@ -422,6 +519,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       val = val.toLowerCase();
       return d.designation.toLowerCase().indexOf(val) !== -1 || !val;
     });
+    this.rows = [];
     this.rows.push(...temp);
   }
 
@@ -430,14 +528,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.statusValue = data;
   }
 
-  Holidays = [
-    { id: 0, read: false },
-    { id: 1, write: false },
-    { id: 2, create: false },
-    { id: 3, delete: false },
-    { id: 4, import: false },
-    { id: 5, export: false },
-  ];
   checkCheckBoxvalueHolidays(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -489,14 +579,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       }
     }
   }
-  Leaves = [
-    { id: 0, read: false },
-    { id: 1, write: false },
-    { id: 2, create: false },
-    { id: 3, delete: false },
-    { id: 4, import: false },
-    { id: 5, export: false },
-  ];
+
   checkCheckBoxvalueLeaves(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -549,14 +632,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     }
   }
 
-  Clients = [
-    { id: 0, read: false },
-    { id: 1, write: false },
-    { id: 2, create: false },
-    { id: 3, delete: false },
-    { id: 4, import: false },
-    { id: 5, export: false },
-  ];
   checkCheckBoxvalueClients(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -608,14 +683,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       }
     }
   }
-  Projects = [
-    { id: 0, read: false },
-    { id: 1, write: false },
-    { id: 2, create: false },
-    { id: 3, delete: false },
-    { id: 4, import: false },
-    { id: 5, export: false },
-  ];
+
   checkCheckBoxvalueProjects(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -668,14 +736,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     }
   }
 
-  Tasks = [
-    { id: 0, read: false },
-    { id: 1, write: false },
-    { id: 2, create: false },
-    { id: 3, delete: false },
-    { id: 4, import: false },
-    { id: 5, export: false },
-  ];
   checkCheckBoxvalueTasks(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -728,14 +788,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     }
   }
 
-  Chats = [
-    { id: 0, read: false },
-    { id: 1, write: false },
-    { id: 2, create: false },
-    { id: 3, delete: false },
-    { id: 4, import: false },
-    { id: 5, export: false },
-  ];
   checkCheckBoxvalueChats(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -788,14 +840,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     }
   }
 
-  Assets = [
-    { id: 0, read: false },
-    { id: 1, write: false },
-    { id: 2, create: false },
-    { id: 3, delete: false },
-    { id: 4, import: false },
-    { id: 5, export: false },
-  ];
   checkCheckBoxvalueAssets(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -848,14 +892,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     }
   }
 
-  TimingSheets = [
-    { id: 0, read: false },
-    { id: 1, write: false },
-    { id: 2, create: false },
-    { id: 3, delete: false },
-    { id: 4, import: false },
-    { id: 5, export: false },
-  ];
   checkCheckBoxvalueTimingSheets(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {

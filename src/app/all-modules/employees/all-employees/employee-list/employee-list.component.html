@@ -42,11 +42,8 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus select-focus">
                 <select class="form-select form-control" (input)="searchByDesignation($event.target.value)" (focusout)="rerender()">
-                    <option value = "">Select Designation</option>
-                    <option>Web Developer</option>
-                    <option>Web Designer</option>
-                    <option>Android Developer</option>
-                    <option>Ios Developer</option>
+                    <option >Select Designation</option>
+                    <option *ngFor="let designation of designations" >{{designation.designation}}</option>
                 </select>
             </div>
         </div>
@@ -271,8 +268,8 @@
                                 <select class="form-select form-control"
                                     [class.invalid]="addEmployeeForm.get('CompanyName').invalid && addEmployeeForm.get('CompanyName').touched"
                                     formControlName="CompanyName">
-                                    <option value="">Global Technologies</option>
-                                    <option value="1">Delta Infotech</option>
+                                    <option>Select Department</option>    
+                               <option *ngFor="let deparment of departments"[value]="deparment.departmentName" >{{deparment.departmentName}}</option>
                                 </select>
                                 <div
                                     *ngIf="addEmployeeForm.get('CompanyName').invalid && addEmployeeForm.get('CompanyName').touched">
@@ -289,7 +286,7 @@
                                     [class.invalid]="addEmployeeForm.get('DepartmentName').invalid && addEmployeeForm.get('DepartmentName').touched"
                                     formControlName="DepartmentName">
                                     <option>Select Department</option>    
-                               <option *ngFor="let deparment of departments" >{{deparment.departmentName}}</option>
+                               <option *ngFor="let department of departments" >{{department.departmentName}}</option>
                                 </select>
                                 <div
                                     *ngIf="addEmployeeForm.get('DepartmentName').invalid && addEmployeeForm.get('DepartmentName').touched">
@@ -306,9 +303,8 @@
                                     [class.invalid]="addEmployeeForm.get('Designation').invalid && addEmployeeForm.get('Designation').touched"
                                     formControlName="Designation">
                                     <option>Select Designation</option>
-                                    <option>Web Designer</option>
-                                    <option>Web Developer</option>
-                                    <option>Android Developer</option>
+                                        
+                               <option *ngFor="let designation of designations" >{{designation.designation}}</option>
                                 </select>
                                 <div
                                     *ngIf="addEmployeeForm.get('Designation').invalid && addEmployeeForm.get('Designation').touched">
@@ -679,11 +675,10 @@
                                 <select class="form-select form-control"
                                     [class.invalid]="editEmployeeForm.get('DepartmentName').invalid && editEmployeeForm.get('DepartmentName').touched"
                                     formControlName="DepartmentName">
-                                    <option>Select Department</option>
-                                    <option>Web Development</option>
-                                    <option>IT Management</option>
-                                    <option>Marketing</option>
+                                    <option>Select Department</option>    
+                               <option *ngFor="let department of departments" [value]="department.departmentName" >{{department.departmentName}}</option>
                                 </select>
+                              
                                 <div
                                     *ngIf="editEmployeeForm.get('DepartmentName').invalid && editEmployeeForm.get('DepartmentName').touched">
                                     <small
@@ -699,9 +694,8 @@
                                     [class.invalid]="editEmployeeForm.get('Designation').invalid && editEmployeeForm.get('Designation').touched"
                                     formControlName="Designation">
                                     <option>Select Designation</option>
-                                    <option>Web Designer</option>
-                                    <option>Web Developer</option>
-                                    <option>Android Developer</option>
+                                        
+                                    <option *ngFor="let designation of designations" [value]="designation.designation" >{{designation.designation}}</option>
                                 </select>
                                 <div
                                     *ngIf="editEmployeeForm.get('Designation').invalid && editEmployeeForm.get('Designation').touched">
@@ -729,22 +723,22 @@
                                 <tr>
                                     <td>Holidays</td>
                                     <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueHolidays($event, 0)">
+                                        <input type="checkbox" [checked]="Holidays[0].read" (click)="checkCheckBoxvalueHolidays($event, 0)">
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueHolidays($event, 1)" >
+                                        <input type="checkbox" [checked]="Holidays[1].write" (click)="checkCheckBoxvalueHolidays($event, 1)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueHolidays($event, 2)" >
+                                        <input type="checkbox" [checked]="Holidays[2].create"(click)="checkCheckBoxvalueHolidays($event, 2)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueHolidays($event, 3)" >
+                                        <input type="checkbox"[checked]="Holidays[3].delete" (click)="checkCheckBoxvalueHolidays($event, 3)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueHolidays($event, 4)" >
+                                        <input type="checkbox" [checked]="Holidays[4].import"(click)="checkCheckBoxvalueHolidays($event, 4)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueHolidays($event, 5)" >
+                                        <input type="checkbox" [checked]="Holidays[5].export" (click)="checkCheckBoxvalueHolidays($event, 5)" >
                                     </td>
                                 </tr>
                                 <tr>
