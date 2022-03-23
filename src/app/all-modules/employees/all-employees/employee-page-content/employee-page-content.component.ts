@@ -6,6 +6,7 @@ import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { id } from "src/assets/all-modules-data/id";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -14,7 +15,7 @@ declare const $: any;
   styleUrls: ["./employee-page-content.component.css"],
 })
 export class EmployeePageContentComponent implements OnInit {
-  public lstEmployee: any[];
+  public lstEmployee: any;
   public url: any = "employeelist";
   public tempId: any;
   public editId: any;
@@ -26,7 +27,7 @@ export class EmployeePageContentComponent implements OnInit {
   public srch = [];
   public statusValue;
   constructor(
-    private srvModuleService: AllModulesService,
+    private srvModuleService: AllModulesService,private http:HttpClient,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) {}
@@ -66,7 +67,8 @@ export class EmployeePageContentComponent implements OnInit {
 
   // Get Employee  Api Call
   loadEmployee() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/allemployees/getallEmployee").subscribe((data) => {
+        console.log(data)
       this.lstEmployee = data;
       this.rows = this.lstEmployee;
       this.srch = [...this.rows];
@@ -85,6 +87,7 @@ export class EmployeePageContentComponent implements OnInit {
 
   // Add employee  Modal Api Call
   addEmployee() {
+    alert("1")
     if(this.addEmployeeForm.invalid){
       this.markFormGroupTouched(this.addEmployeeForm)
       return
@@ -109,7 +112,10 @@ export class EmployeePageContentComponent implements OnInit {
       mobile: "9944996335",
       role: "Web developer",
     };
-    this.srvModuleService.add(obj, this.url).subscribe((data) => {});
+    // this.srvModuleService.add(obj, this.url).subscribe((data) => {});
+    this.http.post("http://localhost:8443/admin/allemployees/addemployee",obj).subscribe((data) => {
+      console.log(data)
+    })
     this.loadEmployee();
     $("#add_employee").modal("hide");
     this.addEmployeeForm.reset();
