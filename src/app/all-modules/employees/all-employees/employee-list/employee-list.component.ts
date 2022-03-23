@@ -21,7 +21,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public url: any = "employeelist";
   public tempId: any;
   public editId: any;
-
+  public departments: any;
+  public designations: any;
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
 
@@ -31,13 +32,96 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public DateJoin;
+  Holidays = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Leaves = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Clients = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Projects = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Tasks = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Chats = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+  Assets = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
+
+  TimingSheets = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false },
+  ];
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    console.log("new", this.Holidays[0].read);
+    this.getDepartments();
+    this.getDesignation();
+  }
 
+  public getDepartments() {
+    this.http
+      .get("http://localhost:8443/admin/department/getData")
+      .subscribe((data) => {
+        this.departments = data;
+      });
+  }
+  public getDesignation() {
+    this.http
+      .get("http://localhost:8443/admin/designation/getData")
+      .subscribe((data) => {
+        this.designations = data;
+      });
+  }
   ngOnInit() {
     // for floating label
 
@@ -94,11 +178,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
     });
+
     this.lstEmployee = [];
     this.loadEmployee();
+    //
+
     setTimeout(() => {
       this.dtTrigger.next();
-    }, 1000);
+    }, 2000);
   }
 
   // Get Employee  Api Call
@@ -116,74 +203,75 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // Add employee  Modal Api Call
   addEmployee() {
-    this.Holidays = [
-      { id: 0, read: 0 },
-      { id: 1, write: 0 },
-      { id: 2, create: 0 },
-      { id: 3, delete: 0 },
-      { id: 4, import: 0 },
-      { id: 5, export: 0 },
-    ];
-    this.Leaves = [
-      { id: 0, read: 0 },
-      { id: 1, write: 0 },
-      { id: 2, create: 0 },
-      { id: 3, delete: 0 },
-      { id: 4, import: 0 },
-      { id: 5, export: 0 },
-    ];
-    this.Clients = [
-      { id: 0, read: 0 },
-      { id: 1, write: 0 },
-      { id: 2, create: 0 },
-      { id: 3, delete: 0 },
-      { id: 4, import: 0 },
-      { id: 5, export: 0 },
-    ];
-    this.Projects = [
-      { id: 0, read: 0 },
-      { id: 1, write: 0 },
-      { id: 2, create: 0 },
-      { id: 3, delete: 0 },
-      { id: 4, import: 0 },
-      { id: 5, export: 0 },
-    ];
-    this.Tasks = [
-      { id: 0, read: 0 },
-      { id: 1, write: 0 },
-      { id: 2, create: 0 },
-      { id: 3, delete: 0 },
-      { id: 4, import: 0 },
-      { id: 5, export: 0 },
-    ];
-    this.Chats = [
-      { id: 0, read: 0 },
-      { id: 1, write: 0 },
-      { id: 2, create: 0 },
-      { id: 3, delete: 0 },
-      { id: 4, import: 0 },
-      { id: 5, export: 0 },
-    ];
-    this.Assets = [
-      { id: 0, read: 0 },
-      { id: 1, write: 0 },
-      { id: 2, create: 0 },
-      { id: 3, delete: 0 },
-      { id: 4, import: 0 },
-      { id: 5, export: 0 },
-    ];
-    this.TimingSheets = [
-      { id: 0, read: 0 },
-      { id: 1, write: 0 },
-      { id: 2, create: 0 },
-      { id: 3, delete: 0 },
-      { id: 4, import: 0 },
-      { id: 5, export: 0 },
-    ];
     let DateJoin = this.pipe.transform(
       this.addEmployeeForm.value.JoinDate,
       "dd-MM-yyyy"
     );
+    this.Holidays = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+
+    this.Leaves = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Clients = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Projects = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Tasks = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Chats = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Assets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.TimingSheets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
     let obj = {
       firstname: this.addEmployeeForm.value.FirstName,
       lastname: this.addEmployeeForm.value.LastName,
@@ -248,7 +336,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       designation: this.editEmployeeForm.value.Designation,
       mobile: this.editEmployeeForm.value.mobile,
       role: this.editEmployeeForm.value.role,
-
+      Holidays: this.Holidays,
+      Leaves: this.Leaves,
+      Clients: this.Clients,
+      Projects: this.Projects,
+      Tasks: this.Tasks,
+      Chats: this.Chats,
+      Assets: this.Assets,
+      TimingSheets: this.TimingSheets,
       // id: this.editId,
     };
     // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
@@ -273,8 +368,73 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // To Get The employee Edit Id And Set Values To Edit Modal Form
   edit(value) {
+    this.Holidays = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+
+    this.Leaves = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Clients = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Projects = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Tasks = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Chats = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Assets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.TimingSheets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
     this.editId = value;
-    alert(value);
+
     const index = this.lstEmployee.findIndex((item) => {
       return item.employeeId === value;
     });
@@ -294,6 +454,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       DepartmentName: toSetValues.department,
       Designation: toSetValues.designation,
     });
+    this.Holidays = toSetValues.Holidays;
+    this.Leaves = toSetValues.Leaves;
+    this.Clients = toSetValues.Clients;
+    this.Projects = toSetValues.Projects;
+    this.Tasks = toSetValues.Tasks;
+    this.Chats = toSetValues.Chats;
+    this.Assets = toSetValues.Assets;
+    this.TimingSheets = toSetValues.TimingSheets;
   }
 
   // delete employee data api call
@@ -329,6 +497,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       val = val.toLowerCase();
       return d.employeeId.toLowerCase().indexOf(val) !== -1 || !val;
     });
+    this.rows = [];
     this.rows.push(...temp);
   }
 
@@ -339,6 +508,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       val = val.toLowerCase();
       return d.firstname.toLowerCase().indexOf(val) !== -1 || !val;
     });
+    this.rows = [];
     this.rows.push(...temp);
   }
 
@@ -349,6 +519,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       val = val.toLowerCase();
       return d.designation.toLowerCase().indexOf(val) !== -1 || !val;
     });
+    this.rows = [];
     this.rows.push(...temp);
   }
 
@@ -357,480 +528,418 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.statusValue = data;
   }
 
-  Holidays = [
-    { id: 0, read: 0 },
-    { id: 1, write: 0 },
-    { id: 2, create: 0 },
-    { id: 3, delete: 0 },
-    { id: 4, import: 0 },
-    { id: 5, export: 0 },
-  ];
   checkCheckBoxvalueHolidays(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].read = 1;
+        this.Holidays[objIndex].read = true;
       } else {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].read = 0;
+        this.Holidays[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].write = 1;
+        this.Holidays[objIndex].write = true;
       } else {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].write = 0;
+        this.Holidays[objIndex].write = false;
       }
     } else if (val == 2) {
       if (event.target.checked == true) {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].create = 1;
+        this.Holidays[objIndex].create = true;
       } else {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].create = 0;
+        this.Holidays[objIndex].create = false;
       }
     } else if (val == 3) {
       if (event.target.checked == true) {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].delete = 1;
+        this.Holidays[objIndex].delete = true;
       } else {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].delete = 0;
+        this.Holidays[objIndex].delete = false;
       }
     } else if (val == 4) {
       if (event.target.checked == true) {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].import = 1;
+        this.Holidays[objIndex].import = true;
       } else {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].import = 0;
+        this.Holidays[objIndex].import = false;
       }
     } else if (val == 5) {
       if (event.target.checked == true) {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].export = 1;
+        this.Holidays[objIndex].export = true;
       } else {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
-        this.Holidays[objIndex].export = 0;
+        this.Holidays[objIndex].export = false;
       }
     }
   }
-  Leaves = [
-    { id: 0, read: 0 },
-    { id: 1, write: 0 },
-    { id: 2, create: 0 },
-    { id: 3, delete: 0 },
-    { id: 4, import: 0 },
-    { id: 5, export: 0 },
-  ];
+
   checkCheckBoxvalueLeaves(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].read = 1;
+        this.Leaves[objIndex].read = true;
       } else {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].read = 0;
+        this.Leaves[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].write = 1;
+        this.Leaves[objIndex].write = true;
       } else {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].write = 0;
+        this.Leaves[objIndex].write = false;
       }
     } else if (val == 2) {
       if (event.target.checked == true) {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].create = 1;
+        this.Leaves[objIndex].create = true;
       } else {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].create = 0;
+        this.Leaves[objIndex].create = false;
       }
     } else if (val == 3) {
       if (event.target.checked == true) {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].delete = 1;
+        this.Leaves[objIndex].delete = true;
       } else {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].delete = 0;
+        this.Leaves[objIndex].delete = false;
       }
     } else if (val == 4) {
       if (event.target.checked == true) {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].import = 1;
+        this.Leaves[objIndex].import = true;
       } else {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].import = 0;
+        this.Leaves[objIndex].import = false;
       }
     } else if (val == 5) {
       if (event.target.checked == true) {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].export = 1;
+        this.Leaves[objIndex].export = true;
       } else {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
-        this.Leaves[objIndex].export = 0;
+        this.Leaves[objIndex].export = false;
       }
     }
   }
 
-  Clients = [
-    { id: 0, read: 0 },
-    { id: 1, write: 0 },
-    { id: 2, create: 0 },
-    { id: 3, delete: 0 },
-    { id: 4, import: 0 },
-    { id: 5, export: 0 },
-  ];
   checkCheckBoxvalueClients(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].read = 1;
+        this.Clients[objIndex].read = true;
       } else {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].read = 0;
+        this.Clients[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].write = 1;
+        this.Clients[objIndex].write = true;
       } else {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].write = 0;
+        this.Clients[objIndex].write = false;
       }
     } else if (val == 2) {
       if (event.target.checked == true) {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].create = 1;
+        this.Clients[objIndex].create = true;
       } else {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].create = 0;
+        this.Clients[objIndex].create = false;
       }
     } else if (val == 3) {
       if (event.target.checked == true) {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].delete = 1;
+        this.Clients[objIndex].delete = true;
       } else {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].delete = 0;
+        this.Clients[objIndex].delete = false;
       }
     } else if (val == 4) {
       if (event.target.checked == true) {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].import = 1;
+        this.Clients[objIndex].import = true;
       } else {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].import = 0;
+        this.Clients[objIndex].import = false;
       }
     } else if (val == 5) {
       if (event.target.checked == true) {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].export = 1;
+        this.Clients[objIndex].export = true;
       } else {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
-        this.Clients[objIndex].export = 0;
+        this.Clients[objIndex].export = false;
       }
     }
   }
-  Projects = [
-    { id: 0, read: 0 },
-    { id: 1, write: 0 },
-    { id: 2, create: 0 },
-    { id: 3, delete: 0 },
-    { id: 4, import: 0 },
-    { id: 5, export: 0 },
-  ];
+
   checkCheckBoxvalueProjects(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].read = 1;
+        this.Projects[objIndex].read = true;
       } else {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].read = 0;
+        this.Projects[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].write = 1;
+        this.Projects[objIndex].write = true;
       } else {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].write = 0;
+        this.Projects[objIndex].write = false;
       }
     } else if (val == 2) {
       if (event.target.checked == true) {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].create = 1;
+        this.Projects[objIndex].create = true;
       } else {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].create = 0;
+        this.Projects[objIndex].create = false;
       }
     } else if (val == 3) {
       if (event.target.checked == true) {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].delete = 1;
+        this.Projects[objIndex].delete = true;
       } else {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].delete = 0;
+        this.Projects[objIndex].delete = false;
       }
     } else if (val == 4) {
       if (event.target.checked == true) {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].import = 1;
+        this.Projects[objIndex].import = true;
       } else {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].import = 0;
+        this.Projects[objIndex].import = false;
       }
     } else if (val == 5) {
       if (event.target.checked == true) {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].export = 1;
+        this.Projects[objIndex].export = true;
       } else {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
-        this.Projects[objIndex].export = 0;
+        this.Projects[objIndex].export = false;
       }
     }
   }
 
-  Tasks = [
-    { id: 0, read: 0 },
-    { id: 1, write: 0 },
-    { id: 2, create: 0 },
-    { id: 3, delete: 0 },
-    { id: 4, import: 0 },
-    { id: 5, export: 0 },
-  ];
   checkCheckBoxvalueTasks(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].read = 1;
+        this.Tasks[objIndex].read = true;
       } else {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].read = 0;
+        this.Tasks[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].write = 1;
+        this.Tasks[objIndex].write = true;
       } else {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].write = 0;
+        this.Tasks[objIndex].write = false;
       }
     } else if (val == 2) {
       if (event.target.checked == true) {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].create = 1;
+        this.Tasks[objIndex].create = true;
       } else {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].create = 0;
+        this.Tasks[objIndex].create = false;
       }
     } else if (val == 3) {
       if (event.target.checked == true) {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].delete = 1;
+        this.Tasks[objIndex].delete = true;
       } else {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].delete = 0;
+        this.Tasks[objIndex].delete = false;
       }
     } else if (val == 4) {
       if (event.target.checked == true) {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].import = 1;
+        this.Tasks[objIndex].import = true;
       } else {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].import = 0;
+        this.Tasks[objIndex].import = false;
       }
     } else if (val == 5) {
       if (event.target.checked == true) {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].export = 1;
+        this.Tasks[objIndex].export = true;
       } else {
         const objIndex = this.Tasks.findIndex((obj) => obj.id == val);
-        this.Tasks[objIndex].export = 0;
+        this.Tasks[objIndex].export = false;
       }
     }
   }
 
-  Chats = [
-    { id: 0, read: 0 },
-    { id: 1, write: 0 },
-    { id: 2, create: 0 },
-    { id: 3, delete: 0 },
-    { id: 4, import: 0 },
-    { id: 5, export: 0 },
-  ];
   checkCheckBoxvalueChats(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].read = 1;
+        this.Chats[objIndex].read = true;
       } else {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].read = 0;
+        this.Chats[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].write = 1;
+        this.Chats[objIndex].write = true;
       } else {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].write = 0;
+        this.Chats[objIndex].write = false;
       }
     } else if (val == 2) {
       if (event.target.checked == true) {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].create = 1;
+        this.Chats[objIndex].create = true;
       } else {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].create = 0;
+        this.Chats[objIndex].create = false;
       }
     } else if (val == 3) {
       if (event.target.checked == true) {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].delete = 1;
+        this.Chats[objIndex].delete = true;
       } else {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].delete = 0;
+        this.Chats[objIndex].delete = false;
       }
     } else if (val == 4) {
       if (event.target.checked == true) {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].import = 1;
+        this.Chats[objIndex].import = true;
       } else {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].import = 0;
+        this.Chats[objIndex].import = false;
       }
     } else if (val == 5) {
       if (event.target.checked == true) {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].export = 1;
+        this.Chats[objIndex].export = true;
       } else {
         const objIndex = this.Chats.findIndex((obj) => obj.id == val);
-        this.Chats[objIndex].export = 0;
+        this.Chats[objIndex].export = false;
       }
     }
   }
 
-  Assets = [
-    { id: 0, read: 0 },
-    { id: 1, write: 0 },
-    { id: 2, create: 0 },
-    { id: 3, delete: 0 },
-    { id: 4, import: 0 },
-    { id: 5, export: 0 },
-  ];
   checkCheckBoxvalueAssets(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].read = 1;
+        this.Assets[objIndex].read = true;
       } else {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].read = 0;
+        this.Assets[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].write = 1;
+        this.Assets[objIndex].write = true;
       } else {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].write = 0;
+        this.Assets[objIndex].write = false;
       }
     } else if (val == 2) {
       if (event.target.checked == true) {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].create = 1;
+        this.Assets[objIndex].create = true;
       } else {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].create = 0;
+        this.Assets[objIndex].create = false;
       }
     } else if (val == 3) {
       if (event.target.checked == true) {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].delete = 1;
+        this.Assets[objIndex].delete = true;
       } else {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].delete = 0;
+        this.Assets[objIndex].delete = false;
       }
     } else if (val == 4) {
       if (event.target.checked == true) {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].import = 1;
+        this.Assets[objIndex].import = true;
       } else {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].import = 0;
+        this.Assets[objIndex].import = false;
       }
     } else if (val == 5) {
       if (event.target.checked == true) {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].export = 1;
+        this.Assets[objIndex].export = true;
       } else {
         const objIndex = this.Assets.findIndex((obj) => obj.id == val);
-        this.Assets[objIndex].export = 0;
+        this.Assets[objIndex].export = false;
       }
     }
   }
 
-  TimingSheets = [
-    { id: 0, read: 0 },
-    { id: 1, write: 0 },
-    { id: 2, create: 0 },
-    { id: 3, delete: 0 },
-    { id: 4, import: 0 },
-    { id: 5, export: 0 },
-  ];
   checkCheckBoxvalueTimingSheets(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].read = 1;
+        this.TimingSheets[objIndex].read = true;
       } else {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].read = 0;
+        this.TimingSheets[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].write = 1;
+        this.TimingSheets[objIndex].write = true;
       } else {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].write = 0;
+        this.TimingSheets[objIndex].write = false;
       }
     } else if (val == 2) {
       if (event.target.checked == true) {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].create = 1;
+        this.TimingSheets[objIndex].create = true;
       } else {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].create = 0;
+        this.TimingSheets[objIndex].create = false;
       }
     } else if (val == 3) {
       if (event.target.checked == true) {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].delete = 1;
+        this.TimingSheets[objIndex].delete = true;
       } else {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].delete = 0;
+        this.TimingSheets[objIndex].delete = false;
       }
     } else if (val == 4) {
       if (event.target.checked == true) {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].import = 1;
+        this.TimingSheets[objIndex].import = true;
       } else {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].import = 0;
+        this.TimingSheets[objIndex].import = false;
       }
     } else if (val == 5) {
       if (event.target.checked == true) {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].export = 1;
+        this.TimingSheets[objIndex].export = true;
       } else {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
-        this.TimingSheets[objIndex].export = 0;
+        this.TimingSheets[objIndex].export = false;
       }
     }
   }
