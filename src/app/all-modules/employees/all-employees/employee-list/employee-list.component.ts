@@ -173,20 +173,20 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   // manually rendering Data table
 
-  rerender(): void {
-    $("#datatable").DataTable().clear();
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-    });
+  // rerender(): void {
+  //   $("#datatable").DataTable().clear();
+  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //     dtInstance.destroy();
+  //   });
 
-    this.lstEmployee = [];
-    this.loadEmployee();
-    //
+  //   this.lstEmployee = [];
+  //   this.loadEmployee();
+  //   //
 
-    setTimeout(() => {
-      this.dtTrigger.next();
-    }, 2000);
-  }
+  //   setTimeout(() => {
+  //     this.dtTrigger.next();
+  //   }, 2000);
+  // }
 
   // Get Employee  Api Call
   loadEmployee() {
@@ -200,9 +200,20 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.srch = [...this.rows];
       });
   }
-
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
   // Add employee  Modal Api Call
   addEmployee() {
+    if (this.addEmployeeForm.invalid) {
+      this.markFormGroupTouched(this.addEmployeeForm);
+      return;
+    }
     let DateJoin = this.pipe.transform(
       this.addEmployeeForm.value.JoinDate,
       "dd-MM-yyyy"
@@ -301,11 +312,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         console.log(data);
         this.loadEmployee();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-        });
-        this.dtTrigger.next();
+        // $("#datatable").DataTable().clear();
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   dtInstance.destroy();
+        // });
+        // this.dtTrigger.next();
       });
 
     $("#add_employee").modal("hide");
@@ -331,7 +342,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       employeeId: this.editEmployeeForm.value.EmployeeID,
       joindate: this.editEmployeeForm.value.JoinDate,
       phone: this.editEmployeeForm.value.PhoneNumber,
-      company: this.editEmployeeForm.value.CompanyName,
+      // company: this.editEmployeeForm.value.CompanyName,
       department: this.editEmployeeForm.value.DepartmentName,
       designation: this.editEmployeeForm.value.Designation,
       mobile: this.editEmployeeForm.value.mobile,
@@ -355,11 +366,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         console.log(data);
         this.loadEmployee();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-        });
-        this.dtTrigger.next();
+        // $("#datatable").DataTable().clear();
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   dtInstance.destroy();
+        // });
+        // this.dtTrigger.next();
       });
 
     $("#edit_employee").modal("hide");
@@ -450,7 +461,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       EmployeeID: toSetValues.employeeId,
       JoinDate: toSetValues.joinDate,
       PhoneNumber: toSetValues.phone,
-      CompanyName: toSetValues.company,
+      // CompanyName: toSetValues.company,
       DepartmentName: toSetValues.department,
       Designation: toSetValues.designation,
     });
@@ -466,24 +477,21 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // delete employee data api call
   deleteEmployee() {
-    let employeeId = this.tempId;
+    let id = this.tempId;
     let obj = {
       status: 2,
     };
     // this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
     this.http
-      .patch(
-        "http://localhost:8443/admin/allemployees/delete" + "/" + employeeId,
-        obj
-      )
+      .patch("http://localhost:8443/admin/allemployees/delete" + "/" + id, obj)
       .subscribe((data) => {
         console.log(data);
         this.loadEmployee();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-        });
-        this.dtTrigger.next();
+        // $("#datatable").DataTable().clear();
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   dtInstance.destroy();
+        // });
+        // this.dtTrigger.next();
       });
 
     $("#delete_employee").modal("hide");
@@ -492,35 +500,49 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   //search by Id
   searchId(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.employeeId.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows = [];
-    this.rows.push(...temp);
+    if (val) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+
+        return d.employeeId.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.loadEmployee();
+    }
   }
 
   //search by name
   searchName(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.firstname.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows = [];
-    this.rows.push(...temp);
+    if (val) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+
+        return d.firstName.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.loadEmployee();
+    }
   }
 
   //search by purchase
   searchByDesignation(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.designation.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows = [];
-    this.rows.push(...temp);
+    if (val.trim()) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        return d.designation.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.loadEmployee();
+    }
   }
 
   //getting the status value
