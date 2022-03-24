@@ -114,7 +114,7 @@ export class EmployeePageContentComponent implements OnInit {
       Email: ["", [Validators.required]],
       PhoneNumber: ["", [Validators.required]],
       JoinDate: ["", [Validators.required]],
-      CompanyName: ["", [Validators.required]],
+
       EmployeeID: ["", [Validators.required]],
     });
 
@@ -129,7 +129,7 @@ export class EmployeePageContentComponent implements OnInit {
       Email: ["", [Validators.required]],
       PhoneNumber: ["", [Validators.required]],
       JoinDate: ["", [Validators.required]],
-      CompanyName: ["", [Validators.required]],
+
       EmployeeID: ["", [Validators.required]],
     });
   }
@@ -240,7 +240,7 @@ export class EmployeePageContentComponent implements OnInit {
       employeeId: this.addEmployeeForm.value.EmployeeID,
       joindate: DateJoin,
       phone: this.addEmployeeForm.value.PhoneNumber,
-      company: this.addEmployeeForm.value.CompanyName,
+
       department: this.addEmployeeForm.value.DepartmentName,
       designation: this.addEmployeeForm.value.Designation,
       mobile: this.addEmployeeForm.value.mobile,
@@ -278,7 +278,7 @@ export class EmployeePageContentComponent implements OnInit {
 
   // edit modal api call
   editEmployee() {
-    let employeeId = this.editId;
+    let id = this.editId;
     let obj = {
       firstname: this.editEmployeeForm.value.FirstName,
       lastname: this.editEmployeeForm.value.LastName,
@@ -289,7 +289,6 @@ export class EmployeePageContentComponent implements OnInit {
       employeeId: this.editEmployeeForm.value.EmployeeID,
       joindate: this.editEmployeeForm.value.JoinDate,
       phone: this.editEmployeeForm.value.PhoneNumber,
-      company: this.editEmployeeForm.value.CompanyName,
       department: this.editEmployeeForm.value.DepartmentName,
       designation: this.editEmployeeForm.value.Designation,
       mobile: this.editEmployeeForm.value.mobile,
@@ -306,10 +305,7 @@ export class EmployeePageContentComponent implements OnInit {
     };
     // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
     this.http
-      .patch(
-        "http://localhost:8443/admin/allemployees/update" + "/" + employeeId,
-        obj
-      )
+      .patch("http://localhost:8443/admin/allemployees/update" + "/" + id, obj)
       .subscribe((data) => {
         console.log(data);
         this.loadEmployee();
@@ -394,7 +390,7 @@ export class EmployeePageContentComponent implements OnInit {
     this.editId = value;
 
     const index = this.lstEmployee.findIndex((item) => {
-      return item.employeeId === value;
+      return item.id === value;
     });
     let toSetValues = this.lstEmployee[index];
     console.log(toSetValues);
@@ -408,7 +404,7 @@ export class EmployeePageContentComponent implements OnInit {
       EmployeeID: toSetValues.employeeId,
       JoinDate: toSetValues.joinDate,
       PhoneNumber: toSetValues.phone,
-      CompanyName: toSetValues.company,
+
       DepartmentName: toSetValues.department,
       Designation: toSetValues.designation,
     });
@@ -476,7 +472,24 @@ export class EmployeePageContentComponent implements OnInit {
       this.loadEmployee();
     }
   }
+  getSearchData(val, val1) {
+    if (val && val1) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        val1 = val1.toLowerCase();
 
+        return (
+          (d.firstName.toLowerCase().indexOf(val) !== -1 || !val) &&
+          (d.designation.toLowerCase().indexOf(val1) !== -1 || !val1)
+        );
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.loadEmployee();
+    }
+  }
   //search by purchase
   searchByDesignation(val) {
     if (val.trim()) {

@@ -103,121 +103,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) {
-    console.log("new", this.Holidays[0].read);
     this.getDepartments();
     this.getDesignation();
   }
-
-  public getDepartments() {
-    this.http
-      .get("http://localhost:8443/admin/department/getData")
-      .subscribe((data) => {
-        this.departments = data;
-      });
-  }
-  public getDesignation() {
-    this.http
-      .get("http://localhost:8443/admin/designation/getData")
-      .subscribe((data) => {
-        this.designations = data;
-      });
-  }
-  ngOnInit() {
-    // for floating label
-
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
-    this.loadEmployee();
-    // add employee form validation
-    this.addEmployeeForm = this.formBuilder.group({
-      FirstName: ["", [Validators.required]],
-      LastName: ["", [Validators.required]],
-      UserName: ["", [Validators.required]],
-      Password: ["", [Validators.required]],
-      ConfirmPassword: ["", [Validators.required]],
-      DepartmentName: ["", [Validators.required]],
-      Designation: ["", [Validators.required]],
-      Email: ["", [Validators.required]],
-      PhoneNumber: ["", [Validators.required]],
-      JoinDate: ["", [Validators.required]],
-      CompanyName: ["", [Validators.required]],
-      EmployeeID: ["", [Validators.required]],
-    });
-
-    // edit form validation
-    this.editEmployeeForm = this.formBuilder.group({
-      FirstName: ["", [Validators.required]],
-      LastName: ["", [Validators.required]],
-      UserName: ["", [Validators.required]],
-      Password: ["", [Validators.required]],
-      ConfirmPassword: ["", [Validators.required]],
-      DepartmentName: ["", [Validators.required]],
-      Designation: ["", [Validators.required]],
-      Email: ["", [Validators.required]],
-      PhoneNumber: ["", [Validators.required]],
-      JoinDate: ["", [Validators.required]],
-      CompanyName: ["", [Validators.required]],
-      EmployeeID: ["", [Validators.required]],
-    });
-  }
-
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.dtTrigger.next();
-    }, 1000);
-  }
-  // manually rendering Data table
-
-  // rerender(): void {
-  //   $("#datatable").DataTable().clear();
-  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //     dtInstance.destroy();
-  //   });
-
-  //   this.lstEmployee = [];
-  //   this.loadEmployee();
-  //   //
-
-  //   setTimeout(() => {
-  //     this.dtTrigger.next();
-  //   }, 2000);
-  // }
-
-  // Get Employee  Api Call
-  loadEmployee() {
-    // this.srvModuleService.get(this.url).subscribe((data) => {
-    this.http
-      .get("http://localhost:8443/admin/allemployees/getallEmployee")
-      .subscribe((data) => {
-        console.log(data);
-        this.lstEmployee = data;
-        this.rows = this.lstEmployee;
-        this.srch = [...this.rows];
-      });
-  }
-  private markFormGroupTouched(formGroup: FormGroup) {
-    (<any>Object).values(formGroup.controls).forEach((control) => {
-      control.markAsTouched();
-      if (control.controls) {
-        this.markFormGroupTouched(control);
-      }
-    });
-  }
-  // Add employee  Modal Api Call
-  addEmployee() {
-    if (this.addEmployeeForm.invalid) {
-      this.markFormGroupTouched(this.addEmployeeForm);
-      return;
-    }
-    let DateJoin = this.pipe.transform(
-      this.addEmployeeForm.value.JoinDate,
-      "dd-MM-yyyy"
-    );
+  public initializeArray() {
+    alert("done");
     this.Holidays = [
       { id: 0, read: false },
       { id: 1, write: false },
@@ -283,6 +173,118 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       { id: 4, import: false },
       { id: 5, export: false },
     ];
+  }
+  public getDepartments() {
+    this.http
+      .get("http://localhost:8443/admin/department/getData")
+      .subscribe((data) => {
+        this.departments = data;
+      });
+  }
+  public getDesignation() {
+    this.http
+      .get("http://localhost:8443/admin/designation/getData")
+      .subscribe((data) => {
+        this.designations = data;
+      });
+  }
+  ngOnInit() {
+    // for floating label
+
+    $(".floating")
+      .on("focus blur", function (e) {
+        $(this)
+          .parents(".form-focus")
+          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+      })
+      .trigger("blur");
+    this.loadEmployee();
+    // add employee form validation
+    this.addEmployeeForm = this.formBuilder.group({
+      FirstName: ["", [Validators.required]],
+      LastName: ["", [Validators.required]],
+      UserName: ["", [Validators.required]],
+      Password: ["", [Validators.required]],
+      ConfirmPassword: ["", [Validators.required]],
+      DepartmentName: ["", [Validators.required]],
+      Designation: ["", [Validators.required]],
+      Email: ["", [Validators.required]],
+      PhoneNumber: ["", [Validators.required]],
+      JoinDate: ["", [Validators.required]],
+
+      EmployeeID: ["", [Validators.required]],
+    });
+
+    // edit form validation
+    this.editEmployeeForm = this.formBuilder.group({
+      FirstName: ["", [Validators.required]],
+      LastName: ["", [Validators.required]],
+      UserName: ["", [Validators.required]],
+      Password: ["", [Validators.required]],
+      ConfirmPassword: ["", [Validators.required]],
+      DepartmentName: ["", [Validators.required]],
+      Designation: ["", [Validators.required]],
+      Email: ["", [Validators.required]],
+      PhoneNumber: ["", [Validators.required]],
+      JoinDate: ["", [Validators.required]],
+
+      EmployeeID: ["", [Validators.required]],
+    });
+  }
+
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.dtTrigger.next();
+    }, 1000);
+  }
+  // manually rendering Data table
+
+  // rerender(): void {
+  //   $("#datatable").DataTable().clear();
+  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //     dtInstance.destroy();
+  //   });
+
+  //   this.lstEmployee = [];
+  //   this.loadEmployee();
+  //   //
+
+  //   setTimeout(() => {
+  //     this.dtTrigger.next();
+  //   }, 2000);
+  // }
+
+  // Get Employee  Api Call
+  loadEmployee() {
+    // this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http
+      .get("http://localhost:8443/admin/allemployees/getallEmployee")
+      .subscribe((data) => {
+        console.log(data);
+        this.lstEmployee = data;
+        this.rows = this.lstEmployee;
+        this.srch = [...this.rows];
+      });
+  }
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+  // Add employee  Modal Api Call
+  addEmployee() {
+    if (this.addEmployeeForm.invalid) {
+      this.markFormGroupTouched(this.addEmployeeForm);
+      return;
+    }
+    let DateJoin = this.pipe.transform(
+      this.addEmployeeForm.value.JoinDate,
+      "dd-MM-yyyy"
+    );
+
     let obj = {
       firstname: this.addEmployeeForm.value.FirstName,
       lastname: this.addEmployeeForm.value.LastName,
@@ -293,7 +295,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       employeeId: this.addEmployeeForm.value.EmployeeID,
       joindate: DateJoin,
       phone: this.addEmployeeForm.value.PhoneNumber,
-      company: this.addEmployeeForm.value.CompanyName,
+
       department: this.addEmployeeForm.value.DepartmentName,
       designation: this.addEmployeeForm.value.Designation,
       mobile: this.addEmployeeForm.value.mobile,
@@ -331,10 +333,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // edit modal api call
   editEmployee() {
-    let employeeId = this.editId;
+    let id = this.editId;
+
     let obj = {
-      firstname: this.editEmployeeForm.value.FirstName,
-      lastname: this.editEmployeeForm.value.LastName,
+      firstName: this.editEmployeeForm.value.FirstName,
+      lastName: this.editEmployeeForm.value.LastName,
       username: this.editEmployeeForm.value.UserName,
       email: this.editEmployeeForm.value.Email,
       password: this.editEmployeeForm.value.Password,
@@ -342,7 +345,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       employeeId: this.editEmployeeForm.value.EmployeeID,
       joindate: this.editEmployeeForm.value.JoinDate,
       phone: this.editEmployeeForm.value.PhoneNumber,
-      // company: this.editEmployeeForm.value.CompanyName,
+
       department: this.editEmployeeForm.value.DepartmentName,
       designation: this.editEmployeeForm.value.Designation,
       mobile: this.editEmployeeForm.value.mobile,
@@ -359,10 +362,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     };
     // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
     this.http
-      .patch(
-        "http://localhost:8443/admin/allemployees/update" + "/" + employeeId,
-        obj
-      )
+      .patch("http://localhost:8443/admin/allemployees/update" + "/" + id, obj)
       .subscribe((data) => {
         console.log(data);
         this.loadEmployee();
@@ -447,7 +447,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.editId = value;
 
     const index = this.lstEmployee.findIndex((item) => {
-      return item.employeeId === value;
+      return item.id === value;
     });
     let toSetValues = this.lstEmployee[index];
     console.log(toSetValues);
@@ -522,6 +522,24 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         val = val.toLowerCase();
 
         return d.firstName.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.loadEmployee();
+    }
+  }
+  getSearchData(val, val1) {
+    if (val && val1) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        val1 = val1.toLowerCase();
+
+        return (
+          (d.firstName.toLowerCase().indexOf(val) !== -1 || !val) &&
+          (d.designation.toLowerCase().indexOf(val1) !== -1 || !val1)
+        );
       });
 
       this.rows.push(...temp);
