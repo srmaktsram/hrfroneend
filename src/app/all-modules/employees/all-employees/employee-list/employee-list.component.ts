@@ -103,11 +103,76 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) {
-    console.log("new", this.Holidays[0].read);
     this.getDepartments();
     this.getDesignation();
   }
+  public initializeArray() {
+    this.Holidays = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
 
+    this.Leaves = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Clients = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Projects = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Tasks = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Chats = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.Assets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+    this.TimingSheets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false },
+    ];
+  }
   public getDepartments() {
     this.http
       .get("http://localhost:8443/admin/department/getData")
@@ -145,7 +210,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Email: ["", [Validators.required]],
       PhoneNumber: ["", [Validators.required]],
       JoinDate: ["", [Validators.required]],
-      CompanyName: ["", [Validators.required]],
+
       EmployeeID: ["", [Validators.required]],
     });
 
@@ -161,7 +226,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Email: ["", [Validators.required]],
       PhoneNumber: ["", [Validators.required]],
       JoinDate: ["", [Validators.required]],
-      CompanyName: ["", [Validators.required]],
+
       EmployeeID: ["", [Validators.required]],
     });
   }
@@ -173,20 +238,20 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   // manually rendering Data table
 
-  rerender(): void {
-    $("#datatable").DataTable().clear();
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-    });
+  // rerender(): void {
+  //   $("#datatable").DataTable().clear();
+  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //     dtInstance.destroy();
+  //   });
 
-    this.lstEmployee = [];
-    this.loadEmployee();
-    //
+  //   this.lstEmployee = [];
+  //   this.loadEmployee();
+  //   //
 
-    setTimeout(() => {
-      this.dtTrigger.next();
-    }, 2000);
-  }
+  //   setTimeout(() => {
+  //     this.dtTrigger.next();
+  //   }, 2000);
+  // }
 
   // Get Employee  Api Call
   loadEmployee() {
@@ -200,78 +265,25 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.srch = [...this.rows];
       });
   }
-
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
   // Add employee  Modal Api Call
   addEmployee() {
+    if (this.addEmployeeForm.invalid) {
+      this.markFormGroupTouched(this.addEmployeeForm);
+      return;
+    }
     let DateJoin = this.pipe.transform(
       this.addEmployeeForm.value.JoinDate,
       "dd-MM-yyyy"
     );
-    this.Holidays = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
 
-    this.Leaves = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Clients = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Projects = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Tasks = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Chats = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Assets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.TimingSheets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
     let obj = {
       firstname: this.addEmployeeForm.value.FirstName,
       lastname: this.addEmployeeForm.value.LastName,
@@ -282,7 +294,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       employeeId: this.addEmployeeForm.value.EmployeeID,
       joindate: DateJoin,
       phone: this.addEmployeeForm.value.PhoneNumber,
-      company: this.addEmployeeForm.value.CompanyName,
+
       department: this.addEmployeeForm.value.DepartmentName,
       designation: this.addEmployeeForm.value.Designation,
       mobile: this.addEmployeeForm.value.mobile,
@@ -301,11 +313,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         console.log(data);
         this.loadEmployee();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-        });
-        this.dtTrigger.next();
+        // $("#datatable").DataTable().clear();
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   dtInstance.destroy();
+        // });
+        // this.dtTrigger.next();
       });
 
     $("#add_employee").modal("hide");
@@ -320,10 +332,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // edit modal api call
   editEmployee() {
-    let employeeId = this.editId;
+    let id = this.editId;
+
     let obj = {
-      firstname: this.editEmployeeForm.value.FirstName,
-      lastname: this.editEmployeeForm.value.LastName,
+      firstName: this.editEmployeeForm.value.FirstName,
+      lastName: this.editEmployeeForm.value.LastName,
       username: this.editEmployeeForm.value.UserName,
       email: this.editEmployeeForm.value.Email,
       password: this.editEmployeeForm.value.Password,
@@ -331,7 +344,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       employeeId: this.editEmployeeForm.value.EmployeeID,
       joindate: this.editEmployeeForm.value.JoinDate,
       phone: this.editEmployeeForm.value.PhoneNumber,
-      company: this.editEmployeeForm.value.CompanyName,
+
       department: this.editEmployeeForm.value.DepartmentName,
       designation: this.editEmployeeForm.value.Designation,
       mobile: this.editEmployeeForm.value.mobile,
@@ -348,18 +361,15 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     };
     // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
     this.http
-      .patch(
-        "http://localhost:8443/admin/allemployees/update" + "/" + employeeId,
-        obj
-      )
+      .patch("http://localhost:8443/admin/allemployees/update" + "/" + id, obj)
       .subscribe((data) => {
         console.log(data);
         this.loadEmployee();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-        });
-        this.dtTrigger.next();
+        // $("#datatable").DataTable().clear();
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   dtInstance.destroy();
+        // });
+        // this.dtTrigger.next();
       });
 
     $("#edit_employee").modal("hide");
@@ -368,75 +378,10 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // To Get The employee Edit Id And Set Values To Edit Modal Form
   edit(value) {
-    this.Holidays = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-
-    this.Leaves = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Clients = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Projects = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Tasks = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Chats = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Assets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.TimingSheets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
     this.editId = value;
 
     const index = this.lstEmployee.findIndex((item) => {
-      return item.employeeId === value;
+      return item.id === value;
     });
     let toSetValues = this.lstEmployee[index];
     console.log(toSetValues);
@@ -450,7 +395,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       EmployeeID: toSetValues.employeeId,
       JoinDate: toSetValues.joinDate,
       PhoneNumber: toSetValues.phone,
-      CompanyName: toSetValues.company,
+      // CompanyName: toSetValues.company,
       DepartmentName: toSetValues.department,
       Designation: toSetValues.designation,
     });
@@ -466,24 +411,21 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // delete employee data api call
   deleteEmployee() {
-    let employeeId = this.tempId;
+    let id = this.tempId;
     let obj = {
       status: 2,
     };
     // this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
     this.http
-      .patch(
-        "http://localhost:8443/admin/allemployees/delete" + "/" + employeeId,
-        obj
-      )
+      .patch("http://localhost:8443/admin/allemployees/delete" + "/" + id, obj)
       .subscribe((data) => {
         console.log(data);
         this.loadEmployee();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-        });
-        this.dtTrigger.next();
+        // $("#datatable").DataTable().clear();
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   dtInstance.destroy();
+        // });
+        // this.dtTrigger.next();
       });
 
     $("#delete_employee").modal("hide");
@@ -492,35 +434,67 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   //search by Id
   searchId(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.employeeId.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows = [];
-    this.rows.push(...temp);
+    if (val) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+
+        return d.employeeId.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.loadEmployee();
+    }
   }
 
   //search by name
   searchName(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.firstname.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows = [];
-    this.rows.push(...temp);
+    if (val) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+
+        return d.firstName.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.loadEmployee();
+    }
+  }
+  getSearchData(val, val1) {
+    if (val && val1) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        val1 = val1.toLowerCase();
+
+        return (
+          (d.firstName.toLowerCase().indexOf(val) !== -1 || !val) &&
+          (d.designation.toLowerCase().indexOf(val1) !== -1 || !val1)
+        );
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.loadEmployee();
+    }
   }
 
   //search by purchase
   searchByDesignation(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.designation.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows = [];
-    this.rows.push(...temp);
+    if (val.trim()) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        return d.designation.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.loadEmployee();
+    }
   }
 
   //getting the status value
