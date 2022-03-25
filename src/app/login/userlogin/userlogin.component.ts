@@ -27,17 +27,17 @@ export class UserLoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   submit() {
-    let userId = this.form.value.email;
+    let email = this.form.value.email;
     let password = this.form.value.password;
     console.log(this.form.valid);
     this.http
       .post("http://localhost:8443/auth/register/login", {
-        userId,
+        email,
         password,
       })
       .subscribe((res: any) => {

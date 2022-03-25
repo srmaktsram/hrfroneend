@@ -60,6 +60,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
       console.log("getapi", data)
       this.lstDesignation = data;
       this.dtTrigger.next();
+
       this.rows = this.lstDesignation;
       this.srch = [...this.rows];
     });
@@ -92,13 +93,13 @@ export class DesignationComponent implements OnInit, OnDestroy {
         )
         .subscribe((res: any) => {
           console.log("result", res);
-         this.LoadDesignation();
+          this.LoadDesignation();
 
         });
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
-     
+
       $("#add_designation").modal("hide");
       this.addDesignationForm.reset();
       this.toastr.success("Desigantion added sucessfully...!", "Success");
