@@ -32,7 +32,7 @@ export class UserLoginComponent implements OnInit {
   ngOnInit() { }
 
   submit() {
-    let email = this.form.value.email;
+    let userId = this.form.value.email;
     let password = this.form.value.password;
 
     this.http
