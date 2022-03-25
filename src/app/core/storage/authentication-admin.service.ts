@@ -3,20 +3,33 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 export class AdminAuthenticationService {
-  login(companyEmail: string, companyUsername: string, companyId: string) {
+  login(
+    companyEmail: string,
+    companyName: string,
+    companySite: string,
+    companyId: string,
+    pinCode: string,
+    companyAddress: string
+  ) {
     sessionStorage.setItem("currentAdminLgn", "loggedin");
     sessionStorage.setItem("user_type", "admin");
     sessionStorage.setItem("companyEmail", companyEmail);
-    sessionStorage.setItem("companyUsername", companyUsername);
+    sessionStorage.setItem("companyName", companyName);
+    sessionStorage.setItem("companySite", companySite);
     sessionStorage.setItem("companyId", companyId);
+    sessionStorage.setItem("pinCode", pinCode);
+    sessionStorage.setItem("companyAddress", companyAddress);
     return true;
   }
   logout() {
     sessionStorage.removeItem("currentAdminLgn");
     sessionStorage.removeItem("user_type");
     sessionStorage.removeItem("companyEmail");
-    sessionStorage.removeItem("companyUsername");
+    sessionStorage.removeItem("companyName");
+    sessionStorage.removeItem("companySite");
     sessionStorage.removeItem("companyId");
+    sessionStorage.removeItem("pinCode");
+    sessionStorage.removeItem("companyAddress");
   }
   // public get loggedIn(): boolean {
   //   return sessionStorage.getItem("currentAdminLgn") !== null;
