@@ -106,7 +106,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("companyId");
     this.getDepartments();
-    alert(this.adminId);
+
     this.getDesignation();
   }
   public initializeArray() {
@@ -222,8 +222,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       FirstName: ["", [Validators.required]],
       LastName: ["", [Validators.required]],
       UserName: ["", [Validators.required]],
-      Password: ["", [Validators.required]],
-      ConfirmPassword: ["", [Validators.required]],
+      // Password: ["", [Validators.required]],
+      // ConfirmPassword: ["", [Validators.required]],
       DepartmentName: ["", [Validators.required]],
       Designation: ["", [Validators.required]],
       Email: ["", [Validators.required]],
@@ -343,8 +343,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       lastName: this.editEmployeeForm.value.LastName,
       username: this.editEmployeeForm.value.UserName,
       email: this.editEmployeeForm.value.Email,
-      password: this.editEmployeeForm.value.Password,
-      confirmpassword: this.editEmployeeForm.value.ConfirmPassword,
+      // password: this.editEmployeeForm.value.Password,
+      // confirmpassword: this.editEmployeeForm.value.ConfirmPassword,
       employeeId: this.editEmployeeForm.value.EmployeeID,
       joindate: this.editEmployeeForm.value.JoinDate,
       phone: this.editEmployeeForm.value.PhoneNumber,
@@ -394,8 +394,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       LastName: toSetValues.lastName,
       UserName: toSetValues.employeeId,
       Email: toSetValues.email,
-      Password: toSetValues.password,
-      ConfirmPassword: toSetValues.password,
+      // Password: toSetValues.password,
+      // ConfirmPassword: toSetValues.password,
       EmployeeID: toSetValues.employeeId,
       JoinDate: toSetValues.joinDate,
       PhoneNumber: toSetValues.phone,

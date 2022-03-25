@@ -33,29 +33,27 @@ export class UserLoginComponent implements OnInit {
 
   submit() {
     let userId = this.form.value.email;
-    alert(userId);
     let password = this.form.value.password;
-    console.log(this.form.valid);
+
     this.http
       .post("http://localhost:8443/auth/employeelogin/login", {
         userId,
         password,
       })
       .subscribe((res: any) => {
-        console.log("login data", res);
-        this.authenticationService.login(
-          res.data.adminId,
-          res.data.id,
-          res.data.username,
-          res.data.employeeId,
-          res.data.email,
-          res.data.firstName,
-          res.data.lastName,
-          res.data.phone
-        );
         if (res.result == 2) {
           // location.replace("http://localhost:51245/layout/dashboard/employee");
           this.router.navigate(["/layout/dashboard/employee"]);
+          this.authenticationService.login(
+            res.data.adminId,
+            res.data.id,
+            res.data.username,
+            res.data.employeeId,
+            res.data.email,
+            res.data.firstName,
+            res.data.lastName,
+            res.data.phone
+          );
         } else {
           alert("wrong Id or pass");
         }
