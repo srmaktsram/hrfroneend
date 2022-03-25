@@ -36,22 +36,24 @@ export class LoginComponent implements OnInit {
   submit() {
     let email = this.form.value.email;
     let password = this.form.value.password;
-    console.log(this.form.valid);
+
     this.http
       .post("http://localhost:8443/auth/register/login", {
         email,
         password,
       })
       .subscribe((res: any) => {
-        console.log("result", res);
-        this.adminAuthenticationService.login(
-          res.companyEmail,
-          res.username,
-          res.id
-        );
         if (res.result == 2) {
           this.router.navigate(["/layout/dashboard/admin"]);
           // location.replace("http://localhost:51245/layout/dashboard/admin");
+          this.adminAuthenticationService.login(
+            res.data.companyEmail,
+            res.data.companyName,
+            res.data.companySite,
+            res.data.id,
+            res.data.pinCode,
+            res.data.companyAddress
+          );
         } else {
           alert("wrong Id or pass");
         }

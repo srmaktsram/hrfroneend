@@ -97,13 +97,16 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     { id: 4, import: false },
     { id: 5, export: false },
   ];
+  adminId: string;
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) {
+    this.adminId = sessionStorage.getItem("companyId");
     this.getDepartments();
+
     this.getDesignation();
   }
   public initializeArray() {
@@ -219,8 +222,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       FirstName: ["", [Validators.required]],
       LastName: ["", [Validators.required]],
       UserName: ["", [Validators.required]],
-      Password: ["", [Validators.required]],
-      ConfirmPassword: ["", [Validators.required]],
+      // Password: ["", [Validators.required]],
+      // ConfirmPassword: ["", [Validators.required]],
       DepartmentName: ["", [Validators.required]],
       Designation: ["", [Validators.required]],
       Email: ["", [Validators.required]],
@@ -307,6 +310,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Chats: this.Chats,
       Assets: this.Assets,
       TimingSheets: this.TimingSheets,
+      adminId: this.adminId,
     };
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
@@ -339,8 +343,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       lastName: this.editEmployeeForm.value.LastName,
       username: this.editEmployeeForm.value.UserName,
       email: this.editEmployeeForm.value.Email,
-      password: this.editEmployeeForm.value.Password,
-      confirmpassword: this.editEmployeeForm.value.ConfirmPassword,
+      // password: this.editEmployeeForm.value.Password,
+      // confirmpassword: this.editEmployeeForm.value.ConfirmPassword,
       employeeId: this.editEmployeeForm.value.EmployeeID,
       joindate: this.editEmployeeForm.value.JoinDate,
       phone: this.editEmployeeForm.value.PhoneNumber,
@@ -390,8 +394,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       LastName: toSetValues.lastName,
       UserName: toSetValues.employeeId,
       Email: toSetValues.email,
-      Password: toSetValues.password,
-      ConfirmPassword: toSetValues.password,
+      // Password: toSetValues.password,
+      // ConfirmPassword: toSetValues.password,
       EmployeeID: toSetValues.employeeId,
       JoinDate: toSetValues.joinDate,
       PhoneNumber: toSetValues.phone,
