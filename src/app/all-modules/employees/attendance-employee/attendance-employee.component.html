@@ -29,8 +29,17 @@
                             <span>3.45 hrs</span>
                         </div>
                     </div>
-                    <div class="punch-btn-section">
-                        <button type="button" class="btn btn-primary punch-btn">Punch Out</button>
+                    <div class="-btn-section">
+
+                        <ng-container *ngIf="punch==0">
+                            <button type="button" class="btn btn-primary punch-btn" (click)="updatePunch()">Punch
+                                In</button>
+                        </ng-container>
+                        <ng-container *ngIf="punch==1">
+                            <button type="button" class="btn btn-primary punch-btn" (click)="updatePunch()">Punch
+                                Out</button>
+                        </ng-container>
+
                     </div>
                     <div class="statistics">
                         <div class="row">
@@ -193,7 +202,7 @@
             </div>
         </div>
         <div class="col-sm-3">
-            <a  class="btn btn-success w-100"> Search </a>
+            <a class="btn btn-success w-100"> Search </a>
         </div>
     </div>
     <!-- /Search Filter -->

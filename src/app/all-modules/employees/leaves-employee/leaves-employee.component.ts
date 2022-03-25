@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 declare const $: any;
 @Component({
   selector: "app-leaves-employee",
@@ -12,7 +13,7 @@ declare const $: any;
   styleUrls: ["./leaves-employee.component.css"],
 })
 export class LeavesEmployeeComponent implements OnInit, OnDestroy {
-  lstLeave: any[];
+  lstLeave: any;
   url: any = "employeeleaves";
   public tempId: any;
   public editId: any;
@@ -30,10 +31,11 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
   public editFromDate: any;
   public editToDate: any;
   constructor(
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadLeaves();
@@ -68,8 +70,9 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
 
   // Get leave  Api Call
   loadLeaves() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/employee/leaves/getleaves").subscribe((data) => {
       this.lstLeave = data;
+      console.log("getdata", data);
       this.dtTrigger.next();
       this.rows = this.lstLeave;
       this.srch = [...this.rows];
@@ -87,7 +90,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
   }
   // Add leaves for admin Modal Api Call
   addleaves() {
-    if(this.addLeaveadminForm.invalid){
+    if (this.addLeaveadminForm.invalid) {
       this.markFormGroupTouched(this.addLeaveadminForm);
       return
     }
@@ -111,12 +114,17 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
         reason: this.addLeaveadminForm.value.LeaveReason,
         status: "Approved",
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+
+      this.http.post("http://localhost:8443/employee/leaves/add_leave", obj).subscribe((data) => {
+        console.log(data);
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
+          this.loadLeaves();
         });
       });
-      this.loadLeaves();
+
+
+      // this.loadLeaves();
       $("#add_leave").modal("hide");
       this.addLeaveadminForm.reset();
       this.toastr.success("Leaves added sucessfully...!", "Success");
@@ -135,6 +143,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
   // Edit leaves Modal Api Call
   editLeaves() {
     if (this.editLeaveadminForm.valid) {
+      let id = this.editId
       let obj = {
         employeeName: "Mike Litorus",
         designation: "web developer",
@@ -144,15 +153,17 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
         noofDays: this.editLeaveadminForm.value.NoOfDays,
         remainleaves: this.editLeaveadminForm.value.RemainLeaves,
         reason: this.editLeaveadminForm.value.LeaveReason,
-        status: "Approved",
-        id: this.editId,
+
+
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data) => {
+      this.http.patch("http://localhost:8443/employee/leaves/updateLeave" + "/" + id, obj).subscribe((data) => {
+        console.log("updateData", data);
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
+          this.loadLeaves();
         });
       });
-      this.loadLeaves();
+
       $("#edit_leave").modal("hide");
       this.toastr.success("Leaves Updated sucessfully...!", "Success");
     } else {
@@ -163,7 +174,12 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
   // Delete leaves Modal Api Call
 
   deleteleaves() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    let id = this.tempId
+    let obj = {
+      status: 2
+    };
+    this.http.patch("http://localhost:8443/employee/leaves/deleteLeave" + "/" + id, obj).subscribe((data) => {
+      console.log("deleteData", data)
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
