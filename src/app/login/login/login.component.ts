@@ -44,10 +44,14 @@ export class LoginComponent implements OnInit {
       })
       .subscribe((res: any) => {
         console.log("result", res);
+        alert(res.id);
         this.adminAuthenticationService.login(
-          res.companyEmail,
-          res.username,
-          res.id
+          res.data.companyEmail,
+          res.data.companyName,
+          res.data.companySite,
+          res.data.id,
+          res.data.pinCode,
+          res.data.companyAddress
         );
         if (res.result == 2) {
           this.router.navigate(["/layout/dashboard/admin"]);

@@ -97,13 +97,16 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     { id: 4, import: false },
     { id: 5, export: false },
   ];
+  adminId: string;
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) {
+    this.adminId = sessionStorage.getItem("companyId");
     this.getDepartments();
+    alert(this.adminId);
     this.getDesignation();
   }
   public initializeArray() {
@@ -307,6 +310,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Chats: this.Chats,
       Assets: this.Assets,
       TimingSheets: this.TimingSheets,
+      adminId: this.adminId,
     };
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
