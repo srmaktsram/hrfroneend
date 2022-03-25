@@ -107,7 +107,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.getDesignation();
   }
   public initializeArray() {
-    alert("done");
     this.Holidays = [
       { id: 0, read: false },
       { id: 1, write: false },
@@ -379,71 +378,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // To Get The employee Edit Id And Set Values To Edit Modal Form
   edit(value) {
-    this.Holidays = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-
-    this.Leaves = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Clients = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Projects = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Tasks = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Chats = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Assets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.TimingSheets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
     this.editId = value;
 
     const index = this.lstEmployee.findIndex((item) => {

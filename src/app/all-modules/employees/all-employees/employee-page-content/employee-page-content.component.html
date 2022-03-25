@@ -248,10 +248,8 @@
                                 <select class="form-select form-control"
                                     [class.invalid]="addEmployeeForm.get('DepartmentName').invalid && addEmployeeForm.get('DepartmentName').touched"
                                     formControlName="DepartmentName">
-                                    <option>Select Department</option>
-                                    <option>Web Development</option>
-                                    <option>IT Management</option>
-                                    <option>Marketing</option>
+                                    <option>Select Department</option>    
+                               <option *ngFor="let department of departments" >{{department.departmentName}}</option>
                                 </select>
                                 <div
                                     *ngIf="addEmployeeForm.get('DepartmentName').invalid && addEmployeeForm.get('DepartmentName').touched">
@@ -268,9 +266,8 @@
                                     [class.invalid]="addEmployeeForm.get('Designation').invalid && addEmployeeForm.get('Designation').touched"
                                     formControlName="Designation">
                                     <option>Select Designation</option>
-                                    <option>Web Designer</option>
-                                    <option>Web Developer</option>
-                                    <option>Android Developer</option>
+                                        
+                               <option *ngFor="let designation of designations" >{{designation.designation}}</option>
                                 </select>
                                 <div
                                     *ngIf="addEmployeeForm.get('Designation').invalid && addEmployeeForm.get('Designation').touched">
@@ -710,22 +707,22 @@
                                 <tr>
                                     <td>Leaves</td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Holidays[0].read" (click)="checkCheckBoxvalueHolidays($event, 0)">
+                                        <input type="checkbox" [checked]="Leaves[0].read" (click)="checkCheckBoxvalueLeaves($event, 0)">
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Holidays[1].write" (click)="checkCheckBoxvalueHolidays($event, 1)" >
+                                        <input type="checkbox" [checked]="Leaves[1].write" (click)="checkCheckBoxvalueLeaves($event, 1)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Holidays[2].create"(click)="checkCheckBoxvalueHolidays($event, 2)" >
+                                        <input type="checkbox" [checked]="Leaves[2].create"(click)="checkCheckBoxvalueLeaves($event, 2)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox"[checked]="Holidays[3].delete" (click)="checkCheckBoxvalueHolidays($event, 3)" >
+                                        <input type="checkbox"[checked]="Leaves[3].delete" (click)="checkCheckBoxvalueLeaves($event, 3)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Holidays[4].import"(click)="checkCheckBoxvalueHolidays($event, 4)" >
+                                        <input type="checkbox" [checked]="Leaves[4].import"(click)="checkCheckBoxvalueLeaves($event, 4)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Holidays[5].export" (click)="checkCheckBoxvalueHolidays($event, 5)" >
+                                        <input type="checkbox" [checked]="Leaves[5].export" (click)="checkCheckBoxvalueLeaves($event, 5)" >
                                     </td>
                                 </tr>
                                 <tr>
@@ -734,19 +731,19 @@
                                         <input type="checkbox" [checked]="Clients[0].read" (click)="checkCheckBoxvalueClients($event, 0)">
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Clients[1].read" (click)="checkCheckBoxvalueClients($event, 1)" >
+                                        <input type="checkbox" [checked]="Clients[1].write" (click)="checkCheckBoxvalueClients($event, 1)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Clients[2].read" (click)="checkCheckBoxvalueClients($event, 2)" >
+                                        <input type="checkbox" [checked]="Clients[2].create"(click)="checkCheckBoxvalueClients($event, 2)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Clients[3].read" (click)="checkCheckBoxvalueClients($event, 3)" >
+                                        <input type="checkbox"[checked]="Clients[3].delete" (click)="checkCheckBoxvalueClients($event, 3)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Clients[4].read" (click)="checkCheckBoxvalueClients($event, 4)" >
+                                        <input type="checkbox" [checked]="Clients[4].import"(click)="checkCheckBoxvalueClients($event, 4)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Clients[5].read" (click)="checkCheckBoxvalueClients($event, 5)" >
+                                        <input type="checkbox" [checked]="Clients[5].export" (click)="checkCheckBoxvalueClients($event, 5)" >
                                     </td>
                                 </tr>
                                 <tr>
@@ -755,19 +752,19 @@
                                         <input type="checkbox" [checked]="Projects[0].read" (click)="checkCheckBoxvalueProjects($event, 0)">
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Projects[1].read" (click)="checkCheckBoxvalueProjects($event, 1)" >
+                                        <input type="checkbox" [checked]="Projects[1].write" (click)="checkCheckBoxvalueProjects($event, 1)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Projects[2].read" (click)="checkCheckBoxvalueProjects($event, 2)" >
+                                        <input type="checkbox" [checked]="Projects[2].create"(click)="checkCheckBoxvalueProjects($event, 2)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Projects[3].read" (click)="checkCheckBoxvalueProjects($event, 3)" >
+                                        <input type="checkbox"[checked]="Projects[3].delete" (click)="checkCheckBoxvalueProjects($event, 3)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Projects[4].read" (click)="checkCheckBoxvalueProjects($event, 4)" >
+                                        <input type="checkbox" [checked]="Projects[4].import"(click)="checkCheckBoxvalueProjects($event, 4)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Projects[5].read" (click)="checkCheckBoxvalueProjects($event, 5)" >
+                                        <input type="checkbox" [checked]="Projects[5].export" (click)="checkCheckBoxvalueProjects($event, 5)" >
                                     </td>
                                 </tr>
                                 <tr>
@@ -776,19 +773,19 @@
                                         <input type="checkbox" [checked]="Tasks[0].read" (click)="checkCheckBoxvalueTasks($event, 0)">
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Tasks[1].read" (click)="checkCheckBoxvalueTasks($event, 1)" >
+                                        <input type="checkbox" [checked]="Tasks[1].write" (click)="checkCheckBoxvalueTasks($event, 1)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Tasks[2].read" (click)="checkCheckBoxvalueTasks($event, 2)" >
+                                        <input type="checkbox" [checked]="Tasks[2].create"(click)="checkCheckBoxvalueTasks($event, 2)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Tasks[3].read" (click)="checkCheckBoxvalueTasks($event, 3)" >
+                                        <input type="checkbox"[checked]="Tasks[3].delete" (click)="checkCheckBoxvalueTasks($event, 3)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Tasks[4].read" (click)="checkCheckBoxvalueTasks($event, 4)" >
+                                        <input type="checkbox" [checked]="Tasks[4].import"(click)="checkCheckBoxvalueTasks($event, 4)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Tasks[5].read" (click)="checkCheckBoxvalueTasks($event, 5)" >
+                                        <input type="checkbox" [checked]="Tasks[5].export" (click)="checkCheckBoxvalueTasks($event, 5)" >
                                     </td>
                                 </tr>
                                 <tr>
@@ -797,19 +794,19 @@
                                         <input type="checkbox" [checked]="Chats[0].read" (click)="checkCheckBoxvalueChats($event, 0)">
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Chats[1].read" (click)="checkCheckBoxvalueChats($event, 1)" >
+                                        <input type="checkbox" [checked]="Chats[1].write" (click)="checkCheckBoxvalueChats($event, 1)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Chats[2].read" (click)="checkCheckBoxvalueChats($event, 2)" >
+                                        <input type="checkbox" [checked]="Chats[2].create"(click)="checkCheckBoxvalueChats($event, 2)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Chats[3].read" (click)="checkCheckBoxvalueChats($event, 3)" >
+                                        <input type="checkbox"[checked]="Chats[3].delete" (click)="checkCheckBoxvalueChats($event, 3)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Chats[4].read" (click)="checkCheckBoxvalueChats($event, 4)" >
+                                        <input type="checkbox" [checked]="Chats[4].import"(click)="checkCheckBoxvalueChats($event, 4)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Chats[5].read" (click)="checkCheckBoxvalueChats($event, 5)" >
+                                        <input type="checkbox" [checked]="Chats[5].export" (click)="checkCheckBoxvalueChats($event, 5)" >
                                     </td>
                                 </tr>
                                 <tr>
@@ -818,19 +815,19 @@
                                         <input type="checkbox" [checked]="Assets[0].read" (click)="checkCheckBoxvalueAssets($event, 0)">
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Assets[1].read" (click)="checkCheckBoxvalueAssets($event, 1)" >
+                                        <input type="checkbox" [checked]="Assets[1].write" (click)="checkCheckBoxvalueAssets($event, 1)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Assets[2].read" (click)="checkCheckBoxvalueAssets($event, 2)" >
+                                        <input type="checkbox" [checked]="Assets[2].create"(click)="checkCheckBoxvalueAssets($event, 2)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Assets[3].read" (click)="checkCheckBoxvalueAssets($event, 3)" >
+                                        <input type="checkbox"[checked]="Assets[3].delete" (click)="checkCheckBoxvalueAssets($event, 3)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Assets[4].read" (click)="checkCheckBoxvalueAssets($event, 4)" >
+                                        <input type="checkbox" [checked]="Assets[4].import"(click)="checkCheckBoxvalueAssets($event, 4)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="Assets[5].read" (click)="checkCheckBoxvalueAssets($event, 5)" >
+                                        <input type="checkbox" [checked]="Assets[5].export" (click)="checkCheckBoxvalueAssets($event, 5)" >
                                     </td>
                                 </tr>
                                 <tr>
@@ -839,19 +836,19 @@
                                         <input type="checkbox" [checked]="TimingSheets[0].read" (click)="checkCheckBoxvalueTimingSheets($event, 0)">
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="TimingSheets[1].read" (click)="checkCheckBoxvalueTimingSheets($event, 1)" >
+                                        <input type="checkbox" [checked]="TimingSheets[1].write" (click)="checkCheckBoxvalueTimingSheets($event, 1)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="TimingSheets[2].read" (click)="checkCheckBoxvalueTimingSheets($event, 2)" >
+                                        <input type="checkbox" [checked]="TimingSheets[2].create"(click)="checkCheckBoxvalueTimingSheets($event, 2)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="TimingSheets[3].read" (click)="checkCheckBoxvalueTimingSheets($event, 3)" >
+                                        <input type="checkbox"[checked]="TimingSheets[3].delete" (click)="checkCheckBoxvalueTimingSheets($event, 3)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="TimingSheets[4].read" (click)="checkCheckBoxvalueTimingSheets($event, 4)" >
+                                        <input type="checkbox" [checked]="TimingSheets[4].import"(click)="checkCheckBoxvalueTimingSheets($event, 4)" >
                                     </td>
                                     <td class="text-center">
-                                        <input type="checkbox" [checked]="TimingSheets[5].read" (click)="checkCheckBoxvalueTimingSheets($event, 5)" >
+                                        <input type="checkbox" [checked]="TimingSheets[5].export" (click)="checkCheckBoxvalueTimingSheets($event, 5)" >
                                     </td>
                                 </tr>
                                 

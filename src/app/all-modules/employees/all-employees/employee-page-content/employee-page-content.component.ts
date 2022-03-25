@@ -99,8 +99,24 @@ export class EmployeePageContentComponent implements OnInit {
     private http: HttpClient,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
-  ) {}
-
+  ) {
+    this.getDesignation();
+    this.getDepartments();
+  }
+  public getDepartments() {
+    this.http
+      .get("http://localhost:8443/admin/department/getData")
+      .subscribe((data) => {
+        this.departments = data;
+      });
+  }
+  public getDesignation() {
+    this.http
+      .get("http://localhost:8443/admin/designation/getData")
+      .subscribe((data) => {
+        this.designations = data;
+      });
+  }
   ngOnInit() {
     this.loadEmployee();
     this.addEmployeeForm = this.formBuilder.group({
@@ -165,71 +181,7 @@ export class EmployeePageContentComponent implements OnInit {
       this.addEmployeeForm.value.JoinDate,
       "dd-MM-yyyy"
     );
-    this.Holidays = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
 
-    this.Leaves = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Clients = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Projects = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Tasks = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Chats = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Assets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.TimingSheets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
     let obj = {
       firstname: this.addEmployeeForm.value.FirstName,
       lastname: this.addEmployeeForm.value.LastName,
@@ -304,6 +256,7 @@ export class EmployeePageContentComponent implements OnInit {
       // id: this.editId,
     };
     // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+    console.log("data is", this.Holidays);
     this.http
       .patch("http://localhost:8443/admin/allemployees/update" + "/" + id, obj)
       .subscribe((data) => {
@@ -321,74 +274,9 @@ export class EmployeePageContentComponent implements OnInit {
   }
 
   // To Get The employee Edit Id And Set Values To Edit Modal Form
-  edit(value) {
-    this.Holidays = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-
-    this.Leaves = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Clients = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Projects = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Tasks = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Chats = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.Assets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.TimingSheets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
+  editEmp(value) {
     this.editId = value;
-
+    alert(value);
     const index = this.lstEmployee.findIndex((item) => {
       return item.id === value;
     });
