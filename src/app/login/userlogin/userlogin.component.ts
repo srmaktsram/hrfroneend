@@ -27,9 +27,9 @@ export class UserLoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private http: HttpClient,
     private router: Router
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   submit() {
     let userId = this.form.value.email;
@@ -43,6 +43,7 @@ export class UserLoginComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
+        console.log(res);
         if (res.result == 2) {
           // location.replace("http://localhost:51245/layout/dashboard/employee");
           this.router.navigate(["/layout/dashboard/employee"]);
