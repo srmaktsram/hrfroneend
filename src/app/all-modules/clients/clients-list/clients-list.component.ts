@@ -37,12 +37,18 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   chats: any;
   estimates: any;
   timingSheets: any;
+  companys: any[];
+  filtereddata: any[];
+  searchId: any;
+  searchName: any;
+  searchCompany: any;
   constructor(
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
+    this.getCompanyName();
     this.invoices = [
       { id: 0, read: false },
       { id: 1, write: false },
@@ -133,19 +139,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  // manually rendering Data table
-
-  rerender(): void {
-    $("#datatable").DataTable().clear();
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-    });
-    this.clientsData = [];
-    this.getClients();
-    setTimeout(() => {
-      this.dtTrigger.next();
-    }, 1000);
-  }
   //Get all Clients data
   public getClients() {
     // this.allModulesService.get("clients").subscribe((data) => {
@@ -162,6 +155,16 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
         this.rows = this.clientsData;
         this.srch = [...this.rows];
+      });
+  }
+  public getCompanyName() {
+    // this.allModulesService.get("clients").subscribe((data) => {
+    this.http
+      .get("http://localhost:8443/admin/clients/getDataClient")
+      .subscribe((data) => {
+        this.data = data;
+        this.clientsData = this.data.data;
+        this.companys = this.clientsData;
       });
   }
 
@@ -196,13 +199,14 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
   // Save Client
   public onSave() {
-    this.editedClient = {
-      firstname: this.editClientForm.value.editClientfirstName,
-      lastname: this.editClientForm.value.editClientlastName,
+    let obj = {
+      firstName: this.editClientForm.value.editClientName,
+      lastName: this.editClientForm.value.editClientLastName,
       role: "CEO",
-      company: this.editClientForm.value.editClientCompany,
+      companyName: this.editClientForm.value.editClientCompany,
       clientId: this.editClientForm.value.editClientId,
       email: this.editClientForm.value.editClientEmail,
+      username: this.editClientForm.value.editClientUsername,
       phone: this.editClientForm.value.editClientPhone,
       invoices: this.invoices,
       tasks: this.tasks,
@@ -213,11 +217,9 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     };
     // this.allModulesService
     //   .update(this.editedClient, "clients")
+    let id = this.editId;
     this.http
-      .patch(
-        "localhost:8443/admin/clients/updateClient" + "/" + this.editId,
-        this.editedClient
-      )
+      .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
       .subscribe((data) => {
         this.getClients();
       });
@@ -289,7 +291,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   //search by name
-  searchName(val) {
+  searchByName(val) {
     if (val) {
       this.rows.splice(0, this.rows.length);
       let temp = this.srch.filter(function (d) {
@@ -303,7 +305,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   //search by company
-  searchCompany(val) {
+  searchByCompany(val) {
     if (val.trim()) {
       this.rows.splice(0, this.rows.length);
       let temp = this.srch.filter(function (d) {
@@ -315,19 +317,31 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       this.getClients();
     }
   }
-  searchCompanyAndName(val, val1) {
-    if (val && val1) {
-      this.rows.splice(0, this.rows.length);
-      let temp = this.srch.filter(function (d) {
-        val = val.toLowerCase();
-        return (
-          (d.companyName.toLowerCase().indexOf(val) !== -1 || !val) &&
-          (d.firstName.toLowerCase().indexOf(val1) !== -1 || !val1)
+  onSearch(id, name, company) {
+    this.filtereddata = [];
+    this.searchId = id;
+    this.searchName = name;
+    this.searchCompany = company;
+    this.clientsData = this.data.data;
+    if (this.searchId) {
+      this.filtereddata = this.clientsData.filter((data) =>
+        data.clientId.toLowerCase().includes(this.searchId.toLowerCase())
+      );
+      if (this.searchName) {
+        let nameFilter = this.filtereddata.filter((data) =>
+          data.firstName.toLowerCase().includes(this.searchName.toLowerCase())
         );
-      });
-      this.rows.push(...temp);
+        if (nameFilter.length != 0) {
+          this.filtereddata = nameFilter;
+        }
+      }
+    }
+
+    if (this.searchId || this.searchCompany || this.searchName) {
+      this.clientsData =
+        this.filtereddata.length != 0 ? this.filtereddata : this.clientsData;
     } else {
-      this.getClients();
+      this.clientsData = [];
     }
   }
   //getting the status value
