@@ -10,6 +10,8 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
 
 declare const $: any;
 @Component({
@@ -35,12 +37,42 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
   public editCreated: any;
   public editLastDate: any;
+  dataarr: any;
+  lstEmployee: any;
+  data: Object;
+  user_type: string;
+  check: boolean;
+  disableButton = true;
+  adminId: string;
+  employeeid: string;
+
   constructor(
     private allModuleService: AllModulesService,
+    private router: Router,
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.loadEmployee();
+    this.user_type = sessionStorage.getItem("user_type");
+    this.adminId = sessionStorage.getItem("adminId");
+    this.employeeid = sessionStorage.getItem("empployee_login_id");
+    if (this.user_type == "admin") {
+      this.check = true;
+    }
+  }
 
+  public loadEmployee() {
+    this.http
+      .get("http://localhost:8443/admin/allemployees/getallEmployee")
+      .subscribe((data) => {
+        console.log("my details", data);
+
+        this.dataarr = data;
+        console.log("new details", this.dataarr[0]);
+        this.srch = [...this.dataarr];
+      });
+  }
   ngOnInit() {
     // for floating label
     $(".floating")
@@ -62,6 +94,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       ccName: ["", [Validators.required]],
       AssignName: ["", [Validators.required]],
       addFlowers: ["", [Validators.required]],
+      createdDate: [""],
+      lastReply: [""],
     });
 
     // Edit Ticket Form Validation And Getting Values
@@ -92,27 +126,67 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
 
   // manually rendering Data table
 
-  rerender(): void {
-    $("#datatable").DataTable().clear();
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      dtInstance.destroy();
-    });
-    this.allTickets = [];
-    this.getTickets();
-    setTimeout(() => {
-      this.dtTrigger.next();
-    }, 1000);
-  }
-
+  // rerender(): void {
+  //   $("#datatable").DataTable().clear();
+  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //     dtInstance.destroy();
+  //   });
+  //   this.allTickets = [];
+  //   this.getTickets();
+  //   setTimeout(() => {
+  //     this.dtTrigger.next();
+  //   }, 1000);
+  // }
+  //////////////////////////////////
   getTickets() {
-    this.allModuleService.get(this.url).subscribe((data) => {
-      this.allTickets = data;
-      this.rows = this.allTickets;
-      this.srch = [...this.rows];
-    });
+    // alert(this.adminId);
+    if (this.user_type == "employee") {
+      this.http
+        .get(
+          "http://localhost:8443/admin/tickets/getAllTickets" +
+            "/" +
+            this.adminId +
+            "/" +
+            this.employeeid
+        )
+        .subscribe((data) => {
+          console.log("new details 1", data);
+          this.allTickets = data;
+          this.rows = this.allTickets;
+          this.srch = [...this.rows];
+        });
+    } else if (this.user_type == "admin") {
+      // let adminId = "650d1d68-2c65-4061-90b5-c371f50ab431";
+      this.http
+        .get(
+          "http://localhost:8443/admin/tickets/getAdminAllTickets" +
+            "/" +
+            this.adminId
+        )
+        .subscribe((data) => {
+          console.log("admin .........", data);
+          this.allTickets = data;
+          this.rows = this.allTickets;
+          this.srch = [...this.rows];
+        });
+    }
   }
+  // getTickets() {
+  //   this.http
+  //     .get(
+  //       "http://localhost:8443/admin/tickets/getAdminAllTickets" +
+  //         "/" +
+  //         this.adminId
+  //     )
+  //     .subscribe((data) => {
+  //       console.log("admin .........", data);
+  //       this.allTickets = data;
+  //       this.rows = this.allTickets;
+  //       this.srch = [...this.rows];
+  //     });
+  // }
 
-    private markFormGroupTouched(formGroup: FormGroup) {
+  private markFormGroupTouched(formGroup: FormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control) => {
       control.markAsTouched();
       if (control.controls) {
@@ -124,9 +198,9 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   // Add Ticket Modal Api Call
 
   addTickets() {
-    if(this.addTicketForm.invalid){
-      this.markFormGroupTouched(this.addTicketForm)
-      return
+    if (this.addTicketForm.invalid) {
+      this.markFormGroupTouched(this.addTicketForm);
+      return;
     }
     if (this.addTicketForm.valid) {
       // let created = this.pipe.transform(
@@ -146,18 +220,20 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
         priority: this.addTicketForm.value.PriorityName,
         assigne: this.addTicketForm.value.AssignName,
         addfollow: this.addTicketForm.value.addFlowers,
-        createdDate: "05-05-2020",
-        lastReply: "11-05-2020",
-        status: "Pending",
+        adminId: sessionStorage.getItem("adminId"),
+        employeeid: sessionStorage.getItem("empployee_login_id"),
       };
-      this.allModuleService.add(obj, this.url).subscribe((data) => {
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/tickets/createTickets", obj)
+        .subscribe((data) => {
+          this.getTickets();
+          //   $("#datatable").DataTable().clear();
+          //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          //     dtInstance.destroy();
+          //   });
+          //   this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
-      this.getTickets();
+
       $("#add_ticket").modal("hide");
       this.addTicketForm.reset();
       this.toastr.success("Tickets added", "Success");
@@ -178,22 +254,29 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       priority: this.editTicketForm.value.editPriorityName,
       assigne: this.editTicketForm.value.editAssignName,
       addfollow: this.editTicketForm.value.editaddFlowers,
-      createdDate: "05-09-2020",
-      lastReply: "06-09-2020",
-      status: "Approved",
-      id: this.editId,
+      // createdDate: "05-09-2020",
+      // lastReply: "06-09-2020",
+      // status: "Approved",
     };
-    this.allModuleService.update(obj, this.url).subscribe((data1) => {
-      $("#datatable").DataTable().clear();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    let id = this.editId;
+    this.http
+      .patch(
+        "http://localhost:8443/admin/tickets/updateTickets" + "/" + id,
+        obj
+      )
+      .subscribe((data) => {
+        //  $("#datatable").DataTable().clear();
+        //  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //    dtInstance.destroy();
+        //  });
+        //  this.dtTrigger.next();
+
+        this.getTickets();
       });
-      this.dtTrigger.next();
-    });
-    this.getTickets();
+
     $("#edit_ticket").modal("hide");
     this.editTicketForm.reset();
-    this.toastr.success("Tickets updated", "Success");
+    this.toastr.success("Ticket updated", "Success");
   }
 
   edit(value) {
@@ -213,58 +296,149 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       editaddFlowers: toSetValues.addfollow,
     });
   }
-
   // Delete Ticket Modal Api Call
   deleteTicket() {
-    this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
-      $("#datatable").DataTable().clear();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    let id = this.tempId;
+    let obj = {
+      status: 2,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/tickets/deleteTickets" + "/" + id,
+        obj
+      )
+      .subscribe((data) => {
+        //   $("#datatable").DataTable().clear();
+        //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //     dtInstance.destroy();
+        //   });
+        //   this.dtTrigger.next();
+        // });
+        this.getTickets();
       });
-      this.dtTrigger.next();
-    });
-    this.getTickets();
     $("#delete_ticket").modal("hide");
     this.toastr.success("Tickets deleted", "Success");
   }
 
   //search by name
   searchName(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.assignedStaff.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
+    if (val) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        return d.assignedStaff.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+      this.rows.push(...temp);
+    } else {
+      this.getTickets();
+    }
   }
+  getSearchData(val, val1) {
+    if (val && val1) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        val1 = val1.toLowerCase();
+        return (
+          (d.createdDate.toLowerCase().indexOf(val) !== -1 || !val) &&
+          (d.lastReply.toLowerCase().indexOf(val1) !== -1 || !val1)
+        );
+      });
 
+      this.rows.push(...temp);
+    } else {
+      this.getTickets();
+    }
+  }
+  /////
+  // searchName(val) {
+  //   if (val) {
+  //     this.rows.splice(0, this.rows.length);
+  //     let temp = this.srch.filter(function (d) {
+  //       val = val.toLowerCase();
+  //       return d.assignedStaff.toLowerCase().indexOf(val) !== -1 || !val;
+  //     });
+  //     this.rows.push(...temp);
+  //   } else {
+  //     this.getTickets();
+  //   }
+  // }
   //search by status
   searchStatus(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.status.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
+    if (val) {
+      if (val == "Pending") {
+        val = "Open";
+        let val1 = "Reopened";
+        let val2 = "OnHold";
+        this.rows.splice(0, this.rows.length);
+        let temp = this.srch.filter(function (d) {
+          return (
+            d.status.indexOf(val) !== -1 ||
+            !val ||
+            d.status.indexOf(val1) !== -1 ||
+            !val1 ||
+            d.status.indexOf(val2) !== -1 ||
+            !val2
+          );
+        });
+        this.rows.push(...temp);
+      } else if (val == "Approved") {
+        val = "InProgress";
+        this.rows.splice(0, this.rows.length);
+        let temp = this.srch.filter(function (d) {
+          val = val;
+          return d.status.indexOf(val) !== -1 || !val;
+        });
+        this.rows.push(...temp);
+      } else if (val == "Returned") {
+        val = "Cancelled";
+        let val1 = "Closed";
+
+        this.rows.splice(0, this.rows.length);
+        let temp = this.srch.filter(function (d) {
+          return (
+            d.status.indexOf(val) !== -1 ||
+            !val ||
+            d.status.indexOf(val1) !== -1 ||
+            !val1
+          );
+        });
+        this.rows.push(...temp);
+      }
+    } else {
+      this.getTickets();
+    }
   }
 
   searchPriority(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.priority.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
+    if (val) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        return d.priority.toLowerCase().indexOf(val) !== -1 || !val;
+      });
+      this.rows.push(...temp);
+    } else {
+      this.getTickets();
+    }
   }
 
   //search by purchase
-  searchFrom(val) {
-    let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      return d.createdDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
-    });
-    this.rows.push(...temp);
+  searchFrom(val, val1) {
+    if (val && val1) {
+      this.disableButton = false;
+    }
+    if (val) {
+      let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        return d.createdDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
+      });
+      this.rows.push(...temp);
+    } else {
+      this.getTickets();
+    }
+
     $(".floating")
       .on("focus blur", function (e) {
         $(this)
@@ -275,13 +449,20 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   }
 
   //search by warranty
-  searchTo(val) {
-    let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      return d.lastReply.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
-    });
-    this.rows.push(...temp);
+  searchTo(val, val1) {
+    if (val && val1) {
+      this.disableButton = false;
+    }
+    if (val && val1) {
+      let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        return d.lastReply.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
+      });
+      this.rows.push(...temp);
+    } else {
+      this.getTickets();
+    }
     $(".floating")
       .on("focus blur", function (e) {
         $(this)
@@ -292,9 +473,41 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   }
 
   //getting the status value
-  getStatus(data) {
-    this.statusValue = data;
+  getStatus(data, id) {
+    // const priority = data;
+    const status = data;
+
+    // this.statusValue = data;
+
+    //////
+    this.http
+      .patch(
+        "http://localhost:8443/admin/tickets/updateTicketStatus" + "/" + id,
+        { status }
+      )
+      .subscribe((res) => {
+        console.log(res);
+        // this.router.navigate(["/layout/employees/employeeprofile"]);
+        this.getTickets();
+      });
   }
+  getPriority(data, id) {
+    const priority = data;
+
+    // this.statusValue = data;
+    this.http
+      .patch(
+        "http://localhost:8443/admin/tickets/updateTicketPriority" + "/" + id,
+        { priority }
+      )
+      .subscribe((res) => {
+        console.log(res);
+        this.getTickets();
+      });
+
+    //////
+  }
+
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
