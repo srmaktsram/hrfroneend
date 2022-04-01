@@ -4,7 +4,9 @@ import { Injectable } from "@angular/core";
 })
 export class AdminAuthenticationService {
   login(
+
     id:string,
+
     companyEmail: string,
     companyName: string,
     companySite: string,
@@ -16,6 +18,7 @@ export class AdminAuthenticationService {
     sessionStorage.setItem("user_type", "admin");
     sessionStorage.setItem("adminId", id);
     sessionStorage.setItem("companyEmail", companyEmail);
+    sessionStorage.setItem("adminId", id);
     sessionStorage.setItem("companyName", companyName);
     sessionStorage.setItem("companySite", companySite);
     sessionStorage.setItem("companyId", companyId);
