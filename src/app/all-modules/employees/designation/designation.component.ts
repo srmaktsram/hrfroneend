@@ -57,7 +57,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
   // Get designation list  Api Call
   LoadDesignation() {
     this.http.get("http://localhost:8443/admin/designation/getData").subscribe((data) => {
-      console.log("getapi", data)
+      //console.log("getapi", data)
       this.lstDesignation = data;
       this.dtTrigger.next();
 
@@ -92,7 +92,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
           obj
         )
         .subscribe((res: any) => {
-          console.log("result", res);
+          //console.log("result", res);
           this.LoadDesignation();
 
         });
@@ -115,7 +115,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
 
       };
       this.http.patch("http://localhost:8443/admin/designation/update" + "/" + designationId, obj).subscribe((data1) => {
-        console.log("patchapi", data1)
+        //console.log("patchapi", data1)
         this.LoadDesignation();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -134,7 +134,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
       return item.designationId === value;
     });
     let toSetValues = this.lstDesignation[index];
-    console.log(toSetValues)
+    //console.log(toSetValues)
     this.editDesignationForm.setValue({
       Designation: toSetValues.designation,
       DepartmentName: toSetValues.departmentName,
@@ -150,7 +150,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
     };
     this.http.patch("http://localhost:8443/admin/designation/delete" + "/" + designationId, obj).subscribe((data1) => {
       this.LoadDesignation();
-      console.log("deleteApi", data1)
+      //console.log("deleteApi", data1)
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
@@ -169,11 +169,11 @@ export class DesignationComponent implements OnInit, OnDestroy {
 
   getDepartmentData() {
     this.http.get("http://localhost:8443/admin/department/getData").subscribe((data) => {
-      console.log("DropdownData", data);
+      //console.log("DropdownData", data);
 
       this.dropdownData = data
 
-      console.log("data==>>", this.dropdownData);
+      //console.log("data==>>", this.dropdownData);
     });
 
 

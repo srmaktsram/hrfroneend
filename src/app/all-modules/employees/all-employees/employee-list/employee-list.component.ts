@@ -6,6 +6,7 @@ import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
 
 declare const $: any;
 @Component({
@@ -102,7 +103,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     private srvModuleService: AllModulesService,
     private http: HttpClient,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public router: Router
   ) {
     this.adminId = sessionStorage.getItem("companyId");
     this.getDepartments();
@@ -262,7 +264,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/admin/allemployees/getallEmployee")
       .subscribe((data) => {
-        console.log(data);
+        //console.log(data);
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
@@ -315,7 +317,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
       .subscribe((data) => {
-        console.log(data);
+        //console.log(data);
         this.loadEmployee();
         // $("#datatable").DataTable().clear();
         // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -367,7 +369,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/admin/allemployees/update" + "/" + id, obj)
       .subscribe((data) => {
-        console.log(data);
+        //console.log(data);
         this.loadEmployee();
         // $("#datatable").DataTable().clear();
         // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -388,7 +390,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       return item.id === value;
     });
     let toSetValues = this.lstEmployee[index];
-    console.log(toSetValues);
+    //console.log(toSetValues);
     this.editEmployeeForm.setValue({
       FirstName: toSetValues.firstName,
       LastName: toSetValues.lastName,
@@ -423,7 +425,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/admin/allemployees/delete" + "/" + id, obj)
       .subscribe((data) => {
-        console.log(data);
+        //console.log(data);
         this.loadEmployee();
         // $("#datatable").DataTable().clear();
         // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -920,9 +922,17 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.TimingSheets[objIndex].export = false;
       }
     }
+
+  }
+
+  getId(id) {
+    // //console.log("bbbbbbb", id)
+    sessionStorage.setItem("empid", id)
+    this.router.navigate(["/layout/employees/employeeprofile"])
   }
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
+
     this.dtTrigger.unsubscribe();
   }
+
 }

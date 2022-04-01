@@ -74,7 +74,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
 
 
-      console.log("resultquery", data);
+      //console.log("resultquery", data);
     });
 
   }
@@ -97,7 +97,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
         )
         .subscribe((res: any) => {
-          console.log("result", res);
+          //console.log("result", res);
 
         });
       // this.srvModuleService.add(obj, this.url).subscribe((data) => {
@@ -126,7 +126,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
-        console.log("data update result", data1)
+        //console.log("data update result", data1)
       });
 
       $("#edit_department").modal("hide");
@@ -142,7 +142,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       return item.departmentId === value;
     });
     let toSetValues = this.lstDepartment[index];
-    console.log(toSetValues)
+    //console.log(toSetValues)
     this.editDepartmentForm.setValue({
       DepartmentName: toSetValues.departmentName,
     });
@@ -156,7 +156,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     };
     this.http.patch("http://localhost:8443/admin/department/delete" + "/" + deparmentId, obj).subscribe((data1) => {
       this.LoadDepartment();
-      console.log("deleteApi", data1)
+      //console.log("deleteApi", data1)
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
