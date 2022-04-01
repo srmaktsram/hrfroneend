@@ -1,3 +1,7 @@
+
+
+
+
 import {
   Component,
   OnInit,
@@ -11,6 +15,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -28,10 +33,15 @@ export class EstimatesComponent implements OnInit, OnDestroy {
   public srch = [];
   public pipe = new DatePipe("en-US");
   public dtTrigger: Subject<any> = new Subject();
+  adminId: any;
   constructor(
+    
     private router: Router,
+    private http:HttpClient,
     private allModulesService: AllModulesService
-  ) {}
+  ) {
+    this.adminId =sessionStorage.getItem("adminId")
+  }
 
   ngOnInit() {
     $(".floating")
@@ -60,8 +70,8 @@ export class EstimatesComponent implements OnInit, OnDestroy {
 
   //get estimate list
   getAllEstimates() {
-    this.allModulesService.get("estimates").subscribe((res) => {
-      this.estimates = res;
+    this.http.get("http://localhost:8443/admin/estimates/getEstimates"+"/"+this.adminId).subscribe((res:any) => {
+     this.estimates=(res.data)
       this.dtTrigger.next();
       this.rows = this.estimates;
       this.srch = [...this.rows];
@@ -71,8 +81,8 @@ export class EstimatesComponent implements OnInit, OnDestroy {
   //delete method of estimate list
   delete() {
     let id: any = Number(this.id);
-    this.allModulesService.delete(id, "estimates").subscribe((res) => {
-      this.router.navigate(["/accounts/estimates"]);
+    this.http.patch("http://localhost:8443/admin/estimates/deleteEstimates"+"/"+id, {}).subscribe((res:any) => {
+      this.router.navigate(["/layout/accounts/estimates"]);
       this.getAllEstimates();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
@@ -82,45 +92,61 @@ export class EstimatesComponent implements OnInit, OnDestroy {
 
   //search by from date
   searchFromDate(val) {
+   
+    if(val){
     let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
+    
+    
     this.rows.splice(0, this.rows.length);
+   
     let temp = this.srch.filter(function (d) {
-      return d.estimate_date.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
+      return d.estimateDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
     });
+  
     this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
+  }else{
+    this.getAllEstimates()
+  }
+    // $(".floating")
+    //   .on("focus blur", function (e) {
+    //     $(this)
+    //       .parents(".form-focus")
+    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+    //   })
+    //   .trigger("blur");
   }
 
   //search by to date
   searchToDate(val) {
+    if(val){
     let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
     this.rows.splice(0, this.rows.length);
     let temp = this.srch.filter(function (d) {
-      return d.expiry_date.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
+      return d.expiryDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
     });
     this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
+  }else{
+    this.getAllEstimates()
+  }
+    // $(".floating")
+    //   .on("focus blur", function (e) {
+    //     $(this)
+    //       .parents(".form-focus")
+    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+    //   })
+    //   .trigger("blur");
   }
 
   //search by status
 
   searchStatus(val) {
+   
     this.rows.splice(0, this.rows.length);
+  
     let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.status.toLowerCase().indexOf(val) !== -1 || !val;
+      // val = val.toLowerCase();
+      
+      return d.status.indexOf(val) !== -1 || !val;
     });
     this.rows.push(...temp);
   }
