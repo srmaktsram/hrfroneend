@@ -66,10 +66,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/admin/allemployees/getallEmployee")
       .subscribe((data) => {
-        console.log("my details", data);
-
         this.dataarr = data;
-        console.log("new details", this.dataarr[0]);
+
         this.srch = [...this.dataarr];
       });
   }
@@ -139,7 +137,6 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   // }
   //////////////////////////////////
   getTickets() {
-    // alert(this.adminId);
     if (this.user_type == "employee") {
       this.http
         .get(
@@ -150,13 +147,11 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
             this.employeeid
         )
         .subscribe((data) => {
-          console.log("new details 1", data);
           this.allTickets = data;
           this.rows = this.allTickets;
           this.srch = [...this.rows];
         });
     } else if (this.user_type == "admin") {
-      // let adminId = "650d1d68-2c65-4061-90b5-c371f50ab431";
       this.http
         .get(
           "http://localhost:8443/admin/tickets/getAdminAllTickets" +
@@ -164,27 +159,12 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
             this.adminId
         )
         .subscribe((data) => {
-          console.log("admin .........", data);
           this.allTickets = data;
           this.rows = this.allTickets;
           this.srch = [...this.rows];
         });
     }
   }
-  // getTickets() {
-  //   this.http
-  //     .get(
-  //       "http://localhost:8443/admin/tickets/getAdminAllTickets" +
-  //         "/" +
-  //         this.adminId
-  //     )
-  //     .subscribe((data) => {
-  //       console.log("admin .........", data);
-  //       this.allTickets = data;
-  //       this.rows = this.allTickets;
-  //       this.srch = [...this.rows];
-  //     });
-  // }
 
   private markFormGroupTouched(formGroup: FormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control) => {
@@ -486,7 +466,6 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
         { status }
       )
       .subscribe((res) => {
-        console.log(res);
         // this.router.navigate(["/layout/employees/employeeprofile"]);
         this.getTickets();
       });
@@ -501,7 +480,6 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
         { priority }
       )
       .subscribe((res) => {
-        console.log(res);
         this.getTickets();
       });
 
