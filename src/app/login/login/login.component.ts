@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/layout/dashboard/admin"]);
           // location.replace("http://localhost:51245/layout/dashboard/admin");
           this.adminAuthenticationService.login(
+            res.data.id,
             res.data.companyEmail,
             res.data.companyName,
             res.data.companySite,
