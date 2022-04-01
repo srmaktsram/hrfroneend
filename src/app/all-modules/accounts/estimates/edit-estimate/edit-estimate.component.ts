@@ -4,6 +4,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-edit-estimate",
@@ -12,7 +13,7 @@ import { DatePipe } from "@angular/common";
 })
 export class EditEstimateComponent implements OnInit {
   public id;
-  public allEstimates;
+  public allEstimates=[];
   public editEstimateForm: FormGroup;
   public total;
   public pipe = new DatePipe("en-US");
@@ -28,6 +29,7 @@ export class EditEstimateComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private http:HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
@@ -35,7 +37,8 @@ export class EditEstimateComponent implements OnInit {
 
   ngOnInit() {
     //getting edit id of selected estimate list
-    this.id = parseInt(this.route.snapshot.queryParams["id"]);
+    this.id = this.route.snapshot.queryParams["id"];
+    console.log("ngOnInit pe Id",this.id)
 
     //editestimate form value
     this.editEstimateForm = this.formBuilder.group({
@@ -63,12 +66,14 @@ export class EditEstimateComponent implements OnInit {
 
   // get method for estimate
   getEstimate() {
-    this.allModulesService.get("estimates").subscribe((res) => {
-      this.allEstimates = res;
-
+    let id=this.id
+    console.log("this is get method ",id)
+    this.http.get("http://localhost:8443/admin/estimates/getEstimate"+"/"+this.id).subscribe((res:any) => {
+      this.allEstimates = (res);
+  
       //passing edit id
 
-      this.edit(this.id);
+      this.edit(id);
     });
   }
 
@@ -171,7 +176,7 @@ export class EditEstimateComponent implements OnInit {
         ],
       };
 
-      this.allModulesService.update(obj, "estimates").subscribe((res) => {
+      this.http.patch("http://localhost:8443/admin/estimates/updateEstimates"+"/"+this.id,obj).subscribe((res) => {
         this.toastr.success("", "Edited successfully!");
         this.router.navigate(["/accounts/estimates"]);
       });
@@ -186,33 +191,37 @@ export class EditEstimateComponent implements OnInit {
   // set values to form
   edit(value) {
     this.editId = value;
-    const index = this.allEstimates.findIndex((item) => {
-      return item.id === value;
-    });
-    let toSetValues = this.allEstimates[index];
+    // console.log("edit function ke andarr",this.editId)
+    // const index = this.allEstimates.findIndex((item) => {
+    //   return item.id === value;
+    // });
+    // console.log("edit function ke andarr",index)
+    let toSetValues:any = this.allEstimates;
+    // console.log("to setValue in edit function",toSetValues)
     this.editEstimateForm.patchValue({
       client: toSetValues.client,
       project: toSetValues.project,
       email: toSetValues.email,
       tax: toSetValues.tax,
-      client_address: toSetValues.client_address,
-      billing_address: toSetValues.billing_address,
-      estimate_date: toSetValues.estimate_date,
-      expiry_date: toSetValues.expiry_date,
-      other_information: toSetValues.other_information,
+      client_address: toSetValues.clientAddress,
+      billing_address: toSetValues.billingAddress,
+      estimate_date: toSetValues.estimateDate,
+      expiry_date: toSetValues.expiryDate,
+      other_information: toSetValues.otherInformation,
       status: toSetValues.status,
-      totalamount: toSetValues.totalamount,
+      totalamount: toSetValues.amount,
       discount: toSetValues.discount,
       grandTotal: toSetValues.grandTotal,
-      items: [
-        {
-          item: toSetValues.items[0].item,
-          description: toSetValues.items[0].description,
-          unit_cost: toSetValues.items[0].unit_cost,
-          qty: toSetValues.items[0].qty,
-          amount: toSetValues.items[0].amount,
-        },
-      ],
+      items:toSetValues.items
+      // [
+      //   {
+      //     item: toSetValues.items[0].item,
+      //     description: toSetValues.items[0].description,
+      //     unit_cost: toSetValues.items[0].unit_cost,
+      //     qty: toSetValues.items[0].qty,
+      //     amount: toSetValues.items[0].amount,
+      //   },
+      // ],
     });
   }
 }

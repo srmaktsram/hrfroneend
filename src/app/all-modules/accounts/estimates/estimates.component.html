@@ -72,10 +72,10 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let estimate of estimates">
-                            <td><a routerLink="/layout/accounts/estimates-view">{{estimate.number}}</a></td>
+                            <td><a routerLink="/layout/accounts/estimates-view">{{estimate.estimateNumber}}</a></td>
                             <td>{{estimate.client}}</td>
-                            <td>{{estimate.estimate_date | customDate}}</td>
-                            <td>{{estimate.expiry_date | customDate}}</td>
+                            <td>{{estimate.estimateDate | customDate}}</td>
+                            <td>{{estimate.expiryDate | customDate}}</td>
                             <td>{{estimate.grandTotal}}</td>
                             <td>
                                 <span class="badge bg-inverse-success">{{estimate.status}}</span>

@@ -6,6 +6,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-create-estimates",
@@ -28,6 +29,7 @@ export class CreateEstimatesComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private http:HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
@@ -142,35 +144,32 @@ export class CreateEstimatesComponent implements OnInit {
         "dd-MM-yyyy"
       );
       let getItems = this.addEstimateForm.get("items").value;
+    
+      console.log(getItems)
       let amount = this.addEstimateForm.value.totalamount.toString();
       let obj = {
-        number: "EST-0001",
+        adminId:sessionStorage.getItem("adminId"),
+        estimateNumber: "EST-0001",
         client: this.addEstimateForm.value.client,
         project: this.addEstimateForm.value.project,
-        estimate_date: estimateDateFormat,
+        estimateDate: estimateDateFormat,
         email: this.addEstimateForm.value.email,
         tax: this.addEstimateForm.value.tax,
-        client_address: this.addEstimateForm.value.client_address,
-        expiry_date: expiryToDateFormat,
-        billing_address: this.addEstimateForm.value.billing_address,
-        other_information: this.addEstimateForm.value.other_information,
+        clientAddress: this.addEstimateForm.value.client_address,
+        expiryDate: expiryToDateFormat,
+        billingAddress: this.addEstimateForm.value.billing_address,
+        otherInformation: this.addEstimateForm.value.other_information,
+        grandTotal:this.addEstimateForm.value.grandTotal,
         status: "Declined",
-        totalamount: amount,
+        totalAmount: this.addEstimateForm.value.amount,
         discount: this.addEstimateForm.value.discount,
-        grandTotal: this.addEstimateForm.value.grandTotal,
-        items: [
-          {
-            item: getItems[0].item,
-            description: getItems[0].description,
-            unit_cost: getItems[0].unit_cost,
-            qty: getItems[0].qty,
-            amount: getItems[0].amount,
-          },
-        ],
+        
+        items:getItems
       };
-      this.allModulesService.add(obj, "estimates").subscribe((res) => {
+      this.http.post("http://localhost:8443/admin/estimates/createEstimate",obj).subscribe((res) => {
+        console.log(res);
         this.toastr.success("", "Added successfully!");
-        this.router.navigate(["/accounts/estimates"]);
+        this.router.navigate(["/layout/accounts/estimates"]);
       });
     }
   }
