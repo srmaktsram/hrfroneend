@@ -72,7 +72,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
   loadLeaves() {
     this.http.get("http://localhost:8443/employee/leaves/getleaves").subscribe((data) => {
       this.lstLeave = data;
-      console.log("getdata", data);
+      //console.log("getdata", data);
       this.dtTrigger.next();
       this.rows = this.lstLeave;
       this.srch = [...this.rows];
@@ -116,7 +116,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
       };
 
       this.http.post("http://localhost:8443/employee/leaves/add_leave", obj).subscribe((data) => {
-        console.log(data);
+        //console.log("postApi", data);
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
           this.loadLeaves();
@@ -157,7 +157,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
 
       };
       this.http.patch("http://localhost:8443/employee/leaves/updateLeave" + "/" + id, obj).subscribe((data) => {
-        console.log("updateData", data);
+        //console.log("updateData", data);
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
           this.loadLeaves();
@@ -179,7 +179,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
       status: 2
     };
     this.http.patch("http://localhost:8443/employee/leaves/deleteLeave" + "/" + id, obj).subscribe((data) => {
-      console.log("deleteData", data)
+      //console.log("deleteData", data)
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });

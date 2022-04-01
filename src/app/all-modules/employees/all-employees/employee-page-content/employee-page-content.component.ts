@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { id } from "src/assets/all-modules-data/id";
 import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
 
 declare const $: any;
 @Component({
@@ -95,11 +96,13 @@ export class EmployeePageContentComponent implements OnInit {
   ];
   DateJoin: string;
   adminId: string;
+  dtTrigger: any;
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    public router: Router
   ) {
     this.adminId = sessionStorage.getItem("companyId");
     this.getDesignation();
@@ -157,7 +160,7 @@ export class EmployeePageContentComponent implements OnInit {
     this.http
       .get("http://localhost:8443/admin/allemployees/getallEmployee")
       .subscribe((data) => {
-        console.log(data);
+        //console.log(data);
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
@@ -211,7 +214,7 @@ export class EmployeePageContentComponent implements OnInit {
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
       .subscribe((data) => {
-        console.log(data);
+        //console.log(data);
         this.loadEmployee();
         // $("#datatable").DataTable().clear();
         // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -258,11 +261,11 @@ export class EmployeePageContentComponent implements OnInit {
       // id: this.editId,
     };
     // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
-    console.log("data is", this.Holidays);
+    //console.log("data is", this.Holidays);
     this.http
       .patch("http://localhost:8443/admin/allemployees/update" + "/" + id, obj)
       .subscribe((data) => {
-        console.log(data);
+        //console.log(data);
         this.loadEmployee();
         // $("#datatable").DataTable().clear();
         // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -283,7 +286,7 @@ export class EmployeePageContentComponent implements OnInit {
       return item.id === value;
     });
     let toSetValues = this.lstEmployee[index];
-    console.log(toSetValues);
+    //console.log(toSetValues);
     this.editEmployeeForm.setValue({
       FirstName: toSetValues.firstName,
       LastName: toSetValues.lastName,
@@ -318,7 +321,7 @@ export class EmployeePageContentComponent implements OnInit {
     this.http
       .patch("http://localhost:8443/admin/allemployees/delete" + "/" + id, obj)
       .subscribe((data) => {
-        console.log(data);
+        //console.log(data);
         this.loadEmployee();
         // $("#datatable").DataTable().clear();
         // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -815,4 +818,15 @@ export class EmployeePageContentComponent implements OnInit {
       }
     }
   }
+
+  getId(id) {
+    //console.log("bbbbbbbpage", id)
+    sessionStorage.setItem("emp", id)
+    this.router.navigate(["/layout/employees/employeeprofile"])
+  }
+  // ngOnDestroy(): void {
+
+  //   this.dtTrigger.unsubscribe();
+  // }
+
 }

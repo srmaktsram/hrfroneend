@@ -16,7 +16,7 @@ export class AuthenticationService {
     sessionStorage.setItem("currentUser", "loggedin");
     sessionStorage.setItem("user_type", "employee");
     sessionStorage.setItem("adminId", adminId);
-    sessionStorage.setItem("empployee_login_id", id);
+    sessionStorage.setItem("employee_login_id", id);
     sessionStorage.setItem("username", username);
     sessionStorage.setItem("employeeId", employeeId);
     sessionStorage.setItem("email", email);
@@ -31,7 +31,7 @@ export class AuthenticationService {
     sessionStorage.removeItem("currentUser");
     sessionStorage.removeItem("user_type");
     sessionStorage.removeItem("adminId");
-    sessionStorage.removeItem("empployee_login_id");
+    sessionStorage.removeItem("employee_login_id");
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("email");
     sessionStorage.removeItem("firstName");
