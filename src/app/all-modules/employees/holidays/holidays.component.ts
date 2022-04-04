@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient, } from "@angular/common/http";
 declare const $: any;
 @Component({
   selector: "app-holidays",
@@ -15,24 +16,24 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
-  lstHolidays: any[];
+  lstHolidays: any;
   url: any = "holidays";
   public tempId: any;
   public editId: any;
-
-  public rows = [];
-  public srch = [];
+  public rows: any;
+  public srch: any;
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
-  public pipe = new DatePipe("en-US");
+  public pipe = new DatePipe("en-IN");
   public addHolidayForm: FormGroup;
   public editHolidayForm: FormGroup;
   public editHolidayDate: any;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private http: HttpClient
+  ) { }
 
   ngOnInit() {
     this.loadholidays();
@@ -53,19 +54,26 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   }
 
   // Get Employee  Api Call
+  // public data: any;
+
   loadholidays() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstHolidays = data;
+    // this.srvModuleService.get(this.url).subscribe((data) => {
+    //   this.lstHolidays = data;
+
+    this.http.get("http://localhost:8443/admin/holidays/getHolidays").subscribe((res: any) => {
+
+      this.lstHolidays = res.data;
       this.dtTrigger.next();
       this.rows = this.lstHolidays;
       this.srch = [...this.rows];
     });
   }
 
+
   // Add holidays Modal Api Call
 
   addholidays() {
-    if(this.addHolidayForm.invalid){
+    if (this.addHolidayForm.invalid) {
       this.markFormGroupTouched(this.addHolidayForm)
       return
     }
@@ -74,17 +82,25 @@ export class HolidaysComponent implements OnInit, OnDestroy {
         this.addHolidayForm.value.Holidaydate,
         "dd-MM-yyyy"
       );
+
+      let adminId = sessionStorage.getItem("adminId")
+
       let obj = {
         title: this.addHolidayForm.value.HolidayName,
-        holidaydate: holiday,
+        holidayDate: holiday,
         day: this.addHolidayForm.value.DaysName,
+        adminId: adminId,
+
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+
+      this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res) => {
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
+          this.loadholidays();
         });
+
       });
-      this.loadholidays();
+
       $("#add_holiday").modal("hide");
       this.addHolidayForm.reset();
       this.toastr.success("Holidays added", "Success");
@@ -96,21 +112,26 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   }
 
   // Edit holidays Modal Api Call
-
+  public id: any;
   editHolidays() {
     if (this.editHolidayForm.valid) {
+      this.id = this.editId;
+
       let obj = {
         title: this.editHolidayForm.value.editHolidayName,
         holidaydate: this.editHolidayDate,
         day: this.editHolidayForm.value.editDaysName,
-        id: this.editId,
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+      // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+      this.http.patch("http://localhost:8443/admin/holidays/updateHolidays" + "/" + this.id, obj).subscribe((res) => {
+
+
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
+          this.loadholidays();
         });
       });
-      this.loadholidays();
+
       $("#edit_holiday").modal("hide");
       this.toastr.success("Holidays Updated succesfully", "Success");
     }
@@ -119,11 +140,18 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   // Delete holidays Modal Api Call
 
   deleteHolidays() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    let id = this.tempId
+    let obj = {
+      status: 2
+    };
+
+    this.http.patch("http://localhost:8443/admin/holidays/deleteHoliday" + "/" + id, obj).subscribe((res) => {
+
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
+        this.loadholidays();
       });
-      this.loadholidays();
+
       $("#delete_holiday").modal("hide");
       this.toastr.success("Holidays Deleted", "Success");
     });
@@ -139,7 +167,7 @@ export class HolidaysComponent implements OnInit, OnDestroy {
     let toSetValues = this.lstHolidays[index];
     this.editHolidayForm.setValue({
       editHolidayName: toSetValues.title,
-      editHolidayDate: toSetValues.holidaydate,
+      editHolidayDate: toSetValues.holidayDate,
       editDaysName: toSetValues.day,
     });
   }

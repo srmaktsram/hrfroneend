@@ -27,7 +27,6 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public editDepartmentForm: FormGroup;
   DepartmentName: any;
 
-
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
@@ -61,73 +60,69 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
-
   // Get department list  Api Call
   LoadDepartment() {
-    this.http.get("http://localhost:8443/admin/department/getData").subscribe((data) => {
-      this.lstDepartment = data;
-      this.dtTrigger.next();
-      this.rows = this.lstDepartment;
-      this.srch = [...this.rows];
+    this.http
+      .get("http://localhost:8443/admin/department/getData")
+      .subscribe((data) => {
+        this.lstDepartment = data;
+        this.dtTrigger.next();
+        this.rows = this.lstDepartment;
+        this.srch = [...this.rows];
 
-
-
-      //console.log("resultquery", data);
-    });
-
+        //console.log("resultquery", data);
+      });
   }
 
   // Add Department  Modal Api Call
   addDepartment() {
     if (this.addDepartmentForm.invalid) {
-      this.markFormGroupTouched(this.addDepartmentForm)
-      return
+      this.markFormGroupTouched(this.addDepartmentForm);
+      return;
     }
+    let adminId = sessionStorage.getItem("adminId")
     if (this.addDepartmentForm.valid) {
       let obj = {
         departmentName: this.addDepartmentForm.value.DepartmentName,
-        id: 0,
+        adminId: adminId
       };
 
       this.http
-        .post("http://localhost:8443/admin/department/create",
-          obj
-
-        )
+        .post("http://localhost:8443/admin/department/create", obj)
         .subscribe((res: any) => {
-          //console.log("result", res);
 
+          this.LoadDepartment();
         });
-      // this.srvModuleService.add(obj, this.url).subscribe((data) => {
-      //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      //     dtInstance.destroy();
-      //   });
-      // });
-      this.LoadDepartment();
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+      });
+
       $("#add_department").modal("hide");
-      this.addDepartmentForm.reset();
-      this.toastr.success("Department added sucessfully...!", "Success");
+      //this.addDepartmentForm.reset();
+      // this.toastr.success("Department added sucessfully...!", "Success");
     }
   }
 
   editDepartment() {
-    let departmentId = this.editId
+    let departmentId = this.editId;
 
     if (this.editDepartmentForm.valid) {
       let obj = {
         departmentName: this.editDepartmentForm.value.DepartmentName,
-
       };
 
-      this.http.patch("http://localhost:8443/admin/department/update" + "/" + departmentId, obj).subscribe((data1) => {
-        this.LoadDepartment();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/department/update" + "/" + departmentId,
+          obj
+        )
+        .subscribe((data1) => {
+          this.LoadDepartment();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          //console.log("data update result", data1)
         });
-        //console.log("data update result", data1)
-      });
 
       $("#edit_department").modal("hide");
       this.toastr.success("Department Updated sucessfully...!", "Success");
@@ -148,24 +143,26 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     });
   }
 
-
   deleteDepartment() {
-    let deparmentId = this.tempId
+    let deparmentId = this.tempId;
     let obj = {
-      status: 2
+      status: 2,
     };
-    this.http.patch("http://localhost:8443/admin/department/delete" + "/" + deparmentId, obj).subscribe((data1) => {
-      this.LoadDepartment();
-      //console.log("deleteApi", data1)
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    this.http
+      .patch(
+        "http://localhost:8443/admin/department/delete" + "/" + deparmentId,
+        obj
+      )
+      .subscribe((data1) => {
+        this.LoadDepartment();
+        //console.log("deleteApi", data1)
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+
+        $("#delete_department").modal("hide");
+        this.toastr.success("Department deleted sucessfully..!", "Success");
       });
-
-
-
-      $("#delete_department").modal("hide");
-      this.toastr.success("Department deleted sucessfully..!", "Success");
-    });
   }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
