@@ -82,17 +82,19 @@ export class DesignationComponent implements OnInit, OnDestroy {
       return
     }
     if (this.addDesignationForm.valid) {
+      let adminId = sessionStorage.getItem("adminId")
       let obj = {
         designation: this.addDesignationForm.value.Designation,
         departmentName: this.addDesignationForm.value.DepartmentName,
         id: 1,
+        adminId: adminId
       };
       this.http
         .post("http://localhost:8443/admin/designation/create",
           obj
         )
         .subscribe((res: any) => {
-          //console.log("result", res);
+
           this.LoadDesignation();
 
         });
