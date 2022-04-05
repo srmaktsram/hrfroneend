@@ -6,6 +6,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-create-invoice",
@@ -29,6 +30,7 @@ export class CreateInvoiceComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private http:HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
@@ -70,7 +72,8 @@ export class CreateInvoiceComponent implements OnInit {
 
   // getting invoice
   getAllInvoices() {
-    this.allModulesService.get("invoice").subscribe((res) => {
+    let adminId=sessionStorage.getItem("adminId")
+    this.http.get("http://localhost:8443/admin/invoices/getInvoices"+"/"+adminId).subscribe((res) => {
       this.invoices = res;
     });
   }
@@ -142,9 +145,15 @@ export class CreateInvoiceComponent implements OnInit {
         this.addInvoiceForm.value.due_date,
         "dd-MM-yyyy"
       );
+   let adminId= sessionStorage.getItem("adminId");
+  //  let employeeid=sessionStorage.getItem("employeeid");
+  //  console.log(employeeid);
       let getItems = this.addInvoiceForm.get("items").value;
       let amount = this.addInvoiceForm.value.totalamount.toString();
+     
       let obj = {
+        adminId:adminId,
+        // employeeid:employeeid,
         number: "#INV-0001",
         client: this.addInvoiceForm.value.client,
         project: this.addInvoiceForm.value.project,
@@ -159,19 +168,12 @@ export class CreateInvoiceComponent implements OnInit {
         totalamount: amount,
         discount: this.addInvoiceForm.value.discount,
         grandTotal: this.addInvoiceForm.value.grandTotal,
-        items: [
-          {
-            item: getItems[0].item,
-            description: getItems[0].description,
-            unit_cost: getItems[0].unit_cost,
-            qty: getItems[0].qty,
-            amount: getItems[0].amount,
-          },
-        ],
+        items:getItems
       };
-      this.allModulesService.add(obj, "invoice").subscribe((res) => {
+      this.http.post("http://localhost:8443/admin/invoices/createInvoices",obj).subscribe((res:any) => {
+        console.log(res.data)
         this.toastr.success("", "Added successfully!");
-        this.router.navigate(["/accounts/invoices"]);
+        this.router.navigate(["/layout/accounts/invoices"]);
       });
     }
   }

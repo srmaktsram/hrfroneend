@@ -5,6 +5,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -25,6 +26,7 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private http:HttpClient,
     private allModulesService: AllModulesService
   ) {}
 
@@ -50,8 +52,9 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
   //get all invoices
   getAllInvoices() {
-    this.allModulesService.get("invoice").subscribe((res) => {
-      this.invoices = res;
+    let adminId=sessionStorage.getItem("adminId")
+    this.http.get("http://localhost:8443/admin/invoices/getInvoices"+"/"+adminId).subscribe((res:any) => {
+      this.invoices = res.data;
       this.dtTrigger.next();
       this.rows = this.invoices;
       this.srch = [...this.rows];
@@ -65,9 +68,9 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
   // delete method for deleting rows
   delete() {
-    let id: any = Number(this.id);
-    this.allModulesService.delete(id, "invoice").subscribe((res) => {
-      this.router.navigate(["/accounts/invoices"]);
+    let id: any = this.id;
+    this.http.patch("http://localhost:8443/admin/invoices/deleteInvoices"+"/"+id,{status:2}).subscribe((res) => {
+      this.router.navigate(["/layout/accounts/invoices"]);
       this.getAllInvoices();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
@@ -83,13 +86,13 @@ export class InvoicesComponent implements OnInit, OnDestroy {
       return d.invoice_date.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
     });
     this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
+    // $(".floating")
+    //   .on("focus blur", function (e) {
+    //     $(this)
+    //       .parents(".form-focus")
+    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+    //   })
+    //   .trigger("blur");
   }
 
   //search by to date
@@ -100,13 +103,13 @@ export class InvoicesComponent implements OnInit, OnDestroy {
       return d.due_date.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
     });
     this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
+    // $(".floating")
+    //   .on("focus blur", function (e) {
+    //     $(this)
+    //       .parents(".form-focus")
+    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+    //   })
+    //   .trigger("blur");
   }
 
   //search by status

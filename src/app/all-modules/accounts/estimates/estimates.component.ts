@@ -80,7 +80,8 @@ export class EstimatesComponent implements OnInit, OnDestroy {
 
   //delete method of estimate list
   delete() {
-    let id: any = Number(this.id);
+    let id: any = this.id;
+  
     this.http.patch("http://localhost:8443/admin/estimates/deleteEstimates"+"/"+id, {}).subscribe((res:any) => {
       this.router.navigate(["/layout/accounts/estimates"]);
       this.getAllEstimates();
