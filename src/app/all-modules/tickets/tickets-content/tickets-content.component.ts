@@ -45,6 +45,11 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   disableButton = true;
   adminId: string;
   employeeid: string;
+  ticketsCount: any;
+  newTickets = 0;
+  countResolved = 0;
+  countOpen = 0;
+  countPending = 0;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -54,6 +59,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     private toastr: ToastrService
   ) {
     this.loadEmployee();
+
     this.user_type = sessionStorage.getItem("user_type");
     this.adminId = sessionStorage.getItem("adminId");
     this.employeeid = sessionStorage.getItem("empployee_login_id");
@@ -64,7 +70,11 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
 
   public loadEmployee() {
     this.http
-      .get("http://localhost:8443/admin/allemployees/getallEmployee")
+      .get(
+        "http://localhost:8443/admin/allemployees/getallEmployee" +
+          "/" +
+          this.adminId
+      )
       .subscribe((data) => {
         this.dataarr = data;
 
@@ -82,6 +92,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       .trigger("blur");
 
     this.getTickets();
+    this.getTicketsCount();
+
     // Add Ticket Form Validation And Getting Values
     this.addTicketForm = this.formBuilder.group({
       ticketSubject: ["", [Validators.required]],
@@ -136,6 +148,40 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   //   }, 1000);
   // }
   //////////////////////////////////
+  getTicketsCount() {
+    if (this.user_type == "employee") {
+      this.http
+        .get(
+          "http://localhost:8443/admin/tickets/getEmpTicketsCount" +
+            "/" +
+            this.adminId +
+            "/" +
+            this.employeeid
+        )
+        .subscribe((res: any) => {
+          this.newTickets = res.countNewTicket;
+          this.countResolved = res.countResolved;
+          this.countOpen = res.countOpen;
+          this.countPending = res.countPending;
+          console.log("tickets details", res);
+        });
+    } else if (this.user_type == "admin") {
+      this.http
+        .get(
+          "http://localhost:8443/admin/tickets/getTicketsCount" +
+            "/" +
+            this.adminId
+        )
+        .subscribe((res: any) => {
+          this.newTickets = res.countNewTicket;
+          this.countResolved = res.countResolved;
+          this.countOpen = res.countOpen;
+          this.countPending = res.countPending;
+          console.log("tickets details", res);
+        });
+    }
+  }
+
   getTickets() {
     if (this.user_type == "employee") {
       this.http
@@ -468,6 +514,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         // this.router.navigate(["/layout/employees/employeeprofile"]);
         this.getTickets();
+        this.getTicketsCount();
       });
   }
   getPriority(data, id) {
