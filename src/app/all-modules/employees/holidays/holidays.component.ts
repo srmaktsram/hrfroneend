@@ -30,7 +30,6 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   public editHolidayDate: any;
   constructor(
     private formBuilder: FormBuilder,
-    private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient
   ) { }
@@ -57,8 +56,6 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   // public data: any;
 
   loadholidays() {
-    // this.srvModuleService.get(this.url).subscribe((data) => {
-    //   this.lstHolidays = data;
 
     this.http.get("http://localhost:8443/admin/holidays/getHolidays").subscribe((res: any) => {
 
@@ -84,7 +81,6 @@ export class HolidaysComponent implements OnInit, OnDestroy {
       );
 
       let adminId = sessionStorage.getItem("adminId")
-
       let obj = {
         title: this.addHolidayForm.value.HolidayName,
         holidayDate: holiday,
