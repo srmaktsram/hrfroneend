@@ -264,8 +264,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data) => {
         //console.log(data);
@@ -303,7 +303,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       employeeId: this.addEmployeeForm.value.EmployeeID,
       joindate: DateJoin,
       phone: this.addEmployeeForm.value.PhoneNumber,
-
       department: this.addEmployeeForm.value.DepartmentName,
       designation: this.addEmployeeForm.value.Designation,
       mobile: this.addEmployeeForm.value.mobile,
