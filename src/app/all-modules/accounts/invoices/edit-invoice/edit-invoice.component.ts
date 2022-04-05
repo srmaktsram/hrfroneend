@@ -4,6 +4,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-edit-invoice",
@@ -28,6 +29,7 @@ export class EditInvoiceComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private http: HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
@@ -35,7 +37,7 @@ export class EditInvoiceComponent implements OnInit {
 
   ngOnInit() {
     //getting edit id of selected estimate list
-    this.id = parseInt(this.route.snapshot.queryParams["id"]);
+    this.id = this.route.snapshot.queryParams["id"];
 
     //editestimate form value
     this.editInvoiceForm = this.formBuilder.group({
@@ -55,17 +57,19 @@ export class EditInvoiceComponent implements OnInit {
       items: this.formBuilder.array([]),
     });
     //get estimates
-    this.getEstimate();
+    this.getInvoice();
 
     //adding items
     this.addItems();
   }
 
   // get method for estimate
-  getEstimate() {
-    this.allModulesService.get("invoice").subscribe((res) => {
-      this.allInvoices = res;
-
+  getInvoice() {
+    let adminId=sessionStorage.getItem("adminId");
+  
+    this.http.get("http://localhost:8443/admin/invoices/getInvoices"+"/"+adminId).subscribe((res:any) => {
+      this.allInvoices = res.data;
+  console.log(this.allInvoices)
       //passing edit id
 
       this.edit(this.id);
@@ -159,18 +163,10 @@ export class EditInvoiceComponent implements OnInit {
         discount: this.editInvoiceForm.value.discount,
         grandTotal: this.editInvoiceForm.value.grandTotal,
         id: this.id,
-        items: [
-          {
-            item: getItems[0].item,
-            description: getItems[0].description,
-            unit_cost: getItems[0].unit_cost,
-            qty: getItems[0].qty,
-            amount: getItems[0].amount,
-          },
-        ],
+        items:getItems
       };
-      this.allModulesService.update(obj, "invoice").subscribe((res) => {
-        this.router.navigate(["/accounts/invoices"]);
+      this.http.patch("http://localhost:8443/admin/invoices/updateInvoices"+"/"+this.id,obj).subscribe((res) => {
+        this.router.navigate(["/layout/accounts/invoices"]);
         this.toastr.success("", "Edited successfully!");
       });
     }
@@ -183,12 +179,13 @@ export class EditInvoiceComponent implements OnInit {
 
   // set values to form
   edit(value) {
+    
     this.editId = value;
     const index = this.allInvoices.findIndex((item) => {
       return item.id === value;
     });
     let toSetValues = this.allInvoices[index];
-    this.editInvoiceForm.setValue({
+    this.editInvoiceForm.patchValue({
       client: toSetValues.client,
       project: toSetValues.project,
       email: toSetValues.email,

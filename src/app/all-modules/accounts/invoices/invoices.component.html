@@ -78,6 +78,12 @@
                             <td>{{invoice.due_date | customDate}}</td>
                             <td>{{invoice.grandTotal}}</td>
                             <td class="text-center">
+                                <select>
+                                    <option></option>
+                                    <option>Paid</option>
+                                    <option>Partially Paid</option>
+
+                                </select>
                                 <span class="badge bg-inverse-success">{{invoice.status}}</span>
                             </td>
                             <td class="text-end">
@@ -87,7 +93,7 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" routerLink="/layout/accounts/edit-invoice" [queryParams]="{id: invoice.id}"><i
                                                 class="fa fa-pencil m-r-5"></i> Edit</a>
-                                        <a class="dropdown-item" routerLink="/layout/accounts/edit-invoice" [queryParams]="{id: invoice.id}"><i
+                                        <a class="dropdown-item" routerLink="/layout/accounts/invoice-view" [queryParams]="{id: invoice.id}"><i
                                                 class="fa fa-eye m-r-5"></i> View</a>
                                         <a class="dropdown-item" ><i class="fa fa-file-pdf-o m-r-5"></i>
                                             Download</a>
