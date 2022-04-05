@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
 declare const $: any;
 @Component({
   selector: "app-timesheet",
@@ -18,9 +19,11 @@ export class TimesheetComponent implements OnInit {
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   url: any = "timesheet";
+  public id: any;
   public tempId: any;
   public editId: any;
-
+  public adminId = sessionStorage.getItem("adminId")
+  public employeeid = sessionStorage.getItem("employee_login_id")
   public rows = [];
   public srch = [];
   public statusValue;
@@ -32,9 +35,10 @@ export class TimesheetComponent implements OnInit {
   public editDeadline: any;
   constructor(
     private formBuilder: FormBuilder,
+    private http: HttpClient,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // for data table configuration
@@ -73,8 +77,10 @@ export class TimesheetComponent implements OnInit {
 
   // Get Timesheet list  Api Call
   LoadTimewsheet() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstTimesheet = data;
+    this.http.get("http://localhost:8443/admin/timesheet/show" + "/" + this.adminId + "/" + this.employeeid).subscribe((res: any) => {
+      console.log("getApi", res)
+      this.lstTimesheet = res.data;
+      console.log(this.lstTimesheet)
       this.rows = this.lstTimesheet;
       this.srch = [...this.rows];
     });
@@ -92,7 +98,7 @@ export class TimesheetComponent implements OnInit {
 
   // Add Department  Modal Api Call
   addTimesheet() {
-    if(this.addTimesheetForm.invalid){
+    if (this.addTimesheetForm.invalid) {
       this.markFormGroupTouched(this.addTimesheetForm)
       return
     }
@@ -105,26 +111,38 @@ export class TimesheetComponent implements OnInit {
         this.addTimesheetForm.value.DeadlineName,
         "dd-MM-yyyy"
       );
+      // this.adminId = sessionStorage.getItem("adminId");
+      // this.employeeid = sessionStorage.getItem("employee_login_id");
+      let adminId = this.adminId;
+      let employeeid = this.employeeid;
       let obj = {
-        id: 6,
-        employee: "John doe Galaviz",
+        //  employee: "John doe Galaviz",
         project: this.addTimesheetForm.value.Project,
         date: Datetime,
         deadline: deadLine,
-        totalhrs: this.addTimesheetForm.value.totalHours,
+        totalHrs: this.addTimesheetForm.value.totalHours,
         remainHrs: this.addTimesheetForm.value.remainingHours,
-        assignedhours: "20",
+        // assignedhours: "20",
         hrs: this.addTimesheetForm.value.Hrs,
         description: this.addTimesheetForm.value.Description,
+        adminId,
+        employeeid,
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      // this.srvModuleService.add(obj, this.url).subscribe((data) => {
+
+
+
+      this.http.post("http://localhost:8443/admin/timesheet/create", obj).subscribe((res) => {
+        console.log("postApi", res)
+
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
+          this.LoadTimewsheet();
         });
         this.dtTrigger.next();
       });
-      this.LoadTimewsheet();
+
       $("#add_todaywork").modal("hide");
       this.addTimesheetForm.reset();
       this.toastr.success("Timesheet added sucessfully...!", "Success");
@@ -142,27 +160,30 @@ export class TimesheetComponent implements OnInit {
     this.editDeadline = this.pipe.transform(data, "dd-MM-yyyy");
   }
   editTimesheet() {
+
     if (this.editTimesheetForm.valid) {
+      this.id = this.editId
       let obj = {
-        employee: "John doe Galaviz",
+        employee: " ",
         project: this.editTimesheetForm.value.Project,
         date: this.editDatetime,
         deadline: this.editDeadline,
-        totalhrs: this.editTimesheetForm.value.totalHours,
+        totalHrs: this.editTimesheetForm.value.totalHours,
         remainHrs: this.editTimesheetForm.value.remainingHours,
-        assignedhours: "20",
+        assignedhours: " ",
         hrs: this.editTimesheetForm.value.Hrs,
         description: this.editTimesheetForm.value.Description,
-        id: this.editId,
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+      this.http.patch("http://localhost:8443/admin/timesheet/update" + "/" + this.id, obj).subscribe((res) => {
+        console.log("updateApi", res);
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
+          this.LoadTimewsheet();
         });
         this.dtTrigger.next();
       });
-      this.LoadTimewsheet();
+
       $("#edit_todaywork").modal("hide");
       this.toastr.success("Timesheet Updated sucessfully...!", "Success");
     } else {
@@ -177,11 +198,11 @@ export class TimesheetComponent implements OnInit {
       return item.id === value;
     });
     let toSetValues = this.lstTimesheet[index];
-    this.editTimesheetForm.setValue({
+    this.editTimesheetForm.patchValue({
       Project: toSetValues.project,
       TimeDate: toSetValues.date,
       DeadlineName: toSetValues.deadline,
-      totalHours: toSetValues.totalhrs,
+      totalHours: toSetValues.totalHrs,
       remainingHours: toSetValues.remainHrs,
       Hrs: toSetValues.hrs,
       Description: toSetValues.description,
@@ -191,13 +212,21 @@ export class TimesheetComponent implements OnInit {
   // Delete timedsheet Modal Api Call
 
   deleteTimesheet() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+
+    let id = this.tempId
+    let obj = {
+      status: 2
+    };
+
+    this.http.patch("http://localhost:8443/admin/timesheet/delete" + "/" + id, obj).subscribe((res) => {
+      console.log("deleteApi", res)
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
+        this.LoadTimewsheet();
       });
       this.dtTrigger.next();
-      this.LoadTimewsheet();
+
       $("#delete_timesheet").modal("hide");
       this.toastr.success("Timesheet deleted sucessfully..!", "Success");
     });
