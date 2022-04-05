@@ -106,7 +106,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     public router: Router
   ) {
-    this.adminId = sessionStorage.getItem("companyId");
+    this.adminId = sessionStorage.getItem("adminId");
     this.getDepartments();
 
     this.getDesignation();
@@ -262,7 +262,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   loadEmployee() {
     // this.srvModuleService.get(this.url).subscribe((data) => {
     this.http
-      .get("http://localhost:8443/admin/allemployees/getallEmployee")
+      .get(
+        "http://localhost:8443/admin/allemployees/getallEmployee" +
+          "/" +
+          this.adminId
+      )
       .subscribe((data) => {
         //console.log(data);
         this.lstEmployee = data;
@@ -922,17 +926,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.TimingSheets[objIndex].export = false;
       }
     }
-
   }
 
   getId(id) {
     // //console.log("bbbbbbb", id)
-    sessionStorage.setItem("empid", id)
-    this.router.navigate(["/layout/employees/employeeprofile"])
+    sessionStorage.setItem("empid", id);
+    this.router.navigate(["/layout/employees/employeeprofile"]);
   }
   ngOnDestroy(): void {
-
     this.dtTrigger.unsubscribe();
   }
-
 }

@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
 declare const $: any;
 @Component({
   selector: "app-leaves-admin",
@@ -28,11 +29,15 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   public editLeaveadminForm: FormGroup;
   public editFromDate: any;
   public editToDate: any;
+  adminId: any;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
+    private http: HttpClient,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.adminId = sessionStorage.getItem("adminId");
+  }
 
   ngOnInit() {
     // for floating label
@@ -95,11 +100,17 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   }
   // Get leave  Api Call
   loadLeaves() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstLeave = data;
-      this.rows = this.lstLeave;
-      this.srch = [...this.rows];
-    });
+    // this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http
+      .get(
+        "http://localhost:8443/admin/leaves/searchleaves" + "/" + this.adminId
+      )
+      .subscribe((data) => {
+        this.lstLeave = data;
+        this.rows = this.lstLeave;
+        this.srch = [...this.rows];
+        console.log(this.rows);
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -112,9 +123,9 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   }
   // Add leaves for admin Modal Api Call
   addleaves() {
-    if(this.addLeaveadminForm.invalid){
-      this.markFormGroupTouched(this.addLeaveadminForm)
-      return
+    if (this.addLeaveadminForm.invalid) {
+      this.markFormGroupTouched(this.addLeaveadminForm);
+      return;
     }
     if (this.addLeaveadminForm.valid) {
       let fromDate = this.pipe.transform(
@@ -167,7 +178,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
       let obj = {
         employeeName: "Mike Litorus",
         designation: "web developer",
-        
+
         leaveType: this.editLeaveadminForm.value.LeaveType,
         from: this.editFromDate,
         to: this.editToDate,
@@ -232,7 +243,6 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
     });
     this.rows.push(...temp);
   }
-  
 
   //search by status
   searchType(val) {
