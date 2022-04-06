@@ -97,6 +97,7 @@ export class TimesheetComponent implements OnInit {
 
 
   // Add Department  Modal Api Call
+
   addTimesheet() {
     if (this.addTimesheetForm.invalid) {
       this.markFormGroupTouched(this.addTimesheetForm)
@@ -111,8 +112,10 @@ export class TimesheetComponent implements OnInit {
         this.addTimesheetForm.value.DeadlineName,
         "dd-MM-yyyy"
       );
+
       // this.adminId = sessionStorage.getItem("adminId");
       // this.employeeid = sessionStorage.getItem("employee_login_id");
+
       let adminId = this.adminId;
       let employeeid = this.employeeid;
       let obj = {

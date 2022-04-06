@@ -12,7 +12,8 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_overtime"><i class="fa fa-plus"></i> Add
+                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_overtime"><i class="fa fa-plus"></i>
+                    Add
                     Overtime</a>
             </div>
         </div>
@@ -67,7 +68,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let item of lstOvertime;let i = index">
-                            <td>{{item.id}}</td>
+                            <td>{{i+1}}</td>
                             <td>
                                 <h2 class="table-avatar blue-link">
                                     <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
@@ -75,16 +76,43 @@
                                     <a routerLink="/layout/employees/employeeprofile">{{item.name}}</a>
                                 </h2>
                             </td>
-                            <td>{{item.otDate | customDate}}</td>
+                            <td>{{item.otDate |customDate}}</td>
                             <td class="text-center">{{item.otHrs}}</td>
-                            <td>{{item.otType}}x</td>
-                            <td>{{item.description}}r</td>
+                            <td>{{item.otType}}</td>
+                            <td>{{item.description}}</td>
                             <td class="text-center">
                                 <div class="action-label">
                                     <a class="btn btn-white btn-sm btn-rounded">
                                         <i class="fa fa-dot-circle-o text-purple"></i>{{item.status || statusValue}}
                                     </a>
                                 </div>
+
+
+                                <!-- <div class="dropdown action-label">
+                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-dot-circle-o text-purple"></i>{{item.status || statusValue}}
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" (click)="getStatus('New')"><i
+                                                class="fa fa-dot-circle-o text-purple"></i>
+                                            Active</a>
+                                        <a class="dropdown-item" (click)="getStatus('Pending')"><i
+                                                class="fa fa-dot-circle-o text-danger"></i>
+                                            Inactive</a>
+                                        <a class="dropdown-item" (click)="getStatus('Approved')"><i
+                                                class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                                        <a class="dropdown-item" (click)="getStatus('Declined')"><i
+                                                class="fa fa-dot-circle-o text-danger"></i>
+                                            Declined</a>
+                                    </div>
+                                </div> -->
+
+
+
+
+
+
                             </td>
                             <td>
                                 <h2 class="table-avatar">
@@ -100,8 +128,9 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_overtime"
                                             (click)="edit(item.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_overtime"
-                                            (click)="tempId = item.id"><i class="fa fa-trash-o m-r-5"></i>
+                                        <a class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#delete_overtime" (click)="tempId = item.id"><i
+                                                class="fa fa-trash-o m-r-5"></i>
                                             Delete</a>
                                     </div>
                                 </div>
@@ -121,20 +150,27 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Overtime</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#add_overtime">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
+                    data-bs-target="#add_overtime">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form (ngSubmit)="addOvertime()" [formGroup]="addOvertimeForm">
-                    <div class="form-group">
+                    <!-- <div class="form-group"> 
                         <label>Select Employee <span class="text-danger">*</span></label>
                         <select class="form-select form-control"
                             [class.invalid]="addOvertimeForm.get('EmployeeName').invalid && addOvertimeForm.get('EmployeeName').touched"
                             formControlName="EmployeeName">
-                            <option>-</option>
-                            <option>John Doe</option>
-                            <option>Richard Miles</option>
+                            <option [value]="" selected>Select Employee</option>
+                            <ng-container *ngFor="let item of lstEmployee">
+                                <option (click)="employeeid=item.id">
+                                    {{item.firstName}}
+                                </option>
+                            </ng-container>
+
+
+                           <option>Richard Miles</option>
                             <option>John Smith</option>
                         </select>
                         <div
@@ -143,8 +179,22 @@
                                 *ngIf="addOvertimeForm.get('EmployeeName').invalid && addOvertimeForm.get('EmployeeName').touched"
                                 class="text-danger"> *Employee is required</small>
                         </div>
-                    </div>
+                    </div> -->
+                    <div class="dropdown action-label">
+                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i>
+                            Select Employee
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <div *ngFor="let item of lstEmployee">
+                                <a class="dropdown-item" (click)="getId(item.id,item.firstName)"><i
+                                        class="fa fa-dot-circle-o text-danger"></i> {{item.firstName}}</a>
+                            </div>
 
+
+                        </div>
+                    </div>
+                    <br><br>
                     <div class="form-group">
                         <label>Overtime Date <span class="text-danger">*</span></label>
                         <div class="cal-icon">
@@ -209,10 +259,12 @@
                         <select class="form-select form-control"
                             [class.invalid]="editOvertimeForm.get('EmployeeName').invalid && editOvertimeForm.get('EmployeeName').touched"
                             formControlName="EmployeeName">
-                            <option>-</option>
-                            <option>John Doe</option>
-                            <option>Richard Miles</option>
-                            <option>John Smith</option>
+                            <option [value]="" selected>Select Employee</option>
+                            <ng-container *ngFor="let item of lstEmployee">
+                                <option>
+                                    {{item.firstName}}
+                                </option>
+                            </ng-container>
                         </select>
                         <div
                             *ngIf="editOvertimeForm.get('EmployeeName').invalid && editOvertimeForm.get('EmployeeName').touched">
@@ -281,12 +333,10 @@
                 <div class="modal-btn delete-action">
                     <div class="row">
                         <div class="col-6">
-                            <a  class="btn btn-primary continue-btn"
-                                (click)="deleteOvetime()">Delete</a>
+                            <a class="btn btn-primary continue-btn" (click)="deleteOvetime()">Delete</a>
                         </div>
                         <div class="col-6">
-                            <a  data-bs-dismiss="modal"
-                                class="btn btn-primary cancel-btn">Cancel</a>
+                            <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                     </div>
                 </div>
