@@ -30,13 +30,13 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let payments of allPayments;let i = index">
-                            <td><a routerLink="/layout/accounts/invoice-view">{{payments.invoiceId}}</a></td>
+                            <td><a routerLink="/layout/accounts/invoice-view">{{payments.invoiceNumber}}</a></td>
                             <td>
                                 <h2><a>{{payments.client}}</a></h2>
                             </td>
                             <td>{{payments.paymenttype}}</td>
                             <td>{{payments.paidDate}}</td>
-                            <td>{{payments.paidAmount}}</td>
+                            <td>{{payments.grandTotal}}</td>
                         </tr>
                         <tr *ngIf="allPayments.length === 0">
                             <td colspan="10">

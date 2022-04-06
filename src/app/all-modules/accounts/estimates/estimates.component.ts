@@ -72,10 +72,23 @@ export class EstimatesComponent implements OnInit, OnDestroy {
   getAllEstimates() {
     this.http.get("http://localhost:8443/admin/estimates/getEstimates"+"/"+this.adminId).subscribe((res:any) => {
      this.estimates=(res.data)
-      this.dtTrigger.next();
+     console.log("ALL GET ESTIMATE",this.estimates)
+    
       this.rows = this.estimates;
       this.srch = [...this.rows];
     });
+  }
+
+
+
+  //  updateStatus ............
+  updateStatus(val,id){
+    alert(id)
+    this.http.patch("http://localhost:8443/admin/estimates/updateEstimates"+"/"+id, {status:val}).subscribe((res:any)=>{
+console.log(res);
+this.getAllEstimates();
+    })
+
   }
 
   //delete method of estimate list
@@ -83,11 +96,9 @@ export class EstimatesComponent implements OnInit, OnDestroy {
     let id: any = this.id;
   
     this.http.patch("http://localhost:8443/admin/estimates/deleteEstimates"+"/"+id, {}).subscribe((res:any) => {
-      this.router.navigate(["/layout/accounts/estimates"]);
+      
       this.getAllEstimates();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
-      });
+     
     });
   }
 

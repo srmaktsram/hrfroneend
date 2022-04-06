@@ -37,8 +37,8 @@ export class EditEstimateComponent implements OnInit {
 
   ngOnInit() {
     //getting edit id of selected estimate list
-    this.id = this.route.snapshot.queryParams["id"];
-    console.log("ngOnInit pe Id",this.id)
+    // this.id = this.route.snapshot.queryParams["id"];
+    // console.log("ngOnInit pe Id",this.id)
 
     //editestimate form value
     this.editEstimateForm = this.formBuilder.group({

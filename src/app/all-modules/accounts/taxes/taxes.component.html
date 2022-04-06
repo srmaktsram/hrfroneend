@@ -41,12 +41,12 @@
                                 <div class="dropdown action-label">
                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Inactive
+                                        <i class="fa fa-dot-circle-o text-danger" ></i> {{taxes.status}}
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item"><i
-                                                class="fa fa-dot-circle-o text-success"></i> Active</a>
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                        <a class="dropdown-item" (click)="updateStatus('Active',taxes.id)"><i
+                                                class="fa fa-dot-circle-o text-success" ></i> Active</a>
+                                        <a class="dropdown-item" (click)="updateStatus('Inactive',taxes.id)"><i class="fa fa-dot-circle-o text-danger"></i>
                                             Inactive</a>
                                     </div>
                                 </div>
@@ -107,8 +107,8 @@
                     </div>
                     </div>
                     <div class="form-group">
-                        <label>Status <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
+                        <label>Status <span class="text-danger" >*</span></label>
+                        <select class="form-select form-control" >
                             <option>Pending</option>
                             <option>Approved</option>
                         </select>
@@ -159,7 +159,7 @@
                     </div>
                     <div class="form-group">
                         <label>Status <span class="text-danger">*</span></label>
-                        <select class="form-select form-control">
+                        <select class="form-select form-control" >
                             <option>Active</option>
                             <option>Inactive</option>
                         </select>
