@@ -60,15 +60,15 @@ export class CreateEstimatesComponent implements OnInit {
     //adding new rows to table
     this.addItems();
     //get estimation
-    this.getEstimate();
+    // this.getEstimate();
   }
 
   //getting estimate
-  getEstimate() {
-    this.allModulesService.get("estimates").subscribe((res) => {
-      this.allEstimates = res;
-    });
-  }
+  // getEstimate() {
+  //   this.allModulesService.get("estimates").subscribe((res) => {
+  //     this.allEstimates = res;
+  //   });
+  // }
 
   //for adding new array
 

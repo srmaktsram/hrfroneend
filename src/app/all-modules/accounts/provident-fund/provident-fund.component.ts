@@ -9,6 +9,7 @@ import {
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -19,6 +20,7 @@ declare const $: any;
 export class ProvidentFundComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
+  public adminId=sessionStorage.getItem("adminId");
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject();
   public url: any = "providentFund";
@@ -27,8 +29,10 @@ export class ProvidentFundComponent implements OnInit, OnDestroy {
   public editProvidentForm: FormGroup;
   public editId: any;
   public tempId: any;
+  employeeid: any;
   constructor(
     private allModuleService: AllModulesService,
+    private http:HttpClient,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
   ) {}
@@ -62,7 +66,8 @@ export class ProvidentFundComponent implements OnInit, OnDestroy {
   }
 
   getProvidentfund() {
-    this.allModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/provident/adminGetProvident"+"/"+this.adminId).subscribe((data:any) => {
+      console.log("GET API",data)
       this.allProvidentfund = data;
       this.dtTrigger.next();
     });
@@ -88,17 +93,21 @@ export class ProvidentFundComponent implements OnInit, OnDestroy {
     }
     if (this.addProvidentfund.valid) {
       let obj = {
+        adminId:this.adminId,
+        employeeid:this.employeeid,
         employeeName: this.addProvidentfund.value.employeeName,
         providentFundType: this.addProvidentfund.value.providentType,
         employeeShare: this.addProvidentfund.value.employeeShare,
         organizationShare: this.addProvidentfund.value.organisationShare,
       };
-      this.allModuleService.add(obj, this.url).subscribe((data) => {
+      this.http.post("http://localhost:8443/admin/provident/createProvident",obj).subscribe((data:any) => {
+        console.log("POST API",data)
+        this.getProvidentfund();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
       });
-      this.getProvidentfund();
+     
       $("#add_pf").modal("hide");
       this.addProvidentfund.reset();
       this.toastr.success("Provident fund is added", "Success");
@@ -115,12 +124,14 @@ export class ProvidentFundComponent implements OnInit, OnDestroy {
       organizationShare: this.editProvidentForm.value.organisationShare,
       id: this.editId,
     };
-    this.allModuleService.update(obj, this.url).subscribe((data1) => {
+    this.http.patch("http://localhost:8443/admin/provident/updateProvident"+"/"+this.editId,obj).subscribe((data1:any) => {
+      console.log(data1)
+      this.getProvidentfund();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
     });
-    this.getProvidentfund();
+    
     $("#edit_pf").modal("hide");
     this.toastr.success("Provident fund is edited", "Success");
   }
@@ -142,11 +153,13 @@ export class ProvidentFundComponent implements OnInit, OnDestroy {
   // Delete Provident Modal Api Call
 
   deleteProvident() {
-    this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    this.http.patch("http://localhost:8443/admin/provident/deleteProvident"+"/"+this.tempId,{}).subscribe((data) => {
+      console.log("DELETE API",data)
+      this.getProvidentfund();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
-      this.getProvidentfund();
+      
       $("#delete_pf").modal("hide");
       this.toastr.success("Tax is deleted", "Success");
     });

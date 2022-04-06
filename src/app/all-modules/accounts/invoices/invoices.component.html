@@ -78,13 +78,37 @@
                             <td>{{invoice.due_date | customDate}}</td>
                             <td>{{invoice.grandTotal}}</td>
                             <td class="text-center">
-                                <select>
-                                    <option></option>
-                                    <option>Paid</option>
-                                    <option>Partially Paid</option>
 
-                                </select>
-                                <span class="badge bg-inverse-success">{{invoice.status}}</span>
+
+
+                                <div class="dropdown action-label">
+                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-dot-circle-o " ></i> {{invoice.status}}
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" (click)="updateStatus('Pending',invoice.id)"><i
+                                                class="fa fa-dot-circle-o text-success" ></i> Pending</a>
+                                        <a class="dropdown-item" (click)="updateStatus('Approved',invoice.id)"><i class="fa fa-dot-circle-o text-danger"></i>
+                                            Approved</a>
+                                    </div>
+                                </div>
+
+
+
+
+                                
+                              
+
+
+
+
+
+
+
+
+
+
                             </td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">

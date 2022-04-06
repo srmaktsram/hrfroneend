@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AllModulesService } from "../../all-modules.service";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -10,10 +11,11 @@ declare const $: any;
 })
 export class PaymentsComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
-  public url: any = "payments";
+  public adminId =sessionStorage.getItem("adminId")
   public allPayments: any = [];
   public dtTrigger: Subject<any> = new Subject();
-  constructor(private allModuleService: AllModulesService) {}
+  constructor(private allModuleService: AllModulesService,
+    private http:HttpClient) {}
 
   ngOnInit() {
     //get payments
@@ -29,8 +31,10 @@ export class PaymentsComponent implements OnInit, OnDestroy {
 
   // get payment API call
   getPayments() {
-    this.allModuleService.get(this.url).subscribe((data) => {
+    // console.log(this.adminId)
+    this.http.get("http://localhost:8443/admin/payments/adminGetPayments"+"/"+this.adminId).subscribe((data:any) => {
       this.allPayments = data;
+    
       this.dtTrigger.next();
     });
   }

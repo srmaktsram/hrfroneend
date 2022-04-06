@@ -78,7 +78,25 @@
                             <td>{{estimate.expiryDate | customDate}}</td>
                             <td>{{estimate.grandTotal}}</td>
                             <td>
-                                <span class="badge bg-inverse-success">{{estimate.status}}</span>
+
+                                <div class="dropdown action-label">
+                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-dot-circle-o " ></i> {{estimate.status}}
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" (click)="updateStatus('Accepted',estimate.id)"><i
+                                                class="fa fa-dot-circle-o text-success" ></i> Accepted</a>
+                                        <a class="dropdown-item" (click)="updateStatus('Declined',estimate.id)"><i class="fa fa-dot-circle-o text-danger"></i>
+                                            Declined</a>
+                                            <a class="dropdown-item" (click)="updateStatus('Expired',estimate.id)"><i class="fa fa-dot-circle-o text-danger"></i>
+                                                Expired</a>
+                                    </div>
+                                </div>
+
+
+
+
                             </td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
