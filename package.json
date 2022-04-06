@@ -1,6 +1,6 @@
 {
   "name": "smarthr",
-  "version": "0.0.0", 
+  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -51,7 +51,6 @@
     "ngx-filepond": "^5.0.1",
     "ngx-mask": "^10.0.1",
     "ngx-perfect-scrollbar": "^8.0.0",
-    "ngx-print": "^1.2.1",
     "ngx-toastr": "^11.3.0",
     "npm-force-resolutions": "0.0.10",
     "popper.js": "^1.16.0",
