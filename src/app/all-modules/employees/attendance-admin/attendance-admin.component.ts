@@ -30,7 +30,8 @@ export class AttendanceAdminComponent implements OnInit {
 
     this.http.get("http://localhost:8443/admin/attendance/search", { params: queryParams }).subscribe((res) => {
 
-      //console.log(res);
+
+      console.log("attandanceData", res);
 
     })
 

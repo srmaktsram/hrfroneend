@@ -6,6 +6,7 @@ import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
+import { id } from "src/assets/all-modules-data/id";
 declare const $: any;
 @Component({
   selector: "app-leaves-admin",
@@ -19,10 +20,12 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   public lstLeave: any;
   public url: any = "adminleaves";
   public tempId: any;
+  public lstEmployee: any;
   public editId: any;
   public rows = [];
   public srch = [];
   public statusValue;
+
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
   public addLeaveadminForm: FormGroup;
@@ -30,6 +33,8 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   public editFromDate: any;
   public editToDate: any;
   adminId: any;
+  public id: any;
+  router: any;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -50,6 +55,9 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
       .trigger("blur");
 
     this.loadLeaves();
+
+
+    this.getAllEmployeeData()
 
     this.addLeaveadminForm = this.formBuilder.group({
       LeaveType: ["", [Validators.required]],
@@ -100,7 +108,6 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   }
   // Get leave  Api Call
   loadLeaves() {
-    // this.srvModuleService.get(this.url).subscribe((data) => {
     this.http
       .get(
         "http://localhost:8443/admin/leaves/searchleaves" + "/" + this.adminId
@@ -137,24 +144,28 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         "dd-MM-yyyy"
       );
       let obj = {
-        employeeName: "Mike Litorus",
-        designation: "web developer",
+        // employeeName: "Mike Litorus",
+        // designation: "web developer",
         leaveType: this.addLeaveadminForm.value.LeaveType,
         from: fromDate,
         to: toDate,
         noofDays: this.addLeaveadminForm.value.NoOfDays,
         remainleaves: this.addLeaveadminForm.value.RemainLeaves,
         reason: this.addLeaveadminForm.value.LeaveReason,
-        status: "Approved",
+        // status: "Approved",
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      console.log("obj", obj)
+      this.http.post("http://localhost:8443/admin/leaves/createLeave", obj).subscribe((res) => {
+        console.log("postApi", res)
+        this.loadLeaves();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
+
         });
         this.dtTrigger.next();
       });
-      this.loadLeaves();
+
       $("#add_leave").modal("hide");
       this.addLeaveadminForm.reset();
       this.toastr.success("Leaves added sucessfully...!", "Success");
@@ -174,28 +185,31 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
 
   // Edit leaves Modal Api Call
   editLeaves() {
+    this.id = this.editId
     if (this.editLeaveadminForm.valid) {
       let obj = {
-        employeeName: "Mike Litorus",
-        designation: "web developer",
-
+        // employeeName: "Mike Litorus",
+        // designation: "web developer",
         leaveType: this.editLeaveadminForm.value.LeaveType,
         from: this.editFromDate,
         to: this.editToDate,
         noofDays: this.editLeaveadminForm.value.NoOfDays,
         remainleaves: this.editLeaveadminForm.value.RemainLeaves,
         reason: this.editLeaveadminForm.value.LeaveReason,
-        status: "Approved",
-        id: this.editId,
+        // status: "Approved",
+
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data) => {
+      this.http.patch("http://localhost:8443/admin/leaves/updateAdminLeave" + "/" + this.id, obj).subscribe((res) => {
+        console.log("updateApi", res)
+        this.loadLeaves();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
+
         });
         this.dtTrigger.next();
       });
-      this.loadLeaves();
+
       $("#edit_leave").modal("hide");
       this.toastr.success("Leaves Updated sucessfully...!", "Success");
     } else {
@@ -204,14 +218,20 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   }
   // Delete leaves Modal Api Call
   deleteleaves() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    let id = this.tempId
+    let obj = {
+      status: 2
+    };
+    this.http.patch("http://localhost:8443/admin/leaves/deleteLeave" + "/" + id, obj).subscribe((data) => {
+      console.log("deleteApi", data)
+      this.loadLeaves();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
       this.dtTrigger.next();
     });
-    this.loadLeaves();
+
     $("#delete_approve").modal("hide");
     this.toastr.success("Leaves deleted sucessfully..!", "Success");
   }
@@ -304,4 +324,27 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
+
+  getAllEmployeeData() {
+
+    this.http
+      .get(
+        "http://localhost:8443/admin/allemployees/getallEmployee" +
+        "/" +
+        this.adminId
+      )
+      .subscribe((data) => {
+        console.log("getApi", data);
+        this.lstEmployee = data;
+        this.rows = this.lstEmployee;
+        this.srch = [...this.rows];
+      });
+  }
+
+  getId(id) {
+    // //console.log("bbbbbbb", id)
+    sessionStorage.setItem("empid", id);
+    this.router.navigate(["/layout/employees/employeeprofile"]);
+  }
+
 }
