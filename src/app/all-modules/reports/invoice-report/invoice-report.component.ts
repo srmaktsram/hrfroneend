@@ -4,6 +4,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 
@@ -22,11 +23,15 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   public srch = [];
   public pipe = new DatePipe("en-US");
   public dtTrigger: Subject<any> = new Subject();
+public adminId:any;
 
   constructor(
     private router: Router,
+    private http:HttpClient,
     private allModulesService: AllModulesService
-  ) {}
+  ) {
+    this.adminId=sessionStorage.getItem("adminId");
+  }
 
   ngOnInit() {
     $(".floating")
@@ -50,7 +55,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
 
   //get all invoices
   getAllInvoices() {
-    this.allModulesService.get("invoiceReport").subscribe((res) => {
+    this.http.get("http://localhost:8443/admin/").subscribe((res) => {
       this.invoices = res;
       this.dtTrigger.next();
       this.rows = this.invoices;
@@ -66,7 +71,7 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   // delete method for deleting rows
   delete() {
     let id: any = Number(this.id);
-    this.allModulesService.delete(id, "invoiceReport").subscribe((res) => {
+    this.http.patch("http://localhost:8443/admin/",{}).subscribe((res) => {
       this.router.navigate(["/reports/edit-invoice-report"]);
       this.getAllInvoices();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

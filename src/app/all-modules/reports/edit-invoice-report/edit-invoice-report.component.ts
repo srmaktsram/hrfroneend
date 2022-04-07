@@ -4,6 +4,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-edit-invoice-report",
@@ -24,14 +25,18 @@ export class EditInvoiceReportComponent implements OnInit {
   public percentageTaxValue;
   public grandTotal;
   public totalTax;
+  public adminId:any;
   public percentageDiscountValue;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private http:HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.adminId=sessionStorage.getItem("adminId")
+  }
 
   ngOnInit() {
     //getting edit id of selected estimate list
@@ -63,7 +68,7 @@ export class EditInvoiceReportComponent implements OnInit {
 
   // get method for estimate
   getEstimate() {
-    this.allModulesService.get("invoiceReport").subscribe((res) => {
+    this.http.get("invoiceReport").subscribe((res) => {
       this.allInvoices = res;
 
       //passing edit id
@@ -170,7 +175,7 @@ export class EditInvoiceReportComponent implements OnInit {
         ],
       };
 
-      this.allModulesService.update(obj, "invoiceReport").subscribe((res) => {
+      this.http.patch("http:localhost:8443/admin",obj).subscribe((res) => {
         this.router.navigate(["/reports/invoice-report"]);
         this.toastr.success("", "Edited successfully!");
       });

@@ -51,12 +51,12 @@
                                 <div class="dropdown action-label">
                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" 
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-dot-circle-o text-danger"></i> Pending
+                                        <i class="fa fa-dot-circle-o text-danger"></i> {{provident.status}}
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" ><i class="fa fa-dot-circle-o text-danger"></i>
+                                        <a class="dropdown-item" (click)="updateStatus('Pending',provident.id)" > <i class="fa fa-dot-circle-o text-danger"></i>
                                             Pending</a>
-                                        <a class="dropdown-item" ><i
+                                        <a class="dropdown-item" (click)="updateStatus('Approved',provident.id)" ><i
                                                 class="fa fa-dot-circle-o text-success"></i> Approved</a>
                                     </div>
                                 </div>
