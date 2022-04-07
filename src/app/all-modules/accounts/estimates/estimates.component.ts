@@ -83,7 +83,7 @@ export class EstimatesComponent implements OnInit, OnDestroy {
 
   //  updateStatus ............
   updateStatus(val,id){
-    alert(id)
+ 
     this.http.patch("http://localhost:8443/admin/estimates/updateEstimates"+"/"+id, {status:val}).subscribe((res:any)=>{
 console.log(res);
 this.getAllEstimates();
