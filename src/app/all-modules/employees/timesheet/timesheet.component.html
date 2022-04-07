@@ -12,8 +12,8 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a  class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_todaywork"><i
-                        class="fa fa-plus"></i> Add Today Work</a>
+                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_todaywork"><i class="fa fa-plus"></i>
+                    Add Today Work</a>
             </div>
         </div>
     </div>
@@ -49,17 +49,17 @@
                             <td>
                                 <h2>{{item.project}} </h2>
                             </td>
-                            <td class="text-center">{{item.assignedhours}}</td>
+                            <td class="text-center">{{item.totalHrs}}</td>
                             <td class="text-center">{{item.hrs}}</td>
                             <td class="d-none d-sm-table-cell col-md-4">{{item.description}}</td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">
-                                    <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                    <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item"  data-bs-toggle="modal" (click)="edit(item.id)"
+                                        <a class="dropdown-item" data-bs-toggle="modal" (click)="edit(item.id)"
                                             data-bs-target="#edit_todaywork"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                        <a class="dropdown-item"  data-bs-toggle="modal"
+                                        <a class="dropdown-item" data-bs-toggle="modal"
                                             data-bs-target="#delete_timesheet" (click)="tempId = item.id"><i
                                                 class="fa fa-trash-o m-r-5"></i>
                                             Delete</a>
@@ -316,12 +316,10 @@
                 <div class="modal-btn delete-action">
                     <div class="row">
                         <div class="col-6">
-                            <a  class="btn btn-primary continue-btn"
-                                (click)="deleteTimesheet()">Delete</a>
+                            <a class="btn btn-primary continue-btn" (click)="deleteTimesheet()">Delete</a>
                         </div>
                         <div class="col-6">
-                            <a  data-bs-dismiss="modal"
-                                class="btn btn-primary cancel-btn">Cancel</a>
+                            <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                     </div>
                 </div>

@@ -21,6 +21,9 @@ export class AttendanceEmployeeComponent implements OnInit {
   public srch: [];
   punchtimeIn: [];
   storeData: any
+  public adminId = sessionStorage.getItem("adminId")
+  public employeeid = sessionStorage.getItem("employee_login_id")
+
   public dtTrigger: Subject<any> = new Subject();
 
 
@@ -39,12 +42,12 @@ export class AttendanceEmployeeComponent implements OnInit {
 
   public punch: any
   getData() {
-    let obj = {
-      adminId: sessionStorage.getItem("adminId"),
-      employeeid: sessionStorage.getItem("employee_login_id"),
-    }
-    this.http.post("http://localhost:8443/employee/attendance/create", obj).subscribe((data) => {
-      //console.log("postData", data);
+
+    let adminId = this.adminId
+    let employeeid = this.employeeid
+
+    this.http.post("http://localhost:8443/employee/attendance/create", { adminId, employeeid }).subscribe((data) => {
+
       this.data = data
       this.punch = this.data.punchStatus
       sessionStorage.setItem("id", this.data.id)
@@ -82,7 +85,7 @@ export class AttendanceEmployeeComponent implements OnInit {
 
 
 
-    this.http.get("http://localhost:8443/employee/attendance/search?" + queryParams, {}).subscribe((data) => {
+    this.http.get("http://localhost:8443/employee/attendance/search?" + queryParams, {}).subscribe((data: any) => {
 
 
       //console.log("getDataApi", data);
