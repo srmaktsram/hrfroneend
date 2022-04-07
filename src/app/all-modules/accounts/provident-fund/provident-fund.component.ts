@@ -74,6 +74,15 @@ export class ProvidentFundComponent implements OnInit, OnDestroy {
   }
 
 
+  /////update Status ///////////////////
+  updateStatus(val,id){
+    this.http.patch("http://localhost:8443/admin/provident/updateProvident"+"/"+id,{status:val}).subscribe((data1:any) => {
+      console.log(data1)
+      this.getProvidentfund();
+    })
+  }
+
+
   private markFormGroupTouched(formGroup: FormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control) => {
       control.markAsTouched();
