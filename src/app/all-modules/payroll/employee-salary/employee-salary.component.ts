@@ -16,6 +16,9 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
+import { id } from "src/assets/all-modules-data/id";
+import { Router } from "@angular/router";
 
 declare const $: any;
 
@@ -25,16 +28,24 @@ declare const $: any;
   styleUrls: ["./employee-salary.component.css"],
 })
 export class EmployeeSalaryComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+  implements OnInit, OnDestroy, AfterViewInit
+{
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   public url: any = "employeeSalary";
+  public adminId = sessionStorage.getItem("adminId");
   public allSalary: any = [];
   public addSalary: FormGroup;
   public editSalary: FormGroup;
   public editId: any;
   public tempId: any;
+  public listemp: any;
+  public employeeId: any;
+  public email: any;
+  public joinDate: any;
+  public firstName: any;
+  public role: any;
   public rows = [];
   public srch = [];
   public statusValue;
@@ -54,11 +65,44 @@ export class EmployeeSalaryComponent
   public profTaxValue;
   public labourValue;
   public othersDedValue;
+
+  dataarr: any;
+  designations: Object;
+  disableButton = true;
+  deduct: any;
+
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private router: Router,
+
+    private http: HttpClient
+  ) {
+    this.getData();
+    this.loadEmployee();
+    this.getDesignation();
+  }
+  public loadEmployee() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/allemployees/getallEmployee" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.dataarr = data;
+
+        this.srch = [...this.dataarr];
+      });
+  }
+  public getDesignation() {
+    this.http
+      .get("http://localhost:8443/admin/designation/getData")
+      .subscribe((data) => {
+        this.designations = data;
+      });
+  }
 
   ngOnInit() {
     $(".floating")
@@ -91,6 +135,7 @@ export class EmployeeSalaryComponent
       profTax: [""],
       labour: [""],
       othersDed: [""],
+      date: ["", [Validators.required]],
     });
 
     // Edit salary Form Validation And Getting Values
@@ -112,6 +157,7 @@ export class EmployeeSalaryComponent
       editProfTax: [""],
       editLabour: [""],
       editDedOthers: [""],
+      editDate: [""],
     });
 
     // for data table configuration
@@ -145,11 +191,17 @@ export class EmployeeSalaryComponent
   //get data for data table
 
   getSalary() {
-    this.allModuleService.get(this.url).subscribe((data) => {
-      this.allSalary = data;
-      this.rows = this.allSalary;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/employeeSalary/getEmployeeSalary" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data1) => {
+        this.allSalary = data1;
+        this.rows = this.allSalary;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -164,49 +216,86 @@ export class EmployeeSalaryComponent
   // Add salary Modal Api Call
 
   addSalarySubmit() {
-    if(this.addSalary.invalid){
-      this.markFormGroupTouched(this.addSalary)
-      return
+    if (this.addSalary.invalid) {
+      this.markFormGroupTouched(this.addSalary);
+      return;
     }
     if (this.addSalary.valid) {
+      let adminId = this.adminId;
       let obj = {
-        employee: this.addSalary.value.selectStaff,
-        employeeId: "FT-0101",
-        email: "johndoe@example.com",
-        joinDate: "07-01-2019",
-        role: "Web Developer",
-        employeeRole: "Employee",
-        status: "pending",
-        salary: this.addSalary.value.netSalary,
-        Basic: this.addSalary.value.basic,
-        tDS: this.addSalary.value.tds,
+        selectStaff: this.addSalary.value.selectStaff,
+        // employeeId: "FT-0101",
+        // email: "johndoe@example.com",
+        // joinDate: "07-01-2019",
+        // role: "Web Developer",
+        // employeeRole: "Employee",
+        // status: "pending",
+        netSalary: this.addSalary.value.netSalary,
+        basic: this.addSalary.value.basic,
+        tds: this.addSalary.value.tds,
         da: this.addSalary.value.da,
         hra: this.addSalary.value.hra,
         pf: this.addSalary.value.pf,
         conveyance: this.addSalary.value.conveyance,
         leave: this.addSalary.value.leave,
         allowance: this.addSalary.value.allowance,
-        proTax: this.addSalary.value.profTax,
-        medAllowance: this.addSalary.value.medicalAllowance,
-        labourWelfare: this.addSalary.value.labour,
+        profTax: this.addSalary.value.profTax,
+        medicalAllowance: this.addSalary.value.medicalAllowance,
+        labour: this.addSalary.value.labour,
         othersAdd: this.addSalary.value.othersAdd,
         othersDed: this.addSalary.value.othersDed,
         esi: this.addSalary.value.esi,
+        adminId,
+        employeeId: this.employeeId,
+        email: this.email,
+        joinDate: this.joinDate,
+        firstName: this.firstName,
+        role: this.role,
+        date: this.pipe.transform(this.addSalary.value.date, "dd-MM-yyyy"),
       };
-      this.allModuleService.add(obj, this.url).subscribe((data) => {
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+
+      this.http
+        .post(
+          "http://localhost:8443/admin/employeeSalary/createEmployeeSalary",
+          obj
+        )
+        .subscribe((data) => {
+          this.getSalary();
+
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
-      this.getSalary();
+
       $("#add_salary").modal("hide");
       this.addSalary.reset();
       this.toastr.success("Salary is added", "Success");
     } else {
       this.toastr.warning("Mandatory fields required", "");
     }
+  }
+
+  /////////delete Employee Salary
+  deleteEmpSalary() {
+    let id = this.tempId;
+    let obj = {
+      status: 2,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/employeeSalary/deleteEmployeeSalary" +
+          "/" +
+          id,
+        obj
+      )
+      .subscribe((data) => {
+        this.getSalary();
+      });
+    $("#delete_salary").modal("hide");
+    this.toastr.success("Salary is deleted", "Success");
+    this.toastr.success("Tickets deleted", "Success");
   }
 
   // changes in add form feilds
@@ -283,7 +372,6 @@ export class EmployeeSalaryComponent
         });
         break;
       default:
-        console.log("");
         break;
     }
     let basicValue = this.addSalary.value.basic;
@@ -396,7 +484,6 @@ export class EmployeeSalaryComponent
         });
         break;
       default:
-        console.log("");
         break;
     }
     let basicValue = this.editSalary.value.editBasic;
@@ -438,45 +525,49 @@ export class EmployeeSalaryComponent
   // Edit salary Modal Api Call
 
   editSalarySubmit() {
-    if (this.editSalary.valid) {
-      let obj = {
-        employee: this.editSalary.value.editSelectStaff,
-        employeeId: "FT-0101",
-        email: "johndoe@example.com",
-        joinDate: "07-01-2019",
-        role: "Web Developer",
-        employeeRole: "Employee",
-        status: "pending",
-        salary: this.editSalary.value.editNetSalary,
-        Basic: this.editSalary.value.editBasic,
-        tDS: this.editSalary.value.editTds,
-        da: this.editSalary.value.editDa,
-        hra: this.editSalary.value.editHra,
-        pf: this.editSalary.value.editPf,
-        conveyance: this.editSalary.value.editConveyance,
-        leave: this.editSalary.value.editleave,
-        allowance: this.editSalary.value.editAllowance,
-        proTax: this.editSalary.value.editProfTax,
-        medAllowance: this.editSalary.value.editMedAllowance,
-        labourWelfare: this.editSalary.value.editLabour,
-        othersAdd: this.editSalary.value.editAddOthers,
-        othersDed: this.editSalary.value.editDedOthers,
-        esi: this.editSalary.value.editEsi,
-        id: this.editId,
-      };
-      this.allModuleService.update(obj, this.url).subscribe((data1) => {
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-        });
-        this.dtTrigger.next();
+    let obj = {
+      employee: this.editSalary.value.editSelectStaff,
+      // employeeId: "FT-0101",
+      // email: "johndoe@example.com",
+      // joinDate: "07-01-2019",
+      // role: "Web Developer",
+      // employeeRole: "Employee",
+      // status: "pending",
+      netSalary: this.editSalary.value.editNetSalary,
+      basic: this.editSalary.value.editBasic,
+      tds: this.editSalary.value.editTds,
+      da: this.editSalary.value.editDa,
+      hra: this.editSalary.value.editHra,
+      pf: this.editSalary.value.editPf,
+      conveyance: this.editSalary.value.editConveyance,
+      leave: this.editSalary.value.editleave,
+      allowance: this.editSalary.value.editAllowance,
+      proTax: this.editSalary.value.editProfTax,
+      medAllowance: this.editSalary.value.editMedAllowance,
+      labour: this.editSalary.value.editLabour,
+      othersAdd: this.editSalary.value.editAddOthers,
+      othersDed: this.editSalary.value.editDedOthers,
+      esi: this.editSalary.value.editEsi,
+      date: this.editSalary.value.editDate,
+    };
+    let id = this.editId;
+    this.http
+      .patch(
+        "http://localhost:8443/admin/employeeSalary/updateEmployeeSalary" +
+          "/" +
+          id,
+        obj
+      )
+      .subscribe((data1) => {
+        // $("#datatable").DataTable().clear();
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   dtInstance.destroy();
+        // });
+        // this.dtTrigger.next();
       });
-      this.getSalary();
-      $("#edit_salary").modal("hide");
-      this.toastr.success("Salary is edited", "Success");
-    } else {
-      this.toastr.warning("Mandatory fields required", "");
-    }
+    this.getSalary();
+    $("#edit_salary").modal("hide");
+    this.toastr.success("Salary is edited", "Success");
   }
 
   edit(value) {
@@ -488,37 +579,38 @@ export class EmployeeSalaryComponent
     this.editSalary.patchValue({
       editSelectStaff: toSetValues.employee,
       editNetSalary: toSetValues.salary,
-      editBasic: toSetValues.Basic,
+      editBasic: toSetValues.basic,
       editDa: toSetValues.da,
       editHra: toSetValues.hra,
       editConveyance: toSetValues.conveyance,
       editAllowance: toSetValues.allowance,
-      editMedAllowance: toSetValues.medAllowance,
+      editMedAllowance: toSetValues.medicalAllowance,
       editAddOthers: toSetValues.othersAdd,
-      editTds: toSetValues.tDS,
+      editTds: toSetValues.tds,
       editEsi: toSetValues.esi,
       editPf: toSetValues.pf,
       editleave: toSetValues.leave,
-      editProfTax: toSetValues.proTax,
-      editLabour: toSetValues.labourWelfare,
+      editProfTax: toSetValues.profTax,
+      editLabour: toSetValues.labour,
       editDedOthers: toSetValues.othersDed,
+      editDate: toSetValues.date,
     });
   }
 
   // Delete salary Modal Api Call
 
-  deleteSalary() {
-    this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
-      $("#datatable").DataTable().clear();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
-      });
-      this.dtTrigger.next();
-    });
-    this.getSalary();
-    $("#delete_salary").modal("hide");
-    this.toastr.success("Salary is deleted", "Success");
-  }
+  // deleteSalary() {
+  //   this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
+  //     $("#datatable").DataTable().clear();
+  //     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //       dtInstance.destroy();
+  //     });
+  //     this.dtTrigger.next();
+  //   });
+  //   this.getSalary();
+  //   $("#delete_salary").modal("hide");
+  //   this.toastr.success("Salary is deleted", "Success");
+  // }
 
   //search by name
   searchName(val) {
@@ -552,7 +644,74 @@ export class EmployeeSalaryComponent
     this.rows.push(...temp);
   }
 
+  ////////////////////////////////////////
+  getSearchData(val, val1) {
+    if (val && val1) {
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        val1 = val1.toLowerCase();
+        return (
+          (d.date.toLowerCase().indexOf(val) !== -1 || !val) &&
+          (d.date.toLowerCase().indexOf(val1) !== -1 || !val1)
+        );
+      });
+
+      this.rows.push(...temp);
+    } else {
+      this.getSalary();
+    }
+  }
   //search by from value
+ Budget-Revenue-front-end
+  searchByFrom(val, val1) {
+    if (val && val1) {
+      this.disableButton = false;
+    }
+    if (val) {
+      let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
+
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        return d.date.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
+      });
+      this.rows.push(...temp);
+    } else {
+      this.getSalary();
+    }
+    $(".floating")
+      .on("focus blur", function (e) {
+        $(this)
+          .parents(".form-focus")
+          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+      })
+      .trigger("blur");
+  }
+
+  //search by To value
+  searchByTo(val, val1) {
+    if (val && val1) {
+      this.disableButton = false;
+    }
+    if (val) {
+      let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
+
+      this.rows.splice(0, this.rows.length);
+      let temp = this.srch.filter(function (d) {
+        return d.date.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
+      });
+      this.rows.push(...temp);
+    } else {
+      this.getSalary();
+    }
+    $(".floating")
+      .on("focus blur", function (e) {
+        $(this)
+          .parents(".form-focus")
+          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+      })
+      .trigger("blur");
+
   searchByFrom(val) {
     let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
     this.rows.splice(0, this.rows.length);
@@ -593,5 +752,28 @@ export class EmployeeSalaryComponent
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+  getData() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/allemployees/getallEmployee" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((res) => {
+        this.listemp = res;
+      });
+  }
+  getEmpl(employeeId, email, joinDate, firstName, role) {
+    this.employeeId = employeeId;
+    this.email = email;
+    this.joinDate = joinDate;
+    this.firstName = firstName;
+    this.role = role;
+  }
+
+  generateSlip(id) {
+    sessionStorage.setItem("slipId", id);
+    this.router.navigate(["/layout/payroll/salary-view"]);
   }
 }

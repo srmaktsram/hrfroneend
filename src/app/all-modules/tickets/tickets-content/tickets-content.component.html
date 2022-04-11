@@ -254,13 +254,13 @@
                       alt=""
                       src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
                   /></a>
-                  <a routerLink="/layout/employees/employeeprofile">{{
-                    tickets.assignedStaff
-                  }}</a>
+                  <a routerLink="/layout/employees/employeeprofile">
+                    {{ tickets.assignedStaff }}</a
+                  >
                 </h2>
               </td>
-              <td>{{ tickets.createdDate }}</td>
-              <td>{{ tickets.lastReply }}</td>
+              <td>{{ tickets.createdDate | customDate }}</td>
+              <td>{{ tickets.lastReply | customDate }}</td>
               <td>
                 <div class="dropdown action-label">
                   <a
@@ -462,7 +462,6 @@
                   formControlName="assignStaff"
                 >
                   <option>Select Staff</option>
-
                   <option
                     *ngFor="let datanew of dataarr"
                     [value]="datanew.firstName"
