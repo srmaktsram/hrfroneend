@@ -1,4 +1,5 @@
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DataTableDirective } from "angular-datatables";
@@ -20,7 +21,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   public addProjectForm: FormGroup;
   public editProjectForm: FormGroup;
   public tempId: any;
-
+  public adminId:any;
   public rows = [];
   public srch = [];
   public statusValue;
@@ -28,9 +29,12 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
   constructor(
     private formBuilder: FormBuilder,
+    private http:HttpClient,
     private toastr: ToastrService,
     private allModulesService: AllModulesService
-  ) {}
+  ) {
+    this.adminId=sessionStorage.getItem("adminId");
+  }
 
   ngOnInit() {
     this.dtOptions = {
@@ -85,11 +89,29 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     }, 1000);
   }
   getProjects() {
-    this.allModulesService.get("projects").subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/projects/getAdminproject"+"/"+this.adminId).subscribe((data:any) => {
       this.projects = data;
       this.rows = this.projects;
       this.srch = [...this.rows];
     });
+  }
+  updateStatus(val,id){
+    this.http
+
+    .patch("http://localhost:8443/admin/projects/updateProject"+"/"+id,{status:val})
+    .subscribe((data) => {
+      this.getProjects();
+    })
+
+  }
+
+  priorityStatus(val,id){
+    this.http
+
+    .patch("http://localhost:8443/admin/projects/updateProject"+"/"+id,{priority:val})
+    .subscribe((data) => {
+      this.getProjects();
+    })
   }
 
   //Edit project
@@ -99,7 +121,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       return item.id === id;
     });
     let toSetValues = this.projects[index];
-    this.editProjectForm.setValue({
+    this.editProjectForm.patchValue({
       editProjectName: toSetValues.name,
       editProjectDescription: toSetValues.description,
       editProjectEndDate: toSetValues.endDate,
@@ -122,6 +144,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       "dd-MM-yyyy"
     );
     let newProject = {
+      adminId:this.adminId,
       name: this.addProjectForm.value.projectName,
       description: this.addProjectForm.value.projectDescription,
       endDate: EndDate,
@@ -131,14 +154,15 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       teamMember: this.addProjectForm.value.addTeamMembers,
       projectId: "PRO-0012",
     };
-    this.allModulesService.add(newProject, "projects").subscribe((data) => {
+    this.http.post("http://localhost:8443/admin/projects/createProject",newProject).subscribe((data:any) => {
+      this. getProjects();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
       this.dtTrigger.next();
     });
-    this.getProjects();
+    
     this.addProjectForm.reset();
     $("#create_project").modal("hide");
     this.toastr.success("Project added sucessfully...!", "Success");
@@ -162,11 +186,11 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       priority: this.editProjectForm.value.editProjectPriority,
       teamMember: this.editProjectForm.value.editaddTeamMembers,
       projectId: this.editProjectForm.value.editProjectPriority,
-      id: this.tempId,
+     
     };
-    this.allModulesService
+    this.http
 
-      .update(editedProject, "projects")
+      .patch("http://localhost:8443/admin/projects/updateProject"+"/"+this.tempId,editedProject)
       .subscribe((data) => {
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -182,14 +206,15 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   //Delete project
   public deleteProject() {
-    this.allModulesService.delete(this.tempId, "projects").subscribe((data) => {
+    this.http.patch("http://localhost:8443/admin/projects/deleteproject"+"/"+this.tempId,{}).subscribe((data) => {
+      this.getProjects();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
       this.dtTrigger.next();
     });
-    this.getProjects();
+   
     $("#delete_project").modal("hide");
     this.toastr.success("Project deleted sucessfully...!", "Success");
   }
