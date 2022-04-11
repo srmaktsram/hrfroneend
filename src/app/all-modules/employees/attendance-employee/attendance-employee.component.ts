@@ -67,6 +67,7 @@ export class AttendanceEmployeeComponent implements OnInit {
       //console.log(data);
       this.data = data
       this.punch = this.data.punchStatus
+      this.loadData()
     })
 
   }
