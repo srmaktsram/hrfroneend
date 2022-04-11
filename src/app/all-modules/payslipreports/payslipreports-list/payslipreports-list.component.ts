@@ -6,52 +6,58 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 declare const $: any;
 @Component({
-  selector: 'app-payslipreports-list',
-  templateUrl: './payslipreports-list.component.html',
-  styleUrls: ['./payslipreports-list.component.css']
+  selector: "app-payslipreports-list",
+  templateUrl: "./payslipreports-list.component.html",
+  styleUrls: ["./payslipreports-list.component.css"],
 })
-export class PayslipreportsListComponent implements OnInit, OnDestroy    {
-@ViewChild(DataTableDirective, { static: false })
+export class PayslipreportsListComponent implements OnInit, OnDestroy {
+  @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject();
   // public lstUseralljobs: any[];
-	public url: any = "payslip";
-	public tempId: any;
-    public editId: any;
-    public lstPaylip;
-       public rows = [];
+  public url: any = "payslip";
+  public tempId: any;
+  public editId: any;
+  public lstPaylip;
+  public rows = [];
   public srch = [];
   constructor(
-  	private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  	) { }
+  ) {}
 
   ngOnInit() {
-  	// Floating Label
+    // Floating Label
 
-	if($('.floating').length > 0 ){
-		$('.floating').on('focus blur', function (e) {
-		$(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
-		}).trigger('blur');
-	}
-  	this.dtOptions = {
+    if ($(".floating").length > 0) {
+      $(".floating")
+        .on("focus blur", function (e) {
+          $(this)
+            .parents(".form-focus")
+            .toggleClass(
+              "focused",
+              e.type === "focus" || this.value.length > 0
+            );
+        })
+        .trigger("blur");
+    }
+    this.dtOptions = {
       // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
-  	this.LoadPaylip();
+    this.LoadPaylip();
   }
-    // Get department list  Api Call
+  // Get department list  Api Call
   LoadPaylip() {
     this.srvModuleService.get(this.url).subscribe((data) => {
       this.lstPaylip = data;
       this.dtTrigger.next();
       this.rows = this.lstPaylip;
       this.srch = [...this.rows];
-     
-      });
+    });
   }
 
   //search by designation
@@ -84,9 +90,8 @@ export class PayslipreportsListComponent implements OnInit, OnDestroy    {
     this.rows.push(...temp);
   }
 
-   ngOnDestroy(): void {
+  ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
-
 }

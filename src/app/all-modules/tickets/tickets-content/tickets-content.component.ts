@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import {
+  COMPILER_OPTIONS,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { AllModulesService } from "../../all-modules.service";
 import {
   FormBuilder,
@@ -25,6 +31,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   public dtElement: DataTableDirective;
   public url: any = "tickets";
   public allTickets: any = [];
+
   public addTicketForm: FormGroup;
   public editTicketForm: FormGroup;
   public editId: any;
@@ -58,11 +65,11 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private toastr: ToastrService
   ) {
-    this.loadEmployee();
-
     this.user_type = sessionStorage.getItem("user_type");
     this.adminId = sessionStorage.getItem("adminId");
-    this.employeeid = sessionStorage.getItem("empployee_login_id");
+    this.loadEmployee();
+
+    this.employeeid = sessionStorage.getItem("employee_login_id");
     if (this.user_type == "admin") {
       this.check = true;
     }
@@ -75,7 +82,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
           "/" +
           this.adminId
       )
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         this.dataarr = data;
 
         this.srch = [...this.dataarr];
@@ -163,7 +170,6 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
           this.countResolved = res.countResolved;
           this.countOpen = res.countOpen;
           this.countPending = res.countPending;
-          console.log("tickets details", res);
         });
     } else if (this.user_type == "admin") {
       this.http
@@ -177,7 +183,6 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
           this.countResolved = res.countResolved;
           this.countOpen = res.countOpen;
           this.countPending = res.countPending;
-          console.log("tickets details", res);
         });
     }
   }
@@ -228,27 +233,28 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       this.markFormGroupTouched(this.addTicketForm);
       return;
     }
-    if (this.addTicketForm.valid) {
-      // let created = this.pipe.transform(
-      //   "12-05-2020",
-      //   "dd-MM-yyyy"
-      // );
-      // let lastDate = this.pipe.transform(
-      //   "13-05-2020",
-      //   "dd-MM-yyyy"
-      // );
-      let obj = {
-        ticketSubject: this.addTicketForm.value.ticketSubject,
-        ticketId: this.addTicketForm.value.ticketId,
-        assignedStaff: this.addTicketForm.value.assignStaff,
-        client: this.addTicketForm.value.clientName,
-        cc: this.addTicketForm.value.ccName,
-        priority: this.addTicketForm.value.PriorityName,
-        assigne: this.addTicketForm.value.AssignName,
-        addfollow: this.addTicketForm.value.addFlowers,
-        adminId: sessionStorage.getItem("adminId"),
-        employeeid: sessionStorage.getItem("empployee_login_id"),
-      };
+
+    // let created = this.pipe.transform(
+    //   "12-05-2020",
+    //   "dd-MM-yyyy"
+    // );
+    // let lastDate = this.pipe.transform(
+    //   "13-05-2020",
+    //   "dd-MM-yyyy"
+    // );
+    let obj = {
+      ticketSubject: this.addTicketForm.value.ticketSubject,
+      ticketId: this.addTicketForm.value.ticketId,
+      assignedStaff: this.addTicketForm.value.assignStaff,
+      client: this.addTicketForm.value.clientName,
+      cc: this.addTicketForm.value.ccName,
+      priority: this.addTicketForm.value.PriorityName,
+      assigne: this.addTicketForm.value.AssignName,
+      addfollow: this.addTicketForm.value.addFlowers,
+      adminId: sessionStorage.getItem("adminId"),
+      employeeid: sessionStorage.getItem("employee_login_id"),
+    };
+    if (this.user_type == "employee") {
       this.http
         .post("http://localhost:8443/admin/tickets/createTickets", obj)
         .subscribe((data) => {
