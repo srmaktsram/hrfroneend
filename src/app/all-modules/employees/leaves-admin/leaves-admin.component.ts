@@ -113,6 +113,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         "http://localhost:8443/admin/leaves/searchleaves" + "/" + this.adminId
       )
       .subscribe((data) => {
+        console.log("adminpgllll", data)
         this.lstLeave = data;
         this.rows = this.lstLeave;
         this.srch = [...this.rows];
@@ -144,7 +145,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         "dd-MM-yyyy"
       );
       let obj = {
-        // employeeName: "Mike Litorus",
+
         // designation: "web developer",
         leaveType: this.addLeaveadminForm.value.LeaveType,
         from: fromDate,
@@ -342,7 +343,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   }
 
   getId(id) {
-    // //console.log("bbbbbbb", id)
+    console.log("bbbbbbb", id)
     sessionStorage.setItem("empid", id);
     this.router.navigate(["/layout/employees/employeeprofile"]);
   }
