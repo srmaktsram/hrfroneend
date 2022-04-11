@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -26,9 +27,13 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   public tempId: any;
   public rows = [];
   public srch = [];
+  public adminId:any;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
-  constructor(private allModuleService: AllModulesService) {}
+  constructor(private allModuleService: AllModulesService,
+    private http:HttpClient) {
+    this.adminId=sessionStorage.getItem("adminId")
+  }
 
   ngOnInit() {
     $(".floating")
@@ -48,7 +53,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   }
 
   getExpensesReport() {
-    this.allModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/").subscribe((data) => {
       this.allExpensesReport = data;
       this.dtTrigger.next();
       this.rows = this.allExpensesReport;

@@ -20,6 +20,7 @@ export class EmployeePageContentComponent implements OnInit {
   public url: any = "employeelist";
   public tempId: any;
   public editId: any;
+  public id: any;
   public departments: any;
   public designations: any;
   public addEmployeeForm: FormGroup;
@@ -104,7 +105,8 @@ export class EmployeePageContentComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router
   ) {
-    this.adminId = sessionStorage.getItem("companyId");
+    // this.adminId = sessionStorage.getItem("companyId");
+    this.adminId = sessionStorage.getItem("adminId");
     this.getDesignation();
     this.getDepartments();
   }
@@ -135,7 +137,6 @@ export class EmployeePageContentComponent implements OnInit {
       Email: ["", [Validators.required]],
       PhoneNumber: ["", [Validators.required]],
       JoinDate: ["", [Validators.required]],
-
       EmployeeID: ["", [Validators.required]],
     });
 
@@ -157,10 +158,15 @@ export class EmployeePageContentComponent implements OnInit {
 
   // Get Employee  Api Call
   loadEmployee() {
+
     this.http
-      .get("http://localhost:8443/admin/allemployees/getallEmployee")
+      .get(
+        "http://localhost:8443/admin/allemployees/getallEmployee" +
+        "/" +
+        this.adminId
+      )
       .subscribe((data) => {
-        //console.log(data);
+        console.log("getApi", data);
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
@@ -214,7 +220,7 @@ export class EmployeePageContentComponent implements OnInit {
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
       .subscribe((data) => {
-        //console.log(data);
+        console.log("postApi", data);
         this.loadEmployee();
         // $("#datatable").DataTable().clear();
         // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -820,9 +826,9 @@ export class EmployeePageContentComponent implements OnInit {
   }
 
   getId(id) {
-    //console.log("bbbbbbbpage", id)
-    sessionStorage.setItem("emp", id)
-    this.router.navigate(["/layout/employees/employeeprofile"])
+    // //console.log("bbbbbbb", id)
+    sessionStorage.setItem("empid", id);
+    this.router.navigate(["/layout/employees/employeeprofile"]);
   }
   // ngOnDestroy(): void {
 

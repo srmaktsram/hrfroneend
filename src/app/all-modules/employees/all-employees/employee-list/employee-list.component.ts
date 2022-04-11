@@ -215,7 +215,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Email: ["", [Validators.required]],
       PhoneNumber: ["", [Validators.required]],
       JoinDate: ["", [Validators.required]],
-
       EmployeeID: ["", [Validators.required]],
     });
 
@@ -231,7 +230,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Email: ["", [Validators.required]],
       PhoneNumber: ["", [Validators.required]],
       JoinDate: ["", [Validators.required]],
-
       EmployeeID: ["", [Validators.required]],
     });
   }
@@ -268,7 +266,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.adminId
       )
       .subscribe((data) => {
-        //console.log(data);
+        console.log("getApi", data);
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
@@ -305,7 +303,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       phone: this.addEmployeeForm.value.PhoneNumber,
       department: this.addEmployeeForm.value.DepartmentName,
       designation: this.addEmployeeForm.value.Designation,
-      mobile: this.addEmployeeForm.value.mobile,
+      // mobile: this.addEmployeeForm.value.mobile,
       role: this.addEmployeeForm.value.role,
       Holidays: this.Holidays,
       Leaves: this.Leaves,
@@ -317,16 +315,13 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       TimingSheets: this.TimingSheets,
       adminId: this.adminId,
     };
+    console.log("op", obj)
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
       .subscribe((data) => {
-        //console.log(data);
+        console.log("postApi", data);
         this.loadEmployee();
-        // $("#datatable").DataTable().clear();
-        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        //   dtInstance.destroy();
-        // });
-        // this.dtTrigger.next();
+
       });
 
     $("#add_employee").modal("hide");

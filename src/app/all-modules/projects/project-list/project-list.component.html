@@ -168,11 +168,11 @@
                                         data-bs-toggle="dropdown" aria-expanded="false"><i
                                             class="fa fa-dot-circle-o text-danger"></i>{{project.priority}}</a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                        <a class="dropdown-item" (click)="priorityStatus('High',project.id)"><i class="fa fa-dot-circle-o text-danger"></i>
                                             High</a>
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-warning"></i>
+                                        <a class="dropdown-item" (click)="priorityStatus('Medium',project.id)"><i class="fa fa-dot-circle-o text-warning"></i>
                                             Medium</a>
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i> Low</a>
+                                        <a class="dropdown-item"(click)="priorityStatus('Low',project.id)"><i class="fa fa-dot-circle-o text-success"></i> Low</a>
                                     </div>
                                 </div>
                             </td>
@@ -180,11 +180,12 @@
                                 <div class="dropdown action-label">
                                     <a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false"><i
-                                            class="fa fa-dot-circle-o text-success"></i> Active </a>
+                                            class="fa fa-dot-circle-o text-success"></i> {{project.status}} </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
+                                        <a class="dropdown-item" (click)="updateStatus('Active',project.id)"
+                                        ><i class="fa fa-dot-circle-o text-success"></i>
                                             Active</a>
-                                        <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                        <a class="dropdown-item" (click)="updateStatus('Inactive',project.id)"><i class="fa fa-dot-circle-o text-danger"></i>
                                             Inactive</a>
                                     </div>
                                 </div>

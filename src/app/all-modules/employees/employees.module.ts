@@ -23,10 +23,10 @@ import { SharingModule } from 'src/app/sharing/sharing.module';
 import { PickListModule } from 'primeng/picklist';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { ProductionPipe } from 'src/app/core/_pipe/employeeattandance';
+import { BreakTime, ProductionPipe } from 'src/assets/pipes/employeeattandance';
 
 @NgModule({
-  declarations: [EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeavesEmployeeComponent, LeaveSettingsComponent, AttendanceAdminComponent, AttendanceEmployeeComponent, DepartmentsComponent, DesignationComponent, TimesheetComponent, OvertimeComponent, ProductionPipe],
+  declarations: [EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeavesEmployeeComponent, LeaveSettingsComponent, AttendanceAdminComponent, AttendanceEmployeeComponent, DepartmentsComponent, DesignationComponent, TimesheetComponent, OvertimeComponent, ProductionPipe, BreakTime],
   imports: [
     CommonModule,
     FormsModule,

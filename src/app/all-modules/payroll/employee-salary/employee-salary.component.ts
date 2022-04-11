@@ -663,6 +663,7 @@ export class EmployeeSalaryComponent
     }
   }
   //search by from value
+ Budget-Revenue-front-end
   searchByFrom(val, val1) {
     if (val && val1) {
       this.disableButton = false;
@@ -710,6 +711,38 @@ export class EmployeeSalaryComponent
           .toggleClass("focused", e.type === "focus" || this.value.length > 0);
       })
       .trigger("blur");
+
+  searchByFrom(val) {
+    let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      return d.joinDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
+    });
+    this.rows.push(...temp);
+    // $(".floating")
+    //   .on("focus blur", function (e) {
+    //     $(this)
+    //       .parents(".form-focus")
+    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+    //   })
+    //   .trigger("blur");
+  }
+
+  //search by To value
+  searchByTo(val) {
+    let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      return d.joinDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
+    });
+    this.rows.push(...temp);
+    // $(".floating")
+    //   .on("focus blur", function (e) {
+    //     $(this)
+    //       .parents(".form-focus")
+    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+    //   })
+    //   .trigger("blur");
   }
 
   //getting the status value

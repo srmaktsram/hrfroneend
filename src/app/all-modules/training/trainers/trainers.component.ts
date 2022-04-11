@@ -4,6 +4,7 @@ import { ToastrService } from "ngx-toastr";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -23,14 +24,16 @@ export class TrainersComponent implements OnInit, OnDestroy {
   public srch = [];
   public tempId: any;
   public editId: any;
-
+  public id: any;
+  public adminId = sessionStorage.getItem("adminId");
   public addTrainerForm: FormGroup;
   public editTrainerForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private http: HttpClient,
+  ) { }
 
   ngOnInit() {
     this.loadtrainer();
@@ -63,7 +66,8 @@ export class TrainersComponent implements OnInit, OnDestroy {
 
   // Get  trainer Api Call
   loadtrainer() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/training/trainers/getData" + "/" + this.adminId).subscribe((data: any) => {
+      console.log("getApi", data)
       this.lstTrainer = data;
       this.dtTrigger.next();
       this.rows = this.lstTrainer;
@@ -82,27 +86,30 @@ export class TrainersComponent implements OnInit, OnDestroy {
 
   // Add  goal type  Modal Api Call
   addTrainer() {
-    if(this.addTrainerForm.invalid){
+    if (this.addTrainerForm.invalid) {
       this.markFormGroupTouched(this.addTrainerForm)
       return
     }
     if (this.addTrainerForm.valid) {
       let obj = {
-        name: this.addTrainerForm.value.firstName,
-        lname: this.addTrainerForm.value.lastName,
-        mail: this.addTrainerForm.value.Email,
+        firstName: this.addTrainerForm.value.firstName,
+        lastName: this.addTrainerForm.value.lastName,
+        email: this.addTrainerForm.value.Email,
         role: this.addTrainerForm.value.RoleName,
-        contactNumber: this.addTrainerForm.value.phoneNumber,
+        phone: this.addTrainerForm.value.phoneNumber,
         description: this.addTrainerForm.value.Description,
         status: this.addTrainerForm.value.StatusName,
-        id: 0,
+        adminId: this.adminId
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      console.log("obj", obj)
+      this.http.post("http://localhost:8443/admin/training/trainers/create", obj).subscribe((data) => {
+        console.log(data, "postApi.......")
+        this.loadtrainer();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
       });
-      this.loadtrainer();
+
       $("#add_trainer").modal("hide");
       this.addTrainerForm.reset();
       this.toastr.success("Trainer added sucessfully...!", "Success");
@@ -111,22 +118,25 @@ export class TrainersComponent implements OnInit, OnDestroy {
 
   editTrainer() {
     if (this.editTrainerForm.valid) {
+      this.id = this.editId
       let obj = {
-        name: this.editTrainerForm.value.firstName,
-        lname: this.editTrainerForm.value.lastName,
+        firstName: this.editTrainerForm.value.firstName,
+        lastName: this.editTrainerForm.value.lastName,
         mail: this.editTrainerForm.value.Email,
         role: this.editTrainerForm.value.RoleName,
-        contactNumber: this.editTrainerForm.value.phoneNumber,
+        phone: this.editTrainerForm.value.phoneNumber,
         description: this.editTrainerForm.value.Description,
         status: this.editTrainerForm.value.StatusName,
-        id: this.editId,
+
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+      this.http.patch("http://localhost:8443/admin/training/trainers/update" + "/" + this.id, obj).subscribe((data: any) => {
+        console.log("updateApi", data)
+        this.loadtrainer();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
       });
-      this.loadtrainer();
+
       $("#edit_trainer").modal("hide");
       this.toastr.success("Trainer Updated sucessfully...!", "Success");
     }
@@ -139,18 +149,23 @@ export class TrainersComponent implements OnInit, OnDestroy {
       return item.id === value;
     });
     let toSetValues = this.lstTrainer[index];
-    this.editTrainerForm.setValue({
-      firstName: toSetValues.name,
-      lastName: toSetValues.lname,
-      Email: toSetValues.mail,
+    this.editTrainerForm.patchValue({
+      firstName: toSetValues.firstName,
+      lastName: toSetValues.lastName,
+      Email: toSetValues.email,
       RoleName: toSetValues.role,
-      phoneNumber: toSetValues.contactNumber,
+      phoneNumber: toSetValues.phone,
       Description: toSetValues.description,
       StatusName: toSetValues.status,
     });
   }
   deleteTrainer() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    this.id = this.tempId;
+    let obj = {
+      status: 2,
+    }
+    this.http.patch("http://localhost:8443/admin/training/trainers/delete" + "/" + this.id, obj).subscribe((data: any) => {
+      console.log("deleteApi", data)
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });

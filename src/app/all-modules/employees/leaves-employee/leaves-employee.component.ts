@@ -35,7 +35,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadLeaves();
@@ -74,7 +74,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/employee/leaves/getleaves")
       .subscribe((data) => {
         this.lstLeave = data;
-        //console.log("getdata", data);
+        console.log("getdata", data);
         this.dtTrigger.next();
         this.rows = this.lstLeave;
         this.srch = [...this.rows];
@@ -120,6 +120,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
         .post("http://localhost:8443/employee/leaves/add_leave", obj)
         .subscribe((data) => {
           //console.log("postApi", data);
+          console.log("pkachu", obj)
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.destroy();
             this.loadLeaves();

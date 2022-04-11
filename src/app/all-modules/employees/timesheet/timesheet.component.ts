@@ -24,6 +24,7 @@ export class TimesheetComponent implements OnInit {
   public editId: any;
   public adminId = sessionStorage.getItem("adminId")
   public employeeid = sessionStorage.getItem("employee_login_id")
+  public employeeName = sessionStorage.getItem("firstName")
   public rows = [];
   public srch = [];
   public statusValue;
@@ -97,6 +98,7 @@ export class TimesheetComponent implements OnInit {
 
 
   // Add Department  Modal Api Call
+
   addTimesheet() {
     if (this.addTimesheetForm.invalid) {
       this.markFormGroupTouched(this.addTimesheetForm)
@@ -111,12 +113,14 @@ export class TimesheetComponent implements OnInit {
         this.addTimesheetForm.value.DeadlineName,
         "dd-MM-yyyy"
       );
+
       // this.adminId = sessionStorage.getItem("adminId");
       // this.employeeid = sessionStorage.getItem("employee_login_id");
+
       let adminId = this.adminId;
       let employeeid = this.employeeid;
       let obj = {
-        //  employee: "John doe Galaviz",
+        employeeName: this.employeeName,
         project: this.addTimesheetForm.value.Project,
         date: Datetime,
         deadline: deadLine,
@@ -134,6 +138,7 @@ export class TimesheetComponent implements OnInit {
 
       this.http.post("http://localhost:8443/admin/timesheet/create", obj).subscribe((res) => {
         console.log("postApi", res)
+        console.log("kjdkjfskjdhgdgjkdf", obj)
 
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

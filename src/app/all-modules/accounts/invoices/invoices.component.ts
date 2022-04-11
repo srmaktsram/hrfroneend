@@ -53,12 +53,19 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   //get all invoices
   getAllInvoices() {
     let adminId=sessionStorage.getItem("adminId")
-    this.http.get("http://localhost:8443/admin/invoices/getInvoices"+"/"+adminId).subscribe((res:any) => {
+    this.http.get("http://localhost:8443/admin/invoices/adminGetInvoices"+"/"+adminId).subscribe((res:any) => {
       this.invoices = res.data;
-      this.dtTrigger.next();
+     
       this.rows = this.invoices;
       this.srch = [...this.rows];
     });
+  }
+
+  updateStatus(val,id){
+    this.http.patch("http://localhost:8443/admin/invoices/updateInvoices"+"/"+id,{status:val}).subscribe((res:any)=>{
+      console.log(res);
+      this.getAllInvoices()
+    })
   }
 
   //getting id for selected row

@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -20,7 +21,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   public addProjectForm: FormGroup;
   public editProjectForm: FormGroup;
   public tempId: any;
-
+public adminId:any;
   public rows = [];
   public srch = [];
   public statusValue;
@@ -29,8 +30,11 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   constructor(
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
+    private http:HttpClient,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.adminId=sessionStorage.getItem("adminId")
+  }
 
   ngOnInit() {
     $(document).ready(function () {
@@ -39,32 +43,32 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
     this.getProjects();
     //Add Projects form
     this.addProjectForm = this.formBuilder.group({
-      projectName: ["", [Validators.required]],
+      projectName: ["",[Validators.required]],
       projectDescription: ["", [Validators.required]],
       projectStartDate: ["", [Validators.required]],
       projectEndDate: ["", [Validators.required]],
-      projectPriority: ["", [Validators.required]],
-      projectLeader: ["", [Validators.required]],
-      addTeamMembers: ["", [Validators.required]],
-      projectId: ["", [Validators.required]],
-      id: ["", [Validators.required]],
+      projectPriority: ["",],
+      projectLeader: ["", [Validators.required] ],
+      addTeamMembers: ["",  [Validators.required]],
+      projectId: ["",],
+      id: ["",],
     });
 
     //Edit Projects Form
     this.editProjectForm = this.formBuilder.group({
-      editProjectName: ["", [Validators.required]],
-      editProjectDescription: ["", [Validators.required]],
-      editProjectStartDate: ["", [Validators.required]],
-      editProjectEndDate: ["", [Validators.required]],
-      editProjectPriority: ["", [Validators.required]],
-      editaddTeamMembers: ["", [Validators.required]],
-      editProjectId: ["", [Validators.required]],
-      editId: ["", [Validators.required]],
+      editProjectName: ["",],
+      editProjectDescription: ["",],
+      editProjectStartDate: ["",],
+      editProjectEndDate: ["",],
+      editProjectPriority: ["",],
+      editaddTeamMembers: ["",],
+      editProjectId: ["",],
+      editId: ["",],
     });
   }
 
   getProjects() {
-    this.allModulesService.get("projects").subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/projects/getAdminproject"+"/"+this.adminId).subscribe((data:any) => {
       this.projects = data;
       this.dtTrigger.next();
       this.rows = this.projects;
@@ -85,6 +89,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   //Create New Project
   public addProject() {
     if(this.addProjectForm.invalid){
+     
       this.markFormGroupTouched(this.addProjectForm)
       return
     }
@@ -97,6 +102,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       "dd-MM-yyyy"
     );
     let newProject = {
+      adminId:this.adminId,
       name: this.addProjectForm.value.projectName,
       description: this.addProjectForm.value.projectDescription,
       endDate: EndDate,
@@ -105,13 +111,16 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       projectleader: this.addProjectForm.value.projectLeader,
       teamMember: this.addProjectForm.value.addTeamMembers,
       projectId: "PRO-0012",
-      id: "",
+    
     };
-    this.allModulesService.add(newProject, "projects").subscribe();
-    this.getProjects();
-    this.addProjectForm.reset();
-    $("#create_project").modal("hide");
-    this.toastr.success("Project added sucessfully...!", "Success");
+    this.http.post("http://localhost:8443/admin/projects/createProject",newProject).subscribe((res:any)=>{
+      console.log(res)
+      this.getProjects();
+      this.addProjectForm.reset();
+      // $("#create_project").modal("hide");
+      this.toastr.success("Project added sucessfully...!", "Success");
+    });
+   
   }
 
   //Edit project
@@ -121,7 +130,8 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       return item.id === id;
     });
     let toSetValues = this.projects[index];
-    this.editProjectForm.setValue({
+    console.log(toSetValues)
+    this.editProjectForm.patchValue({
       editProjectName: toSetValues.name,
       editProjectDescription: toSetValues.description,
       editProjectEndDate: toSetValues.endDate,
@@ -151,21 +161,29 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       priority: this.editProjectForm.value.editProjectPriority,
       teamMember: this.editProjectForm.value.editaddTeamMembers,
       projectId: this.editProjectForm.value.editProjectPriority,
-      id: this.tempId,
+      
     };
-    this.allModulesService.update(editedProject, "projects").subscribe();
-    this.getProjects();
-    this.editProjectForm.reset();
-    $("#edit_project").modal("hide");
-    this.toastr.success("Project updated sucessfully...!", "Success");
+   
+    this.http.patch("http://localhost:8443/admin/projects/updateProject"+"/"+this.tempId,editedProject).subscribe((res:any)=>{
+      console.log(res)
+      this.getProjects();
+      this.editProjectForm.reset();
+      $("#edit_project").modal("hide");
+      this.toastr.success("Project updated sucessfully...!", "Success");
+    });
+   
   }
 
   //Delete project
   public deleteProject() {
-    this.allModulesService.delete(this.tempId, "projects").subscribe();
-    this.getProjects();
-    $("#delete_project").modal("hide");
-    this.toastr.success("Project deleted sucessfully...!", "Success");
+   
+    this.http.patch("http://localhost:8443/admin/projects/deleteproject"+"/"+this.tempId,{}).subscribe((res:any)=>{
+    
+      this.getProjects();
+      $("#delete_project").modal("hide");
+      this.toastr.success("Project deleted sucessfully...!", "Success");
+    });
+   
   }
 
   //search by name

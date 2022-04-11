@@ -5,20 +5,22 @@ import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 declare const $: any;
 @Component({
   selector: 'app-shift-list',
   templateUrl: './shift-list.component.html',
   styleUrls: ['./shift-list.component.css']
 })
-export class ShiftListComponent implements OnInit, OnDestroy  {
+export class ShiftListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject();
-   public pipe = new DatePipe("en-US");
+  public pipe = new DatePipe("en-US");
   public url: any = "shiftlist";
   public tempId: any;
+  public adminId = sessionStorage.getItem("adminId");
   public editId: any;
   public addRevenueForm: FormGroup;
   public editRevenueForm: FormGroup;
@@ -27,26 +29,27 @@ export class ShiftListComponent implements OnInit, OnDestroy  {
   public rows = [];
   public srch = [];
   constructor(
-  	private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  	) { }
+    private toastr: ToastrService,
+    private http: HttpClient,
+  ) { }
 
   ngOnInit() {
-   // Floating Label
+    // Floating Label
 
-  if($('.floating').length > 0 ){
-    $('.floating').on('focus blur', function (e) {
-    $(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
-    }).trigger('blur');
-  }
-  	this.dtOptions = {
+    if ($('.floating').length > 0) {
+      $('.floating').on('focus blur', function (e) {
+        $(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
+      }).trigger('blur');
+    }
+    this.dtOptions = {
       // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
-  	this.LoadRevenue();
-  	this.addRevenueForm = this.formBuilder.group({
+    this.LoadRevenue();
+    this.addRevenueForm = this.formBuilder.group({
       ShiftName: ["", [Validators.required]],
       MinStartTime: ["", [Validators.required]],
       StartTime: ["", [Validators.required]],
@@ -56,7 +59,7 @@ export class ShiftListComponent implements OnInit, OnDestroy  {
       MaxEndTime: ["", [Validators.required]],
       BreakTime: ["", [Validators.required]],
     });
-     this.editRevenueForm = this.formBuilder.group({
+    this.editRevenueForm = this.formBuilder.group({
       ShiftName: ["", [Validators.required]],
       MinStartTime: ["", [Validators.required]],
       StartTime: ["", [Validators.required]],
@@ -67,14 +70,15 @@ export class ShiftListComponent implements OnInit, OnDestroy  {
       BreakTime: ["", [Validators.required]],
     });
   }
-   // Get department list  Api Call
+  // Get department list  Api Call
   LoadRevenue() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstRevenue = data;
+    this.http.get("http://localhost:8443/admin/shifts/getShifts" + "/" + this.adminId).subscribe((res: any) => {
+      console.log("getApi", res)
+      this.lstRevenue = res;
       this.dtTrigger.next();
-       this.rows = this.lstRevenue;
+      this.rows = this.lstRevenue;
       this.srch = [...this.rows];
-      });
+    });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -87,32 +91,36 @@ export class ShiftListComponent implements OnInit, OnDestroy  {
   }
 
 
-      // Add Department  Modal Api Call
+  // Add Department  Modal Api Call
   addRevenue() {
-    if(this.addRevenueForm.invalid){
-      this.markFormGroupTouched(this.addRevenueForm) 
+    if (this.addRevenueForm.invalid) {
+      this.markFormGroupTouched(this.addRevenueForm)
       return
     }
     if (this.addRevenueForm.valid) {
+
       let obj = {
-        shiftname: this.addRevenueForm.value.ShiftName,
-        minstarttime: this.addRevenueForm.value.MinStartTime,
-        starttime: this.addRevenueForm.value.StartTime,
-        maxstarttime: this.addRevenueForm.value.MaxStartTime,
-        minendtime: this.addRevenueForm.value.MinEndTime,
-        endtime: this.addRevenueForm.value.EndTime,
-        maxendtime: this.addRevenueForm.value.MaxEndTime,
-        breaktime: this.addRevenueForm.value.BreakTime,
-        id: 0,
-        status: "Active"
+        shiftName: this.addRevenueForm.value.ShiftName,
+        minStartTime: this.addRevenueForm.value.MinStartTime,
+        startTime: this.addRevenueForm.value.StartTime,
+        maxStartTime: this.addRevenueForm.value.MaxStartTime,
+        minEndTime: this.addRevenueForm.value.MinEndTime,
+        endTime: this.addRevenueForm.value.EndTime,
+        maxEndTime: this.addRevenueForm.value.MaxEndTime,
+        breakTime: this.addRevenueForm.value.BreakTime,
+        adminId: this.adminId,
+        // id: 0,
+        // status: "Active"
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
-      	this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.http.post("http://localhost:8443/admin/shifts/createShift", obj).subscribe((res) => {
+        console.log("postApi", res)
+        this.LoadRevenue();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
-       
+
       });
-      this.LoadRevenue();
+
       $("#add_shift").modal("hide");
       this.addRevenueForm.reset();
       this.toastr.success("Shift-list added sucessfully...!", "Success");
@@ -121,59 +129,66 @@ export class ShiftListComponent implements OnInit, OnDestroy  {
 
   editRevenue() {
     if (this.editRevenueForm.valid) {
+      let id = this.editId
       let obj = {
-        shiftname: this.editRevenueForm.value.ShiftName,
-        minstarttime: this.editRevenueForm.value.MinStartTime,
-        starttime: this.editRevenueForm.value.StartTime,
-        maxstarttime: this.editRevenueForm.value.MaxStartTime,
-        minendtime: this.editRevenueForm.value.MinEndTime,
-        endtime: this.editRevenueForm.value.EndTime,
-        maxendtime: this.editRevenueForm.value.MaxEndTime,
-        breaktime: this.editRevenueForm.value.BreakTime,
-        id: this.editId,
-        status: "Active"
+        shiftName: this.editRevenueForm.value.ShiftName,
+        minStartTime: this.editRevenueForm.value.MinStartTime,
+        startTime: this.editRevenueForm.value.StartTime,
+        maxStartTime: this.editRevenueForm.value.MaxStartTime,
+        minEndTime: this.editRevenueForm.value.MinEndTime,
+        endTime: this.editRevenueForm.value.EndTime,
+        maxEndTime: this.editRevenueForm.value.MaxEndTime,
+        breakTime: this.editRevenueForm.value.BreakTime,
+
+        // status: "Active"
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {  
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      this.http.patch("http://localhost:8443/admin/shifts/updateShift" + "/" + id, obj).subscribe((res) => {
+        console.log("updateApi", res)
+        this.LoadRevenue();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
-        });     
+        });
       });
-      this.LoadRevenue();
+
       $("#edit_shift").modal("hide");
       this.toastr.success("Budget-list Updated sucessfully...!", "Success");
     }
   }
-   // To Get The department Edit Id And Set Values To Edit Modal Form
+  // To Get The department Edit Id And Set Values To Edit Modal Form
   edit(value) {
-  	this.editedvalue = value.ShiftName
+    this.editedvalue = value.ShiftName
     this.editId = value.id;
     const index = this.lstRevenue.findIndex((item) => {
       return item.id === value.id;
     });
     let toSetValues = this.lstRevenue[index];
     this.editRevenueForm.setValue({
-      ShiftName: toSetValues.shiftname,
-      MinStartTime: toSetValues.minstarttime,
-      StartTime: toSetValues.starttime,
-      MaxStartTime: toSetValues.maxstarttime,
-      MinEndTime: toSetValues.minendtime,
-      EndTime: toSetValues.endtime,
-      MaxEndTime: toSetValues.maxendtime,
-      BreakTime: toSetValues.breaktime,
+      ShiftName: toSetValues.shiftName,
+      MinStartTime: toSetValues.minStartTime,
+      StartTime: toSetValues.startTime,
+      MaxStartTime: toSetValues.maxStartTime,
+      MinEndTime: toSetValues.minEndTime,
+      EndTime: toSetValues.endTime,
+      MaxEndTime: toSetValues.maxEndTime,
+      BreakTime: toSetValues.breakTime,
     });
   }
 
-     deleteRevenue() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
-       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-        });
+  deleteRevenue() {
+    let obj = {
+      status: 2
+    }
+    this.http.patch("http://localhost:8443/admin/shifts/deleteShift" + "/" + this.tempId, obj).subscribe((res) => {
+      console.log("deliteApi", res)
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+      });
       this.LoadRevenue();
       $("#delete_employee").modal("hide");
       this.toastr.success("Budget-revenue deleted sucessfully..!", "Success");
     });
   }
-   ngOnDestroy(): void {
+  ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }

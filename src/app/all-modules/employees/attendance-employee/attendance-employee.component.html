@@ -229,11 +229,26 @@
                             <td>{{row.date}}</td>
 
 
+                            <td>{{row.punch[0].time}}</td>
+
+
+                            <td>
+                                <ng-container *ngIf="row.punch[row.punch.length-1].status==1">
+                                    {{row.punch[row.punch.length-1].time}}
+                                </ng-container>
+
+                                <ng-container *ngIf="row.punch[row.punch.length-1].status==0">
+                                    {{row.punch[row.punch.length-2].time}}
+                                </ng-container>
+                            </td>
+
+
+
                             <td>{{row.punch |production}}</td>
-                            <td>{{row.punch |production}}</td>
-                            <td>{{row.punch |production}}</td>
-                            <td>{{row.break}}</td>
-                            <td>{{row.Overtime}}</td>
+                            <td>{{row.punch|breaktime}}</td>
+                            <ng-container *ngIf="(row.punch |production)>8">
+                                <td>{{(row.punch |production)-8}}</td>
+                            </ng-container>
                         </tr>
                         <!-- <tr>
                             <td>2</td>

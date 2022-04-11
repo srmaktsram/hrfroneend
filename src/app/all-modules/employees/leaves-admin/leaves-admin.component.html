@@ -89,7 +89,7 @@
                 <label class="focus-label">From</label>
             </div>
         </div>
-        
+
         <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
             <div class="form-group form-focus">
                 <div class="cal-icon">
@@ -127,10 +127,11 @@
                         <tr *ngFor="let row of lstLeave;let i = index">
                             <td>
                                 <h2 class="table-avatar">
-                                    <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
+                                    <a (click)="getId(row.id)" (click)="getId(row.id)" class="avatar"><img alt=""
                                             src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
-                                    <a
-                                        routerLink="/layout/employees/employeeprofile">{{row.employeeName}}<span>{{row.designation}}</span></a>
+                                    <a (click)="getId(row.id)">{{row.employeeName}}<span>{{row.designation}}</span></a>
+
+
                                 </h2>
                             </td>
                             <td>{{row.leaveType}}</td>
@@ -140,8 +141,8 @@
                             <td>{{row.reason}}</td>
                             <td class="text-center">
                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
+                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-dot-circle-o text-purple"></i>{{row.status || statusValue}}
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
@@ -186,7 +187,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add Leave</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#add_leave">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
+                    data-bs-target="#add_leave">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -289,7 +291,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit Leave</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#edit_leave">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
+                    data-bs-target="#edit_leave">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -398,12 +401,10 @@
                 <div class="modal-btn delete-action">
                     <div class="row">
                         <div class="col-6">
-                            <a  class="btn btn-primary continue-btn"
-                                (click)="deleteleaves()">Delete</a>
+                            <a class="btn btn-primary continue-btn" (click)="deleteleaves()">Delete</a>
                         </div>
                         <div class="col-6">
-                            <a  data-bs-dismiss="modal"
-                                class="btn btn-primary cancel-btn">Cancel</a>
+                            <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                     </div>
                 </div>

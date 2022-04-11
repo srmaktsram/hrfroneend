@@ -31,12 +31,13 @@ export class InvoiceViewComponent implements OnInit {
       getInvoice(){
         let id=this.id;
         this.http.get("http://localhost:8443/admin/invoices/getOneInvoices"+"/"+id).subscribe((res:any)=>{
-          this.invoices=res.data[0];
+          this.invoices=res.data;
+          // console.log( this.invoices)
       // this.dtTrigger.next();
      
           
          this.getdata =this.invoices.items
-          console.log( this.invoices.project)
+          // console.log( this.invoices.project)
           
           
         })

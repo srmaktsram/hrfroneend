@@ -30,7 +30,7 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadTrainingType();
@@ -74,13 +74,13 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
 
   // Add  goal type  Modal Api Call
   addTrainingType() {
-    if(this.addTrainingTypeForm.invalid){
+    if (this.addTrainingTypeForm.invalid) {
       this.markFormGroupTouched(this.addTrainingTypeForm)
       return
     }
     if (this.addTrainingTypeForm.valid) {
       let obj = {
-        type: this.addTrainingTypeForm.value.GoalType,
+        goalType: this.addTrainingTypeForm.value.GoalType,
         description: this.addTrainingTypeForm.value.Description,
         status: this.addTrainingTypeForm.value.Status,
         id: 0,
@@ -100,7 +100,7 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
   editTrainingType() {
     if (this.editTrainingTypeForm.valid) {
       let obj = {
-        type: this.editTrainingTypeForm.value.GoalType,
+        goalType: this.editTrainingTypeForm.value.GoalType,
         description: this.editTrainingTypeForm.value.Description,
         status: this.editTrainingTypeForm.value.Status,
         id: this.editId,

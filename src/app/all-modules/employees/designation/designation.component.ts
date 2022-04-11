@@ -171,7 +171,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
 
   getDepartmentData() {
     this.http.get("http://localhost:8443/admin/department/getData").subscribe((data) => {
-      //console.log("DropdownData", data);
+      console.log("DropdownData", data);
 
       this.dropdownData = data
 
