@@ -597,21 +597,6 @@ export class EmployeeSalaryComponent
     });
   }
 
-  // Delete salary Modal Api Call
-
-  // deleteSalary() {
-  //   this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
-  //     $("#datatable").DataTable().clear();
-  //     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //       dtInstance.destroy();
-  //     });
-  //     this.dtTrigger.next();
-  //   });
-  //   this.getSalary();
-  //   $("#delete_salary").modal("hide");
-  //   this.toastr.success("Salary is deleted", "Success");
-  // }
-
   //search by name
   searchName(val) {
     this.rows.splice(0, this.rows.length);
@@ -662,8 +647,7 @@ export class EmployeeSalaryComponent
       this.getSalary();
     }
   }
-  //search by from value
- Budget-Revenue-front-end
+
   searchByFrom(val, val1) {
     if (val && val1) {
       this.disableButton = false;
@@ -711,48 +695,12 @@ export class EmployeeSalaryComponent
           .toggleClass("focused", e.type === "focus" || this.value.length > 0);
       })
       .trigger("blur");
-
-  searchByFrom(val) {
-    let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      return d.joinDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
-    });
-    this.rows.push(...temp);
-    // $(".floating")
-    //   .on("focus blur", function (e) {
-    //     $(this)
-    //       .parents(".form-focus")
-    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-    //   })
-    //   .trigger("blur");
   }
 
-  //search by To value
-  searchByTo(val) {
-    let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      return d.joinDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
-    });
-    this.rows.push(...temp);
-    // $(".floating")
-    //   .on("focus blur", function (e) {
-    //     $(this)
-    //       .parents(".form-focus")
-    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-    //   })
-    //   .trigger("blur");
-  }
-
-  //getting the status value
   getStatus(data) {
     this.statusValue = data;
   }
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
+
   getData() {
     this.http
       .get(
@@ -764,6 +712,7 @@ export class EmployeeSalaryComponent
         this.listemp = res;
       });
   }
+  //
   getEmpl(employeeId, email, joinDate, firstName, role) {
     this.employeeId = employeeId;
     this.email = email;
@@ -775,5 +724,9 @@ export class EmployeeSalaryComponent
   generateSlip(id) {
     sessionStorage.setItem("slipId", id);
     this.router.navigate(["/layout/payroll/salary-view"]);
+  }
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
 }
