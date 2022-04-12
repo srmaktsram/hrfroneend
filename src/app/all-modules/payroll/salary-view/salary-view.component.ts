@@ -10,11 +10,13 @@ import { id } from "src/assets/all-modules-data/id";
 export class SalaryViewComponent implements OnInit {
   public adminId = sessionStorage.getItem("adminId");
   public id: any;
-  public total: Number;
+  public total: number;
+  public otherD: number;
+  public otherA: number;
   allSalary: any;
   editId: any;
   value: string;
-  public total1: Number;
+  public total1: number;
 
   constructor(private http: HttpClient) {
     this.id = sessionStorage.getItem("slipId");
@@ -36,14 +38,23 @@ export class SalaryViewComponent implements OnInit {
         let pf = Number(this.allSalary.pf);
         let tds = Number(this.allSalary.tds);
         let esi = Number(this.allSalary.esi);
+        let leave = Number(this.allSalary.leave);
+        let profTax = Number(this.allSalary.profTax);
+        let labour = Number(this.allSalary.labour);
         let othersDed = Number(this.allSalary.othersDed);
-        this.total = pf + tds + esi + othersDed;
+        this.otherD = leave + profTax + labour + othersDed;
+        this.total = pf + tds + esi + this.otherD;
 
         let basic = Number(this.allSalary.basic);
         let hra = Number(this.allSalary.hra);
         let conveyance = Number(this.allSalary.conveyance);
+        let da = Number(this.allSalary.da);
+        let allowance = Number(this.allSalary.allowance);
+        let medicalAllowance = Number(this.allSalary.medicalAllowance);
         let othersAdd = Number(this.allSalary.othersAdd);
-        this.total1 = basic + hra + conveyance + othersAdd;
+        this.otherA = da + allowance + medicalAllowance + othersAdd;
+
+        this.total1 = basic + hra + conveyance + this.otherA;
 
         // this.rows = this.allSalary;
         // this.srch = [...this.rows];

@@ -7,6 +7,9 @@ import {
   Validators,
 } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
+import { HttpClient } from "@angular/common/http";
+
+import { Router } from "@angular/router";
 
 declare const $: any;
 
@@ -20,6 +23,8 @@ export class PayrollItemsComponent implements OnInit {
   public urlAdd: any = "payrollAddition";
   public urlOver: any = "payrollOvertime";
   public urlDeduct: any = "payrollDeduction";
+  public adminId = sessionStorage.getItem("adminId");
+
   public allAddPayroll: any = [];
   public allOverPayroll: any = [];
   public allDeductPayroll: any = [];
@@ -35,10 +40,15 @@ export class PayrollItemsComponent implements OnInit {
   public tempAddId: any;
   public tempOverId: any;
   public tempDeductId: any;
+  tempId: any;
+
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router,
+
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -71,6 +81,7 @@ export class PayrollItemsComponent implements OnInit {
 
     this.addOverForm = this.formBuilder.group({
       addOverName: ["", [Validators.required]],
+      // addOverRateType: ["", [Validators.required]],
       addOverRate: ["", [Validators.required]],
     });
 
@@ -78,6 +89,7 @@ export class PayrollItemsComponent implements OnInit {
 
     this.editOverForm = this.formBuilder.group({
       editOverName: ["", [Validators.required]],
+      // editOverRateType: ["", [Validators.required]],
       editOverRate: ["", [Validators.required]],
     });
 
@@ -112,10 +124,16 @@ export class PayrollItemsComponent implements OnInit {
 
   // get overtime
   getOverpayroll() {
-    this.allModuleService.get(this.urlOver).subscribe((data) => {
-      this.allOverPayroll = data;
-      $("#datatable2").DataTable().clear();
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/payrollItems/getOvertime" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((res: any) => {
+        this.allOverPayroll = res;
+        $("#datatable2").DataTable().clear();
+      });
   }
 
   // get deducts
@@ -137,9 +155,9 @@ export class PayrollItemsComponent implements OnInit {
   // Add payroll Modal Api Call
 
   addPayroll() {
-    if(this.addPayrollForm.invalid){
-      this.markFormGroupTouched(this.addPayrollForm)
-      return
+    if (this.addPayrollForm.invalid) {
+      this.markFormGroupTouched(this.addPayrollForm);
+      return;
     }
     if (this.addPayrollForm.valid) {
       let obj = {
@@ -201,10 +219,18 @@ export class PayrollItemsComponent implements OnInit {
     if (this.addOverForm.valid) {
       let obj = {
         name: this.addOverForm.value.addOverName,
+        // rateType: this.addOverForm.value.addOverRateType,
         rate: this.addOverForm.value.addOverRate,
+
+        adminId: this.adminId,
       };
-      this.allModuleService.add(obj, this.urlOver).subscribe((data) => {});
-      this.getOverpayroll();
+      this.http
+        .post("http://localhost:8443/admin/payrollItems/createOvertime", obj)
+        .subscribe((data) => {
+          console.log(data, "444");
+          this.getOverpayroll();
+        });
+
       $("#add_overtime").modal("hide");
       this.addOverForm.reset();
       this.toastr.success("Overtime added", "Success");
@@ -214,13 +240,20 @@ export class PayrollItemsComponent implements OnInit {
   // Edit overtime Modal Api Call
 
   editOverSubmit() {
+    let id = this.editOverId;
     let obj = {
       name: this.editOverForm.value.editOverName,
       rate: this.editOverForm.value.editOverRate,
-      id: this.editOverId,
+      // rateType: this.editOverForm.value.editOverRateType,
     };
-    this.allModuleService.update(obj, this.urlOver).subscribe((data1) => {});
-    this.getOverpayroll();
+    this.http
+      .patch(
+        "http://localhost:8443/admin/payrollItems/updateOvertime" + "/" + id,
+        obj
+      )
+      .subscribe((data1) => {
+        this.getOverpayroll();
+      });
     $("#edit_overtime").modal("hide");
     this.toastr.success("Overtime edited", "Success");
   }
@@ -231,8 +264,9 @@ export class PayrollItemsComponent implements OnInit {
       return item.id === value;
     });
     let toSetValues = this.allOverPayroll[index];
-    this.editOverForm.setValue({
+    this.editOverForm.patchValue({
       editOverName: toSetValues.name,
+      // editOverRateType: toSetValues.rateType,
       editOverRate: toSetValues.rate,
     });
   }
@@ -240,8 +274,15 @@ export class PayrollItemsComponent implements OnInit {
   // Delete overtime Modal Api Call
 
   deleteOver() {
-    this.allModuleService
-      .delete(this.tempOverId, this.urlOver)
+    let id = this.tempId;
+    let obj = {
+      status: 2,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/payrollItems/deleteOvertime" + "/" + id,
+        obj
+      )
       .subscribe((data) => {
         this.getOverpayroll();
         $("#delete_overtime").modal("hide");
