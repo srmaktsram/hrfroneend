@@ -10,6 +10,7 @@ import { PayrollItemsComponent } from "./payroll-items/payroll-items.component";
 import { BsDatepickerModule } from "ngx-bootstrap";
 import { SharingModule } from "src/app/sharing/sharing.module";
 import { ReactiveFormsModule } from "@angular/forms";
+import { NumberToWordsPipe } from "src/assets/pipes/custom-number.pipe";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     EmployeeSalaryComponent,
     SalaryViewComponent,
     PayrollItemsComponent,
+    NumberToWordsPipe,
   ],
   imports: [
     CommonModule,

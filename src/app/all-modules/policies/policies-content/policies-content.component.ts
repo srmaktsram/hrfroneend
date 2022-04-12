@@ -28,14 +28,14 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   public editPolicies: FormGroup;
   public editId: any;
   public tempId: any;
-  public adminId:any;
+  public adminId: any;
   constructor(
     private allModuleService: AllModulesService,
-    private http:HttpClient,
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
   ) {
-    this.adminId=sessionStorage.getItem("adminId")
+    this.adminId = sessionStorage.getItem("adminId");
   }
 
   ngOnInit() {
@@ -65,11 +65,17 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   }
 
   getPolicies() {
-    this.http.get("http://localhost:8443/admin/policies/getAdminPolicies"+"/"+this.adminId).subscribe((data) => {
-      this.allPolicies = data;
-      console.log("GET API", this.allPolicies)
-      this.dtTrigger.next();
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/policies/getAdminPolicies" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data) => {
+        this.allPolicies = data;
+        console.log("GET API", this.allPolicies);
+        this.dtTrigger.next();
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -84,26 +90,27 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   // Add Provident Modal Api Call
 
   addPoliciesSubmit() {
-    if(this.addPolicies.invalid){
-      this.markFormGroupTouched(this.addPolicies)
-      return
+    if (this.addPolicies.invalid) {
+      this.markFormGroupTouched(this.addPolicies);
+      return;
     }
     if (this.addPolicies.valid) {
       let obj = {
-        adminId:this.adminId,
+        adminId: this.adminId,
         policyName: this.addPolicies.value.addPolicyName,
         department: this.addPolicies.value.addDepartment,
         description: this.addPolicies.value.addDescription,
-        
       };
-      this.http.post("http://localhost:8443/admin/policies/createPolicy",obj).subscribe((data:any) => {
-        this.allPolicies = data;
-        console.log("POST API", this.allPolicies)
-        this.getPolicies();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/policies/createPolicy", obj)
+        .subscribe((data: any) => {
+          this.allPolicies = data;
+          console.log("POST API", this.allPolicies);
+          this.getPolicies();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
       // this.getPolicies();
       $("#add_policy").modal("hide");
       this.addPolicies.reset();
@@ -118,15 +125,20 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
       policyName: this.editPolicies.value.editPolicyName,
       department: this.editPolicies.value.editDepartment,
       description: this.editPolicies.value.editDescription,
-      createdDate:  this.editPolicies.value.createdDate,
+      createdDate: this.editPolicies.value.createdDate,
       id: this.editId,
     };
-    this.http.patch("http://localhost:8443/admin/policies/updatePolicy"+"/"+this.editId,obj).subscribe((data1:any) => {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    this.http
+      .patch(
+        "http://localhost:8443/admin/policies/updatePolicy" + "/" + this.editId,
+        obj
+      )
+      .subscribe((data1: any) => {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        console.log("UPDATE API", data1);
       });
-      console.log("UPDATE API",data1)
-    });
     this.getPolicies();
     $("#edit_policy").modal("hide");
     this.toastr.success("Policy is edited", "Success");
@@ -148,15 +160,20 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   // Delete Provident Modal Api Call
 
   deletePolicies() {
-    this.http.patch("http://localhost:8443/admin/policies/deletePolicy"+"/"+this.tempId,{}).subscribe((data:any) => {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    this.http
+      .patch(
+        "http://localhost:8443/admin/policies/deletePolicy" + "/" + this.tempId,
+        {}
+      )
+      .subscribe((data: any) => {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        console.log("DELETE API", data);
+        this.getPolicies();
+        $("#delete_policy").modal("hide");
+        this.toastr.success("Policy is deleted", "Success");
       });
-      console.log("DELETE API",data)
-      this.getPolicies();
-      $("#delete_policy").modal("hide");
-      this.toastr.success("Policy is deleted", "Success");
-    });
   }
 
   ngOnDestroy(): void {
