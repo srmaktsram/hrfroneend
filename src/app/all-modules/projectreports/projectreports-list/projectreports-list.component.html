@@ -29,12 +29,12 @@
                         <div class="col-sm-6 col-md-3">  
                             <div class="form-group form-focus">
                                 
-                                    <select class="form-control floating form-select">
+                                    <select #projectName class="form-control floating form-select">
                                         <option>
-                                            Name1
+                                         
                                         </option>
-                                        <option>
-                                            Name2
+                                        <option *ngFor="let item of Allprojects">
+                                        {{item.name}}
                                         </option>
                                     </select>
                                 
@@ -44,7 +44,10 @@
                         <div class="col-sm-6 col-md-3">  
                             <div class="form-group form-focus">
                                 
-                                    <select class="form-control floating form-select" (input)="searchStatus($event.target.value)">
+                                    <select #projectStatus class="form-control floating form-select" (input)="searchStatus($event.target.value)">
+                                        <option>
+                                          
+                                        </option>
                                         <option>
                                             Active
                                         </option>
@@ -57,7 +60,7 @@
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-3">  
-                            <a href="#" class="btn btn-success w-100"> Search </a>  
+                            <a  class="btn btn-success w-100" (click)="nameAndStatus(projectName.value,projectStatus.value)" > Search </a>  
                         </div>     
                     </div>
                     <!-- /Search Filter -->
@@ -86,11 +89,11 @@
                                             <td>
                                                 <h2 class="table-avatar">
                                                     <a routerLink="/layout/clientsprofile/:id" class="avatar"><img src="assets/img/profiles/avatar-19.jpg" alt=""></a>
-                                                    <a routerLink="/layout/clientsprofile/:id">{{item.clientname}}</a>
+                                                    <a routerLink="/layout/clientsprofile/:id">{{item.client}}</a>
                                                 </h2>
                                             </td>
-                                            <td>{{item.startdate}}</td>
-                                            <td>{{item.expiredate}}</td>
+                                            <td>{{item.startDate}}</td>
+                                            <td>{{item.endDate}}</td>
                                             <td>
                                                
                                                      {{item.status}} 

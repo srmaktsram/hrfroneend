@@ -25,6 +25,7 @@ export class EmployeereportsListComponent implements OnInit {
     public adminId:any;
     public lstEmployee;
        public rows = [];
+       public dep=[];
   public srch = [];
   constructor(
   		private formBuilder: FormBuilder,
@@ -33,6 +34,7 @@ export class EmployeereportsListComponent implements OnInit {
     private toastr: ToastrService
   	) {
       this.adminId=sessionStorage.getItem("adminId")
+      this.selecteDepartment();
      }
 
   ngOnInit() {
@@ -61,6 +63,29 @@ export class EmployeereportsListComponent implements OnInit {
      
       });
   }
+/////////searching between from and to/////////////////
+  searchFromAndTo(startDate,endDate){
+    this.rows.splice(0,this.rows.length)
+    this.srch.map((item)=>{
+      let currDate=item.createDate.split()
+      if(startDate<=currDate[0] && currDate[0]<=endDate){
+        this.rows.push(item);
+      }
+    })
+
+  }
+/////////////////Select department/////////////////////////
+selecteDepartment(){
+  this.http.get("http://localhost:8443/admin/department/getAdminData"+"/"+this.adminId).subscribe((data:any)=>{
+    this.dep=data
+    console.log("this is Dep",this.dep)
+  })
+}
+   
+
+
+
+
 
   //search by designation
   searchEmployee(val) {

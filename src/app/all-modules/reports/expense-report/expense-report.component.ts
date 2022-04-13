@@ -60,6 +60,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
       this.dtTrigger.next();
       this.rows = this.allExpensesReport;
       this.srch = [...this.rows];
+     
        // console.log("START THE FUNCTION>>>>>>>>>>>>>>>>>>>>")
       //  this.searchFromAndTo("01-04-2022","01-09-2022")
     });

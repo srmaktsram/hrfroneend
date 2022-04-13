@@ -28,7 +28,7 @@ lstStudents
   }
     // Get Students List  Api Call
   loadStudents() {
-    this.http.get("http://localhost:8443/admin/report/tasks/getAdminTask"+"/"+this.adminId).subscribe((data:any) => {
+    this.http.get("http://localhost:8443/admin/tasks/getAdminTask"+"/"+this.adminId).subscribe((data:any) => {
       console.log(data)
       this.lstStudents = data;
      

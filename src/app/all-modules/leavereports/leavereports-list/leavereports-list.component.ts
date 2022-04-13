@@ -20,10 +20,14 @@ export class LeavereportsListComponent implements OnInit {
   public lstFees: any[];
   public url: any = "leavereports";
   public adminId:any;
+  public dep=[];
+  public rows=[];
+  public srch=[];
 
   constructor(private srvModuleService: AllModulesService,
     private http:HttpClient) { 
       this.adminId=sessionStorage.getItem("adminId");
+      this.selecteDepartment();
     }
 
   ngOnInit() {
@@ -47,8 +51,31 @@ export class LeavereportsListComponent implements OnInit {
     this.http.get("http://localhost:8443/admin/leaves/searchleaves"+"/"+this.url).subscribe((data:any) => {
       console.log(data)
       this.lstFees = data;
+      this.rows=this.lstFees;
+      this.srch=[...this.rows]
       this.dtTrigger.next();
     });
+  }
+
+  ////searching from and to ////////////////
+  searchFromAndTo(startDate,endDate){
+    this.rows.splice(0,this.rows.length)
+    this.srch.map((item)=>{
+      let currDate=item.createDate.split()
+      if(startDate<=currDate[0] && currDate[0]<=endDate){
+        this.rows.push(item);
+      }
+    })
+
+  }
+  
+
+//////////////select Department//////////////////////////
+  selecteDepartment(){
+    this.http.get("http://localhost:8443/admin/department/getAdminData"+"/"+this.adminId).subscribe((data:any)=>{
+      this.dep=data
+      console.log("this is Dep",this.dep)
+    })
   }
   // destroy data table when leaving
   ngOnDestroy(): void {
