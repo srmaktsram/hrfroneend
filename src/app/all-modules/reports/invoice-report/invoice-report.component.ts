@@ -55,8 +55,9 @@ public adminId:any;
 
   //get all invoices
   getAllInvoices() {
-    this.http.get("http://localhost:8443/admin/").subscribe((res) => {
-      this.invoices = res;
+    this.http.get("http://localhost:8443/admin/invoices/adminGetInvoices"+"/"+this.adminId).subscribe((res:any) => {
+      this.invoices = res.data;
+      console.log(res.data)
       this.dtTrigger.next();
       this.rows = this.invoices;
       this.srch = [...this.rows];
@@ -64,21 +65,21 @@ public adminId:any;
   }
 
   //getting id for selected row
-  deleteInvoice(estimate) {
-    this.id = estimate.id;
-  }
+  // deleteInvoice(estimate) {
+  //   this.id = estimate.id;
+  // }
 
   // delete method for deleting rows
-  delete() {
-    let id: any = Number(this.id);
-    this.http.patch("http://localhost:8443/admin/",{}).subscribe((res) => {
-      this.router.navigate(["/reports/edit-invoice-report"]);
-      this.getAllInvoices();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
-      });
-    });
-  }
+  // delete() {
+  //   let id: any = Number(this.id);
+  //   this.http.patch("http://localhost:8443/admin/",{}).subscribe((res) => {
+  //     this.router.navigate(["/reports/edit-invoice-report"]);
+  //     this.getAllInvoices();
+  //     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //       dtInstance.destroy();
+  //     });
+  //   });
+  // }
 
   //search by from date
   searchFromDate(val) {
@@ -88,13 +89,13 @@ public adminId:any;
       return d.invoice_date.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
     });
     this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
+    // $(".floating")
+    //   .on("focus blur", function (e) {
+    //     $(this)
+    //       .parents(".form-focus")
+    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+    //   })
+    //   .trigger("blur");
   }
 
   //search by to date
@@ -105,13 +106,27 @@ public adminId:any;
       return d.due_date.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
     });
     this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
+    // $(".floating")
+    //   .on("focus blur", function (e) {
+    //     $(this)
+    //       .parents(".form-focus")
+    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+    //   })
+    //   .trigger("blur");
+  }
+
+  ////searching in both from and to//////////
+
+  searchFromTo(startDate,endDate){
+    console.log(this.srch)
+    this.rows.splice(0, this.rows.length);
+    this.srch.map((item)=>{
+      let currDate=item.createDate.split();
+      console.log("After SPLITS>>>>>>>>",currDate,"Date>>>>>>>>>",startDate);
+      if(startDate<=currDate[0] && currDate[0]<=endDate){
+        this.rows.push(item)
+      }
+    })
   }
 
   //search by status

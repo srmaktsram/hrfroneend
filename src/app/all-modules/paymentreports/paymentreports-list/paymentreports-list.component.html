@@ -24,7 +24,7 @@
                         <div class="col-sm-6 col-md-3">  
                             <div class="form-group form-focus">
                                 <div class="cal-icon">
-                                    <input class="form-control floating datetimepicker" type="text"  bsDatepicker>
+                                    <input #fromDate class="form-control floating datetimepicker" type="text"  bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
                                 </div>
                                 <label class="focus-label">From</label>
                             </div>
@@ -32,13 +32,13 @@
                         <div class="col-sm-6 col-md-3">  
                             <div class="form-group form-focus">
                                 <div class="cal-icon">
-                                    <input class="form-control floating datetimepicker" type="text" bsDatepicker>
+                                    <input #toDate class="form-control floating datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
                                 </div>
                                 <label class="focus-label">To</label>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-3">  
-                            <a href="#" class="btn btn-success w-100"> Search </a>  
+                            <a  class="btn btn-success w-100" (click)="searchFromAndTo(fromDate.value,toDate.value)"> Search </a>  
                         </div>     
                     </div>
                     <!-- /Search Filter -->
@@ -59,7 +59,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr *ngFor="let fees of lstFees;let i = index">
+                                        <tr *ngFor="let fees of rows;let i = index">
                                             <td>{{fees.id}}</td>
                                             <td><a href="#">{{fees.transactionid}}</a></td>
                                             <td>{{fees.date}}</td>

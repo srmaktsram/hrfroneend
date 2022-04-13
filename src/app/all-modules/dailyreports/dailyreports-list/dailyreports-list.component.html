@@ -27,7 +27,7 @@
 							<div class="col-md-3 col-sm-6">
 								<div class="card">
 									<div class="card-body text-center">
-										<h3><b>101</b></h3>
+										<h3><b>{{totalEmployee}}</b></h3>
 										<p>Total Employees</p>
 									</div>
 								</div>
@@ -35,7 +35,7 @@
 							<div class="col-md-3 col-sm-6">
 								<div class="card">
 									<div class="card-body text-center">
-										<h3 class="text-success"><b>84</b></h3>
+										<h3 class="text-success"><b>{{totalPresent}}</b></h3>
 										<p>Today Present</p>
 									</div>
 								</div>
@@ -43,7 +43,7 @@
 							<div class="col-md-3 col-sm-6">
 								<div class="card">
 									<div class="card-body text-center">
-										<h3 class="text-danger"><b>12</b></h3>
+										<h3 class="text-danger"><b>{{totalAbsent}}</b></h3>
 										<p>Today Absent</p>
 									</div>
 								</div>
@@ -51,7 +51,7 @@
 							<div class="col-md-3 col-sm-6">
 								<div class="card">
 									<div class="card-body text-center">
-										<h3><b>5</b></h3>
+										<h3><b>{{totalLeft}}</b></h3>
 										<p>Today Left</p>
 									</div>
 								</div>
@@ -119,7 +119,7 @@
 													<a routerLink="/layout/profile/profilelist">{{item.name1}} <span>{{item.name2}}</span></a>
 												</h2>
 											</td>
-											<td>{{item.date}}</td>
+											<td>{{item.createDate}}</td>
 											<td>{{item.department}}</td>
 											<td class="text-center">
 												<button class="btn btn-outline-info btn-sm">{{item.status}}</button>

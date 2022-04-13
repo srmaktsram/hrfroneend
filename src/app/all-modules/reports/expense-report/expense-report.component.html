@@ -30,7 +30,7 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
                 <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchByFrom($event)">
+                    <input #fromdate class="form-control floating datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchByFrom($event)">
                 </div>
                 <label class="focus-label">From</label>
             </div>
@@ -38,13 +38,13 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
                 <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" bsDatepicker type="text"  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchByTo($event)">
+                    <input #todate class="form-control floating datetimepicker" bsDatepicker type="text"  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchByTo($event)">
                 </div>
                 <label class="focus-label">To</label>
             </div>
         </div>
         <div class="col-sm-6 col-md-3">
-            <a  class="btn btn-success w-100"> Search </a>
+            <a  class="btn btn-success w-100" (click)="searchFromAndTo(fromdate.value,todate.value)"> Search </a>
         </div>
     </div>
     <!-- /Search Filter -->
@@ -62,7 +62,7 @@
                             <th>Amount</th>
                             <th>Paid By</th>
                             <th class="text-center">Status</th>
-                            <th class="text-end">Actions</th>
+                            <!-- <th class="text-end">Actions</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -80,7 +80,8 @@
                             </td>
                             <td>{{expensesReport.amount}}</td>
                             <td>{{expensesReport.paidBy}}</td>
-                            <td class="text-center">
+                            <td> {{expensesReport.status}}</td> 
+                            <!-- <td class="text-center">
                                 <div class="dropdown action-label">
                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" 
                                         data-bs-toggle="dropdown" aria-expanded="false">
@@ -93,8 +94,8 @@
                                                 class="fa fa-dot-circle-o text-success"></i> Approved</a>
                                     </div>
                                 </div>
-                            </td>
-                            <td class="text-end">
+                            </td> -->
+                            <!-- <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -105,7 +106,7 @@
                                             data-bs-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                         <tr *ngIf="allExpensesReport.length === 0">
                             <td colspan="10">

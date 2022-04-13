@@ -30,7 +30,7 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
                 <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchFromDate($event)">
+                    <input #fromDate class="form-control floating datetimepicker" type="text" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchFromDate($event)">
                 </div>
                 <label class="focus-label">From</label>
             </div>
@@ -38,13 +38,13 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
                 <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchToDate($event)">
+                    <input #toDate class="form-control floating datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchToDate($event)">
                 </div>
                 <label class="focus-label">To</label>
             </div>
         </div>
         <div class="col-sm-6 col-md-3">
-            <a  class="btn btn-success w-100"> Search </a>
+            <a  class="btn btn-success w-100" (click)="searchFromTo(fromDate.value,toDate.value)"> Search </a>
         </div>
     </div>
     <!-- /Search Filter -->
@@ -62,7 +62,7 @@
                             <th>Due Date</th>
                             <th>Amount</th>
                             <th>Status</th>
-                            <th class="text-end">Action</th>
+                            <!-- <th class="text-end">Action</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -76,7 +76,7 @@
                             <td class="text-center">
                                 <span class="badge bg-inverse-success">{{invoice.status}}</span>
                             </td>
-                            <td class="text-end">
+                            <!-- <td class="text-end">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -90,7 +90,7 @@
                                         <a class="dropdown-item"  data-bs-toggle="modal" (click)="deleteInvoice(invoice)" data-bs-target="#delete_estimate"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                         <tr *ngIf="invoices.length === 0">
                             <td colspan="10">
