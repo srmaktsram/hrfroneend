@@ -55,6 +55,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
   }
 
   getExpensesReport() {
+
     this.http
       .get(
         "http://localhost:8443/admin/expenses/getAllExpenses" +
@@ -67,6 +68,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
         this.rows = this.allExpensesReport;
         this.srch = [...this.rows];
       });
+
   }
 
   //search by status
@@ -82,6 +84,7 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
 
   //search by purchase
   searchByFrom(val) {
+    
     let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
     this.rows.splice(0, this.rows.length);
     let temp = this.srch.filter(function (d) {
@@ -105,13 +108,32 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
       return d.purchaseDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
     });
     this.rows.push(...temp);
-    $(".floating")
-      .on("focus blur", function (e) {
-        $(this)
-          .parents(".form-focus")
-          .toggleClass("focused", e.type === "focus" || this.value.length > 0);
-      })
-      .trigger("blur");
+    // $(".floating")
+    //   .on("focus blur", function (e) {
+    //     $(this)
+    //       .parents(".form-focus")
+    //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
+    //   })
+    //   .trigger("blur");
+  }
+
+
+  searchFromAndTo(startDate,endDate){
+    this.rows.splice(0, this.rows.length);
+  
+   let temp= this.srch.map((item)=>{
+
+      let currDate=item.purchaseDate.split()
+     
+     if( startDate<= currDate[0] && currDate[0]<=endDate){
+
+    
+       this.rows.push(item);
+      //  console.log("this.rows AFTER PUSH............>>>>",this.rows)
+      }
+     
+    })
+  
   }
 
   ngOnDestroy(): void {

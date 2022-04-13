@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { AllModulesService } from "../../all-modules.service";
 declare const $: any;
@@ -9,8 +10,12 @@ declare const $: any;
 })
 export class UserreportsListComponent implements OnInit {
 public url: any = "userreports";
+public adminId:any;
 lstStudents
-  constructor(private srvModuleService: AllModulesService) { }
+  constructor(private srvModuleService: AllModulesService,
+    private http:HttpClient) {
+      this.adminId=sessionStorage.getItem("adminId");
+     }
 
   ngOnInit() {
   	// Floating Label
@@ -24,7 +29,8 @@ lstStudents
   }
     // Get Students List  Api Call
   loadStudents() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/allemployees/getallEmployee"+"/"+this.adminId).subscribe((data:any) => {
+      console.log(data)
       this.lstStudents = data;
      
     });
