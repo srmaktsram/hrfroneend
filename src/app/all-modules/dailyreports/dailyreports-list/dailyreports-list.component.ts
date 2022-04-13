@@ -5,6 +5,7 @@ import { DatePipe } from "@angular/common";
 import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 declare const $: any;
 @Component({
   selector: 'app-dailyreports-list',
@@ -22,14 +23,21 @@ export class DailyreportsListComponent implements OnInit, OnDestroy  {
 	public tempId: any;
     public editId: any;
     public lstDailyreport;
-
+   public adminId:any;
     public rows = [];
   public srch = [];
+  public totalEmployee:any;
+  public totalPresent:any;
+  public totalAbsent:any;
+  public totalLeft:any;
   constructor(
   	private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
+    private http:HttpClient,
     private toastr: ToastrService
-  	) { }
+  	) { 
+      this.adminId=sessionStorage.getItem("adminId")
+    }
 
   ngOnInit() {
         // Floating Label
@@ -48,13 +56,21 @@ export class DailyreportsListComponent implements OnInit, OnDestroy  {
   }
    // Get department list  Api Call
   LoadDailyreport() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/allemployees/getallEmployee"+"/"+this.adminId).subscribe((data:any) => {
       this.lstDailyreport = data;
+      console.log( data.length)
+      this.totalEmployee=this.lstDailyreport.length
       this.dtTrigger.next();
        this.rows = this.lstDailyreport;
       this.srch = [...this.rows];
      
       });
+  }
+
+  total(){
+    this.http.get("http://localhost:8443/admin"+"/"+this.adminId).subscribe((res:any)=>{
+     
+    })
   }
 
   //search by Department

@@ -4,6 +4,7 @@ import { Subject } from "rxjs";
 import { AllModulesService } from "../../all-modules.service";
 
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 declare const $: any;
 @Component({
   selector: 'app-paymentreports-list',
@@ -15,12 +16,16 @@ export class PaymentreportsListComponent implements OnInit {
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject();
-
+  public adminId :any;
    public pipe = new DatePipe("en-US");
-
+public rows=[];
+public srch=[];
   public lstFees: any[];
   public url: any = "paymentreports";
-  constructor(private srvModuleService: AllModulesService) { }
+  constructor(private srvModuleService: AllModulesService,
+    private http:HttpClient) { 
+      this.adminId=sessionStorage.getItem("adminId");
+    }
 
   ngOnInit() {
     // Floating Label
@@ -41,10 +46,32 @@ export class PaymentreportsListComponent implements OnInit {
 
    // Get Fees List  Api Call
   loadFees() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/payments/adminGetPayments"+"/"+this.adminId).subscribe((data:any) => {
+      console.log(data)
       this.lstFees = data;
-      this.dtTrigger.next();
+      this.rows= this.lstFees;
+      this.srch=[...this.rows]
+      // this.dtTrigger.next();
     });
+  }
+  
+  searchFromAndTo(startDate,endDate){
+    console.log("ARGUMENTS>>>>>>>>>>>>>",startDate,endDate)
+    this.rows.splice(0, this.rows.length);
+  
+  this.srch.map((item)=>{
+
+      let currDate=item.createDate.split()
+     
+     if( startDate<= currDate[0] && currDate[0]<=endDate){
+
+    
+       this.rows.push(item);
+      //  console.log("this.rows AFTER PUSH............>>>>",this.rows)
+      }
+     
+    })
+  
   }
   // destroy data table when leaving
   ngOnDestroy(): void {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
+import { HttpClient } from '@angular/common/http';
 declare const $: any;
 
 @Component({
@@ -16,11 +17,15 @@ export class ProjectreportsListComponent implements OnInit {
   public lstProjectreports;
   public rows = [];
   public srch = [];
+  public adminId:any;
   constructor(
   	private formBuilder: FormBuilder,
+    private http:HttpClient,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  	) { }
+  	) {
+      this.adminId=sessionStorage.getItem("adminId");
+     }
 
 
   ngOnInit() {
@@ -35,7 +40,7 @@ export class ProjectreportsListComponent implements OnInit {
   }
   // Get department list  Api Call
   LoadProjectreports() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/projects/getAdminproject"+"/"+this.adminId).subscribe((data:any) => {
       this.lstProjectreports = data;
       this.rows = this.lstProjectreports;
       this.srch = [...this.rows];

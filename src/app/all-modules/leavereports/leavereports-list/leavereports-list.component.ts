@@ -3,6 +3,7 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { AllModulesService } from "../../all-modules.service";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 declare const $: any;
 
 @Component({
@@ -18,8 +19,12 @@ export class LeavereportsListComponent implements OnInit {
     public pipe = new DatePipe("en-US");
   public lstFees: any[];
   public url: any = "leavereports";
+  public adminId:any;
 
-  constructor(private srvModuleService: AllModulesService) { }
+  constructor(private srvModuleService: AllModulesService,
+    private http:HttpClient) { 
+      this.adminId=sessionStorage.getItem("adminId");
+    }
 
   ngOnInit() {
      // Floating Label
@@ -39,7 +44,8 @@ export class LeavereportsListComponent implements OnInit {
   }
    // Get Fees List  Api Call
   loadFees() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/leaves/searchleaves"+"/"+this.url).subscribe((data:any) => {
+      console.log(data)
       this.lstFees = data;
       this.dtTrigger.next();
     });
