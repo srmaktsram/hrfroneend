@@ -21,20 +21,50 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   public addProjectForm: FormGroup;
   public editProjectForm: FormGroup;
   public tempId: any;
-public adminId:any;
+  public adminId: any;
+  public employeeId: any;
   public rows = [];
   public srch = [];
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
+  designations: any;
+  data: Object;
+  clientsData: any;
+
   constructor(
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
-    private http:HttpClient,
+    private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
-    this.adminId=sessionStorage.getItem("adminId")
+    this.adminId = sessionStorage.getItem("adminId");
+    this.employeeId = sessionStorage.getItem("employeeId");
+    this.getDesignation();
+    // this.getClients();
   }
+  public getDesignation() {
+    this.http
+      .get("http://localhost:8443/admin/designation/getData")
+      .subscribe((data) => {
+        this.designations = data;
+      });
+  }
+  // public getClients() {
+  //   this.http
+  //     .get(
+  //       "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
+  //     )
+  //     .subscribe((data: any) => {
+  //       this.data = data;
+  //       // console.log(this.data.result, "new");
+  //       this.clientsData = this.data;
+
+  //       this.rows = this.clientsData;
+  //       this.srch = [...this.rows];
+  //       // }
+  //     });
+  // }
 
   ngOnInit() {
     $(document).ready(function () {
@@ -43,37 +73,43 @@ public adminId:any;
     this.getProjects();
     //Add Projects form
     this.addProjectForm = this.formBuilder.group({
-      projectName: ["",[Validators.required]],
+      projectName: ["", [Validators.required]],
       projectDescription: ["", [Validators.required]],
       projectStartDate: ["", [Validators.required]],
       projectEndDate: ["", [Validators.required]],
-      projectPriority: ["",],
-      projectLeader: ["", [Validators.required] ],
-      addTeamMembers: ["",  [Validators.required]],
-      projectId: ["",],
-      id: ["",],
+      projectPriority: [""],
+      projectLeader: ["", [Validators.required]],
+      addTeamMembers: ["", [Validators.required]],
+      projectId: [""],
+      id: [""],
     });
 
     //Edit Projects Form
     this.editProjectForm = this.formBuilder.group({
-      editProjectName: ["",],
-      editProjectDescription: ["",],
-      editProjectStartDate: ["",],
-      editProjectEndDate: ["",],
-      editProjectPriority: ["",],
-      editaddTeamMembers: ["",],
-      editProjectId: ["",],
-      editId: ["",],
+      editProjectName: [""],
+      editProjectDescription: [""],
+      editProjectStartDate: [""],
+      editProjectEndDate: [""],
+      editProjectPriority: [""],
+      editaddTeamMembers: [""],
+      editProjectId: [""],
+      editId: [""],
     });
   }
 
   getProjects() {
-    this.http.get("http://localhost:8443/admin/projects/getAdminproject"+"/"+this.adminId).subscribe((data:any) => {
-      this.projects = data;
-      this.dtTrigger.next();
-      this.rows = this.projects;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/projects/getAdminproject" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.projects = data;
+        this.dtTrigger.next();
+        this.rows = this.projects;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -85,13 +121,11 @@ public adminId:any;
     });
   }
 
-
   //Create New Project
   public addProject() {
-    if(this.addProjectForm.invalid){
-     
-      this.markFormGroupTouched(this.addProjectForm)
-      return
+    if (this.addProjectForm.invalid) {
+      this.markFormGroupTouched(this.addProjectForm);
+      return;
     }
     let StartDate = this.pipe.transform(
       this.addProjectForm.value.projectStartDate,
@@ -102,7 +136,7 @@ public adminId:any;
       "dd-MM-yyyy"
     );
     let newProject = {
-      adminId:this.adminId,
+      adminId: this.adminId,
       name: this.addProjectForm.value.projectName,
       description: this.addProjectForm.value.projectDescription,
       endDate: EndDate,
@@ -111,16 +145,16 @@ public adminId:any;
       projectleader: this.addProjectForm.value.projectLeader,
       teamMember: this.addProjectForm.value.addTeamMembers,
       projectId: "PRO-0012",
-    
     };
-    this.http.post("http://localhost:8443/admin/projects/createProject",newProject).subscribe((res:any)=>{
-      console.log(res)
-      this.getProjects();
-      this.addProjectForm.reset();
-      // $("#create_project").modal("hide");
-      this.toastr.success("Project added sucessfully...!", "Success");
-    });
-   
+    this.http
+      .post("http://localhost:8443/admin/projects/createProject", newProject)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.getProjects();
+        this.addProjectForm.reset();
+        // $("#create_project").modal("hide");
+        this.toastr.success("Project added sucessfully...!", "Success");
+      });
   }
 
   //Edit project
@@ -130,7 +164,7 @@ public adminId:any;
       return item.id === id;
     });
     let toSetValues = this.projects[index];
-    console.log(toSetValues)
+    console.log(toSetValues);
     this.editProjectForm.patchValue({
       editProjectName: toSetValues.name,
       editProjectDescription: toSetValues.description,
@@ -161,29 +195,38 @@ public adminId:any;
       priority: this.editProjectForm.value.editProjectPriority,
       teamMember: this.editProjectForm.value.editaddTeamMembers,
       projectId: this.editProjectForm.value.editProjectPriority,
-      
     };
-   
-    this.http.patch("http://localhost:8443/admin/projects/updateProject"+"/"+this.tempId,editedProject).subscribe((res:any)=>{
-      console.log(res)
-      this.getProjects();
-      this.editProjectForm.reset();
-      $("#edit_project").modal("hide");
-      this.toastr.success("Project updated sucessfully...!", "Success");
-    });
-   
+
+    this.http
+      .patch(
+        "http://localhost:8443/admin/projects/updateProject" +
+          "/" +
+          this.tempId,
+        editedProject
+      )
+      .subscribe((res: any) => {
+        console.log(res);
+        this.getProjects();
+        this.editProjectForm.reset();
+        $("#edit_project").modal("hide");
+        this.toastr.success("Project updated sucessfully...!", "Success");
+      });
   }
 
   //Delete project
   public deleteProject() {
-   
-    this.http.patch("http://localhost:8443/admin/projects/deleteproject"+"/"+this.tempId,{}).subscribe((res:any)=>{
-    
-      this.getProjects();
-      $("#delete_project").modal("hide");
-      this.toastr.success("Project deleted sucessfully...!", "Success");
-    });
-   
+    this.http
+      .patch(
+        "http://localhost:8443/admin/projects/deleteproject" +
+          "/" +
+          this.tempId,
+        {}
+      )
+      .subscribe((res: any) => {
+        this.getProjects();
+        $("#delete_project").modal("hide");
+        this.toastr.success("Project deleted sucessfully...!", "Success");
+      });
   }
 
   //search by name
