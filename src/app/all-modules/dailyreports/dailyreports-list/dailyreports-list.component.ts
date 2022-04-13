@@ -23,6 +23,7 @@ export class DailyreportsListComponent implements OnInit, OnDestroy  {
 	public tempId: any;
     public editId: any;
     public lstDailyreport;
+    public dep=[];
    public adminId:any;
     public rows = [];
   public srch = [];
@@ -36,7 +37,8 @@ export class DailyreportsListComponent implements OnInit, OnDestroy  {
     private http:HttpClient,
     private toastr: ToastrService
   	) { 
-      this.adminId=sessionStorage.getItem("adminId")
+      this.adminId=sessionStorage.getItem("adminId");
+      this.selectDepartment();
     }
 
   ngOnInit() {
@@ -66,12 +68,26 @@ export class DailyreportsListComponent implements OnInit, OnDestroy  {
      
       });
   }
+///////search
+  searchFromAndTo(startDate,endDate){
+ this.rows.splice(0,this.rows.length);
+ this.srch.map((item)=>{
+   console.log(item.createDate)
+   if(startDate<=item.createDate && item.createDate<=endDate){
+     this.rows.push(item);
+   }
+ })
 
-  total(){
-    this.http.get("http://localhost:8443/admin"+"/"+this.adminId).subscribe((res:any)=>{
-     
-    })
   }
+
+
+
+
+  // total(){
+  //   this.http.get("http://localhost:8443/admin"+"/"+this.adminId).subscribe((res:any)=>{
+     
+  //   })
+  // }
 
   //search by Department
   searchEmployee(val) {
@@ -81,6 +97,13 @@ export class DailyreportsListComponent implements OnInit, OnDestroy  {
       return d.name1.toLowerCase().indexOf(val) !== -1 || !val;
     });
     this.rows.push(...temp);
+  }
+
+  ///////////select Department//////////////////////
+  selectDepartment(){
+    this.http.get("http://localhost:8443/admin/department/getAdminData"+"/"+this.adminId).subscribe((data:any)=>{
+      this.dep=data
+    })
   }
 
   //search by jobtype

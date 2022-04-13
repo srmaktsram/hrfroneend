@@ -36,10 +36,10 @@
 							<div class="form-group form-focus select-focus">
 								<select class="form-select form-control" (input)="searchDepartment($event.target.value)">
 									<option>Select Department</option>
-									<option>Designing</option>
-									<option>Development</option>
+									<option *ngFor="let item of dep">{{item.departmentName}}</option>
+									<!-- <option>Development</option>
 									<option>Finance</option>
-									<option>Hr & Finance</option>
+									<option>Hr & Finance</option> -->
 								</select>
 								<label class="focus-label">Department</label>
 							</div>
@@ -47,7 +47,7 @@
 						<div class="col-sm-6 col-md-3">  
 							<div class="form-group form-focus">
 								<div class="cal-icon">
-									<input class="form-control floating datetimepicker" type="text" bsDatepicker>
+									<input #fromDate class="form-control floating datetimepicker" type="text" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
 								</div>
 								<label class="focus-label">From</label>
 							</div>
@@ -55,13 +55,13 @@
 						<div class="col-sm-6 col-md-3">  
 							<div class="form-group form-focus">
 								<div class="cal-icon">
-									<input class="form-control floating datetimepicker" type="text" bsDatepicker>
+									<input #toDate class="form-control floating datetimepicker" type="text" bsDatepicker  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }">
 								</div>
 								<label class="focus-label">To</label>
 							</div>
 						</div>
 						<div class="col-sm-6 col-md-3">  
-							<a href="#" class="btn btn-success w-100"> Search </a>  
+							<a  class="btn btn-success w-100" (click)="searchFromAndTo(fromDate.value,toDate.value)"> Search </a>  
 						</div>     
                     </div>
 					<!-- /Search Filter -->

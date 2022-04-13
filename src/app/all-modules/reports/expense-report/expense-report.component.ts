@@ -56,18 +56,17 @@ export class ExpenseReportComponent implements OnInit, OnDestroy {
 
   getExpensesReport() {
 
-    this.http
-      .get(
-        "http://localhost:8443/admin/expenses/getAllExpenses" +
-          "/" +
-          this.adminId
-      )
-      .subscribe((data) => {
-        this.allExpensesReport = data;
-        this.dtTrigger.next();
-        this.rows = this.allExpensesReport;
-        this.srch = [...this.rows];
-      });
+    this.http.get("http://localhost:8443/admin/expenses/getAllExpenses"+"/"+this.adminId).subscribe((data) => {
+      this.allExpensesReport = data;
+     
+     
+      this.dtTrigger.next();
+      this.rows = this.allExpensesReport;
+      this.srch = [...this.rows];
+     
+       // console.log("START THE FUNCTION>>>>>>>>>>>>>>>>>>>>")
+      //  this.searchFromAndTo("01-04-2022","01-09-2022")
+    });
 
   }
 
