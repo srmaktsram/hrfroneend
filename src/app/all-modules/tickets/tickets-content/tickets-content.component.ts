@@ -506,12 +506,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
 
   //getting the status value
   getStatus(data, id) {
-    // const priority = data;
     const status = data;
-
-    // this.statusValue = data;
-
-    //////
     this.http
       .patch(
         "http://localhost:8443/admin/tickets/updateTicketStatus" + "/" + id,
