@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -29,11 +30,28 @@ export class GoalListComponent implements OnInit, OnDestroy {
   public editId: any;
   public addGoalForm: FormGroup;
   public editGoalForm: FormGroup;
+  public adminId = sessionStorage.getItem("adminId");
+  lstGoaltype: Object;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private http: HttpClient
+  ) {
+    this.LoadGoaltype();
+  }
+  LoadGoaltype() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/goalType/getGoalType" + "/" + this.adminId
+      )
+      .subscribe((data) => {
+        this.lstGoaltype = data;
+        this.dtTrigger.next();
+        // this.rows = this.lstGoaltype;
+        // this.srch = [...this.rows];
+      });
+  }
 
   ngOnInit() {
     this.LoadGoal();
@@ -66,12 +84,16 @@ export class GoalListComponent implements OnInit, OnDestroy {
 
   // Get goallist  Api Call
   LoadGoal() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstGoal = data;
-      this.dtTrigger.next();
-      this.rows = this.lstGoal;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/goalList/getGoalList" + "/" + this.adminId
+      )
+      .subscribe((data) => {
+        this.lstGoal = data;
+        this.dtTrigger.next();
+        this.rows = this.lstGoal;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -84,9 +106,9 @@ export class GoalListComponent implements OnInit, OnDestroy {
   }
   // Add Department  Modal Api Call
   addGoal() {
-    if(this.addGoalForm.invalid){
-      this.markFormGroupTouched(this.addGoalForm)
-      return
+    if (this.addGoalForm.invalid) {
+      this.markFormGroupTouched(this.addGoalForm);
+      return;
     }
     if (this.addGoalForm.valid) {
       let StartDatetime = this.pipe.transform(
@@ -106,13 +128,18 @@ export class GoalListComponent implements OnInit, OnDestroy {
         description: this.addGoalForm.value.Description,
         status: this.addGoalForm.value.Status,
         progress: "Completed 73%",
+        adminId: this.adminId,
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/goalList/createGoalList", obj)
+        .subscribe((data) => {
+          this.LoadGoal();
+
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
-      this.LoadGoal();
+
       $("#add_goal").modal("hide");
       this.addGoalForm.reset();
       this.toastr.success("Goal added sucessfully...!", "Success");
@@ -129,6 +156,7 @@ export class GoalListComponent implements OnInit, OnDestroy {
         this.editGoalForm.value.EndDate,
         "dd-MM-yyyy"
       );
+      let id = this.editId;
       let obj = {
         goalType: this.editGoalForm.value.GoalType,
         subject: this.editGoalForm.value.Subject,
@@ -138,14 +166,19 @@ export class GoalListComponent implements OnInit, OnDestroy {
         description: this.editGoalForm.value.Description,
         status: this.editGoalForm.value.Status,
         progress: "Completed 73%",
-        id: this.editId,
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/goalList/updateGoalList" + "/" + id,
+          obj
+        )
+        .subscribe((data1) => {
+          this.LoadGoal();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
-      this.LoadGoal();
+
       $("#edit_goal").modal("hide");
       this.toastr.success("Goal Updated sucessfully...!", "Success");
     }
@@ -170,19 +203,37 @@ export class GoalListComponent implements OnInit, OnDestroy {
   }
 
   deleteGoal() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    let id = this.tempId;
+    let obj = {
+      status: 2,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/goalList/deleteGoalList" + "/" + id,
+        obj
+      )
+      .subscribe((data) => {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.LoadGoal();
+        $("#delete_goal").modal("hide");
+        this.toastr.success("Goal deleted sucessfully..!", "Success");
       });
-      this.LoadGoal();
-      $("#delete_goal").modal("hide");
-      this.toastr.success("Goal deleted sucessfully..!", "Success");
-    });
   }
   //getting the status value
-  getStatus(data) {
-    this.statusValue = data;
+  getStatus(data, id) {
+    const status = data;
+    this.http
+      .patch(
+        "http://localhost:8443/admin/goalList/updateGoalListStatus" + "/" + id,
+        { status }
+      )
+      .subscribe((data1) => {
+        this.LoadGoal();
+      });
   }
+
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
