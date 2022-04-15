@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -23,6 +24,7 @@ export class ResignationMainComponent implements OnInit {
   public editId: any;
   public rows = [];
   public srch = [];
+  public adminId:any;
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
@@ -32,9 +34,12 @@ export class ResignationMainComponent implements OnInit {
   public ResignDate;
   constructor(
     private formBuilder: FormBuilder,
+    private http:HttpClient,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.adminId=sessionStorage.getItem("adminId");
+  }
 
   ngOnInit() {
     this.loadResignation();
@@ -68,7 +73,8 @@ export class ResignationMainComponent implements OnInit {
 
   // Get  resignation Api Call
   loadResignation() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/resignation/getAdminResignation"+"/"+this.adminId).subscribe((data:any) => {
+        console.log("GetData>>>>>>>>>>>>>>>>>>>>>>>",data)
       this.lstResignation = data;
       this.rows = this.lstResignation;
       this.srch = [...this.rows];
@@ -100,21 +106,25 @@ export class ResignationMainComponent implements OnInit {
         "dd-MM-yyyy"
       );
       let obj = {
+        adminId:this.adminId,
         employee: this.addResignForm.value.EmployeeName,
         department: "Web development",
         noticedDate: noticedDate,
         resignDate: resignationDate,
         reason: this.addResignForm.value.ReasonName,
-        id: 0,
+       
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      this.http.post("http://localhost:8443/admin/resignation/createResignation",obj).subscribe((data:any) => {
+        console.log("CreateData>>>>>>>>>>>>>>",data)
+        this.loadResignation();
+
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.loadResignation();
+      
       $("#add_resignation").modal("hide");
       this.addResignForm.reset();
       this.toastr.success("Resignation added sucessfully...!", "Success");
@@ -140,14 +150,16 @@ export class ResignationMainComponent implements OnInit {
         reason: this.editResignForm.value.ReasonName,
         id: this.editId,
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+      this.http.patch("http://localhost:8443/admin/resignation/updateResignation"+"/"+this.editId,obj).subscribe((data:any) => {
+        console.log("updateData>>>>>>>>>>>>>>>",data)
+        this.loadResignation();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.loadResignation();
+      
       $("#edit_resignation").modal("hide");
       this.toastr.success("Resignation Updated sucessfully...!", "Success");
     }
@@ -170,14 +182,17 @@ export class ResignationMainComponent implements OnInit {
 
   // delete api call
   deleteResignation() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    alert(this.tempId)
+    this.http.patch("http://localhost:8443/admin/resignation/updateResignation"+"/"+this.tempId,{status:2}).subscribe((data:any) => {
+      console.log("deleteData>>>>>>>>>>>>>>>",data)
+      this.loadResignation();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
       this.dtTrigger.next();
     });
-    this.loadResignation();
+   
     $("#delete_resignation").modal("hide");
     this.toastr.success("Resignation  deleted sucessfully..!", "Success");
   }
