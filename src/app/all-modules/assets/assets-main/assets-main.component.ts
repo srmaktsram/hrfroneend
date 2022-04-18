@@ -16,6 +16,7 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -35,6 +36,7 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
   public tempId: any;
   public rows = [];
   public srch = [];
+  public adminId:any;
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
@@ -42,9 +44,12 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
   public editPurchaseToDateFormat;
   constructor(
     private allModuleService: AllModulesService,
+    private http:HttpClient,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.adminId=sessionStorage.getItem("adminId");
+  }
 
   ngOnInit() {
     // for floating label
@@ -72,6 +77,12 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
       value: ["", [Validators.required]],
       assetUser: ["", [Validators.required]],
       assetStatus: ["", [Validators.required]],
+      description:["", ],
+      manufacturer:["", ],
+      model:["", ], 
+      serialNumber:["", ], 
+      supplier:["", ], 
+      condition:["", ],
     });
 
     // Edit Assets Form Validation And Getting Values
@@ -85,6 +96,12 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
       editAssetUser: ["", [Validators.required]],
       editAssetId: ["", [Validators.required]],
       editAssetStatus: ["", [Validators.required]],
+      editdescription:["", ],
+      editmanufacturer:["", ],
+      editmodel:["", ], 
+      editserialNumber:["", ], 
+      editsupplier:["", ], 
+      editcondition:["", ],
     });
 
     // for data table configuration
@@ -117,7 +134,8 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //get data for data table
   getAssets() {
-    this.allModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/assets/getAdminAssets"+"/"+this.adminId).subscribe((data:any) => {
+      // console.log("get Assets>>>>>>>>>>>>>",data)
       this.allAssets = data;
       this.rows = this.allAssets;
       this.srch = [...this.rows];
@@ -149,6 +167,7 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
         "dd-MM-yyyy"
       );
       let obj = {
+        adminId:this.adminId,
         assetName: this.addAssets.value.assetName,
         assetId: this.addAssets.value.assetId,
         purchaseDate: purchaseDateFormat,
@@ -157,15 +176,26 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
         assetUser: this.addAssets.value.assetUser,
         warrentyEnd: purchaseToDateFormat,
         assetStatus: this.addAssets.value.assetStatus,
+        description: this.addAssets.value.description,
+        manufacturer: this.addAssets.value.manufacturer,
+        model: this.addAssets.value.model,
+        serialNumber: this.addAssets.value.serialNumber,
+        supplier: this.addAssets.value.supplier,
+        condition: this.addAssets.value.condition
       };
-      this.allModuleService.add(obj, this.url).subscribe((data) => {
+
+      this.http.post("http://localhost:8443/admin/assets/createAssets",obj).subscribe((data:any) => {
+      //   console.log("post Assets>>>>>>>>>>>>>",obj)
+      // console.log("post Assets>>>>>>>>>>>>>",data)
+
+        this.getAssets();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.getAssets();
+    
       $("#add_asset").modal("hide");
       this.addAssets.reset();
       this.toastr.success("Assets is added", "Success");
@@ -195,16 +225,26 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
         assetUser: this.editAssets.value.editAssetUser,
         warrentyEnd: this.editPurchaseToDateFormat,
         assetStatus: this.editAssets.value.editAssetStatus,
-        id: this.editId,
+        description: this.editAssets.value.editdescription,
+        manufacturer: this.editAssets.value.editmanufacturer,
+        model: this.editAssets.value.editmodel,
+        serialNumber: this.editAssets.value.editserialNumber,
+        supplier: this.editAssets.value.editsupplier,
+        condition: this.editAssets.value.editcondition,
+       
       };
-      this.allModuleService.update(obj, this.url).subscribe((data1) => {
+      alert(this.editId)
+      this.http.patch("http://localhost:8443/admin/assets/updateAssets"+"/"+this.editId,obj).subscribe((data:any) => {
+      // console.log("update Assets>>>>>>>>>>>>>",obj)
+      // console.log("update Assets>>>>>>>>>>>>>",data)
+      this.getAssets();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.getAssets();
+    
       $("#edit_asset").modal("hide");
       this.toastr.success("Assets is edited", "Success");
     } else {
@@ -214,12 +254,19 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // for set values to editassets form
   edit(value) {
+    
     this.editId = value;
+   
     const index = this.allAssets.findIndex((item) => {
-      return item.id === value;
+      return item.assetId === value;
+    
     });
+   
     let toSetValues = this.allAssets[index];
-    this.editAssets.setValue({
+   
+
+    
+    this.editAssets.patchValue({
       editAssetsName: toSetValues.assetName,
       editPurchaseDate: toSetValues.purchaseDate,
       editPurchaseTo: toSetValues.warrentyEnd,
@@ -228,19 +275,28 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
       editAssetUser: toSetValues.assetUser,
       editAssetId: toSetValues.assetId,
       editAssetStatus: toSetValues.assetStatus,
+      editdescription: toSetValues.description,
+      editmanufacturer: toSetValues.manufacturer,
+      editmodel:toSetValues.model,
+      editserialNumber:toSetValues.serialNumber,
+      editsupplier:toSetValues.supplier,
+      editcondition:toSetValues.condition,
+
     });
   }
 
   // Delete Assets Modal Api Call
   deleteAssets() {
-    this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    this.http.patch("http://localhost:8443/admin/assets/deleteAssets"+"/"+this.tempId,{assetStatus:2}).subscribe((data:any) => {
+      // console.log("delete Assets>>>>>>>>>>>>>",this.tempId)
+      this.getAssets();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
       this.dtTrigger.next();
     });
-    this.getAssets();
+   
     $("#delete_asset").modal("hide");
     this.toastr.success("Assets is deleted", "Success");
   }
@@ -300,11 +356,27 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
       .trigger("blur");
   }
 
-  //getting the status value
-  getStatus(data) {
-    this.statusValue = data;
+
+
+  /////search   by fropm and to////////////
+  searchFromAndTo(startDate,endDate){
+    this.rows.splice(0,this.rows.length);
+    this.srch.map((item)=>{
+      // console.log(item.createDate)
+      if(startDate<=item.createDate && item.createDate<=endDate){
+        this.rows.push(item);
+      }
+    })
   }
 
+  //getting the status value
+  getStatus(data,id) {
+       
+     this.http.patch("http://localhost:8443/admin/assets/updateAssets"+"/"+id,{assetStatus:data}).subscribe((data:any) => {
+     
+      this.getAssets();
+  })
+  }
   //for unsubscribe datatable
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
