@@ -43,7 +43,7 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-focus">
                         <div class="cal-icon">
-                            <input class="form-control floating datetimepicker" bsDatepicker type="text"
+                            <input #fromData   class="form-control floating datetimepicker" bsDatepicker type="text"
                                 [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
                                 (bsValueChange)="searchByPurchase($event)">
                         </div>
@@ -53,7 +53,7 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="form-group form-focus">
                         <div class="cal-icon">
-                            <input class="form-control floating datetimepicker" bsDatepicker type="text"
+                            <input #toDate class="form-control floating datetimepicker" bsDatepicker type="text"
                                 [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
                                 (bsValueChange)="searchByWarranty($event)">
                         </div>
@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="col-sm-6 col-md-2">
-            <a  class="btn btn-success w-100"> Search </a>
+            <a  (click)="searchFromAndTo(fromData.value,toDate.value)" class="btn btn-success w-100"> Search </a>
         </div>
     </div>
     <!-- /Search Filter -->
@@ -102,15 +102,15 @@
                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" 
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-dot-circle-o text-danger"></i>
-                                        {{assets.assetStatus || statusValue}}
+                                        {{assets.assetStatus}}
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" (click)="getStatus('Pending')"><i
+                                        <a class="dropdown-item" (click)="getStatus('Pending',assets.assetId)"><i
                                                 class="fa fa-dot-circle-o text-danger"></i>
                                             Pending</a>
-                                        <a class="dropdown-item" (click)="getStatus('Approved')"><i
+                                        <a class="dropdown-item" (click)="getStatus('Approved',assets.assetId)"><i
                                                 class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                        <a class="dropdown-item" (click)="getStatus('Returned')"><i
+                                        <a class="dropdown-item" (click)="getStatus('Returned',assets.assetId)"><i
                                                 class="fa fa-dot-circle-o text-info"></i>
                                             Returned</a>
                                     </div>
@@ -122,9 +122,9 @@
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#edit_asset"
-                                            (click)="edit(assets.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            (click)="edit(assets.assetId)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                         <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#delete_asset" (click)="tempId = assets.id"><i
+                                            data-bs-target="#delete_asset" (click)="tempId = assets.assetId"><i
                                                 class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
@@ -221,13 +221,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Manufacturer</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" formControlName="manufacturer">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Model</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" formControlName="model">
                             </div>
                         </div>
                     </div>
@@ -235,19 +235,19 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Serial Number</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" formControlName="serialNumber">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Supplier</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" formControlName="supplier">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Condition</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" formControlName="condition">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -297,7 +297,10 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea class="form-control"></textarea>
+                                   
+                                    <textarea class="form-control"  formControlName="description" ></textarea>
+                              
+                               
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -409,13 +412,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Manufacturer</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text"  formControlName="editmanufacturer">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Model</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" formControlName="editmodel">
                             </div>
                         </div>
                     </div>
@@ -423,19 +426,21 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Serial Number</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text" formControlName="editserialNumber">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Supplier</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text"
+                                formControlName="editsupplier">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Condition</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text"
+                                formControlName="editcondition">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -487,7 +492,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Description</label>
-                                <textarea class="form-control"></textarea>
+                                <textarea class="form-control" formControlName="editdescription"></textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
