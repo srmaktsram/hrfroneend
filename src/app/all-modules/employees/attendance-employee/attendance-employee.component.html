@@ -19,14 +19,19 @@
         <div class="col-md-4">
             <div class="card punch-status">
                 <div class="card-body">
-                    <h5 class="card-title">Timesheet <small class="text-muted">11 Mar 2019</small></h5>
+                    <h5 class="card-title">Timesheet <small class="text-muted"
+                            *ngIf="punchlength>0">{{employeeAttandance[0].date |customDate}}
+                        </small></h5>
+
                     <div class="punch-det">
                         <h6>Punch In at</h6>
-                        <p>Wed, 11th Mar 2019 10.00 AM</p>
+                        <p *ngIf="punchlength>0">{{newDay}} {{punchDetails[0].date |customDate}}
+                            {{punchDetails[0].time}}</p>
                     </div>
                     <div class="punch-info">
                         <div class="punch-hours">
-                            <span>3.45 hrs</span>
+                            <span *ngIf="punchlength>0">{{employeeAttandance[0].punch
+                                |production}}</span>
                         </div>
                     </div>
                     <div class="-btn-section text-center">
@@ -46,13 +51,15 @@
                             <div class="col-md-6 col-6 text-center">
                                 <div class="stats-box">
                                     <p>Break</p>
-                                    <h6>1.21 hrs</h6>
+                                    <h6 *ngIf="punchlength>0">{{employeeAttandance[0].punch
+                                        |breaktime}}</h6>
                                 </div>
                             </div>
                             <div class="col-md-6 col-6 text-center">
                                 <div class="stats-box">
                                     <p>Overtime</p>
-                                    <h6>3 hrs</h6>
+                                    <h6 *ngIf="punchlength>0">{{employeeAttandance[0].punch
+                                        |overtime}}</h6>
                                 </div>
                             </div>
                         </div>
@@ -66,21 +73,24 @@
                     <h5 class="card-title">Statistics</h5>
                     <div class="stats-list">
                         <div class="stats-info">
-                            <p>Today <strong>3.45 <small>/ 8 hrs</small></strong></p>
+                            <p>Today <strong *ngIf="punchlength>0">{{employeeAttandance[0].punch
+                                    |production}} <small>/ 8 hrs</small></strong>
+                            </p>
                             <div class="progress">
                                 <div class="progress-bar bg-primary" role="progressbar" style="width: 31%"
                                     aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="stats-info">
-                            <p>This Week <strong>28 <small>/ 40 hrs</small></strong></p>
+                            <p>This Week <strong>{{hours}}:{{minute}}
+                                    <small> /40 hrs</small></strong></p>
                             <div class="progress">
                                 <div class="progress-bar bg-warning" role="progressbar" style="width: 31%"
                                     aria-valuenow="31" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </div>
                         <div class="stats-info">
-                            <p>This Month <strong>90 <small>/ 160 hrs</small></strong></p>
+                            <p>This Month <strong>{{hours}}:{{minute}} <small>/ 160 hrs</small></strong></p>
                             <div class="progress">
                                 <div class="progress-bar bg-success" role="progressbar" style="width: 62%"
                                     aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"></div>
@@ -108,50 +118,27 @@
             <div class="card recent-activity">
                 <div class="card-body">
                     <h5 class="card-title">Today Activity</h5>
-                    <ul class="res-activity-list">
-                        <li>
-                            <p class="mb-0">Punch In at</p>
-                            <p class="res-activity-time">
-                                <i class="fa fa-clock-o"></i>
-                                10.00 AM.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="mb-0">Punch Out at</p>
-                            <p class="res-activity-time">
-                                <i class="fa fa-clock-o"></i>
-                                11.00 AM.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="mb-0">Punch In at</p>
-                            <p class="res-activity-time">
-                                <i class="fa fa-clock-o"></i>
-                                11.15 AM.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="mb-0">Punch Out at</p>
-                            <p class="res-activity-time">
-                                <i class="fa fa-clock-o"></i>
-                                1.30 PM.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="mb-0">Punch In at</p>
-                            <p class="res-activity-time">
-                                <i class="fa fa-clock-o"></i>
-                                2.00 PM.
-                            </p>
-                        </li>
-                        <li>
-                            <p class="mb-0">Punch Out at</p>
-                            <p class="res-activity-time">
-                                <i class="fa fa-clock-o"></i>
-                                7.30 PM.
-                            </p>
-                        </li>
-                    </ul>
+                    <ng-container *ngIf="punchlength>0">
+                        <ul *ngFor="let item of punchused">
+                            <li *ngIf="item.status==0">
+                                <p class="mb-0">Punch In at</p>
+                                <p class="res-activity-time">
+                                    <i class="fa fa-clock-o"></i>
+                                    {{item.time}}
+                                </p>
+                            </li>
+
+                            <li *ngIf="item.status==1">
+                                <p class="mb-0">Punch Out at</p>
+                                <p class="res-activity-time">
+                                    <i class="fa fa-clock-o"></i>
+                                    {{item.time}}
+                                </p>
+                            </li>
+
+                        </ul>
+                    </ng-container>
+
                 </div>
             </div>
         </div>
@@ -225,14 +212,14 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let row of employeeAttandance;let i = index">
-                            <td>1</td>
+                            <td>{{i+1}}</td>
                             <td>{{row.date}}</td>
 
 
-                            <td>{{row.punch[0].time}}</td>
+                            <td *ngIf="row.punch.length>0">{{row.punch[0].time}}</td>
 
 
-                            <td>
+                            <td *ngIf="row.punch.length>1">
                                 <ng-container *ngIf="row.punch[row.punch.length-1].status==1">
                                     {{row.punch[row.punch.length-1].time}}
                                 </ng-container>
@@ -244,11 +231,11 @@
 
 
 
-                            <td>{{row.punch |production}}</td>
-                            <td>{{row.punch|breaktime}}</td>
-                            <ng-container *ngIf="(row.punch |production)>8">
-                                <td>{{(row.punch |production)-8}}</td>
-                            </ng-container>
+                            <td *ngIf="row.punch.length>1">{{row.punch |production}}</td>
+                            <td *ngIf="row.punch.length>2">{{row.punch|breaktime}}</td>
+
+                            <td *ngIf="row.punch.length>1">{{row.punch |overtime}}</td>
+
                         </tr>
                         <!-- <tr>
                             <td>2</td>

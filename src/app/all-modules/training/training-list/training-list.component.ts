@@ -6,6 +6,7 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { id } from "src/assets/all-modules-data/id";
 
 declare const $: any;
 @Component({
@@ -217,5 +218,11 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+  updateStatus(val, id) {
+    this.http.patch("http://localhost:8443/admin/training/traininglist/update" + "/" + id, { status: val }).subscribe((data: any) => {
+      console.log("updateStatus", data);
+      this.loadtrainerlist();
+    })
   }
 }
