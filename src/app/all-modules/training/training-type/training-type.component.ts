@@ -4,6 +4,8 @@ import { ToastrService } from "ngx-toastr";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { A11yModule } from "@angular/cdk/a11y";
 
 declare const $: any;
 @Component({
@@ -23,14 +25,18 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
   public srch = [];
   public tempId: any;
   public editId: any;
-
+  public adminId: any;
+  public id: any;
   public addTrainingTypeForm: FormGroup;
   public editTrainingTypeForm: FormGroup;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService,
+    private http: HttpClient
+  ) {
+    this.adminId = sessionStorage.getItem("adminId");
+  }
 
   ngOnInit() {
     this.loadTrainingType();
@@ -54,9 +60,10 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
 
   // Get  goal type  Api Call
   loadTrainingType() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/training/trainingtype/getData" + "/" + this.adminId).subscribe((data: any) => {
+      console.log("getApi", data)
       this.lstTrainingType = data;
-      this.dtTrigger.next();
+      // this.dtTrigger.next();
       this.rows = this.lstTrainingType;
       this.srch = [...this.rows];
     });
@@ -80,17 +87,20 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
     }
     if (this.addTrainingTypeForm.valid) {
       let obj = {
+        adminId: this.adminId,
         goalType: this.addTrainingTypeForm.value.GoalType,
         description: this.addTrainingTypeForm.value.Description,
         status: this.addTrainingTypeForm.value.Status,
-        id: 0,
+
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      this.http.post("http://localhost:8443/admin/training/trainingtype/create", obj).subscribe((data: any) => {
+        console.log("postApi", data)
+        this.loadTrainingType();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
       });
-      this.loadTrainingType();
+
       $("#add_type").modal("hide");
       this.addTrainingTypeForm.reset();
       this.toastr.success("Training type added sucessfully...!", "Success");
@@ -99,18 +109,20 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
 
   editTrainingType() {
     if (this.editTrainingTypeForm.valid) {
+      this.id = this.editId
       let obj = {
         goalType: this.editTrainingTypeForm.value.GoalType,
         description: this.editTrainingTypeForm.value.Description,
         status: this.editTrainingTypeForm.value.Status,
-        id: this.editId,
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+      this.http.patch("http://localhost:8443/admin/training/trainingtype/update" + "/" + this.id, obj).subscribe((data: any) => {
+        console.log("updateApi", data)
+        this.loadTrainingType();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
       });
-      this.loadTrainingType();
+
       $("#edit_type").modal("hide");
       this.toastr.success("Training type Updated sucessfully...!", "Success");
     }
@@ -124,18 +136,23 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
     });
     let toSetValues = this.lstTrainingType[index];
     this.editTrainingTypeForm.setValue({
-      GoalType: toSetValues.type,
+      GoalType: toSetValues.goalType,
       Description: toSetValues.description,
       Status: toSetValues.status,
     });
   }
 
   deleteTrainingType() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    let obj = {
+      status: 2
+    }
+    this.http.patch("http://localhost:8443/admin/training/trainingtype/delete" + "/" + this.tempId, obj).subscribe((data: any) => {
+      console.log("deleteApi", data)
+      this.loadTrainingType();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
-      this.loadTrainingType();
+
       $("#delete_type").modal("hide");
       this.toastr.success("Training type deleted sucessfully..!", "Success");
     });
@@ -145,4 +162,16 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
+
+  updateStatus(val, id) {
+    console.log("agdgasdhgaj", val, id)
+    this.http.patch("http://localhost:8443/admin/training/trainingtype/update" + "/" + id, { status: val }).subscribe((data: any) => {
+      console.log("updateStatus", data);
+      this.loadTrainingType();
+
+    })
+  }
+
+
+
 }

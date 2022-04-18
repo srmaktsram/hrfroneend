@@ -69,7 +69,7 @@ export class TrainersComponent implements OnInit, OnDestroy {
     this.http.get("http://localhost:8443/admin/training/trainers/getData" + "/" + this.adminId).subscribe((data: any) => {
       console.log("getApi", data)
       this.lstTrainer = data;
-      this.dtTrigger.next();
+      // this.dtTrigger.next();
       this.rows = this.lstTrainer;
       this.srch = [...this.rows];
     });
@@ -178,5 +178,11 @@ export class TrainersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+  updateStatus(val, id) {
+    this.http.patch("http://localhost:8443/admin/training/trainers/update" + "/" + id, { status: val }).subscribe((data) => {
+      console.log("updatestatus", data);
+      this.loadtrainer();
+    })
   }
 }
