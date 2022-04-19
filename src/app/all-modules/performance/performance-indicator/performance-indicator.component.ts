@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -22,7 +23,7 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
 
   public tempId: any;
   public editId: any;
-
+  public id: any
   public addIndicatorForm: FormGroup;
   public editIndicatorForm: FormGroup;
   public pipe = new DatePipe("en-US");
@@ -30,11 +31,15 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
   public srch = [];
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
+  public adminId: any;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private http: HttpClient,
+  ) {
+    this.adminId = sessionStorage.getItem("adminId")
+  }
 
   ngOnInit() {
     this.loadData();
@@ -90,7 +95,7 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
 
   // Get  trainer Api Call
   loadData() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/performance/performance_indicator/getData" + "/" + this.adminId).subscribe((data: any) => {
       this.lstData = data;
       this.dtTrigger.next();
       this.rows = this.lstData;
@@ -109,12 +114,13 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
 
   // Add  goal type  Modal Api Call
   addIndicator() {
-    if(this.addIndicatorForm.invalid){
+    if (this.addIndicatorForm.invalid) {
       this.markFormGroupTouched(this.addIndicatorForm)
       return
     }
     if (this.addIndicatorForm.valid) {
       let obj = {
+        adminId: this.adminId,
         designation: this.addIndicatorForm.value.designationName,
         department: "Web Development",
         experience: this.addIndicatorForm.value.experienceName,
@@ -137,12 +143,15 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
         createdBy: "28 Feb 2019",
         status: this.addIndicatorForm.value.statusName,
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      console.log("obj", obj);
+      this.http.post("http://localhost:8443/admin/performance/performance_indicator/create", obj).subscribe((data: any) => {
+        this.loadData();
+        console.log(data, "postApi")
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
       });
-      this.loadData();
+
       $("#add_indicator").modal("hide");
       this.addIndicatorForm.reset();
       this.toastr.success("Indicator added sucessfully...!", "Success");
@@ -151,6 +160,7 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
 
   editIndicator() {
     if (this.editIndicatorForm.valid) {
+      this.id = this.editId
       let obj = {
         designation: this.editIndicatorForm.value.designationName,
         department: "Web Development",
@@ -173,14 +183,16 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
         addedBy: "Mike Litorus",
         createdBy: "28 Feb 2019",
         status: this.editIndicatorForm.value.statusName,
-        id: this.editId,
+
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data) => {
+      this.http.patch("http://localhost:8443/admin/performance/performance_indicator/update" + "/" + this.editId, obj).subscribe((data: any) => {
+        console.log("updateApi", data)
+        this.loadData();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
       });
-      this.loadData();
+
       $("#edit_indicator").modal("hide");
       this.toastr.success("Indicator Updated sucessfully...!", "Success");
     }
@@ -213,7 +225,11 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
   }
 
   deleteIndicator() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    let obj = {
+      status: 2,
+    }
+    this.http.patch("http://localhost:8443/admin/performance/performance_indicator/delete" + "/" + this.tempId, obj).subscribe((data) => {
+      console.log("deleteApi", data)
       this.loadData();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
@@ -231,4 +247,5 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
+
 }

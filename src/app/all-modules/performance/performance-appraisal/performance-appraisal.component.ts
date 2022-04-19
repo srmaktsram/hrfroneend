@@ -1,9 +1,11 @@
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
+import { id } from "src/assets/all-modules-data/id";
 import { AllModulesService } from "../../all-modules.service";
 
 declare const $: any;
@@ -21,6 +23,8 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
 
   public tempId: any;
   public editId: any;
+  public adminId: any;
+  id: any;
 
   public addApparaisalForm: FormGroup;
   public editApparaisalForm: FormGroup;
@@ -29,11 +33,15 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
   public srch = [];
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
+  lstEmployee: any;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService,
+    private http: HttpClient,
+  ) {
+    this.adminId = sessionStorage.getItem("adminId");
+  }
 
   ngOnInit() {
     this.loadData();
@@ -60,7 +68,7 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
 
   // Get  apparaisal Api Call
   loadData() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/performance/performance_appraisal/getData" + "/" + this.adminId).subscribe((data: any) => {
       this.lstData = data;
       this.rows = this.lstData;
       this.srch = [...this.rows];
@@ -85,7 +93,7 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
 
   // Add  apparaisal type  Modal Api Call
   addApparaisal() {
-    if(this.addApparaisalForm.invalid){
+    if (this.addApparaisalForm.invalid) {
       this.markFormGroupTouched(this.addApparaisalForm)
       return
     }
@@ -95,20 +103,24 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
         "dd-MM-yyyy"
       );
       let obj = {
-        employee: this.addApparaisalForm.value.EmployeeName,
+        adminId: this.adminId,
+        employeeName: this.addApparaisalForm.value.EmployeeName,
         apparaisaldate: apparaisalDate,
         designation: "Web Designer",
         department: "Web development",
         status: this.addApparaisalForm.value.StatusName,
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      console.log("obj", obj)
+      this.http.post("http://localhost:8443/admin/performance/performance_appraisal/create", obj).subscribe((data: any) => {
+        console.log(data, "postApi")
+        this.loadData();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.loadData();
+
       $("#add_appraisal").modal("hide");
       this.addApparaisalForm.reset();
       this.toastr.success("Apparaisal added sucessfully...!", "Success");
@@ -122,22 +134,25 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
         this.editApparaisalForm.value.SelectDate,
         "dd-MM-yyyy"
       );
+      this.id = this.editId
       let obj = {
-        employee: this.editApparaisalForm.value.EmployeeName,
+        employeeName: this.editApparaisalForm.value.EmployeeName,
         apparaisaldate: apparaisalDate,
         designation: "Web Designer",
         department: "Web development",
         status: this.editApparaisalForm.value.StatusName,
-        id: this.editId,
+
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data) => {
+      this.http.patch("http://localhost:8443/admin/performance/performance_appraisal/update" + "/" + this.id, obj).subscribe((data: any) => {
+        console.log("updateApi", data)
+        this.loadData();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.loadData();
+
       $("#edit_appraisal").modal("hide");
       this.toastr.success("Apparaisal updated sucessfully...!", "Success");
     }
@@ -157,15 +172,24 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
 
   // Delete apparaisal Modal Api Call
 
+
   deleteApparaisal() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+
+    this.id = this.tempId;
+    let obj = {
+      status: 2,
+    }
+
+    this.http.patch("http://localhost:8443/admin/performance/performance_appraisal/delete" + "/" + this.id, obj).subscribe((data: any) => {
+      console.log(data, "deleteApi");
+      this.loadData();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
       this.dtTrigger.next();
     });
-    this.loadData();
+
     $("#delete_appraisal").modal("hide");
     this.toastr.success("Record deleted sucessfully...!", "Success");
   }
@@ -178,4 +202,28 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
+
+  updateStatus(val, id) {
+    this.http.patch("http://localhost:8443/admin/performance/performance_appraisal/update" + "/" + id, { status: val }).subscribe((data: any) => {
+      console.log("updateStatus", data);
+      this.loadData();;
+    })
+  }
+  getAllemployeeData() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/allemployees/getallEmployee" +
+        "/" +
+        this.adminId
+      )
+      .subscribe((data: any) => {
+        console.log("getApi", data);
+
+        this.lstEmployee = data;
+        // this.rows = this.lstEmployee;
+        // this.srch = [...this.rows];
+      });
+
+  }
 }
+
