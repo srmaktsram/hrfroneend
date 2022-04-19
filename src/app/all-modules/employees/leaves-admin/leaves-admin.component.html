@@ -143,20 +143,25 @@
                                 <div class="dropdown action-label">
                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-dot-circle-o text-purple"></i>{{row.status || statusValue}}
+                                        <ng-container *ngIf="row.status=='Approved'">
+                                            <i class="fa fa-dot-circle-o text-success"></i>{{row.status}}
+                                        </ng-container>
+                                        <ng-container *ngIf="row.status=='Pending'">
+                                            <i class="fa fa-dot-circle-o text-purple"></i>{{row.status}}
+                                        </ng-container>
+                                        <ng-container *ngIf="row.status=='Declined'">
+                                            <i class="fa fa-dot-circle-o text-danger"></i>{{row.status}}
+                                        </ng-container>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" (click)="getStatus('New')"><i
+                                        <a class="dropdown-item" (click)="updateStatus('Approved',row.id)"><i
+                                                class="fa fa-dot-circle-o text-success"></i>
+                                            Approved</a>
+                                        <a class="dropdown-item" (click)="updateStatus('Pending',row.id)"><i
                                                 class="fa fa-dot-circle-o text-purple"></i>
-                                            New</a>
-                                        <a class="dropdown-item" (click)="getStatus('Pending')"><i
-                                                class="fa fa-dot-circle-o text-danger"></i>
                                             Pending</a>
-                                        <a class="dropdown-item" (click)="getStatus('Approved')"><i
-                                                class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                        <a class="dropdown-item" (click)="getStatus('Declined')"><i
-                                                class="fa fa-dot-circle-o text-danger"></i>
-                                            Declined</a>
+                                        <a class="dropdown-item" (click)="updateStatus('Declined',row.id)"><i
+                                                class="fa fa-dot-circle-o text-danger"></i> Declined</a>
                                     </div>
                                 </div>
                             </td>

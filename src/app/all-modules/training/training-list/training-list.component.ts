@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
+import { Router } from "@angular/router";
 
 declare const $: any;
 @Component({
@@ -36,7 +37,8 @@ export class TrainingListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -151,7 +153,6 @@ export class TrainingListComponent implements OnInit, OnDestroy {
         trainingType: this.editTrainerForm.value.Type,
         trainer: this.editTrainerForm.value.TranierName,
         employeeName: this.editTrainerForm.value.EmployeeName,
-        // timeDuration: "7 May 2019 - 10 May 2019",
         startDate: this.start,
         endDate: this.end,
         costName: this.editTrainerForm.value.costName,
@@ -225,4 +226,5 @@ export class TrainingListComponent implements OnInit, OnDestroy {
       this.loadtrainerlist();
     })
   }
+
 }
