@@ -43,7 +43,9 @@ export class EmployeeProfileComponent implements OnInit {
     private http: HttpClient
   ) {
     this.id = sessionStorage.getItem("empid")
+    console.log(this.id, "pkkkkkkkk")
     this.getId(this.id);
+    console.log(this.id, "hpppppppppppp")
 
 
   }
@@ -149,6 +151,7 @@ export class EmployeeProfileComponent implements OnInit {
   getId(id) {
     this.http.get("http://localhost:8443/admin/allemployees/getEmployee" + "/" + id).subscribe((res) => {
       this.data = res;
+      console.log("res", this.data)
 
       this.profileEmp = this.data.data
 

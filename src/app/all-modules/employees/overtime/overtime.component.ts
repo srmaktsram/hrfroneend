@@ -6,6 +6,7 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
 declare const $: any;
 
 @Component({
@@ -36,9 +37,10 @@ export class OvertimeComponent implements OnInit {
   name: any;
   constructor(
     private formBuilder: FormBuilder,
-    private srvModuleService: AllModulesService,
+    // private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private router: Router,
   ) {
     this.getEmployeeData()
 
@@ -74,7 +76,8 @@ export class OvertimeComponent implements OnInit {
     this.http.get("http://localhost:8443/admin/overtime/getAllOvertime" + "/" + this.adminId).subscribe((res: any) => {
       console.log("getApiokkkk", res)
       this.lstOvertime = res;
-      this.dtTrigger.next();
+      console.log(this.lstOvertime, "kkpkpkpkp")
+      // this.dtTrigger.next();
       this.rows = this.lstOvertime;
       this.srch = [...this.rows];
     });
@@ -89,7 +92,7 @@ export class OvertimeComponent implements OnInit {
     });
   }
 
-  getId(id, name) {
+  getIdFirstName(id, name) {
     this.employeeid = id
     this.name = name
   }
@@ -147,9 +150,6 @@ export class OvertimeComponent implements OnInit {
         name: this.editOvertimeForm.value.EmployeeName,
         otDate: Datetime,
         otHrs: this.editOvertimeForm.value.OtHrs,
-        // otType: "Normal day OT 1.5x",
-        // status: "New",
-        // approvedBy: "Richard Miles",
         description: this.editOvertimeForm.value.Description,
       };
       this.http.patch("http://localhost:8443/admin/overtime/updateOvertime" + "/" + this.id, obj).subscribe((res) => {
@@ -198,10 +198,10 @@ export class OvertimeComponent implements OnInit {
     });
   }
 
-  //getting the status value
-  getStatus(data) {
-    this.statusValue = data;
-  }
+  // getting the status value
+  // getStatus(data) {
+  //   this.statusValue = data;
+  // }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
@@ -220,5 +220,19 @@ export class OvertimeComponent implements OnInit {
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
       });
+  }
+  getId(id) {
+    sessionStorage.setItem("empid", id);
+    this.router.navigate(["/layout/employees/employeeprofile"]);
+  }
+
+  updateStatus(val, id) {
+    this.http.patch("http://localhost:8443/admin/overtime/updateOvertime" + "/" + id, { status: val }).subscribe((res) => {
+      console.log("updateApi", res);
+      // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      //   dtInstance.destroy();
+      this.LoadOvertime();
+      // });
+    });
   }
 }

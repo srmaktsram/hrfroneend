@@ -45,9 +45,11 @@
                                 <td>{{item.trainingType}}</td>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
+                                        <a routerLink="/layout/employees/employeeprofile" class="avatar"
+                                            (click)="getId()"><img alt=""
                                                 src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
-                                        <a routerLink="/layout/employees/employeeprofile">{{item.trainerName}} </a>
+                                        <a routerLink="/layout/employees/employeeprofile"
+                                            (click)="getId()">{{item.trainerName}} </a>
                                     </h2>
                                 </td>
                                 <td>
@@ -122,8 +124,14 @@
                                     <div class="dropdown action-label">
                                         <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                                             data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-dot-circle-o text-success"></i> {{item.status ||
-                                            statusValue}}
+                                            <ng-container *ngIf="item.status=='Active'">
+                                                <i class="fa fa-dot-circle-o text-success"></i> {{item.status ||
+                                                statusValue}}
+                                            </ng-container>
+                                            <ng-container *ngIf="item.status=='Inactive'">
+                                                <i class="fa fa-dot-circle-o text-danger"></i> {{item.status ||
+                                                statusValue}}
+                                            </ng-container>
                                         </a>
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item" (click)="updateStatus('Active',item.id)"><i

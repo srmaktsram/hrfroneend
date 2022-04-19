@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { Router } from "@angular/router";
 
 declare const $: any;
 @Component({
@@ -33,6 +34,7 @@ export class TrainersComponent implements OnInit, OnDestroy {
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -185,4 +187,9 @@ export class TrainersComponent implements OnInit, OnDestroy {
       this.loadtrainer();
     })
   }
+
+  // getId(id) {
+  //   sessionStorage.setItem("empid", id);
+  //   this.router.navigate(["/layout/employees/employeeprofile"]);
+  // }
 }
