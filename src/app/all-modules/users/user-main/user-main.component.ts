@@ -15,6 +15,7 @@ import {
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -29,17 +30,94 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
   public url: any = "users";
   public allUsers: any = [];
   public addUsers: FormGroup;
+  public check:any;
   public editUsers: FormGroup;
+  public Holidays=[
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false }
+  ];
+  public Employee=[
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false }
+  ];
+  public Leaves=[
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false }
+  ];
+  public Events=[
+    { id: 0, read: false },
+    { id: 1, write: false },
+    { id: 2, create: false },
+    { id: 3, delete: false },
+    { id: 4, import: false },
+    { id: 5, export: false }
+  ]
+
+
+
+
   public editId: any;
   public tempId: any;
+  public adminId:any;
   public rows = [];
   public srch = [];
   public dtTrigger: Subject<any> = new Subject();
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
+    private http:HttpClient,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.adminId=sessionStorage.getItem("adminId");
+  
+  }
+  public initializeArray(){
+    this. Holidays=[
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false }
+    ];
+    this. Employee=[
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false }
+    ];
+    this. Leaves=[
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false }
+    ];
+    this. Events=[
+      { id: 0, read: false },
+      { id: 1, write: false },
+      { id: 2, create: false },
+      { id: 3, delete: false },
+      { id: 4, import: false },
+      { id: 5, export: false }
+    ]
+
+  }
 
   ngOnInit() {
     $(".floating")
@@ -59,6 +137,11 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
       addEmail: ["", [Validators.required]],
       addRole: ["", [Validators.required]],
       addCompany: ["", [Validators.required]],
+      firstName:["",[Validators.required]],
+      lastName:[""],
+      password:["",[Validators.required]],
+      confirmPassword:["",[Validators.required]],
+      phone:["",[Validators.required]]
     });
 
     // Edit Provident Form Validation And Getting Values
@@ -68,6 +151,11 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
       editEmail: ["", [Validators.required]],
       editRole: ["", [Validators.required]],
       editCompany: ["", [Validators.required]],
+      firstName:["",[Validators.required]],
+      lastName:[""],
+      password:["",[Validators.required]],
+      confirmPassword:["",[Validators.required]],
+      phone:["",[Validators.required]]
     });
     // for data table configuration
     this.dtOptions = {
@@ -98,32 +186,61 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getUsers() {
-    this.allModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/users/getAdminUsers"+"/"+this.adminId).subscribe((data:any) => {
+      // console.log("get Data >>>>>>>>>>>>>>>>>>>>>",data);
       this.allUsers = data;
       this.rows = this.allUsers;
       this.srch = [...this.rows];
     });
   }
 
+
+
+  //////////////password checking///////////////
+  checkpassword(pass,confpass){
+  
+   
+    if(pass===confpass){
+      this.check=true;
+    }else{
+      this.check=false;
+    }
+  }
+
   // Add Provident Modal Api Call
 
   addUsersSubmit() {
     if (this.addUsers.valid) {
-      let obj = {
+      let obj = { 
+        adminId:this.adminId,
         name: this.addUsers.value.addUserName,
         designation: "Web Designer",
         email: this.addUsers.value.addEmail,
         role: this.addUsers.value.addRole,
         company: this.addUsers.value.addCompany,
+        firstName:this.addUsers.value.firstName,
+        lastName:this.addUsers.value.lastName,
+        password:this.addUsers.value.password,
+        confirmPassword:this.addUsers.value.confirmPassword,
+        phone:this.addUsers.value.phone,
+        holidays:this.Holidays,
+        employee:this.Employee,
+        leaves:this.Leaves,
+        events:this.Events
+
       };
-      this.allModuleService.add(obj, this.url).subscribe((data) => {
+      
+      this.http.post("http://localhost:8443/admin/users/createUsers",obj).subscribe((data:any) => {
+        // console.log("POST DATA>>>>>>>>>>>>>",data);
+        this.getUsers();
+
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.getUsers();
+      
       $("#add_user").modal("hide");
       this.addUsers.reset();
       this.toastr.success("Users is added", "Success");
@@ -137,21 +254,33 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
   editUsersSubmit() {
     if (this.editUsers.valid) {
       let obj = {
+       
         name: this.editUsers.value.editUsersName,
         designation: "Android Developer",
         email: this.editUsers.value.editEmail,
         company: this.editUsers.value.editCompany,
         role: this.editUsers.value.editRole,
-        id: this.editId,
+       
+        firstName:this.editUsers.value.firstName,
+        lastName:this.editUsers.value.lastName,
+        password:this.editUsers.value.password,
+        confirmPassword:this.editUsers.value.confirmPassword,
+        phone:this.editUsers.value.phone,
+        holidays:this.Holidays,
+        employee:this.Employee,
+        leaves:this.Leaves,
+        event:this.Events,
       };
-      this.allModuleService.update(obj, this.url).subscribe((data1) => {
+      this.http.patch("http://localhost:8443/admin/users/updateUsers"+"/"+this.editId,obj).subscribe((data:any) => {
+        // console.log("updateData>>>>>>>>>>>>>>>>>>>",data);
+        this.getUsers();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.getUsers();
+    
       $("#edit_user").modal("hide");
       this.toastr.success("Users is edited", "Success");
     } else {
@@ -165,25 +294,43 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
       return item.id === value;
     });
     let toSetValues = this.allUsers[index];
-    this.editUsers.setValue({
+    // console.log("ToSetValue>>>>>>>>>>>>>>>",toSetValues);
+    this.editUsers.patchValue({
       editUsersName: toSetValues.name,
       editEmail: toSetValues.email,
       editRole: toSetValues.role,
       editCompany: toSetValues.company,
+      firstName:toSetValues.firstName,
+      lastName:toSetValues.lastName,
+      password:toSetValues.password,
+      confirmPassword:toSetValues.confirmPassword,
+      phone:toSetValues.phone,
+    
+
     });
+    this.Holidays=toSetValues.holidays;
+   
+    this.Employee=toSetValues.employee;
+    
+    this.Leaves=toSetValues.leaves;
+   
+    this.Events=toSetValues.events;
+   
   }
 
   // Delete Provident Modal Api Call
 
   deleteUsers() {
-    this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    this.http.patch("http://localhost:8443/admin/users/deleteUsers"+"/"+this.tempId,{status:2}).subscribe((data:any) => {
+      // console.log("deleteData>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",data);
+      this.getUsers();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
       this.dtTrigger.next();
     });
-    this.getUsers();
+   
     $("#delete_user").modal("hide");
     this.toastr.success("Users is deleted", "Success");
   }
@@ -211,12 +358,233 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
   //search by name
   searchRole(val) {
     this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.role.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
+     this.srch.map((item)=>{
+       if(item.designation===val){
+        this.rows.push(item);
+       }
+
+    })
+    
+
+   
   }
+
+/////////////Create function///////////////////////////////////////////
+checkEmployee(event, val) {
+ 
+  
+  if (val == 0) {
+    if (event.target.checked == true) {
+    
+       this.Employee[0].read = true;
+      
+    } else {
+      this.Employee[0].read = false;
+    }
+  } else if (val == 1) {
+    if (event.target.checked == true) {
+      this.Employee[1].write  = true;
+    } else {
+      this.Employee[1].write = false;
+    }
+  } else if (val == 2) {
+    if (event.target.checked == true) {
+      this.Employee[2].create = true;
+    } else {
+      this.Employee[2].create = false;
+    }
+  } else if (val == 3) {
+    if (event.target.checked == true) {
+      this.Employee[3].delete = true;
+    } else {
+      this.Employee[3].delete = false;
+    }
+  } else if (val == 4) {
+    if (event.target.checked == true) {
+      this.Employee[4].import = true;
+    } else {
+      this.Employee[4].import = false;
+    }
+  } else if (val == 5) {
+    if (event.target.checked == true) {
+      this.Employee[5].export = true;
+    } else {
+      this.Employee[5].export = false;
+    }
+  }
+}
+
+checkHolidays(event, val) {
+ 
+  if (val == 0) {
+    if (event.target.checked == true) {
+      this.Holidays[0].read = true;
+    } else {
+      this.Holidays[0].read = false;
+    }
+  } else if (val == 1) {
+    if (event.target.checked == true) {
+
+      this.Holidays[1].write = true;
+    } else {
+
+      this.Holidays[1].write = false;
+    }
+  } else if (val == 2) {
+    if (event.target.checked == true) {
+
+      this.Holidays[2].create = true;
+    } else {
+
+      this.Holidays[2].create = false;
+    }
+  } else if (val == 3) {
+    if (event.target.checked == true) {
+
+      this.Holidays[3].delete = true;
+    } else {
+
+      this.Holidays[3].delete = false;
+    }
+  } else if (val == 4) {
+    if (event.target.checked == true) {
+
+      this.Holidays[4].import = true;
+    } else {
+
+      this.Holidays[4].import = false;
+    }
+  } else if (val == 5) {
+    if (event.target.checked == true) {
+
+      this.Holidays[5].export = true;
+    } else {
+
+      this.Holidays[5].export = false;
+    }
+  }
+}
+
+checkLeaves(event, val) {
+ 
+  if (val == 0) {
+    if (event.target.checked == true) {
+     
+      this.Leaves[0].read = true;
+    } else {
+     
+      this.Leaves[0].read = false;
+    }
+  } else if (val == 1) {
+    if (event.target.checked == true) {
+     
+      this.Leaves[1].write = true;
+    } else {
+     
+      this.Leaves[1].write = false;
+    }
+  } else if (val == 2) {
+    if (event.target.checked == true) {
+     
+      this.Leaves[2].create = true;
+    } else {
+     
+      this.Leaves[2].create = false;
+    }
+  } else if (val == 3) {
+    if (event.target.checked == true) {
+     
+      this.Leaves[3].delete = true;
+    } else {
+     
+      this.Leaves[3].delete = false;
+    }
+  } else if (val == 4) {
+    if (event.target.checked == true) {
+     
+      this.Leaves[4].import = true;
+    } else {
+     
+      this.Leaves[4].import = false;
+    }
+  } else if (val == 5) {
+    if (event.target.checked == true) {
+     
+      this.Leaves[5].export = true;
+    } else {
+     
+      this.Leaves[5].export = false;
+    }
+  }
+}
+
+checkEvents(event, val) {
+  
+  if (val == 0) {
+    if (event.target.checked == true) {
+      
+      this.Events[0].read = true;
+    } else {
+      
+      this.Events[0].read = false;
+    }
+  } else if (val == 1) {
+    if (event.target.checked == true) {
+      
+      this.Events[1].write = true;
+    } else {
+      
+      this.Events[1].write = false;
+    }
+  } else if (val == 2) {
+    if (event.target.checked == true) {
+      
+      this.Events[2].create = true;
+    } else {
+      
+      this.Events[2].create = false;
+    }
+  } else if (val == 3) {
+    if (event.target.checked == true) {
+      
+      this.Events[3].delete = true;
+    } else {
+      
+      this.Events[3].delete = false;
+    }
+  } else if (val == 4) {
+    if (event.target.checked == true) {
+      
+      this.Events[4].import = true;
+    } else {
+      
+      this.Events[4].import = false;
+    }
+  } else if (val == 5) {
+    if (event.target.checked == true) {
+      
+      this.Events[5].export = true;
+    } else {
+      
+      this.Events[5].export = false;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

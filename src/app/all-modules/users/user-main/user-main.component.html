@@ -119,7 +119,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add User</h5>
+                <h5 class="modal-title" (click)="initializeArray()">Add User</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -130,13 +130,13 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>First Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" >
+                                <input class="form-control" type="text" formControlName="firstName">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text"  formControlName="lastName">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -168,19 +168,27 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Password</label>
-                                <input class="form-control" type="password">
+                                <input  #pass   class="form-control" type="password" formControlName="password">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Confirm Password</label>
-                                <input class="form-control" type="password">
+                                
+                                <input #confpass class="form-control  " type="password"  formControlName="confirmPassword" (keyup)="checkpassword(pass.value, confpass.value)"  >
+                               <div [hidden]="check">
+                                   
+                                   <small class=" text-danger">* Password Not Matched....</small>
+
+                               </div>
+                                                           
+                            
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Phone </label>
-                                <input class="form-control" type="text">
+                                <input class="form-control" type="text"   formControlName="phone" > 
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -240,85 +248,85 @@
                                 <tr>
                                     <td>Employee</td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkEmployee($event,0)"   >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkEmployee($event,1)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkEmployee($event,2)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkEmployee($event,3)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkEmployee($event,4)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkEmployee($event,5)"  >
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Holidays</td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkHolidays($event,0)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkHolidays($event,1)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkHolidays($event,2)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkHolidays($event,3)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkHolidays($event,4)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" (click)="checkHolidays($event,5)"  >
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Leaves</td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkLeaves($event,0)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkLeaves($event,1)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkLeaves($event,2)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkLeaves($event,3)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkLeaves($event,4)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkLeaves($event,5)"  >
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Events</td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkEvents($event,0)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkEvents($event,1)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkEvents($event,2)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkEvents($event,3)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkEvents($event,4)"  >
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input   type="checkbox" (click)="checkEvents($event,5)"  >
                                     </td>
                                 </tr>
                             </tbody>
@@ -350,13 +358,13 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>First Name <span class="text-danger">*</span></label>
-                                <input class="form-control" value="John" type="text">
+                                <input class="form-control" formControlName="firstName" type="text">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Last Name</label>
-                                <input class="form-control" value="Doe" type="text">
+                                <input class="form-control" formControlName="lastName" type="text">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -390,19 +398,19 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Password</label>
-                                <input class="form-control" type="password">
+                                <input class="form-control" type="password" formControlName="password">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Confirm Password</label>
-                                <input class="form-control" type="password">
+                                <input class="form-control" type="password" formControlName="confirmPassword">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Phone </label>
-                                <input class="form-control" value="9876543210" type="text">
+                                <input class="form-control" value="9876543210" type="text" formControlName="phone">
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -462,85 +470,85 @@
                                 <tr>
                                     <td>Employee</td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Employee[0].read"  (click)="checkEmployee($event,0)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Employee[1].write"  (click)="checkEmployee($event,1)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Employee[2].create" (click)="checkEmployee($event,2)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Employee[3].delete" (click)="checkEmployee($event,3)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Employee[4].import" (click)="checkEmployee($event,4)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Employee[5].export" (click)="checkEmployee($event,5)">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Holidays</td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" [checked]="Holidays[0].read" (click)="checkHolidays($event,0)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" [checked]="Holidays[1].write" (click)="checkHolidays($event,1)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" [checked]="Holidays[2].create" (click)="checkHolidays($event,2)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" [checked]="Holidays[3].delete" (click)="checkHolidays($event,3)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Holidays[4].import" (click)="checkHolidays($event,4)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" [checked]="Holidays[5].export" (click)="checkHolidays($event,5)">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Leaves</td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox" [checked]="Leaves[0].read" (click)="checkLeaves($event,0)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Leaves[1].write"  (click)="checkLeaves($event,1)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Leaves[2].create" (click)="checkLeaves($event,2)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Leaves[3].delete" (click)="checkLeaves($event,3)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Leaves[4].import" (click)="checkLeaves($event,4)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Leaves[5].export" (click)="checkLeaves($event,5)">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Events</td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Events[0].read" (click)="checkEvents($event,0)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Events[1].write"  (click)="checkEvents($event,1)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Events[2].create" (click)="checkEvents($event,2)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Events[3].delete" (click)="checkEvents($event,3)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Events[4].import" (click)="checkEvents($event,4)">
                                     </td>
                                     <td class="text-center">
-                                        <input checked="" type="checkbox">
+                                        <input  type="checkbox"  [checked]="Events[5].export" (click)="checkEvents($event,5)">
                                     </td>
                                 </tr>
                             </tbody>
