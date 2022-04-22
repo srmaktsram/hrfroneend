@@ -153,7 +153,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         noofDays: this.addLeaveadminForm.value.NoOfDays,
         remainleaves: this.addLeaveadminForm.value.RemainLeaves,
         reason: this.addLeaveadminForm.value.LeaveReason,
-        // status: "Approved",
+        status: "Approved",
       };
       console.log("obj", obj)
       this.http.post("http://localhost:8443/admin/leaves/createLeave", obj).subscribe((res) => {
@@ -317,12 +317,8 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
       .trigger("blur");
   }
 
-  //getting the status value
-  getStatus(data) {
-    this.statusValue = data;
-  }
+
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
 
@@ -346,6 +342,16 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
     console.log("bbbbbbb", id)
     sessionStorage.setItem("empid", id);
     this.router.navigate(["/layout/employees/employeeprofile"]);
+  }
+
+  updateStatus(val, id) {
+    this.http.patch("http://localhost:8443/admin/leaves/updateAdminLeave" + "/" + id, { status: val }).subscribe((data: any) => {
+      console.log(data, "updateStatus")
+      // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      //   dtInstance.destroy();
+      this.loadLeaves();
+      // });
+    })
   }
 
 }

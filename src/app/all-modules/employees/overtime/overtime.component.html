@@ -71,42 +71,53 @@
                             <td>{{i+1}}</td>
                             <td>
                                 <h2 class="table-avatar blue-link">
-                                    <a routerLink="/layout/employees/employeeprofile" class="avatar"><img alt=""
-                                            src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
-                                    <a routerLink="/layout/employees/employeeprofile">{{item.name}}</a>
+                                    <a routerLink="/layout/employees/employeeprofile" (click)="getId(item.employeeid)"
+                                        class="avatar"><img alt="" src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
+                                    <a routerLink="/layout/employees/employeeprofile"
+                                        (click)="getId(item.employeeid)">{{item.name}}</a>
                                 </h2>
                             </td>
-                            <td>{{item.otDate |customDate}}</td>
+                            <td>{{item.otDate }}</td>
                             <td class="text-center">{{item.otHrs}}</td>
                             <td>{{item.otType}}</td>
                             <td>{{item.description}}</td>
                             <td class="text-center">
-                                <div class="action-label">
+                                <!-- <div class="action-label">
                                     <a class="btn btn-white btn-sm btn-rounded">
                                         <i class="fa fa-dot-circle-o text-purple"></i>{{item.status || statusValue}}
                                     </a>
-                                </div>
+                                </div> -->
 
 
-                                <!-- <div class="dropdown action-label">
+                                <div class="dropdown action-label">
                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-dot-circle-o text-purple"></i>{{item.status || statusValue}}
+
+                                        <ng-container *ngIf="item.status=='Approved'">
+                                            <i class="fa fa-dot-circle-o text-success"></i>{{item.status}}
+
+                                        </ng-container>
+                                        <ng-container *ngIf="item.status=='Pending'">
+                                            <i class="fa fa-dot-circle-o text-primary"></i>{{item.status}}
+
+                                        </ng-container>
+                                        <ng-container *ngIf="item.status =='Declined'">
+                                            <i class="fa fa-dot-circle-o text-danger"></i>{{item.status}}
+
+                                        </ng-container>
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" (click)="getStatus('New')"><i
-                                                class="fa fa-dot-circle-o text-purple"></i>
-                                            Active</a>
-                                        <a class="dropdown-item" (click)="getStatus('Pending')"><i
-                                                class="fa fa-dot-circle-o text-danger"></i>
-                                            Inactive</a>
-                                        <a class="dropdown-item" (click)="getStatus('Approved')"><i
-                                                class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                        <a class="dropdown-item" (click)="getStatus('Declined')"><i
+                                    <div class="dropdown-menu">
+                                        <a (click)="updateStatus('Approved',item.id)" class="dropdown-item"><i
+                                                class="fa fa-dot-circle-o text-success"></i>
+                                            Approved</a>
+                                        <a (click)="updateStatus('Pending',item.id)" class="dropdown-item"><i
+                                                class="fa fa-dot-circle-o text-primary"></i>
+                                            Pending</a>
+                                        <a (click)="updateStatus('Declined',item.id)" class="dropdown-item"><i
                                                 class="fa fa-dot-circle-o text-danger"></i>
                                             Declined</a>
                                     </div>
-                                </div> -->
+                                </div>
 
 
 
@@ -187,7 +198,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div *ngFor="let item of lstEmployee">
-                                <a class="dropdown-item" (click)="getId(item.id,item.firstName)"><i
+                                <a class="dropdown-item" (click)="getIdFirstName(item.id,item.firstName)"><i
                                         class="fa fa-dot-circle-o text-danger"></i> {{item.firstName}}</a>
                             </div>
 

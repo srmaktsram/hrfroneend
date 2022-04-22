@@ -19,10 +19,10 @@
     <div class="row filter-row">
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus select-focus">
-                <select class="form-select form-control" (input)="searchStatus($event.target.value)">
+                <select class="form-select form-control" >
                     <option  value = "">Select Client</option>
-                    <option  value = "Global Technologies">Global Technologies</option>
-                    <option  value = "Delta Infotech">Delta Infotech</option>
+                    <option *ngFor="let name of clientsData" >{{name.firstName}} {{name.lastName}}</option>
+                   
                 </select>
                 <label class="focus-label">Client</label>
             </div>

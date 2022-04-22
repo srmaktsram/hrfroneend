@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { DataTableDirective } from 'angular-datatables';
+import { HttpClient } from '@angular/common/http';
 
 declare const $: any;
 @Component({
@@ -20,6 +21,7 @@ export class TerminationMainComponent implements OnInit {
   public dtOptions: DataTables.Settings = {};
   public rows = [];
   public srch = [];
+  public adminId:any;
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
@@ -33,8 +35,11 @@ export class TerminationMainComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
+    private http:HttpClient,
     private toastr: ToastrService
-  ) { }
+  ) {
+    this.adminId=sessionStorage.getItem("adminId")
+   }
 
   ngOnInit() {
     this.loadTermination();
@@ -70,7 +75,8 @@ export class TerminationMainComponent implements OnInit {
 
   // Get  termination Api Call
   loadTermination() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/termination/getAdminTermination"+"/"+this.adminId).subscribe((data:any) => {
+      console.log("GETdATA>>>>>>>>>>>>>>>>>",data)
       this.lstTermination = data;
       this.rows = this.lstTermination;
       this.srch = [...this.rows];
@@ -103,22 +109,25 @@ export class TerminationMainComponent implements OnInit {
         "dd-MM-yyyy"
       );
       let obj = {
+        adminId:this.adminId,
         employee: this.addTerminationForm.value.EmployeeName,
         department: "Web development",
         terminationType: this.addTerminationForm.value.TerminationTyped,
         noticedDate: noticedDate,
         terminationDate: terminationDate,
         reason: this.addTerminationForm.value.ReasonName,
-        id: 0,
+   
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
+      this.http.post("http://localhost:8443/admin/termination/createTermination",obj).subscribe((data:any) => {
+        console.log("CREATEDATA>>>>>>>>>>>>>>>>>",data)
+        this.loadTermination();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.loadTermination();
+   
       $("#add_termination").modal("hide");
       this.addTerminationForm.reset();
       this.toastr.success("Termination added sucessfully...!", "Success");
@@ -145,14 +154,16 @@ export class TerminationMainComponent implements OnInit {
         reason: this.editTerminationForm.value.ReasonName,
         id: this.editId,
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
+      this.http.patch("http://localhost:8443/admin/termination/updateTermination"+"/"+this.editId,obj).subscribe((data:any) => {
+        console.log("UPDATEDATA>>>>>>>>>>>>>>>>>",data)
+        this.loadTermination();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-      this.loadTermination();
+      
       $("#edit_termination").modal("hide");
       this.toastr.success("Termination Updated sucessfully...!", "Success");
     }
@@ -178,14 +189,16 @@ export class TerminationMainComponent implements OnInit {
 
   // delete api call
   deleteTermination() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+    this.http.patch("http://localhost:8443/admin/termination/deleteTermination"+"/"+this.tempId,{status:2}).subscribe((data:any) => {
+      console.log("UPDATEDATA>>>>>>>>>>>>>>>>>",data)
+      this.loadTermination();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
       });
       this.dtTrigger.next();
     });
-    this.loadTermination();
+   
     $("#delete_termination").modal("hide");
     this.toastr.success("Termination  deleted sucessfully..!", "Success");
   }

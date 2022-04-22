@@ -506,19 +506,13 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
 
   //getting the status value
   getStatus(data, id) {
-    // const priority = data;
     const status = data;
-
-    // this.statusValue = data;
-
-    //////
     this.http
       .patch(
         "http://localhost:8443/admin/tickets/updateTicketStatus" + "/" + id,
         { status }
       )
       .subscribe((res) => {
-        // this.router.navigate(["/layout/employees/employeeprofile"]);
         this.getTickets();
         this.getTicketsCount();
       });
@@ -526,7 +520,6 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   getPriority(data, id) {
     const priority = data;
 
-    // this.statusValue = data;
     this.http
       .patch(
         "http://localhost:8443/admin/tickets/updateTicketPriority" + "/" + id,
@@ -535,8 +528,6 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.getTickets();
       });
-
-    //////
   }
 
   ngOnDestroy(): void {

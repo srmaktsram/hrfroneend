@@ -4,6 +4,8 @@ import { AllModulesService } from "../../all-modules.service";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
+import { id } from "src/assets/all-modules-data/id";
 
 declare const $: any;
 @Component({
@@ -12,7 +14,7 @@ declare const $: any;
   styleUrls: ["./goal-type.component.css"],
 })
 export class GoalTypeComponent implements OnInit, OnDestroy {
-  lstGoaltype: any[];
+  lstGoaltype: any;
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -26,11 +28,16 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
   public editId: any;
   public addGoalTypeForm: FormGroup;
   public editGoalTypeForm: FormGroup;
+  public adminId = sessionStorage.getItem("adminId");
+
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private http: HttpClient
+  ) {
+    this.LoadGoaltype();
+  }
 
   ngOnInit() {
     this.LoadGoaltype();
@@ -54,12 +61,16 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
 
   // Get  goal type  Api Call
   LoadGoaltype() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
-      this.lstGoaltype = data;
-      this.dtTrigger.next();
-      this.rows = this.lstGoaltype;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/goalType/getGoalType" + "/" + this.adminId
+      )
+      .subscribe((data) => {
+        this.lstGoaltype = data;
+        this.dtTrigger.next();
+        this.rows = this.lstGoaltype;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -72,23 +83,26 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
   }
   // Add  goal type  Modal Api Call
   addGoalType() {
-    if(this.addGoalTypeForm.invalid){
-      this.markFormGroupTouched(this.addGoalTypeForm)
-      return
+    if (this.addGoalTypeForm.invalid) {
+      this.markFormGroupTouched(this.addGoalTypeForm);
+      return;
     }
     if (this.addGoalTypeForm.valid) {
       let obj = {
         type: this.addGoalTypeForm.value.GoalType,
         description: this.addGoalTypeForm.value.Description,
         status: this.addGoalTypeForm.value.Status,
-        id: 0,
+        adminId: this.adminId,
       };
-      this.srvModuleService.add(obj, this.url).subscribe((data) => {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/goalType/createGoalType", obj)
+        .subscribe((data) => {
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.LoadGoaltype();
+
+            dtInstance.destroy();
+          });
         });
-      });
-      this.LoadGoaltype();
       $("#add_type").modal("hide");
       this.addGoalTypeForm.reset();
       this.toastr.success("Goal type added sucessfully...!", "Success");
@@ -97,18 +111,24 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
 
   editGoalType() {
     if (this.editGoalTypeForm.valid) {
+      let id = this.editId;
       let obj = {
         type: this.editGoalTypeForm.value.GoalType,
         description: this.editGoalTypeForm.value.Description,
         status: this.editGoalTypeForm.value.Status,
-        id: this.editId,
       };
-      this.srvModuleService.update(obj, this.url).subscribe((data1) => {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/goalType/updateGoalType" + "/" + id,
+          obj
+        )
+        .subscribe((data1) => {
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            this.LoadGoaltype();
+            dtInstance.destroy();
+          });
         });
-      });
-      this.LoadGoaltype();
+
       $("#edit_type").modal("hide");
       this.toastr.success("Goal type Updated sucessfully...!", "Success");
     }
@@ -129,14 +149,35 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
   }
 
   deleteGoalType() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    let id = this.tempId;
+    let obj = {
+      status: 2,
+    };
+
+    this.http
+      .patch(
+        "http://localhost:8443/admin/goalType/deleteGoalType" + "/" + id,
+        obj
+      )
+      .subscribe((data) => {
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.LoadGoaltype();
+        $("#delete_type").modal("hide");
+        this.toastr.success("Goal type deleted sucessfully..!", "Success");
       });
-      this.LoadGoaltype();
-      $("#delete_type").modal("hide");
-      this.toastr.success("Goal type deleted sucessfully..!", "Success");
-    });
+  }
+  updateGoalTypeStatus(data, id) {
+    const status = data;
+    this.http
+      .patch(
+        "http://localhost:8443/admin/goalType/updateGoalTypeStatus" + "/" + id,
+        { status }
+      )
+      .subscribe((data1) => {
+        this.LoadGoaltype();
+      });
   }
   // for unsubscribe datatable
   ngOnDestroy(): void {

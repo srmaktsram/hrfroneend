@@ -19,6 +19,8 @@ export class InvoiceReportComponent implements OnInit, OnDestroy {
   public dtOptions: DataTables.Settings = {};
   invoices: any = [];
   id: any;
+  public clientsName=[];
+  public clientsData=[];
   public rows = [];
   public srch = [];
   public pipe = new DatePipe("en-US");
@@ -31,6 +33,7 @@ public adminId:any;
     private allModulesService: AllModulesService
   ) {
     this.adminId=sessionStorage.getItem("adminId");
+    this.allClients();
   }
 
   ngOnInit() {
@@ -58,10 +61,29 @@ public adminId:any;
     this.http.get("http://localhost:8443/admin/invoices/adminGetInvoices"+"/"+this.adminId).subscribe((res:any) => {
       this.invoices = res.data;
       console.log(res.data)
+     
       this.dtTrigger.next();
       this.rows = this.invoices;
       this.srch = [...this.rows];
     });
+  }
+
+  /////////////////clients /////////////
+  
+
+  //search by clients///////////
+  allClients(){
+  this.http.get("http://localhost:8443/admin/clients/getAdminClient").subscribe((data:any)=>{
+      this.clientsData=data;
+      this.clientsData.map((item)=>{
+        let fullName=item.firstName+item.lastName ;
+         this.clientsName.push(fullName);
+      })
+       
+
+    
+    console.log("ALL CLIENTS>>>>>>>>",  this.clientsName)
+  })
   }
 
   //getting id for selected row

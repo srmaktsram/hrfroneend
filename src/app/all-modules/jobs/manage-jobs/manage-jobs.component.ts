@@ -10,6 +10,7 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -31,11 +32,25 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
   public purchaseDateFormat;
   public purchaseToDateFormat;
+  public adminId = sessionStorage.getItem("adminId");
+  dataarr: any;
+  srch: any[];
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private http: HttpClient
+  ) {
+    this.LoadDepartment();
+  }
+  LoadDepartment() {
+    this.http
+      .get("http://localhost:8443/admin/department/getData")
+      .subscribe((data) => {
+        this.dataarr = data;
+        this.srch = this.dataarr;
+      });
+  }
 
   ngOnInit() {
     this.getManageJobs();
@@ -47,6 +62,15 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       addDepartment: ["", [Validators.required]],
       addStartDate: ["", [Validators.required]],
       addExpireDate: ["", [Validators.required]],
+      addJobLocation: ["", [Validators.required]],
+      addVacancy: ["", [Validators.required]],
+      addExperience: ["", [Validators.required]],
+      addAge: ["", [Validators.required]],
+      addSalaryFrom: ["", [Validators.required]],
+      addSalaryTo: ["", [Validators.required]],
+      addJobType: ["", [Validators.required]],
+      addStatus: ["", [Validators.required]],
+      addDescription: ["", [Validators.required]],
     });
 
     // Edit Provident Form Validation And Getting Values
@@ -56,6 +80,15 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       editDepartment: ["", [Validators.required]],
       editStartDate: ["", [Validators.required]],
       editExpireDate: ["", [Validators.required]],
+      ediJobLocation: ["", [Validators.required]],
+      editVacancy: ["", [Validators.required]],
+      editExperience: ["", [Validators.required]],
+      editAge: ["", [Validators.required]],
+      editSalaryFrom: ["", [Validators.required]],
+      editSalaryTo: ["", [Validators.required]],
+      editJobType: ["", [Validators.required]],
+      editStatus: ["", [Validators.required]],
+      editDescription: ["", [Validators.required]],
     });
 
     // for data table configuration
@@ -67,10 +100,15 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
   }
 
   getManageJobs() {
-    this.allModuleService.get(this.url).subscribe((data) => {
-      this.allManageJobs = data;
-      this.dtTrigger.next();
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/manageJobs/getManageJobs" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data) => {
+        this.allManageJobs = data;
+      });
   }
 
   // Add Provident Modal Api Call
@@ -90,13 +128,26 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
         department: this.addManageJobs.value.addDepartment,
         startDate: purchaseDateFormat,
         expireDate: purchaseToDateFormat,
+        jobLocation: this.addManageJobs.value.addJobLocation,
+        vacancy: this.addManageJobs.value.addVacancy,
+        experience: this.addManageJobs.value.addExperience,
+        age: this.addManageJobs.value.addAge,
+        salaryFrom: this.addManageJobs.value.addSalaryFrom,
+        salaryTo: this.addManageJobs.value.addSalaryTo,
+        jobType: this.addManageJobs.value.addJobType,
+        status: this.addManageJobs.value.addStatus,
+        description: this.addManageJobs.value.addDescription,
+        adminId: this.adminId,
       };
-      this.allModuleService.add(obj, this.url).subscribe((data) => {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/manageJobs/createManageJobs", obj)
+        .subscribe((data) => {
+          this.getManageJobs();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
-      this.getManageJobs();
+
       $("#add_job").modal("hide");
       this.addManageJobs.reset();
       this.toastr.success("Job is added", "Success");
@@ -114,21 +165,34 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
   // Edit Provident Modal Api Call
 
   editJobs() {
-    let obj = {
-      jobTitle: this.editManageJobs.value.editJobTitle,
-      department: this.editManageJobs.value.editDepartment,
-      startDate: this.purchaseDateFormat,
-      expireDate: this.purchaseToDateFormat,
-      id: this.editId,
-    };
-    this.allModuleService.update(obj, this.url).subscribe((data1) => {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
-      });
-    });
-    this.getManageJobs();
-    $("#edit_job").modal("hide");
-    this.toastr.success("Job is edited", "Success");
+    if (this.editManageJobs.valid) {
+      let id = this.editId;
+      let obj = {
+        jobTitle: this.editManageJobs.value.editJobTitle,
+        department: this.editManageJobs.value.editDepartment,
+        startDate: this.purchaseDateFormat,
+        expireDate: this.purchaseToDateFormat,
+        jobLocation: this.editManageJobs.value.ediJobLocation,
+        vacancy: this.editManageJobs.value.editVacancy,
+        experience: this.editManageJobs.value.editExperience,
+        age: this.editManageJobs.value.editAge,
+        salaryFrom: this.editManageJobs.value.editSalaryFrom,
+        salaryTo: this.editManageJobs.value.editSalaryTo,
+        jobType: this.editManageJobs.value.editJobType,
+        status: this.editManageJobs.value.editStatus,
+        description: this.editManageJobs.value.editDescription,
+      };
+      this.http
+        .patch(
+          "http://localhost:8443/admin/manageJobs/updateManageJobs" + "/" + id,
+          obj
+        )
+        .subscribe((data1) => {
+          this.getManageJobs();
+        });
+      $("#edit_job").modal("hide");
+      this.toastr.success("Job is edited", "Success");
+    }
   }
 
   edit(value) {
@@ -137,25 +201,73 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       return item.id === value;
     });
     let toSetValues = this.allManageJobs[index];
-    this.editManageJobs.setValue({
+    this.editManageJobs.patchValue({
       editJobTitle: toSetValues.jobTitle,
       editDepartment: toSetValues.department,
       editStartDate: toSetValues.startDate,
       editExpireDate: toSetValues.expireDate,
+      ediJobLocation: toSetValues.jobLocation,
+      editVacancy: toSetValues.vacancy,
+      editExperience: toSetValues.experience,
+      editAge: toSetValues.age,
+      editSalaryFrom: toSetValues.salaryFrom,
+      editSalaryTo: toSetValues.salaryTo,
+      editJobType: toSetValues.jobType,
+      editStatus: toSetValues.status,
+      editDescription: toSetValues.description,
     });
   }
 
   // Delete Provident Modal Api Call
 
   deleteJobs() {
-    this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    let id = this.tempId;
+    let obj = {
+      status: 2,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/manageJobs/deleteManageJobs" + "/" + id,
+        obj
+      )
+      .subscribe((data) => {
+        this.getManageJobs();
+        this.getManageJobs();
+        $("#delete_job").modal("hide");
+        this.toastr.success("Job is deleted", "Success");
       });
-      this.getManageJobs();
-      $("#delete_job").modal("hide");
-      this.toastr.success("Job is deleted", "Success");
-    });
+  }
+
+  //////////////
+
+  updateStatus(data, id) {
+    const status = data;
+    this.http
+      .patch(
+        "http://localhost:8443/admin/manageJobs/updateManageJobsStatus" +
+          "/" +
+          id,
+        { status }
+      )
+      .subscribe((res) => {
+        this.getManageJobs();
+      });
+  }
+
+  /////////////////////////////////////////////
+  updateJobType(data, id) {
+    const jobType = data;
+
+    this.http
+      .patch(
+        "http://localhost:8443/admin/manageJobs/updateManageJobsJobType" +
+          "/" +
+          id,
+        { jobType }
+      )
+      .subscribe((res) => {
+        this.getManageJobs();
+      });
   }
 
   ngOnDestroy(): void {

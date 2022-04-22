@@ -4,6 +4,7 @@ import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
 declare const $: any;
 @Component({
   selector: "app-payslipreports-list",
@@ -22,11 +23,15 @@ export class PayslipreportsListComponent implements OnInit, OnDestroy {
   public lstPaylip;
   public rows = [];
   public srch = [];
+  public adminId:any;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
+    private http:HttpClient,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.adminId=sessionStorage.getItem("adminId")
+  }
 
   ngOnInit() {
     // Floating Label
@@ -52,8 +57,9 @@ export class PayslipreportsListComponent implements OnInit, OnDestroy {
   }
   // Get department list  Api Call
   LoadPaylip() {
-    this.srvModuleService.get(this.url).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/employeeSalary/getEmployeeSalary"+"/"+this.adminId).subscribe((data:any) => {
       this.lstPaylip = data;
+      console.log(this.lstPaylip)
       this.dtTrigger.next();
       this.rows = this.lstPaylip;
       this.srch = [...this.rows];
