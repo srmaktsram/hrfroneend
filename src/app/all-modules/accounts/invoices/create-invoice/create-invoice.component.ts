@@ -30,11 +30,11 @@ export class CreateInvoiceComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http:HttpClient,
+    private http: HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     //get id value of invoice list
@@ -72,9 +72,10 @@ export class CreateInvoiceComponent implements OnInit {
 
   // getting invoice
   getAllInvoices() {
-    let adminId=sessionStorage.getItem("adminId")
-    this.http.get("http://localhost:8443/admin/invoices/getInvoices"+"/"+adminId).subscribe((res) => {
+    let adminId = sessionStorage.getItem("adminId")
+    this.http.get("http://localhost:8443/admin/invoices/getInvoices" + "/" + adminId).subscribe((res) => {
       this.invoices = res;
+      console.log(this.invoices, "llllllllllllllllllllll")
     });
   }
 
@@ -130,7 +131,7 @@ export class CreateInvoiceComponent implements OnInit {
 
 
   savesend() {
-    if(this.addInvoiceForm.invalid){
+    if (this.addInvoiceForm.invalid) {
       this.markFormGroupTouched(this.addInvoiceForm)
       return
     }
@@ -145,14 +146,14 @@ export class CreateInvoiceComponent implements OnInit {
         this.addInvoiceForm.value.due_date,
         "dd-MM-yyyy"
       );
-   let adminId= sessionStorage.getItem("adminId");
-  //  let employeeid=sessionStorage.getItem("employeeid");
-  //  console.log(employeeid);
+      let adminId = sessionStorage.getItem("adminId");
+      //  let employeeid=sessionStorage.getItem("employeeid");
+      //  console.log(employeeid);
       let getItems = this.addInvoiceForm.get("items").value;
       let amount = this.addInvoiceForm.value.totalamount.toString();
-     
+
       let obj = {
-        adminId:adminId,
+        adminId: adminId,
         // employeeid:employeeid,
         number: "#INV-0001",
         client: this.addInvoiceForm.value.client,
@@ -168,9 +169,9 @@ export class CreateInvoiceComponent implements OnInit {
         totalamount: amount,
         discount: this.addInvoiceForm.value.discount,
         grandTotal: this.addInvoiceForm.value.grandTotal,
-        items:getItems
+        items: getItems
       };
-      this.http.post("http://localhost:8443/admin/invoices/createInvoices",obj).subscribe((res:any) => {
+      this.http.post("http://localhost:8443/admin/invoices/createInvoices", obj).subscribe((res: any) => {
         console.log(res.data)
         this.toastr.success("", "Added successfully!");
         this.router.navigate(["/layout/accounts/invoices"]);

@@ -22,6 +22,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public addClientForm: FormGroup;
   public editClientForm: FormGroup;
   public tempId: any;
+  public adminId: any;
   public companiesList = [];
 
   public rows = [];
@@ -41,14 +42,17 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   filtereddata: any[];
   searchId: any;
   searchName: any;
+  public employeeId: any;
   searchCompany: any;
   constructor(
-    private allModulesService: AllModulesService,
+    // private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
-    this.getCompanyName();
+
+    this.adminId = sessionStorage.getItem("adminId")
+
     this.invoices = [
       { id: 0, read: false },
       { id: 1, write: false },
@@ -100,12 +104,14 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // this.getCompanyName()
+    this.getClients();
+
     this.dtOptions = {
       // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
-    this.getClients();
 
     //Add clients form
     this.addClientForm = this.formBuilder.group({
@@ -141,45 +147,40 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
   //Get all Clients data
   public getClients() {
-    // this.allModulesService.get("clients").subscribe((data) => {
-    this.http
-      .get("http://localhost:8443/admin/clients/getDataClient")
-      .subscribe((data) => {
-        console.log(data);
-        this.data = data;
-        // console.log(this.data.result, "new");
-        this.clientsData = this.data.data;
-        // this.clientsData.map((client) =>
-        //   this.companiesList.push(client.company)
-        // );
 
-        this.rows = this.clientsData;
-        this.srch = [...this.rows];
-      });
-  }
-  public getCompanyName() {
-    // this.allModulesService.get("clients").subscribe((data) => {
     this.http
-      .get("http://localhost:8443/admin/clients/getDataClient")
-      .subscribe((data) => {
-        this.data = data;
-        this.clientsData = this.data.data;
-        this.companys = this.clientsData;
+      .get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId)
+      .subscribe((res: any) => {
+
+        this.data = res;
+        //console.log(this.data, "???????????//")
+
       });
   }
+  // public getCompanyName() {
+  //   this.http
+  //     .get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId)
+  //     .subscribe((data) => {
+  //       this.data = data;
+  //       //console.log(this.data, "kjdjkjkdgjghd")
+
+  //       this.clientsData = this.data.data;
+  //       this.companys = this.clientsData;
+  //     });
+  // }
 
   // Edit client
   public onEditClient(clientId: any) {
     this.editId = clientId;
-    let client = this.clientsData.filter((client) => client.id === clientId);
-    console.log("edit recards", client);
+    let client = this.data.filter((client) => client.id === clientId);
+    //console.log("edit recards kkkk", client);
     this.editClientForm.patchValue({
       editClientName: client[0]?.firstName,
       editClientLastName: client[0]?.lastName,
       editClientPhone: client[0]?.phone,
       editClientEmail: client[0]?.email,
       editClientUsername: client[0]?.username,
-      // editClientPassword: client[0]?.password,
+
       editClientCompany: client[0]?.companyName,
       editClientRole: client[0]?.role,
       editClientId: client[0]?.clientId,
@@ -191,7 +192,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.timingSheets = client[0]?.timingSheets;
     this.tasks = client[0]?.tasks;
   }
-
   //Reset form
   public resetForm() {
     this.addClientForm.reset();
@@ -214,9 +214,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       estimates: this.estimates,
       projects: this.projects,
       timingSheets: this.timingSheets,
+      adminId: this.adminId,
     };
-    // this.allModulesService
-    //   .update(this.editedClient, "clients")
     let id = this.editId;
     this.http
       .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
@@ -247,13 +246,13 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       estimates: this.estimates,
       projects: this.projects,
       timingSheets: this.timingSheets,
+      adminId: this.adminId,
     };
-    console.log("my data", newClient);
-    // this.allModulesService.add(newClient, "clients").subscribe((data) => {
+    //console.log("mydata>>>>>>>>", newClient);
     this.http
       .post("http://localhost:8443/admin/clients/createClient", newClient)
       .subscribe((data) => {
-        console.log(data);
+        //console.log("postApi", data);
         this.getClients();
       });
 
@@ -345,9 +344,21 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     }
   }
   //getting the status value
-  getStatus(data) {
-    this.statusValue = data;
+  getStatus(val, id) {
+
+    let obj = {
+      status: val
+    }
+    this.http.patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj).subscribe((data: any) => {
+      this.getClients();
+
+    })
   }
+
+
+
+
+
   checkCheckBoxvalueInvoices(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {

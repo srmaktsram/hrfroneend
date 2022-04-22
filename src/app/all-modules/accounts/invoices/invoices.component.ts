@@ -26,9 +26,9 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private http:HttpClient,
+    private http: HttpClient,
     private allModulesService: AllModulesService
-  ) {}
+  ) { }
 
   ngOnInit() {
     $(".floating")
@@ -52,17 +52,18 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
   //get all invoices
   getAllInvoices() {
-    let adminId=sessionStorage.getItem("adminId")
-    this.http.get("http://localhost:8443/admin/invoices/adminGetInvoices"+"/"+adminId).subscribe((res:any) => {
+    let adminId = sessionStorage.getItem("adminId")
+    this.http.get("http://localhost:8443/admin/invoices/adminGetInvoices" + "/" + adminId).subscribe((res: any) => {
       this.invoices = res.data;
-     
+      console.log("jaggy", this.invoices)
+
       this.rows = this.invoices;
       this.srch = [...this.rows];
     });
   }
 
-  updateStatus(val,id){
-    this.http.patch("http://localhost:8443/admin/invoices/updateInvoices"+"/"+id,{status:val}).subscribe((res:any)=>{
+  updateStatus(val, id) {
+    this.http.patch("http://localhost:8443/admin/invoices/updateInvoices" + "/" + id, { status: val }).subscribe((res: any) => {
       console.log(res);
       this.getAllInvoices()
     })
@@ -76,7 +77,7 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   // delete method for deleting rows
   delete() {
     let id: any = this.id;
-    this.http.patch("http://localhost:8443/admin/invoices/deleteInvoices"+"/"+id,{status:2}).subscribe((res) => {
+    this.http.patch("http://localhost:8443/admin/invoices/deleteInvoices" + "/" + id, { status: 2 }).subscribe((res) => {
       this.router.navigate(["/layout/accounts/invoices"]);
       this.getAllInvoices();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

@@ -110,9 +110,9 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
         department: "Web development",
         status: this.addApparaisalForm.value.StatusName,
       };
-      console.log("obj", obj)
+      //console.log("obj", obj)
       this.http.post("http://localhost:8443/admin/performance/performance_appraisal/create", obj).subscribe((data: any) => {
-        console.log(data, "postApi")
+        //console.log(data, "postApi")
         this.loadData();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -144,7 +144,7 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
 
       };
       this.http.patch("http://localhost:8443/admin/performance/performance_appraisal/update" + "/" + this.id, obj).subscribe((data: any) => {
-        console.log("updateApi", data)
+        //console.log("updateApi", data)
         this.loadData();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -181,7 +181,7 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
     }
 
     this.http.patch("http://localhost:8443/admin/performance/performance_appraisal/delete" + "/" + this.id, obj).subscribe((data: any) => {
-      console.log(data, "deleteApi");
+      //console.log(data, "deleteApi");
       this.loadData();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -205,7 +205,7 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
 
   updateStatus(val, id) {
     this.http.patch("http://localhost:8443/admin/performance/performance_appraisal/update" + "/" + id, { status: val }).subscribe((data: any) => {
-      console.log("updateStatus", data);
+      //console.log("updateStatus", data);
       this.loadData();;
     })
   }
@@ -217,7 +217,7 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
         this.adminId
       )
       .subscribe((data: any) => {
-        console.log("getApi", data);
+        //console.log("getApi", data);
 
         this.lstEmployee = data;
         // this.rows = this.lstEmployee;

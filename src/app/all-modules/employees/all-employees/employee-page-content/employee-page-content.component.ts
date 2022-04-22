@@ -271,13 +271,8 @@ export class EmployeePageContentComponent implements OnInit {
     this.http
       .patch("http://localhost:8443/admin/allemployees/update" + "/" + id, obj)
       .subscribe((data) => {
-        //console.log(data);
         this.loadEmployee();
-        // $("#datatable").DataTable().clear();
-        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        //   dtInstance.destroy();
-        // });
-        // this.dtTrigger.next();
+
       });
 
     $("#edit_employee").modal("hide");
