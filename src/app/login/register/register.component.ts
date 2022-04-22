@@ -2,6 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
+import { switchMap } from "rxjs/operators";
+
 // import { WebStorage } from "src/app/core/storage/web.storage";
 // import { HttpClient } from "@angular/common/http";
 
@@ -38,6 +40,9 @@ export class RegisterComponent implements OnInit {
   });
   disable = false;
   error: string;
+  ipAddress: any;
+  currentAddress: Object;
+  location: Object;
 
   get f() {
     return this.form.controls;
@@ -45,8 +50,24 @@ export class RegisterComponent implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
-
+  ngOnInit() {
+    this.getip();
+  }
+  getip() {
+    this.http
+      .get("https://jsonip.com")
+      .pipe(
+        switchMap((value: any) => {
+          this.ipAddress = value.ip;
+          let url = `http://api.ipstack.com/${value.ip}?access_key=1cc71113e78393d0eaf6837be1e5ebb7`;
+          return this.http.get(url);
+        })
+      )
+      .subscribe((data) => {
+        console.log(data);
+        this.location = data;
+      });
+  }
   submit() {
     if (this.form.valid) {
       if (this.form.value.password != this.form.value.confirmPassword) {
@@ -73,7 +94,24 @@ export class RegisterComponent implements OnInit {
     let username = this.form.value.userName;
     let password = this.form.value.password;
     let confirmPassword = this.form.value.confirmPassword;
-
+    let location = this.location;
+    console.log(
+      companyName,
+      companySite,
+      companyEmail,
+      companyAddress,
+      phone,
+      pinCode,
+      mobile,
+      name,
+      role,
+      address,
+      email,
+      code,
+      username,
+      password,
+      location
+    );
     this.http
       .post("http://localhost:8443/auth/register/createUser", {
         companyName,
@@ -90,6 +128,7 @@ export class RegisterComponent implements OnInit {
         code,
         username,
         password,
+        location,
       })
       .subscribe((response: any) => {
         console.log("result", response);
