@@ -80,7 +80,7 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   // Get  trainer Api Call
   loadtrainerlist() {
     this.http.get("http://localhost:8443/admin/training/traininglist/getData" + "/" + this.adminId).subscribe((data: any) => {
-      console.log(data, "getApi")
+      //console.log(data, "getApi")
       this.lstTraininglist = data;
       this.rows = this.lstTraininglist;
       this.srch = [...this.rows];
@@ -123,7 +123,7 @@ export class TrainingListComponent implements OnInit, OnDestroy {
         adminId: this.adminId
       };
       this.http.post("http://localhost:8443/admin/training/traininglist/create", obj).subscribe((data: any) => {
-        console.log("postApi", data)
+        //console.log("postApi", data)
         this.loadtrainerlist();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -161,7 +161,7 @@ export class TrainingListComponent implements OnInit, OnDestroy {
 
       };
       this.http.patch("http://localhost:8443/admin/training/traininglist/update" + "/" + id, obj).subscribe((data: any) => {
-        console.log("updateApi", data)
+        //console.log("updateApi", data)
         this.loadtrainerlist();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -199,7 +199,7 @@ export class TrainingListComponent implements OnInit, OnDestroy {
       status: 2,
     }
     this.http.patch("http://localhost:8443/admin/training/traininglist/delete" + "/" + this.tempId, obj).subscribe((data) => {
-      console.log("deleteApi", data)
+      //console.log("deleteApi", data)
       this.loadtrainerlist();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -222,7 +222,7 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   }
   updateStatus(val, id) {
     this.http.patch("http://localhost:8443/admin/training/traininglist/update" + "/" + id, { status: val }).subscribe((data: any) => {
-      console.log("updateStatus", data);
+      //console.log("updateStatus", data);
       this.loadtrainerlist();
     })
   }

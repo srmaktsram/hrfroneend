@@ -259,6 +259,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   // Get Employee  Api Call
   loadEmployee() {
     // this.srvModuleService.get(this.url).subscribe((data) => {
+
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
@@ -270,8 +271,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
+
       });
+
   }
+
   private markFormGroupTouched(formGroup: FormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control) => {
       control.markAsTouched();
@@ -282,12 +286,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   // Add employee  Modal Api Call
   addEmployee() {
+    console.log(this.addEmployeeForm.value.JoinDate, "/////////////////////")
     if (this.addEmployeeForm.invalid) {
       this.markFormGroupTouched(this.addEmployeeForm);
       return;
     }
     let DateJoin = this.pipe.transform(
       this.addEmployeeForm.value.JoinDate,
+
       "dd-MM-yyyy"
     );
 
@@ -316,6 +322,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       adminId: this.adminId,
     };
     console.log("op", obj)
+
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
       .subscribe((data) => {

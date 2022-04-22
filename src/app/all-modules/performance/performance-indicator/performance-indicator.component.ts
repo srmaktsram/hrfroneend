@@ -143,10 +143,10 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
         createdBy: "28 Feb 2019",
         status: this.addIndicatorForm.value.statusName,
       };
-      console.log("obj", obj);
+      //console.log("obj", obj);
       this.http.post("http://localhost:8443/admin/performance/performance_indicator/create", obj).subscribe((data: any) => {
         this.loadData();
-        console.log(data, "postApi")
+        //console.log(data, "postApi")
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
@@ -186,7 +186,7 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
 
       };
       this.http.patch("http://localhost:8443/admin/performance/performance_indicator/update" + "/" + this.editId, obj).subscribe((data: any) => {
-        console.log("updateApi", data)
+        //console.log("updateApi", data)
         this.loadData();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -229,7 +229,7 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
       status: 2,
     }
     this.http.patch("http://localhost:8443/admin/performance/performance_indicator/delete" + "/" + this.tempId, obj).subscribe((data) => {
-      console.log("deleteApi", data)
+      //console.log("deleteApi", data)
       this.loadData();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
