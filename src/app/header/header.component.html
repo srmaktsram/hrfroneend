@@ -19,7 +19,7 @@
 
     <!-- Header Title -->
     <div class="page-title-box">
-        <h3>Dreamguy's Technologies</h3>
+        <h3>{{companyName}}</h3>
     </div>
     <!-- /Header Title -->
 
@@ -44,21 +44,16 @@
         <!-- Flag -->
         <li class="nav-item dropdown has-arrow flag-nav">
             <a href="javascript:" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img src="assets/img/flags/us.png" alt="" height="20"> <span>English</span>
+                <img [src]="current_location.location.country_flag" alt="" height="20">{{current_location.location.languages[0].name}}<span></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-menu dropdown-menu-right" >
+                <div *ngFor="let language of languages">
+
+               
                 <a  class="dropdown-item">
-                    <img src="assets/img/flags/us.png" alt="" height="16"> English
+                    <img  [src]="current_location.location.country_flag" alt="" height="16"> {{language.name}}
                 </a>
-                <a  class="dropdown-item">
-                    <img src="assets/img/flags/fr.png" alt="" height="16"> French
-                </a>
-                <a  class="dropdown-item">
-                    <img src="assets/img/flags/es.png" alt="" height="16"> Spanish
-                </a>
-                <a  class="dropdown-item">
-                    <img src="assets/img/flags/de.png" alt="" height="16"> German
-                </a>
+            </div>
             </div>
         </li>
         <!-- /Flag -->

@@ -54,7 +54,10 @@ export class LoginComponent implements OnInit {
             res.data.companySite,
             res.data.id,
             res.data.pinCode,
-            res.data.companyAddress
+            res.data.companyAddress,
+            res.data.phone,
+            res.data.mobile,
+            res.data.location
           );
         } else {
           alert("wrong Id or pass");

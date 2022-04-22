@@ -31,7 +31,7 @@
                     <label class="col-lg-3 col-form-label">Light Logo</label>
                     <div class="col-lg-7">
                         <input type="file" class="form-control" [class.invalid]="themeSettings.get('lightLogo').invalid && themeSettings.get('lightLogo').touched"
-                        formControlName="lightLogo">
+                        formControlName="lightLogo" (change)="selectImage($event)">
                         <div
                         *ngIf="themeSettings.get('lightLogo').invalid && themeSettings.get('lightLogo').touched">
                         <small
@@ -41,7 +41,7 @@
                         <span class="form-text text-muted">Recommended image size is 40px x 40px</span>
                     </div>
                     <div class="col-lg-2">
-                        <div class="img-thumbnail float-end"><img src="assets/img/logo2.png" alt="" width="40"
+                        <div class="img-thumbnail float-end"><img src="htbackend\uploads\\srmakts_Screenshot (51).png" alt="" width="40"
                                 height="40"></div>
                     </div>
                 </div>

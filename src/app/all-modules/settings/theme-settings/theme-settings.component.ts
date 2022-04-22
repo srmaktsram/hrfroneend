@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import {
   FormBuilder,
@@ -14,9 +15,11 @@ import { ToastrService } from "ngx-toastr";
 })
 export class ThemeSettingsComponent implements OnInit {
   public themeSettings: FormGroup;
+  images: any;
   constructor(
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -26,8 +29,24 @@ export class ThemeSettingsComponent implements OnInit {
       favicon: [""],
     });
   }
+  selectImage(event) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.images = file;
+    }
+  }
+
   submitThemeSettings() {
     if (this.themeSettings.valid) {
+      const formData = new FormData();
+      formData.append("file", this.images);
+      console.log(formData, this.images);
+      this.http
+        .post("http://localhost:8443/admin/themesetting/file", formData)
+        .subscribe((res) => {
+          console.log(res);
+        });
+
       this.toastr.success("Theme settings is added", "Success");
     }
   }
