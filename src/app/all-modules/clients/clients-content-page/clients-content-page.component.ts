@@ -24,6 +24,7 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
   public searchCompany: any;
   public companiesList = [];
   public filtereddata = [];
+  public adminId: any;
 
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -48,7 +49,8 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) {
-    this.getCompanyName();
+    this.adminId = sessionStorage.getItem('adminId')
+    // this.getCompanyName();
     this.invoices = [
       { id: 0, read: false },
       { id: 1, write: false },
@@ -132,31 +134,29 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
   //Get all Clients data
   public getClients() {
     this.http
-      .get("http://localhost:8443/admin/clients/getDataClient")
-      .subscribe((data) => {
-        this.data = data;
-        // console.log(this.data.result, "new");
-        this.clientsData = this.data.data;
-
-        this.rows = this.clientsData;
+      .get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId)
+      .subscribe((res) => {
+        this.data = res;
+        //console.log(this.data, "new");
+        this.rows = this.data;
         this.srch = [...this.rows];
-        // }
+
       });
   }
-  public getCompanyName() {
-    // this.allModulesService.get("clients").subscribe((data) => {
-    this.http
-      .get("http://localhost:8443/admin/clients/getDataClient")
-      .subscribe((data) => {
-        this.data = data;
-        this.clientsData = this.data.data;
-        this.companys = this.clientsData;
-      });
-  }
+  // public getCompanyName() {
+  //   // this.allModulesService.get("clients").subscribe((data) => {
+  //   this.http
+  //     .get("http://localhost:8443/admin/clients/getDataClient")
+  //     .subscribe((data) => {
+  //       this.data = data;
+  //       this.clientsData = this.data.data;
+  //       this.companys = this.clientsData;
+  //     });
+  // }
   public onEditClient(clientId: any) {
     this.editId = clientId;
-    let client = this.clientsData.filter((client) => client.id === clientId);
-    console.log("edit recards", client);
+    let client = this.data.filter((client) => client.id === clientId);
+    //console.log("edit recards", client);
     this.editClientForm.patchValue({
       editClientName: client[0]?.firstName,
       editClientLastName: client[0]?.lastName,
@@ -199,12 +199,13 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
       projects: this.projects,
       timingSheets: this.timingSheets,
     };
-    // this.allModulesService
-    //   .update(this.editedClient, "clients")
+    //console.log("poppopp///////", obj)
     let id = this.editId;
+    //console.log(id, "kkkkkk//////////////////////////")
     this.http
       .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
-      .subscribe((data) => {
+      .subscribe((data: any) => {
+        //console.log("patchApi", data)
         this.getClients();
       });
 
@@ -231,13 +232,13 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
       estimates: this.estimates,
       projects: this.projects,
       timingSheets: this.timingSheets,
+      adminId: this.adminId
     };
-    console.log("my data", newClient);
-    // this.allModulesService.add(newClient, "clients").subscribe((data) => {
+    //console.log("my data", newClient);
     this.http
       .post("http://localhost:8443/admin/clients/createClient", newClient)
       .subscribe((data) => {
-        console.log(data);
+        //console.log(data, "postApi");
         this.getClients();
       });
 

@@ -63,6 +63,7 @@ export class CreateInvoiceComponent implements OnInit {
       });
   }
 
+
   ngOnInit() {
     //get id value of invoice list
     this.id = this.route.snapshot.queryParams["id"];
@@ -108,6 +109,8 @@ export class CreateInvoiceComponent implements OnInit {
         this.invoices = res;
         console.log(res, "gettt");
       });
+
+  
   }
 
   newItem(): FormGroup {
@@ -164,6 +167,7 @@ export class CreateInvoiceComponent implements OnInit {
     if (this.addInvoiceForm.invalid) {
       this.markFormGroupTouched(this.addInvoiceForm);
       return;
+
     }
     if (!this.addInvoiceForm.valid) {
       this.toastr.error("", "Please enter mandatory field!");
@@ -208,6 +212,7 @@ export class CreateInvoiceComponent implements OnInit {
           this.toastr.success("", "Added successfully!");
           this.router.navigate(["/layout/accounts/invoices"]);
         });
+
     }
   }
 }

@@ -18,11 +18,8 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Default Country</label>
-                            <select class="form-select form-control" [class.invalid]="localisation.get('defaultCountry').invalid && localisation.get('defaultCountry').touched"
+                            <input class="form-control" readonly [class.invalid]="localisation.get('defaultCountry').invalid && localisation.get('defaultCountry').touched"
                             formControlName="defaultCountry">
-                                <option value = "USA">USA</option>
-                                <option value = "United Kingdom">United Kingdom</option>
-                            </select>
                             <div
                             *ngIf="localisation.get('defaultCountry').invalid && localisation.get('defaultCountry').touched">
                             <small
@@ -34,17 +31,17 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Date Format</label>
-                            <select class="form-select form-control" [class.invalid]="localisation.get('dateFormat').invalid && localisation.get('dateFormat').touched"
+                            <input class="form-control" readonly [class.invalid]="localisation.get('dateFormat').invalid && localisation.get('dateFormat').touched"
                             formControlName="dateFormat" [value] = "15/05/2016">
-                                <option value="15/05/2016">15/05/2016</option>
+                                <!-- <option value="15/05/2016">15/05/2016</option>
                                 <option value="15.05.2016">15.05.2016</option>
                                 <option value="15-05-2016">15-05-2016</option>
                                 <option value="05/15/2016">05/15/2016</option>
                                 <option value="05/15/2016">05/15/2016</option>
                                 <option value="2016-05-15">2016-05-15</option>
                                 <option value="May 15 2016">May 15 2016</option>
-                                <option selected="selected" value="d M Y">15 May 2016</option>
-                            </select>
+                                <option selected="selected" value="d M Y">15 May 2016</option> -->
+                            <!-- </select> -->
                             <div
                             *ngIf="localisation.get('dateFormat').invalid && localisation.get('dateFormat').touched">
                             <small
@@ -56,10 +53,10 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Timezone</label>
-                            <select class="form-select form-control" [class.invalid]="localisation.get('timeZone').invalid && localisation.get('timeZone').touched"
+                            <input class="form-control" readonly [class.invalid]="localisation.get('timeZone').invalid && localisation.get('timeZone').touched"
                             formControlName="timeZone">
-                                <option value = "(UTC +5:30) Antarctica/Palmer">(UTC +5:30) Antarctica/Palmer</option>
-                            </select>
+                                <!-- <option value = "(UTC +5:30) Antarctica/Palmer">(UTC +5:30) Antarctica/Palmer</option>
+                            </select> -->
                             <div
                             *ngIf="localisation.get('timeZone').invalid && localisation.get('timeZone').touched">
                             <small
@@ -71,11 +68,11 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Default Language</label>
-                            <select class="form-select form-control" [class.invalid]="localisation.get('deafultLanguage').invalid && localisation.get('deafultLanguage').touched"
+                            <input class="form-control" readonly [class.invalid]="localisation.get('deafultLanguage').invalid && localisation.get('deafultLanguage').touched"
                             formControlName="deafultLanguage">
-                                <option value = "English" >English</option>
-                                <option value = "French">French</option>
-                            </select>
+                                <!-- <option value = "English" >English</option>
+                                <option value = "French">French</option> -->
+                            <!-- </select> -->
                             <div
                             *ngIf="localisation.get('deafultLanguage').invalid && localisation.get('deafultLanguage').touched">
                             <small
@@ -87,13 +84,13 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Currency Code</label>
-                            <select class="form-select form-control" [class.invalid]="localisation.get('currencyCode').invalid && localisation.get('currencyCode').touched"
+                            <input class="form-control" readonly [class.invalid]="localisation.get('currencyCode').invalid && localisation.get('currencyCode').touched"
                             formControlName="currencyCode">
-                                <option value = "USD">USD</option>
+                                <!-- <option value = "USD">USD</option>
                                 <option value = "Pound">Pound</option>
                                 <option value = "EURO">EURO</option>
                                 <option value = "Ringgit">Ringgit</option>
-                            </select>
+                            </select> -->
                             <div
                             *ngIf="localisation.get('currencyCode').invalid && localisation.get('currencyCode').touched">
                             <small
@@ -105,7 +102,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Currency Symbol</label>
-                            <input class="form-control" readonly value="$" type="text">
+                            <input class="form-control" readonly [value]="symbol" type="text">
                         </div>
                     </div>
                     <div class="col-sm-12">

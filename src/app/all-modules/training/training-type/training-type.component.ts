@@ -61,7 +61,7 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
   // Get  goal type  Api Call
   loadTrainingType() {
     this.http.get("http://localhost:8443/admin/training/trainingtype/getData" + "/" + this.adminId).subscribe((data: any) => {
-      console.log("getApi", data)
+      //console.log("getApi", data)
       this.lstTrainingType = data;
       // this.dtTrigger.next();
       this.rows = this.lstTrainingType;
@@ -94,7 +94,7 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
 
       };
       this.http.post("http://localhost:8443/admin/training/trainingtype/create", obj).subscribe((data: any) => {
-        console.log("postApi", data)
+        //console.log("postApi", data)
         this.loadTrainingType();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -116,7 +116,7 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
         status: this.editTrainingTypeForm.value.Status,
       };
       this.http.patch("http://localhost:8443/admin/training/trainingtype/update" + "/" + this.id, obj).subscribe((data: any) => {
-        console.log("updateApi", data)
+        //console.log("updateApi", data)
         this.loadTrainingType();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -147,7 +147,7 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
       status: 2
     }
     this.http.patch("http://localhost:8443/admin/training/trainingtype/delete" + "/" + this.tempId, obj).subscribe((data: any) => {
-      console.log("deleteApi", data)
+      //console.log("deleteApi", data)
       this.loadTrainingType();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
         dtInstance.destroy();
@@ -164,9 +164,9 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
   }
 
   updateStatus(val, id) {
-    console.log("agdgasdhgaj", val, id)
+    //console.log("agdgasdhgaj", val, id)
     this.http.patch("http://localhost:8443/admin/training/trainingtype/update" + "/" + id, { status: val }).subscribe((data: any) => {
-      console.log("updateStatus", data);
+      //console.log("updateStatus", data);
       this.loadTrainingType();
 
     })

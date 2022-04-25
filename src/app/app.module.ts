@@ -8,7 +8,8 @@ import { AppComponent } from "./app.component";
 // Bootstrap DataTable to open pull request
 import { DataTablesModule } from "angular-datatables";
 import { ToastrModule } from "ngx-toastr";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { LanguageInterceptor } from "./interceptors/language.interceptor";
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -23,7 +24,7 @@ import { HttpClientModule } from "@angular/common/http";
       preventDuplicates: true,
     }),
   ],
-  providers: [],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

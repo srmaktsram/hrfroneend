@@ -17,19 +17,27 @@ export class HeaderComponent implements OnInit {
   notifications: any;
   messagesData: any;
   user_type: string;
-
+  current_location: any;
+  languages: any;
+  companyName: string;
   constructor(
     private headerService: HeaderService,
     private router: Router,
     private adminAuthenticationService: AdminAuthenticationService
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.companyName = sessionStorage.getItem("companyName");
+    this.current_location = JSON.parse(
+      sessionStorage.getItem("current_location")
+    );
   }
 
   ngOnInit() {
+    console.log(JSON.parse(sessionStorage.getItem("current_location")));
+
     // this.getDatas("notification");
     // this.getDatas("message");
-
+    this.languages = this.current_location.location.languages;
     this.notifications = [
       {
         message: "Patient appointment booking",
