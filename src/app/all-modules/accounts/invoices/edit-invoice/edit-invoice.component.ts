@@ -13,7 +13,8 @@ import { HttpClient } from "@angular/common/http";
 })
 export class EditInvoiceComponent implements OnInit {
   public id;
-  public allInvoices;
+  public invoiceDetails;
+  public invoices;
   public editInvoiceForm: FormGroup;
   public total;
   public pipe = new DatePipe("en-US");
@@ -26,6 +27,11 @@ export class EditInvoiceComponent implements OnInit {
   public grandTotal;
   public totalTax;
   public percentageDiscountValue;
+  public adminId = sessionStorage.getItem("adminId");
+  data: any;
+  clientsData: any;
+  projects: any;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -33,31 +39,54 @@ export class EditInvoiceComponent implements OnInit {
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    //getting edit id of selected estimate list
+
+    this.id = this.route.snapshot.queryParams["id"];
+    console.log(this.id, "id");
+    this.getInvoice();
+    this.getClients();
+    this.getProjects();
+  }
+  getClients() {
+    this.http
+      .get("http://localhost:8443/admin/clients/getDataClient")
+      .subscribe((data) => {
+        this.data = data;
+        this.clientsData = this.data.data;
+      });
+  }
+  getProjects() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/projects/getAdminproject" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.projects = data;
+      });
+  }
 
   ngOnInit() {
-    //getting edit id of selected estimate list
-    this.id = this.route.snapshot.queryParams["id"];
-
     //editestimate form value
     this.editInvoiceForm = this.formBuilder.group({
       client: ["", [Validators.required]],
-      project: [""],
-      email: [""],
-      tax: [""],
-      client_address: [""],
-      billing_address: [""],
-      invoice_date: [""],
-      due_date: [""],
-      other_information: [""],
-      status: [],
-      totalamount: "",
+      project: ["", [Validators.required]],
+      email: ["", [Validators.required]],
+      tax: ["", [Validators.required]],
+      client_address: ["", [Validators.required]],
+      billing_address: ["", [Validators.required]],
+      invoice_date: ["", [Validators.required]],
+      due_date: ["", [Validators.required]],
+      other_information: ["", [Validators.required]],
+      status: [""],
+      totalamount: ["", [Validators.required]],
       discount: ["", [Validators.required]],
       grandTotal: [""],
       items: this.formBuilder.array([]),
     });
     //get estimates
-    this.getInvoice();
 
     //adding items
     this.addItems();
@@ -65,15 +94,18 @@ export class EditInvoiceComponent implements OnInit {
 
   // get method for estimate
   getInvoice() {
-    let adminId=sessionStorage.getItem("adminId");
-  
-    this.http.get("http://localhost:8443/admin/invoices/getInvoices"+"/"+adminId).subscribe((res:any) => {
-      this.allInvoices = res.data;
-  console.log(this.allInvoices)
-      //passing edit id
+    let id = this.id;
 
-      this.edit(this.id);
-    });
+    this.http
+      .get("http://localhost:8443/admin/invoices/getOneInvoices" + "/" + id)
+      .subscribe((res: any) => {
+        console.log(res, "res getdata");
+        this.invoiceDetails = res.data;
+        console.log(this.invoiceDetails, "222");
+        //passing edit id
+
+        this.edit();
+      });
   }
 
   //for adding new rows
@@ -147,6 +179,7 @@ export class EditInvoiceComponent implements OnInit {
 
       let getItems = this.editInvoiceForm.get("items").value;
       let amount = this.editInvoiceForm.value.totalamount.toString();
+      let id = this.editId;
       let obj = {
         number: "#INV-0001",
         client: this.editInvoiceForm.value.client,
@@ -158,17 +191,22 @@ export class EditInvoiceComponent implements OnInit {
         due_date: this.expiryToDateFormat,
         billing_address: this.editInvoiceForm.value.billing_address,
         other_information: this.editInvoiceForm.value.other_information,
-        status: "Pending",
+        // status: "Pending",
         totalamount: amount,
         discount: this.editInvoiceForm.value.discount,
         grandTotal: this.editInvoiceForm.value.grandTotal,
-        id: this.id,
-        items:getItems
+        // id: this.id,
+        items: getItems,
       };
-      this.http.patch("http://localhost:8443/admin/invoices/updateInvoices"+"/"+this.id,obj).subscribe((res) => {
-        this.router.navigate(["/layout/accounts/invoices"]);
-        this.toastr.success("", "Edited successfully!");
-      });
+      this.http
+        .patch(
+          "http://localhost:8443/admin/invoices/updateInvoices" + "/" + this.id,
+          obj
+        )
+        .subscribe((res) => {
+          this.router.navigate(["/layout/accounts/invoices"]);
+          this.toastr.success("", "Edited successfully!");
+        });
     }
   }
 
@@ -178,36 +216,22 @@ export class EditInvoiceComponent implements OnInit {
   }
 
   // set values to form
-  edit(value) {
-    
-    this.editId = value;
-    const index = this.allInvoices.findIndex((item) => {
-      return item.id === value;
-    });
-    let toSetValues = this.allInvoices[index];
+  edit() {
     this.editInvoiceForm.patchValue({
-      client: toSetValues.client,
-      project: toSetValues.project,
-      email: toSetValues.email,
-      tax: toSetValues.tax,
-      client_address: toSetValues.client_address,
-      billing_address: toSetValues.billing_address,
-      invoice_date: toSetValues.invoice_date,
-      due_date: toSetValues.due_date,
-      other_information: toSetValues.other_information,
-      status: toSetValues.status,
-      totalamount: toSetValues.totalamount,
-      discount: toSetValues.discount,
-      grandTotal: toSetValues.grandTotal,
-      items: [
-        {
-          item: toSetValues.items[0].item,
-          description: toSetValues.items[0].description,
-          unit_cost: toSetValues.items[0].unit_cost,
-          qty: toSetValues.items[0].qty,
-          amount: toSetValues.items[0].amount,
-        },
-      ],
+      client: this.invoiceDetails.client,
+      project: this.invoiceDetails.project,
+      email: this.invoiceDetails.email,
+      tax: this.invoiceDetails.tax,
+      client_address: this.invoiceDetails.client_address,
+      billing_address: this.invoiceDetails.billing_address,
+      invoice_date: this.invoiceDetails.invoice_date,
+      due_date: this.invoiceDetails.due_date,
+      other_information: this.invoiceDetails.other_information,
+      status: this.invoiceDetails.status,
+      totalamount: this.invoiceDetails.totalamount,
+      discount: this.invoiceDetails.discount,
+      grandTotal: this.invoiceDetails.grandTotal,
+      items: this.invoiceDetails.items,
     });
   }
 }
