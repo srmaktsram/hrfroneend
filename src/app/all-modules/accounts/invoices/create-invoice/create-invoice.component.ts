@@ -27,6 +27,11 @@ export class CreateInvoiceComponent implements OnInit {
   public percentageTaxValue;
   public percentageDiscountValue;
   public grandTotal;
+  public adminId = sessionStorage.getItem("adminId");
+
+  data: any;
+  clientsData: any;
+  projects: any;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -34,7 +39,30 @@ export class CreateInvoiceComponent implements OnInit {
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
-  ) { }
+  ) {
+    this.getClients();
+    this.getProjects();
+  }
+  getClients() {
+    this.http
+      .get("http://localhost:8443/admin/clients/getDataClient")
+      .subscribe((data) => {
+        this.data = data;
+        this.clientsData = this.data.data;
+      });
+  }
+  getProjects() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/projects/getAdminproject" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.projects = data;
+      });
+  }
+
 
   ngOnInit() {
     //get id value of invoice list
@@ -72,11 +100,17 @@ export class CreateInvoiceComponent implements OnInit {
 
   // getting invoice
   getAllInvoices() {
-    let adminId = sessionStorage.getItem("adminId")
-    this.http.get("http://localhost:8443/admin/invoices/getInvoices" + "/" + adminId).subscribe((res) => {
-      this.invoices = res;
-      console.log(this.invoices, "llllllllllllllllllllll")
-    });
+    let adminId = sessionStorage.getItem("adminId");
+    this.http
+      .get(
+        "http://localhost:8443/admin/invoices/adminGetInvoices" + "/" + adminId
+      )
+      .subscribe((res) => {
+        this.invoices = res;
+        console.log(res, "gettt");
+      });
+
+  
   }
 
   newItem(): FormGroup {
@@ -129,11 +163,11 @@ export class CreateInvoiceComponent implements OnInit {
     });
   }
 
-
   savesend() {
     if (this.addInvoiceForm.invalid) {
-      this.markFormGroupTouched(this.addInvoiceForm)
-      return
+      this.markFormGroupTouched(this.addInvoiceForm);
+      return;
+
     }
     if (!this.addInvoiceForm.valid) {
       this.toastr.error("", "Please enter mandatory field!");
@@ -169,13 +203,16 @@ export class CreateInvoiceComponent implements OnInit {
         totalamount: amount,
         discount: this.addInvoiceForm.value.discount,
         grandTotal: this.addInvoiceForm.value.grandTotal,
-        items: getItems
+        items: getItems,
       };
-      this.http.post("http://localhost:8443/admin/invoices/createInvoices", obj).subscribe((res: any) => {
-        console.log(res.data)
-        this.toastr.success("", "Added successfully!");
-        this.router.navigate(["/layout/accounts/invoices"]);
-      });
+      this.http
+        .post("http://localhost:8443/admin/invoices/createInvoices", obj)
+        .subscribe((res: any) => {
+          console.log(res.data);
+          this.toastr.success("", "Added successfully!");
+          this.router.navigate(["/layout/accounts/invoices"]);
+        });
+
     }
   }
 }
