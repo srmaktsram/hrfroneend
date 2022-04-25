@@ -24,9 +24,7 @@ import { LanguageInterceptor } from "./interceptors/language.interceptor";
       preventDuplicates: true,
     }),
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: LanguageInterceptor, multi: true },
-  ],
+
   bootstrap: [AppComponent],
 })
 export class AppModule {}

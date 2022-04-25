@@ -78,7 +78,7 @@ export class CompanySettingsComponent implements OnInit {
       console.log("new details", obj);
       this.http
         .patch(
-          "http://localhost:8443/admin/register/updateCompanyDetails" +
+          "http://localhost:8443/admin/companysetting/updateCompanyDetails" +
             "/" +
             this.adminId,
           obj

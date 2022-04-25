@@ -44,7 +44,12 @@ export class ThemeSettingsComponent implements OnInit {
       this.http
         .post("http://localhost:8443/admin/themesetting/file", formData)
         .subscribe((res) => {
-          console.log(res);
+          console.log("backend", res);
+        });
+      this.http
+        .get("http://localhost:8443/admin/themesetting/getimg")
+        .subscribe((res) => {
+          console.log("backend", res);
         });
 
       this.toastr.success("Theme settings is added", "Success");
