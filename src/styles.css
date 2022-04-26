@@ -74,6 +74,7 @@ Version      : 3.6
 
 ========================================*/
 
+/* /////////////////////////////////////////// */
 @font-face {
 	font-family: 'Material Icons';
 	font-style: normal;
@@ -137,6 +138,12 @@ Version      : 3.6
 /*-----------------
 	1. General
 -----------------------*/
+.my-custom-snackbar {
+ 
+  position: absolute;
+  right: 50px;
+  top: 60px;
+}
 
 html {
 	height: 100%;
