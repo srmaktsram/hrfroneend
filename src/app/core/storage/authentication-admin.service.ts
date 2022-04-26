@@ -14,7 +14,10 @@ export class AdminAuthenticationService {
     companyAddress: string,
     phone: string,
     mobile: string,
-    location: Object
+    location: Object,
+    clogo: string,
+    cinvoice: string,
+    cinvoicepre: string
   ) {
     sessionStorage.setItem("currentAdminLgn", "loggedin");
     sessionStorage.setItem("user_type", "admin");
@@ -27,6 +30,9 @@ export class AdminAuthenticationService {
     sessionStorage.setItem("companyId", companyId);
     sessionStorage.setItem("pinCode", pinCode);
     sessionStorage.setItem("companyAddress", companyAddress);
+    sessionStorage.setItem("clogo", clogo);
+    sessionStorage.setItem("cinvoice", cinvoice);
+    sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
     return true;
   }
@@ -41,6 +47,9 @@ export class AdminAuthenticationService {
     sessionStorage.removeItem("pinCode");
     sessionStorage.removeItem("companyAddress");
     sessionStorage.removeItem("current_location");
+    sessionStorage.removeItem("clogo");
+    sessionStorage.removeItem("cinvoice");
+    sessionStorage.removeItem("cinvoicepre");
   }
   // public get loggedIn(): boolean {
   //   return sessionStorage.getItem("currentAdminLgn") !== null;

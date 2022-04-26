@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit {
   current_location: any;
   languages: any;
   companyName: string;
+  companyLogo: string;
   constructor(
     private headerService: HeaderService,
     private router: Router,
@@ -27,6 +28,9 @@ export class HeaderComponent implements OnInit {
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.companyName = sessionStorage.getItem("companyName");
+    this.companyLogo = `http://localhost:8443/${sessionStorage.getItem(
+      "clogo"
+    )}`;
     this.current_location = JSON.parse(
       sessionStorage.getItem("current_location")
     );
