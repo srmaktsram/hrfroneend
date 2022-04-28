@@ -13,12 +13,19 @@ export class InvoiceViewComponent implements OnInit {
   public id;
   data: any;
   getdata: any;
+  companyInvoiceLogo: string;
   // public dtTrigger: Subject<any> = new Subject();
   constructor(
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute
   ) {
+
+
+    this.companyInvoiceLogo = `http://localhost:8443/${sessionStorage.getItem(
+      "cinvoice"
+    )}`;
+
     this.id = this.route.snapshot.queryParams["id"];
 
     this.getInvoice();
@@ -35,6 +42,7 @@ export class InvoiceViewComponent implements OnInit {
         // this.dtTrigger.next();
 
         this.getdata = this.invoices.items;
+
       });
   }
 }
