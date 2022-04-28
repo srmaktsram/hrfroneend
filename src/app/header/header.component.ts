@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   languages: any;
   companyName: string;
   companyLogo: string;
+  flag: string;
   constructor(
     private headerService: HeaderService,
     private router: Router,
@@ -34,6 +35,7 @@ export class HeaderComponent implements OnInit {
     this.current_location = JSON.parse(
       sessionStorage.getItem("current_location")
     );
+    this.flag = `https://assets.ipstack.com/flags/${this.current_location.country_code.toLowerCase()}.svg`;
   }
 
   ngOnInit() {
@@ -41,7 +43,7 @@ export class HeaderComponent implements OnInit {
 
     // this.getDatas("notification");
     // this.getDatas("message");
-    this.languages = this.current_location.location.languages;
+    // this.languages = this.current_location.location.languages;
     this.notifications = [
       {
         message: "Patient appointment booking",
