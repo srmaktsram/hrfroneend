@@ -43,10 +43,10 @@
 
         <!-- Flag -->
         <li class="nav-item dropdown has-arrow flag-nav">
-            <a href="javascript:" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img [src]="current_location.location.country_flag" alt="" height="20">{{current_location.location.languages[0].name}}<span></span>
+            <a href="javascript:" class="nav-link" >
+                <img [src]="flag" alt="" height="20">English<span></span>
             </a>
-            <div class="dropdown-menu dropdown-menu-right" >
+            <!-- <div class="dropdown-menu dropdown-menu-right" >
                 <div *ngFor="let language of languages">
 
                
@@ -54,7 +54,7 @@
                     <img  [src]="current_location.location.country_flag" alt="" height="16"> {{language.name}}
                 </a>
             </div>
-            </div>
+            </div> -->
         </li>
         <!-- /Flag -->
 

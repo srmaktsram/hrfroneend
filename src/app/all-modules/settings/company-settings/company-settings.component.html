@@ -95,7 +95,7 @@
                             <label>State/Province</label>
                             <input class="form-control"
                                 [class.invalid]="companySettings.get('state').invalid && companySettings.get('state').touched"
-                                formControlName="state" [(ngModel)]="current_location.region_name">
+                                formControlName="state" [(ngModel)]="current_location.region">
                                 <!-- <option value="California">California</option>
                                 <option value="Alaska">Alaska</option>
                                 <option value="Alabama">Alabama</option>
@@ -112,7 +112,7 @@
                             <label>Postal Code</label>
                             <input class="form-control" value="91403" type="text"
                                 [class.invalid]="companySettings.get('postalCode').invalid && companySettings.get('postalCode').touched"
-                                formControlName="postalCode" [(ngModel)]="current_location.zip">
+                                formControlName="postalCode" [(ngModel)]="current_location.postal">
                             <div
                                 *ngIf="companySettings.get('postalCode').invalid && companySettings.get('postalCode').touched">
                                 <small
