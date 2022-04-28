@@ -90,10 +90,10 @@
         >
           <thead>
             <tr>
-              <th>#</th>
+              <th>Sr.No.</th>
               <th>Invoice Number</th>
               <th>Client</th>
-              <th>Created Date</th>
+              <th>Invoice Date</th>
               <th>Due Date</th>
               <th>Amount</th>
               <th>Status</th>
@@ -104,9 +104,9 @@
             <tr *ngFor="let invoice of invoices; let i = index">
               <td>{{ i + 1 }}</td>
               <td>
-                <a routerLink="/layout/accounts/invoice-view">{{
-                  invoice.number
-                }}</a>
+                <a routerLink="/layout/accounts/invoice-view"
+                  >INV-{{ invoice.number }}</a
+                >
               </td>
               <td>{{ invoice.client }}</td>
               <td>{{ invoice.invoice_date | customDate }}</td>

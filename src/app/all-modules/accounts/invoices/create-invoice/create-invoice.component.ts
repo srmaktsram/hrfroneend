@@ -7,6 +7,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { ThemeSettingsComponent } from "src/app/all-modules/settings/theme-settings/theme-settings.component";
 
 @Component({
   selector: "app-create-invoice",
@@ -28,10 +29,13 @@ export class CreateInvoiceComponent implements OnInit {
   public percentageDiscountValue;
   public grandTotal;
   public adminId = sessionStorage.getItem("adminId");
-
+  buttondisable = false;
   data: any;
   clientsData: any;
   projects: any;
+  invoiceNo: any;
+  invErrorMsg: string;
+  show = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -42,13 +46,15 @@ export class CreateInvoiceComponent implements OnInit {
   ) {
     this.getClients();
     this.getProjects();
+    this.invoiceNo = sessionStorage.getItem("invoiceNo");
   }
   getClients() {
     this.http
-      .get("http://localhost:8443/admin/clients/getDataClient")
-      .subscribe((data) => {
-        this.data = data;
-        this.clientsData = this.data.data;
+      .get(
+        "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
+      )
+      .subscribe((res: any) => {
+        this.data = res;
       });
   }
   getProjects() {
@@ -63,14 +69,13 @@ export class CreateInvoiceComponent implements OnInit {
       });
   }
 
-
   ngOnInit() {
     //get id value of invoice list
     this.id = this.route.snapshot.queryParams["id"];
-
     //add invoive form
     this.addInvoiceForm = this.formBuilder.group({
       client: ["", [Validators.required]],
+      number: [this.invoiceNo, [Validators.required]],
       project: ["", [Validators.required]],
       email: ["", [Validators.required]],
       tax: ["", [Validators.required]],
@@ -85,6 +90,9 @@ export class CreateInvoiceComponent implements OnInit {
       grandTotal: [""],
       items: this.formBuilder.array([]),
     });
+    // this.addInvoiceForm.patchValue({
+    //   number: this.invoiceNo,
+    // });
 
     //for adding row
     this.addItems();
@@ -97,6 +105,14 @@ export class CreateInvoiceComponent implements OnInit {
   get itemsList(): FormArray {
     return this.addInvoiceForm.get("items") as FormArray;
   }
+  ///////Get  Invoice Number/////
+  // getInvNo() {
+  //   this.http
+  //     .get("http://localhost:8443/admin/invoices/getOneInvoiceNumber")
+  //     .subscribe((res: any) => {
+  //       this.invoiceNo = res.number + 1;
+  //     });
+  // }
 
   // getting invoice
   getAllInvoices() {
@@ -107,10 +123,7 @@ export class CreateInvoiceComponent implements OnInit {
       )
       .subscribe((res) => {
         this.invoices = res;
-        console.log(res, "gettt");
       });
-
-  
   }
 
   newItem(): FormGroup {
@@ -167,10 +180,6 @@ export class CreateInvoiceComponent implements OnInit {
     if (this.addInvoiceForm.invalid) {
       this.markFormGroupTouched(this.addInvoiceForm);
       return;
-
-    }
-    if (!this.addInvoiceForm.valid) {
-      this.toastr.error("", "Please enter mandatory field!");
     } else {
       let invoiceDateFormat = this.pipe.transform(
         this.addInvoiceForm.value.invoice_date,
@@ -182,15 +191,14 @@ export class CreateInvoiceComponent implements OnInit {
       );
       let adminId = sessionStorage.getItem("adminId");
       //  let employeeid=sessionStorage.getItem("employeeid");
-      //  console.log(employeeid);
       let getItems = this.addInvoiceForm.get("items").value;
       let amount = this.addInvoiceForm.value.totalamount.toString();
 
       let obj = {
         adminId: adminId,
         // employeeid:employeeid,
-        number: "#INV-0001",
         client: this.addInvoiceForm.value.client,
+        number: this.addInvoiceForm.value.number,
         project: this.addInvoiceForm.value.project,
         invoice_date: invoiceDateFormat,
         email: this.addInvoiceForm.value.email,
@@ -208,11 +216,17 @@ export class CreateInvoiceComponent implements OnInit {
       this.http
         .post("http://localhost:8443/admin/invoices/createInvoices", obj)
         .subscribe((res: any) => {
-          console.log(res.data);
-          this.toastr.success("", "Added successfully!");
-          this.router.navigate(["/layout/accounts/invoices"]);
-        });
+          if (res.result == 0) {
+            this.show = true;
+            this.buttondisable = false;
+            this.invErrorMsg = "Already exist !";
+          } else if (res.result == 1) {
+            this.buttondisable = false;
 
+            this.toastr.success("", "Added successfully!");
+            this.router.navigate(["/layout/accounts/invoices"]);
+          }
+        });
     }
   }
 }

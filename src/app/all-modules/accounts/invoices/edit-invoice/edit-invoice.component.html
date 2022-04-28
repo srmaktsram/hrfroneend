@@ -34,7 +34,7 @@
               >
                 <option>Please Select</option>
                 <option
-                  *ngFor="let newData of clientsData"
+                  *ngFor="let newData of data"
                   [value]="newData.firstName"
                 >
                   {{ newData.firstName }}
@@ -54,6 +54,37 @@
                   class="text-danger"
                 >
                   *Client is required</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-3">
+            <div class="form-group">
+              <label>Invoice Number</label>
+              <input
+                class="form-control"
+                rows="3"
+                name="number"
+                [class.invalid]="
+                  editInvoiceForm.get('number').invalid &&
+                  editInvoiceForm.get('number').touched
+                "
+                formControlName="number"
+              />
+              <div
+                *ngIf="
+                  editInvoiceForm.get('number').invalid &&
+                  editInvoiceForm.get('number').touched
+                "
+              >
+                <small
+                  *ngIf="
+                    editInvoiceForm.get('number').invalid &&
+                    editInvoiceForm.get('number').touched
+                  "
+                  class="text-danger"
+                >
+                  *Invoice number is required</small
                 >
               </div>
             </div>
@@ -303,7 +334,7 @@
               <table class="table table-hover table-white">
                 <thead>
                   <tr>
-                    <th style="width: 20px">#</th>
+                    <th style="width: 20px">Sr.no.</th>
                     <th class="col-sm-2">Item</th>
                     <th class="col-md-6">Description</th>
                     <th style="width: 100px">Unit Cost</th>

@@ -31,6 +31,7 @@ export class EditInvoiceComponent implements OnInit {
   data: any;
   clientsData: any;
   projects: any;
+  invoiceNo: any;
 
   constructor(
     private router: Router,
@@ -43,17 +44,18 @@ export class EditInvoiceComponent implements OnInit {
     //getting edit id of selected estimate list
 
     this.id = this.route.snapshot.queryParams["id"];
-    console.log(this.id, "id");
     this.getInvoice();
     this.getClients();
     this.getProjects();
+    // this.getInvNo();
   }
   getClients() {
     this.http
-      .get("http://localhost:8443/admin/clients/getDataClient")
-      .subscribe((data) => {
-        this.data = data;
-        this.clientsData = this.data.data;
+      .get(
+        "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
+      )
+      .subscribe((res: any) => {
+        this.data = res;
       });
   }
   getProjects() {
@@ -67,11 +69,22 @@ export class EditInvoiceComponent implements OnInit {
         this.projects = data;
       });
   }
+  // getInvNo() {
+  //   let id = this.id;
+
+  //   this.http
+  //     .get("http://localhost:8443/admin/invoices/getOneInvoices" + "/" + id)
+  //     .subscribe((res: any) => {
+  //       this.invoiceNo = res.data.number;
+  //       this.edit();
+  //     });
+  // }
 
   ngOnInit() {
     //editestimate form value
     this.editInvoiceForm = this.formBuilder.group({
       client: ["", [Validators.required]],
+      number: ["", [Validators.required]],
       project: ["", [Validators.required]],
       email: ["", [Validators.required]],
       tax: ["", [Validators.required]],
@@ -99,9 +112,7 @@ export class EditInvoiceComponent implements OnInit {
     this.http
       .get("http://localhost:8443/admin/invoices/getOneInvoices" + "/" + id)
       .subscribe((res: any) => {
-        console.log(res, "res getdata");
         this.invoiceDetails = res.data;
-        console.log(this.invoiceDetails, "222");
         //passing edit id
 
         this.edit();
@@ -181,8 +192,8 @@ export class EditInvoiceComponent implements OnInit {
       let amount = this.editInvoiceForm.value.totalamount.toString();
       let id = this.editId;
       let obj = {
-        number: "#INV-0001",
         client: this.editInvoiceForm.value.client,
+        number: this.editInvoiceForm.value.number,
         project: this.editInvoiceForm.value.project,
         invoice_date: this.estimateDateFormat,
         email: this.editInvoiceForm.value.email,
@@ -219,6 +230,7 @@ export class EditInvoiceComponent implements OnInit {
   edit() {
     this.editInvoiceForm.patchValue({
       client: this.invoiceDetails.client,
+      number: this.invoiceDetails.number,
       project: this.invoiceDetails.project,
       email: this.invoiceDetails.email,
       tax: this.invoiceDetails.tax,

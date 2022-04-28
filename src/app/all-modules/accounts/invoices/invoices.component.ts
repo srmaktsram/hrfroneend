@@ -23,12 +23,16 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   public srch = [];
   public pipe = new DatePipe("en-US");
   public dtTrigger: Subject<any> = new Subject();
+  adminId: string;
 
   constructor(
     private router: Router,
     private http: HttpClient,
     private allModulesService: AllModulesService
-  ) { }
+  ) {
+    this.adminId = sessionStorage.getItem("adminId");
+    sessionStorage.removeItem("invoiceNo");
+  }
 
   ngOnInit() {
     $(".floating")
@@ -48,25 +52,43 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
     //get all invoices
     this.getAllInvoices();
+    this.getInvNo();
   }
-
+  getInvNo() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/invoices/getOneInvoiceNumber" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((res: any) => {
+        let total = String(parseInt(res.number) + 1);
+        sessionStorage.setItem("invoiceNo", total);
+      });
+  }
   //get all invoices
   getAllInvoices() {
-    let adminId = sessionStorage.getItem("adminId")
-    this.http.get("http://localhost:8443/admin/invoices/adminGetInvoices" + "/" + adminId).subscribe((res: any) => {
-      this.invoices = res.data;
-      console.log("jaggy", this.invoices)
+    let adminId = sessionStorage.getItem("adminId");
+    this.http
+      .get(
+        "http://localhost:8443/admin/invoices/adminGetInvoices" + "/" + adminId
+      )
+      .subscribe((res: any) => {
+        this.invoices = res.data;
 
-      this.rows = this.invoices;
-      this.srch = [...this.rows];
-    });
+        this.rows = this.invoices;
+        this.srch = [...this.rows];
+      });
   }
 
   updateStatus(val, id) {
-    this.http.patch("http://localhost:8443/admin/invoices/updateInvoices" + "/" + id, { status: val }).subscribe((res: any) => {
-      console.log(res);
-      this.getAllInvoices()
-    })
+    this.http
+      .patch("http://localhost:8443/admin/invoices/updateInvoices" + "/" + id, {
+        status: val,
+      })
+      .subscribe((res: any) => {
+        this.getAllInvoices();
+      });
   }
 
   //getting id for selected row
@@ -77,13 +99,17 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   // delete method for deleting rows
   delete() {
     let id: any = this.id;
-    this.http.patch("http://localhost:8443/admin/invoices/deleteInvoices" + "/" + id, { status: 2 }).subscribe((res) => {
-      this.router.navigate(["/layout/accounts/invoices"]);
-      this.getAllInvoices();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    this.http
+      .patch("http://localhost:8443/admin/invoices/deleteInvoices" + "/" + id, {
+        status: 2,
+      })
+      .subscribe((res) => {
+        this.router.navigate(["/layout/accounts/invoices"]);
+        this.getAllInvoices();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
       });
-    });
   }
 
   //search by from date
