@@ -65,7 +65,6 @@ export class EmployeeSalaryComponent
   public profTaxValue;
   public labourValue;
   public othersDedValue;
-
   dataarr: any;
   designations: Object;
   disableButton = true;

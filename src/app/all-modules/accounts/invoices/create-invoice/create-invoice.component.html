@@ -35,7 +35,7 @@
               >
                 <option>Please Select</option>
                 <option
-                  *ngFor="let newData of clientsData"
+                  *ngFor="let newData of data"
                   [value]="newData.firstName"
                 >
                   {{ newData.firstName }}
@@ -55,6 +55,40 @@
                   class="text-danger"
                 >
                   *Client is required</small
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-3">
+            <div class="form-group">
+              <label>Invoice Number</label>
+              <input
+                class="form-control"
+                rows="3"
+                name="number"
+                [class.invalid]="
+                  addInvoiceForm.get('number').invalid &&
+                  addInvoiceForm.get('number').touched
+                "
+                formControlName="number"
+              />
+              <ng-container *ngIf="show == true">
+                <p class="text-danger">{{ invErrorMsg }}</p>
+              </ng-container>
+              <div
+                *ngIf="
+                  addInvoiceForm.get('number').invalid &&
+                  addInvoiceForm.get('number').touched
+                "
+              >
+                <small
+                  *ngIf="
+                    addInvoiceForm.get('number').invalid &&
+                    addInvoiceForm.get('number').touched
+                  "
+                  class="text-danger"
+                >
+                  *Invoice number is required</small
                 >
               </div>
             </div>
@@ -546,7 +580,12 @@
           >
             Save & Send
           </button>
-          <button class="btn btn-primary submit-btn" (click)="savesend()">
+          <button
+            [disabled]="addInvoiceForm.invalid"
+            [disabled]="buttondisable"
+            class="btn btn-primary submit-btn"
+            (click)="savesend(); buttondisable = true"
+          >
             Save
           </button>
         </div>
