@@ -27,7 +27,7 @@ export class NotificationsComponent implements OnInit {
     let data = val.target.checked;
     this.http
       .patch(
-        "http://localhost:8443/auth/notificationSetting/updateNotificationSetting" +
+        "http://localhost:8443/admin/notificationSetting/updateNotificationSetting" +
           "/" +
           this.adminId,
         { key, data }
@@ -40,7 +40,7 @@ export class NotificationsComponent implements OnInit {
   getNotifications() {
     this.http
       .get(
-        "http://localhost:8443/auth/notificationSetting/getNotificationSetting" +
+        "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
           "/" +
           this.adminId
       )
