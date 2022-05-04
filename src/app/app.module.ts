@@ -9,11 +9,13 @@ import { AppComponent } from "./app.component";
 import { DataTablesModule } from "angular-datatables";
 import { ToastrModule } from "ngx-toastr";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
-import { LanguageInterceptor } from "./interceptors/language.interceptor";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    MatSnackBarModule,
     HttpClientModule,
     BrowserAnimationsModule,
     AppRoutingModule,

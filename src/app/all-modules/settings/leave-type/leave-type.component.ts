@@ -9,6 +9,7 @@ import {
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
@@ -27,10 +28,13 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   public editLeaveType: FormGroup;
   public editId: any;
   public tempId: any;
+  public adminId = sessionStorage.getItem("adminId");
+  buttondisable = false;
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
@@ -58,26 +62,35 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   }
 
   getLeaveType() {
-    this.allModuleService.get(this.url).subscribe((data) => {
-      this.allLeaveType = data;
-      this.dtTrigger.next();
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/leaveType/getLeaveType" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data) => {
+        this.allLeaveType = data;
+      });
   }
 
   // Add Provident Modal Api Call
 
   addLeave() {
     if (this.addLeaveType.valid) {
+      let adminId = this.adminId;
+
       let obj = {
         leaveType: this.addLeaveType.value.addLeaveType,
         leaveDays: this.addLeaveType.value.addLeaveDays,
+        adminId,
+        status: "New",
       };
-      this.allModuleService.add(obj, this.url).subscribe((data) => {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/leaveType/createLeaveType", obj)
+        .subscribe((data) => {
+          this.buttondisable = false;
+          this.getLeaveType();
         });
-      });
-      this.getLeaveType();
       $("#add_leavetype").modal("hide");
       this.addLeaveType.reset();
       this.toastr.success("Leave type is added", "Success");
@@ -87,17 +100,19 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   // Edit Provident Modal Api Call
 
   editLeave() {
+    let id = this.editId;
     let obj = {
       leaveType: this.editLeaveType.value.editLeave,
       leaveDays: this.editLeaveType.value.editLeaveDays,
-      id: this.editId,
     };
-    this.allModuleService.update(obj, this.url).subscribe((data1) => {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    this.http
+      .patch(
+        "http://localhost:8443/admin/leaveType/updateLeaveType" + "/" + id,
+        obj
+      )
+      .subscribe((data1) => {
+        this.getLeaveType();
       });
-    });
-    this.getLeaveType();
     $("#edit_leavetype").modal("hide");
     this.toastr.success("Leave type is edited", "Success");
   }
@@ -108,7 +123,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
       return item.id === value;
     });
     let toSetValues = this.allLeaveType[index];
-    this.editLeaveType.setValue({
+    this.editLeaveType.patchValue({
       editLeave: toSetValues.leaveType,
       editLeaveDays: toSetValues.leaveDays,
     });
@@ -117,14 +132,35 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   // Delete Provident Modal Api Call
 
   deleteLeave() {
-    this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    let id = this.tempId;
+    let obj = {
+      status: 2,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/leaveType/deleteLeaveType" + "/" + id,
+        obj
+      )
+      .subscribe((data) => {
+        this.getLeaveType();
+        $("#delete_leavetype").modal("hide");
+        this.toastr.success("Leave type is deleted", "Success");
       });
-      this.getLeaveType();
-      $("#delete_leavetype").modal("hide");
-      this.toastr.success("Leave type is deleted", "Success");
-    });
+  }
+  //getting the status value
+  getStatus(data, id) {
+    const status = data;
+
+    this.http
+      .patch(
+        "http://localhost:8443/admin/leaveType/updateLeaveTypeStatus" +
+          "/" +
+          id,
+        { status: data }
+      )
+      .subscribe((res: any) => {
+        this.getLeaveType();
+      });
   }
   // for unsubscribe datatable
   ngOnDestroy(): void {

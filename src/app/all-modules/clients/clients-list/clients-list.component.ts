@@ -50,8 +50,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
-
-    this.adminId = sessionStorage.getItem("adminId")
+    this.adminId = sessionStorage.getItem("adminId");
 
     this.invoices = [
       { id: 0, read: false },
@@ -147,15 +146,18 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
   //Get all Clients data
   public getClients() {
-
     this.http
-      .get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId)
+      .get(
+        "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
+      )
       .subscribe((res: any) => {
+
         
         this.data = res;
 
         this.srch=res
         //console.log(this.data, "???????????//")
+
 
       });
   }
@@ -347,19 +349,15 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
   //getting the status value
   getStatus(val, id) {
-
     let obj = {
-      status: val
-    }
-    this.http.patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj).subscribe((data: any) => {
-      this.getClients();
-
-    })
+      status: val,
+    };
+    this.http
+      .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
+      .subscribe((data: any) => {
+        this.getClients();
+      });
   }
-
-
-
-
 
   checkCheckBoxvalueInvoices(event, val) {
     if (val == 0) {

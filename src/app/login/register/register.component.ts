@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
       .pipe(
         switchMap((value: any) => {
           this.ipAddress = value.ip;
-          let url = `http://api.ipstack.com/${value.ip}?access_key=1cc71113e78393d0eaf6837be1e5ebb7`;
+          let url = `https://ipapi.co/${value.ip}/json/`;
           return this.http.get(url);
         })
       )

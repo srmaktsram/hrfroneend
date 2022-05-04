@@ -317,7 +317,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       return item.id === value;
     });
     let toSetValues = this.allTickets[index];
-    this.editTicketForm.setValue({
+    this.editTicketForm.patchValue({
       editTicketSubject: toSetValues.ticketSubject,
       editTicketId: toSetValues.ticketId,
       editAssignStaff: toSetValues.assignedStaff,
