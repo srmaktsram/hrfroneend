@@ -25,12 +25,12 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public adminId: any;
   public companiesList = [];
 
-  public rows = [];
+  public data = [];
   public srch = [];
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
-  data: any;
+
   editId: any;
   invoices: any;
   projects: any;
@@ -151,8 +151,10 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId)
       .subscribe((res: any) => {
-
+        
         this.data = res;
+
+        this.srch=res
         //console.log(this.data, "???????????//")
 
       });
@@ -278,12 +280,12 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   //search by name
   searchID(val) {
     if (val) {
-      this.rows.splice(0, this.rows.length);
+      this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return d.clientId.toLowerCase().indexOf(val) !== -1 || !val;
       });
-      this.rows.push(...temp);
+      this.data.push(...temp);
     } else {
       this.getClients();
     }
@@ -292,12 +294,12 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   //search by name
   searchByName(val) {
     if (val) {
-      this.rows.splice(0, this.rows.length);
+      this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return d.name.toLowerCase().indexOf(val) !== -1 || !val;
       });
-      this.rows.push(...temp);
+      this.data.push(...temp);
     } else {
       this.getClients();
     }
@@ -306,12 +308,12 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   //search by company
   searchByCompany(val) {
     if (val.trim()) {
-      this.rows.splice(0, this.rows.length);
+      this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return d.companyName.toLowerCase().indexOf(val) !== -1 || !val;
       });
-      this.rows.push(...temp);
+      this.data.push(...temp);
     } else {
       this.getClients();
     }
@@ -321,7 +323,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.searchId = id;
     this.searchName = name;
     this.searchCompany = company;
-    this.clientsData = this.data.data;
+    this.clientsData = this.data;
     if (this.searchId) {
       this.filtereddata = this.clientsData.filter((data) =>
         data.clientId.toLowerCase().includes(this.searchId.toLowerCase())

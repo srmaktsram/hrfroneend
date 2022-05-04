@@ -25,6 +25,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   public employeeId: any;
   public rows = [];
   public srch = [];
+  public client=[];
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
@@ -41,13 +42,15 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
     this.adminId = sessionStorage.getItem("adminId");
     this.employeeId = sessionStorage.getItem("employeeId");
     this.getDesignation();
-    // this.getClients();
+  
+    this.getClients();
   }
   public getDesignation() {
     this.http
       .get("http://localhost:8443/admin/designation/getData")
-      .subscribe((data) => {
+      .subscribe((data:any) => {
         this.designations = data;
+        // console.log("this is designation<><><><>", this.designations )
       });
   }
   // public getClients() {
@@ -81,7 +84,8 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       projectLeader: ["", [Validators.required]],
       addTeamMembers: ["", [Validators.required]],
       projectId: [""],
-      id: [""],
+      rate: [""],
+      client:[""]
     });
 
     //Edit Projects Form
@@ -93,7 +97,10 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       editProjectPriority: [""],
       editaddTeamMembers: [""],
       editProjectId: [""],
-      editId: [""],
+      projectLeader:[""],
+      rate: [""],
+      client:[""]
+     
     });
   }
 
@@ -106,11 +113,24 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       )
       .subscribe((data: any) => {
         this.projects = data;
+        // console.log("this is getProjects<><><<><><><><>", this.projects)
         this.dtTrigger.next();
         this.rows = this.projects;
         this.srch = [...this.rows];
       });
   }
+
+ ///////// shows  clients ///////
+
+ getClients(){
+   this.http.get("http://localhost:8443/admin/clients/getDataClient"+"/"+this.adminId).subscribe((data:any)=>{
+  //  console.log("all clients <><><><<><><><><",data);
+   this.client=data
+  //  console.log(this.client)
+   })
+ }
+
+
 
   private markFormGroupTouched(formGroup: FormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control) => {
@@ -142,14 +162,16 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       endDate: EndDate,
       startDate: StartDate,
       priority: this.addProjectForm.value.projectPriority,
-      projectleader: this.addProjectForm.value.projectLeader,
+      projectLeader: this.addProjectForm.value.projectLeader,
       teamMember: this.addProjectForm.value.addTeamMembers,
-      projectId: "PRO-0012",
+      rate:this.addProjectForm.value.rate,
+      client:this.addProjectForm.value. client
     };
+    // console.log("this is object<><><><<><><><><><><><><",newProject)
     this.http
       .post("http://localhost:8443/admin/projects/createProject", newProject)
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log("POST API PROJECT<><><><><><><",res);
         this.getProjects();
         this.addProjectForm.reset();
         // $("#create_project").modal("hide");
@@ -161,10 +183,10 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   editProject(id: any) {
     this.tempId = id;
     const index = this.projects.findIndex((item) => {
-      return item.id === id;
+      return item.projectId === id;
     });
     let toSetValues = this.projects[index];
-    console.log(toSetValues);
+    // console.log("EDIT VALUE<><><><><><><",toSetValues);
     this.editProjectForm.patchValue({
       editProjectName: toSetValues.name,
       editProjectDescription: toSetValues.description,
@@ -173,7 +195,9 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       editProjectPriority: toSetValues.priority,
       editaddTeamMembers: toSetValues.teamMember,
       editProjectId: toSetValues.projectId,
-      editId: toSetValues.id,
+      rate:  toSetValues.rate,
+      client: toSetValues.client,
+      projectLeader:toSetValues.projectLeader
     });
   }
 
@@ -195,6 +219,8 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       priority: this.editProjectForm.value.editProjectPriority,
       teamMember: this.editProjectForm.value.editaddTeamMembers,
       projectId: this.editProjectForm.value.editProjectPriority,
+      rate:this.editProjectForm.value.rate,
+      client: this.editProjectForm.value.client,
     };
 
     this.http
@@ -205,7 +231,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
         editedProject
       )
       .subscribe((res: any) => {
-        console.log(res);
+        // console.log(res);
         this.getProjects();
         this.editProjectForm.reset();
         $("#edit_project").modal("hide");
@@ -215,6 +241,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
 
   //Delete project
   public deleteProject() {
+    alert(this.tempId)
     this.http
       .patch(
         "http://localhost:8443/admin/projects/deleteproject" +
@@ -223,6 +250,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
         {}
       )
       .subscribe((res: any) => {
+        // console.log(res)
         this.getProjects();
         $("#delete_project").modal("hide");
         this.toastr.success("Project deleted sucessfully...!", "Success");
