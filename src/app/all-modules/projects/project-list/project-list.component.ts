@@ -23,6 +23,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   public tempId: any;
   public adminId:any;
   public rows = [];
+  public client=[];
   public srch = [];
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
@@ -34,6 +35,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     private allModulesService: AllModulesService
   ) {
     this.adminId=sessionStorage.getItem("adminId");
+    this.getClients();
   }
 
   ngOnInit() {
@@ -53,7 +55,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       projectLeader: ["", [Validators.required]],
       addTeamMembers: ["", [Validators.required]],
       projectId: ["", [Validators.required]],
-      id: ["", [Validators.required]],
+      rate: [""],
+      client:[""],
+      
     });
 
     //Edit Projects Form
@@ -65,7 +69,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       editProjectPriority: ["", [Validators.required]],
       editaddTeamMembers: ["", [Validators.required]],
       editProjectId: ["", [Validators.required]],
-      editId: ["", [Validators.required]],
+      rate: [""],
+      client:[""],
+      projectLeader:[""]
     });
   }
 
@@ -91,34 +97,51 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   getProjects() {
     this.http.get("http://localhost:8443/admin/projects/getAdminproject"+"/"+this.adminId).subscribe((data:any) => {
       this.projects = data;
+      // console.log(this.projects)
       this.rows = this.projects;
       this.srch = [...this.rows];
     });
   }
   updateStatus(val,id){
-    this.http
-
+  
+    
+  // console.log("jdgd>>>>>>>>>>>>",val,id)
+  this.http
     .patch("http://localhost:8443/admin/projects/updateProject"+"/"+id,{status:val})
-    .subscribe((data) => {
+    .subscribe((data:any) => {
+      // console.log("status<><><><>",data)
       this.getProjects();
     })
 
   }
 
   priorityStatus(val,id){
+   
     this.http
 
     .patch("http://localhost:8443/admin/projects/updateProject"+"/"+id,{priority:val})
-    .subscribe((data) => {
+    .subscribe((data:any) => {
+      // console.log("Priority<><><><>",data)
       this.getProjects();
     })
   }
+
+
+  ///////// shows  clients ///////
+
+ getClients(){
+  this.http.get("http://localhost:8443/admin/clients/getDataClient"+"/"+this.adminId).subscribe((data:any)=>{
+ //  console.log("all clients <><><><<><><><><",data);
+  this.client=data
+  // console.log(this.client)
+  })
+}
 
   //Edit project
   editProject(id: any) {
     this.tempId = id;
     const index = this.projects.findIndex((item) => {
-      return item.id === id;
+      return item.projectId === id;
     });
     let toSetValues = this.projects[index];
     this.editProjectForm.patchValue({
@@ -129,7 +152,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       editProjectPriority: toSetValues.priority,
       editaddTeamMembers: toSetValues.teamMember,
       editProjectId: toSetValues.projectId,
-      editId: toSetValues.id,
+      rate:  toSetValues.rate,
+      client: toSetValues.client,
+      projectLeader:toSetValues.projectLeader
     });
   }
 
@@ -150,9 +175,10 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       endDate: EndDate,
       startDate: StartDate,
       priority: this.addProjectForm.value.projectPriority,
-      projectleader: this.addProjectForm.value.projectleader,
+      projectLeader: this.addProjectForm.value.projectLeader,
       teamMember: this.addProjectForm.value.addTeamMembers,
-      projectId: "PRO-0012",
+      rate:this.addProjectForm.value.rate,
+      client:this.addProjectForm.value. client
     };
     this.http.post("http://localhost:8443/admin/projects/createProject",newProject).subscribe((data:any) => {
       this. getProjects();
@@ -186,27 +212,33 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       priority: this.editProjectForm.value.editProjectPriority,
       teamMember: this.editProjectForm.value.editaddTeamMembers,
       projectId: this.editProjectForm.value.editProjectPriority,
-     
+      rate:this.editProjectForm.value.rate,
+      client: this.editProjectForm.value.client,
+      projectLeader:this.editProjectForm.value.projectLeader
     };
     this.http
 
       .patch("http://localhost:8443/admin/projects/updateProject"+"/"+this.tempId,editedProject)
-      .subscribe((data) => {
+      .subscribe((data:any) => {
+        this.getProjects();
         $("#datatable").DataTable().clear();
+       
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-    this.getProjects();
+    
     this.editProjectForm.reset();
     $("#edit_project").modal("hide");
     this.toastr.success("Project updated sucessfully...!", "Success");
   }
 
   //Delete project
-  public deleteProject() {
-    this.http.patch("http://localhost:8443/admin/projects/deleteproject"+"/"+this.tempId,{}).subscribe((data) => {
+ deleteProject() {
+    // alert(this.tempId)
+    this.http.patch("http://localhost:8443/admin/projects/deleteproject"+"/"+this.tempId,{status:2}).subscribe((data:any) => {
+      // console.log(data)
       this.getProjects();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

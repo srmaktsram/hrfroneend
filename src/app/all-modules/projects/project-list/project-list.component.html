@@ -77,7 +77,7 @@
                     <tbody>
                         <tr *ngFor="let project of projects;let i = index">
                             <td>
-                                <a routerLink="/layout/projects/projectview/{{project.id}}">{{project.name}}</a>
+                                <a routerLink="/layout/projects/projectview/{{project.projectId}}">{{project.name}}</a>
                             </td>
                             <td>{{project.projectId}}</td>
                             <td>
@@ -178,14 +178,22 @@
                             </td>
                             <td>
                                 <div class="dropdown action-label">
-                                    <a href="" class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false"><i
-                                            class="fa fa-dot-circle-o text-success"></i> {{project.status}} </a>
+                                    <a  class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <ng-container *ngIf="project.status=='Active'">
+                                      
+                                        <i class="fa fa-dot-circle-o text-success">{{project.status}} </i> 
+                                    </ng-container>
+                                    <ng-container *ngIf="project.status=='Inactive'">
+                                      
+                                        <i class="fa fa-dot-circle-o text-danger">{{project.status}} </i> 
+                                    </ng-container>
+                                </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" (click)="updateStatus('Active',project.id)"
+                                        <a class="dropdown-item" (click)="updateStatus('Active',project.projectId)"
                                         ><i class="fa fa-dot-circle-o text-success"></i>
                                             Active</a>
-                                        <a class="dropdown-item" (click)="updateStatus('Inactive',project.id)"><i class="fa fa-dot-circle-o text-danger"></i>
+                                        <a class="dropdown-item" (click)="updateStatus('Inactive',project.projectId)"><i class="fa fa-dot-circle-o text-danger"></i>
                                             Inactive</a>
                                     </div>
                                 </div>
@@ -196,10 +204,10 @@
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_project"
-                                            (click)="editProject(project.id)"><i class="fa fa-pencil m-r-5"></i>
+                                            (click)="editProject(project.projectId)"><i class="fa fa-pencil m-r-5"></i>
                                             Edit</a>
                                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_project"
-                                            (click)="tempId = project.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            (click)="tempId = project.projectId"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                     </div>
                                 </div>
                             </td>
@@ -241,9 +249,9 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Client</label>
-                                <select class="form-select form-control">
-                                    <option>Global Technologies</option>
-                                    <option>Delta Infotech</option>
+                                <select  formControlName="client"  class="form-select form-control">
+                                    <option>Select Client</option>
+                                    <option *ngFor="let item of client">{{item.firstName}} {{item.lastName}} </option>
                                 </select>
                             </div>
                         </div>
@@ -288,7 +296,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Rate</label>
-                                <input placeholder="$50" class="form-control" type="text">
+                                <input formControlName="rate" placeholder="$50" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -419,9 +427,9 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Client</label>
-                                <select class="form-select form-control">
-                                    <option>Global Technologies</option>
-                                    <option>Delta Infotech</option>
+                                <select  formControlName="client" class="form-select form-control">
+                                    <option>Select Client</option>
+                                    <option *ngFor="let item of client" >{{item.firstName}} {{item.lastName}} </option>
                                 </select>
                             </div>
                         </div>
@@ -466,7 +474,7 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>Rate</label>
-                                <input placeholder="$50" class="form-control" value="$5000" type="text">
+                                <input  formControlName="rate"  placeholder="$50" class="form-control" value="$5000" type="text">
                             </div>
                         </div>
                         <div class="col-sm-3">
@@ -495,7 +503,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label>Add Project Leader</label>
-                                <input class="form-control" type="text">
+                                <input formControlName="projectLeader" class="form-control" type="text">
                             </div>
                         </div>
                         <div class="col-sm-6">

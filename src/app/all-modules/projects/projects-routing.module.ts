@@ -25,7 +25,7 @@ const routes: Routes = [
         component: ProjectViewComponent
       },
       {
-        path: "taskboard",
+        path: "taskboard/:id",
         component: TaskBoardComponent
       },
       {

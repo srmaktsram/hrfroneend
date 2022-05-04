@@ -5,7 +5,7 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">{{projectTitle}}</h3>
+                <h3 class="page-title">{{projectTitle}} </h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
                     <li class="breadcrumb-item active">Project</li>
@@ -14,7 +14,7 @@
             <div class="col-auto float-end ms-auto">
                 <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#edit_project"><i class="fa fa-plus"></i> Edit
                     Project</a>
-                <a routerLink="/layout/projects/taskboard" class="btn btn-white float-end m-r-10" data-bs-toggle="tooltip"
+                <a routerLink="/layout/projects/taskboard/{{projects.projectId}}" class="btn btn-white float-end m-r-10" data-bs-toggle="tooltip"
                     title="Task Board"><i class="fa fa-bars"></i></a>
             </div>
         </div>
@@ -31,26 +31,8 @@
                                 class="text-muted">open tasks, </span><span class="text-xs">5</span> <span
                                 class="text-muted">tasks completed</span></small>
                     </div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque. Class aptent
-                        taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum
-                        sollicitudin libero vitae est consectetur, a molestie tortor consectetur. Aenean tincidunt
-                        interdum ipsum, id pellentesque diam suscipit ut. Vivamus massa mi, fermentum eget neque eget,
-                        imperdiet tristique lectus. Proin at purus ut sem pellentesque tempor sit amet ut lectus. Sed
-                        orci augue, placerat et pretium ac, hendrerit in felis. Integer scelerisque libero non metus
-                        commodo, et hendrerit diam aliquet. Proin tincidunt porttitor ligula, a tincidunt orci
-                        pellentesque nec. Ut ultricies maximus nulla id consequat. Fusce eu consequat mi, eu euismod
-                        ligula. Aliquam porttitor neque id massa porttitor, a pretium velit vehicula. Morbi volutpat
-                        tincidunt urna, vel ullamcorper ligula fermentum at. </p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vel elit neque. Class aptent
-                        taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Vestibulum
-                        sollicitudin libero vitae est consectetur, a molestie tortor consectetur. Aenean tincidunt
-                        interdum ipsum, id pellentesque diam suscipit ut. Vivamus massa mi, fermentum eget neque eget,
-                        imperdiet tristique lectus. Proin at purus ut sem pellentesque tempor sit amet ut lectus. Sed
-                        orci augue, placerat et pretium ac, hendrerit in felis. Integer scelerisque libero non metus
-                        commodo, et hendrerit diam aliquet. Proin tincidunt porttitor ligula, a tincidunt orci
-                        pellentesque nec. Ut ultricies maximus nulla id consequat. Fusce eu consequat mi, eu euismod
-                        ligula. Aliquam porttitor neque id massa porttitor, a pretium velit vehicula. Morbi volutpat
-                        tincidunt urna, vel ullamcorper ligula fermentum at. </p>
+                    
+                    <p>{{projects.description}} </p>
                 </div>
             </div>
             <div class="card">
@@ -161,12 +143,13 @@
             </div>
             <div class="project-task">
                 <ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
-                    <li class="nav-item"><a class="nav-link active" href="#all_tasks" data-bs-toggle="tab"
-                            aria-expanded="true">All Tasks</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#pending_tasks" data-bs-toggle="tab"
-                            aria-expanded="false">Pending Tasks</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#completed_tasks" data-bs-toggle="tab"
-                            aria-expanded="false">Completed Tasks</a></li>
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab"
+                            aria-expanded="true"  (click)="allTasks()"  >All Tasks</a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                            aria-expanded="false" *ngFor="let item of pendingTask " >Pending Tasks
+                        </a></li>
+                    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
+                            aria-expanded="false"  >Completed Tasks</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane show active" id="all_tasks">
@@ -174,7 +157,7 @@
                             <div class="task-list-container">
                                 <div class="task-list-body">
                                     <ul id="task-list">
-                                        <li class="task">
+                                        <li class="task" *ngFor="let task of tasks">
                                             <div class="task-container">
                                                 <span class="task-action-btn task-check">
                                                     <span class="action-circle large complete-btn"
@@ -182,117 +165,23 @@
                                                         <i class="material-icons">check</i>
                                                     </span>
                                                 </span>
-                                                <span class="task-label" contenteditable="true">Patient appointment
-                                                    booking</span>
+                                                <span class="task-label" contenteditable="true">{{task.taskName}}</span>
                                                 <span class="task-action-btn task-btn-right">
                                                     <span class="action-circle large" title="Assign">
-                                                        <i class="material-icons">person_add</i>
+                                                        <i class="material-icons" data-bs-toggle="modal"
+                                                        data-bs-target="#assign_user" >person_add</i>
                                                     </span>
                                                     <span class="action-circle large delete-btn" title="Delete Task">
-                                                        <i class="material-icons">delete</i>
+                                                        <i class="material-icons" (click)="deletedTask(task.id)">delete</i>
                                                     </span>
                                                 </span>
                                             </div>
                                         </li>
-                                        <li class="task">
-                                            <div class="task-container">
-                                                <span class="task-action-btn task-check">
-                                                    <span class="action-circle large complete-btn"
-                                                        title="Mark Complete">
-                                                        <i class="material-icons">check</i>
-                                                    </span>
-                                                </span>
-                                                <span class="task-label" contenteditable="true">Appointment booking with
-                                                    payment gateway</span>
-                                                <span class="task-action-btn task-btn-right">
-                                                    <span class="action-circle large" title="Assign">
-                                                        <i class="material-icons">person_add</i>
-                                                    </span>
-                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                        <i class="material-icons">delete</i>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li class="completed task">
-                                            <div class="task-container">
-                                                <span class="task-action-btn task-check">
-                                                    <span class="action-circle large complete-btn"
-                                                        title="Mark Complete">
-                                                        <i class="material-icons">check</i>
-                                                    </span>
-                                                </span>
-                                                <span class="task-label">Doctor available module</span>
-                                                <span class="task-action-btn task-btn-right">
-                                                    <span class="action-circle large" title="Assign">
-                                                        <i class="material-icons">person_add</i>
-                                                    </span>
-                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                        <i class="material-icons">delete</i>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li class="task">
-                                            <div class="task-container">
-                                                <span class="task-action-btn task-check">
-                                                    <span class="action-circle large complete-btn"
-                                                        title="Mark Complete">
-                                                        <i class="material-icons">check</i>
-                                                    </span>
-                                                </span>
-                                                <span class="task-label" contenteditable="true">Patient and Doctor video
-                                                    conferencing</span>
-                                                <span class="task-action-btn task-btn-right">
-                                                    <span class="action-circle large" title="Assign">
-                                                        <i class="material-icons">person_add</i>
-                                                    </span>
-                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                        <i class="material-icons">delete</i>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li class="task">
-                                            <div class="task-container">
-                                                <span class="task-action-btn task-check">
-                                                    <span class="action-circle large complete-btn"
-                                                        title="Mark Complete">
-                                                        <i class="material-icons">check</i>
-                                                    </span>
-                                                </span>
-                                                <span class="task-label" contenteditable="true">Private chat
-                                                    module</span>
-                                                <span class="task-action-btn task-btn-right">
-                                                    <span class="action-circle large" title="Assign">
-                                                        <i class="material-icons">person_add</i>
-                                                    </span>
-                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                        <i class="material-icons">delete</i>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        <li class="task">
-                                            <div class="task-container">
-                                                <span class="task-action-btn task-check">
-                                                    <span class="action-circle large complete-btn"
-                                                        title="Mark Complete">
-                                                        <i class="material-icons">check</i>
-                                                    </span>
-                                                </span>
-                                                <span class="task-label" contenteditable="true">Patient Profile
-                                                    add</span>
-                                                <span class="task-action-btn task-btn-right">
-                                                    <span class="action-circle large" title="Assign">
-                                                        <i class="material-icons">person_add</i>
-                                                    </span>
-                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                        <i class="material-icons">delete</i>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </li>
+                                        
+                                        
+                                        
+                                        
+                                        
                                     </ul>
                                 </div>
                                 <div class="task-list-footer">
@@ -319,7 +208,7 @@
                         <tbody>
                             <tr>
                                 <td>Cost:</td>
-                                <td class="text-end">$1200</td>
+                                <td class="text-end">${{projects.rate}}</td>
                             </tr>
                             <tr>
                                 <td>Total Hours:</td>
@@ -337,9 +226,9 @@
                                 <td>Priority:</td>
                                 <td class="text-end">
                                     <div class="btn-group">
-                                        <li class="badge badge-danger dropdown-toggle" data-bs-toggle="dropdown">Highest
+                                        <li class="badge badge-danger dropdown-toggle" data-bs-toggle="dropdown">{{projects.priority}}
                                         </li>
-                                        <div class="dropdown-menu dropdown-menu-right">
+                                        <!-- <div class="dropdown-menu dropdown-menu-right">
                                             <li class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
                                                 Highest priority</li>
                                             <li class="dropdown-item"><i class="fa fa-dot-circle-o text-info"></i> High
@@ -348,17 +237,17 @@
                                                 Normal priority</li>
                                             <li class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
                                                 Low priority</li>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Created by:</td>
-                                <td class="text-end"><a routerLink="/layout/profile/profilelist">Barry Cuda</a></td>
+                                <td class="text-end"><a routerLink="/layout/profile/profilelist">{{projects.client}}</a></td>
                             </tr>
                             <tr>
                                 <td>Status:</td>
-                                <td class="text-end">Working</td>
+                        <td class="text-end">{{projects.status}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -374,7 +263,7 @@
                     <h6 class="card-title m-b-20">Assigned Leader <button type="button"
                             class="float-end btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#assign_leader"><i class="fa fa-plus"></i> Add</button></h6>
-                    <ul class="list-box">
+                    <ul class="list-box" >
                         <li>
                             <a routerLink="/layout/employees/employeeprofile">
                                 <div class="list-item">
@@ -383,27 +272,14 @@
                                                 src="assets/img/profiles/avatar-11.jpg"></span>
                                     </div>
                                     <div class="list-body">
-                                        <span class="message-author">Wilmer Deluna</span>
+                                        <span class="message-author">{{projects.projectLeader}}</span>
                                         <div class="clearfix"></div>
                                         <span class="message-content">Team Leader</span>
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a routerLink="/layout/employees/employeeprofile">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar"><img alt="" src="assets/img/profiles/avatar-1.jpg"></span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">Lesley Grauer</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Team Leader</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                       
                     </ul>
                 </div>
             </div>
@@ -414,35 +290,23 @@
                         <button type="button" class="float-end btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#assign_user"><i class="fa fa-plus"></i> Add</button>
                     </h6>
-                    <ul class="list-box">
-                        <li>
+                    <ul class="list-box"  *ngFor="let users of projects.teamMember ">
+                        <li >
+
                             <a routerLink="/layout/employees/employeeprofile">
                                 <div class="list-item">
                                     <div class="list-left">
                                         <span class="avatar"><img alt="" src="assets/img/profiles/avatar-2.jpg"></span>
-                                    </div>
+                                    </div >
                                     <div class="list-body">
-                                        <span class="message-author">John Doe</span>
+                                        <span class="message-author">{{users}}</span>
                                         <div class="clearfix"></div>
-                                        <span class="message-content">Web Designer</span>
+                                        <span class="message-content">projects team Member</span>
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a routerLink="/layout/employees/employeeprofile">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar"><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">Richard Miles</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Web Developer</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                      
                     </ul>
                 </div>
             </div>
@@ -463,50 +327,35 @@
             </div>
             <div class="modal-body">
                 <div class="input-group m-b-30">
-                    <input placeholder="Search to add a leader" class="form-control search-input" type="text">
+                    <input placeholder="Search to add a leader" class="form-control search-input" type="text"  (input)="filterUser($event.target.value)">
                     <button class="btn btn-primary">Search</button>
                 </div>
                 <div>
-                    <ul class="chat-user-list">
+                    <ul class="chat-user-list" *ngFor="let user of userdata">
                         <li>
                             <a>
                                 <div class="media d-flex">
                                     <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
                                     <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div class="user-name">Richard Miles</div>
-                                        <span class="designation">Web Developer</span>
+                                        <div  (click)="addLeader(user.firstName,user.lastName)" class="user-name">{{user.firstName}} {{user.lastName}}</div>
+                                        <span class="designation">{{user.designation}}</span>
                                     </div>
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a>
-                                <div class="media d-flex">
-                                    <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-10.jpg"></span>
-                                    <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div class="user-name">John Smith</div>
-                                        <span class="designation">Android Developer</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <div class="media d-flex">
-                                    <span class="avatar flex-shrink-0">
-                                        <img alt="" src="assets/img/profiles/avatar-16.jpg">
-                                    </span>
-                                    <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div class="user-name">Jeffery Lalor</div>
-                                        <span class="designation">Team Leader</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                       
+                       
                     </ul>
                 </div>
+                <div>
+                    
+                     <div  *ngIf="teamLeader">   <span class="avatar flex-shrink-0"  ><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
+                        <span class="text-danger">{{teamLeader}}</span>
+                    </div>
+                    
+                </div>
                 <div class="submit-section">
-                    <button class="btn btn-primary submit-btn">Submit</button>
+                    <button class="btn btn-primary submit-btn" (click)="addTeamLeader()">Submit</button>
                 </div>
             </div>
         </div>
@@ -526,50 +375,35 @@
             </div>
             <div class="modal-body">
                 <div class="input-group m-b-30">
-                    <input placeholder="Search a user to assign" class="form-control search-input" type="text">
-                    <button class="btn btn-primary">Search</button>
+                    <input  placeholder="Search a user to assign" class="form-control search-input" type="text" (input)="filterUser($event.target.value)">
+                    <button class="btn btn-primary" >Search</button>
                 </div>
                 <div>
                     <ul class="chat-user-list">
                         <li>
-                            <a>
+                            <a *ngFor="let user of userdata">
                                 <div class="media d-flex">
                                     <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
                                     <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div class="user-name">Richard Miles</div>
-                                        <span class="designation">Web Developer</span>
+                                        <div  (click)="addUsers(user.firstName,user.lastName)" class="user-name">{{user.firstName}} {{user.lastName}}</div>
+                                        <span class="designation">{{user.designation}}</span>
                                     </div>
+                                   
                                 </div>
                             </a>
                         </li>
-                        <li>
-                            <a>
-                                <div class="media d-flex">
-                                    <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-10.jpg"></span>
-                                    <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div class="user-name">John Smith</div>
-                                        <span class="designation">Android Developer</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a>
-                                <div class="media d-flex">
-                                    <span class="avatar flex-shrink-0">
-                                        <img alt="" src="assets/img/profiles/avatar-16.jpg">
-                                    </span>
-                                    <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div class="user-name">Jeffery Lalor</div>
-                                        <span class="designation">Team Leader</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                       
                     </ul>
                 </div>
+                 <div>
+                    <div *ngFor="let name of userArr" class="main">
+                     <div class="child">   <span class="avatar flex-shrink-0"  ><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
+                        <span class="text-danger">{{name}}</span>
+                    </div>
+                    </div>
+                </div>
                 <div class="submit-section">
-                    <button class="btn btn-primary submit-btn">Submit</button>
+                    <button class="btn btn-primary submit-btn" (click)="addAllTeam()">Submit</button>
                 </div>
             </div>
         </div>
