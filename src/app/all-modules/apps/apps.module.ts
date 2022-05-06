@@ -10,7 +10,7 @@ import { AppsComponent } from './apps.component';
 import { FilePondModule } from 'ngx-filepond';
 
 // Tooltip module
-import { TooltipModule } from 'ngx-bootstrap';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 // Calendar Module
 import { CalendarModule, DateAdapter } from 'angular-calendar';

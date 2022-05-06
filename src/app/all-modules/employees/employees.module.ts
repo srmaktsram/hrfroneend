@@ -18,7 +18,7 @@ import { TimesheetComponent } from './timesheet/timesheet.component';
 import { OvertimeComponent } from './overtime/overtime.component';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BsDatepickerModule } from 'ngx-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SharingModule } from 'src/app/sharing/sharing.module';
 import { PickListModule } from 'primeng/picklist';
 import { MatSelectModule } from '@angular/material/select';
