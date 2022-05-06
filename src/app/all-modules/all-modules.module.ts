@@ -2,14 +2,15 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
+// import { ExportAsModule } from 'ngx-export-as';
 
 import { AllModulesRoutingModule } from "./all-modules-routing.module";
 import { AllModulesComponent } from "./all-modules.component";
 import { HeaderComponent } from "../header/header.component";
 import { SidebarComponent } from "../sidebar/sidebar.component";
 
-// Api Interaction
-import { InMemoryWebApiModule } from "angular-in-memory-web-api";
+// // Api Interaction
+// import { InMemoryWebApiModule } from "angular-in-memory-web-api";
 
 // Perfect Scrollbar
 import {
@@ -21,7 +22,7 @@ import { HeaderService } from "../header/header.service";
 import { AllModulesService } from "./all-modules.service";
 
 // Api All Modules Database
-import { AllModulesData } from "src/assets/all-modules-data/all-modules-data";
+
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 
@@ -30,6 +31,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
   imports: [
     CommonModule,
     FormsModule,
+    // ExportAsModule,
     HttpClientModule,
     // InMemoryWebApiModule.forRoot(AllModulesData),
     PerfectScrollbarModule,
