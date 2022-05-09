@@ -5,6 +5,7 @@ import {
   Validators,
   FormControl,
   FormGroup,
+  FormArray,
 } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 
@@ -53,10 +54,13 @@ export class ApprovalComponent implements OnInit {
     // Add form for Expense Approval
     this.addApproval = this.formBuilder.group({
       addApprovals: [""],
-      addApprover1: [""],
-      addApprover2: [""],
-      addApprover3: [""],
+      approvers: this.formBuilder.array([]),
+
     });
+    this.addItems();
+
+    
+    
     // Add form for Leave Approvals
     this.addLeaveApproval = this.formBuilder.group({
       addApprovals: [""],
@@ -73,28 +77,13 @@ export class ApprovalComponent implements OnInit {
       addNoticeDays: [""],
     });
   }
-
-  /// Create Expense Approvals
-  createApproval() {
-    if (this.addApproval.valid) {
-      let adminId = this.adminId;
-
-      let obj = {
-        approval: this.addApproval.value.addApprovals,
-        approver1: this.addApproval.value.addApprover1,
-        approver2: this.addApproval.value.addApprover2,
-        approver3: this.addApproval.value.addApprover3,
-        adminId,
-      };
-      this.http
-        .post("http://localhost:8443/admin/approval/createExpenseApproval", obj)
-        .subscribe((data) => {
-          this.getExpApproval();
-          this.buttondisable = false;
-        });
-    }
+  //for adding new array
+  get itemsList(): FormArray {
+    return this.addApproval.get("approvers") as FormArray;
   }
+ 
 
+  
   ///// Get  Expense Approvals
   getExpApproval() {
     this.http
@@ -107,12 +96,41 @@ export class ApprovalComponent implements OnInit {
         this.expApproval = data;
         this.addApproval.patchValue({
           addApprovals: this.expApproval.approval,
-          addApprover1: this.expApproval.approver1,
-          addApprover2: this.expApproval.approver2,
-          addApprover3: this.expApproval.approver3,
+          approvers:this.expApproval.approvers
         });
       });
   }
+  newItem(): FormGroup {
+    return this.formBuilder.group({
+      approver: "",
+    });
+  }
+  addItems() {
+    this.itemsList.push(this.newItem());
+  }
+  removeItems(i) {
+    this.itemsList.removeAt(i);
+  }
+  /// Create Expense Approvals
+  createApproval() {
+    if (this.addApproval.valid) {
+      let adminId = this.adminId;
+      let getItems = this.addApproval.get("approvers").value;
+      let obj = {
+        approval: this.addApproval.value.addApprovals,
+        adminId,
+        approvers:getItems
+        
+      };
+      this.http
+        .post("http://localhost:8443/admin/approval/createExpenseApproval", obj)
+        .subscribe((data) => {
+          this.getExpApproval();
+          this.buttondisable = false;
+        });
+    }
+  }
+
 
   //Create Leave approvals
   createLeaveApproval() {

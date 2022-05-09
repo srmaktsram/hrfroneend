@@ -5,23 +5,23 @@
             <form (ngSubmit)="submitEmailSettings()" [formGroup]="emailSettings">
                 <div class="form-group">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio"  id="phpmail" value="option1" [class.invalid]="emailSettings.get('phpMail').invalid && emailSettings.get('phpMail').touched"
-                        formControlName="phpMail">
+                        <input class="form-check-input" type="radio"  id="phpmail" value="option1" [class.invalid]="emailSettings.get('mail').invalid && emailSettings.get('mail').touched"
+                        formControlName="mail">
                         <div
-                        *ngIf="emailSettings.get('phpMail').invalid && emailSettings.get('phpMail').touched">
+                        *ngIf="emailSettings.get('mail').invalid && emailSettings.get('mail').touched">
                         <small
-                            *ngIf="emailSettings.get('phpMail').invalid && emailSettings.get('phpMail').touched"
+                            *ngIf="emailSettings.get('mail').invalid && emailSettings.get('mail').touched"
                             class="text-danger"> *PHP mail is required</small>
                     </div>
                         <label class="form-check-label" for="phpmail">PHP Mail</label>
                     </div>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio"  id="smtpmail" value="option2" [class.invalid]="emailSettings.get('smtp').invalid && emailSettings.get('smtp').touched"
-                        formControlName="smtp">
+                        <input class="form-check-input" type="radio"  id="smtpmail" value="option2" [class.invalid]="emailSettings.get('mail').invalid && emailSettings.get('mail').touched"
+                        formControlName="mail">
                         <div
-                        *ngIf="emailSettings.get('smtp').invalid && emailSettings.get('smtp').touched">
+                        *ngIf="emailSettings.get('mail').invalid && emailSettings.get('mail').touched">
                         <small
-                            *ngIf="emailSettings.get('smtp').invalid && emailSettings.get('smtp').touched"
+                            *ngIf="emailSettings.get('mail').invalid && emailSettings.get('mail').touched"
                             class="text-danger"> *SMTP is required</small>
                     </div>
                         <label class="form-check-label" for="smtpmail">SMTP</label>
@@ -142,7 +142,10 @@
                     </div>
                 </div>
                 <div class="submit-section">
-                    <button class="btn btn-primary submit-btn">Save &amp; update</button>
+                    <button class="btn btn-primary submit-btn"
+                    [disabled]="buttondisable"
+                    (click)="submitEmailSettings(); buttondisable = true"
+                    >Save &amp; update</button>
                 </div>
             </form>
         </div>

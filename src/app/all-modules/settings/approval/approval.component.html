@@ -118,94 +118,63 @@
                 <label
                   class="ex_exp_approvers_1 control-label mb-2 exp_appr"
                   style="padding-left: 0"
-                  >Approver 1</label
+                  >Approvers</label
                 >
                 <div class="row ex_exp_approvers_1 form-group">
                   <div class="col-md-6">
+                     <tbody formArrayName="approvers">
+                  <tr
+                    *ngFor="
+                      let item of addApproval.get('approvers')['controls'];
+                      let i = index
+                    "
+                    [formGroupName]="i"
+                  >
                     <select
                       class="form-select form-control expense_approvers"
                       style="width: 260px"
                       name="expense_approvers[]"
                       tabindex="-1"
                       aria-hidden="true"
-                      formControlName="addApprover1"
+                      formControlName="approver"
                     >
                       <option value="">Select Approvers</option>
-                      <option *ngFor="let designation of designations">
+                      <option *ngFor="let designation of designations"
+                      >
                         {{ designation.designation }}
                       </option>
                     </select>
-                  </div>
-                </div>
-                <label
-                  class="ex_exp_approvers_2 control-label mb-2 exp_appr"
-                  style="padding-left: 0"
-                  >Approver 2</label
-                >
-                <div class="row ex_exp_approvers_2 form-group">
-                  <div class="col-md-6">
-                    <select
-                      class="form-select form-control expense_approvers"
-                      style="width: 260px"
-                      name="expense_approvers[]"
-                      tabindex="-1"
-                      aria-hidden="true"
-                      formControlName="addApprover2"
-                    >
-                      <option value="">Select Approvers</option>
-                      <option *ngFor="let designation of designations">
-                        {{ designation.designation }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-md-2">
-                    <a
+                    <div class="col-md-2">
+                      <a
+                      (click)="removeItems(i)"
                       class="remove_ex_exp_approver btn rounded border text-danger"
-                      data-id="2"
-                      ><i class="fa fa-times" aria-hidden="true"></i
-                    ></a>
-                  </div>
-                </div>
-                <label
-                  class="ex_exp_approvers_3 control-label m-b-10 exp_appr"
-                  style="padding-left: 0"
-                  >Approver 3</label
-                >
-                <div class="row ex_exp_approvers_3 form-group">
-                  <div class="col-md-6">
-                    <select
-                      class="form-select form-control expense_approvers"
-                      style="width: 260px"
-                      name="expense_approvers[]"
-                      tabindex="-1"
-                      aria-hidden="true"
-                      formControlName="addApprover3"
-                    >
-                      <option value="">Select Approvers</option>
-                      <option *ngFor="let designation of designations">
-                        {{ designation.designation }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="col-md-2">
-                    <a
-                      class="remove_ex_exp_approver btn rounded border text-danger"
-                      data-id="3"
-                      ><i class="fa fa-times" aria-hidden="true"></i
-                    ></a>
-                  </div>
+                        data-id="2"
+                        ><i class="fa fa-times" aria-hidden="true"></i
+                      ></a>
+                    </div> </div>
+  
+                
+                  
                 </div>
               </div>
               <div class="row">
                 <div class="col-sm-9 col-md-offset-3 m-t-10">
                   <a
+                    (click)="addItems()"
                     id="add_expense_approvers"
                     href="javascript:void(0)"
                     class="add-more"
-                    >+ Add Approver</a
+                    
+                    > + Add Approver</a
                   >
                 </div>
+               
+                
+
               </div>
+            
+
+              
               <div class="m-t-30">
                 <div class="col-md-12 submit-section">
                   <button
