@@ -230,7 +230,6 @@ export class RoleComponent implements OnInit {
       .subscribe((data: any) => {
         this.getNotifications(data.id);
 
-        console.log(data, " Toggle button");
       });
   }
   getNotifications(roleId) {
@@ -243,7 +242,6 @@ export class RoleComponent implements OnInit {
           roleId
       )
       .subscribe((data: any) => {
-        console.log(data, "button Get");
         this.employee = data.notification.employee;
         this.holiday = data.notification.holidays;
         this.leaves = data.notification.leaves;
@@ -320,7 +318,6 @@ export class RoleComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.getNotifications(data.id);
-        console.log(data, "Employee");
       });
   }
   /////// Holiday
@@ -387,7 +384,6 @@ export class RoleComponent implements OnInit {
       .subscribe((data: any) => {
         this.getNotifications(data.id);
 
-        console.log(data, "Holidays");
       });
   }
   ///Leaves
@@ -454,7 +450,6 @@ export class RoleComponent implements OnInit {
       .subscribe((data: any) => {
         this.getNotifications(data.id);
 
-        console.log(data, "Leaves");
       });
   }
   ///Events
@@ -521,7 +516,6 @@ export class RoleComponent implements OnInit {
       .subscribe((data: any) => {
         this.getNotifications(data.id);
 
-        console.log(data, "Events");
       });
   }
 }
