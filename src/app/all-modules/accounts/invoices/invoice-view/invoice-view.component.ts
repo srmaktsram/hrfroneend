@@ -1,6 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import html2canvas from 'html2canvas';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 // import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
 import { Subject } from "rxjs";
 
@@ -12,26 +16,29 @@ import { Subject } from "rxjs";
 export class InvoiceViewComponent implements OnInit {
   public invoices: any;
   public id;
+  public path;
+ 
   data: any;
   getdata: any;
-  // exportAsConfig: ExportAsConfig = {
-  //   type: 'png', // the type you want to download
-  //    elementIdOrContent:'print-section'   // the id of html/table element
-    
-  // }
+  
   companyInvoiceLogo: string;
   // public dtTrigger: Subject<any> = new Subject();
   constructor(
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute,
-    // private exportAsService: ExportAsService
+    
   ) {
 
-
-    this.companyInvoiceLogo = `http://localhost:8443/${sessionStorage.getItem(
+      
+    this.companyInvoiceLogo = 
+    `http://localhost:8443/${sessionStorage.getItem(
       "cinvoice"
     )}`;
+    this.path=this.companyInvoiceLogo 
+  console.log(this.path)
+    
+  
 
     this.id = this.route.snapshot.queryParams["id"];
 
@@ -43,17 +50,48 @@ export class InvoiceViewComponent implements OnInit {
   ngOnInit() {}
 
 
-  // downloadPDF() {
-  //   // download the file using old school javascript method
-  //   this.exportAsService.save(this.exportAsConfig, 'My File Name').subscribe(() => {
-  //     // save started
-  //   });
-  //   // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
-  //   this.exportAsService.get(this.exportAsConfig).subscribe((res:any) => {
-  //     console.log(res);
-  //   });
-  // }
 
+
+  generatePdf(){
+
+   
+
+   var container = document.getElementById("download");
+   
+   html2canvas(container,
+    {
+       useCORS: true, 
+      
+    }).then(
+        function(canvas){
+          var data = canvas.toDataURL();
+                var docDefinition = {
+                  pageSize: 'A4',
+                pageMargins: [1, 1, 1, 1],
+                 content: [{
+                       image: data,
+                       width: 530 , 
+                       height: 700 , 
+                       absolutePosition: {  
+                               x: 20,
+                               y: 4
+                              }
+                   }]
+               };
+              pdfMake.createPdf(docDefinition).download("Invoce.pdf");
+  
+        }
+      )
+
+    }
+
+
+
+
+
+
+
+  
 
   getInvoice() {
     let id = this.id;

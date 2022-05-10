@@ -1,4 +1,5 @@
 <!-- Page Content -->
+
 <div class="content container-fluid">
 
     <!-- Page Header -->
@@ -13,24 +14,24 @@
             </div>
             <div class="col-auto float-end ms-auto">
                 <div class="btn-group btn-group-sm">
-                    <button class="btn btn-white">CSV</button>
-                    <button class="btn btn-white">PDF</button>
-                    <button class="btn btn-white" 
+                    <!-- <button class="btn btn-white">CSV</button> -->
+                    <button class="btn btn-success" (click)="generatePdf()"   >Download PDF</button>
+                    <!-- <button class="btn btn-white" 
                     
-                    ><i class="fa fa-print fa-lg"></i> Print</button>
+                    ><i class="fa fa-print fa-lg"></i> Print</button> -->
                 </div>
             </div>
         </div>
     </div>
     <!-- /Page Header -->
 
-    <div class="row" id="print-section">
+    <div class="row" id="download">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6 m-b-20">
-                            <img src="{{companyInvoiceLogo}}" class="inv-logo" alt="">
+                            <img src="{{path}}"  class="inv-logo" alt="">
                             <ul class="list-unstyled">
                                 
                                 <li>HR.SRMAK TDS </li>
