@@ -30,6 +30,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
   public editLeaveadminForm: FormGroup;
   public editFromDate: any;
   public editToDate: any;
+  public employeeId= sessionStorage.getItem("employeeId")
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
@@ -71,11 +72,10 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
   // Get leave  Api Call
   loadLeaves() {
     this.http
-      .get("http://localhost:8443/employee/leaves/getleaves")
+      .get("http://localhost:8443/employee/leaves/getleaves"+"/"+this.employeeId)
       .subscribe((data) => {
         this.lstLeave = data;
         console.log("getdata", data);
-        this.dtTrigger.next();
         this.rows = this.lstLeave;
         this.srch = [...this.rows];
       });
@@ -104,6 +104,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
         this.addLeaveadminForm.value.To,
         "dd-MM-yyyy"
       );
+      let employeeId=this.employeeId
       let obj = {
         employeeName: sessionStorage.getItem("firstName"),
         designation: "web developer",
@@ -114,18 +115,17 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
         remainleaves: this.addLeaveadminForm.value.RemainLeaves,
         reason: this.addLeaveadminForm.value.LeaveReason,
         status: "New",
+        employeeId:this.employeeId
       };
 
       this.http
         .post("http://localhost:8443/employee/leaves/add_leave", obj)
         .subscribe((data) => {
-          //console.log("postApi", data);
+          console.log("postApi", data);
           console.log("pkachu", obj)
-          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            dtInstance.destroy();
+          
             this.loadLeaves();
           });
-        });
 
       // this.loadLeaves();
       $("#add_leave").modal("hide");

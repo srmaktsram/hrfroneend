@@ -99,6 +99,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     { id: 5, export: false },
   ];
   adminId: string;
+  current_location: any;
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient,
@@ -106,6 +107,9 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     public router: Router
   ) {
+    this.current_location = JSON.parse(
+      sessionStorage.getItem("current_location")
+    );
     this.adminId = sessionStorage.getItem("adminId");
     this.getDepartments();
 
@@ -291,11 +295,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.markFormGroupTouched(this.addEmployeeForm);
       return;
     }
-    let DateJoin = this.pipe.transform(
-      this.addEmployeeForm.value.JoinDate,
-
-      "dd-MM-yyyy"
-    );
+    
 
     let obj = {
       firstname: this.addEmployeeForm.value.FirstName,
@@ -305,7 +305,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       password: this.addEmployeeForm.value.Password,
       confirmpassword: this.addEmployeeForm.value.ConfirmPassword,
       employeeId: this.addEmployeeForm.value.EmployeeID,
-      joindate: DateJoin,
+      joindate: this.addEmployeeForm.value.JoinDate,
       phone: this.addEmployeeForm.value.PhoneNumber,
       department: this.addEmployeeForm.value.DepartmentName,
       designation: this.addEmployeeForm.value.Designation,
@@ -320,6 +320,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Assets: this.Assets,
       TimingSheets: this.TimingSheets,
       adminId: this.adminId,
+      location: this.current_location
     };
     console.log("op", obj)
 
@@ -396,17 +397,19 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     });
     let toSetValues = this.lstEmployee[index];
     //console.log(toSetValues);
-    this.editEmployeeForm.setValue({
+    let DateJoin = this.pipe.transform(
+      toSetValues.joindate,
+      "dd-MM-yyyy"
+    );
+   
+    this.editEmployeeForm.patchValue({
       FirstName: toSetValues.firstName,
       LastName: toSetValues.lastName,
       UserName: toSetValues.employeeId,
       Email: toSetValues.email,
-      // Password: toSetValues.password,
-      // ConfirmPassword: toSetValues.password,
       EmployeeID: toSetValues.employeeId,
-      JoinDate: toSetValues.joinDate,
+      JoinDate: DateJoin,
       PhoneNumber: toSetValues.phone,
-      // CompanyName: toSetValues.company,
       DepartmentName: toSetValues.department,
       Designation: toSetValues.designation,
     });

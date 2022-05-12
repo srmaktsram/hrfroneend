@@ -11,7 +11,8 @@ export class AuthenticationService {
     email: string,
     firstName: string,
     lastName: string,
-    phone: string
+    phone: string,
+    location: Object,
   ) {
     sessionStorage.setItem("currentUser", "loggedin");
     sessionStorage.setItem("user_type", "employee");
@@ -23,6 +24,7 @@ export class AuthenticationService {
     sessionStorage.setItem("firstName", firstName);
     sessionStorage.setItem("lastName", lastName);
     sessionStorage.setItem("phone", phone);
+    sessionStorage.setItem("current_location", JSON.stringify(location));
 
     return true;
   }

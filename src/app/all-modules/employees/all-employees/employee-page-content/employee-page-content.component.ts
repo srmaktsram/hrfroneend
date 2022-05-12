@@ -98,6 +98,7 @@ export class EmployeePageContentComponent implements OnInit {
   DateJoin: string;
   adminId: string;
   dtTrigger: any;
+  current_location: any;
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient,
@@ -105,6 +106,10 @@ export class EmployeePageContentComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router
   ) {
+    this.current_location = JSON.parse(
+      sessionStorage.getItem("current_location")
+    );
+
     // this.adminId = sessionStorage.getItem("companyId");
     this.adminId = sessionStorage.getItem("adminId");
     this.getDesignation();
@@ -216,6 +221,8 @@ export class EmployeePageContentComponent implements OnInit {
       Chats: this.Chats,
       Assets: this.Assets,
       TimingSheets: this.TimingSheets,
+      location: this.current_location
+
     };
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
@@ -296,7 +303,7 @@ export class EmployeePageContentComponent implements OnInit {
       // Password: toSetValues.password,
       // ConfirmPassword: toSetValues.password,
       EmployeeID: toSetValues.employeeId,
-      JoinDate: toSetValues.joinDate,
+      JoinDate: toSetValues.joindate,
       PhoneNumber: toSetValues.phone,
 
       DepartmentName: toSetValues.department,

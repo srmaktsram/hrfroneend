@@ -55,7 +55,8 @@ export class UserLoginComponent implements OnInit {
             res.data.email,
             res.data.firstName,
             res.data.lastName,
-            res.data.phone
+            res.data.phone,
+            res.data.location,
           );
         } else {
           alert("wrong Id or pass");
