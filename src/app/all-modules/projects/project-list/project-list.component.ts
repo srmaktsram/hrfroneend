@@ -1,5 +1,5 @@
 import { DatePipe } from "@angular/common";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { DataTableDirective } from "angular-datatables";
@@ -25,6 +25,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   public rows = [];
   public client=[];
   public srch = [];
+  public multImages=[];
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
@@ -54,7 +55,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       projectPriority: ["", [Validators.required]],
       projectLeader: ["", [Validators.required]],
       addTeamMembers: ["", [Validators.required]],
-      projectId: ["", [Validators.required]],
+      projectId: ["", ],
       rate: [""],
       client:[""],
       
@@ -68,7 +69,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       editProjectEndDate: ["", [Validators.required]],
       editProjectPriority: ["", [Validators.required]],
       editaddTeamMembers: ["", [Validators.required]],
-      editProjectId: ["", [Validators.required]],
+      
       rate: [""],
       client:[""],
       projectLeader:[""]
@@ -115,6 +116,20 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   }
 
+
+
+
+  selectImage(event:any){
+    //  console.log("this is the Event<><><><><><>",event)
+     if(event.target.files.length > 0){
+       
+    this.multImages = event.target.files;
+     
+     
+      //  console.log("this is the image <><><><><><>",this.multImages);
+     }
+   }
+
   priorityStatus(val,id){
    
     this.http
@@ -136,6 +151,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   // console.log(this.client)
   })
 }
+
+
 
   //Edit project
   editProject(id: any) {
@@ -168,19 +185,28 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       this.addProjectForm.value.projectEndDate,
       "dd-MM-yyyy"
     );
-    let newProject = {
-      adminId:this.adminId,
-      name: this.addProjectForm.value.projectName,
-      description: this.addProjectForm.value.projectDescription,
-      endDate: EndDate,
-      startDate: StartDate,
-      priority: this.addProjectForm.value.projectPriority,
-      projectLeader: this.addProjectForm.value.projectLeader,
-      teamMember: this.addProjectForm.value.addTeamMembers,
-      rate:this.addProjectForm.value.rate,
-      client:this.addProjectForm.value. client
-    };
-    this.http.post("http://localhost:8443/admin/projects/createProject",newProject).subscribe((data:any) => {
+    var fd=new FormData();
+    for(let image of this.multImages){
+    fd.append("files", image,)
+    }
+    // console.log("this is the formData<><><><><",fd)
+     
+   let params=new HttpParams();
+      params=params.set("adminId",this.adminId);
+      params=params.set("name", this.addProjectForm.value.projectName);
+      params=params.set( "description",this.addProjectForm.value.projectDescription) 
+      params=params.set(  "endDate", EndDate) 
+      params=params.set( "startDate", StartDate) 
+      params=params.set( "priority", this.addProjectForm.value.projectPriority) 
+      params=params.set(  "projectLeader", this.addProjectForm.value.projectLeader) 
+      params=params.set( "teamMember", this.addProjectForm.value.addTeamMembers) 
+      params=params.set(  "rate",this.addProjectForm.value.rate);
+      params=params.set( "client",this.addProjectForm.value. client) 
+
+   
+    //  console.log("this is object<><><><<><><><><><><><><",params)
+    this.http
+      .post("http://localhost:8443/admin/projects/createProject?"+params, fd).subscribe((data:any) => {
       this. getProjects();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -196,6 +222,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   //Save Project
   public saveProject() {
+    console.log( this.editProjectForm.value.editProjectStartDate,this.editProjectForm.value.editProjectEndDate,)
     let StartDate = this.pipe.transform(
       this.editProjectForm.value.editProjectStartDate,
       "dd-MM-yyyy"
@@ -204,21 +231,28 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       this.editProjectForm.value.editProjectEndDate,
       "dd-MM-yyyy"
     );
-    let editedProject = {
-      name: this.editProjectForm.value.editProjectName,
-      description: this.editProjectForm.value.editProjectDescription,
-      endDate: EndDate,
-      startDate: StartDate,
-      priority: this.editProjectForm.value.editProjectPriority,
-      teamMember: this.editProjectForm.value.editaddTeamMembers,
-      projectId: this.editProjectForm.value.editProjectPriority,
-      rate:this.editProjectForm.value.rate,
-      client: this.editProjectForm.value.client,
-      projectLeader:this.editProjectForm.value.projectLeader
-    };
-    this.http
+    var fd=new FormData();
+    for(let image of this.multImages){
+    fd.append("files", image,)
+    }
+  let params=new HttpParams();
+    params=params.set("tempId",this.tempId)
+    params=params.set( "name", this.editProjectForm.value.editProjectName,);
+    params=params.set( "description", this.editProjectForm.value.editProjectDescription,);
+    params=params.set( "endDate", EndDate,);
+    params=params.set( "startDate", StartDate,);
+    params=params.set("priority", this.editProjectForm.value.editProjectPriority,);
+    params=params.set( "teamMember", this.editProjectForm.value.editaddTeamMembers,);
+    params=params.set("projectId", this.editProjectForm.value.editProjectPriority,);
+    params=params.set("rate",this.editProjectForm.value.rate,);
+    params=params.set("client", this.editProjectForm.value.client,);
+   
+   
 
-      .patch("http://localhost:8443/admin/projects/updateProject"+"/"+this.tempId,editedProject)
+    this.http
+      .patch(
+        "http://localhost:8443/admin/projects/updateProjectFiles?" +params,fd
+      )
       .subscribe((data:any) => {
         this.getProjects();
         $("#datatable").DataTable().clear();

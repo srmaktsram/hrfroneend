@@ -107,9 +107,10 @@
             </div>
           </div>
           <h4 class="project-title">
-            <a routerLink="/layout/projects/projectview/{{project.projectId}}">{{
-              project.name
-            }}</a>
+            <a
+              routerLink="/layout/projects/projectview/{{ project.projectId }}"
+              >{{ project.name }}</a
+            >
           </h4>
           <small class="block text-ellipsis m-b-15">
             <span class="text-xs">1</span>
@@ -226,18 +227,6 @@
               </li>
             </ul>
           </div>
-          <p class="m-b-5">
-            Progress <span class="text-success float-end">40%</span>
-          </p>
-          <div class="progress progress-xs mb-0">
-            <div
-              class="progress-bar bg-success"
-              role="progressbar"
-              data-bs-toggle="tooltip"
-              title="40%"
-              style="width: 40%"
-            ></div>
-          </div>
         </div>
       </div>
     </div>
@@ -296,10 +285,14 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label>Client</label>
-                <select  formControlName="client"  class="form-select form-control"   >
+                <select
+                  formControlName="client"
+                  class="form-select form-control"
+                >
                   <option>Select Client</option>
-                  <option  *ngFor="let item of client">{{item.firstName}} {{item.lastName}}</option>
-                 
+                  <option *ngFor="let item of client">
+                    {{ item.firstName }} {{ item.lastName }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -386,7 +379,12 @@
             <div class="col-sm-3">
               <div class="form-group">
                 <label>Rate</label>
-                <input formControlName="rate" placeholder="$50" class="form-control" type="text" />
+                <input
+                  formControlName="rate"
+                  placeholder="$50"
+                  class="form-control"
+                  type="text"
+                />
               </div>
             </div>
             <div class="col-sm-3">
@@ -537,7 +535,13 @@
           </div>
           <div class="form-group">
             <label>Upload Files</label>
-            <input class="form-control" type="file" />
+            <input
+              class="form-control"
+              type="file"
+              multiple
+              formControlName="file"
+              (change)="selectImage($event)"
+            />
           </div>
           <div class="submit-section">
             <button class="btn btn-primary submit-btn" (click)="addProject()">
@@ -602,9 +606,14 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label>Client</label>
-                <select  formControlName="client" class="form-select form-control">
+                <select
+                  formControlName="client"
+                  class="form-select form-control"
+                >
                   <option>Select client</option>
-                  <option *ngFor="let item of client">{{item.firstName}} {{item.lastName}}</option>
+                  <option *ngFor="let item of client">
+                    {{ item.firstName }} {{ item.lastName }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -692,7 +701,7 @@
               <div class="form-group">
                 <label>Rate</label>
                 <input
-                formControlName="rate"
+                  formControlName="rate"
                   placeholder="$50"
                   class="form-control"
                   value="$5000"
@@ -731,7 +740,11 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label>Add Project Leader</label>
-                <input  formControlName="projectLeader" class="form-control" type="text" />
+                <input
+                  formControlName="projectLeader"
+                  class="form-control"
+                  type="text"
+                />
               </div>
             </div>
             <div class="col-sm-6">
@@ -824,7 +837,13 @@
           </div>
           <div class="form-group">
             <label>Upload Files</label>
-            <input class="form-control" type="file" />
+            <input
+              class="form-control"
+              type="file"
+              multiple
+              formControlName="file"
+              (change)="selectImage($event)"
+            />
           </div>
           <div class="submit-section">
             <button class="btn btn-primary submit-btn" (click)="saveProject()">
