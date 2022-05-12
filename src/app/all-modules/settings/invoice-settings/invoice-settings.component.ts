@@ -58,18 +58,19 @@ export class InvoiceSettingsComponent implements OnInit {
       params = params.set("id", this.id);
       const formData = new FormData();
       formData.append("file", this.cinvoice);
-      console.log(params);
+      console.log("this is params<><><><>",params);
+      console.log("this is the fpormData<><><><",formData);
       this.http
         .post(
           "http://localhost:8443/admin/invoicesetting/file?" + params,
           formData
         )
         .subscribe((res: any) => {
-          console.log(res);
+          console.log("this is res <><><><><>",res);
           if (res.result == 1) {
             sessionStorage.setItem("cinvoice", res.data.cinvoice);
             sessionStorage.setItem("cinvoicepre", res.data.cinvoicepre);
-            window.location.reload();
+            // window.location.reload();
           }
         });
 
