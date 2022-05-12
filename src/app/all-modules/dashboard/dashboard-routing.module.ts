@@ -13,6 +13,9 @@ const routes: Routes = [
       { path: "admin", component: AdminDashboardComponent },
     ],
   },
+  
+  
+  
 ];
 
 @NgModule({

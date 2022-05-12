@@ -5,7 +5,7 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Holidays 2019</h3>
+                <h3 class="page-title">Holidays</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
                     <li class="breadcrumb-item active">Holidays</li>
@@ -37,7 +37,7 @@
                         <tr class="holiday-completed" *ngFor="let row of lstHolidays; let i=index">
                             <td>{{i+1}}</td>
                             <td>{{row.title}}</td>
-                            <td>{{row.holidayDate | customDate}}</td>
+                            <td>{{row.holidayDate}}</td>
                             <td>{{row.day}}</td>
                             <td class="text-end">
                                 <div class="dropdown dropdown-action">

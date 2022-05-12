@@ -60,7 +60,6 @@ export class HolidaysComponent implements OnInit, OnDestroy {
     this.http.get("http://localhost:8443/admin/holidays/getHolidays").subscribe((res: any) => {
 
       this.lstHolidays = res.data;
-      this.dtTrigger.next();
       this.rows = this.lstHolidays;
       this.srch = [...this.rows];
     });
@@ -83,19 +82,16 @@ export class HolidaysComponent implements OnInit, OnDestroy {
       let adminId = sessionStorage.getItem("adminId")
       let obj = {
         title: this.addHolidayForm.value.HolidayName,
-        holidayDate: holiday,
+        holidayDate:holiday,
         day: this.addHolidayForm.value.DaysName,
         adminId: adminId,
 
       };
 
       this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res) => {
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
           this.loadholidays();
         });
 
-      });
 
       $("#add_holiday").modal("hide");
       this.addHolidayForm.reset();
@@ -112,21 +108,15 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   editHolidays() {
     if (this.editHolidayForm.valid) {
       this.id = this.editId;
-
       let obj = {
         title: this.editHolidayForm.value.editHolidayName,
-        holidaydate: this.editHolidayDate,
+        holidayDate: this.editHolidayDate,
         day: this.editHolidayForm.value.editDaysName,
       };
       // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
       this.http.patch("http://localhost:8443/admin/holidays/updateHolidays" + "/" + this.id, obj).subscribe((res) => {
-
-
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-          this.loadholidays();
+        this.loadholidays();
         });
-      });
 
       $("#edit_holiday").modal("hide");
       this.toastr.success("Holidays Updated succesfully", "Success");
@@ -142,15 +132,11 @@ export class HolidaysComponent implements OnInit, OnDestroy {
     };
 
     this.http.patch("http://localhost:8443/admin/holidays/deleteHoliday" + "/" + id, obj).subscribe((res) => {
-
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
-        this.loadholidays();
+      this.loadholidays();
       });
 
       $("#delete_holiday").modal("hide");
       this.toastr.success("Holidays Deleted", "Success");
-    });
   }
 
   // To Get The holidays Edit Id And Set Values To Edit Modal Form
