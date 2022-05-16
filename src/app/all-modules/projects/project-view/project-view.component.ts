@@ -120,7 +120,6 @@ export class ProjectViewComponent implements OnInit {
       .subscribe((data: any) => {
         this.tasks = data.lstTasks;
         this.completedTask = data.lstCompleted;
-        // console.log("all task<><><><><><><><><>,",this.tasks)
       });
   }
 
@@ -138,7 +137,7 @@ export class ProjectViewComponent implements OnInit {
      this. lstReview=data.lstReview;
      this.completeTask=this.lstCompleted.length;
      this.openTask=this.lstTasks.length;
-      // console.log("this is the Tasks <><><><><><><><><><>",this.allTasks)
+      
       let totalLength=(this.lstTasks.length+ this.lstProgress.length+ this.lstHold.length+this.lstInprogress.length+this.lstReview.length+this.lstCompleted.length)
       let completeLength=this.lstCompleted.length;
       this.progess=((completeLength/totalLength)*100).toFixed(1)+"%";
@@ -149,15 +148,18 @@ export class ProjectViewComponent implements OnInit {
   }
 
 
+  download(){
+    
+  }
+
+
   
  selectImage(event:any){
-  //  console.log("this is the Event<><><><><><>",event)
    if(event.target.files.length > 0){
      
   this.multImages = event.target.files;
    
    
-    //  console.log("this is the image <><><><><><>",this.multImages);
    }
  }
 
@@ -168,7 +170,6 @@ export class ProjectViewComponent implements OnInit {
   editProject() {
     
     let toSetValues = this.projects;
-    // console.log("EDIT VALUE<><><><><><><",toSetValues);
     this.editProjectForm.patchValue({
       editProjectName: toSetValues.name,
       editProjectDescription: toSetValues.description,
@@ -219,20 +220,16 @@ export class ProjectViewComponent implements OnInit {
         "http://localhost:8443/admin/projects/updateProjectFiles?" +params,fd
       )
       .subscribe((res: any) => {
-        // console.log(res);
         this.allTasks();
         this.getInfo();
         this.editProjectForm.reset();
         $("#edit_project").modal("hide");
-        // this.toastr.success("Project updated sucessfully...!", "Success");
       });
   }
   
   getClients(){
     this.http.get("http://localhost:8443/admin/clients/getDataClient"+"/"+this.adminId).subscribe((data:any)=>{
-   //  console.log("all clients <><><><<><><><><",data);
     this.client=data
-   //  console.log(this.client)
     })
   }
 
@@ -275,7 +272,6 @@ export class ProjectViewComponent implements OnInit {
   addLeader(val1, val2) {
     let val = val1 + " " + val2;
     this.teamLeader = val;
-    // console.log( "this is total teamLeader<><><><><><><><><><>",this.teamLeader);
   }
 
   addTeamLeader() {
@@ -288,13 +284,11 @@ export class ProjectViewComponent implements OnInit {
         { projectLeader: teamLeaders }
       )
       .subscribe((data: any) => {
-        // console.log(data);
         this.teamLeader = "";
         $("#assign_leader").modal("hide");
         this.getInfo();
       });
 
-    // console.log("After api call teamLeader<><><><><><",this.teamLeader)
   }
 
   filterUser(val) {
@@ -324,7 +318,6 @@ export class ProjectViewComponent implements OnInit {
         {}
       )
       .subscribe((data: any) => {
-        // console.log(data)
         this.allTasks();
       });
   }

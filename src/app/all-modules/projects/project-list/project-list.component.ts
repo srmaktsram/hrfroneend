@@ -98,7 +98,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   getProjects() {
     this.http.get("http://localhost:8443/admin/projects/getAdminproject"+"/"+this.adminId).subscribe((data:any) => {
       this.projects = data;
-      // console.log(this.projects)
       this.rows = this.projects;
       this.srch = [...this.rows];
     });
@@ -106,11 +105,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   updateStatus(val,id){
   
     
-  // console.log("jdgd>>>>>>>>>>>>",val,id)
   this.http
     .patch("http://localhost:8443/admin/projects/updateProject"+"/"+id,{status:val})
     .subscribe((data:any) => {
-      // console.log("status<><><><>",data)
       this.getProjects();
     })
 
@@ -120,13 +117,11 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
 
   selectImage(event:any){
-    //  console.log("this is the Event<><><><><><>",event)
      if(event.target.files.length > 0){
        
     this.multImages = event.target.files;
      
      
-      //  console.log("this is the image <><><><><><>",this.multImages);
      }
    }
 
@@ -136,7 +131,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
     .patch("http://localhost:8443/admin/projects/updateProject"+"/"+id,{priority:val})
     .subscribe((data:any) => {
-      // console.log("Priority<><><><>",data)
       this.getProjects();
     })
   }
@@ -146,9 +140,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
  getClients(){
   this.http.get("http://localhost:8443/admin/clients/getDataClient"+"/"+this.adminId).subscribe((data:any)=>{
- //  console.log("all clients <><><><<><><><><",data);
   this.client=data
-  // console.log(this.client)
   })
 }
 
@@ -189,7 +181,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     for(let image of this.multImages){
     fd.append("files", image,)
     }
-    // console.log("this is the formData<><><><><",fd)
      
    let params=new HttpParams();
       params=params.set("adminId",this.adminId);
@@ -204,7 +195,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       params=params.set( "client",this.addProjectForm.value. client) 
 
    
-    //  console.log("this is object<><><><<><><><><><><><><",params)
     this.http
       .post("http://localhost:8443/admin/projects/createProject?"+params, fd).subscribe((data:any) => {
       this. getProjects();
@@ -270,9 +260,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   //Delete project
  deleteProject() {
-    // alert(this.tempId)
     this.http.patch("http://localhost:8443/admin/projects/deleteproject"+"/"+this.tempId,{status:2}).subscribe((data:any) => {
-      // console.log(data)
       this.getProjects();
       $("#datatable").DataTable().clear();
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {

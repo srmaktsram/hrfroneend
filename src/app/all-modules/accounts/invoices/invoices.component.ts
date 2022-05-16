@@ -6,6 +6,7 @@ import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import { ngxCsv } from "ngx-csv";
 
 declare const $: any;
 @Component({
@@ -18,9 +19,11 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   invoices: any = [];
+  public csvData=[];
   id: any;
   public rows = [];
   public srch = [];
+  public arr=[];
   public pipe = new DatePipe("en-US");
   public dtTrigger: Subject<any> = new Subject();
   adminId: string;
@@ -53,6 +56,7 @@ export class InvoicesComponent implements OnInit, OnDestroy {
     //get all invoices
     this.getAllInvoices();
     this.getInvNo();
+    this.getcsvData();
   }
   getInvNo() {
     this.http
@@ -79,6 +83,41 @@ export class InvoicesComponent implements OnInit, OnDestroy {
         this.rows = this.invoices;
         this.srch = [...this.rows];
       });
+  }
+
+  getcsvData(){
+    let adminId = sessionStorage.getItem("adminId");
+    this.http
+      .get(
+        "http://localhost:8443/admin/invoices/InvoicesCSV" + "/" + adminId
+      )
+      .subscribe((res: any) => {
+        this.csvData = res.data;
+      
+      });
+
+  }
+
+  
+  csv(){
+    this.getcsvData();
+    
+    var data=this.csvData;
+    
+
+    var options = { 
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true, 
+      showTitle: false,
+      title: 'Invoice in csv',
+      useBom: true,
+      noDownload: false,
+      headers: [ "Client","Email", "Invoice Date", "Due Date","Invoice Number","total Amount","Status"]
+    };
+   
+    new ngxCsv(data, "Invoice",options);
   }
 
   updateStatus(val, id) {

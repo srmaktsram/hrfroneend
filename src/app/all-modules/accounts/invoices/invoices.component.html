@@ -12,6 +12,15 @@
           <li class="breadcrumb-item active">Invoices</li>
         </ul>
       </div>
+
+
+     
+      <div class="col-auto float-end ms-auto">
+        <a  (click)="csv()" class="btn add-btn  text-regular" 
+          >Invoices CSV</a
+        >
+      </div>
+
       <div class="col-auto float-end ms-auto">
         <a routerLink="/layout/accounts/create-invoice" class="btn add-btn"
           ><i class="fa fa-plus"></i> Create Invoice</a
@@ -93,6 +102,7 @@
               <th>Sr.No.</th>
               <th>Invoice Number</th>
               <th>Client</th>
+              <th>Email</th>
               <th>Invoice Date</th>
               <th>Due Date</th>
               <th>Amount</th>
@@ -104,14 +114,15 @@
             <tr *ngFor="let invoice of invoices; let i = index">
               <td>{{ i + 1 }}</td>
               <td>
-                <a routerLink="/layout/accounts/invoice-view"
-                  >INV-{{ invoice.number }}</a
+                <a routerLink="/layout/accounts/invoice-view"  [queryParams]="{ id: invoice.id }"
+                  >{{ invoice.number }}</a
                 >
               </td>
               <td>{{ invoice.client }}</td>
+              <td>{{ invoice.email }}</td>
               <td>{{ invoice.invoice_date | customDate }}</td>
               <td>{{ invoice.due_date | customDate }}</td>
-              <td>{{ invoice.grandTotal }}</td>
+              <td>{{ invoice.totalamount }}</td>
               <td class="text-center">
                 <div class="dropdown action-label">
                   <a
@@ -153,8 +164,7 @@
                   <div class="dropdown-menu dropdown-menu-right">
                     <a
                       class="dropdown-item"
-                      routerLink="/layout/accounts/edit-invoice"
-                      [queryParams]="{ id: invoice.id }"
+                      routerLink="/layout/accounts/edit-invoice" [queryParams]="{ id: invoice.id }"
                       ><i class="fa fa-pencil m-r-5"></i> Edit</a
                     >
                     <a
@@ -163,6 +173,8 @@
                       [queryParams]="{ id: invoice.id }"
                       ><i class="fa fa-eye m-r-5"></i> View</a
                     >
+                    
+                   
                     <!-- <a class="dropdown-item"
                       ><i class="fa fa-file-pdf-o m-r-5"></i> Download</a> -->
                     <a

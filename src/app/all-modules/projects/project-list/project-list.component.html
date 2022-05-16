@@ -108,8 +108,8 @@
               <td>{{ project.projectId }}</td>
               <td>
                 <ul class="team-members">
-                  <li>
-                    <a data-bs-toggle="tooltip" title="Jeffery Lalor"
+                  <li >
+                    <a data-bs-toggle="tooltip"   title="{{project.projectLeader}}"
                       ><img
                         alt=""
                         src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
@@ -119,28 +119,14 @@
               </td>
               <td>
                 <ul class="team-members text-nowrap">
-                  <li>
-                    <a title="John Doe" data-bs-toggle="tooltip"
+                  <li  *ngFor="let team of project.teamMember" >
+                    <a title="{{team}}" data-bs-toggle="tooltip"
                       ><img
                         alt=""
                         src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
                     /></a>
                   </li>
-                  <li>
-                    <a title="Richard Miles" data-bs-toggle="tooltip"
-                      ><img alt="" src="assets/img/profiles/avatar-9.jpg"
-                    /></a>
-                  </li>
-                  <li>
-                    <a title="John Smith" data-bs-toggle="tooltip"
-                      ><img alt="" src="assets/img/profiles/avatar-1.jpg"
-                    /></a>
-                  </li>
-                  <li>
-                    <a title="Mike Litorus" data-bs-toggle="tooltip"
-                      ><img alt="" src="assets/img/profiles/avatar-5.jpg"
-                    /></a>
-                  </li>
+                 
                   <li class="dropdown avatar-dropdown">
                     <a
                       class="all-users dropdown-toggle"
