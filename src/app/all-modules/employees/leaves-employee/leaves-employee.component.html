@@ -24,25 +24,25 @@
         <div class="col-md-3">
             <div class="stats-info">
                 <h6>Annual Leave</h6>
-                <h4>12</h4>
+                <h4>{{annualLeaves}}</h4>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stats-info">
                 <h6>Medical Leave</h6>
-                <h4>3</h4>
+                <h4>{{sickLeave}}</h4>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stats-info">
                 <h6>Other Leave</h6>
-                <h4>4</h4>
+                <h4>{{otherLeaves}}</h4>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stats-info">
                 <h6>Remaining Leave</h6>
-                <h4>5</h4>
+                <h4>{{remainingDays}}</h4>
             </div>
         </div>
     </div>
@@ -126,10 +126,12 @@
                         <select class="form-select form-control"
                             [class.invalid]="addLeaveadminForm.get('addLeaveType').invalid && addLeaveadminForm.get('addLeaveType').touched"
                             formControlName="addLeaveType">
-                            <option>Select Leave Type</option>
-                            <option>Casual Leave 12 Days</option>
-                            <option>Medical Leave</option>
-                            <option>Loss of Pay</option>
+                            <option>Select</option>
+
+                            <option *ngFor="let item of allLeaveType">
+                                {{item.leaveType}}
+                            </option>
+                            
                         </select>
                         <div
                             *ngIf="addLeaveadminForm.get('addLeaveType').invalid && addLeaveadminForm.get('addLeaveType').touched">
@@ -231,10 +233,13 @@
                         <select class="form-select form-control"
                             [class.invalid]="editLeaveadminForm.get('LeaveType').invalid && editLeaveadminForm.get('LeaveType').touched"
                             formControlName="LeaveType">
-                            <option>Select Leave Type</option>
-                            <option>Casual Leave 12 Days</option>
-                            <option>Medical Leave</option>
-                            <option>Loss of Pay</option>
+                            <option>Select</option>
+
+                            <option 
+                            *ngFor="let item of allLeaveType">
+                                {{item.leaveType}}
+                            </option>
+
                         </select>
                         <div
                             *ngIf="editLeaveadminForm.get('LeaveType').invalid && editLeaveadminForm.get('LeaveType').touched">

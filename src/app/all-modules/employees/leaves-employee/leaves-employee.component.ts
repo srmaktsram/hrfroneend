@@ -30,16 +30,75 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
   public editLeaveadminForm: FormGroup;
   public editFromDate: any;
   public editToDate: any;
-  public employeeId= sessionStorage.getItem("employeeId")
+  public adminId = sessionStorage.getItem("adminId");
+  public employeeId = sessionStorage.getItem("employeeId");
+  allLeaveType: any;
+  annualLeaves: any;
+  sickLeave: any;
+  casualLeave: any;
+  otherLeaves: any;
+  empLeaves: any;
+  public newData:number =0;
+  public nullData:number =0;
+  remainingDays: number;
+  leavesTaken: any;
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) { }
+  ) {}
+  getLeaveType() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/leaveType/getLeaveType" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.allLeaveType = data;
+
+        this.allLeaveType.map((item: any) => {
+          if (item.leaveType == "Sick Leaves") {
+            this.sickLeave = item.leaveDays;
+          } else if (item.leaveType == "Casual Leaves") {
+            this.casualLeave = item.leaveDays;
+          }
+         else if (item.LeaveType != "Sick Leaves" || item.LeaveType != "Casual Leaves") {
+            this.nullData=this.nullData+item.leaveDays;
+            this.otherLeaves = this.nullData
+
+          }
+          this.annualLeaves = this.sickLeave + this.casualLeave;
+        });
+      });
+  }
+  Leaves() {
+    this.http
+      .get(
+        "http://localhost:8443/employee/leaves/getleaves" +
+          "/" +
+          this.employeeId
+      )
+      .subscribe((data: any) => {
+        this.empLeaves = data;
+        this.empLeaves.map((item: any) => {
+          if (
+            item.leaveType == "Sick Leaves" ||
+            item.leaveType == "Casual Leaves"
+          ) {
+            this.newData = this.newData + item.noofDays;
+            this.leavesTaken = this.newData;
+            this.remainingDays = this.annualLeaves - this.leavesTaken;
+          }
+        });
+      });
+  }
 
   ngOnInit() {
     this.loadLeaves();
+    this.getLeaveType();
+    this.Leaves()
 
     this.addLeaveadminForm = this.formBuilder.group({
       addLeaveType: ["", [Validators.required]],
@@ -72,10 +131,13 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
   // Get leave  Api Call
   loadLeaves() {
     this.http
-      .get("http://localhost:8443/employee/leaves/getleaves"+"/"+this.employeeId)
+      .get(
+        "http://localhost:8443/employee/leaves/getleaves" +
+          "/" +
+          this.employeeId
+      )
       .subscribe((data) => {
         this.lstLeave = data;
-        console.log("getdata", data);
         this.rows = this.lstLeave;
         this.srch = [...this.rows];
       });
@@ -104,7 +166,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
         this.addLeaveadminForm.value.To,
         "dd-MM-yyyy"
       );
-      let employeeId=this.employeeId
+      let employeeId = this.employeeId;
       let obj = {
         employeeName: sessionStorage.getItem("firstName"),
         designation: "web developer",
@@ -115,17 +177,16 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
         remainleaves: this.addLeaveadminForm.value.RemainLeaves,
         reason: this.addLeaveadminForm.value.LeaveReason,
         status: "New",
-        employeeId:this.employeeId
+        employeeId: this.employeeId,
       };
 
       this.http
         .post("http://localhost:8443/employee/leaves/add_leave", obj)
         .subscribe((data) => {
-          console.log("postApi", data);
-          console.log("pkachu", obj)
-          
-            this.loadLeaves();
-          });
+         
+
+          this.loadLeaves();
+        });
 
       // this.loadLeaves();
       $("#add_leave").modal("hide");
@@ -163,7 +224,6 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
           obj
         )
         .subscribe((data) => {
-          //console.log("updateData", data);
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.destroy();
             this.loadLeaves();
@@ -190,7 +250,6 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((data) => {
-        //console.log("deleteData", data)
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
@@ -217,6 +276,7 @@ export class LeavesEmployeeComponent implements OnInit, OnDestroy {
       LeaveReason: toSetValues.reason,
     });
   }
+
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();

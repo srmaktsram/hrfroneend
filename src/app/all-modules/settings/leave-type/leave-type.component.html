@@ -133,14 +133,24 @@
         <form (ngSubmit)="addLeave()" [formGroup]="addLeaveType">
           <div class="form-group">
             <label>Leave Type <span class="text-danger">*</span></label>
-            <input
-              class="form-control"
-              type="text"
+            <select
+              class="form-select form-control"
               [class.invalid]="
                 addLeaveType.get('addLeaveType').invalid &&
                 addLeaveType.get('addLeaveType').touched
               "
               formControlName="addLeaveType"
+              (change)="check($event.target.value)"
+            >
+              <option> Select </option>
+              <option>Casual Leaves</option>
+              <option>Sick Leaves</option>
+              <option>Others</option>
+            </select><br>
+            <input
+              class="form-control" placeholder="Enter here"
+              formControlName="addOther"
+              [hidden]="disableInputField"
             />
             <div
               *ngIf="
@@ -223,15 +233,25 @@
         <form (ngSubmit)="editLeave()" [formGroup]="editLeaveType">
           <div class="form-group">
             <label>Leave Type <span class="text-danger">*</span></label>
-            <input
-              class="form-control"
-              type="text"
+            <select
+              class="form-select form-control"
               [class.invalid]="
-                editLeaveType.get('editLeave').invalid &&
-                editLeaveType.get('editLeave').touched
+              editLeaveType.get('editLeave').invalid &&
+              editLeaveType.get('editLeave').touched
               "
               formControlName="editLeave"
+              (change)="check($event.target.value)"
+            >
+              <option>Casual Leaves</option>
+              <option>Sick Leaves</option>
+              <option>Others</option>
+            </select><br>
+            <input
+              class="form-control" placeholder="Enter here"
+              formControlName="editOther"
+              [hidden]="disableInputField"
             />
+
             <div
               *ngIf="
                 editLeaveType.get('editLeave').invalid &&
