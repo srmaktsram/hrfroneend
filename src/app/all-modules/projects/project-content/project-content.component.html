@@ -112,12 +112,7 @@
               >{{ project.name }}</a
             >
           </h4>
-          <small class="block text-ellipsis m-b-15">
-            <span class="text-xs">1</span>
-            <span class="text-muted">open tasks, </span>
-            <span class="text-xs">9</span>
-            <span class="text-muted">tasks completed</span>
-          </small>
+         
           <p class="text-muted">{{ project.description }}</p>
           <div class="pro-deadline m-b-15">
             <div class="sub-title">Deadline:</div>
@@ -129,11 +124,11 @@
             <div>Project Leader :</div>
             <ul class="team-members">
               <li>
-                <a data-bs-toggle="tooltip" title="Jeffery Lalor"
+                <a data-bs-toggle="tooltip" title="{{project.projectLeader}}"
                   ><img alt="" src="assets/img/profiles/avatar-9.jpg"
                 /></a>
               </li>
-              <li>
+              <!-- <li>
                 <a data-bs-toggle="tooltip" title="Jeffery Lalor"
                   ><img alt="" src="assets/img/profiles/avatar-8.jpg"
                 /></a>
@@ -142,18 +137,18 @@
                 <a data-bs-toggle="tooltip" title="Jeffery Lalor"
                   ><img alt="" src="assets/img/profiles/avatar-7.jpg"
                 /></a>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="project-members m-b-15">
             <div>Team :</div>
             <ul class="team-members">
-              <li>
-                <a data-bs-toggle="tooltip" title="John Doe"
+              <li  *ngFor="let team of project.teamMember">
+                <a data-bs-toggle="tooltip" title="{{team}}"
                   ><img alt="" src="assets/img/profiles/avatar-2.jpg"
                 /></a>
               </li>
-              <li>
+              <!-- <li>
                 <a data-bs-toggle="tooltip" title="Richard Miles"
                   ><img alt="" src="assets/img/profiles/avatar-9.jpg"
                 /></a>
@@ -167,7 +162,7 @@
                 <a data-bs-toggle="tooltip" title="Mike Litorus"
                   ><img alt="" src="assets/img/profiles/avatar-5.jpg"
                 /></a>
-              </li>
+              </li> -->
               <li class="dropdown avatar-dropdown">
                 <a
                   class="all-users dropdown-toggle"

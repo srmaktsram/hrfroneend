@@ -73,9 +73,7 @@
                                 </div>
                                 <div class="files-info">
                                     <span class="file-name text-ellipsis"> {{file.fileName}}</span>
-                                    <!-- <span class="file-author"><a>John Doe</a></span> <span class="file-date">May 31st at
-                                        6:53 PM</span>
-                                    <div class="file-size">Size: 14.8Mb</div> -->
+                                   
                                 </div>
                             </a>
                                 <ul class="files-action">
@@ -92,39 +90,14 @@
                                 </ul>
                             </div>
                         </li>
-                        <!-- <li>
-                            <div class="files-cont">
-                                <div class="file-type">
-                                    <span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
-                                </div>
-                                <div class="files-info">
-                                    <span class="file-name text-ellipsis"><a>AHA Selfcare Mobile Application
-                                            Test-Cases.xls</a></span>
-                                    <span class="file-author"><a>Richard Miles</a></span> <span class="file-date">May
-                                        31st at 6:53 PM</span>
-                                    <div class="file-size">Size: 14.8Mb</div>
-                                </div>
-                                <ul class="files-action">
-                                    <li class="dropdown dropdown-action">
-                                        <a href="" class="dropdown-toggle btn btn-link" data-bs-toggle="dropdown"
-                                            aria-expanded="false"><i class="material-icons">more_horiz</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="javascript:void(0)">Download</a>
-                                            <a class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#share_files">Share</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">Delete</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li> -->
+                       
                     </ul>
                 </div>
             </div>
             <div class="project-task">
                 <ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
-                    <!-- <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab"
-                            aria-expanded="true"  (click)="allTasks()"  >All Tasks</a></li> -->
+                    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab"
+                            aria-expanded="true"  (click)="allTasks()"  >All Tasks</a></li>
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
                         aria-expanded="true"  (click)="allTasks()"  >Pending Tasks
                         </a></li>
@@ -136,8 +109,8 @@
                         <div class="task-wrapper">
                             <div class="task-list-container">
                                 <div class="task-list-body">
-                                    <ul id="task-list">
-                                        <li class="task" *ngFor="let task of tasks">
+                                    <ul id="task-list" *ngFor="let task of tasks">
+                                        <li class="task">
                                             <div class="task-container">
                                                 <span class="task-action-btn task-check">
                                                     <span class="action-circle large complete-btn"
@@ -208,16 +181,7 @@
                                     <div class="btn-group">
                                         <li class="badge badge-danger dropdown-toggle" data-bs-toggle="dropdown">{{projects.priority}}
                                         </li>
-                                        <!-- <div class="dropdown-menu dropdown-menu-right">
-                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
-                                                Highest priority</li>
-                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-info"></i> High
-                                                priority</li>
-                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-primary"></i>
-                                                Normal priority</li>
-                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
-                                                Low priority</li>
-                                        </div> -->
+                                       
                                     </div>
                                 </td>
                             </tr>

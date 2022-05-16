@@ -53,24 +53,9 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/admin/designation/getData")
       .subscribe((data:any) => {
         this.designations = data;
-        // console.log("this is designation<><><><>", this.designations )
       });
   }
-  // public getClients() {
-  //   this.http
-  //     .get(
-  //       "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
-  //     )
-  //     .subscribe((data: any) => {
-  //       this.data = data;
-  //       // console.log(this.data.result, "new");
-  //       this.clientsData = this.data;
-
-  //       this.rows = this.clientsData;
-  //       this.srch = [...this.rows];
-  //       // }
-  //     });
-  // }
+ 
 
   ngOnInit() {
    
@@ -129,9 +114,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
 
  getClients(){
    this.http.get("http://localhost:8443/admin/clients/getDataClient"+"/"+this.adminId).subscribe((data:any)=>{
-  //  console.log("all clients <><><><<><><><><",data);
    this.client=data
-  //  console.log(this.client)
    })
  }
 
@@ -145,14 +128,10 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
 }
 
  selectImage(event:any){
-  //  console.log("this is the Event<><><><><><>",event)
    if(event.target.files.length > 0){
      
   this.multImages = event.target.files;
-   
-   
-    //  console.log("this is the image <><><><><><>",this.multImages);
-   }
+      }
  }
  
  
@@ -177,7 +156,6 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
     for(let image of this.multImages){
     fd.append("files", image,)
     }
-    // console.log("this is the formData<><><><><",fd)
      
    let params=new HttpParams();
       params=params.set("adminId",this.adminId);
@@ -192,7 +170,6 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       params=params.set( "client",this.addProjectForm.value. client) 
 
    
-    //  console.log("this is object<><><><<><><><><><><><><",params)
     this.http
       .post("http://localhost:8443/admin/projects/createProject?"+params, fd)
       .subscribe((res: any) => {
@@ -214,7 +191,6 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       return item.projectId === id;
     });
     let toSetValues = this.projects[index];
-    // console.log("EDIT VALUE<><><><><><><",toSetValues);
     this.editProjectForm.patchValue({
       editProjectName: toSetValues.name,
       editProjectDescription: toSetValues.description,
@@ -264,7 +240,6 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
         "http://localhost:8443/admin/projects/updateProjectFiles?" +params,fd
       )
       .subscribe((res: any) => {
-        // console.log(res);
         this.getProjects();
         this.editProjectForm.reset();
         $("#edit_project").modal("hide");
@@ -275,7 +250,6 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
 
   //Delete project
   public deleteProject() {
-    alert(this.tempId)
     this.http
       .patch(
         "http://localhost:8443/admin/projects/deleteproject" +
@@ -284,7 +258,6 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
         {}
       )
       .subscribe((res: any) => {
-        // console.log(res)
         this.getProjects();
         $("#delete_project").modal("hide");
         this.toastr.success("Project deleted sucessfully...!", "Success");
