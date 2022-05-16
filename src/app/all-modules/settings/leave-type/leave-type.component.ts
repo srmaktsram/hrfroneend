@@ -28,6 +28,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   public editLeaveType: FormGroup;
   public editId: any;
   public tempId: any;
+  public disableInputField = true;
   public adminId = sessionStorage.getItem("adminId");
   buttondisable = false;
   constructor(
@@ -51,6 +52,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
     this.addLeaveType = this.formBuilder.group({
       addLeaveType: ["", [Validators.required]],
       addLeaveDays: ["", [Validators.required]],
+      addOther: [null],
     });
 
     // Edit Provident Form Validation And Getting Values
@@ -58,6 +60,7 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
     this.editLeaveType = this.formBuilder.group({
       editLeave: ["", [Validators.required]],
       editLeaveDays: ["", [Validators.required]],
+      editOther: [null],
     });
   }
 
@@ -78,13 +81,30 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   addLeave() {
     if (this.addLeaveType.valid) {
       let adminId = this.adminId;
+      let obj = {};
+      if (this.addLeaveType.value.addLeaveType != "Others") {
+        obj = {
+          leaveType: this.addLeaveType.value.addLeaveType,
+          leaveDays: this.addLeaveType.value.addLeaveDays,
+          adminId,
+          status: "New",
+        };
+      } else if (this.addLeaveType.value.addOther == null) {
+        obj = {
+          leaveType: this.addLeaveType.value.addLeaveType,
+          leaveDays: this.addLeaveType.value.addLeaveDays,
+          adminId,
+          status: "New",
+        };
+      } else {
+        obj = {
+          leaveType: this.addLeaveType.value.addOther,
+          leaveDays: this.addLeaveType.value.addLeaveDays,
+          adminId,
+          status: "New",
+        };
+      }
 
-      let obj = {
-        leaveType: this.addLeaveType.value.addLeaveType,
-        leaveDays: this.addLeaveType.value.addLeaveDays,
-        adminId,
-        status: "New",
-      };
       this.http
         .post("http://localhost:8443/admin/leaveType/createLeaveType", obj)
         .subscribe((data) => {
@@ -101,10 +121,30 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
 
   editLeave() {
     let id = this.editId;
-    let obj = {
-      leaveType: this.editLeaveType.value.editLeave,
-      leaveDays: this.editLeaveType.value.editLeaveDays,
-    };
+    // let obj = {
+    //   leaveType: this.editLeaveType.value.editLeave,
+    //   leaveDays: this.editLeaveType.value.editLeaveDays,
+    // };
+    let obj = {};
+      if (this.editLeaveType.value.editLeave != "Others") {
+        obj = {
+          leaveType: this.editLeaveType.value.editLeave,
+          leaveDays: this.editLeaveType.value.editLeaveDays,
+        };
+      } else if (this.editLeaveType.value.editOther == null) {
+
+        obj = {
+          leaveType: this.editLeaveType.value.editLeave,
+          leaveDays: this.editLeaveType.value.editLeaveDays,
+        };
+      } else {
+
+        obj = {
+          leaveType: this.editLeaveType.value.editOther,
+          leaveDays: this.editLeaveType.value.editLeaveDays,
+        };
+      }
+
     this.http
       .patch(
         "http://localhost:8443/admin/leaveType/updateLeaveType" + "/" + id,
@@ -162,6 +202,15 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
         this.getLeaveType();
       });
   }
+  ////////////
+  check(val) {
+    if (val == "Others") {
+      this.disableInputField = false;
+    } else {
+      this.disableInputField = true;
+    }
+  }
+
   // for unsubscribe datatable
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

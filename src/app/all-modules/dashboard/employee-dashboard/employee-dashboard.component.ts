@@ -16,6 +16,7 @@ export class EmployeeDashboardComponent implements OnInit {
   lstHolidays: any;
   lstHoliday: any;
   empJoin: any;
+  public newData:number =0;
   lstLeave: Object;
   newStatus: boolean;
   getStatus: boolean;
@@ -28,11 +29,22 @@ export class EmployeeDashboardComponent implements OnInit {
   tasklengths: any;
   totalTaskLengths: any;
   pendingTaskLengths: any;
+  allLeaveType: any;
+  data: any;
+  remainingDays: any;
+  sickLeave: any;
+  casualLeave: any;
+  annualLeaves: any;
+  leavesTaken: any;
+  empLeaves: any;
+  newLeaves: any;
 
   constructor(private http: HttpClient, private router: Router) {
     // alert(sessionStorage.getItem("username"));
   }
   ngOnInit() {
+    this.getLeaveType()
+    this.Leaves();
     this.loadNextSevenDaysLeave();
     this.getProjects();
     this.getProject();
@@ -115,6 +127,47 @@ export class EmployeeDashboardComponent implements OnInit {
         }
       });
   }
+  Leaves() {
+    this.http
+      .get(
+        "http://localhost:8443/employee/leaves/getleaves" +
+          "/" +
+          this.employeeId
+      )
+      .subscribe((data: any) => {
+        this.empLeaves = data;
+        this.empLeaves.map((item: any) => {
+          if (item.leaveType == "Sick Leaves" || item.leaveType =="Casual Leaves") {
+            this.newData = this.newData + item.noofDays;
+            this.leavesTaken = this.newData;
+            this.remainingDays=this.annualLeaves-this.leavesTaken
+
+          }
+        });
+      });
+  }
+  getLeaveType() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/leaveType/getLeaveType" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.allLeaveType = data;
+
+        this.allLeaveType.map((item: any) => {
+          if (item.leaveType == "Sick Leaves") {
+            this.sickLeave = item.leaveDays;
+          } else if (item.leaveType == "Casual Leaves") {
+            this.casualLeave = item.leaveDays;
+          }
+          this.annualLeaves = this.sickLeave + this.casualLeave;
+
+        });
+      });
+  }
+
   ///////
   loadLeave() {
     this.http
@@ -171,9 +224,9 @@ export class EmployeeDashboardComponent implements OnInit {
           this.adminId
       )
       .subscribe((data: any) => {
-        this.lstTasks=data;
-        this.totalTaskLengths=this.lstTasks.totalTask
-        this.pendingTaskLengths=this.lstTasks.pendingTask
+        this.lstTasks = data;
+        this.totalTaskLengths = this.lstTasks.totalTask;
+        this.pendingTaskLengths = this.lstTasks.pendingTask;
       });
   }
 }
