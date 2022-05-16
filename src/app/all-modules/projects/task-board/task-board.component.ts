@@ -226,7 +226,7 @@ export class TaskBoardComponent implements OnInit {
       let totalLength=(this.lstTasks.length+ this.lstProgress.length+ this.lstHold.length+this.lstInprogress.length+this.lstReview.length+this.lstCompleted.length)
       let completeLength=this.lstCompleted.length;
       this.progess=((completeLength/totalLength)*100).toFixed(2)+"%";
-
+       
     //  console.log("<><><><<",this.progess)
      
     });

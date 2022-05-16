@@ -12,7 +12,7 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#edit_project"><i class="fa fa-plus"></i> Edit
+                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#edit_project"   (click)="editProject()"><i class="fa fa-plus"></i> Edit
                     Project</a>
                 <a routerLink="/layout/projects/taskboard/{{projects.projectId}}" class="btn btn-white float-end m-r-10" data-bs-toggle="tooltip"
                     title="Task Board"><i class="fa fa-bars"></i></a>
@@ -27,80 +27,58 @@
                 <div class="card-body">
                     <div class="project-title">
                         <h5 class="card-title">{{projectTitle}}</h5>
-                        <small class="block text-ellipsis m-b-15"><span class="text-xs">2</span> <span
-                                class="text-muted">open tasks, </span><span class="text-xs">5</span> <span
-                                class="text-muted">tasks completed</span></small>
+                        <small class="block text-ellipsis m-b-15"><span class="text-xs text-primary"> </span></small>
+                        {{openTask}}  
+                        <small> <span class="text-danger">open tasks, </span><span class="text-xs text-success"></span> </small>
+                            {{completeTask}}  
+                            <small>  <span class="text-success">tasks completed</span></small>
                     </div>
                     
                     <p>{{projects.description}} </p>
                 </div>
             </div>
+
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title m-b-20">Uploaded image files</h5>
-                    <div class="row">
-                        <div class="col-md-3 col-sm-4 col-lg-4 col-xl-3">
+                    <div class="row" >
+                       
+                        <div class="col-md-3 col-sm-4 col-lg-4 col-xl-3"   *ngFor="let image of projectImage">
                             <div class="uploaded-box">
+                               
                                 <div class="uploaded-img">
-                                    <img src="assets/img/placeholder.jpg" class="img-fluid" alt="">
+                                    <img src="http://localhost:8443/{{image.imagePath}}" class="img-fluid" alt="">
                                 </div>
+                                <a href="http://localhost:8443/{{image.imagePath}}">
                                 <div class="uploaded-img-name">
-                                    demo.png
+                                    {{image.imageName}}
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4 col-lg-4 col-xl-3">
-                            <div class="uploaded-box">
-                                <div class="uploaded-img">
-                                    <img src="assets/img/placeholder.jpg" class="img-fluid" alt="">
-                                </div>
-                                <div class="uploaded-img-name">
-                                    demo.png
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4 col-lg-4 col-xl-3">
-                            <div class="uploaded-box">
-                                <div class="uploaded-img">
-                                    <img src="assets/img/placeholder.jpg" class="img-fluid" alt="">
-                                </div>
-                                <div class="uploaded-img-name">
-                                    demo.png
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-4 col-lg-4 col-xl-3">
-                            <div class="uploaded-box">
-                                <div class="uploaded-img">
-                                    <img src="assets/img/placeholder.jpg" class="img-fluid" alt="">
-                                </div>
-                                <div class="uploaded-img-name">
-                                    demo.png
-                                </div>
+                            </a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title m-b-20">Uploaded files</h5>
-                    <ul class="files-list">
-                        <li>
+                    <ul class="files-list" >
+                        <li *ngFor="let file of projectFile">
                             <div class="files-cont">
+                               <a  href="http://localhost:8443/{{file.filePath}}">
                                 <div class="file-type">
                                     <span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
                                 </div>
                                 <div class="files-info">
-                                    <span class="file-name text-ellipsis"><a>AHA Selfcare Mobile Application
-                                            Test-Cases.xls</a></span>
-                                    <span class="file-author"><a>John Doe</a></span> <span class="file-date">May 31st at
-                                        6:53 PM</span>
-                                    <div class="file-size">Size: 14.8Mb</div>
+                                    <span class="file-name text-ellipsis"> {{file.fileName}}</span>
+                                   
                                 </div>
+                            </a>
                                 <ul class="files-action">
                                     <li class="dropdown dropdown-action">
-                                        <a href="" class="dropdown-toggle btn btn-link" data-bs-toggle="dropdown"
+                                        <a href="{{file}}" class="dropdown-toggle btn btn-link" data-bs-toggle="dropdown"
                                             aria-expanded="false"><i class="material-icons">more_horiz</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" href="javascript:void(0)">Download</a>
@@ -112,32 +90,7 @@
                                 </ul>
                             </div>
                         </li>
-                        <li>
-                            <div class="files-cont">
-                                <div class="file-type">
-                                    <span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
-                                </div>
-                                <div class="files-info">
-                                    <span class="file-name text-ellipsis"><a>AHA Selfcare Mobile Application
-                                            Test-Cases.xls</a></span>
-                                    <span class="file-author"><a>Richard Miles</a></span> <span class="file-date">May
-                                        31st at 6:53 PM</span>
-                                    <div class="file-size">Size: 14.8Mb</div>
-                                </div>
-                                <ul class="files-action">
-                                    <li class="dropdown dropdown-action">
-                                        <a href="" class="dropdown-toggle btn btn-link" data-bs-toggle="dropdown"
-                                            aria-expanded="false"><i class="material-icons">more_horiz</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="javascript:void(0)">Download</a>
-                                            <a class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#share_files">Share</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">Delete</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                       
                     </ul>
                 </div>
             </div>
@@ -146,18 +99,18 @@
                     <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab"
                             aria-expanded="true"  (click)="allTasks()"  >All Tasks</a></li>
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
-                            aria-expanded="false" *ngFor="let item of pendingTask " >Pending Tasks
+                        aria-expanded="true"  (click)="allTasks()"  >Pending Tasks
                         </a></li>
                     <li class="nav-item"><a class="nav-link" data-bs-toggle="tab"
-                            aria-expanded="false"  >Completed Tasks</a></li>
+                            aria-expanded="false"   >Completed Tasks</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane show active" id="all_tasks">
                         <div class="task-wrapper">
                             <div class="task-list-container">
                                 <div class="task-list-body">
-                                    <ul id="task-list">
-                                        <li class="task" *ngFor="let task of tasks">
+                                    <ul id="task-list" *ngFor="let task of tasks">
+                                        <li class="task">
                                             <div class="task-container">
                                                 <span class="task-action-btn task-check">
                                                     <span class="action-circle large complete-btn"
@@ -228,16 +181,7 @@
                                     <div class="btn-group">
                                         <li class="badge badge-danger dropdown-toggle" data-bs-toggle="dropdown">{{projects.priority}}
                                         </li>
-                                        <!-- <div class="dropdown-menu dropdown-menu-right">
-                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
-                                                Highest priority</li>
-                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-info"></i> High
-                                                priority</li>
-                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-primary"></i>
-                                                Normal priority</li>
-                                            <li class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
-                                                Low priority</li>
-                                        </div> -->
+                                       
                                     </div>
                                 </td>
                             </tr>
@@ -251,10 +195,10 @@
                             </tr>
                         </tbody>
                     </table>
-                    <p class="m-b-5">Progress <span class="text-success float-end">40%</span></p>
+                    <p class="m-b-5">Progress <span class="text-success float-end">{{progess}}</span></p>
                     <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-success" role="progressbar" data-bs-toggle="tooltip" title="40%"
-                            style="width: 40%"></div>
+                        <div class="progress-bar bg-success" role="progressbar" data-bs-toggle="tooltip" title={{progess}}
+                        [ngStyle]="{'width': progess}"></div>
                     </div>
                 </div>
             </div>
@@ -422,127 +366,286 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form [formGroup]="editProjectForm">
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Project Name</label>
-                                <input class="form-control" value="Project Management" type="text">
-                            </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Project Name</label>
+                          <input
+                            class="form-control"
+                            type="text"
+                            [class.invalid]="
+                              editProjectForm.get('editProjectName').invalid &&
+                              editProjectForm.get('editProjectName').touched
+                            "
+                            formControlName="editProjectName"
+                          />
+                          <div
+                            *ngIf="
+                              editProjectForm.get('editProjectName').invalid &&
+                              editProjectForm.get('editProjectName').touched
+                            "
+                          >
+                            <small
+                              *ngIf="
+                                editProjectForm.get('editProjectName').invalid &&
+                                editProjectForm.get('editProjectName').touched
+                              "
+                              class="text-danger"
+                            >
+                              *Name is required</small
+                            >
+                          </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Client</label>
-                                <select class="form-select form-control">
-                                    <option>Global Technologies</option>
-                                    <option>Delta Infotech</option>
-                                </select>
-                            </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Client</label>
+                          <select
+                            formControlName="client"
+                            class="form-select form-control"
+                          >
+                            <option>Select client</option>
+                            <option *ngFor="let item of client">
+                              {{ item.firstName }} {{ item.lastName }}
+                            </option>
+                          </select>
                         </div>
+                      </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Start Date</label>
-                                <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text">
-                                </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Start Date</label>
+                          <div class="cal-icon">
+                            <input
+                              class="form-control datetimepicker"
+                              type="text"
+                              bsDatepicker
+                              type="text"
+                              [bsConfig]="{
+                                dateInputFormat: 'DD-MM-YYYY',
+                                returnFocusToInput: true
+                              }"
+                              [class.invalid]="
+                                editProjectForm.get('editProjectStartDate').invalid &&
+                                editProjectForm.get('editProjectStartDate').touched
+                              "
+                              formControlName="editProjectStartDate"
+                            />
+                            <div
+                              *ngIf="
+                                editProjectForm.get('editProjectStartDate').invalid &&
+                                editProjectForm.get('editProjectStartDate').touched
+                              "
+                            >
+                              <small
+                                *ngIf="
+                                  editProjectForm.get('editProjectStartDate').invalid &&
+                                  editProjectForm.get('editProjectStartDate').touched
+                                "
+                                class="text-danger"
+                              >
+                                *Start date is required</small
+                              >
                             </div>
+                          </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>End Date</label>
-                                <div class="cal-icon">
-                                    <input class="form-control datetimepicker" type="text">
-                                </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>End Date</label>
+                          <div class="cal-icon">
+                            <input
+                              class="form-control datetimepicker"
+                              type="text"
+                              bsDatepicker
+                              type="text"
+                              [bsConfig]="{
+                                dateInputFormat: 'DD-MM-YYYY',
+                                returnFocusToInput: true
+                              }"
+                              [class.invalid]="
+                                editProjectForm.get('editProjectEndDate').invalid &&
+                                editProjectForm.get('editProjectEndDate').touched
+                              "
+                              formControlName="editProjectEndDate"
+                            />
+                            <div
+                              *ngIf="
+                                editProjectForm.get('editProjectEndDate').invalid &&
+                                editProjectForm.get('editProjectEndDate').touched
+                              "
+                            >
+                              <small
+                                *ngIf="
+                                  editProjectForm.get('editProjectEndDate').invalid &&
+                                  editProjectForm.get('editProjectEndDate').touched
+                                "
+                                class="text-danger"
+                              >
+                                *End date is required</small
+                              >
                             </div>
+                          </div>
                         </div>
+                      </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label>Rate</label>
-                                <input placeholder="$50" class="form-control" value="$5000" type="text">
-                            </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>Rate</label>
+                          <input
+                            formControlName="rate"
+                            placeholder="$50"
+                            class="form-control"
+                            value="$5000"
+                            type="text"
+                          />
                         </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label>&nbsp;</label>
-                                <select class="form-select form-control">
-                                    <option>Hourly</option>
-                                    <option selected>Fixed</option>
-                                </select>
-                            </div>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <label>&nbsp;</label>
+                          <select class="form-select form-control">
+                            <option>Hourly</option>
+                            <option selected>Fixed</option>
+                          </select>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Priority</label>
-                                <select class="form-select form-control">
-                                    <option selected>High</option>
-                                    <option>Medium</option>
-                                    <option>Low</option>
-                                </select>
-                            </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Priority</label>
+                          <select
+                            class="form-select form-control"
+                            [class.invalid]="
+                              editProjectForm.get('editProjectPriority').invalid &&
+                              editProjectForm.get('editProjectPriority').touched
+                            "
+                            formControlName="editProjectPriority"
+                          >
+                            <option selected>High</option>
+                            <option>Medium</option>
+                            <option>Low</option>
+                          </select>
                         </div>
+                      </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Add Project Leader</label>
-                                <input class="form-control" type="text">
-                            </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Add Project Leader</label>
+                          <input
+                            formControlName="projectLeader"
+                            class="form-control"
+                            type="text"
+                          />
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Team Leader</label>
-                                <div class="project-members">
-                                    <a class="avatar" data-bs-toggle="tooltip" title="Jeffery Lalor">
-                                        <img alt="" src="assets/img/profiles/avatar-16.jpg">
-                                    </a>
-                                </div>
-                            </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Team Leader</label>
+                          <div class="project-members">
+                            <a
+                              data-bs-toggle="tooltip"
+                              title="Jeffery Lalor"
+                              class="avatar"
+                            >
+                              <img src="assets/img/profiles/avatar-5.jpg" alt="" />
+                            </a>
+                          </div>
                         </div>
+                      </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Add Team</label>
-                                <input class="form-control" type="text">
-                            </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Add Team</label>
+                          <input
+                            class="form-control"
+                            type="text"
+                            [class.invalid]="
+                              editProjectForm.get('editaddTeamMembers').invalid &&
+                              editProjectForm.get('editaddTeamMembers').touched
+                            "
+                            formControlName="editaddTeamMembers"
+                          />
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Team Members</label>
-                                <div class="project-members">
-                                    <a class="avatar" data-bs-toggle="tooltip" title="John Doe">
-                                        <img alt="" src="assets/img/profiles/avatar-2.jpg">
-                                    </a>
-                                    <a class="avatar" data-bs-toggle="tooltip" title="Richard Miles">
-                                        <img alt="" src="assets/img/profiles/avatar-9.jpg">
-                                    </a>
-                                    <a class="avatar" data-bs-toggle="tooltip" title="John Smith">
-                                        <img alt="" src="assets/img/profiles/avatar-10.jpg">
-                                    </a>
-                                    <a class="avatar" data-bs-toggle="tooltip" title="Mike Litorus">
-                                        <img alt="" src="assets/img/profiles/avatar-5.jpg">
-                                    </a>
-                                    <span class="all-team">+2</span>
-                                </div>
-                            </div>
+                      </div>
+                      <div class="col-sm-6">
+                        <div class="form-group">
+                          <label>Team Members</label>
+                          <div class="project-members">
+                            <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
+                              <img src="assets/img/profiles/avatar-8.jpg" alt="" />
+                            </a>
+                            <a
+                              data-bs-toggle="tooltip"
+                              title="Richard Miles"
+                              class="avatar"
+                            >
+                              <img src="assets/img/profiles/avatar-9.jpg" alt="" />
+                            </a>
+                            <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
+                              <img src="assets/img/profiles/avatar-5.jpg" alt="" />
+                            </a>
+                            <a
+                              data-bs-toggle="tooltip"
+                              title="Mike Litorus"
+                              class="avatar"
+                            >
+                              <img src="assets/img/profiles/avatar-4.jpg" alt="" />
+                            </a>
+                            <span class="all-team">+2</span>
+                          </div>
                         </div>
+                      </div>
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
-                        <textarea rows="4" class="form-control" placeholder="Enter your message here"></textarea>
+                      <label>Description</label>
+                      <textarea
+                        rows="4"
+                        class="form-control summernote"
+                        placeholder="Enter your message here"
+                        [class.invalid]="
+                          editProjectForm.get('editProjectDescription').invalid &&
+                          editProjectForm.get('editProjectDescription').touched
+                        "
+                        formControlName="editProjectDescription"
+                      ></textarea>
+                      <div
+                        *ngIf="
+                          editProjectForm.get('editProjectDescription').invalid &&
+                          editProjectForm.get('editProjectDescription').touched
+                        "
+                      >
+                        <small
+                          *ngIf="
+                            editProjectForm.get('editProjectDescription').invalid &&
+                            editProjectForm.get('editProjectDescription').touched
+                          "
+                          class="text-danger"
+                        >
+                          *Description is required</small
+                        >
+                      </div>
                     </div>
                     <div class="form-group">
-                        <label>Upload Files</label>
-                        <input class="form-control" type="file">
+                      <label>Upload Files</label>
+                      <input
+                        class="form-control"
+                        type="file"
+                        multiple
+                        formControlName="file"
+                        (change)="selectImage($event)"
+                      />
                     </div>
                     <div class="submit-section">
-                        <button class="btn btn-primary submit-btn">Save</button>
+                      <button class="btn btn-primary submit-btn" (click)="saveProject()">
+                        Save
+                      </button>
                     </div>
-                </form>
+                  </form>
             </div>
         </div>
     </div>
