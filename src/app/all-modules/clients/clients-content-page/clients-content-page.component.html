@@ -130,6 +130,27 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label class="col-form-label">Date of Birth</label>
+                                <input class="form-control" type="text" placeholder="dd-mm-yyyy" formControlName="birthday">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-form-label  text-center">Gender</label><br>
+                                <input  type="radio"    name="gender" formControlName="gender" value="Male">Male<br>
+                                <input  type="radio"    name="gender" formControlName="gender"  value="Female">Female<br>
+                                <input  type="radio"    name="gender" formControlName="gender"  value="Other">Other<br>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Address</label>
+                                <input class="form-control" type="text" formControlName="address">
+                            </div>
+                        </div>
+                      
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label class="col-form-label">Email <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
                                     [class.invalid]="addClientForm.get('clientEmail').invalid && addClientForm.get('clientEmail').touched"

@@ -280,12 +280,12 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label>Client</label>
-                <select
+                <select 
                   formControlName="client"
                   class="form-select form-control"
                 >
                   <option>Select Client</option>
-                  <option *ngFor="let item of client">
+                  <option *ngFor="let item of client" value="{{item.id}},{{item.firstName}},{{ item.lastName }}">
                     {{ item.firstName }} {{ item.lastName }}
                   </option>
                 </select>

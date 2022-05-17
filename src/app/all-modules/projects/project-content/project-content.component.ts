@@ -35,7 +35,10 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   clientsData: any;
   public multImages=[];
   public path: any;
-
+  bindTrue=true
+  clientIdName: any;
+  clientName: any;
+  clientId: any;
   constructor(
    
     private toastr: ToastrService,
@@ -136,10 +139,13 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
  
  
 
-  
+ currentClient:any
 
   //Create New Project
   public addProject() {
+    
+    
+    
     if (this.addProjectForm.invalid) {
       this.markFormGroupTouched(this.addProjectForm);
       return;
@@ -156,7 +162,12 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
     for(let image of this.multImages){
     fd.append("files", image,)
     }
-     
+    this.clientIdName=this.addProjectForm.value. client.split(",")
+   
+    this.clientName=this.clientIdName[1]+""+this.clientIdName[2]  ;
+    this.clientId=this.clientIdName[0];
+    
+
    let params=new HttpParams();
       params=params.set("adminId",this.adminId);
       params=params.set("name", this.addProjectForm.value.projectName);
@@ -167,7 +178,8 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       params=params.set(  "projectLeader", this.addProjectForm.value.projectLeader) 
       params=params.set( "teamMember", this.addProjectForm.value.addTeamMembers) 
       params=params.set(  "rate",this.addProjectForm.value.rate);
-      params=params.set( "client",this.addProjectForm.value. client) 
+      params=params.set( "clientName",this.clientName) 
+      params=params.set( "clientId",this.clientId) 
 
    
     this.http
