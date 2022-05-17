@@ -83,6 +83,7 @@ export class ProjectViewComponent implements OnInit {
       .pipe(
         map((id) => {
           this.projectId = id.id;
+          console.log("this is the ROUTE.PARAMS>>>>>>>>>>>",this.projectId)
         }),
         mergeMap(() =>
           this.http.get(

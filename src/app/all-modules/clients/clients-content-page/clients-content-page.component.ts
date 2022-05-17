@@ -115,6 +115,10 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
       clientCompany: ["", [Validators.required]],
       clientUsername: ["", [Validators.required]],
       clientId: ["", [Validators.required]],
+      birthday: ["", [Validators.required]],
+      address: ["", [Validators.required]],
+      gender: ["", [Validators.required]],
+      
     });
 
     //Edit Clients Form
@@ -128,6 +132,9 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
       editClientCompany: ["", [Validators.required]],
       editClientRole: ["", [Validators.required]],
       editClientId: ["", [Validators.required]],
+      birthday: ["", [Validators.required]],
+      address: ["", [Validators.required]],
+      gender: ["", [Validators.required]],
     });
   }
 
@@ -167,6 +174,7 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
       editClientCompany: client[0]?.companyName,
       editClientRole: client[0]?.role,
       editClientId: client[0]?.clientId,
+
     });
     this.invoices = client[0]?.invoices;
     this.chats = client[0]?.chats;
@@ -232,13 +240,16 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
       estimates: this.estimates,
       projects: this.projects,
       timingSheets: this.timingSheets,
-      adminId: this.adminId
+      adminId: this.adminId,
+      birthday:this.addClientForm.value.birthday,
+      address:this.addClientForm.value.address,
+      gender:this.addClientForm.value.gender,
     };
     //console.log("my data", newClient);
     this.http
       .post("http://localhost:8443/admin/clients/createClient", newClient)
-      .subscribe((data) => {
-        //console.log(data, "postApi");
+      .subscribe((data:any) => {
+        console.log(data, "<<<<<<<<<<<<postApi>>>>>>>>>>>>>>>>");
         this.getClients();
       });
 
