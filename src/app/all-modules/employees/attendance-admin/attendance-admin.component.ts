@@ -1,6 +1,7 @@
 import { getLocaleDateFormat } from '@angular/common';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { DatePipe } from "@angular/common";
 
 @Component({
   selector: 'app-attendance-admin',
@@ -9,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AttendanceAdminComponent implements OnInit {
 
-  public limit = 10
-  public offset = 5
+  public monthlyPunch: any;
+  public currentDate: any;
+  public adminId: any;
+  public day: any;
+  public month: any;
+  public monthlyPunchData: any;
+  lstAttandance: any;
+  public pipe = new DatePipe("en-US");
+  lstPunch: any;
+  public todayDate = new Date();
+
   constructor(private http: HttpClient) {
+    this.adminId = sessionStorage.getItem("adminId")
 
   }
 
@@ -20,20 +31,34 @@ export class AttendanceAdminComponent implements OnInit {
     this.getData()
 
   }
-
+  public monthDate: any = [{ date: '01', present: 'A' }]
+  attendances: any = []
   getData() {
-    let queryParams = new HttpParams();
-    queryParams = queryParams.append("limit", 15);
-    queryParams = queryParams.append("offset", 5);
-    queryParams = queryParams.append("month", "july");
-    queryParams = queryParams.append("year", 2022);
 
-    this.http.get("http://localhost:8443/admin/attendance/search", { params: queryParams }).subscribe((res) => {
-
-
+    this.http.get("http://localhost:8443/admin/monthlyAttandance/getData" + "/" + this.adminId).subscribe((res) => {
       console.log("attandanceData", res);
+      this.lstAttandance = res
+      console.log(this.lstAttandance, "jaggoomiyana tere jaisa na koiiiii")
+      this.monthlyPunch = this.lstAttandance[this.lstAttandance.length - 1].monthlyPunchData
+      console.log(this.monthlyPunch, "jwehjkhkjhejkwh")
+
+
+
+      this.lstAttandance.map((data) => {
+        this.attendances.push(data.monthlyPunchData)
+      })
+
+      console.log("My Attendance", this.attendances)
+
+      this.attendances.map()
+
+
 
     })
 
+
+
   }
+
+
 }

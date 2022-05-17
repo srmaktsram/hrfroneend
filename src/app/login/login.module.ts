@@ -19,11 +19,10 @@ import { UserLoginComponent } from "./userlogin/userlogin.component";
     LoginComponent,
     UserLoginComponent,
     ForgotComponent,
-    SharingModule,
     RegisterComponent,
     OtpComponent,
     LockscreenComponent,
   ],
-  imports: [CommonModule, LoginRoutingModule, ReactiveFormsModule],
+  imports: [CommonModule, LoginRoutingModule, ReactiveFormsModule, SharingModule,],
 })
-export class LoginModule {}
+export class LoginModule { }
