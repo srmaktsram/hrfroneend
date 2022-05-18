@@ -12,6 +12,8 @@ export class AttendanceAdminComponent implements OnInit {
 
   public monthlyPunch: any;
   public currentDate: any;
+  public employeeData=[];
+  public attenArry=[];
   public adminId: any;
   public day: any;
   public month: any;
@@ -23,41 +25,94 @@ export class AttendanceAdminComponent implements OnInit {
 
   constructor(private http: HttpClient) {
     this.adminId = sessionStorage.getItem("adminId")
-
+    this.daysInMonth();
+    
+    
+    
   }
 
   ngOnInit() {
 
     this.getData()
 
+    
+
+
   }
-  public monthDate: any = [{ date: '01', present: 'A' }]
+ 
   attendances: any = []
   getData() {
 
     this.http.get("http://localhost:8443/admin/monthlyAttandance/getData" + "/" + this.adminId).subscribe((res) => {
-      console.log("attandanceData", res);
+    
       this.lstAttandance = res
-      console.log(this.lstAttandance, "jaggoomiyana tere jaisa na koiiiii")
-      this.monthlyPunch = this.lstAttandance[this.lstAttandance.length - 1].monthlyPunchData
-      console.log(this.monthlyPunch, "jwehjkhkjhejkwh")
+      
+      
+      
+      this.lstAttandance.map((item)=>{
+       
+        var arr=[]
+        for(let i=0;i<this.day;i++){
+          arr.push("A")
+        }
+    
+      
+        item.monthlyPunchData.map((data)=>{
+          
+           var dateDay=data.date.split("-");
+         
+          var noDay=Number(dateDay[0]);
+          var noMonth=Number(dateDay[1]);
+         
+           if(noDay <this.day && noMonth === this.month){
+            if(data.status===0){
+              arr[noDay-1]="A"
+             }else if(data.status===1){
+             arr[noDay-1]="P/2"
+            }else if(data.status===3){
+              arr[noDay-1]="P"
+              
+            }
+            ;
+           }
+          
+        
 
-
-
-      this.lstAttandance.map((data) => {
-        this.attendances.push(data.monthlyPunchData)
+        })
+      
+        var obj={
+          name:item.employeeName,
+          attendDate:arr
+        }
+       
+        this.employeeData.push(obj)
+        
       })
 
-      console.log("My Attendance", this.attendances)
-
-      this.attendances.map()
 
 
+
+
+
+
+       
 
     })
 
 
 
+  }
+
+  daysInMonth(){
+    var dt = new Date();
+var month = dt. getMonth()+1;
+this.month=month;
+console.log("this is the month>>>>>>>>",this.month)
+var year = dt. getFullYear();
+ var dayInMonth = new Date(year, month, 0). getDate();
+ this.day=dayInMonth
+ console.log("this is the day>>>>",this.day);
+ return dayInMonth;
   }
 
 

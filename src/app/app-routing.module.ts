@@ -4,11 +4,16 @@ import { AuthGuardAdmin } from "./core/auth/auth-guard-admin.service";
 import { AuthGuard } from "./core/auth/auth-guard.service";
 
 const routes: Routes = [
-  { path: "", redirectTo: "homepage", pathMatch: "full" },
+  { path: "", redirectTo: "login", pathMatch: "full" },
   {
     path: "homepage",
     loadChildren: () =>
       import("./homepage/homepage.module").then((m) => m.HomePageModule),
+  },
+  {
+    path: "login",
+    loadChildren: () =>
+      import("./login/login.module").then((m) => m.LoginModule),
   },
   {
     path: "error",
