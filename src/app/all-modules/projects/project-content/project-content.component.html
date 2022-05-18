@@ -112,6 +112,12 @@
               >{{ project.name }}</a
             >
           </h4>
+          <small class="block text-ellipsis m-b-15">
+            <span class="text-xs">{{project.lstTasks.length}}</span>
+            <span class="text-danger">open tasks, </span>
+            <span class="text-xs">{{project.lstCompleted.length}}</span>
+            <span class="text-success">tasks completed</span>
+          </small>
          
           <p class="text-muted">{{ project.description }}</p>
           <div class="pro-deadline m-b-15">
@@ -221,6 +227,18 @@
                 </div>
               </li>
             </ul>
+          </div>
+          <p class="m-b-5">
+            Progress <span class="text-success float-end">
+              {{ (project.lstCompleted.length/(project.lstTasks.length+ project.lstProgress.length+ project.lstHold.length+project.lstInprogress.length+project.lstReview.length+project.lstCompleted.length))*100 | number: '2.1-2'}} % </span>
+          </p>
+          <div class="progress progress-xs mb-0">  
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+              data-bs-toggle="tooltip"
+              title="40%" [style.width.%]="(project.lstCompleted.length/(project.lstTasks.length+ project.lstProgress.length+ project.lstHold.length+project.lstInprogress.length+project.lstReview.length+project.lstCompleted.length))*100"
+            ></div>
           </div>
         </div>
       </div>
