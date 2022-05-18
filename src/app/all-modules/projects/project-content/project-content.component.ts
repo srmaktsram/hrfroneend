@@ -34,11 +34,13 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   data: Object;
   clientsData: any;
   public multImages=[];
+  public wayData:any;
   public path: any;
   bindTrue=true
   clientIdName: any;
   clientName: any;
   clientId: any;
+  progess: string;
   constructor(
    
     private toastr: ToastrService,
@@ -106,6 +108,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       )
       .subscribe((data: any) => {
         this.projects = data;
+       
         console.log("this is getProjects<><><<><><><><>", this.projects)
         this.dtTrigger.next();
         this.rows = this.projects;
