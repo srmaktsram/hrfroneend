@@ -10,10 +10,10 @@ import { ReactiveFormsModule } from "@angular/forms";
 // import { MatCardModule } from "@angular/material/card";
 import { SharingModule } from "../sharing/sharing.module";
 import { UserLoginComponent } from "./userlogin/userlogin.component";
-// export const routes = [
-//   { path: "", component: LoginComponent, pathMatch: "full" },
-//   { path: "forgot", component: ForgotComponent, pathMatch: "" },
-// ];
+export const routes = [
+  { path: "", component: LoginComponent, pathMatch: "full" },
+  { path: "forgot", component: ForgotComponent, pathMatch: "" },
+];
 @NgModule({
   declarations: [
     LoginComponent,
