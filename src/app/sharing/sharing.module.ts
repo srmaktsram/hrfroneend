@@ -5,17 +5,17 @@ import { CustomDatePipe } from "src/assets/pipes/custom-date.pipe";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon'
+import { DateAgoPipe } from "src/assets/pipes/timeAgo";
 
 
 // import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
-  declarations: [CustomDatePipe],
+  declarations: [CustomDatePipe,DateAgoPipe],
   exports: [
     CustomDatePipe,
-
+    DateAgoPipe,
+    MatCardModule,
     MatSelectModule,
     MatFormFieldModule,
     FormsModule,
