@@ -113,11 +113,9 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         "http://localhost:8443/admin/leaves/searchleaves" + "/" + this.adminId
       )
       .subscribe((data) => {
-        console.log("adminpgllll", data)
         this.lstLeave = data;
         this.rows = this.lstLeave;
         this.srch = [...this.rows];
-        console.log(this.rows);
       });
   }
 
@@ -331,7 +329,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         this.adminId
       )
       .subscribe((data) => {
-        console.log("getApi", data);
+        console.log("getAllEmployee", data);
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];

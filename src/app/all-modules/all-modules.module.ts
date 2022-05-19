@@ -14,12 +14,14 @@ import { SidebarComponent } from "../sidebar/sidebar.component";
 
 // Perfect Scrollbar
 import {
+  
   PerfectScrollbarModule,
   PerfectScrollbarConfigInterface,
   PERFECT_SCROLLBAR_CONFIG,
 } from "ngx-perfect-scrollbar";
 import { HeaderService } from "../header/header.service";
 import { AllModulesService } from "./all-modules.service";
+import { SharingModule } from "../sharing/sharing.module";
 
 // Api All Modules Database
 
@@ -29,6 +31,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 @NgModule({
   declarations: [AllModulesComponent, HeaderComponent, SidebarComponent],
   imports: [
+    SharingModule,
     CommonModule,
     FormsModule,
     // ExportAsModule,

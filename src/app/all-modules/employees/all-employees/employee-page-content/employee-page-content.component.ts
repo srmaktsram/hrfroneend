@@ -171,7 +171,7 @@ export class EmployeePageContentComponent implements OnInit {
         this.adminId
       )
       .subscribe((data) => {
-        console.log("getApi", data);
+        console.log("Get Employee page", data);
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];

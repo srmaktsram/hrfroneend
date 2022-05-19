@@ -271,7 +271,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.adminId
       )
       .subscribe((data) => {
-        console.log("getApi", data);
+        console.log("get Employees", data);
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];

@@ -5,12 +5,14 @@ import { MatCardModule } from "@angular/material/card";
 import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { DateAgoPipe } from "src/assets/pipes/timeAgo";
 // import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
-  declarations: [CustomDatePipe],
+  declarations: [CustomDatePipe,DateAgoPipe],
   exports: [
     CustomDatePipe,
+    DateAgoPipe,
     MatCardModule,
     MatSelectModule,
     MatFormFieldModule,
