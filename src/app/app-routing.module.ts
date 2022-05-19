@@ -6,6 +6,11 @@ import { AuthGuard } from "./core/auth/auth-guard.service";
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" },
   {
+    path: "homepage",
+    loadChildren: () =>
+      import("./homepage/homepage.module").then((m) => m.HomePageModule),
+  },
+  {
     path: "login",
     loadChildren: () =>
       import("./login/login.module").then((m) => m.LoginModule),
@@ -38,4 +43,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

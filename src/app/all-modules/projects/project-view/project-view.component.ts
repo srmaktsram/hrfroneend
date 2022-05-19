@@ -36,6 +36,7 @@ export class ProjectViewComponent implements OnInit {
   public completedTask: any;
   public projectImage = [];
   public projectFile = [];
+  public pendingTas=[];
   public file: string;
   public tasks = [];
   public pendingTask = [];
@@ -82,6 +83,7 @@ export class ProjectViewComponent implements OnInit {
       .pipe(
         map((id) => {
           this.projectId = id.id;
+          console.log("this is the ROUTE.PARAMS>>>>>>>>>>>",this.projectId)
         }),
         mergeMap(() =>
           this.http.get(
@@ -118,7 +120,8 @@ export class ProjectViewComponent implements OnInit {
           this.projectId
       )
       .subscribe((data: any) => {
-        this.tasks = data.lstTasks;
+        this.tasks = data.lstTasks
+        // this.pendingTas=data.lstCompleted;
         this.completedTask = data.lstCompleted;
       });
   }

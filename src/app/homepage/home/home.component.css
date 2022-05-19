@@ -1,0 +1,11 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.mainDiv{
+	height: 100px;;
+	width:100%;
+	border-top: 1px solid green;
+}
+.mat{
+	height:110px;
+	width:100%;
+
+}

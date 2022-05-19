@@ -41,7 +41,8 @@
                                 In</button>
                         </ng-container>
                         <ng-container *ngIf="punch==1">
-                            <button type="button" class="btn btn-primary punch-btn" (click)="updatePunch()">Punch
+                            <button type="button" class="btn btn-primary punch-btn"
+                                (click)="updatePunch(); updateMonthlyPunch()">Punch
                                 Out</button>
                         </ng-container>
 

@@ -24,9 +24,10 @@ import { PickListModule } from 'primeng/picklist';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BreakTime, OverTime, ProductionPipe } from 'src/assets/pipes/employeeattandance';
+import { MatchDate } from 'src/assets/pipes/checkDate';
 
 @NgModule({
-  declarations: [EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeavesEmployeeComponent, LeaveSettingsComponent, AttendanceAdminComponent, AttendanceEmployeeComponent, DepartmentsComponent, DesignationComponent, TimesheetComponent, OvertimeComponent, ProductionPipe, BreakTime, OverTime],
+  declarations: [MatchDate, EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeavesEmployeeComponent, LeaveSettingsComponent, AttendanceAdminComponent, AttendanceEmployeeComponent, DepartmentsComponent, DesignationComponent, TimesheetComponent, OvertimeComponent, ProductionPipe, BreakTime, OverTime],
   imports: [
     CommonModule,
     FormsModule,

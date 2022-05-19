@@ -16,18 +16,22 @@ export class AttendanceEmployeeComponent implements OnInit {
   public dtElement: DataTableDirective;
   data: any
   public prod;
+  public Production: any;
   public Datetime: any;
   public calMonthData: Number;
   public employeeAttandance: any;
   public rows: [];
   public hours: any;
+  public monthlyData: any;
   public minute: any;
   public srch: [];
+  public monthlyStatus: any
+  public monthlyid: any
   punchtimeIn: [];
   public totalProduction = []
   storeData: any
-  public adminId = sessionStorage.getItem("adminId")
-  public employeeid = sessionStorage.getItem("employee_login_id")
+  public adminId
+  public employeeid
   public dtTrigger: Subject<any> = new Subject();
   punchDetails: any;
   public pipe = new DatePipe("en-US");
@@ -40,11 +44,16 @@ export class AttendanceEmployeeComponent implements OnInit {
   public TotalDay = 0;
   TotalOneWeakProduction: number;
   TotalOneMonthProduction: number;
+  punchStatus: any;
 
   constructor(
     private http: HttpClient
   ) {
+    this.adminId = sessionStorage.getItem("adminId")
+    this.employeeid = sessionStorage.getItem("employee_login_id")
     this.getData()
+    this.createData()
+
   }
   ngOnInit() {
 
@@ -56,8 +65,10 @@ export class AttendanceEmployeeComponent implements OnInit {
   getData() {
     let adminId = this.adminId
     let employeeid = this.employeeid
-    this.http.post("http://localhost:8443/employee/attendance/create", { adminId, employeeid }).subscribe((data) => {
+    let employeeName = sessionStorage.getItem("firstName")
+    this.http.post("http://localhost:8443/employee/attendance/create", { adminId, employeeid, employeeName }).subscribe((data) => {
       this.data = data
+      console.log("postApipppppppppp", this.data)
       this.punch = this.data.punchStatus
       sessionStorage.setItem("id", this.data.id)
     })
@@ -67,11 +78,10 @@ export class AttendanceEmployeeComponent implements OnInit {
     let queryParams = new HttpParams();
     queryParams = queryParams.set("id", id);
     queryParams = queryParams.set("punchStatus", this.punch);
-    queryParams = queryParams.set("punchStatus", this.punch);
 
     this.http.patch("http://localhost:8443/employee/attendance/update?" + queryParams, {}).subscribe((data) => {
       this.data = data
-      // console.log(data, "jbjdjkhjdhjdh>>>>>>>>>>>>")
+      console.log(this.data, "phlaApi,,,,,,,,,")
       this.punch = this.data.punchStatus
       this.loadData()
     })
@@ -89,11 +99,7 @@ export class AttendanceEmployeeComponent implements OnInit {
       this.employeeAttandance = data;
       this.punchused = this.employeeAttandance[0].punch;
       this.punchlength = this.punchused.length
-      console.log(this.punchlength, "/////")
-      console.log("pikachu>>>>>>>>", this.punchused)
-      // this.rows = this.employeeAttandance;
-      // this.srch = [...this.rows];
-      console.log(this.employeeAttandance, "opopoopppp")
+
 
 
       var countmin = 0;
@@ -103,6 +109,7 @@ export class AttendanceEmployeeComponent implements OnInit {
 
         this.punchDetails = item.punch
         let b = this.calculate()
+        console.log(b, ">>>>>><<<<<<<<<<<")
 
 
         let month = item.date.split("-")
@@ -110,7 +117,6 @@ export class AttendanceEmployeeComponent implements OnInit {
           let hh = b.split(":");
           let min = Number(hh[1]);
           let hour = Number(hh[0]);
-          console.log("this is HH>>>>>>", countmin, ">>>>>>>>>", min)
           countmin = countmin + (min);
           counthour = counthour + (hour);
 
@@ -129,8 +135,6 @@ export class AttendanceEmployeeComponent implements OnInit {
 
       })
 
-
-
       var today = new Date()
       var day = today.toLocaleString('en-us', { weekday: 'long' })
       this.newDay = day.slice(0, 3);
@@ -139,10 +143,7 @@ export class AttendanceEmployeeComponent implements OnInit {
     })
 
 
-
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
   }
@@ -166,7 +167,31 @@ export class AttendanceEmployeeComponent implements OnInit {
       totalProduction = this.addTimes(startTime, timeDiff)
       startTime = totalProduction
     }
-    return startTime;
+    this.Production = startTime;
+    // if (p >= '06:00:00') {
+    //   const id = sessionStorage.getItem('id')
+
+    //   this.http.patch("http://localhost:8443/employee/attandance/updateStatus" + "/" + id, { showStatus: 1 }).subscribe((res) => {
+    //     // console.log("updateApi", res)
+    //   })
+    // }
+    // else if (p > '03:00:00' && p < '06:00:00') {
+    //   const id = sessionStorage.getItem('id')
+    //   this.http.patch("http://localhost:8443/employee/attandance/updateStatus" + "/" + id, { showStatus: 3 }).subscribe((res) => {
+    //     // console.log("updateApi2", res)
+    //   })
+
+    // }
+    // else {
+    //   const id = sessionStorage.getItem('id')
+
+    //   this.http.patch("http://localhost:8443/employee/attandance/updateStatus" + "/" + id, { showStatus: 0 }).subscribe((res) => {
+    //     // console.log("updateApi3", res)
+    //   })
+
+    // }
+
+    return this.Production;
 
   }
 
@@ -180,9 +205,11 @@ export class AttendanceEmployeeComponent implements OnInit {
     var hours = Math.floor(diff / 1000 / 60 / 60);
     diff -= hours * 1000 * 60 * 60;
     var minutes = Math.floor(diff / 1000 / 60);
+
     // diff -= minutes = minutes * 1000 * 60 * 60
     // var second = Math.floor(diff / 1000)
     // If using time pickers with 24 hours format, add the below line get exact hours
+
     if (hours < 0)
       hours = hours + 24;
 
@@ -227,6 +254,58 @@ export class AttendanceEmployeeComponent implements OnInit {
 
     return ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2)
   }
+
+  createData() {
+
+    let adminId = this.adminId
+    let employeeid = this.employeeid
+    let employeeName = sessionStorage.getItem("firstName")
+
+    this.http.post("http://localhost:8443/admin/monthlyAttandance/create", { adminId, employeeid, employeeName }).subscribe((res: any) => {
+      console.log("monthlyPostApi", res)
+      this.data = res
+      this.punchStatus = this.data[0].punchStatus
+      this.monthlyid = this.data[0].id
+
+      // sessionStorage.setItem("monthlyid", this.monthlyid)
+
+      console.log(this.monthlyid, this.punchStatus, "......................>>>>>>>>")
+    })
+  }
+
+  updateMonthlyPunch() {
+
+    setTimeout(() => {
+      // const id = sessionStorage.getItem('monthlyid')
+      console.log(this.Production, "opopoppokkkkkk")
+      // console.log(id, this.punchStatus, "jndjdppppp........")
+      let queryParams = new HttpParams();
+      queryParams = queryParams.set("id", this.monthlyid);
+
+      if (this.Production < '03:00:00') {
+        queryParams = queryParams.set("status", 0)
+        queryParams = queryParams.set("production", this.Production)
+      }
+      else if ('03:00:00' < this.Production && this.Production < '07:00:00') {
+
+        queryParams = queryParams.set("status", 1)
+        queryParams = queryParams.set("production", this.Production)
+      }
+      else {
+        queryParams = queryParams.set("status", 3)
+        queryParams = queryParams.set("production", this.Production)
+      }
+      // queryParams = queryParams.set("status", status)
+      this.http.patch("http://localhost:8443/admin/monthlyAttandance/update?" + queryParams, {}).subscribe((res: any) => {
+        console.log("updateMonthlyeDataApiopppppp-------->", res)
+        this.punchStatus = this.data.punchStatus
+
+      })
+    }, 1000)
+
+
+  }
+
 }
 
 
