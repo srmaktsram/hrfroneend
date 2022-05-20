@@ -302,14 +302,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
           this.adminId
       )
       .subscribe((data: any) => {
-        console.log(data, "lllll");
         this.employees = data[0].notification.employee;
-        console.log(this.employees, "employee");
       });
   }
   // Add employee  Modal Api Call
   addEmployee() {
-    console.log(this.addEmployeeForm.value.JoinDate, "/////////////////////");
     if (this.addEmployeeForm.invalid) {
       this.markFormGroupTouched(this.addEmployeeForm);
       return;
@@ -340,17 +337,15 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       adminId: this.adminId,
       location: this.current_location,
     };
-    console.log("op", obj);
 
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
       .subscribe((data: any) => {
-        console.log("postApi", data);
         this.loadEmployee();
         let document = data.data;
-        let author = "Admin added a new employee ";
-        let message = document.firstName+" in ";
-        let functions = document.department + " department";
+        let author = "Admin";
+        let message = 'added a new employee ';
+        let functions = document.firstName+" in "+document.department + " department";
         let time = document.createDate;
         if (this.employees == true) {
           this.http
@@ -362,7 +357,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
             )
             .subscribe((data: any) => {
               this.headerComponent.getAllNotifications()
-              console.log(data, "notification was created for Employee");
+              console.log(this.headerComponent.getAllNotifications(),"Header")
             });
         }
       });
@@ -380,7 +375,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
               this.adminId
           )
           .subscribe((data: any) => {
-            console.log(data,"get all Bell notifications")
             this.dataArray = data[0].notifications;
             this.lengthCount = this.dataArray.length;
 
@@ -433,7 +427,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/admin/allemployees/update" + "/" + id, obj)
       .subscribe((data) => {
-        //console.log(data);
         this.loadEmployee();
         // $("#datatable").DataTable().clear();
         // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -454,7 +447,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       return item.id === value;
     });
     let toSetValues = this.lstEmployee[index];
-    //console.log(toSetValues);
     let DateJoin = this.pipe.transform(toSetValues.joindate, "dd-MM-yyyy");
 
     this.editEmployeeForm.patchValue({
@@ -488,7 +480,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/admin/allemployees/delete" + "/" + id, obj)
       .subscribe((data) => {
-        //console.log(data);
         this.loadEmployee();
         // $("#datatable").DataTable().clear();
         // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -988,7 +979,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
   getId(id) {
-    // //console.log("bbbbbbb", id)
     sessionStorage.setItem("empid", id);
     this.router.navigate(["/layout/employees/employeeprofile"]);
   }

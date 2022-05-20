@@ -59,10 +59,8 @@ export class HeaderComponent implements OnInit {
   //         this.adminId
   //     )
   //     .subscribe((data: any) => {
-  //       console.log(data,"lllll")
   //       this.leaves = data[0].notification.leaves;
   //       this.holiday = data[0].notification.holidays;
-  //       console.log(this.holiday)
   //       this.getLeaveNotifications();
   //       this.loadHolidaysNotifications();
 
@@ -96,7 +94,6 @@ export class HeaderComponent implements OnInit {
               this.adminId
           )
           .subscribe((data: any) => {
-            console.log(data,"get all Bell notifications")
             this.dataArray = data[0].notifications;
             this.lengthCount = this.dataArray.length;
 
@@ -119,7 +116,6 @@ export class HeaderComponent implements OnInit {
 
   //   this.http.get("http://localhost:8443/admin/holidays/getNotification"+"/"+this.adminId).subscribe((res: any) => {
   //     this.lstHolidays = res;
-  //     console.log(this.lstHolidays,"Holidays Notification")
      
   //   });}}
   // }

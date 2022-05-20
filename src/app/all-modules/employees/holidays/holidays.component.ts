@@ -63,7 +63,6 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   loadholidays() {
 
     this.http.get("http://localhost:8443/admin/holidays/getHolidays").subscribe((res: any) => {
-      console.log(res,"list Holidays")
 
       this.lstHolidays = res.data;
       this.rows = this.lstHolidays;
@@ -79,9 +78,7 @@ getNotifications() {
         this.adminId
     )
     .subscribe((data: any) => {
-      console.log(data, "lllll");
       this.holiday = data[0].notification.holidays;
-      console.log(this.holiday, "holiday");
     });
 }
 
@@ -109,17 +106,14 @@ getNotifications() {
 
       this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res:any) => {
           this.loadholidays();
-          console.log(res,"create Holidays")
           let document=res.data
-          let author="Admin created"
-          let message=document.title
-          let functions="'s holiday"
+          let author="Admin"
+          let message="added holiday of "          
+          let functions=document.title
           let time=document.createDate
           if (this.holiday== true) {
-            alert("1")
           this.http.post("http://localhost:8443/admin/allNotification/createNotification"+"/"+this.adminId, {message,author,functions,time}).subscribe((data:any) => {
             this.loadholidays();
-            console.log(data,"create HOLI NOTI")
           });}
         })
 

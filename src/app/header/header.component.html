@@ -63,24 +63,20 @@
 
     <!-- Notifications -->
     <li class="nav-item dropdown">
-        <a
-          href="javascript:"
-          class="dropdown-toggle nav-link"
-          data-bs-toggle="dropdown"
-        >
-          <i class="fa fa-bell-o"></i>
-          <ng-container *ngIf="lengthCount >= 1">
-
+      <a
+        href="javascript:"
+        class="dropdown-toggle nav-link"
+        data-bs-toggle="dropdown"
+      >
+        <i class="fa fa-bell-o"></i>
+        <ng-container *ngIf="lengthCount >= 1">
           <span class="badge rounded-pill">{{ lengthCount }}</span>
         </ng-container>
         <ng-container *ngIf="lengthCount <= 0">
-
           <span class="badge rounded-pill">{{ lengthCount }}</span>
         </ng-container>
-        </a>
-      
-     
-       
+      </a>
+
       <div class="dropdown-menu notifications">
         <div class="topnav-dropdown-header">
           <span class="notification-title">Notifications</span>
@@ -90,45 +86,127 @@
         </div>
         <!-- <div class="noti-content d-flex align-items-center justify-content-center"> -->
         <div class="noti-content">
-          <center><p *ngIf="lengthCount<1">No notifications</p></center>
-          <ul class="notification-list">
-            <li
-              class="notification-message"
-              *ngFor="let item of dataArray; let i = index"
-            >
-              <a routerLink="/layout/activities/activities-main">
-                <div class="media d-flex">
-                  <span class="avatar flex-shrink-0">
-                    <img
-                      alt=""
-                      src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                    />
-                  </span>
-                  <div class="media-body flex-grow-1">
-                    <p class="noti-details">
-                      <span class="noti-title">{{ item.author }}</span>
-                      <span class="noti-title"> {{ item.message }}</span>
+          <center><p *ngIf="lengthCount < 1">No notifications</p></center>
+          <ul class="notification-list" *ngFor="let item of dataArray; let i = index">
+            <ng-container *ngIf="item.message == 'added a new employee '">
+              <li class="notification-message" routerLink="/layout/employees/employeelist">
+                <a routerLink="/layout/activities/activities-main">
+                  <div class="media d-flex">
+                    <span class="avatar flex-shrink-0">
+                      <img
+                        alt=""
+                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
+                      />
+                    </span>
+                    <div class="media-body flex-grow-1">
+                      <p class="noti-details">
+                        <span class="noti-title">{{ item.author }}</span>
+                        <span class="noti-title"> {{ item.message }}</span>
 
-                      <span class="noti-title">{{ item.functions }}</span>
-                    </p>
-                    <p class="noti-time">
-                      <span class="notification-time">{{
-                        item.time | dateAgo
-                      }}</span>
-                    </p>
+                        <span class="noti-title">{{ item.functions }}</span>
+                      </p>
+                      <p class="noti-time">
+                        <span class="notification-time">{{
+                          item.time | dateAgo
+                        }}</span>
+                      </p>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </li>
+                </a>
+              </li>
+            </ng-container>
+
+            <ng-container *ngIf="item.message == 'applied for '">
+              <li class="notification-message" routerLink="/layout/employees/adminleaves">
+                <a routerLink="/layout/activities/activities-main">
+                  <div class="media d-flex">
+                    <span class="avatar flex-shrink-0">
+                      <img
+                        alt=""
+                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
+                      />
+                    </span>
+                    <div class="media-body flex-grow-1">
+                      <p class="noti-details">
+                        <span class="noti-title">{{ item.author }}</span>
+                        <span class="noti-title"> {{ item.message }}</span>
+
+                        <span class="noti-title">{{ item.functions }}</span>
+                      </p>
+                      <p class="noti-time">
+                        <span class="notification-time">{{
+                          item.time | dateAgo
+                        }}</span>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ng-container>
+
+            <ng-container *ngIf="item.message == 'added holiday of '">
+              <li class="notification-message" routerLink="/layout/employees/holidays">
+                <a routerLink="/layout/activities/activities-main">
+                  <div class="media d-flex">
+                    <span class="avatar flex-shrink-0">
+                      <img
+                        alt=""
+                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
+                      />
+                    </span>
+                    <div class="media-body flex-grow-1">
+                      <p class="noti-details">
+                        <span class="noti-title">{{ item.author }}</span>
+                        <span class="noti-title"> {{ item.message }}</span>
+
+                        <span class="noti-title">{{ item.functions }}</span>
+                      </p>
+                      <p class="noti-time">
+                        <span class="notification-time">{{
+                          item.time | dateAgo
+                        }}</span>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ng-container>
+
+            <ng-container *ngIf="item.message == 'added a job for '">
+              <li class="notification-message" routerLink="/layout/jobs/manage-jobs">
+                <a routerLink="/layout/activities/activities-main">
+                  <div class="media d-flex">
+                    <span class="avatar flex-shrink-0">
+                      <img
+                        alt=""
+                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
+                      />
+                    </span>
+                    <div class="media-body flex-grow-1">
+                      <p class="noti-details">
+                        <span class="noti-title">{{ item.author }}</span>
+                        <span class="noti-title"> {{ item.message }}</span>
+
+                        <span class="noti-title">{{ item.functions }}</span>
+                      </p>
+                      <p class="noti-time">
+                        <span class="notification-time">{{
+                          item.time | dateAgo
+                        }}</span>
+                      </p>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            </ng-container>
           </ul>
         </div>
-        
-          <div [hidden]="newStatus" class="topnav-dropdown-footer">
-            <a routerLink="/layout/activities/activities-main"
-              >View all Notifications</a
-            >
-          </div>
-       
+
+        <div [hidden]="newStatus" class="topnav-dropdown-footer">
+          <a routerLink="/layout/activities/activities-main"
+            >View all Notifications</a
+          >
+        </div>
       </div>
     </li>
     <!-- /Notifications -->
