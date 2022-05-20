@@ -24,6 +24,13 @@ const routes: Routes = [
           import("./apps/apps.module").then((m) => m.AppsModule),
       },
       {
+        path: "mainadmin",
+        loadChildren: () =>
+          import("./main-dashboard/dashboard.module").then(
+            (m) => m.MainDashboardModule
+          ),
+      },
+      {
         path: "employees",
         loadChildren: () =>
           import("./employees/employees.module").then((m) => m.EmployeesModule),

@@ -22,7 +22,9 @@ export class UserLoginComponent implements OnInit {
   get f() {
     return this.form.controls;
   }
-
+  sendTo() {
+    this.router.navigate(["/login/forgot"]);
+  }
   constructor(
     private authenticationService: AuthenticationService,
     private http: HttpClient,
@@ -56,7 +58,7 @@ export class UserLoginComponent implements OnInit {
             res.data.firstName,
             res.data.lastName,
             res.data.phone,
-            res.data.location,
+            res.data.location
           );
         } else {
           alert("wrong Id or pass");
