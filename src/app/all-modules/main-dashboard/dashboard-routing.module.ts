@@ -16,6 +16,11 @@ const routes: Routes = [
           import("./clients/clients.module").then((m) => m.ClientAdminModule),
       },
       {
+        path: "subadmins",
+        loadChildren: () =>
+          import("./sub-admin/clients.module").then((m) => m.SubAdminModule),
+      },
+      {
         path: "tickets",
         loadChildren: () =>
           import("./tickets/tickets.module").then((m) => m.TicketsModule),

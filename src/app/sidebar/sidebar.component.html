@@ -27,13 +27,20 @@
             </ul>
             
           </li>
-          
+
           <li [ngClass]="{
             active:
               urlComplete.subUrl === 'clientspage' ||
               urlComplete.subUrl === 'clientslist'
           }">
           <a routerLink="/layout/mainadmin/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
+        </li>
+          <li [ngClass]="{
+            active:
+              urlComplete.subUrl === 'clientspage' ||
+              urlComplete.subUrl === 'clientslist'
+          }">
+          <a routerLink="/layout/mainadmin/subadmins/clientspage"><i class="la la-users"></i> <span>Sub Admin</span></a>
         </li>
 
         <li [ngClass]="{
@@ -110,7 +117,7 @@
 
 
 
-
+<!-- ///////////////////////////client admin -->
 
         <ng-container *ngIf="user_type!='mainadmin'">
           <li class="menu-title">
