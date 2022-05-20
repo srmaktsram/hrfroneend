@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { HeaderComponent } from "src/app/header/header.component";
 
 declare const $: any;
 @Component({
@@ -26,6 +27,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public designations: any;
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
+  public user_type = sessionStorage.getItem("user_type");
 
   public pipe = new DatePipe("en-US");
   public rows = [];
@@ -33,6 +35,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public DateJoin;
+  newStatus= true;
   Holidays = [
     { id: 0, read: false },
     { id: 1, write: false },
@@ -100,9 +103,12 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   ];
   adminId: string;
   current_location: any;
+  employees: any;
+  dataArray: any;
+  lengthCount: any;
   constructor(
     private srvModuleService: AllModulesService,
-    private http: HttpClient,
+    private http: HttpClient,private headerComponent:HeaderComponent,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     public router: Router
@@ -197,6 +203,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       });
   }
   ngOnInit() {
+    this.getNotifications();
     // for floating label
 
     $(".floating")
@@ -267,17 +274,15 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data) => {
         console.log("get Employees", data);
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
-
       });
-
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -288,14 +293,27 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  getNotifications() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        console.log(data, "lllll");
+        this.employees = data[0].notification.employee;
+        console.log(this.employees, "employee");
+      });
+  }
   // Add employee  Modal Api Call
   addEmployee() {
-    console.log(this.addEmployeeForm.value.JoinDate, "/////////////////////")
+    console.log(this.addEmployeeForm.value.JoinDate, "/////////////////////");
     if (this.addEmployeeForm.invalid) {
       this.markFormGroupTouched(this.addEmployeeForm);
       return;
     }
-    
 
     let obj = {
       firstname: this.addEmployeeForm.value.FirstName,
@@ -320,22 +338,62 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Assets: this.Assets,
       TimingSheets: this.TimingSheets,
       adminId: this.adminId,
-      location: this.current_location
+      location: this.current_location,
     };
-    console.log("op", obj)
+    console.log("op", obj);
 
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         console.log("postApi", data);
         this.loadEmployee();
-
+        let document = data.data;
+        let author = "Admin added a new employee ";
+        let message = document.firstName+" in ";
+        let functions = document.department + " department";
+        let time = document.createDate;
+        if (this.employees == true) {
+          this.http
+            .post(
+              "http://localhost:8443/admin/allNotification/createNotification" +
+                "/" +
+                this.adminId,
+              { message, author, functions, time }
+            )
+            .subscribe((data: any) => {
+              this.headerComponent.getAllNotifications()
+              console.log(data, "notification was created for Employee");
+            });
+        }
       });
 
     $("#add_employee").modal("hide");
     this.addEmployeeForm.reset();
     this.toastr.success("Employeee added sucessfully...!", "Success");
   }
+  getAllNotifications() {
+    if (this.user_type == "admin") {
+        this.http
+          .get(
+            "http://localhost:8443/admin/notifications/getAllNotification" +
+              "/" +
+              this.adminId
+          )
+          .subscribe((data: any) => {
+            console.log(data,"get all Bell notifications")
+            this.dataArray = data[0].notifications;
+            this.lengthCount = this.dataArray.length;
+
+            if (this.lengthCount <= 4) {
+              this.newStatus = true;
+            } else if (this.lengthCount >= 5) {
+              this.newStatus = false;
+            }
+          });
+      
+    }
+  }
+
 
   // to know the date picker changes
   from(data) {
@@ -397,11 +455,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     });
     let toSetValues = this.lstEmployee[index];
     //console.log(toSetValues);
-    let DateJoin = this.pipe.transform(
-      toSetValues.joindate,
-      "dd-MM-yyyy"
-    );
-   
+    let DateJoin = this.pipe.transform(toSetValues.joindate, "dd-MM-yyyy");
+
     this.editEmployeeForm.patchValue({
       FirstName: toSetValues.firstName,
       LastName: toSetValues.lastName,

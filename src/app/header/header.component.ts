@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   jsonData: any = {
     message: [],
   };
+  
   notifications: any;
   messagesData: any;
   user_type: string;
@@ -24,11 +25,13 @@ export class HeaderComponent implements OnInit {
   companyName: string;
   companyLogo: string;
   flag: string;
-  employee: boolean;
   dataArray: any;
   lengthCount: any;
   newData: any;
   newStatus= true;
+  leaves: boolean;
+  lstHolidays: any;
+  holiday: boolean;
   constructor(
     private headerService: HeaderService,
     private router: Router,
@@ -48,19 +51,23 @@ export class HeaderComponent implements OnInit {
     this.flag = `https://assets.ipstack.com/flags/${this.current_location.country_code.toLowerCase()}.svg`;
   }
 
-  getNotifications() {
-    this.http
-      .get(
-        "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
-          "/" +
-          this.adminId
-      )
-      .subscribe((data: any) => {
-        this.employee = data[0].notification.employee;
+  // getNotifications() {
+  //   this.http
+  //     .get(
+  //       "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
+  //         "/" +
+  //         this.adminId
+  //     )
+  //     .subscribe((data: any) => {
+  //       console.log(data,"lllll")
+  //       this.leaves = data[0].notification.leaves;
+  //       this.holiday = data[0].notification.holidays;
+  //       console.log(this.holiday)
+  //       this.getLeaveNotifications();
+  //       this.loadHolidaysNotifications();
 
-        this.getLeaveNotifications();
-      });
-  }
+  //     });
+  // }
 
   // loadLeaves() {
   //   if (this.user_type == "admin") {
@@ -80,16 +87,16 @@ export class HeaderComponent implements OnInit {
   //   }
   // }
   //////Get leave Notifications......
-  getLeaveNotifications() {
+  public getAllNotifications() {
     if (this.user_type == "admin") {
-      if (this.employee == true) {
         this.http
           .get(
-            "http://localhost:8443/employee/leaves/getNotification" +
+            "http://localhost:8443/admin/notifications/getAllNotification" +
               "/" +
               this.adminId
           )
           .subscribe((data: any) => {
+            console.log(data,"get all Bell notifications")
             this.dataArray = data[0].notifications;
             this.lengthCount = this.dataArray.length;
 
@@ -99,12 +106,26 @@ export class HeaderComponent implements OnInit {
               this.newStatus = false;
             }
           });
-      }
+      
     }
   }
 
+
+
+  //////////
+  // loadHolidaysNotifications() {
+  //   if (this.user_type == "admin") {
+  //     if (this.holiday == true) {
+
+  //   this.http.get("http://localhost:8443/admin/holidays/getNotification"+"/"+this.adminId).subscribe((res: any) => {
+  //     this.lstHolidays = res;
+  //     console.log(this.lstHolidays,"Holidays Notification")
+     
+  //   });}}
+  // }
+
   ngOnInit() {
-    this.getNotifications();
+    this.getAllNotifications();
 
     console.log(JSON.parse(sessionStorage.getItem("current_location")));
 
@@ -166,7 +187,7 @@ export class HeaderComponent implements OnInit {
     };
     this.http
       .patch(
-        "http://localhost:8443/employee/leaves/deleteLeaveNotifications" +
+        "http://localhost:8443/admin/notification/deleteAllNotifications" +
           "/" +
           this.adminId,
         obj

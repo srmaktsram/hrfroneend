@@ -35,6 +35,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
   public adminId = sessionStorage.getItem("adminId");
   dataarr: any;
   srch: any[];
+  jobs: boolean;
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
@@ -54,6 +55,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getManageJobs();
+    this.getNotifications()
 
     // Add Provident Form Validation And Getting Values
 
@@ -110,6 +112,20 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
         this.allManageJobs = data;
       });
   }
+  ///////
+  getNotifications() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        console.log(data, "lllll");
+        this.jobs = data[0].notification.jobs;
+        console.log(this.jobs, "jobs");
+      });
+  }
 
   // Add Provident Modal Api Call
 
@@ -141,11 +157,28 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       };
       this.http
         .post("http://localhost:8443/admin/manageJobs/createManageJobs", obj)
-        .subscribe((data) => {
+        .subscribe((data:any) => {
+          console.log(data,"kklo")
           this.getManageJobs();
-          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-            dtInstance.destroy();
-          });
+          let document = data.data;
+          let author = "Admin ";
+          let message = 'added a job for ';
+          let functions = document.jobTitle+' post';
+          let time = document.createDate;
+            if (this.jobs == true) {
+
+              this.http
+                .post(
+                  "http://localhost:8443/admin/allNotification/createNotification" +
+                    "/" +
+                    this.adminId,
+                  { message, author, functions, time }
+                )
+                .subscribe((data: any) => {
+                  console.log(data,"notification was created for Jobs")
+                });
+            }
+          
         });
 
       $("#add_job").modal("hide");

@@ -25,6 +25,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BreakTime, OverTime, ProductionPipe } from 'src/assets/pipes/employeeattandance';
 import { MatchDate } from 'src/assets/pipes/checkDate';
+// import { NotificationService } from 'src/app/services/notification.service';
+import { HeaderComponent } from 'src/app/header/header.component';
 
 @NgModule({
   declarations: [MatchDate, EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeavesEmployeeComponent, LeaveSettingsComponent, AttendanceAdminComponent, AttendanceEmployeeComponent, DepartmentsComponent, DesignationComponent, TimesheetComponent, OvertimeComponent, ProductionPipe, BreakTime, OverTime],
@@ -41,7 +43,8 @@ import { MatchDate } from 'src/assets/pipes/checkDate';
     MatFormFieldModule,
 
 
-  ]
+  ],
+  providers:[HeaderComponent]
 })
 
 export class EmployeesModule { }

@@ -27,7 +27,10 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-IN");
   public addHolidayForm: FormGroup;
   public editHolidayForm: FormGroup;
+  public adminId = sessionStorage.getItem("adminId");
+
   public editHolidayDate: any;
+  holiday: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -36,6 +39,8 @@ export class HolidaysComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadholidays();
+    this.getNotifications();
+    
 
     this.addHolidayForm = this.formBuilder.group({
       HolidayName: ["", [Validators.required]],
@@ -58,13 +63,27 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   loadholidays() {
 
     this.http.get("http://localhost:8443/admin/holidays/getHolidays").subscribe((res: any) => {
+      console.log(res,"list Holidays")
 
       this.lstHolidays = res.data;
       this.rows = this.lstHolidays;
       this.srch = [...this.rows];
     });
   }
-
+////
+getNotifications() {
+  this.http
+    .get(
+      "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
+        "/" +
+        this.adminId
+    )
+    .subscribe((data: any) => {
+      console.log(data, "lllll");
+      this.holiday = data[0].notification.holidays;
+      console.log(this.holiday, "holiday");
+    });
+}
 
   // Add holidays Modal Api Call
 
@@ -84,14 +103,25 @@ export class HolidaysComponent implements OnInit, OnDestroy {
         title: this.addHolidayForm.value.HolidayName,
         holidayDate:holiday,
         day: this.addHolidayForm.value.DaysName,
-        adminId: adminId,
+        adminId: this.adminId,
 
       };
 
-      this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res) => {
+      this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res:any) => {
           this.loadholidays();
-        });
-
+          console.log(res,"create Holidays")
+          let document=res.data
+          let author="Admin created"
+          let message=document.title
+          let functions="'s holiday"
+          let time=document.createDate
+          if (this.holiday== true) {
+            alert("1")
+          this.http.post("http://localhost:8443/admin/allNotification/createNotification"+"/"+this.adminId, {message,author,functions,time}).subscribe((data:any) => {
+            this.loadholidays();
+            console.log(data,"create HOLI NOTI")
+          });}
+        })
 
       $("#add_holiday").modal("hide");
       this.addHolidayForm.reset();
