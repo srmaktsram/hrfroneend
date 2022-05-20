@@ -29,6 +29,8 @@ export class LeavesEmployeeComponent implements OnInit {
   public editFromDate: any;
   public editToDate: any;
   public adminId = sessionStorage.getItem("adminId");
+  public user_type = sessionStorage.getItem("user_type");
+
   public employeeId = sessionStorage.getItem("employeeId");
   public employeeid = sessionStorage.getItem("employee_login_id");
 
@@ -38,11 +40,13 @@ export class LeavesEmployeeComponent implements OnInit {
   casualLeave: any;
   otherLeaves: any;
   empLeaves: any;
- 
+
   leavesTaken: any;
   addLeaveEmployeeForm: FormGroup;
   editLeaveEmployeeForm: FormGroup;
   remainingLeave: number;
+  leaves: boolean;
+  holiday: boolean;
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
@@ -50,7 +54,7 @@ export class LeavesEmployeeComponent implements OnInit {
     private toastr: ToastrService
   ) {}
   getLeaveType() {
-    let nullData=0
+    let nullData = 0;
     this.http
       .get(
         "http://localhost:8443/admin/leaveType/getLeaveType" +
@@ -65,19 +69,21 @@ export class LeavesEmployeeComponent implements OnInit {
             this.sickLeave = item.leaveDays;
           } else if (item.leaveType == "Casual Leaves") {
             this.casualLeave = item.leaveDays;
-          }
-         else if (item.LeaveType != "Sick Leaves" || item.LeaveType != "Casual Leaves") {
-            nullData=nullData+item.leaveDays;
-            this.otherLeaves = nullData
-
+          } else if (
+            item.LeaveType != "Sick Leaves" ||
+            item.LeaveType != "Casual Leaves"
+          ) {
+            nullData = nullData + item.leaveDays;
+            this.otherLeaves = nullData;
           }
           this.annualLeaves = this.sickLeave + this.casualLeave;
         });
       });
   }
-  
+
   ngOnInit() {
     this.getLeaveType();
+    this.getNotifications();
     this.loadLeaves();
     this.addLeaveEmployeeForm = this.formBuilder.group({
       addLeaveType: ["", [Validators.required]],
@@ -109,26 +115,31 @@ export class LeavesEmployeeComponent implements OnInit {
 
   // Get leave  Api Call
   loadLeaves() {
-    let newData=0
+    let newData = 0;
     this.http
       .get(
         "http://localhost:8443/employee/leaves/getleaves" +
           "/" +
-          this.employeeId+"/"+this.adminId
+          this.employeeId +
+          "/" +
+          this.adminId
       )
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
         this.lstLeave = data;
         this.rows = this.lstLeave;
         this.srch = [...this.rows];
         this.empLeaves = data;
         this.empLeaves.map((item: any) => {
-          if (item.leaveType == "Sick Leaves" ||
-            item.leaveType == "Casual Leaves"){
-              if(item.status=="Approved"){
-            newData = newData + item.noofDays;
-            this.leavesTaken =newData;
-            this.remainingLeave = this.annualLeaves - this.leavesTaken;
-          }}
+          if (
+            item.leaveType == "Sick Leaves" ||
+            item.leaveType == "Casual Leaves"
+          ) {
+            if (item.status == "Approved") {
+              newData = newData + item.noofDays;
+              this.leavesTaken = newData;
+              this.remainingLeave = this.annualLeaves - this.leavesTaken;
+            }
+          }
         });
       });
   }
@@ -139,6 +150,21 @@ export class LeavesEmployeeComponent implements OnInit {
         this.markFormGroupTouched(control);
       }
     });
+  }
+
+  ////
+  getNotifications() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        console.log(data, "lllll");
+        this.leaves = data[0].notification.leaves;
+        console.log(this.leaves, "Leaves");
+      });
   }
   // Add leaves for admin Modal Api Call
   addleaves() {
@@ -167,29 +193,36 @@ export class LeavesEmployeeComponent implements OnInit {
         reason: this.addLeaveEmployeeForm.value.LeaveReason,
         status: "New",
         employeeId: this.employeeId,
-        adminId:this.adminId,
-        employeeid:this.employeeid
+        adminId: this.adminId,
+        employeeid: this.employeeid,
       };
 
       this.http
-        .post("http://localhost:8443/employee/leaves/add_leave",obj)
-        .subscribe((data:any) => {
-         this.loadLeaves();
-
-         let document=data
-          let message="applied for "
-          let author=document.employeeName
-          let functions=document.leaveType
-          let time=document.createDate
-
-
-          this.http
-        .post("http://localhost:8443/employee/leaves/createNotification"+"/"+this.adminId, {message,author,functions,time})
-        .subscribe((data:any) => {
+        .post("http://localhost:8443/employee/leaves/add_leave", obj)
+        .subscribe((data: any) => {
           this.loadLeaves();
-         
+
+          let document = data;
+          let message = "applied for ";
+          let author = document.employeeName;
+          let functions = document.leaveType;
+          let time = document.createDate;
+            if (this.leaves == true) {
+
+              this.http
+                .post(
+                  "http://localhost:8443/admin/allNotification/createNotification" +
+                    "/" +
+                    this.adminId,
+                  { message, author, functions, time }
+                )
+                .subscribe((data: any) => {
+                  console.log(data,"notification was created for leaves")
+                  this.loadLeaves();
+                });
+            }
+          
         });
-      })
 
       // this.loadLeaves();
       $("#add_leave").modal("hide");
@@ -227,7 +260,7 @@ export class LeavesEmployeeComponent implements OnInit {
           obj
         )
         .subscribe((data) => {
-            this.loadLeaves();
+          this.loadLeaves();
         });
 
       $("#edit_leave").modal("hide");
@@ -236,7 +269,7 @@ export class LeavesEmployeeComponent implements OnInit {
       this.toastr.warning("Mandatory fields required", "");
     }
   }
- 
+
   // Delete leaves Modal Api Call
 
   deleteleaves() {

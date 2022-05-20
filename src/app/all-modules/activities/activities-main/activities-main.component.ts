@@ -20,7 +20,7 @@ export class ActivitiesMainComponent implements OnInit {
   dateAndTime: any;
   dtTrigger: any;
   dataArray: any;
-  employee: boolean;
+  leaves: boolean;
 
   constructor(
     private http: HttpClient,
@@ -34,52 +34,25 @@ export class ActivitiesMainComponent implements OnInit {
       this.check = true;
     }
   }
-  getNotifications() {
-    this.http
-      .get(
-        "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
-          "/" +
-          this.adminId
-      )
-      .subscribe((data: any) => {
-        this.employee = data[0].notification.employee;
-        this.getLeaveNotifications();
-      });
-  }
-
-  // loadLeaves() {
-
-  //   if (this.user_type == "admin") {
-  //     if (this.employee == true) {
-  //       this.http
-  //         .get(
-  //           "http://localhost:8443/admin/leaves/searchleaves" +
-  //             "/" +
-  //             this.adminId
-  //         )
-  //         .subscribe((data: any) => {
-  //           this.dataArray = data;
-  //         });
-  //     }
-  //   }
-  // }
-
-  getLeaveNotifications(){
+  ///////////////
+  getAllNotifications(){
     if (this.user_type == "admin") {
-      if (this.employee == true) {
-    this.http.get("http://localhost:8443/employee/leaves/getNotification" +
+
+
+    this.http.get("http://localhost:8443/admin/notifications/getAllNotification" +
             "/" +
             this.adminId
         )
         .subscribe((data: any) => {
           this.dataArray = data[0].notifications
+          console.log( this.dataArray," get notification for Activity Page")
         })
-      }}
+      }
       }
   
 
   ngOnInit() {
-    this.getNotifications();
+    this.getAllNotifications();
   }
   // ngOnDestroy(): void {
   //   // Do not forget to unsubscribe the event
