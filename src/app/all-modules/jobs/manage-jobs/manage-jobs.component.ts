@@ -121,9 +121,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
           this.adminId
       )
       .subscribe((data: any) => {
-        console.log(data, "lllll");
         this.jobs = data[0].notification.jobs;
-        console.log(this.jobs, "jobs");
       });
   }
 
@@ -158,7 +156,6 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       this.http
         .post("http://localhost:8443/admin/manageJobs/createManageJobs", obj)
         .subscribe((data:any) => {
-          console.log(data,"kklo")
           this.getManageJobs();
           let document = data.data;
           let author = "Admin ";
@@ -175,7 +172,6 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
                   { message, author, functions, time }
                 )
                 .subscribe((data: any) => {
-                  console.log(data,"notification was created for Jobs")
                 });
             }
           

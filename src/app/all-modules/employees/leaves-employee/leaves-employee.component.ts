@@ -161,9 +161,7 @@ export class LeavesEmployeeComponent implements OnInit {
           this.adminId
       )
       .subscribe((data: any) => {
-        console.log(data, "lllll");
         this.leaves = data[0].notification.leaves;
-        console.log(this.leaves, "Leaves");
       });
   }
   // Add leaves for admin Modal Api Call
@@ -217,7 +215,6 @@ export class LeavesEmployeeComponent implements OnInit {
                   { message, author, functions, time }
                 )
                 .subscribe((data: any) => {
-                  console.log(data,"notification was created for leaves")
                   this.loadLeaves();
                 });
             }

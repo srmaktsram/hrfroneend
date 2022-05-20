@@ -45,7 +45,6 @@ export class ActivitiesMainComponent implements OnInit {
         )
         .subscribe((data: any) => {
           this.dataArray = data[0].notifications
-          console.log( this.dataArray," get notification for Activity Page")
         })
       }
       }
@@ -54,8 +53,5 @@ export class ActivitiesMainComponent implements OnInit {
   ngOnInit() {
     this.getAllNotifications();
   }
-  // ngOnDestroy(): void {
-  //   // Do not forget to unsubscribe the event
-  //   this.dtTrigger.unsubscribe();
-  // }
+  
 }
