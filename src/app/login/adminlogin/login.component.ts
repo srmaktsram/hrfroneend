@@ -3,20 +3,19 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
-import { AuthenticationService } from "src/app/core/storage/authentication.service";
+import { MainAdminAuthenticationService } from "src/app/core/storage/authentication-mainadmin.service copy";
 
 @Component({
-  selector: "app-login",
+  selector: "app-adminlogin",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
-export class LoginComponent implements OnInit {
+export class AdminLoginComponent implements OnInit {
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
   form = new FormGroup({
-    email: new FormControl("", [Validators.required]),
+    username: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required]),
   });
 
@@ -28,7 +27,7 @@ export class LoginComponent implements OnInit {
     // private storage: WebStorage,
     private http: HttpClient,
     private router: Router,
-    private adminAuthenticationService: AdminAuthenticationService
+    private adminAuthenticationService: MainAdminAuthenticationService
   ) {}
 
   ngOnInit() {}
@@ -36,12 +35,12 @@ export class LoginComponent implements OnInit {
     this.router.navigate(["/login/forgot"]);
   }
   submit() {
-    let email = this.form.value.email;
+    let username = this.form.value.username;
     let password = this.form.value.password;
-
+    alert(username);
     this.http
-      .post("http://localhost:8443/auth/register/login", {
-        email,
+      .post("http://localhost:8443/mainadmin/login/login", {
+        username,
         password,
       })
       .subscribe((res: any) => {
@@ -49,21 +48,7 @@ export class LoginComponent implements OnInit {
         if (res.result == 2) {
           this.router.navigate(["/layout/dashboard/admin"]);
           // location.replace("http://localhost:51245/layout/dashboard/admin");
-          this.adminAuthenticationService.login(
-            res.data.id,
-            res.data.companyEmail,
-            res.data.companyName,
-            res.data.companySite,
-            res.data.id,
-            res.data.pinCode,
-            res.data.companyAddress,
-            res.data.phone,
-            res.data.mobile,
-            res.data.location,
-            res.data.cicon,
-            res.data.cinvoice,
-            res.data.cinvoicepre
-          );
+          this.adminAuthenticationService.login();
         } else {
           alert("wrong Id or pass");
         }

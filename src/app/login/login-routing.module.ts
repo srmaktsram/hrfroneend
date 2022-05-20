@@ -6,10 +6,12 @@ import { RegisterComponent } from "./register/register.component";
 import { OtpComponent } from "./otp/otp.component";
 import { LockscreenComponent } from "./lockscreen/lockscreen.component";
 import { UserLoginComponent } from "./userlogin/userlogin.component";
+import { AdminLoginComponent } from "./adminlogin/login.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "userlogin", pathMatch: "full" },
+  { path: "", redirectTo: "adminlogin", pathMatch: "full" },
   { path: "userlogin", component: UserLoginComponent },
+  { path: "adminhrlogin", component: AdminLoginComponent },
   { path: "adminlogin", component: LoginComponent },
   { path: "forgot", component: ForgotComponent },
   { path: "register", component: RegisterComponent },
@@ -21,4 +23,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LoginRoutingModule { }
+export class LoginRoutingModule {}
