@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { MainAdminAuthenticationService } from "src/app/core/storage/authentication-mainadmin.service copy";
+import { MainAdminAuthenticationService } from "src/app/core/storage/authentication-mainadmin.service";
 
 @Component({
   selector: "app-adminlogin",
