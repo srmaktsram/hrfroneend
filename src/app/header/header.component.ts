@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
     this.current_location = JSON.parse(
       sessionStorage.getItem("current_location")
     );
-    this.flag = `https://assets.ipstack.com/flags/${this.current_location.country_code.toLowerCase()}.svg`;
+    // this.flag = `https://assets.ipstack.com/flags/${this.current_location.country_code.toLowerCase()}.svg`;
   }
 
   // getNotifications() {

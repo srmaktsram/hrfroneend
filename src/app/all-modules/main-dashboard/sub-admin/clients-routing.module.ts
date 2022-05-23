@@ -10,15 +10,15 @@ const routes: Routes = [
     component: ClientsComponent,
     children: [
       {
-        path: 'clientspage',
+        path: 'subadminpage',
         component: ClientsContentPageComponent
       },
       {
-        path: 'clientslist',
+        path: 'subadminlist',
         component: ClientsListComponent
       },
       {
-        path: 'clientsprofile/:id',
+        path: 'subadminprofile/:id',
         component: ClientsProfileComponent
       },
 
