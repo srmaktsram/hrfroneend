@@ -68,6 +68,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       editContactPerson: ["", [Validators.required]],
       editClientEmail: ["", [Validators.required]],
       editClientPhone: ["", [Validators.required]],
+      editCompanyEmail: ["", [Validators.required]],
     });
   }
 
@@ -80,10 +81,10 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   //Get all Clients data
   public getDemoAdmins() {
     this.http
-      .get("http://localhost:8443/mainadmin/demoClient/getDemoClients")
+      .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
       .subscribe((res: any) => {
         this.data = res;
-        console.log(res, "All Demo admin Clients");
+        this.srch = [...this.data];
       });
   }
 
@@ -96,6 +97,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       editContactPerson: client[0]?.name,
       editClientEmail: client[0]?.email,
       editClientPhone: client[0]?.mobile,
+      editCompanyEmail: client[0]?.companyEmail,
     });
   }
   //Reset form
@@ -110,17 +112,17 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       name: this.editClientForm.value.editContactPerson,
       email: this.editClientForm.value.editClientEmail,
       mobile: this.editClientForm.value.editClientPhone,
+      companyEmail: this.editClientForm.value.editCompanyEmail,
     };
     let id = this.editId;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/demoClient/updateDemoClient" +
+        "http://localhost:8443/mainadmin/freeClient/updateFreeClient" +
           "/" +
           id,
         obj
       )
       .subscribe((data) => {
-        console.log(data, "demo updated");
         this.getDemoAdmins();
       });
 
@@ -130,31 +132,33 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   }
 
   //////////////
-  // getStatus(data, id) {
-  //   const status = data;
-  //   this.http
-  //     .patch(
-  //       "http://localhost:8443/admin/tickets/updateTicketStatus" + "/" + id,
-  //       { status }
-  //     )
-  //     .subscribe((res) => {
-       
-  //     });
-  // }
+  getStatus(data, id) {
+    const status = data;
+    this.http
+      .patch(
+        "http://localhost:8443/mainadmin/freeClient/updateFreeClientStatus" +
+          "/" +
+          id,
+        { status }
+      )
+      .subscribe((res) => {
+        this.getDemoAdmins();
+      });
+  }
 
   //search by name
-  searchID(val) {
-    if (val) {
-      this.data.splice(0, this.data.length);
-      let temp = this.srch.filter(function (d) {
-        val = val.toLowerCase();
-        return d.clientId.toLowerCase().indexOf(val) !== -1 || !val;
-      });
-      this.data.push(...temp);
-    } else {
-      // this.getClients();
-    }
-  }
+  // searchID(val) {
+  //   if (val) {
+  //     this.data.splice(0, this.data.length);
+  //     let temp = this.srch.filter(function (d) {
+  //       val = val.toLowerCase();
+  //       return d.clientId.toLowerCase().indexOf(val) !== -1 || !val;
+  //     });
+  //     this.data.push(...temp);
+  //   } else {
+  //     // this.getClients();
+  //   }
+  // }
 
   //search by name
   searchByName(val) {
@@ -162,65 +166,57 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+        return (
+          d.name.toLowerCase().indexOf(val) !== -1 ||
+          !val ||
+          d.email.toLowerCase().indexOf(val) !== -1 ||
+          !val ||
+          d.mobile.toLowerCase().indexOf(val) !== -1 ||
+          !val ||
+          d.companyEmail.toLowerCase().indexOf(val) !== -1 ||
+          !val
+        );
       });
       this.data.push(...temp);
     } else {
-      // this.getClients();
+      this.getDemoAdmins();
     }
   }
 
   //search by company
   searchByCompany(val) {
     if (val.trim()) {
-      this.data.splice(0, this.data.length);
+      this.srch.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return d.companyName.toLowerCase().indexOf(val) !== -1 || !val;
       });
-      this.data.push(...temp);
+      this.srch.push(...temp);
     } else {
-      // this.getClients();
+      this.getDemoAdmins();
     }
   }
-  onSearch(id, name, company) {
+  onSearch(name, company) {
     this.filtereddata = [];
-    this.searchId = id;
     this.searchName = name;
     this.searchCompany = company;
     this.clientsData = this.data;
-    if (this.searchId) {
-      this.filtereddata = this.clientsData.filter((data) =>
-        data.clientId.toLowerCase().includes(this.searchId.toLowerCase())
+
+    if (this.searchName) {
+      let nameFilter = this.filtereddata.filter((data) =>
+        data.name.toLowerCase().includes(this.searchName.toLowerCase())
       );
-      if (this.searchName) {
-        let nameFilter = this.filtereddata.filter((data) =>
-          data.firstName.toLowerCase().includes(this.searchName.toLowerCase())
-        );
-        if (nameFilter.length != 0) {
-          this.filtereddata = nameFilter;
-        }
+      if (nameFilter.length != 0) {
+        this.filtereddata = nameFilter;
       }
     }
-
-    if (this.searchId || this.searchCompany || this.searchName) {
+    if (this.searchCompany || this.searchName) {
       this.clientsData =
         this.filtereddata.length != 0 ? this.filtereddata : this.clientsData;
     } else {
       this.clientsData = [];
     }
   }
-  //getting the status value
-  // getStatus(val, id) {
-  //   let obj = {
-  //     status: val,
-  //   };
-  //   this.http
-  //     .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
-  //     .subscribe((data: any) => {
-  //       // this.getClients();
-  //     });
-  // }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();

@@ -95,7 +95,7 @@ export class RegisterComponent implements OnInit {
     let password = this.form.value.password;
     let confirmPassword = this.form.value.confirmPassword;
     let location = this.location;
-    let status="Demo"
+    let status="Free"
     console.log(
       companyName,
       companySite,
