@@ -37,7 +37,7 @@
 
   <!-- Search Filter -->
   <div class="row filter-row">
-    <div class="col-sm-6 col-md-3">
+    <!-- <div class="col-sm-6 col-md-3">
       <div class="form-group form-focus">
         <input
           type="text"
@@ -47,7 +47,7 @@
         />
         <label class="focus-label">Client ID</label>
       </div>
-    </div>
+    </div> -->
     <div class="col-sm-6 col-md-3">
       <div class="form-group form-focus">
         <input
@@ -56,7 +56,7 @@
           #clientn
           (input)="searchByName($event.target.value)"
         />
-        <label class="focus-label">Client Name</label>
+        <label class="focus-label">Search by user details</label>
       </div>
     </div>
     <div class="col-sm-6 col-md-3">
@@ -67,8 +67,8 @@
           (input)="searchByCompany($event.target.value)"
         >
           <option value="">Select Company</option>
-          <option *ngFor="let designation of companys">
-            {{ designation.companyName }}
+          <option *ngFor="let client of data">
+            {{ client.companyName }}
           </option>
         </select>
         <label class="focus-label">Company</label>
@@ -77,7 +77,7 @@
     <div class="col-sm-6 col-md-3">
       <a
         class="btn btn-success w-100"
-        (click)="onSearch(id.value, clientn.value, companyn.value)"
+        (click)="onSearch(clientn.value, companyn.value)"
       >
         Search
       </a>
@@ -98,7 +98,7 @@
           <thead>
             <tr>
               <th>Company Name</th>
-              <!-- <th>Client ID</th> -->
+              <th>Company Email</th>
               <th>Contact Person</th>
               <th>Email</th>
               <th>Mobile</th>
@@ -123,7 +123,7 @@
                   >
                 </h2>
               </td>
-              <!-- <td>{{ client.id }}</td> -->
+              <td>{{ client.companyEmail }}</td>
               <td>{{ client.name }}</td>
               <td>{{ client.email }}</td>
               <td>{{ client.mobile }}</td>
@@ -141,17 +141,17 @@
                   <div class="dropdown-menu">
                     <a
                       class="dropdown-item"
-                      (click)="getStatus('Active', client.id)"
-                      ><i class="fa fa-dot-circle-o text-success"></i> Demo</a
+                      (click)="getStatus('Free', client.id)"
+                      ><i class="fa fa-dot-circle-o text-success"></i> Free</a
                     >
                     <a
                       class="dropdown-item"
-                      (click)="getStatus('Inactive', client.id)"
+                      (click)="getStatus('Visitor', client.id)"
                       ><i class="fa fa-dot-circle-o text-danger"></i> Visitor</a
                     >
                     <a
                       class="dropdown-item"
-                      (click)="getStatus('Active', client.id)"
+                      (click)="getStatus('Premium', client.id)"
                       ><i class="fa fa-dot-circle-o text-success"></i>
                       Premium</a
                     >
@@ -768,38 +768,38 @@
               </div>
             </div>
            
-            <!-- <div class="col-md-6">
+            <div class="col-md-6">
               <div class="form-group">
                 <label class="col-form-label"
-                  >Client ID <span class="text-danger">*</span></label
+                  >Company Email <span class="text-danger">*</span></label
                 >
                 <input
                   class="form-control"
                   type="text"
                   [class.invalid]="
-                    editClientForm.get('editClientId').invalid &&
-                    editClientForm.get('editClientId').touched
+                    editClientForm.get('editCompanyEmail').invalid &&
+                    editClientForm.get('editCompanyEmail').touched
                   "
-                  formControlName="editClientId"
+                  formControlName="editCompanyEmail"
                 />
                 <div
                   *ngIf="
-                    editClientForm.get('editClientId').invalid &&
-                    editClientForm.get('editClientId').touched
+                    editClientForm.get('editCompanyEmail').invalid &&
+                    editClientForm.get('editCompanyEmail').touched
                   "
                 >
                   <small
                     *ngIf="
-                      editClientForm.get('editClientId').invalid &&
-                      editClientForm.get('editClientId').touched
+                      editClientForm.get('editCompanyEmail').invalid &&
+                      editClientForm.get('editCompanyEmail').touched
                     "
                     class="text-danger"
                   >
-                    *Id is required</small
+                    *Company Email is required</small
                   >
                 </div>
               </div>
-            </div> -->
+            </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-form-label"
