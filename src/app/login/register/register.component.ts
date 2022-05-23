@@ -95,6 +95,7 @@ export class RegisterComponent implements OnInit {
     let password = this.form.value.password;
     let confirmPassword = this.form.value.confirmPassword;
     let location = this.location;
+    let status="Demo"
     console.log(
       companyName,
       companySite,
@@ -110,7 +111,8 @@ export class RegisterComponent implements OnInit {
       code,
       username,
       password,
-      location
+      location,
+      status
     );
     this.http
       .post("http://localhost:8443/auth/register/createUser", {
@@ -129,6 +131,7 @@ export class RegisterComponent implements OnInit {
         username,
         password,
         location,
+        status
       })
       .subscribe((response: any) => {
         console.log("result", response);

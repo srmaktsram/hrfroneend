@@ -5,16 +5,20 @@ import { DataTablesModule } from "angular-datatables";
 
 import { ClientsComponent } from "./clients.component";
 import { ClientsContentPageComponent } from "./clients-content-page/clients-content-page.component";
-import { ClientsListComponent } from "./clients-list/clients-list.component";
 import { ClientsProfileComponent } from "./clients-profile/clients-profile.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { VisitorClientsListComponent } from "./visitor-clients-list/clients-list.component";
+import { DemoClientsListComponent } from "./demo-clients-list/clients-list.component";
+import { PremiumClientsListComponent } from "./premium-clients-list/clients-list.component";
 
 @NgModule({
   declarations: [
     ClientsComponent,
     ClientsContentPageComponent,
-    ClientsListComponent,
     ClientsProfileComponent,
+    VisitorClientsListComponent,
+    DemoClientsListComponent,
+    PremiumClientsListComponent
   ],
   imports: [
     CommonModule,

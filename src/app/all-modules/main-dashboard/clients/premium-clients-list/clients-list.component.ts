@@ -13,7 +13,7 @@ declare const $: any;
   templateUrl: "./clients-list.component.html",
   styleUrls: ["./clients-list.component.css"],
 })
-export class ClientsListComponent implements OnInit, OnDestroy {
+export class PremiumClientsListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -104,7 +104,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // this.getCompanyName()
-    this.getClients();
+    this.getPremiumAdmins();
 
     this.dtOptions = {
       // ... skipped ...
@@ -145,15 +145,17 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   //Get all Clients data
-  public getClients() {
+  public getPremiumAdmins() {
     this.http
       .get(
-        "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
+        "http://localhost:8443/mainadmin/premiumClient/getPremiumClients"
       )
       .subscribe((res: any) => {
-        this.data = res;
 
-        this.srch = res;
+        this.data = res;
+        console.log(res,"All premium admin Clients")
+
+        // this.srch = res;
         //console.log(this.data, "???????????//")
       });
   }
@@ -220,7 +222,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
       .subscribe((data) => {
-        this.getClients();
+        // this.getClients();
       });
 
     $("#edit_client").modal("hide");
@@ -253,7 +255,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       .post("http://localhost:8443/admin/clients/createClient", newClient)
       .subscribe((data) => {
         //console.log("postApi", data);
-        this.getClients();
+        // this.getClients();
       });
 
     $("#add_client").modal("hide");
@@ -268,7 +270,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/admin/clients/deleteClient" + "/" + id, {})
       .subscribe((data) => {
-        this.getClients();
+        // this.getClients();
       });
 
     $("#delete_client").modal("hide");
@@ -285,7 +287,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       });
       this.data.push(...temp);
     } else {
-      this.getClients();
+      // this.getClients();
     }
   }
 
@@ -299,7 +301,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       });
       this.data.push(...temp);
     } else {
-      this.getClients();
+      // this.getClients();
     }
   }
 
@@ -313,7 +315,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       });
       this.data.push(...temp);
     } else {
-      this.getClients();
+      // this.getClients();
     }
   }
   onSearch(id, name, company) {
@@ -351,7 +353,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
       .subscribe((data: any) => {
-        this.getClients();
+        // this.getClients();
       });
   }
 
