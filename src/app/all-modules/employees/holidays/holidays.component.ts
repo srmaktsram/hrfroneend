@@ -27,7 +27,10 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-IN");
   public addHolidayForm: FormGroup;
   public editHolidayForm: FormGroup;
+  public adminId = sessionStorage.getItem("adminId");
+
   public editHolidayDate: any;
+  holiday: boolean;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -36,6 +39,8 @@ export class HolidaysComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadholidays();
+    this.getNotifications();
+    
 
     this.addHolidayForm = this.formBuilder.group({
       HolidayName: ["", [Validators.required]],
@@ -64,7 +69,18 @@ export class HolidaysComponent implements OnInit, OnDestroy {
       this.srch = [...this.rows];
     });
   }
-
+////
+getNotifications() {
+  this.http
+    .get(
+      "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
+        "/" +
+        this.adminId
+    )
+    .subscribe((data: any) => {
+      this.holiday = data[0].notification.holidays;
+    });
+}
 
   // Add holidays Modal Api Call
 
@@ -84,14 +100,22 @@ export class HolidaysComponent implements OnInit, OnDestroy {
         title: this.addHolidayForm.value.HolidayName,
         holidayDate:holiday,
         day: this.addHolidayForm.value.DaysName,
-        adminId: adminId,
+        adminId: this.adminId,
 
       };
 
-      this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res) => {
+      this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res:any) => {
           this.loadholidays();
-        });
-
+          let document=res.data
+          let author="Admin"
+          let message="added holiday of "          
+          let functions=document.title
+          let time=document.createDate
+          if (this.holiday== true) {
+          this.http.post("http://localhost:8443/admin/allNotification/createNotification"+"/"+this.adminId, {message,author,functions,time}).subscribe((data:any) => {
+            this.loadholidays();
+          });}
+        })
 
       $("#add_holiday").modal("hide");
       this.addHolidayForm.reset();

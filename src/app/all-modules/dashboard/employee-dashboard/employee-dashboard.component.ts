@@ -38,7 +38,6 @@ export class EmployeeDashboardComponent implements OnInit {
   leavesTaken: any;
   empLeaves: any;
   newLeaves: any;
-
   constructor(private http: HttpClient, private router: Router) {
     // alert(sessionStorage.getItem("username"));
   }
@@ -132,7 +131,7 @@ export class EmployeeDashboardComponent implements OnInit {
       .get(
         "http://localhost:8443/employee/leaves/getleaves" +
           "/" +
-          this.employeeId
+          this.employeeId+"/"+this.adminId
       )
       .subscribe((data: any) => {
         this.empLeaves = data;

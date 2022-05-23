@@ -4,6 +4,122 @@
     <perfect-scrollbar [scrollIndicators]="false">
       <div id="sidebar-menu" class="sidebar-menu">
         <ul *ngIf="sidebarMenus.default">
+          <ng-container *ngIf="user_type=='mainadmin'">
+          <li class="menu-title">
+            <span>Main-Admin</span>
+          </li>
+          <li class="submenu" [ngClass]="{ active: urlComplete.mainUrl === 'dashboard' }">
+            <a href="javascript:" [ngClass]="{ subdrop: urlComplete.mainUrl === 'dashboard' }">
+              <i class="la la-dashboard"></i>
+              <span>Dashboard</span>
+              <span class="menu-arrow"></span>
+            </a>
+            <ul style="display: none" [ngStyle]="{
+                display: urlComplete.mainUrl === 'dashboard' ? 'block' : 'none'
+              }">
+              
+                <li routerLink="/layout/mainadmin/admindashboard">
+                  <a [ngClass]="{ active: urlComplete.subUrl === 'admindashboard' }" href="javascript:">Admin Dashboard</a>
+                </li>
+              
+             
+          
+            </ul>
+            
+          </li>
+
+          <li [ngClass]="{
+            active:
+              urlComplete.subUrl === 'clientspage' ||
+              urlComplete.subUrl === 'clientslist'
+          }">
+          <a routerLink="/layout/mainadmin/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
+        </li>
+          <li [ngClass]="{
+            active:
+              urlComplete.subUrl === 'clientspage' ||
+              urlComplete.subUrl === 'clientslist'
+          }">
+          <a routerLink="/layout/mainadmin/subadmins/clientspage"><i class="la la-users"></i> <span>Sub Admin</span></a>
+        </li>
+
+        <li [ngClass]="{
+          active:
+            urlComplete.subUrl === 'ticketscontent' ||
+            urlComplete.subUrl === 'ticketsview'
+        }">
+        <a routerLink="/layout/mainadmin/tickets/ticketscontent"><i class="la la-ticket"></i> <span>Tickets</span></a>
+      </li>
+
+     
+
+        <li class="submenu" [ngClass]="{
+          active:
+            urlComplete.mainUrl === 'accounts' ||
+            urlComplete.mainUrl === 'reports'
+        }">
+          <a href="javascript:" [ngClass]="{
+            subdrop:
+              urlComplete.mainUrl === 'accounts' ||
+              urlComplete.mainUrl === 'reports'
+          }">
+
+            <i class="la la-files-o"></i> <span> Sales </span>
+            <span class="menu-arrow"></span></a>
+          <ul style="display: none" [ngStyle]="{
+            display:
+              urlComplete.mainUrl === 'accounts'
+                ? 'block' || urlComplete.mainUrl === 'reports'
+                : 'none'
+          }">
+
+            <li routerLink="/layout/mainadmin/accounts/estimates">
+              <a href="javascript:" [ngClass]="{
+                active:
+                  urlComplete.subUrl === 'estimates' ||
+                  urlComplete.subUrl === 'estimates-view' ||
+                  urlComplete.subUrl === 'create-estimates' ||
+                  urlComplete.subUrl === 'edit-estimates?id=1'
+              }">Estimates</a>
+            </li>
+            <li routerLink="/layout/mainadmin/accounts/invoices">
+              <a href="javascript:" [ngClass]="{
+                active:
+                  urlComplete.subUrl === 'invoices' ||
+                  urlComplete.subUrl === 'invoice-view' ||
+                  urlComplete.subUrl === 'create-invoice' ||
+                  urlComplete.subUrl === 'edit-invoice-report' ||
+                  urlComplete.subUrl === 'edit-invoice?id=1'
+              }">Invoices</a>
+            </li>
+            <li routerLink="/layout/mainadmin/accounts/payments">
+              <a href="javascript:" [ngClass]="{ active: urlComplete.subUrl === 'payments' }">Payments</a>
+            </li>
+            <li routerLink="/layout/mainadmin/accounts/expenses">
+              <a href="javascript:" [ngClass]="{ active: urlComplete.subUrl === 'expenses' }">Expenses</a>
+            </li>
+            <li routerLink="/layout/mainadmin/accounts/provident-fund">
+              <a href="javascript:" [ngClass]="{
+                active: urlComplete.subUrl === 'provident-fund'
+              }">Provident Fund</a>
+            </li>
+            <li routerLink="/layout/mainadmin/accounts/taxes">
+              <a href="javascript:" [ngClass]="{ active: urlComplete.subUrl === 'taxes' }">Taxes</a>
+            </li>
+          </ul>
+        </li>
+
+
+
+
+
+        </ng-container>
+
+
+
+<!-- ///////////////////////////client admin -->
+
+        <ng-container *ngIf="user_type!='mainadmin'">
           <li class="menu-title">
             <span>Main</span>
           </li>
@@ -28,6 +144,7 @@
               </ng-container>
             </ul>
           </li>
+         
           <li class="submenu" [ngClass]="{ active: urlComplete.mainUrl === 'apps' }">
             <a href="javascript:" [ngClass]="{ subdrop: urlComplete.mainUrl === 'apps' }">
               <i class="la la-cube"></i>
@@ -1054,6 +1171,7 @@
               </ul>
             </li>
           </ng-container>
+        </ng-container>
         </ul>
         <ul *ngIf="sidebarMenus.chat">
           <li routerLink="/layout/dashboard/admin">

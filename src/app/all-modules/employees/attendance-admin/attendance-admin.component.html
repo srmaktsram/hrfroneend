@@ -104,15 +104,26 @@
                     </thead>
                     <tbody>
 
-                        <tr *ngFor="let item of lstAttandance">
+                        <tr *ngFor="let item of employeeData">
                             <td>
                                 <h2 class="table-avatar">
                                     <a class="avatar avatar-xs" routerLink="/layout/employees/employeeprofile"><img
                                             alt="" src="assets/img/profiles/avatar-9.jpg"></a>
-                                    <a routerLink="/layout/employees/employeeprofile">{{item.employeeName}}</a>
+                                    <a routerLink="/layout/employees/employeeprofile">{{item.name}} </a>
                                 </h2>
                             </td>
-
+                            <td *ngFor="let data of item.attendDate " >
+                            <ng-container *ngIf="data =='A'">
+                                <span class="text-danger text-lg"> <b>{{data}}</b></span>
+                            </ng-container>
+                            <ng-container *ngIf="data =='P'">
+                                <span class="text-success text-lg"><b>{{data}}</b></span>
+                            </ng-container>
+                            <ng-container *ngIf="data =='P/2'">
+                                <span class="text-primary text-lg"><b>{{data}}</b></span>
+                            </ng-container>
+                                
+                        </td>
 
 
                         </tr>

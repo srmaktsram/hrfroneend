@@ -250,11 +250,11 @@
             </div>
           </div>
         </section> -->
-        <section>
+        <section *ngFor="let item of lstHoliday">
           <h5 class="dash-title">Upcoming Holiday</h5>
           <div class="card">
             <div class="card-body text-center">
-              <h4 *ngFor="let item of lstHoliday">
+              <h4>
                 {{ item.holidayDate }} - {{ item.title }}
               </h4>
             </div>

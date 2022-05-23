@@ -32,7 +32,9 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {}
-
+  sendTo() {
+    this.router.navigate(["/login/forgot"]);
+  }
   submit() {
     let email = this.form.value.email;
     let password = this.form.value.password;
