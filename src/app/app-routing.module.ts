@@ -11,6 +11,11 @@ const routes: Routes = [
       import("./homepage/homepage.module").then((m) => m.HomePageModule),
   },
   {
+    path: "login",
+    loadChildren: () =>
+      import("./login/login.module").then((m) => m.LoginModule),
+  },
+  {
     path: "error",
     loadChildren: () =>
       import("./errorpages/errorpages.module").then((m) => m.ErrorpagesModule),

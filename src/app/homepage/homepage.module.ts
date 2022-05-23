@@ -11,7 +11,6 @@ import { MatCardModule } from '@angular/material/card';
     CommonModule,
     HomePageRoutingModule,
     MatCardModule
-    // MatCardModule,
   ]
 })
 export class HomePageModule { }

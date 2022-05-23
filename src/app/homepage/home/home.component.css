@@ -1,11 +1,1206 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-.mainDiv{
-	height: 100px;;
-	width:100%;
-	border-top: 1px solid green;
-}
+
+/*//////////////////////////////////// header Css ////////////////////////////////////////////////////*/
+
 .mat{
 	height:110px;
 	width:100%;
+	display:flex;
+	justify-content: space-between;
+
+	/* background-color: aqua; */
+}
+.flexItems{
+	display:flex;
+    justify-content: space-between;
+	/* border:4px solid green; */
+	align-items: center;
+	width:100%;
+}
+.img{
+	height: 90px;
+	width:90px;
+	margin-left:10px;
+	margin-top: -10px;
+}
+.mainFlexDiv{
+	/* border:4px solid blue;	 */
+	width:90%;
+	display: flex;
+	justify-content: center;
+}
+
+
+/* ////////////////////////////////////////////////////HeaderCss close//////////////////////////////////////// */
+
+
+.button{
+	border:15px solid orange;
+	background-color: orange;
+	width: 200px;
+	border-radius: 8px;
+	text-align: center;
+	cursor: pointer;
+}
+.rupee{
+	display: flex;
+	justify-content: space-between;
+	margin-top: 50px;
+	margin-left: 50px;
+	margin-right: 50px;
+}
+.spanText{
+	font-size:50px;
+	font-weight: bold;
+	margin-left:20px ;
+	
+}
+.textDiv{
+	padding-top: 80px;
+	display: flex;
+	justify-content: space-between;
+	background-color: rgb(238, 235, 232);
+}
+
+.IndiasNo1{
+   width:60%
+}
+.inputText{
+	width:70%;
+	height:80px;
+	margin-top: 20px;
+	margin-left: 20px;
+}
+.vajpaiiDiv{
+	width:40%
+}
+.VajpaiiImg{
+
+width:100%
+
+}
+.freeTrail{
+	height:80px;
+	margin-top: 20px;
+}
+.getfree{
+	font-size: 25px;
+	border:5px solid red;
+	background: red;
+	cursor: pointer;
+	border-radius:5px;
+
+}
+.desktop{
+	margin-top: 100px;
+	border:20px solid black;
+	background-color: black;
+	color:white;
+	width:30%;
+	margin-left: 50px;
+	text-align: center;
+	border-radius: 7px;
+	font-size: 25px;
+}
+.fileicon{
+ text-align: center;
+}
+.India{
+	margin-left: 60px;
+}
+.iso{
+margin-top: -50px;
+display: flex;
+justify-content: space-between;
+width:50%;
+}
+
+.isoCertified{
+	width: 200px;
+}
+.customerChoice{
+	width:250px
+}
+.Create{
+	font-size: 50px;
+	margin-left: 50px;
+	margin-top: 150px;
+
+}
+.professional{
+	font-size: 50px;
+	color:red;
+	font-weight: bold;
+	margin-left: 50px;
+}
+.NonGst{
+	font-size: 50px;
+	color:red;
+	font-weight: bold;
+}
+.or{
+	font-size: 50px;
+	font-weight: bold;
+}
+.fully{
+ margin-left:50px;
+ margin-top: 50px;
+}
+.op{
+	background:white;
+	border-bottom:10px solid orange
+}
+.list{
+	margin-top: 15px;
+	font-size: 25px;
+	margin-left:50px;
+}
+
+.flexImage{
+ display:flex;
+ justify-content: space-between;
+}
+.lapimage{
+	width:50%;
+}
+.invoiceImage{
+	width:100%;
+}
+.why{
+	margin-top: 150px;
+	font-size: 50px;
+	font-weight: bold;
+	margin-left:30px ;
+}
+.Flexicons{
+	display:flex;
+	justify-content: space-between;
+}
+.invoiceWebp{
+	margin-top: 100px;
+	width:30%;
+	text-align: center;
+}
+.imgHight{
+	width:130px;
+	height:130px;
+
+}
+.stayConnected{
+	font-size: 40px;
+	font-weight: bold;
+	margin-left: 70px;
+
+}
+.Connected{
+	font-size: 40px;
+	font-weight: bold;
+	color:orange;
+	margin-left: 10px;
+}
+.SyncData{
+	margin-left: 70px;
+}
+.mobileLaptop{
+	width:70%;
+}
+.whoisIt{
+	margin-left: 70px;
+	color:orange;
+	font-weight: bold;
+	font-size: 50px;
+	margin-top: 80px;
+
+}
+.ForRetailers{
+	display: flex;
+	justify-content: space-between;
+	margin-top:80px;
+	width:100%;
+	height:100px;
+	background:white;
+	margin-left: 70px;
+	padding-left: 20px;
+
+}
+.plusIcon{
+	height:50px;
+	width:50px;
+	margin-right:20px;
+	margin-top:15px;
+}
+.hiddenList{
+	margin-left: 80px;
+	font-size: 20px;
+}
+.hiddenContentDiv{
+	background-color: white;
+	padding-top: 10px;
+    width:100%;
+	margin-left: 70px;
+	
+}
+.coneImgDIv{
+	background-color: rgb(238, 235, 232);
+}
+.flexHiddenImg{
+	display:flex;
+	justify-content: space-between;
+}
+.ManImgDiv{
+width:28%;
+}
+.manImg{
+	width:100%;
+}
+.ourUsers{
+	color:orange;
+	font-size: 50px;
+	font-weight: bold;
+
+}
+.what{
+	font-size: 50px;
+	margin-left: 70px;
+
+}
+.Bussiness{
+	margin-left: 70px;
+	margin-top: 10px;
+
+}
+.SayAboutUs{
+	font-size: 50px;
+}
+.Fmgc{
+	font-size: 30px;
+	border:5px solid red;
+	background:red;
+	margin-left: 70px;
+	width:13%;
+	border-radius: 20px;
+}
+.Electronics{
+	font-size: 30px;
+	border:5px solid green;
+	background:green;
+	margin-left: 20px;
+	width:13%;
+	border-radius: 20px;
+
+
+}
+.Hardware{
+	font-size: 30px;
+	border:5px solid yellow;
+	background:yellow;
+	margin-left: 20px;
+	width:13%;
+	border-radius: 20px;
+
+
+}
+.Kirana{
+	font-size: 30px;
+	border:5px solid blue;
+	background:blue;
+	margin-left: 20px;
+	width:13%;
+	border-radius: 20px;
+
+
+
+
+}
+.Jewellery{
+	font-size: 30px;
+	border:5px solid blueviolet;
+	background:blueviolet;
+	margin-left: 20px;
+	width:13%;
+	border-radius: 20px;
+
+
+
+}
+.Pharma{
+	font-size: 30px;
+	border:5px solid orange;
+	background:orange;
+	margin-left: 70px;
+	width:13%;
+	border-radius: 20px;
+
+
+
+}
+.Transportation{
+	font-size: 30px;
+	border:5px solid rgb(121, 169, 203);
+	background: rgb(121, 169, 203);
+	margin-left: 20px;
+	border-radius: 20px;
+	width:13%;
+}
+.flexImageContent{
+display:flex;
+justify-content: space-between;
+}
+.FmgcContent{
+	width:75%;
+	margin-top: 70px;
+}
+.commentImgDiv{
+	width:20%;
+	margin-left: 70px;
+	margin-top: 70px;
+}
+.commentImg{
+	width:75%;
+	margin-left: 70px;
+}
+.TakeYourBusiness{
+	font-size: 60px;
+	font-weight: bold;
+	margin-left:70px;
+
+}
+.online{
+	color:orange;
+	font-size: 60px;
+	font-weight: bold;
+
+}
+.onlineContentDiv{
+	margin-top: 300px;
+	width:50%;
+}
+.setup{
+	font-size: 30px;
+	margin-left:70px;
+}
+.flexBusiness{
+display:flex;
+justify-content: space-between;
+}
+.storeImgDiv{
+	width:50%;
+}
+.storeImg{
+
+	width:90%;
+}
+.benifitsOfBillbook{
+	margin-top: 70px;
+}
+.benifits{
+	font-size: 60px;
+	color:orange;
+	font-weight: bold;
+	margin-left: 70px;
+
+}
+.billBook{
+	font-size: 60px;
+
+}
+.flexNewIcons{
+	margin-left: 100px;
+	display:flex;
+	justify-content: space-between;
+	margin-top: 100px;
+}
+.safeAndSecureDiv{
+	width:30%;
+	text-align: center;
+
+}
+.safeAndSecureImg{
+	height: 150px;
+	width: 150px;
+	
+}
+.AssociationDiv{
+	margin-top: 100px;
+	margin-left: 70px;
+}
+.Associations{
+	font-size: 60px;
+	color:orange;
+}
+.And{
+	font-size: 60px;
+
+}
+.memberIconsDiv{
+	display:flex;
+	justify-content: space-between;
+	background-color: white;
+
+}
+.memberIcons{
+	width:15%;
+	margin-left: 70px;
+	margin-right: 70px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+.memberIconImg{
+	width:177px;
+}
+.memberIconImg1{
+	width:177px;
+	height: 50px;
+}
+.FooterMainDiv{
+	display:flex;
+	justify-content: space-between;
+	margin-top: 50px;
+}
+
+
+.getInTouchDiv{
+	padding-left: 70px;
+
+}
+
+.getInTouch{
+	color:orangered
+
+}
+
+.paragraph{
+	font-size:22px;
+}
+
+.TrandingFooter{
+	padding-right: 70px;
+}
+
+.whatsAppIcon{
+ width:30px
+}
+.whatsApp{
+	font-size: 20px;
+	margin-left: 20px;
+	color:green;
+
+}
+.whatsAppDiv{
+	margin-top: 20px;
+	border:8px solid rgb(166, 251, 227);;
+	text-align: center;
+	background-color: rgb(166, 251, 227);
+	border-radius: 10px;
+	cursor: pointer;
+}
+.followus{
+	margin-top: 20px;
+
+}
+.matfooter{
+	margin-top: 30px;
+	width:53px;
+	border-radius: 50%;
+	cursor: pointer;
+	text-align: center;
+
+}
+.flexYoutubeIcons{
+	display:flex;
+	justify-content:space-between;
+}
+
+.manyButtons{
+  margin-top: 40px;
+
+}
+
+/* /////////////////////////////////////////MIDIA QUERY START FROM HERE ///////////////////////////////////////*/
+
+@media(min-width:1400px) and (max-width:1500px){
+	
+.mat{
+	height:110px;	
+	display:flex;
+	justify-content: space-between;
+	width:110%;
+}
+.textDiv{
+	width: 110%;
+	padding-top: 80px;
+	display: flex;
+	justify-content: space-between;
+	background-color: rgb(238, 235, 232);
+	padding-bottom:120px;
+}
+.IndiasNo1{
+	width:70%;
+ }
+ .desktop{
+	margin-top: 100px;
+	border:20px solid black;
+	background-color: black;
+	color:white;
+	width:40%;
+	margin-left: 50px;
+	text-align: center;
+	border-radius: 7px;
+	font-size: 25px;
+}
+.iso{
+	/* margin-top: 50px; */
+	display: flex;
+	justify-content: space-between;
+	width:70%;
+	/* border:4px solid red */
+	}
+	.vajpaiiDiv{
+    	width:40%
+	}
+
+	.VajpaiiImg{
+		width:100%;
+		height:110%;
+		}
+	.rupee{
+			display: flex;
+			justify-content: space-between;
+			margin-top: 50px;
+			margin-left: 50px;
+			margin-right: 50px;
+			width:105%;
+		}
+		.flexImage{
+			display:flex;
+			justify-content: space-between;
+			width:110%;
+		
+		}
+		.professional{
+			font-size: 42px;
+			color:red;
+			font-weight: bold;
+			margin-left: 50px;
+		}
+		.NonGst{
+			font-size: 42px;
+			color:red;
+			font-weight: bold;
+		}
+		.op{
+			background:white;
+			border-bottom:10px solid orange;
+			width:110%;
+		}
+		.coneImgDIv{
+			width: 110%;
+			background-color: rgb(238, 235, 232);
+		}
+		.flexHiddenImg{
+			display:flex;
+			justify-content: space-between;
+			width:110%;
+		}
+		.manImg{
+			width:100%;
+		}
+		.ManImgDiv{
+			width:33%
+		}		
+		
+		.Transportation{
+			font-size: 30px;
+			border:5px solid rgb(121, 169, 203);
+			background: rgb(121, 169, 203);
+			margin-left: 20px;
+			border-radius: 20px;
+			width:16%;
+		}
+		.flexImageContent{
+			display:flex;
+			justify-content: space-between;
+			width:110%;
+			}
+			.commentImgDiv{
+				width:20%;
+				margin-top: 70px;
+			}
+
+			.commentImg{
+				width:75%;
+				margin-left:30px;
+			}
+			.onlineContentDiv{
+				margin-top: 130px;
+				width:60%;
+			}
+			.storeImgDiv{
+				width:50%;
+			}
+			.flexBusiness{
+				display:flex;
+				justify-content: space-between;
+				width:110%
+				}
+				
+					.FooterMainDiv{
+						display:flex;
+						justify-content: space-between;
+						margin-top: 50px;
+						width:110%;
+					}
+					
+				
+}
+
+
+
+@media(min-width:700px) and (max-width:775px){
+
+	.mat{
+		height:110px;	
+		display:flex;
+		justify-content: space-between;
+		width:161%;
+	}
+	.textDiv{
+		width: 161%;
+		padding-top: 80px;
+		display: flex;
+		justify-content: space-between;
+		background-color: rgb(238, 235, 232);
+		padding-bottom:120px;
+	}
+	.IndiasNo1{
+		width:80%;
+	 }
+	 .desktop{
+		margin-top: 120px;
+		border:20px solid black;
+		background-color: black;
+		color:white;
+		width:40%;
+		margin-left: 50px;
+		text-align: center;
+		border-radius: 7px;
+		font-size: 25px;
+	}
+
+	.vajpaiiDiv{
+    	width:50%
+	}
+
+	.VajpaiiImg{
+		width:100%;
+		height:110%;
+	}
+
+
+.iso{
+	display: flex;
+	justify-content: space-between;
+	width:120%;
+	}
+	.rupee{
+		display: flex;
+		justify-content: space-between;
+		margin-top: 50px;
+		margin-left: 50px;
+		margin-right: 50px;
+		width:155%;
+	}
+	.flexImage{
+		display:flex;
+		justify-content: space-between;
+		width:161%;
+	
+	}
+	.Create{
+		font-size: 50px;
+		margin-left: 50px;
+		margin-top: 100px;
+	}
+	 .CreateAndPrint{
+		width:110%;
+	}
+	.lapimage{
+		width:60%;
+	}
+
+	.professional{
+		font-size: 45px;
+		color:red;
+		font-weight: bold;
+		margin-left: 50px;
+	}
+	.NonGst{
+		font-size: 45px;
+		color:red;
+		font-weight: bold;
+	}
+	.or{
+		font-size: 50px;
+		font-weight: bold;
+	}
+	.fully{
+	 margin-left:50px;
+	 margin-top: 50px;
+	}
+
+	.invoiceImage{
+		width:100%;
+		height: 100%;
+	}
+ 
+	.Flexicons{
+		display:flex;
+		justify-content: space-between;
+		width:161%;
+	}
+	.op{
+		background:white;
+		border-bottom:10px solid orange;
+		width:161%;
+	}
+
+	.flexHiddenImg{
+		display:flex;
+		justify-content: space-between;
+		width:161%;
+	}
+	.hiddenContentDiv{
+		background-color: white;
+		padding-top: 10px;
+		width:100%;
+		margin-left: 70px;
+		
+	}
+	.manImg{
+		width:100%;
+	}
+	.ManImgDiv{
+		width:35%;
+		height:100%;
+	}	
+	.manyButtons{
+		margin-top: 40px;
+		width:161%;
+	  
+	  }
+	  .Transportation{
+		font-size: 30px;
+		border:5px solid rgb(121, 169, 203);
+		background: rgb(121, 169, 203);
+		margin-left: 20px;
+		border-radius: 20px;
+		width:20%;
+	}
+
+	.flexImageContent{
+		display:flex;
+		justify-content: space-between;
+		width:161%;
+		}
+		.FmgcContent{
+			width:60%;
+			margin-top: 70px;
+		}
+		.commentImgDiv{
+			width:35%;
+			margin-top: 70px;
+		}
+		.commentImg{
+			width:75%;
+			margin-left:30px;
+		}
+	  
+		.flexBusiness{
+			display:flex;
+			justify-content: space-between;
+			width:161%;
+			}
+
+			.TakeYourBusiness{
+				font-size: 40px;
+				font-weight: bold;
+				margin-left:70px;
+			
+			}
+			.online{
+				color:orange;
+				font-size: 40px;
+				font-weight: bold;
+			
+			}
+			.onlineContentDiv{
+				margin-top: 130px;
+				width:60%;
+			}
+
+			.benifitsOfBillbook{
+				margin-top: 70px;
+				width:161%;
+			}
+
+			.flexNewIcons{
+				margin-left: 100px;
+				display:flex;
+				justify-content: space-between;
+				margin-top: 100px;
+				width:150%;
+			}
+
+
+			.AssociationDiv{
+				margin-top: 100px;
+				margin-left: 70px;
+				width:150%;
+			}
+			.Associations{
+				font-size: 60px;
+				color:orange;
+			}
+			.And{
+				font-size: 60px;
+			
+			}
+			
+			.FooterMainDiv{
+				display:flex;
+				justify-content: space-between;
+				margin-top: 50px;
+				width:161%;
+			}			
+		
+
+			.getInTouchDiv{
+				padding-left: 20px;
+			
+			}
+
+			.TrandingFooter{
+				padding-right: 0px;
+			}
+
+			.whatsAppDiv{
+				margin-top: 20px;
+				border:8px solid rgb(166, 251, 227);;
+				text-align: center;
+				background-color: rgb(166, 251, 227);
+				border-radius: 10px;
+				cursor: pointer;
+				width:80%;
+			}
+}
+	
+
+ @media(min-width:370px) and (max-width:450px){
+
+	.mat{
+		height:110px;	
+		display:flex;
+		justify-content: space-between;
+		width:250%;
+	}
+
+	.textDiv{
+		width: 250%;
+		padding-top: 80px;
+		display: flex;
+		justify-content: space-between;
+		background-color: rgb(238, 235, 232);
+		padding-bottom:120px;
+	}
+	.IndiasNo1{
+		width:100%;
+	 }
+	 .desktop{
+		margin-top: 140px;
+		border:20px solid black;
+		background-color: black;
+		color:white;
+		width:40%;
+		margin-left: 50px;
+		text-align: center;
+		border-radius: 7px;
+		font-size: 25px;
+	}
+
+	.vajpaiiDiv{
+    	width:50%
+	}
+
+	.VajpaiiImg{
+		width:100%;
+		height:110%;
+	}
+
+
+	.iso{
+		display: flex;
+		justify-content: space-between;
+		width:200%;
+		}
+		.rupee{
+			display: flex;
+			justify-content: space-between;
+			margin-top: 50px;
+			margin-left: 50px;
+			margin-right: 50px;
+			width:240%;
+			text-align: center;
+		}
+		.flexImage{
+			display:flex;
+			justify-content: space-between;
+			width:250%;
+		
+		}
+		.Create{
+			font-size: 50px;
+			margin-left:20px;
+			margin-top: 100px;
+		}
+		 .CreateAndPrint{
+			width:110%;
+		}
+		.lapimage{
+			width:60%;
+		}
+		.invoiceImage{
+			width:100%;
+			height: 100%;
+		}
+	 
+
+		.professional{
+			font-size: 45px;
+			color:red;
+			font-weight: bold;
+			margin-left: 20px;
+		}
+		.NonGst{
+			font-size: 45px;
+			color:red;
+			font-weight: bold;
+		}
+		.or{
+			font-size: 50px;
+			font-weight: bold;
+		}
+
+		.Flexicons{
+			display:flex;
+			justify-content: space-between;
+			width:230%;
+		}
+
+		.whyUseBillBook{
+			width:200%;
+		}
+
+		.StayConnected{
+			width:230%;
+		}
+		.op{
+			background:white;
+			border-bottom:10px solid orange;
+			width:250%;
+		}
+
+	.flexHiddenImg{
+		display:flex;
+		justify-content: space-between;
+		width:250%;
+	}
+	.hiddenContentDiv{
+		background-color: white;
+		padding-top: 10px;
+		width:90%;
+		margin-left: 70px;
+		
+	}
+	.manImg{
+		width:100%;
+	}
+	.ManImgDiv{
+	
+		 display:none
+	}	
+
+	.ForRetailers{
+		display: flex;
+		justify-content: space-between;
+		margin-top:80px;
+		width:90%;
+		height:100px;
+		background:white;
+		margin-left: 70px;
+		padding-left: 20px;
+	
+	}
+	.retailersDiv{
+		width:100%;
+	}
+
+	.manyButtons{
+		margin-top: 40px;
+		width:250%;
+	  
+	  }
+
+	  .Electronics{
+		font-size: 30px;
+		border:5px solid green;
+		background:green;
+		margin-left: 20px;
+		width:18%;
+		border-radius: 20px;
+	
+	
+	}
+	.Hardware{
+		font-size: 30px;
+		border:5px solid yellow;
+		background:yellow;
+		margin-left: 20px;
+		width:18%;
+		border-radius: 20px;
+	
+	
+	}
+
+	
+.Jewellery{
+	font-size: 30px;
+	border:5px solid blueviolet;
+	background:blueviolet;
+	margin-left: 20px;
+	width:18%;
+	border-radius: 20px;
+
+
+
+}
+.Pharma{
+	font-size: 30px;
+	border:5px solid orange;
+	background:orange;
+	margin-left: 70px;
+	width:18%;
+	border-radius: 20px;
+
+
+
+}
+.Transportation{
+	font-size: 30px;
+	border:5px solid rgb(121, 169, 203);
+	background: rgb(121, 169, 203);
+	margin-left: 20px;
+	border-radius: 20px;
+	width:22%;
+}
+
+
+.flexImageContent{
+	display:flex;
+	justify-content: space-between;
+	width:250%;
+	}
+	.FmgcContent{
+		width:60%;
+		margin-top: 70px;
+	}
+	.commentImgDiv{
+		width:40%;
+		margin-top: 70px;
+	}
+	.commentImg{
+		width:80%;
+		margin-left:10px;
+	}
+  
+	.flexBusiness{
+		display:flex;
+		justify-content: space-between;
+		width:250%;
+		}
+
+		.TakeYourBusiness{
+			font-size: 40px;
+			font-weight: bold;
+			margin-left:70px;
+		
+		}
+		.online{
+			color:orange;
+			font-size: 40px;
+			font-weight: bold;
+		
+		}
+		.onlineContentDiv{
+			margin-top: 100px;
+			width:60%;
+		}
+
+
+		.benifitsOfBillbook{
+			margin-top: 70px;
+			width:250%;
+		}
+		.flexNewIcons{
+			margin-left: 100px;
+			display:flex;
+			justify-content: space-between;
+			margin-top: 100px;
+			width:200%;
+		}
+
+
+		.AssociationDiv{
+			margin-top: 100px;
+			margin-left: 70px;
+			width:230%;
+		}
+		.Associations{
+			font-size: 60px;
+			color:orange;
+		}
+		.And{
+			font-size: 60px;
+		
+		}
+	
+
+		.FooterMainDiv{
+			display:flex;
+			justify-content: space-between;
+			margin-top: 50px;
+			width:250%;
+		}			
+	
+
+		.getInTouchDiv{
+			padding-left: 20px;
+		
+		}
+
+		.TrandingFooter{
+			padding-right: 0px;
+		}
+
+		.whatsAppDiv{
+			margin-top: 20px;
+			border:8px solid rgb(166, 251, 227);;
+			text-align: center;
+			background-color: rgb(166, 251, 227);
+			border-radius: 10px;
+			cursor: pointer;
+			width:80%;
+		}
+		
 
 }
