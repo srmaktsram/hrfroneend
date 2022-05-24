@@ -254,7 +254,7 @@
                             class="float-end btn btn-primary btn-sm" data-bs-toggle="modal"
                             data-bs-target="#assign_leader"><i class="fa fa-plus"></i> Add</button></h6>
                     <ul class="list-box" >
-                        <li>
+                        <li *ngFor="let item of projects.projectLeader">
                             <a routerLink="/layout/employees/employeeprofile">
                                 <div class="list-item">
                                     <div class="list-left">
@@ -262,7 +262,7 @@
                                                 src="assets/img/profiles/avatar-11.jpg"></span>
                                     </div>
                                     <div class="list-body">
-                                        <span class="message-author">{{projects.projectLeader}}</span>
+                                        <span class="message-author">{{item.name}}</span>
                                         <div class="clearfix"></div>
                                         <span class="message-content">Team Leader</span>
                                     </div>
@@ -289,7 +289,7 @@
                                         <span class="avatar"><img alt="" src="assets/img/profiles/avatar-2.jpg"></span>
                                     </div >
                                     <div class="list-body">
-                                        <span class="message-author">{{users}}</span>
+                                        <span class="message-author">{{users.name}}</span>
                                         <div class="clearfix"></div>
                                         <span class="message-content">projects team Member</span>
                                     </div>
@@ -327,7 +327,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
                                     <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div  (click)="addLeader(user.firstName,user.lastName)" class="user-name">{{user.firstName}} {{user.lastName}}</div>
+                                        <div  (click)="addLeader(user.firstName,user.lastName,user.id)" class="user-name">{{user.firstName}} {{user.lastName}}</div>
                                         <span class="designation">{{user.designation}}</span>
                                     </div>
                                 </div>
@@ -338,12 +338,12 @@
                     </ul>
                 </div>
                 <div>
-                    
-                     <div  *ngIf="teamLeader">   <span class="avatar flex-shrink-0"  ><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
-                        <span class="text-danger">{{teamLeader}}</span>
-                    </div>
-                    
-                </div>
+                  <div *ngFor="let name of leader" class="main">
+                   <div class="child">   <span class="avatar flex-shrink-0"  ><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
+                      <span class="text-danger">{{name.name}}</span>
+                  </div>
+                  </div>
+              </div>
                 <div class="submit-section">
                     <button class="btn btn-primary submit-btn" (click)="addTeamLeader()">Submit</button>
                 </div>
@@ -375,7 +375,7 @@
                                 <div class="media d-flex">
                                     <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
                                     <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div  (click)="addUsers(user.firstName,user.lastName)" class="user-name">{{user.firstName}} {{user.lastName}}</div>
+                                        <div  (click)="addUsers(user.firstName,user.lastName,user.id)" class="user-name">{{user.firstName}} {{user.lastName}}</div>
                                         <span class="designation">{{user.designation}}</span>
                                     </div>
                                    
@@ -388,7 +388,7 @@
                  <div>
                     <div *ngFor="let name of userArr" class="main">
                      <div class="child">   <span class="avatar flex-shrink-0"  ><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
-                        <span class="text-danger">{{name}}</span>
+                        <span class="text-danger">{{name.name}}</span>
                     </div>
                     </div>
                 </div>

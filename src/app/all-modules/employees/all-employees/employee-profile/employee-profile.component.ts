@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 declare const $: any;
 @Component({
@@ -18,11 +18,14 @@ export class EmployeeProfileComponent implements OnInit {
   public editEducationForm: FormGroup;
   editBankForm: FormGroup;
   public editExpForm: FormGroup;
+  public editbankStatutory: FormGroup;
   id: string;
   data: any;
   public profileEmp: any
+  public adminId:any;
   public name: any;
   designation: any;
+  public show=true;
   department: any;
   employeeid: any;
   joindate: any;
@@ -36,6 +39,15 @@ export class EmployeeProfileComponent implements OnInit {
   familyinfo: any;
   educationinfo: any;
   expinfo: any;
+  public employeeProjects=[];
+  public projectLeader=[];
+  public projectTeam=[];
+  public projects=[]
+  itemsArray: FormGroup;
+  eduhidden=true;
+  exphidden=true;
+  getEmployeeForm: any;
+  
 
   constructor(
     private toastr: ToastrService,
@@ -43,17 +55,33 @@ export class EmployeeProfileComponent implements OnInit {
     private http: HttpClient
   ) {
     this.id = sessionStorage.getItem("empid")
-    console.log(this.id, "pkkkkkkkk")
+      this.adminId=sessionStorage.getItem("adminId")
+    // console.log(this.id, "pkkkkkkkk")
     this.getId(this.id);
-    console.log(this.id, "hpppppppppppp")
-
+    // console.log(this.id, "hpppppppppppp")
+    this.getProjects();
 
   }
 
   ngOnInit() {
 
     this.addEmployeeForm = this.formBuilder.group({
-      client: ["", [Validators.required]],
+      salaryBasis:["",[Validators.required]],
+      salaryAmount:["",[Validators.required]],
+      paymentType:["",[Validators.required]],
+      pfContribution:["",[Validators.required]],
+      pfNo:["",[Validators.required]],
+      employeePfRate:["",[Validators.required]],
+      additionalRate:["",[Validators.required]],
+      totalRate:["",[Validators.required]],
+      pfEmployeePfRate:["",[Validators.required]],
+      pfAdditionRate:["",[Validators.required]],
+      pfTotalRate:["",[Validators.required]],
+      esiContribution:["",[Validators.required]],
+      esiNo:["",[Validators.required]],
+      employeeEsiRate:["",[Validators.required]],
+      esiAdditionalRate:["",[Validators.required]],
+      esiTotalRate:["",[Validators.required]],
     });
 
 
@@ -91,6 +119,7 @@ export class EmployeeProfileComponent implements OnInit {
 
     })
 
+
     this.editBankForm = this.formBuilder.group({
 
 
@@ -102,20 +131,10 @@ export class EmployeeProfileComponent implements OnInit {
     })
 
 
-    this.editFamilyForm = this.formBuilder.group({
-      items: this.formBuilder.array([
 
 
-      ]),
+   
 
-    })
-
-    // this.itemsArray = this.formBuilder.group({
-    //   name: ["", [Validators.required]],
-    //   relationship: ["", [Validators.required]],
-    //   dateOfBirth: ["", [Validators.required]],
-    //   phone: ["", [Validators.required]],
-    // });
 
 
 
@@ -133,25 +152,84 @@ export class EmployeeProfileComponent implements OnInit {
 
     })
 
+
+
+    this.editFamilyForm = this.formBuilder.group({
+      items: this.formBuilder.array([
+        this.formBuilder.group({
+          name: ["", [Validators.required]],
+          relationship: ["", [Validators.required]],
+          dateOfBirth: ["", [Validators.required]],
+          phone: ["", [Validators.required]],
+
+        })
+      ])
+
+    })
+
     this.editEducationForm = this.formBuilder.group({
-      items1: this.formBuilder.array([]),
+      items1: this.formBuilder.array([
+        this.formBuilder.group({
+          institution:["" ,[Validators.required]],
+          subject:["" ,[Validators.required]],
+          startingDate:["" ,[Validators.required]],
+          completeDate:["" ,[Validators.required]],
+          degree:["" ,[Validators.required]],
+          grade:["" ,[Validators.required]],
+          
+        })
+      ]),
 
     })
 
     this.editExpForm = this.formBuilder.group({
-      itemsExp: this.formBuilder.array([]),
+      itemsExp: this.formBuilder.array([
+        this.formBuilder.group({
+          companyName:["" ,[Validators.required]],
+          location:["" ,[Validators.required]],
+          jobPosition:["" ,[Validators.required]],
+          periodFrom:["" ,[Validators.required]],
+          periodTo:["" ,[Validators.required]],
+          
+        })
+      ]),
     })
 
   }
 
   onSubmit() {
+   
+    // console.log("this is the bank&Statutory>>>>>>>>>>>",this.addEmployeeForm)
+    var obj={
+      salaryBasis:this.addEmployeeForm.value.salaryBasis,
+      salaryAmount:this.addEmployeeForm.value.salaryAmount,
+      paymentType:this.addEmployeeForm.value.paymentType,
+      pfContribution:this.addEmployeeForm.value.pfContribution,
+      pfNo:this.addEmployeeForm.value.pfNo,
+      employeePfRate:this.addEmployeeForm.value.employeePfRate,
+      additionalRate:this.addEmployeeForm.value.additionalRate,
+      totalRate:this.addEmployeeForm.value.totalRate,
+      
+      esiContribution:this.addEmployeeForm.value.esiContribution,
+      esiNo:this.addEmployeeForm.value.esiNo,
+      employeeEsiRate:this.addEmployeeForm.value.employeeEsiRate,
+      esiAdditionalRate:this.addEmployeeForm.value.esiAdditionalRate,
+      esiTotalRate:this.addEmployeeForm.value.esiTotalRate,
+
+    }
+    console.log("this is the obj.....>>>",obj)
+
+    this.http.patch("http://localhost:8443/employee/profile/addBankStatutory" + "/" +this.id,obj).subscribe((res:any)=>{
+      // console.log("this is the salary.....>>>",res)
+    })
+
     this.toastr.success("Bank & statutory added", "Success");
   }
 
   getId(id) {
-    this.http.get("http://localhost:8443/admin/allemployees/getEmployee" + "/" + id).subscribe((res) => {
+    this.http.get("http://localhost:8443/admin/allemployees/getEmployee" + "/" + id).subscribe((res:any) => {
       this.data = res;
-      console.log("res", this.data)
+      console.log("res", this.data.data.BasicSalaryInformation)
 
       this.profileEmp = this.data.data
 
@@ -162,7 +240,8 @@ export class EmployeeProfileComponent implements OnInit {
       this.familyinfo = this.profileEmp.familyInformations
       this.educationinfo = this.profileEmp.educationInformations
       this.expinfo = this.profileEmp.experienceInformations
-
+      this.getEmployeeForm=this.data.data.BasicSalaryInformation
+      this.edit();
     });
 
   }
@@ -174,6 +253,48 @@ export class EmployeeProfileComponent implements OnInit {
 
 
   edit() {
+
+    this.addEmployeeForm.patchValue({
+      
+      salaryBasis:this.getEmployeeForm.salaryBasis,
+      salaryAmount:this.getEmployeeForm.salaryAmount,
+      paymentType:this.getEmployeeForm.paymentType,
+      pfContribution:this.getEmployeeForm.pfContribution,
+      pfNo:this.getEmployeeForm.pfNo,
+      employeePfRate:this.getEmployeeForm.employeePfRate,
+      additionalRate:this.getEmployeeForm.additionalRate,
+      totalRate:this.getEmployeeForm.totalRate,
+      esiContribution:this.getEmployeeForm.esiContribution,
+      esiNo:this.getEmployeeForm.esiNo,
+      employeeEsiRate:this.getEmployeeForm.employeeEsiRate,
+      esiAdditionalRate:this.getEmployeeForm.esiAdditionalRate,
+      esiTotalRate:this.getEmployeeForm.esiTotalRate,
+
+    })
+
+
+
+  //   this.editFamilyForm.patchValue({
+
+  //   })
+
+
+  //   this.editEducationForm.patchValue({
+
+
+
+  //   })
+
+  // this.editExpForm.patchValue({
+  //   companyName:this.expinfo.companyName,
+  //         location:this.expinfo.location,
+  //         jobPosition:this.expinfo.jobPosition,
+  //         periodFrom:this.expinfo.periodFrom,
+  //         periodTo:this.expinfo.periodTo,
+  // })
+
+
+
     this.editProfileForm.patchValue({
       birthDate: this.profileinfo.birthDate,
       gender: this.profileinfo.gender,
@@ -186,6 +307,10 @@ export class EmployeeProfileComponent implements OnInit {
       designation: this.profileinfo.designation,
       reportsTo: this.profileinfo.reportsTo,
     });
+
+
+
+    
 
 
     this.editPersonalForm.patchValue({
@@ -271,85 +396,8 @@ export class EmployeeProfileComponent implements OnInit {
     }
   }
 
-  editFamilyInfo() {
 
-    if (this.editFamilyForm.valid) {
-      let obj = {
-        name: this.editFamilyForm.value.name,
-        relationship: this.editFamilyForm.value.relationship,
-        dateOfBirth: this.editFamilyForm.value.dateOfBirth,
-        phone: this.editFamilyForm.value.phone,
-      };
-
-
-      this.http.patch("http://localhost:8443/employee/profile/personalInformations" + "/" + this.id, obj).subscribe((res) => {
-        $("#family_info_modal").modal("hide");
-        this.getId(this.id)
-      })
-    }
-    else {
-    }
-  }
-
-  editEmergencyInfo() {
-
-    if (this.editEmergencyForm.valid) {
-      let obj = {
-        name1: this.editEmergencyForm.value.name1,
-        name2: this.editEmergencyForm.value.name2,
-        relationship1: this.editEmergencyForm.value.relationship1,
-        relationship2: this.editEmergencyForm.value.relationship2,
-        phone1: this.editEmergencyForm.value.phone1,
-        phone2: this.editEmergencyForm.value.phone2,
-        phone3: this.editEmergencyForm.value.phone3,
-        phone4: this.editEmergencyForm.value.phone4,
-      };
-
-
-      this.http.patch("http://localhost:8443/employee/profile/emergencyContact" + "/" + this.id, obj).subscribe((res) => {
-        $("#emergency_contact_modal").modal("hide");
-        this.getId(this.id)
-      })
-    }
-    else {
-    }
-  }
-
-
-  editEducationinfo() {
-
-  }
-
-  editExpInfo() {
-
-  }
-
-
-  editBankInfo() {
-    if (this.editBankForm.valid) {
-      let obj = {
-
-        bankName: this.editBankForm.value.bankName,
-        bankAccountNo: this.editBankForm.value.bankAccountNo,
-        ifscCode: this.editBankForm.value.ifscCode,
-        panNo: this.editBankForm.value.panNo,
-      };
-
-
-      this.http.patch("http://localhost:8443/employee/profile/bankDetails" + "/" + this.id, obj).subscribe((res) => {
-
-        $("#bank_info_modal").modal("hide");
-        this.getId(this.id)
-      })
-    }
-    else {
-    }
-  }
-
-
-
-
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////       Family INformation      /////////////////////////////////////////////////////////////////////
   get itemsList(): FormArray {
     return this.editFamilyForm.get("items") as FormArray;
   }
@@ -366,14 +414,130 @@ export class EmployeeProfileComponent implements OnInit {
   }
 
   addItems() {
-
-
     this.itemsList.push(this.newItem());
+  
   }
   removeItems(i) {
     this.itemsList.removeAt(i);
   }
 
+
+  editFamilyInfo() {
+    let dataArray=this.editFamilyForm.value.items;
+
+    
+    console.log("this is the OBJ Edit FamilyInfo.>>>>>>>>>",dataArray)
+
+      this.http.patch("http://localhost:8443/employee/profile/addFamilyInformations" + "/" + this.id, dataArray).subscribe((res:any) => {
+        // console.log("thi is the RESPONCE>>>>>>>",res)
+        $("#family_info_modal").modal("hide");
+        this.getId(this.id)
+      })
+   
+  }
+////////////////////////////////////////////////////////////////////////////////
+  editEmergencyInfo() {
+
+    if (this.editEmergencyForm.valid) {
+      let obj = {
+        name1: this.editEmergencyForm.value.name1,
+        name2: this.editEmergencyForm.value.name2,
+        relationship1: this.editEmergencyForm.value.relationship1,
+        relationship2: this.editEmergencyForm.value.relationship2,
+        phone1: this.editEmergencyForm.value.phone1,
+        phone2: this.editEmergencyForm.value.phone2,
+        phone3: this.editEmergencyForm.value.phone3,
+        phone4: this.editEmergencyForm.value.phone4,
+      };
+
+
+      this.http.patch("http://localhost:8443/employee/profile/emergencyContact" + "/" + this.id, obj).subscribe((res:any) => {
+        $("#emergency_contact_modal").modal("hide");
+        this.getId(this.id)
+      })
+    }
+    else {
+    }
+  }
+
+///////////get projects /////////////////////////////////////////////
+getProjects(){
+   this.http.get("http://localhost:8443/admin/projects/getAdminproject"+"/"+this.adminId).subscribe((res:any)=>{
+     this.employeeProjects=res;
+     this.employeeProjects.map((item)=>{
+       item.projectLeader.map((data1)=>{
+         if(data1.id===this.id){
+           
+           this.projects.push(item);
+          
+         }
+         
+       })
+       item.teamMember.map((data2)=>{
+        if(data2.id===this.id){
+          this.projects.push(item);
+        }
+     })
+     }
+     
+     )
+    //  console.log("this is the  this.projects>>>>>", this.projects)
+   })
+  //  console.log("this is the EMPOLOYEE >>>>project------------------",this.projects)
+}
+
+
+
+
+
+  editBankInfo() {
+    if (this.editBankForm.valid) {
+      let obj = {
+
+        bankName: this.editBankForm.value.bankName,
+        bankAccountNo: this.editBankForm.value.bankAccountNo,
+        ifscCode: this.editBankForm.value.ifscCode,
+        panNo: this.editBankForm.value.panNo,
+      };
+
+
+      this.http.patch("http://localhost:8443/employee/profile/bankDetails" + "/" + this.id, obj).subscribe((res:any) => {
+
+        $("#bank_info_modal").modal("hide");
+        this.getId(this.id)
+      })
+    }
+    else {
+    }
+  }
+
+
+///////////////////validation ///////////////////////////
+
+checkfamily(val1,val2,val3,val4){
+  //console.log("thi is the validation checking>>>>>>>>>>",val1.length,"><><><",val2.length,".,.,..",val3.length,val4.length)
+  if(val1.length>0 && val2.length>0 && val3.length > 0 && val4.length===10 ){
+    this.show=false;
+  }
+
+}
+////////////////////////education ?////////////////////////////////////
+eduShow(val1,val2,val3,val4,val5,val6){
+   if(val1.length>0 &&val2.length>0 && val3.length>0 && val4.length>0 && val5.length>0 && val6.length>0 ){
+     this.eduhidden=false;
+
+   }
+}
+
+expShow(val1,val2,val3,val4,val5){
+  
+  if(val1.length>0 &&val2.length>0 && val3.length>0 && val4.length>0 && val5.length>0 ){
+    this.exphidden=false;
+  }
+  
+}
+
+  
 
   ////////////////////////////////////////Education///////////////////////////////////////////////////////////////////////
 
@@ -404,6 +568,21 @@ export class EmployeeProfileComponent implements OnInit {
     this.itemsList1.removeAt(i);
   }
 
+
+  editEducationinfo() {
+    let dataArray=this.editEducationForm.value.items1;
+
+    
+    console.log("this is the OBJ Edit editEducationinfo.>>>>>>>>>",dataArray)
+
+      this.http.patch("http://localhost:8443/employee/profile/addEducationInformations" + "/" + this.id, dataArray).subscribe((res:any) => {
+       // console.log("thi is the RESPONCE>>>>>>>",res)
+        $("#education_info").modal("hide");
+        this.getId(this.id)
+      })
+   
+  }
+
   ///////////////////////Experiance/////////////////////////////////////////////////////////////////////////////
 
   get itemsListExp(): FormArray {
@@ -428,6 +607,23 @@ export class EmployeeProfileComponent implements OnInit {
   removeItemsExp(i) {
     this.itemsListExp.removeAt(i);
   }
+  editExpInfo() {
+    let dataArray=this.editExpForm.value.itemsExp;
+
+    
+   // console.log("this is the OBJ Edit FamilyInfo.>>>>>>>>>",this.editExpForm.value.itemsExp)
+
+      this.http.patch("http://localhost:8443/employee/profile/addExperienceInformations" + "/" + this.id, dataArray).subscribe((res:any) => {
+        // console.log("thi is the RESPONCE>>>>>>>",res)
+        $("#experience_info").modal("hide");
+        this.getId(this.id)
+      })
+   
+  }
+
+
+  
+
 
 
 }
