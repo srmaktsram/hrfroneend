@@ -1,0 +1,143 @@
+<div class="mainDiv">
+    <div class="matDiv">
+        <mat-card class="mat" style="border:2px solid #5d9cec">
+            <div class="page-header orange">
+                <h4> Up TO 10 Employee(Single User)</h4>
+            </div>
+            <div class="text-center">
+                <p>Use Free For 90 Days</p>
+
+                <p>1 Month : 50/- Rupees</p>
+
+                <p>1 Year : 600/- Ruppes</p>
+
+                <p> + GST 18%</p>
+
+                <div style="margin-top: 20px;">
+                    <p><b>Free</b></p>
+                </div>
+            </div>
+
+            <div class="button">
+                <button mat-raised-button color="accent">Make Payment</button>
+            </div>
+        </mat-card>
+
+    </div>
+    <div class="matDiv">
+        <mat-card class="mat" style="border:2px solid #37bc9b">
+            <div class="page-header blue">
+                <h4>Employee(Multi-User)</h4>
+            </div>
+            <div class="text-center">
+                <p>Use Free For 90 Days</p>
+                <p>1 Month : 50/- Rupees</p>
+                <p>1 Year : 600/- Ruppes</p>
+                <p>+ GST 18%</p>
+
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1" (change)="yearFunction=true;dayFunction=false">Day Slab
+                    </mat-radio-button>
+                    <mat-radio-button value="2" (change)="dayFunction=true;yearFunction=false"
+                        style="margin-left:80px;">
+                        Year Slab
+                    </mat-radio-button>
+                </mat-radio-group>
+
+                <div class="selectFlex">
+                    <select class="form-select" aria-label="Default select example" class="selectWidth"
+                        [disabled]="dayFunction" (click)="daySlab($event.target.value)">
+                        <option>0</option>
+                        <option value="30">30</option>
+                        <option value="60">60</option>
+                        <option value="90">90</option>
+                        <option value="120">120</option>
+                        <option value="150">150</option>
+                        <option value="180">180</option>
+                        <option value="210">210</option>
+                        <option value="240">240</option>
+                        <option value="270">270</option>
+                        <option value="300">300</option>
+                        <option value="330">330</option>
+                    </select>
+                    <select class="form-select" aria-label="Default select example" class="selectWidth"
+                        [disabled]="yearFunction" (click)="yearSlab($event.target.value)">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+
+                </div>
+                <div style="margin-top: 20px;" [hidden]="dayFunction">
+                    <p>Total Payable Amount : {{totalDayAmount}} /- Only</p>
+                </div>
+                <div style="margin-top: 20px;" [hidden]="yearFunction">
+                    <p>Total Payable Amount : {{totalYearAmount}} /- Only</p>
+
+                </div>
+            </div>
+
+            <div class="button">
+                <button mat-raised-button color="accent">Make Payment</button>
+            </div>
+
+        </mat-card>
+    </div>
+    <div class="matDiv">
+        <mat-card class="mat" style="border:2px solid #f05050">
+            <div class="page-header red">
+                <h4> Up TO 10 Employee(Single User)</h4>
+            </div>
+            <div class="text-center">
+                <p>Use Free For 90 Days</p>
+
+                <p>1 Month : 50/- Rupees</p>
+
+                <p>1 Year : 600/- Ruppes</p>
+                <p>+ GST 18%</p>
+
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1" (change)="yearFunction=true;dayFunction=false">Day Slab
+                    </mat-radio-button>
+                    <mat-radio-button value="2" (change)="dayFunction=true;yearFunction=false"
+                        style="margin-left:80px;">
+                        Year Slab
+                    </mat-radio-button>
+                </mat-radio-group>
+
+                <div class="selectFlex">
+                    <select class="form-select" aria-label="Default select example" class="selectWidth"
+                        [disabled]="dayFunction">
+                        <option value="1">30</option>
+                        <option value="2">60</option>
+                        <option value="3">90</option>
+                        <option value="3">120</option>
+                        <option value="3">150</option>
+                    </select>
+                    <select class="form-select" aria-label="Default select example" class="selectWidth"
+                        [disabled]="yearFunction">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="3">4</option>
+                        <option value="3">5</option>
+                    </select>
+
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <p>Total Payable Amount : 177 /- Only</p>
+                </div>
+
+            </div>
+
+            <div class="button">
+                <button mat-raised-button color="accent">Make Payment</button>
+            </div>
+
+        </mat-card>
+    </div>
+
+</div>
