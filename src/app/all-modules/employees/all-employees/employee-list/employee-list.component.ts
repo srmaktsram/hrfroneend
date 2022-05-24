@@ -35,7 +35,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public DateJoin;
-  newStatus= true;
+  newStatus = true;
   Holidays = [
     { id: 0, read: false },
     { id: 1, write: false },
@@ -108,7 +108,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   lengthCount: any;
   constructor(
     private srvModuleService: AllModulesService,
-    private http: HttpClient,private headerComponent:HeaderComponent,
+    private http: HttpClient, private headerComponent: HeaderComponent,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     public router: Router
@@ -274,8 +274,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data) => {
         console.log("get Employees", data);
@@ -298,8 +298,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data: any) => {
         this.employees = data[0].notification.employee;
@@ -345,19 +345,18 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         let document = data.data;
         let author = "Admin";
         let message = 'added a new employee ';
-        let functions = document.firstName+" in "+document.department + " department";
+        let functions = document.firstName + " in " + document.department + " department";
         let time = document.createDate;
         if (this.employees == true) {
           this.http
             .post(
               "http://localhost:8443/admin/allNotification/createNotification" +
-                "/" +
-                this.adminId,
+              "/" +
+              this.adminId,
               { message, author, functions, time }
             )
             .subscribe((data: any) => {
               this.headerComponent.getAllNotifications()
-              console.log(this.headerComponent.getAllNotifications(),"Header")
             });
         }
       });
@@ -368,23 +367,23 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   getAllNotifications() {
     if (this.user_type == "admin") {
-        this.http
-          .get(
-            "http://localhost:8443/admin/notifications/getAllNotification" +
-              "/" +
-              this.adminId
-          )
-          .subscribe((data: any) => {
-            this.dataArray = data[0].notifications;
-            this.lengthCount = this.dataArray.length;
+      this.http
+        .get(
+          "http://localhost:8443/admin/notifications/getAllNotification" +
+          "/" +
+          this.adminId
+        )
+        .subscribe((data: any) => {
+          this.dataArray = data[0].notifications;
+          this.lengthCount = this.dataArray.length;
 
-            if (this.lengthCount <= 4) {
-              this.newStatus = true;
-            } else if (this.lengthCount >= 5) {
-              this.newStatus = false;
-            }
-          });
-      
+          if (this.lengthCount <= 4) {
+            this.newStatus = true;
+          } else if (this.lengthCount >= 5) {
+            this.newStatus = false;
+          }
+        });
+
     }
   }
 
