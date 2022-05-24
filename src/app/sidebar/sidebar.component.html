@@ -38,6 +38,13 @@
         </li>
           <li [ngClass]="{
             active:
+              urlComplete.subUrl === 'packagesgrid' ||
+              urlComplete.subUrl === 'packageslist'
+          }">
+          <a routerLink="/layout/mainadmin/packages/packageslist"><i class="la la-users"></i> <span>Packages</span></a>
+        </li>
+          <li [ngClass]="{
+            active:
               urlComplete.subUrl === 'subadminpage' ||
               urlComplete.subUrl === 'subadminlist'
           }">
