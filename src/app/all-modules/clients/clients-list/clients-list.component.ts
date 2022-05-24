@@ -151,6 +151,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
         "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
       )
       .subscribe((res: any) => {
+        console.log(res)
 
         
         this.data = res;

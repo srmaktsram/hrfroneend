@@ -5,10 +5,10 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Clients</h3>
+                <h3 class="page-title">Packages</h3>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Clients</li>
+                    <li class="breadcrumb-item"><a routerLink="/layout/mainadmin/admindashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active">packages</li>
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
@@ -16,9 +16,9 @@
                         class="fa fa-plus"></i>
                     Add Client</a>
                 <div class="view-icons">
-                    <a routerLink="/layout/clients/clientspage" class="grid-view btn btn-link active"><i
+                    <a routerLink="/layout/mainadmin/subadmins/subadminpage" class="grid-view btn btn-link"><i
                             class="fa fa-th"></i></a>
-                    <a routerLink="/layout/clients/clientslist" class="list-view btn btn-link"><i
+                    <a routerLink="/layout/mainadmin/subadmins/subadminlist" class="list-view btn btn-link active"><i
                             class="fa fa-bars"></i></a>
                 </div>
             </div>
@@ -36,14 +36,14 @@
         </div>
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
-                <input type="text" class="form-control floating" #name (input)="searchByName($event.target.value)">
+                <input type="text" class="form-control floating" #clientn (input)="searchByName($event.target.value)">
                 <label class="focus-label">Client Name</label>
             </div>
         </div>
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus select-focus">
-                <select class="form-control form-select floating" #company
-                    (input)="searchbyCompany($event.target.value)">
+                <select class="form-select floating form-control" #companyn
+                    (input)="searchByCompany($event.target.value)">
                     <option value="">Select Company</option>
                     <option *ngFor="let designation of companys">{{designation.companyName}}</option>
                 </select>
@@ -51,38 +51,78 @@
             </div>
         </div>
         <div class="col-sm-6 col-md-3">
-            <button class="btn btn-success w-100" (click)="onSearch(id.value,name.value,company.value)"> Search
-            </button>
+            <a class="btn btn-success w-100" (click)="onSearch(id.value,clientn.value,companyn.value)"> Search </a>
         </div>
     </div>
     <!-- Search Filter -->
 
-    <div class="row staff-grid-row">
-        <div *ngFor="let item of data; let i = index " class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3">
-            <div class="profile-widget">
-                <div class="profile-img">
-                    <a routerLink="/layout/clients/clientsprofile/{{item.id}}" class="avatar"><img alt=""
-                            src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"></a>
-                </div>
-                <div class="dropdown profile-action">
-                    <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
-                            class="material-icons">more_vert</i></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_client"
-                            (click)="onEditClient(item.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_client"
-                            (click)="tempId = item.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                    </div>
-                </div>
-                <h4 class="user-name m-t-10 mb-0 text-ellipsis"><a
-                        routerLink="/layout/clients/clientsprofile/{{item.id}}">{{item.companyName}}</a>
-                </h4>
-                <h5 class="user-name m-t-10 mb-0 text-ellipsis"><a
-                        routerLink="/layout/clients/clientsprofile/{{item.id}}">{{item.firstName}}</a></h5>
-                <div class="small text-muted">{{data.role}}</div>
-                <a routerLink="/layout/apps/chat" class="btn btn-white btn-sm m-t-10 me-1">Message</a>
-                <a routerLink="/layout/clients/clientsprofile/{{item.id}}" class="btn btn-white btn-sm m-t-10 ms-1">View
-                    Profile</a>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
+                    class="table table-striped custom-table datatable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Client ID</th>
+                            <th>Contact Person</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                            <th>Status</th>
+                            <th class="text-end">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let client of data; let i = index">
+                            <td>
+                                <h2 class="table-avatar">
+                                    <a routerLink="/layout/clients/clientsprofile/{{client.id}}" class="avatar"><img
+                                            src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" alt=""></a>
+                                    <a
+                                        routerLink="/layout/clients/clientsprofile/{{client.id}}">{{client.companyName}}</a>
+                                </h2>
+                            </td>
+                            <td>{{client.clientId}}</td>
+                            <td>{{client.firstName}}</td>
+                            <td>{{client.email}}</td>
+                            <td>{{client.phone}}</td>
+                            <td>
+                                <div class="dropdown action-label">
+                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <ng-container *ngIf="client.status=='Active'">
+                                            <i class="fa fa-dot-circle-o text-success">{{client.status}}</i>
+                                        </ng-container>
+                                        <ng-container *ngIf="client.status=='Inactive'">
+                                            <i class="fa fa-dot-circle-o text-danger">{{client.status}}</i>
+                                        </ng-container>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" (click)="getStatus('Active',client.id)"><i
+                                                class="fa fa-dot-circle-o text-success"></i> Active</a>
+                                        <a class="dropdown-item" (click)="getStatus('Inactive',client.id)"><i
+                                                class="fa fa-dot-circle-o text-danger"></i>
+                                            Inactive</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="dropdown dropdown-action">
+                                    <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                        aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_client"
+                                            (click)="onEditClient(client.id)"><i class="fa fa-pencil m-r-5"></i>
+                                            Edit</a>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_client"
+                                            (click)="tempId = client.id"><i class="fa fa-trash-o m-r-5"></i>
+                                            Delete</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -120,6 +160,7 @@
                             <div class="form-group">
                                 <label class="col-form-label">Last Name</label>
                                 <input class="form-control" type="text" formControlName="clientLastName">
+
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -128,27 +169,6 @@
                                 <input class="form-control" type="text" formControlName="clientUsername">
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Date of Birth</label>
-                                <input class="form-control" type="text" placeholder="dd-mm-yyyy" formControlName="birthday">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label  text-center">Gender</label><br>
-                                <input  type="radio"    name="gender" formControlName="gender" value="Male">Male<br>
-                                <input  type="radio"    name="gender" formControlName="gender"  value="Female">Female<br>
-                                <input  type="radio"    name="gender" formControlName="gender"  value="Other">Other<br>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Address</label>
-                                <input class="form-control" type="text" formControlName="address">
-                            </div>
-                        </div>
-                      
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">Email <span class="text-danger">*</span></label>
@@ -172,7 +192,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">Confirm Password</label>
-                                <input class="form-control" type="password" formControlName="confirmPassword">
+                                <input class="form-control" type="password">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -401,14 +421,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">Last Name</label>
-                                <input class="form-control" type="text" formControlName="editClientLastName">
+                                <input class="form-control" formControlName="editClientLastName" type="text">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                <input class="form-control" value="barrycuda" type="text"
-                                    formControlName="editClientUsername">
+                                <input class="form-control" formControlName="editClientUsername" type="text">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -428,13 +447,13 @@
                         <!-- <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">Password</label>
-                                <input class="form-control" value="barrycuda" type="password">
+                                <input class="form-control" formControlName="password" type="password">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">Confirm Password</label>
-                                <input class="form-control" value="barrycuda" type="password">
+                                <input class="form-control" vformControlName="password" type="password">
                             </div>
                         </div> -->
                         <div class="col-md-6">

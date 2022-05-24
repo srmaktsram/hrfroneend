@@ -30,17 +30,26 @@
 
           <li [ngClass]="{
             active:
-              urlComplete.subUrl === 'clientspage' ||
-              urlComplete.subUrl === 'clientslist'
+              urlComplete.subUrl === 'democlients' ||
+              urlComplete.subUrl === 'premiumclients' ||
+              urlComplete.subUrl === 'visitorclients'
           }">
-          <a routerLink="/layout/mainadmin/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
+          <a routerLink="/layout/mainadmin/clients/democlients"><i class="la la-users"></i> <span>Clients</span></a>
         </li>
           <li [ngClass]="{
             active:
-              urlComplete.subUrl === 'clientspage' ||
-              urlComplete.subUrl === 'clientslist'
+
+              urlComplete.subUrl === 'packagesgrid' ||
+              urlComplete.subUrl === 'packageslist'
           }">
-          <a routerLink="/layout/mainadmin/subadmins/clientspage"><i class="la la-users"></i> <span>Sub Admin</span></a>
+          <a routerLink="/layout/mainadmin/packages/packageslist"><i class="la la-users"></i> <span>Packages</span></a>
+        </li>
+          <li [ngClass]="{
+            active:
+              urlComplete.subUrl === 'subadminpage' ||
+              urlComplete.subUrl === 'subadminlist'
+          }">
+          <a routerLink="/layout/mainadmin/subadmins/subadminlist"><i class="la la-users"></i> <span>Sub Admin</span></a>
         </li>
 
         <li [ngClass]="{
