@@ -32,109 +32,87 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
 
   editId: any;
-  invoices: any;
-  projects: any;
-  tasks: any;
-  chats: any;
-  estimates: any;
-  timingSheets: any;
   companys: any[];
   filtereddata: any[];
   searchId: any;
   searchName: any;
   public employeeId: any;
   searchCompany: any;
+  dataArray: any;
+  newData: any;
+  dataNew: any;
+
+  newId: any;
+  dashboard: any;
+  premiumClients: any;
+  freeClients: any;
+  visitorClients: any;
+  tickets: any;
+  invoices: any;
+  orders: any;
+  searchUser: any;
+  searchMobile: any;
+  searchEmail: any;
+
   constructor(
-    // private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
 
+    this.dashboard = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.premiumClients = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.freeClients = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.visitorClients = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.tickets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
     this.invoices = [
       { id: 0, read: false },
       { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
     ];
-    this.projects = [
+    this.orders = [
       { id: 0, read: false },
       { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.tasks = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.chats = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.estimates = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
-    ];
-    this.timingSheets = [
-      { id: 0, read: false },
-      { id: 1, write: false },
-      { id: 2, create: false },
-      { id: 3, delete: false },
-      { id: 4, import: false },
-      { id: 5, export: false },
     ];
   }
 
   ngOnInit() {
-    // this.getCompanyName()
-    this.getClients();
+    this.getSubAdmins();
 
     this.dtOptions = {
-      // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
 
     //Add clients form
     this.addClientForm = this.formBuilder.group({
-      clientName: ["", [Validators.required]],
-      clientLastName: ["", [Validators.required]],
-      clientPhone: ["", [Validators.required]],
-      clientEmail: ["", [Validators.required]],
-      clientPassword: ["", [Validators.required]],
-      clientCompany: ["", [Validators.required]],
-      clientUsername: ["", [Validators.required]],
-      clientId: ["", [Validators.required]],
+      addUserName: ["", [Validators.required]],
+      addPassword: ["", [Validators.required]],
+      addMobile: ["", [Validators.required]],
+      addEmail: ["", [Validators.required]],
     });
 
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
-      editClientName: ["", [Validators.required]],
-      editClientLastName: ["", [Validators.required]],
-      editClientPhone: ["", [Validators.required]],
-      editClientEmail: ["", [Validators.required]],
-      // editclientPassword: ["", [Validators.required]],
-      editClientUsername: ["", [Validators.required]],
-      editClientCompany: ["", [Validators.required]],
-      editClientRole: ["", [Validators.required]],
-      editClientId: ["", [Validators.required]],
+      editUserName: ["", [Validators.required]],
+      editPassword: ["", [Validators.required]],
+      editMobile: ["", [Validators.required]],
+      editEmail: ["", [Validators.required]],
     });
   }
 
@@ -145,52 +123,32 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   //Get all Clients data
-  public getClients() {
+  public getSubAdmins() {
     this.http
-      .get(
-        "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
-      )
+      .get("http://localhost:8443/mainadmin/subAdmin/getSubAdmins")
       .subscribe((res: any) => {
         this.data = res;
-
-        this.srch = res;
-        //console.log(this.data, "???????????//")
+        this.srch = [...this.data];
       });
   }
-  // public getCompanyName() {
-  //   this.http
-  //     .get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId)
-  //     .subscribe((data) => {
-  //       this.data = data;
-  //       //console.log(this.data, "kjdjkjkdgjghd")
-
-  //       this.clientsData = this.data.data;
-  //       this.companys = this.clientsData;
-  //     });
-  // }
 
   // Edit client
   public onEditClient(clientId: any) {
     this.editId = clientId;
     let client = this.data.filter((client) => client.id === clientId);
-    //console.log("edit recards kkkk", client);
     this.editClientForm.patchValue({
-      editClientName: client[0]?.firstName,
-      editClientLastName: client[0]?.lastName,
-      editClientPhone: client[0]?.phone,
-      editClientEmail: client[0]?.email,
-      editClientUsername: client[0]?.username,
-
-      editClientCompany: client[0]?.companyName,
-      editClientRole: client[0]?.role,
-      editClientId: client[0]?.clientId,
+      editUserName: client[0]?.userName,
+      editPassword: client[0]?.password,
+      editMobile: client[0]?.mobile,
+      editEmail: client[0]?.email,
     });
+    this.dashboard = client[0]?.dashboard;
+    this.premiumClients = client[0]?.premiumClients;
+    this.freeClients = client[0]?.freeClients;
+    this.visitorClients = client[0]?.visitorClients;
+    this.tickets = client[0]?.tickets;
     this.invoices = client[0]?.invoices;
-    this.chats = client[0]?.chats;
-    this.projects = client[0]?.projects;
-    this.estimates = client[0]?.estimates;
-    this.timingSheets = client[0]?.timingSheets;
-    this.tasks = client[0]?.tasks;
+    this.orders = client[0]?.orders;
   }
   //Reset form
   public resetForm() {
@@ -200,27 +158,24 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   // Save Client
   public onSave() {
     let obj = {
-      firstName: this.editClientForm.value.editClientName,
-      lastName: this.editClientForm.value.editClientLastName,
-      role: "CEO",
-      companyName: this.editClientForm.value.editClientCompany,
-      clientId: this.editClientForm.value.editClientId,
-      email: this.editClientForm.value.editClientEmail,
-      username: this.editClientForm.value.editClientUsername,
-      phone: this.editClientForm.value.editClientPhone,
+      userName: this.editClientForm.value.editUserName,
+      password: this.editClientForm.value.editPassword,
+      mobile: this.editClientForm.value.editMobile,
+      email: this.editClientForm.value.editEmail,
+      dashboard: this.dashboard,
+      premiumClients: this.premiumClients,
+      freeClients: this.freeClients,
+      visitorClients: this.visitorClients,
+      tickets: this.tickets,
       invoices: this.invoices,
-      tasks: this.tasks,
-      chats: this.chats,
-      estimates: this.estimates,
-      projects: this.projects,
-      timingSheets: this.timingSheets,
+      orders: this.orders,
       adminId: this.adminId,
     };
     let id = this.editId;
     this.http
-      .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
+      .patch("http://localhost:8443/mainadmin/subAdmin/updateSubAdmin" + "/" + id, obj)
       .subscribe((data) => {
-        this.getClients();
+        this.getSubAdmins();
       });
 
     $("#edit_client").modal("hide");
@@ -231,29 +186,26 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   //Add new client
   public onAddClient() {
     let newClient = {
-      firstname: this.addClientForm.value.clientName,
-      lastname: this.addClientForm.value.clientLastName,
-      role: "CEO",
-      company: this.addClientForm.value.clientCompany,
-      username: this.addClientForm.value.clientUsername,
-      clientId: this.addClientForm.value.clientId,
-      email: this.addClientForm.value.clientEmail,
-      password: this.addClientForm.value.clientPassword,
-      phone: this.addClientForm.value.clientPhone,
+      userName: this.addClientForm.value.addUserName,
+      password: this.addClientForm.value.addPassword,
+      mobile: this.addClientForm.value.addMobile,
+      email: this.addClientForm.value.addEmail,
+      dashboard: this.dashboard,
+      premiumClients: this.premiumClients,
+      freeClients: this.freeClients,
+      visitorClients: this.visitorClients,
+      tickets: this.tickets,
       invoices: this.invoices,
-      tasks: this.tasks,
-      chats: this.chats,
-      estimates: this.estimates,
-      projects: this.projects,
-      timingSheets: this.timingSheets,
-      adminId: this.adminId,
+      orders: this.orders,
     };
-    //console.log("mydata>>>>>>>>", newClient);
     this.http
-      .post("http://localhost:8443/admin/clients/createClient", newClient)
+      .post(
+        "http://localhost:8443/mainadmin/subAdmin/createSubAdmin",
+        newClient
+      )
       .subscribe((data) => {
-        //console.log("postApi", data);
-        this.getClients();
+        this.getSubAdmins();
+
       });
 
     $("#add_client").modal("hide");
@@ -263,12 +215,14 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
   //Delete Client
   onDelete() {
-    // this.allModulesService.delete(this.tempId, "clients").subscribe((data) => {
     let id = this.tempId;
+    let obj={
+      status:2
+    }
     this.http
-      .patch("http://localhost:8443/admin/clients/deleteClient" + "/" + id, {})
+      .patch("http://localhost:8443/mainadmin/subAdmin/deleteSubAdmin" + "/" + id, obj)
       .subscribe((data) => {
-        this.getClients();
+        this.getSubAdmins();
       });
 
     $("#delete_client").modal("hide");
@@ -276,59 +230,68 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   //search by name
-  searchID(val) {
+  searchUsername(val) {
     if (val) {
       this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return d.clientId.toLowerCase().indexOf(val) !== -1 || !val;
+        return d.userName.toLowerCase().indexOf(val) !== -1 || !val;
       });
       this.data.push(...temp);
     } else {
-      this.getClients();
+      this.getSubAdmins();
     }
   }
 
   //search by name
-  searchByName(val) {
+  searchByMobile(val) {
     if (val) {
       this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+        return d.mobile.toLowerCase().indexOf(val) !== -1 || !val;
       });
       this.data.push(...temp);
     } else {
-      this.getClients();
+      this.getSubAdmins();
     }
   }
 
   //search by company
-  searchByCompany(val) {
+  searchByEmail(val) {
     if (val.trim()) {
       this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return d.companyName.toLowerCase().indexOf(val) !== -1 || !val;
+        return d.email.toLowerCase().indexOf(val) !== -1 || !val;
       });
       this.data.push(...temp);
     } else {
-      this.getClients();
+      this.getSubAdmins();
     }
   }
-  onSearch(id, name, company) {
+  onSearch(userName, mobile, email) {
     this.filtereddata = [];
-    this.searchId = id;
-    this.searchName = name;
-    this.searchCompany = company;
+    this.searchMobile = mobile;
+    this.searchUser = userName;
+    this.searchEmail = email;
     this.clientsData = this.data;
-    if (this.searchId) {
+    if (this.searchMobile) {
       this.filtereddata = this.clientsData.filter((data) =>
-        data.clientId.toLowerCase().includes(this.searchId.toLowerCase())
+        data.mobile.toLowerCase().includes(this.searchMobile.toLowerCase())
       );
-      if (this.searchName) {
+      if (this.searchUser) {
         let nameFilter = this.filtereddata.filter((data) =>
-          data.firstName.toLowerCase().includes(this.searchName.toLowerCase())
+          data.userName.toLowerCase().includes(this.searchUser.toLowerCase())
+        );
+        if (nameFilter.length != 0) {
+          this.filtereddata = nameFilter;
+        }
+      }
+
+      if (this.searchEmail) {
+        let nameFilter = this.filtereddata.filter((data) =>
+          data.email.toLowerCase().includes(this.searchEmail.toLowerCase())
         );
         if (nameFilter.length != 0) {
           this.filtereddata = nameFilter;
@@ -336,7 +299,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.searchId || this.searchCompany || this.searchName) {
+    if (this.searchMobile || this.searchUser || this.searchEmail) {
       this.clientsData =
         this.filtereddata.length != 0 ? this.filtereddata : this.clientsData;
     } else {
@@ -344,17 +307,118 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     }
   }
   //getting the status value
-  getStatus(val, id) {
-    let obj = {
-      status: val,
-    };
+  getStatus(data, id) {
+    const status = data;
     this.http
-      .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
-      .subscribe((data: any) => {
-        this.getClients();
+      .patch(
+        "http://localhost:8443/mainadmin/subAdmin/updateSubAdminStatus" + "/" + id,
+        { status }
+      )
+      .subscribe((res) => {
+        this.getSubAdmins();
       });
   }
 
+  checkCheckBoxvalueDashboard(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.dashboard.findIndex((obj) => obj.id == val);
+        this.dashboard[objIndex].read = true;
+      } else {
+        const objIndex = this.dashboard.findIndex((obj) => obj.id == val);
+        this.dashboard[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.dashboard.findIndex((obj) => obj.id == val);
+        this.dashboard[objIndex].write = true;
+      } else {
+        const objIndex = this.dashboard.findIndex((obj) => obj.id == val);
+        this.dashboard[objIndex].write = false;
+      }
+    }
+  }
+
+  checkCheckBoxvaluePremiumClients(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.premiumClients.findIndex((obj) => obj.id == val);
+        this.premiumClients[objIndex].read = true;
+      } else {
+        const objIndex = this.premiumClients.findIndex((obj) => obj.id == val);
+        this.premiumClients[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.premiumClients.findIndex((obj) => obj.id == val);
+        this.premiumClients[objIndex].write = true;
+      } else {
+        const objIndex = this.premiumClients.findIndex((obj) => obj.id == val);
+        this.premiumClients[objIndex].write = false;
+      }
+    }
+    //
+  }
+
+  checkCheckBoxvalueFreeClients(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.freeClients.findIndex((obj) => obj.id == val);
+        this.freeClients[objIndex].read = true;
+      } else {
+        const objIndex = this.freeClients.findIndex((obj) => obj.id == val);
+        this.freeClients[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.freeClients.findIndex((obj) => obj.id == val);
+        this.freeClients[objIndex].write = true;
+      } else {
+        const objIndex = this.freeClients.findIndex((obj) => obj.id == val);
+        this.freeClients[objIndex].write = false;
+      }
+    }
+  }
+
+  checkCheckBoxvalueVisitorClients(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.visitorClients.findIndex((obj) => obj.id == val);
+        this.visitorClients[objIndex].read = true;
+      } else {
+        const objIndex = this.visitorClients.findIndex((obj) => obj.id == val);
+        this.visitorClients[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.visitorClients.findIndex((obj) => obj.id == val);
+        this.visitorClients[objIndex].write = true;
+      } else {
+        const objIndex = this.visitorClients.findIndex((obj) => obj.id == val);
+        this.visitorClients[objIndex].write = false;
+      }
+    }
+  }
+
+  checkCheckBoxvalueTickets(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.tickets.findIndex((obj) => obj.id == val);
+        this.tickets[objIndex].read = true;
+      } else {
+        const objIndex = this.tickets.findIndex((obj) => obj.id == val);
+        this.tickets[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.tickets.findIndex((obj) => obj.id == val);
+        this.tickets[objIndex].write = true;
+      } else {
+        const objIndex = this.tickets.findIndex((obj) => obj.id == val);
+        this.tickets[objIndex].write = false;
+      }
+    }
+  }
   checkCheckBoxvalueInvoices(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -372,303 +436,30 @@ export class ClientsListComponent implements OnInit, OnDestroy {
         const objIndex = this.invoices.findIndex((obj) => obj.id == val);
         this.invoices[objIndex].write = false;
       }
-    } else if (val == 2) {
-      if (event.target.checked == true) {
-        const objIndex = this.invoices.findIndex((obj) => obj.id == val);
-        this.invoices[objIndex].create = true;
-      } else {
-        const objIndex = this.invoices.findIndex((obj) => obj.id == val);
-        this.invoices[objIndex].create = false;
-      }
-    } else if (val == 3) {
-      if (event.target.checked == true) {
-        const objIndex = this.invoices.findIndex((obj) => obj.id == val);
-        this.invoices[objIndex].delete = true;
-      } else {
-        const objIndex = this.invoices.findIndex((obj) => obj.id == val);
-        this.invoices[objIndex].delete = false;
-      }
-    } else if (val == 4) {
-      if (event.target.checked == true) {
-        const objIndex = this.invoices.findIndex((obj) => obj.id == val);
-        this.invoices[objIndex].import = true;
-      } else {
-        const objIndex = this.invoices.findIndex((obj) => obj.id == val);
-        this.invoices[objIndex].import = false;
-      }
-    } else if (val == 5) {
-      if (event.target.checked == true) {
-        const objIndex = this.invoices.findIndex((obj) => obj.id == val);
-        this.invoices[objIndex].export = true;
-      } else {
-        const objIndex = this.invoices.findIndex((obj) => obj.id == val);
-        this.invoices[objIndex].export = false;
-      }
     }
   }
 
-  checkCheckBoxvalueProjects(event, val) {
+  checkCheckBoxvalueOrders(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].read = true;
+        const objIndex = this.orders.findIndex((obj) => obj.id == val);
+        this.orders[objIndex].read = true;
       } else {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].read = false;
+        const objIndex = this.orders.findIndex((obj) => obj.id == val);
+        this.orders[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].write = true;
+        const objIndex = this.orders.findIndex((obj) => obj.id == val);
+        this.orders[objIndex].write = true;
       } else {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].write = false;
-      }
-    } else if (val == 2) {
-      if (event.target.checked == true) {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].create = true;
-      } else {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].create = false;
-      }
-    } else if (val == 3) {
-      if (event.target.checked == true) {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].delete = true;
-      } else {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].delete = false;
-      }
-    } else if (val == 4) {
-      if (event.target.checked == true) {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].import = true;
-      } else {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].import = false;
-      }
-    } else if (val == 5) {
-      if (event.target.checked == true) {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].export = true;
-      } else {
-        const objIndex = this.projects.findIndex((obj) => obj.id == val);
-        this.projects[objIndex].export = false;
-      }
-    }
-  }
-
-  checkCheckBoxvalueTasks(event, val) {
-    if (val == 0) {
-      if (event.target.checked == true) {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].read = true;
-      } else {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].read = false;
-      }
-    } else if (val == 1) {
-      if (event.target.checked == true) {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].write = true;
-      } else {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].write = false;
-      }
-    } else if (val == 2) {
-      if (event.target.checked == true) {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].create = true;
-      } else {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].create = false;
-      }
-    } else if (val == 3) {
-      if (event.target.checked == true) {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].delete = true;
-      } else {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].delete = false;
-      }
-    } else if (val == 4) {
-      if (event.target.checked == true) {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].import = true;
-      } else {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].import = false;
-      }
-    } else if (val == 5) {
-      if (event.target.checked == true) {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].export = true;
-      } else {
-        const objIndex = this.tasks.findIndex((obj) => obj.id == val);
-        this.tasks[objIndex].export = false;
-      }
-    }
-  }
-
-  checkCheckBoxvalueChats(event, val) {
-    if (val == 0) {
-      if (event.target.checked == true) {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].read = true;
-      } else {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].read = false;
-      }
-    } else if (val == 1) {
-      if (event.target.checked == true) {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].write = true;
-      } else {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].write = false;
-      }
-    } else if (val == 2) {
-      if (event.target.checked == true) {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].create = true;
-      } else {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].create = false;
-      }
-    } else if (val == 3) {
-      if (event.target.checked == true) {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].delete = true;
-      } else {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].delete = false;
-      }
-    } else if (val == 4) {
-      if (event.target.checked == true) {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].import = true;
-      } else {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].import = false;
-      }
-    } else if (val == 5) {
-      if (event.target.checked == true) {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].export = true;
-      } else {
-        const objIndex = this.chats.findIndex((obj) => obj.id == val);
-        this.chats[objIndex].export = false;
-      }
-    }
-  }
-
-  checkCheckBoxvalueEstimates(event, val) {
-    if (val == 0) {
-      if (event.target.checked == true) {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].read = true;
-      } else {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].read = false;
-      }
-    } else if (val == 1) {
-      if (event.target.checked == true) {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].write = true;
-      } else {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].write = false;
-      }
-    } else if (val == 2) {
-      if (event.target.checked == true) {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].create = true;
-      } else {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].create = false;
-      }
-    } else if (val == 3) {
-      if (event.target.checked == true) {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].delete = true;
-      } else {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].delete = false;
-      }
-    } else if (val == 4) {
-      if (event.target.checked == true) {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].import = true;
-      } else {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].import = false;
-      }
-    } else if (val == 5) {
-      if (event.target.checked == true) {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].export = true;
-      } else {
-        const objIndex = this.estimates.findIndex((obj) => obj.id == val);
-        this.estimates[objIndex].export = false;
-      }
-    }
-  }
-
-  checkCheckBoxvalueTimingSheets(event, val) {
-    if (val == 0) {
-      if (event.target.checked == true) {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].read = true;
-      } else {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].read = false;
-      }
-    } else if (val == 1) {
-      if (event.target.checked == true) {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].write = true;
-      } else {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].write = false;
-      }
-    } else if (val == 2) {
-      if (event.target.checked == true) {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].create = true;
-      } else {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].create = false;
-      }
-    } else if (val == 3) {
-      if (event.target.checked == true) {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].delete = true;
-      } else {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].delete = false;
-      }
-    } else if (val == 4) {
-      if (event.target.checked == true) {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].import = true;
-      } else {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].import = false;
-      }
-    } else if (val == 5) {
-      if (event.target.checked == true) {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].export = true;
-      } else {
-        const objIndex = this.timingSheets.findIndex((obj) => obj.id == val);
-        this.timingSheets[objIndex].export = false;
+        const objIndex = this.orders.findIndex((obj) => obj.id == val);
+        this.orders[objIndex].write = false;
       }
     }
   }
 
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
 }
