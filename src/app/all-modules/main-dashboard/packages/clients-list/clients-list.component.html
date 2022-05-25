@@ -8,19 +8,14 @@
                 <h3 class="page-title">Packages</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/mainadmin/admindashboard">Dashboard</a></li>
-                    <li class="breadcrumb-item active">packages</li>
+                    <li class="breadcrumb-item active">Packages</li>
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
                 <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_client" (click)="resetForm()"><i
                         class="fa fa-plus"></i>
-                    Add Client</a>
-                <div class="view-icons">
-                    <a routerLink="/layout/mainadmin/subadmins/subadminpage" class="grid-view btn btn-link"><i
-                            class="fa fa-th"></i></a>
-                    <a routerLink="/layout/mainadmin/subadmins/subadminlist" class="list-view btn btn-link active"><i
-                            class="fa fa-bars"></i></a>
-                </div>
+                    Add Package</a>
+                
             </div>
         </div>
     </div>
@@ -31,16 +26,16 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
                 <input type="text" class="form-control floating" #id (input)="searchID($event.target.value)">
-                <label class="focus-label">Client ID</label>
+                <label class="focus-label">Package Name</label>
             </div>
         </div>
-        <div class="col-sm-6 col-md-3">
+        <!-- <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
                 <input type="text" class="form-control floating" #clientn (input)="searchByName($event.target.value)">
                 <label class="focus-label">Client Name</label>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
+        </div> -->
+        <!-- <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus select-focus">
                 <select class="form-select floating form-control" #companyn
                     (input)="searchByCompany($event.target.value)">
@@ -49,10 +44,10 @@
                 </select>
                 <label class="focus-label">Company</label>
             </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
+        </div> -->
+        <!-- <div class="col-sm-6 col-md-3">
             <a class="btn btn-success w-100" (click)="onSearch(id.value,clientn.value,companyn.value)"> Search </a>
-        </div>
+        </div> -->
     </div>
     <!-- Search Filter -->
 
@@ -63,38 +58,40 @@
                     class="table table-striped custom-table datatable">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Client ID</th>
-                            <th>Contact Person</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
+                            <th>Srno</th>
+                            <th>Package Name</th>
+                            <th>Monthly Charges</th>
+                            <th>Yearly Charges</th>
+                            <th>Offer Monthly Charges</th>
+                            <th>Offer Yearly Charges</th>
                             <th>Status</th>
                             <th class="text-end">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let client of data; let i = index">
-                            <td>
-                                <h2 class="table-avatar">
-                                    <a routerLink="/layout/clients/clientsprofile/{{client.id}}" class="avatar"><img
-                                            src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" alt=""></a>
-                                    <a
-                                        routerLink="/layout/clients/clientsprofile/{{client.id}}">{{client.companyName}}</a>
-                                </h2>
+                        <tr *ngFor="let package of data; let i = index">
+                            
+                            <td>{{i+1}}</td>
+                            <td>{{package.packageName}}</td>
+                            <td>{{package.monthlyPrice}}</td>
+                            <td>{{package.yearlyPrice}}</td>
+                            <td>{{package.offerMonthlyPrice}}</td>
+                            <td>{{package.offerYearlyPrice}}</td>
+
+                            <!-- <td >
+                                <span *ngIf="package.status==0" class="text-danger">Inactive</span>
+                                <span *ngIf="package.status==1" class="text-success">Active</span>
                             </td>
-                            <td>{{client.clientId}}</td>
-                            <td>{{client.firstName}}</td>
-                            <td>{{client.email}}</td>
-                            <td>{{client.phone}}</td>
+                             -->
                             <td>
                                 <div class="dropdown action-label">
                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false">
-                                        <ng-container *ngIf="client.status=='Active'">
-                                            <i class="fa fa-dot-circle-o text-success">{{client.status}}</i>
+                                        <ng-container *ngIf="package.status=='1'">
+                                            <i class="fa fa-dot-circle-o text-success">Active</i>
                                         </ng-container>
-                                        <ng-container *ngIf="client.status=='Inactive'">
-                                            <i class="fa fa-dot-circle-o text-danger">{{client.status}}</i>
+                                        <ng-container *ngIf="package.status=='0'">
+                                            <i class="fa fa-dot-circle-o text-danger">Inactive</i>
                                         </ng-container>
                                     </a>
                                     <div class="dropdown-menu">
@@ -112,10 +109,10 @@
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_client"
-                                            (click)="onEditClient(client.id)"><i class="fa fa-pencil m-r-5"></i>
+                                            (click)="onEditClient(package.id)"><i class="fa fa-pencil m-r-5"></i>
                                             Edit</a>
                                         <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_client"
-                                            (click)="tempId = client.id"><i class="fa fa-trash-o m-r-5"></i>
+                                            (click)="tempId = package.id"><i class="fa fa-trash-o m-r-5"></i>
                                             Delete</a>
                                     </div>
                                 </div>
@@ -129,260 +126,103 @@
 </div>
 <!-- /Page Content -->
 
-<!-- Add Client Modal -->
+<!-- Add Package Modal -->
 <div id="add_client" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Client</h5>
+                <h5 class="modal-title">Add Package</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="addClientForm">
+                <form [formGroup]="addPackageForm">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Package Name Status<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="addClientForm.get('clientName').invalid && addClientForm.get('clientName').touched"
-                                    formControlName="clientName">
+                                    [class.invalid]="addPackageForm.get('packageName').invalid && addPackageForm.get('packageName').touched"
+                                    formControlName="packageName">
                                 <div
-                                    *ngIf="addClientForm.get('clientName').invalid && addClientForm.get('clientName').touched">
+                                    *ngIf="addPackageForm.get('packageName').invalid && addPackageForm.get('packageName').touched">
                                     <small
-                                        *ngIf="addClientForm.get('clientName').invalid && addClientForm.get('clientName').touched"
+                                        *ngIf="addPackageForm.get('packageName').invalid && addPackageForm.get('packageName').touched"
                                         class="text-danger"> *Name is required</small>
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Last Name</label>
-                                <input class="form-control" type="text" formControlName="clientLastName">
-
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Username</label>
-                                <input class="form-control" type="text" formControlName="clientUsername">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Monthly Charges <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="addClientForm.get('clientEmail').invalid && addClientForm.get('clientEmail').touched"
-                                    formControlName="clientEmail">
+                                    [class.invalid]="addPackageForm.get('monthlyPrice').invalid && addPackageForm.get('monthlyPrice').touched"
+                                    formControlName="monthlyPrice">
                                 <div
-                                    *ngIf="addClientForm.get('clientEmail').invalid && addClientForm.get('clientEmail').touched">
+                                    *ngIf="addPackageForm.get('monthlyPrice').invalid && addPackageForm.get('monthlyPrice').touched">
                                     <small
-                                        *ngIf="addClientForm.get('clientEmail').invalid && addClientForm.get('clientEmail').touched"
-                                        class="text-danger"> *Email is required</small>
+                                        *ngIf="addPackageForm.get('monthlyPrice').invalid && addPackageForm.get('monthlyPrice').touched"
+                                        class="text-danger"> *Monthly Charges is required</small>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Yearly Charges <span class="text-danger">*</span></label>
+                                <input class="form-control" type="text"
+                                    [class.invalid]="addPackageForm.get('yearlyPrice').invalid && addPackageForm.get('yearlyPrice').touched"
+                                    formControlName="yearlyPrice">
+                                <div
+                                    *ngIf="addPackageForm.get('yearlyPrice').invalid && addPackageForm.get('yearlyPrice').touched">
+                                    <small
+                                        *ngIf="addPackageForm.get('yearlyPrice').invalid && addPackageForm.get('yearlyPrice').touched"
+                                        class="text-danger"> *Yearly Charges is required</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Password</label>
-                                <input class="form-control" type="password" formControlName="clientPassword">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Confirm Password</label>
-                                <input class="form-control" type="password">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Offer Monthly Chages </label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="addClientForm.get('clientId').invalid && addClientForm.get('clientId').touched"
-                                    formControlName="clientId">
-                                <div
-                                    *ngIf="addClientForm.get('clientId').invalid && addClientForm.get('clientId').touched">
-                                    <small
-                                        *ngIf="addClientForm.get('clientId').invalid && addClientForm.get('clientId').touched"
-                                        class="text-danger"> *Id is required</small>
-                                </div>
+                                    formControlName="offerMonthlyPrice">
+                                
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Phone <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Offer Year Chages</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="addClientForm.get('clientPhone').invalid && addClientForm.get('clientPhone').touched"
-                                    formControlName="clientPhone">
-                                <div
-                                    *ngIf="addClientForm.get('clientPhone').invalid && addClientForm.get('clientPhone').touched">
-                                    <small
-                                        *ngIf="addClientForm.get('clientPhone').invalid && addClientForm.get('clientPhone').touched"
-                                        class="text-danger"> *Phone is required</small>
-                                </div>
+                                    
+                                    formControlName="offerYearlyPrice">
+                                
                             </div>
                         </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Company Name</label>
-                                <input class="form-control" type="text"
-                                    [class.invalid]="addClientForm.get('clientCompany').invalid && addClientForm.get('clientCompany').touched"
-                                    formControlName="clientCompany">
-                                <div
-                                    *ngIf="addClientForm.get('clientCompany').invalid && addClientForm.get('clientCompany').touched">
+                                <label class="col-form-label">Offer Status</label>
+                                <select class="form-control" 
+                                    [class.invalid]="addPackageForm.get('status').invalid && addPackageForm.get('status').touched"
+                                    formControlName="status">
+                                <select></select>
+                                <option value="1">Show</option>
+                                <option value="0">Hide</option>
+                                </select>
+                                    <div
+                                    *ngIf="addPackageForm.get('status').invalid && addPackageForm.get('status').touched">
                                     <small
-                                        *ngIf="addClientForm.get('clientCompany').invalid && addClientForm.get('clientCompany').touched"
-                                        class="text-danger"> *Company is required</small>
+                                        *ngIf="addPackageForm.get('status').invalid && addPackageForm.get('status').touched"
+                                        class="text-danger"> *Offer Status is required</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive m-t-15">
-                        <table class="table table-striped custom-table">
-                            <thead>
-                                <tr>
-                                    <th>Module Permission</th>
-                                    <th class="text-center">Read</th>
-                                    <th class="text-center">Write</th>
-                                    <th class="text-center">Create</th>
-                                    <th class="text-center">Delete</th>
-                                    <th class="text-center">Import</th>
-                                    <th class="text-center">Export</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Invoices</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueInvoices($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueInvoices($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueInvoices($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueInvoices($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueInvoices($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueInvoices($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Projects</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueProjects($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueProjects($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueProjects($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueProjects($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueProjects($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueProjects($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tasks</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTasks($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTasks($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTasks($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTasks($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTasks($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTasks($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Chats</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueChats($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueChats($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueChats($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueChats($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueChats($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueChats($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Estimates</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueEstimates($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueEstimates($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueEstimates($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueEstimates($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueEstimates($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueEstimates($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>TimingSheets</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTimingSheets($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTimingSheets($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTimingSheets($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTimingSheets($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTimingSheets($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" (click)="checkCheckBoxvalueTimingSheets($event, 5)">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    
                     <div class="submit-section">
-                        <button class="btn btn-primary submit-btn" (click)="onAddClient()">Submit</button>
+                        <button class="btn btn-primary submit-btn" (click)="onAddPackage()">Submit</button>
                     </div>
                 </form>
             </div>
@@ -396,290 +236,97 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Client</h5>
+                <h5 class="modal-title">Edit Package</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="editClientForm">
+                <form [formGroup]="editPackageForm">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Package Name <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editClientForm.get('editClientName').invalid && editClientForm.get('editClientName').touched"
-                                    formControlName="editClientName">
+                                    [class.invalid]="editPackageForm.get('editpackageName').invalid && editPackageForm.get('editpackageName').touched"
+                                    formControlName="editpackageName">
                                 <div
-                                    *ngIf="editClientForm.get('editClientName').invalid && editClientForm.get('editClientName').touched">
+                                    *ngIf="editPackageForm.get('editpackageName').invalid && editPackageForm.get('editpackageName').touched">
                                     <small
-                                        *ngIf="editClientForm.get('editClientName').invalid && editClientForm.get('editClientName').touched"
+                                        *ngIf="editPackageForm.get('editpackageName').invalid && editPackageForm.get('editpackageName').touched"
                                         class="text-danger"> *Name is required</small>
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Last Name</label>
-                                <input class="form-control" formControlName="editClientLastName" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Username <span class="text-danger">*</span></label>
-                                <input class="form-control" formControlName="editClientUsername" type="text">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Monthly Charges <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editClientForm.get('editClientEmail').invalid && editClientForm.get('editClientEmail').touched"
-                                    formControlName="editClientEmail">
+                                    [class.invalid]="editPackageForm.get('editmonthlyPrice').invalid && editPackageForm.get('editmonthlyPrice').touched"
+                                    formControlName="editmonthlyPrice">
                                 <div
-                                    *ngIf="editClientForm.get('editClientEmail').invalid && editClientForm.get('editClientEmail').touched">
+                                    *ngIf="editPackageForm.get('editmonthlyPrice').invalid && editPackageForm.get('editmonthlyPrice').touched">
                                     <small
-                                        *ngIf="editClientForm.get('editClientEmail').invalid && editClientForm.get('editClientEmail').touched"
-                                        class="text-danger"> *Email is required</small>
+                                        *ngIf="editPackageForm.get('editmonthlyPrice').invalid && editPackageForm.get('editmonthlyPrice').touched"
+                                        class="text-danger"> *Monthly Charges is required</small>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Password</label>
-                                <input class="form-control" formControlName="password" type="password">
-                            </div>
-                        </div>
+                       
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Confirm Password</label>
-                                <input class="form-control" vformControlName="password" type="password">
-                            </div>
-                        </div> -->
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Client ID <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Yearly Charges <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editClientForm.get('editClientId').invalid && editClientForm.get('editClientId').touched"
-                                    formControlName="editClientId">
+                                    [class.invalid]="editPackageForm.get('edityearlyPrice').invalid && editPackageForm.get('edityearlyPrice').touched"
+                                    formControlName="edityearlyPrice">
                                 <div
-                                    *ngIf="editClientForm.get('editClientId').invalid && editClientForm.get('editClientId').touched">
+                                    *ngIf="editPackageForm.get('edityearlyPrice').invalid && editPackageForm.get('edityearlyPrice').touched">
                                     <small
-                                        *ngIf="editClientForm.get('editClientId').invalid && editClientForm.get('editClientId').touched"
-                                        class="text-danger"> *Id is required</small>
+                                        *ngIf="editPackageForm.get('edityearlyPrice').invalid && editPackageForm.get('edityearlyPrice').touched"
+                                        class="text-danger"> *Yearly Charges is required</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Phone <span class="text-danger">*</span> </label>
+                                <label class="col-form-label">Offer Monthly Chages </label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editClientForm.get('editClientPhone').invalid && editClientForm.get('editClientPhone').touched"
-                                    formControlName="editClientPhone">
-                                <div
-                                    *ngIf="editClientForm.get('editClientPhone').invalid && editClientForm.get('editClientPhone').touched">
-                                    <small
-                                        *ngIf="editClientForm.get('editClientPhone').invalid && editClientForm.get('editClientPhone').touched"
-                                        class="text-danger"> *Phone is required</small>
-                                </div>
+                                    
+                                    formControlName="editofferMonthlyPrice">
+                                
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Company Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Offer Yearly Charges</label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editClientForm.get('editClientCompany').invalid && editClientForm.get('editClientCompany').touched"
-                                    formControlName="editClientCompany">
-                                <div
-                                    *ngIf="editClientForm.get('editClientCompany').invalid && editClientForm.get('editClientCompany').touched">
+                                    formControlName="editofferYearlyPrice">
+                                   
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-form-label">Offer Status</label>
+                                <select class="form-control" 
+                                    [class.invalid]="editPackageForm.get('editstatus').invalid && editPackageForm.get('editstatus').touched"
+                                    formControlName="editstatus">
+                                <select></select>
+                                <option value="1" class="text-success bold">Active</option>
+                                <option value="0" class="text-danger bold">Inactive</option>
+                                </select>
+                                    <div
+                                    *ngIf="editPackageForm.get('editstatus').invalid && editPackageForm.get('editstatus').touched">
                                     <small
-                                        *ngIf="editClientForm.get('editClientCompany').invalid && editClientForm.get('editClientCompany').touched"
-                                        class="text-danger"> *Company is required</small>
+                                        *ngIf="editPackageForm.get('editstatus').invalid && editPackageForm.get('editstatus').touched"
+                                        class="text-danger"> *Offer Status is required</small>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="table-responsive m-t-15">
-                        <table class="table table-striped custom-table">
-                            <thead>
-                                <tr>
-                                    <th>Module Permission</th>
-                                    <th class="text-center">Read</th>
-                                    <th class="text-center">Write</th>
-                                    <th class="text-center">Create</th>
-                                    <th class="text-center">Delete</th>
-                                    <th class="text-center">Import</th>
-                                    <th class="text-center">Export</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Invoices</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="invoices[0].read"
-                                            (click)="checkCheckBoxvalueInvoices($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="invoices[1].write"
-                                            (click)="checkCheckBoxvalueInvoices($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="invoices[2].create"
-                                            (click)="checkCheckBoxvalueInvoices($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="invoices[3].delete"
-                                            (click)="checkCheckBoxvalueInvoices($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="invoices[4].import"
-                                            (click)="checkCheckBoxvalueInvoices($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="invoices[5].export"
-                                            (click)="checkCheckBoxvalueInvoices($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Projects</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="projects[0].read"
-                                            (click)="checkCheckBoxvalueProjects($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="projects[1].write"
-                                            (click)="checkCheckBoxvalueProjects($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="projects[2].create"
-                                            (click)="checkCheckBoxvalueProjects($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="projects[3].delete"
-                                            (click)="checkCheckBoxvalueProjects($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="projects[4].import"
-                                            (click)="checkCheckBoxvalueProjects($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="projects[5].export"
-                                            (click)="checkCheckBoxvalueProjects($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Tasks</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="tasks[0].read"
-                                            (click)="checkCheckBoxvalueTasks($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="tasks[1].write"
-                                            (click)="checkCheckBoxvalueTasks($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="tasks[2].create"
-                                            (click)="checkCheckBoxvalueTasks($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="tasks[3].delete"
-                                            (click)="checkCheckBoxvalueTasks($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="tasks[4].import"
-                                            (click)="checkCheckBoxvalueTasks($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="tasks[5].export"
-                                            (click)="checkCheckBoxvalueTasks($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Chats</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="chats[0].read"
-                                            (click)="checkCheckBoxvalueChats($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="chats[1].write"
-                                            (click)="checkCheckBoxvalueChats($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="chats[2].create"
-                                            (click)="checkCheckBoxvalueChats($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="chats[3].delete"
-                                            (click)="checkCheckBoxvalueChats($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="chats[4].import"
-                                            (click)="checkCheckBoxvalueChats($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="chats[5].export"
-                                            (click)="checkCheckBoxvalueChats($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Estimates</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="estimates[0].read"
-                                            (click)="checkCheckBoxvalueEstimates($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="estimates[1].write"
-                                            (click)="checkCheckBoxvalueEstimates($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="estimates[2].create"
-                                            (click)="checkCheckBoxvalueEstimates($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="estimates[3].delete"
-                                            (click)="checkCheckBoxvalueEstimates($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="estimates[4].import"
-                                            (click)="checkCheckBoxvalueEstimates($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="estimates[5].export"
-                                            (click)="checkCheckBoxvalueEstimates($event, 5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>TimingSheets</td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="timingSheets[0].read"
-                                            (click)="checkCheckBoxvalueTimingSheets($event, 0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="timingSheets[1].write"
-                                            (click)="checkCheckBoxvalueTimingSheets($event, 1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="timingSheets[2].create"
-                                            (click)="checkCheckBoxvalueTimingSheets($event, 2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="timingSheets[3].delete"
-                                            (click)="checkCheckBoxvalueTimingSheets($event, 3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="timingSheets[4].import"
-                                            (click)="checkCheckBoxvalueTimingSheets($event, 4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="checkbox" [checked]="timingSheets[5].export"
-                                            (click)="checkCheckBoxvalueTimingSheets($event, 5)">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    
                     </div>
                     <div class="submit-section">
-                        <button class="btn btn-primary submit-btn" (click)="onSave()">Save</button>
+                        <button class="btn btn-primary submit-btn" (click)="onSave()">Submit</button>
                     </div>
                 </form>
             </div>
@@ -694,7 +341,7 @@
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-header">
-                    <h3>Delete Client</h3>
+                    <h3>Delete Package</h3>
                     <p>Are you sure want to delete?</p>
                 </div>
                 <div class="modal-btn delete-action">

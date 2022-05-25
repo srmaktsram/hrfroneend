@@ -163,7 +163,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   //search by name
   searchByName(val) {
     if (val) {
-      this.data.splice(0, this.data.length);
+      this.srch.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return (

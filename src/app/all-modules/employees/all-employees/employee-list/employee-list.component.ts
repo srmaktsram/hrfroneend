@@ -108,7 +108,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   lengthCount: any;
   constructor(
     private srvModuleService: AllModulesService,
-    private http: HttpClient, private headerComponent: HeaderComponent,
+    private http: HttpClient,
+    private headerComponent: HeaderComponent,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     public router: Router
@@ -274,8 +275,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data) => {
         console.log("get Employees", data);
@@ -298,8 +299,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data: any) => {
         this.employees = data[0].notification.employee;
@@ -344,19 +345,20 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         this.loadEmployee();
         let document = data.data;
         let author = "Admin";
-        let message = 'added a new employee ';
-        let functions = document.firstName + " in " + document.department + " department";
+        let message = "added a new employee ";
+        let functions =
+          document.firstName + " in " + document.department + " department";
         let time = document.createDate;
         if (this.employees == true) {
           this.http
             .post(
               "http://localhost:8443/admin/allNotification/createNotification" +
-              "/" +
-              this.adminId,
+                "/" +
+                this.adminId,
               { message, author, functions, time }
             )
             .subscribe((data: any) => {
-              this.headerComponent.getAllNotifications()
+              this.headerComponent.getAllNotifications();
             });
         }
       });
@@ -370,8 +372,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.http
         .get(
           "http://localhost:8443/admin/notifications/getAllNotification" +
-          "/" +
-          this.adminId
+            "/" +
+            this.adminId
         )
         .subscribe((data: any) => {
           this.dataArray = data[0].notifications;
@@ -383,10 +385,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
             this.newStatus = false;
           }
         });
-
     }
   }
-
 
   // to know the date picker changes
   from(data) {
