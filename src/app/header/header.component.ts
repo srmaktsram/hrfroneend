@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit {
   jsonData: any = {
     message: [],
   };
-  
+
   notifications: any;
   messagesData: any;
   user_type: string;
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   dataArray: any;
   lengthCount: any;
   newData: any;
-  newStatus= true;
+  newStatus = true;
   leaves: boolean;
   lstHolidays: any;
   holiday: boolean;
@@ -45,9 +45,9 @@ export class HeaderComponent implements OnInit {
     this.companyLogo = `http://localhost:8443/${sessionStorage.getItem(
       "clogo"
     )}`;
-    this.current_location = JSON.parse(
-      sessionStorage.getItem("current_location")
-    );
+    // this.current_location = JSON.parse(
+    //   sessionStorage.getItem("current_location")
+    // );
     // this.flag = `https://assets.ipstack.com/flags/${this.current_location.country_code.toLowerCase()}.svg`;
   }
 
@@ -87,27 +87,24 @@ export class HeaderComponent implements OnInit {
   //////Get leave Notifications......
   public getAllNotifications() {
     if (this.user_type == "admin") {
-        this.http
-          .get(
-            "http://localhost:8443/admin/notifications/getAllNotification" +
-              "/" +
-              this.adminId
-          )
-          .subscribe((data: any) => {
-            this.dataArray = data[0].notifications;
-            this.lengthCount = this.dataArray.length;
+      this.http
+        .get(
+          "http://localhost:8443/admin/notifications/getAllNotification" +
+            "/" +
+            this.adminId
+        )
+        .subscribe((data: any) => {
+          this.dataArray = data[0].notifications;
+          this.lengthCount = this.dataArray.length;
 
-            if (this.lengthCount <= 4) {
-              this.newStatus = true;
-            } else if (this.lengthCount >= 5) {
-              this.newStatus = false;
-            }
-          });
-      
+          if (this.lengthCount <= 4) {
+            this.newStatus = true;
+          } else if (this.lengthCount >= 5) {
+            this.newStatus = false;
+          }
+        });
     }
   }
-
-
 
   //////////
   // loadHolidaysNotifications() {
@@ -116,14 +113,14 @@ export class HeaderComponent implements OnInit {
 
   //   this.http.get("http://localhost:8443/admin/holidays/getNotification"+"/"+this.adminId).subscribe((res: any) => {
   //     this.lstHolidays = res;
-     
+
   //   });}}
   // }
 
   ngOnInit() {
     this.getAllNotifications();
 
-    console.log(JSON.parse(sessionStorage.getItem("current_location")));
+    // console.log(JSON.parse(sessionStorage.getItem("current_location")));
 
     // this.getDatas("notification");
     // this.getDatas("message");
@@ -188,8 +185,7 @@ export class HeaderComponent implements OnInit {
           this.adminId,
         obj
       )
-      .subscribe((data: any) => {
-      });
+      .subscribe((data: any) => {});
   }
   onSubmit() {
     this.router.navigate(["/pages/search"]);
