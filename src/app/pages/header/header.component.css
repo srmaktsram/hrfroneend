@@ -3,7 +3,7 @@
 	height:70px;
 	width:100%;
 	display:flex;
-	justify-content: space-between;
+	justify-content: center;
 	background-color: aqua;
 	border:2px solid green
 }
@@ -11,6 +11,10 @@
 	width:80%;
 	display: flex;
 	justify-content: center;
+}
+.all{
+	width:100%;
+	border: 5px solid black;
 }
 .flexItems{
 	display:flex;
@@ -55,6 +59,7 @@
 	height:70px;	
 	display:flex;
 	width:100%;
+
 }
 .flexItems{
 	display:flex;
@@ -76,6 +81,7 @@
 		height:70px;	
 		display:flex;
 		width:100%;
+
 	}
 	.flexItems{
 		display:flex;
@@ -88,14 +94,17 @@
 		width:80%;
 		display: flex;
 		justify-content: center;
-	}
+  }
+
 }
  @media(min-width:370px) and (max-width:450px){
 
 	.mat{
 		height:110px;	
 		display:flex;
-		justify-content: space-between;
-		/* width:250%; */
+
+		justify-content: center;
+		width:100%;
+
 	}
 }
