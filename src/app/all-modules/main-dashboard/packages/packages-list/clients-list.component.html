@@ -95,9 +95,9 @@
                                         </ng-container>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" (click)="getStatus('Active',client.id)"><i
+                                        <a class="dropdown-item" (click)="getStatus(1,package.id)"><i
                                                 class="fa fa-dot-circle-o text-success"></i> Active</a>
-                                        <a class="dropdown-item" (click)="getStatus('Inactive',client.id)"><i
+                                        <a class="dropdown-item" (click)="getStatus(0,package.id)"><i
                                                 class="fa fa-dot-circle-o text-danger"></i>
                                             Inactive</a>
                                     </div>
