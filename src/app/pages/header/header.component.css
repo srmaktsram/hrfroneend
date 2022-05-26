@@ -5,29 +5,33 @@
 	display:flex;
 	justify-content: space-between;
 	background-color: aqua;
+	border:2px solid green
+}
+.mainFlexDiv{
+	width:80%;
+	display: flex;
+	justify-content: center;
 }
 .flexItems{
 	display:flex;
     justify-content:flex-end;
 	margin-top: 10px;
-	/* align-items: center; */
-	width:100%;
+	width:80%;
 	margin-right: 20px;
-	/* border:2px solid black */
+}
+.imgDiv{
+	width:20%;
 }
 .img{
 	height: 60px;
 	width:60px;
 	margin-left:10px;
-	margin-top: -10px;
-	/* border:2px solid red; */
+	margin-top: -13px;
 	margin-left:100px;
 }
-.mainFlexDiv{
-	/* border:4px solid blue;	 */
-	width:90%;
-	display: flex;
-	justify-content: center;
+
+.buttonDiv{
+	width:20%;
 }
 
 .button{
@@ -51,30 +55,40 @@
 	height:70px;	
 	display:flex;
 	width:100%;
-	justify-content: space-between;
+}
+.flexItems{
+	display:flex;
+    justify-content:flex-end;
+	margin-top: 10px;
+	width:100%;
+	margin-right: 20px;
+}
+.mainFlexDiv{
+	width:80%;
+	display: flex;
+	justify-content: center;
 }
 				
 }
 
-
-
 @media(min-width:700px) and (max-width:775px){
-
 	.mat{
 		height:70px;	
 		display:flex;
-		width:200%;
-		/* border:2px solid red */
-
-	}
-
-	.mainFlexDiv{
-		/* border:4px solid blue;	 */
 		width:100%;
+	}
+	.flexItems{
+		display:flex;
+		justify-content:flex-end;
+		margin-top: 10px;
+		width:100%;
+		margin-right: 20px;
+	}
+	.mainFlexDiv{
+		width:80%;
 		display: flex;
 		justify-content: center;
 	}
-
 }
  @media(min-width:370px) and (max-width:450px){
 
@@ -82,6 +96,6 @@
 		height:110px;	
 		display:flex;
 		justify-content: space-between;
-		width:250%;
+		/* width:250%; */
 	}
 }

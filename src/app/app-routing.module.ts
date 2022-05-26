@@ -6,7 +6,7 @@ import { AuthGuard } from "./core/auth/auth-guard.service";
 const routes: Routes = [
 
 
-  { path: "", redirectTo: "homepage", pathMatch: "full" },
+  { path: "", redirectTo: "pages", pathMatch: "full" },
 
   {
     path: "pages",
@@ -51,4 +51,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

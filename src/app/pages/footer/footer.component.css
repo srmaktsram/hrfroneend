@@ -2,8 +2,9 @@
 .FooterMainDiv{
 	display:flex;
 	justify-content: space-between;
-	margin-top: 50px;
-	background-color: rgb(188, 234, 212);
+	/* margin-top: 50px; */
+	/* background-color: rgb(188, 234, 212); */
+	background-color: aqua
 }
 
 
@@ -72,8 +73,8 @@
 					.FooterMainDiv{
 						display:flex;
 						justify-content: space-between;
-						margin-top: 50px;
-						width:110%;
+						/* margin-top: 50px; */
+						width:100%;
 					}
 					
 				
@@ -86,16 +87,19 @@
 			.FooterMainDiv{
 				display:flex;
 				justify-content: space-between;
-				margin-top: 50px;
-				width:161%;
+				/* margin-top: 50px; */
+				width:100%;
 			}			
-		
-
 			.getInTouchDiv{
 				padding-left: 20px;
 			
 			}
-
+			.getInTouch{
+				color:orangered;
+				font-size:20px
+			
+			}			
+			
 			.TrandingFooter{
 				padding-right: 0px;
 			}
@@ -109,29 +113,58 @@
 				cursor: pointer;
 				width:80%;
 			}
+			.paragraph{
+				font-size:15px;
+			}
+			.whatsAppIcon{
+				width:20px;
+			}
+			.whatsApp{
+				font-size: 10px;
+				margin-left: 5px;
+			}
 }
 	
 
- @media(min-width:370px) and (max-width:450px){
-
-
+ @media(min-width:300px) and (max-width:450px){
 		.FooterMainDiv{
 			display:flex;
-			justify-content: space-between;
-			margin-top: 50px;
-			width:250%;
-		}			
-	
-
+			flex-direction: column;
+			width:100%;	
+		
+		}				
 		.getInTouchDiv{
-			padding-left: 20px;
+			padding-left: 5px;
+			text-align: center;
 		
 		}
+		.informationDiv{
+         text-align: center;
+		 margin-top: 15px;
 
-		.TrandingFooter{
-			padding-right: 0px;
 		}
+		.blog{
+			text-align: center;
+			margin-top: 15px;
 
+
+		}
+		.invoiceFooter{
+			text-align: center;
+			margin-top: 15px;
+		}
+		.TrandingFooter{
+			text-align: center;
+			margin-top: 15px;
+			padding-right: 2px;
+		}
+		.whatsAppIcon{
+			width:20px;
+		}
+		.whatsApp{
+			font-size: 10px;
+			margin-left: 5px;
+		}
 		.whatsAppDiv{
 			margin-top: 20px;
 			border:8px solid rgb(166, 251, 227);;
@@ -139,8 +172,16 @@
 			background-color: rgb(166, 251, 227);
 			border-radius: 10px;
 			cursor: pointer;
-			width:80%;
+			width:60%;
 		}
-		
+		.whatsAppMainDiv{
+			display:flex;
+			justify-content: center;
+		}
 
+		.followus{
+			margin-top: 20px;
+			font-size: 20px;
+		
+		}
 }

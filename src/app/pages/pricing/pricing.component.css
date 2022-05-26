@@ -64,7 +64,9 @@ padding-bottom: 30px;
 	display:flex;
 	justify-content: center;
 }
-
+/* .pricingFooter{
+	width:100%;
+} */
 @media(min-width:700px) and (max-width:800px){
 	
 .matDiv{

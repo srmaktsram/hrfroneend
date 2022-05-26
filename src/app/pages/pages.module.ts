@@ -6,22 +6,23 @@ import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
 import { SharingModule } from '../sharing/sharing.module';
 import { HomeComponent } from './home/home.component';
-import { PricingModule } from './pricing/pricing.module';
 import { MatButtonModule } from '@angular/material/button';
-import { HeaderComponent } from './header/header.component';
+import { PricingComponent } from './pricing/pricing.component';
 import { FooterComponent } from './footer/footer.component';
+import { SidenavMenuComponent } from './sidenav-menu/sidenav-menu.component';
+import { PagesComponent } from './pages.component';
+import { HeaderComponent } from './header/header.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, HeaderComponent, FooterComponent],
+  declarations: [HomeComponent, HeaderComponent, PricingComponent, FooterComponent, SidenavMenuComponent, PagesComponent],
   imports: [
     CommonModule,
-    PricingModule,
     PagesRoutingModule,
-    MatCardModule,
-    MatRadioModule,
     FormsModule,
     SharingModule,
+    MatCardModule,
+    MatRadioModule,
     MatButtonModule,
   ]
 })

@@ -3,12 +3,11 @@
 /*//////////////////////////////////// header Css ////////////////////////////////////////////////////*/
 
 .mat{
-	height:110px;
+	height:70px;
 	width:100%;
 	display:flex;
 	justify-content: space-between;
-
-	/* background-color: aqua; */
+	background-color: aqua;
 }
 .flexItems{
 	display:flex;
@@ -50,29 +49,36 @@
 	margin-right: 50px;
 }
 .spanText{
-	font-size:50px;
+	font-size:37px;
 	font-weight: bold;
-	margin-left:20px ;
 	
 }
 .textDiv{
-	padding-top: 80px;
+	padding-top: 20px;
 	display: flex;
 	justify-content: space-between;
 	background-color: rgb(238, 235, 232);
 }
 
 .IndiasNo1{
-   width:60%
+   width:60%;
+   /* border:2px solid green; */
+   padding-left: 70px;
 }
-.inputText{
-	width:70%;
-	height:80px;
+.createGstComp{
+	font-size: 25px;
 	margin-top: 20px;
-	margin-left: 20px;
+}
+.inputTextOp{
+   width:80%;
+   margin-top: 20px;
+}
+.textOp{
+	height: 60px;
+	font-size: 25px;
 }
 .vajpaiiDiv{
-	width:40%
+	width:40%;
 }
 .VajpaiiImg{
 
@@ -80,11 +86,10 @@ width:100%
 
 }
 .freeTrail{
-	height:80px;
-	margin-top: 20px;
+	height:60px;
 }
 .getfree{
-	font-size: 25px;
+	font-size: 20px;
 	border:5px solid red;
 	background: red;
 	cursor: pointer;
@@ -92,59 +97,68 @@ width:100%
 
 }
 .desktop{
-	margin-top: 100px;
-	border:20px solid black;
+	margin-top: 50px;
+	border:10px solid black;
 	background-color: black;
 	color:white;
 	width:30%;
-	margin-left: 50px;
 	text-align: center;
 	border-radius: 7px;
-	font-size: 25px;
-}
-.fileicon{
- text-align: center;
-}
-.India{
-	margin-left: 60px;
-}
-.iso{
-margin-top: -50px;
-display: flex;
-justify-content: space-between;
-width:50%;
+	font-size: 16px;
+	margin-left: 20px;
 }
 
-.isoCertified{
-	width: 200px;
+.fileicon{
+	text-align: center;
+   }
+
+.iso{
+	margin-top: 40px;
+	display: flex;
+	justify-content: space-between;
+	width:70%;
+	
 }
-.customerChoice{
-	width:250px
-}
+.India{
+		font-size: 20px;
+	}
+	
+	.isoCertified{
+		width: 130px;
+	}
+	.customerChoice{
+		width:170px
+	}
+
+	.lakh{
+		text-align: center;
+		color:orange;
+		font-size:38px;
+	}
+
+
 .Create{
-	font-size: 50px;
-	margin-left: 50px;
-	margin-top: 150px;
+	margin-top: 80px;
+	font-size: 40px;
 
 }
 .professional{
-	font-size: 50px;
+	font-size: 40px;
 	color:red;
 	font-weight: bold;
-	margin-left: 50px;
 }
 .NonGst{
-	font-size: 50px;
+	font-size: 40px;
 	color:red;
 	font-weight: bold;
 }
 .or{
-	font-size: 50px;
+	font-size: 40px;
 	font-weight: bold;
 }
 .fully{
- margin-left:50px;
- margin-top: 50px;
+ margin-top: 40px;
+ font-size: 20px;
 }
 .op{
 	background:white;
@@ -152,25 +166,32 @@ width:50%;
 }
 .list{
 	margin-top: 15px;
-	font-size: 25px;
-	margin-left:50px;
+	font-size: 20px;
+	margin-left: 10px;
 }
 
 .flexImage{
- display:flex;
- justify-content: space-between;
+  display:flex;
+  justify-content: space-between;
+  padding-left: 70px;
 }
+
 .lapimage{
 	width:50%;
 }
 .invoiceImage{
 	width:100%;
 }
+.whyUseBillBook{
+	padding-left: 70px;
+	margin-top: 50px;
+
+}
+
+
 .why{
-	margin-top: 150px;
-	font-size: 50px;
+	font-size: 40px;
 	font-weight: bold;
-	margin-left:30px ;
 }
 .Flexicons{
 	display:flex;
@@ -186,11 +207,14 @@ width:50%;
 	height:130px;
 
 }
-.stayConnected{
+.StayConnected{
 	font-size: 40px;
 	font-weight: bold;
-	margin-left: 70px;
-
+    padding-left: 70px;
+   margin-top:50px
+}
+.stay1{
+	font-size: 30px;
 }
 .Connected{
 	font-size: 40px;
@@ -198,28 +222,27 @@ width:50%;
 	color:orange;
 	margin-left: 10px;
 }
-.SyncData{
-	margin-left: 70px;
-}
+
 .mobileLaptop{
 	width:70%;
 }
+
 .whoisIt{
-	margin-left: 70px;
 	color:orange;
 	font-weight: bold;
 	font-size: 50px;
-	margin-top: 80px;
-
+	margin-top: 20px;
+}
+.retailersDiv{
+	width:50%;
 }
 .ForRetailers{
 	display: flex;
 	justify-content: space-between;
-	margin-top:80px;
+	margin-top:40px;
 	width:100%;
-	height:100px;
+	height:80px;
 	background:white;
-	margin-left: 70px;
 	padding-left: 20px;
 
 }
@@ -230,58 +253,65 @@ width:50%;
 	margin-top:15px;
 }
 .hiddenList{
-	margin-left: 80px;
 	font-size: 20px;
 }
 .hiddenContentDiv{
 	background-color: white;
 	padding-top: 10px;
     width:100%;
-	margin-left: 70px;
+	padding-left: 30px;
 	
 }
-.coneImgDIv{
+.coneImgDiv{
 	background-color: rgb(238, 235, 232);
+	width:100%;
+	padding-left: 70px;
 }
+
 .flexHiddenImg{
 	display:flex;
 	justify-content: space-between;
+	padding-bottom: 30px;
 }
+
 .ManImgDiv{
-width:28%;
+width:30%;
 }
 .manImg{
 	width:100%;
 }
+
+.manyButtons{
+	padding-left: 70px;
+ }
+
+.what{
+	font-size: 40px;
+}
 .ourUsers{
 	color:orange;
-	font-size: 50px;
+	font-size: 40px;
 	font-weight: bold;
-
 }
-.what{
-	font-size: 50px;
-	margin-left: 70px;
 
-}
 .Bussiness{
-	margin-left: 70px;
 	margin-top: 10px;
+	font-size: 30px;
 
 }
 .SayAboutUs{
-	font-size: 50px;
+	font-size: 40px;
 }
 .Fmgc{
-	font-size: 30px;
+	margin-top: 20px;
+	font-size: 20px;
 	border:5px solid red;
 	background:red;
-	margin-left: 70px;
 	width:13%;
 	border-radius: 20px;
 }
 .Electronics{
-	font-size: 30px;
+	font-size: 20px;
 	border:5px solid green;
 	background:green;
 	margin-left: 20px;
@@ -291,7 +321,7 @@ width:28%;
 
 }
 .Hardware{
-	font-size: 30px;
+	font-size: 20px;
 	border:5px solid yellow;
 	background:yellow;
 	margin-left: 20px;
@@ -301,41 +331,30 @@ width:28%;
 
 }
 .Kirana{
-	font-size: 30px;
+	font-size: 20px;
 	border:5px solid blue;
 	background:blue;
 	margin-left: 20px;
 	width:13%;
 	border-radius: 20px;
-
-
-
-
 }
 .Jewellery{
-	font-size: 30px;
+	font-size: 20px;
 	border:5px solid blueviolet;
 	background:blueviolet;
 	margin-left: 20px;
 	width:13%;
 	border-radius: 20px;
-
-
-
 }
 .Pharma{
-	font-size: 30px;
+	font-size: 20px;
 	border:5px solid orange;
 	background:orange;
-	margin-left: 70px;
 	width:13%;
 	border-radius: 20px;
-
-
-
 }
 .Transportation{
-	font-size: 30px;
+	font-size: 20px;
 	border:5px solid rgb(121, 169, 203);
 	background: rgb(121, 169, 203);
 	margin-left: 20px;
@@ -349,6 +368,8 @@ justify-content: space-between;
 .FmgcContent{
 	width:75%;
 	margin-top: 70px;
+	padding-right:20px;
+padding-left: 20px;
 }
 .commentImgDiv{
 	width:20%;
@@ -359,30 +380,31 @@ justify-content: space-between;
 	width:75%;
 	margin-left: 70px;
 }
-.TakeYourBusiness{
-	font-size: 60px;
-	font-weight: bold;
-	margin-left:70px;
 
+.flexBusiness{
+	display:flex;
+	justify-content: space-between;
+	padding-left:70px;
+	width:100%;
+}
+.onlineContentDiv{
+	margin-top: 170px;
+	width:50%;
+}
+
+.TakeYourBusiness{
+	font-size: 40px;
+	font-weight: bold;
 }
 .online{
 	color:orange;
-	font-size: 60px;
+	font-size: 40px;
 	font-weight: bold;
-
-}
-.onlineContentDiv{
-	margin-top: 300px;
-	width:50%;
 }
 .setup{
 	font-size: 30px;
-	margin-left:70px;
 }
-.flexBusiness{
-display:flex;
-justify-content: space-between;
-}
+
 .storeImgDiv{
 	width:50%;
 }
@@ -390,18 +412,18 @@ justify-content: space-between;
 
 	width:90%;
 }
+
 .benifitsOfBillbook{
 	margin-top: 70px;
+	padding-left:70px;
 }
 .benifits{
-	font-size: 60px;
+	font-size: 40px;
 	color:orange;
 	font-weight: bold;
-	margin-left: 70px;
-
 }
 .billBook{
-	font-size: 60px;
+	font-size: 40px;
 
 }
 .flexNewIcons{
@@ -425,13 +447,14 @@ justify-content: space-between;
 	margin-left: 70px;
 }
 .Associations{
-	font-size: 60px;
+	font-size: 40px;
 	color:orange;
 }
 .And{
-	font-size: 60px;
+	font-size: 40px;
 
 }
+
 .memberIconsDiv{
 	display:flex;
 	justify-content: space-between;
@@ -449,11 +472,16 @@ justify-content: space-between;
 .memberIconImg{
 	width:177px;
 }
+
 .memberIconImg1{
 	width:177px;
 	height: 50px;
 }
-.FooterMainDiv{
+
+
+
+
+/* .FooterMainDiv{
 	display:flex;
 	justify-content: space-between;
 	margin-top: 50px;
@@ -515,692 +543,1000 @@ justify-content: space-between;
 .manyButtons{
   margin-top: 40px;
 
-}
+} */
 
 /* /////////////////////////////////////////MIDIA QUERY START FROM HERE ///////////////////////////////////////*/
 
 @media(min-width:1400px) and (max-width:1500px){
 	
-.mat{
-	height:110px;	
-	display:flex;
-	justify-content: space-between;
-	width:110%;
-}
 .textDiv{
-	width: 110%;
-	padding-top: 80px;
+	padding-top: 20px;
 	display: flex;
 	justify-content: space-between;
 	background-color: rgb(238, 235, 232);
-	padding-bottom:120px;
 }
 .IndiasNo1{
-	width:70%;
+	width:60%;
+	padding-left: 70px;
  }
  .desktop{
-	margin-top: 100px;
-	border:20px solid black;
+	margin-top: 50px;
+	border:10px solid black;
 	background-color: black;
 	color:white;
-	width:40%;
-	margin-left: 50px;
+	width:30%;
 	text-align: center;
 	border-radius: 7px;
-	font-size: 25px;
+	font-size: 16px;
+	margin-left: 20px;
 }
 .iso{
-	/* margin-top: 50px; */
+	margin-top: 40px;
 	display: flex;
 	justify-content: space-between;
 	width:70%;
-	/* border:4px solid red */
-	}
-	.vajpaiiDiv{
-    	width:40%
-	}
+	
+}
+.vajpaiiDiv{
+	width:40%;
+}
+.VajpaiiImg{
 
-	.VajpaiiImg{
-		width:100%;
-		height:110%;
-		}
-	.rupee{
-			display: flex;
-			justify-content: space-between;
-			margin-top: 50px;
-			margin-left: 50px;
-			margin-right: 50px;
-			width:105%;
-		}
-		.flexImage{
-			display:flex;
-			justify-content: space-between;
-			width:110%;
-		
-		}
-		.professional{
-			font-size: 42px;
-			color:red;
-			font-weight: bold;
-			margin-left: 50px;
-		}
-		.NonGst{
-			font-size: 42px;
-			color:red;
-			font-weight: bold;
-		}
+width:100%
+
+}
+.rupee{
+	display: flex;
+	justify-content: space-between;
+	margin-top: 50px;
+	margin-left: 50px;
+	margin-right: 50px;
+}
+.flexImage{
+	display:flex;
+	justify-content: space-between;
+	padding-left: 70px;
+  }
+  .professional{
+	font-size: 40px;
+	color:red;
+	font-weight: bold;
+}
+.NonGst{
+	font-size: 40px;
+	color:red;
+	font-weight: bold;
+}
 		.op{
 			background:white;
 			border-bottom:10px solid orange;
-			width:110%;
+			width:100%;
 		}
-		.coneImgDIv{
-			width: 110%;
+		.coneImgDiv{
 			background-color: rgb(238, 235, 232);
+			width:100%;
+			padding-left: 70px;
 		}
+		
 		.flexHiddenImg{
 			display:flex;
 			justify-content: space-between;
-			width:110%;
-		}
-		.manImg{
-			width:100%;
+			padding-bottom: 30px;
 		}
 		.ManImgDiv{
-			width:33%
-		}		
-		
-		.Transportation{
-			font-size: 30px;
-			border:5px solid rgb(121, 169, 203);
-			background: rgb(121, 169, 203);
-			margin-left: 20px;
-			border-radius: 20px;
-			width:16%;
-		}
+			width:30%;
+			}
+			.manImg{
+				width:100%;
+			}
+				
+
 		.flexImageContent{
 			display:flex;
 			justify-content: space-between;
-			width:110%;
 			}
 			.commentImgDiv{
 				width:20%;
+				margin-left: 70px;
 				margin-top: 70px;
 			}
-
 			.commentImg{
 				width:75%;
-				margin-left:30px;
+				margin-left: 70px;
 			}
-			.onlineContentDiv{
-				margin-top: 130px;
-				width:60%;
-			}
-			.storeImgDiv{
-				width:50%;
-			}
+			
 			.flexBusiness{
 				display:flex;
 				justify-content: space-between;
-				width:110%
-				}
-				
-					.FooterMainDiv{
-						display:flex;
-						justify-content: space-between;
-						margin-top: 50px;
-						width:110%;
-					}
-					
-				
+				padding-left:70px;
+				width:100%;
+			}
+
+		.onlineContentDiv{
+	     margin-top: 170px;
+	     width:50%;
+         }
+
+		 .storeImgDiv{
+			width:50%;
+		}
+		.memberIconsDiv{
+			display:flex;
+			justify-content: space-between;
+			background-color: white;
+			width:100%;
+		}
+		.memberIcons{
+			width:15%;
+			display:flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.memberIconImg{
+			width:150px;
+		}
+		
+		.memberIconImg1{
+			width:150px;
+			height: 50px;
+		}
+	
 }
 
 
 
 @media(min-width:700px) and (max-width:775px){
-
-	.mat{
-		height:110px;	
-		display:flex;
-		justify-content: space-between;
-		width:161%;
+	.headerCom{
+		display: none;
 	}
 	.textDiv{
-		width: 161%;
-		padding-top: 80px;
+		padding-top: 25px;
 		display: flex;
 		justify-content: space-between;
 		background-color: rgb(238, 235, 232);
-		padding-bottom:120px;
 	}
 	.IndiasNo1{
-		width:80%;
+		width:60%;
+		padding-left: 70px;
 	 }
+	 .spanText{
+		font-size:20px;
+		font-weight: bold;
+		
+	}
+	.createGstComp{
+		font-size: 18px;
+		margin-top: 20px;
+	}
+
+	.inputTextOp{
+		width:100%;
+		margin-top: 20px;
+	 }
+	 .textOp{
+		 height: 50px;
+		 font-size: 19px;
+	 }
+
+	 .freeTrail{
+		height:50px;
+	}
 	 .desktop{
-		margin-top: 120px;
-		border:20px solid black;
+		margin-top: 30px;
+		border:10px solid black;
 		background-color: black;
 		color:white;
-		width:40%;
-		margin-left: 50px;
-		text-align: center;
+		width:60%;
+		display: flex;
+		justify-content: center;
+		align-items:center;
 		border-radius: 7px;
-		font-size: 25px;
+		font-size: 16px;
+		margin-left: 20px;
+		height:40px;
 	}
-
-	.vajpaiiDiv{
-    	width:50%
-	}
-
-	.VajpaiiImg{
-		width:100%;
-		height:110%;
-	}
-
-
+	
 .iso{
+	margin-top: 40px;
 	display: flex;
 	justify-content: space-between;
-	width:120%;
+	width:100%;
+	
+}
+.India{
+		font-size: 15px;
+	}
+	
+	.isoCertified{
+		width: 80px;
+	}
+
+	.customerChoice{
+		width:90px
+	}
+	.vajpaiiDiv{
+		width:40%;
+	}
+	.VajpaiiImg{	
+	  width:100%;
+	  height:100%;
+	
 	}
 	.rupee{
 		display: flex;
 		justify-content: space-between;
-		margin-top: 50px;
-		margin-left: 50px;
 		margin-right: 50px;
-		width:155%;
+		width:100%;
+		margin-left: 0px;
+		margin-right: 0px;
 	}
-	.flexImage{
-		display:flex;
-		justify-content: space-between;
-		width:161%;
+
+	.lakh{
+		text-align: center;
+		color:orange;
+		font-size:30px;
+	}
+	.trustBussiness{
+		font-size:20px;
+		text-align: center;
+	}
 	
+	.CreateAndPrint{
+		width:50%;
 	}
-	.Create{
-		font-size: 50px;
-		margin-left: 50px;
-		margin-top: 100px;
-	}
-	 .CreateAndPrint{
-		width:110%;
-	}
+
 	.lapimage{
-		width:60%;
+		width:50%;
 	}
-
-	.professional{
-		font-size: 45px;
-		color:red;
-		font-weight: bold;
-		margin-left: 50px;
-	}
-	.NonGst{
-		font-size: 45px;
-		color:red;
-		font-weight: bold;
-	}
-	.or{
-		font-size: 50px;
-		font-weight: bold;
-	}
-	.fully{
-	 margin-left:50px;
-	 margin-top: 50px;
-	}
-
+	
 	.invoiceImage{
 		width:100%;
 		height: 100%;
 	}
- 
-	.Flexicons{
-		display:flex;
-		justify-content: space-between;
-		width:161%;
-	}
-	.op{
-		background:white;
-		border-bottom:10px solid orange;
-		width:161%;
-	}
+.Create{
+	margin-top: 80px;
+	font-size: 25px;
 
-	.flexHiddenImg{
-		display:flex;
-		justify-content: space-between;
-		width:161%;
-	}
-	.hiddenContentDiv{
-		background-color: white;
-		padding-top: 10px;
-		width:100%;
-		margin-left: 70px;
-		
-	}
-	.manImg{
-		width:100%;
-	}
-	.ManImgDiv{
-		width:35%;
-		height:100%;
-	}	
-	.manyButtons{
-		margin-top: 40px;
-		width:161%;
-	  
-	  }
-	  .Transportation{
-		font-size: 30px;
-		border:5px solid rgb(121, 169, 203);
-		background: rgb(121, 169, 203);
-		margin-left: 20px;
-		border-radius: 20px;
-		width:20%;
-	}
-
-	.flexImageContent{
-		display:flex;
-		justify-content: space-between;
-		width:161%;
-		}
-		.FmgcContent{
-			width:60%;
-			margin-top: 70px;
-		}
-		.commentImgDiv{
-			width:35%;
-			margin-top: 70px;
-		}
-		.commentImg{
-			width:75%;
-			margin-left:30px;
-		}
-	  
-		.flexBusiness{
-			display:flex;
-			justify-content: space-between;
-			width:161%;
-			}
-
-			.TakeYourBusiness{
-				font-size: 40px;
-				font-weight: bold;
-				margin-left:70px;
-			
-			}
-			.online{
-				color:orange;
-				font-size: 40px;
-				font-weight: bold;
-			
-			}
-			.onlineContentDiv{
-				margin-top: 130px;
-				width:60%;
-			}
-
-			.benifitsOfBillbook{
-				margin-top: 70px;
-				width:161%;
-			}
-
-			.flexNewIcons{
-				margin-left: 100px;
-				display:flex;
-				justify-content: space-between;
-				margin-top: 100px;
-				width:150%;
-			}
-
-
-			.AssociationDiv{
-				margin-top: 100px;
-				margin-left: 70px;
-				width:150%;
-			}
-			.Associations{
-				font-size: 60px;
-				color:orange;
-			}
-			.And{
-				font-size: 60px;
-			
-			}
-			
-			.FooterMainDiv{
-				display:flex;
-				justify-content: space-between;
-				margin-top: 50px;
-				width:161%;
-			}			
-		
-
-			.getInTouchDiv{
-				padding-left: 20px;
-			
-			}
-
-			.TrandingFooter{
-				padding-right: 0px;
-			}
-
-			.whatsAppDiv{
-				margin-top: 20px;
-				border:8px solid rgb(166, 251, 227);;
-				text-align: center;
-				background-color: rgb(166, 251, 227);
-				border-radius: 10px;
-				cursor: pointer;
-				width:80%;
-			}
 }
-	
+.professional{
+	font-size: 25px;
+	color:red;
+	font-weight: bold;
+}
+.NonGst{
+	font-size: 25px;
+	color:red;
+	font-weight: bold;
+}
+.or{
+	font-size: 40px;
+	font-weight: bold;
+}
+.fully{
+ margin-top: 40px;
+ font-size: 20px;
+}
+.op{
+	background:white;
+	border-bottom:10px solid orange
+}
+.list{
+	margin-top: 15px;
+	font-size: 20px;
+	margin-left: 10px;
+}
 
- @media(min-width:370px) and (max-width:450px){
+.flexImage{
+  display:flex;
+  justify-content: space-between;
+  padding-left: 70px;
+  border:2px solid pink;
+}
 
-	.mat{
-		height:110px;	
-		display:flex;
-		justify-content: space-between;
-		width:250%;
-	}
-
-	.textDiv{
-		width: 250%;
-		padding-top: 80px;
-		display: flex;
-		justify-content: space-between;
-		background-color: rgb(238, 235, 232);
-		padding-bottom:120px;
-	}
-	.IndiasNo1{
-		width:100%;
-	 }
-	 .desktop{
-		margin-top: 140px;
-		border:20px solid black;
-		background-color: black;
-		color:white;
-		width:40%;
-		margin-left: 50px;
-		text-align: center;
-		border-radius: 7px;
-		font-size: 25px;
-	}
-
-	.vajpaiiDiv{
-    	width:50%
-	}
-
-	.VajpaiiImg{
-		width:100%;
-		height:110%;
-	}
-
-
-	.iso{
-		display: flex;
-		justify-content: space-between;
-		width:200%;
-		}
-		.rupee{
-			display: flex;
-			justify-content: space-between;
-			margin-top: 50px;
-			margin-left: 50px;
-			margin-right: 50px;
-			width:240%;
-			text-align: center;
-		}
-		.flexImage{
-			display:flex;
-			justify-content: space-between;
-			width:250%;
 		
-		}
-		.Create{
-			font-size: 50px;
-			margin-left:20px;
-			margin-top: 100px;
-		}
-		 .CreateAndPrint{
-			width:110%;
-		}
-		.lapimage{
-			width:60%;
-		}
-		.invoiceImage{
-			width:100%;
-			height: 100%;
-		}
-	 
+.whyUseBillBook{
+	padding-left: 70px;
+	margin-top: 40px;
+}
+.why{
+	font-size: 25px;
+	font-weight: bold;
+}
+.Flexicons{
+	display:flex;
+	justify-content: space-between;
+	padding-left: 70px;
+	padding-right: 70px;
+}
+.invoiceWebp{
+	margin-top: 100px;
+	width:30%;
+	text-align: center;
+}
+.imgHight{
+	height: 90px;
+	width:90px;
+}
+.manageInventory{
+	margin-top: 10px;
+	font-size: 20px;
+}
 
-		.professional{
-			font-size: 45px;
-			color:red;
-			font-weight: bold;
-			margin-left: 20px;
-		}
-		.NonGst{
-			font-size: 45px;
-			color:red;
-			font-weight: bold;
-		}
-		.or{
-			font-size: 50px;
-			font-weight: bold;
-		}
+.flexHiddenImg{
+	display:flex;
+	justify-content: space-between;
+	padding-bottom: 30px;
+}
+  .ManImgDiv{
+   width:50%;
+}
+.manImg{
+	width:100%;
+	height:100%;
+}
 
-		.Flexicons{
-			display:flex;
-			justify-content: space-between;
-			width:230%;
-		}
+.retailersDiv{
+	width:50%;
+}
+.ForRetailers{
+	display: flex;
+	justify-content: space-between;
+	margin-top:40px;
+	width:100%;
+	height:80px;
+	background:white;
+	padding-left: 20px;
 
-		.whyUseBillBook{
-			width:200%;
-		}
+}
 
-		.StayConnected{
-			width:230%;
-		}
-		.op{
-			background:white;
-			border-bottom:10px solid orange;
-			width:250%;
-		}
+.manyButtons{
+	padding-left: 70px;
+ }
 
-	.flexHiddenImg{
-		display:flex;
-		justify-content: space-between;
-		width:250%;
-	}
-	.hiddenContentDiv{
-		background-color: white;
-		padding-top: 10px;
-		width:90%;
-		margin-left: 70px;
-		
-	}
-	.manImg{
-		width:100%;
-	}
-	.ManImgDiv{
-	
-		 display:none
-	}	
-
-	.ForRetailers{
-		display: flex;
-		justify-content: space-between;
-		margin-top:80px;
-		width:90%;
-		height:100px;
-		background:white;
-		margin-left: 70px;
-		padding-left: 20px;
-	
-	}
-	.retailersDiv{
-		width:100%;
-	}
-
-	.manyButtons{
-		margin-top: 40px;
-		width:250%;
-	  
-	  }
-
-	  .Electronics{
-		font-size: 30px;
-		border:5px solid green;
-		background:green;
-		margin-left: 20px;
-		width:18%;
-		border-radius: 20px;
-	
-	
-	}
-	.Hardware{
-		font-size: 30px;
-		border:5px solid yellow;
-		background:yellow;
-		margin-left: 20px;
-		width:18%;
-		border-radius: 20px;
-	
-	
-	}
-
-	
-.Jewellery{
+.what{
 	font-size: 30px;
+}
+.ourUsers{
+	color:orange;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.Bussiness{
+	margin-top: 10px;
+	font-size: 20px;
+
+}
+.SayAboutUs{
+	font-size: 30px;
+}
+.Fmgc{
+	margin-top: 20px;
+	font-size: 13px;
+	border:5px solid red;
+	background:red;
+	width:13%;
+	border-radius: 20px;
+}
+.Electronics{
+	font-size: 13px;
+	border:5px solid green;
+	background:green;
+	margin-left: 20px;
+	width:13%;
+	border-radius: 20px;
+
+
+}
+.Hardware{
+	font-size: 13px;
+	border:5px solid yellow;
+	background:yellow;
+	margin-left: 20px;
+	width:13%;
+	border-radius: 20px;
+
+
+}
+.Kirana{
+	font-size: 13px;
+	border:5px solid blue;
+	background:blue;
+	margin-left: 20px;
+	width:13%;
+	border-radius: 20px;
+}
+.Jewellery{
+	font-size: 13px;
 	border:5px solid blueviolet;
 	background:blueviolet;
 	margin-left: 20px;
-	width:18%;
+	width:13%;
 	border-radius: 20px;
-
-
-
 }
 .Pharma{
-	font-size: 30px;
+	font-size: 13px;
 	border:5px solid orange;
 	background:orange;
-	margin-left: 70px;
-	width:18%;
+	width:13%;
 	border-radius: 20px;
-
-
-
 }
 .Transportation{
-	font-size: 30px;
+	font-size: 13px;
 	border:5px solid rgb(121, 169, 203);
 	background: rgb(121, 169, 203);
 	margin-left: 20px;
 	border-radius: 20px;
-	width:22%;
+	width:15%;
+}
+
+.flexImageContent{
+display:flex;
+justify-content: space-between;
+padding-left: 40px;
+}
+.FmgcContent{
+	width:75%;
+	margin-top: 70px;
+	padding-right:20px;
+padding-left: 20px;
+}
+
+.guru{
+	font-size: 20px;
+}
+.student{
+	font-size: 18px;
+}
+.commentImgDiv{
+	width:20%;
+	margin-left: 0px;
+	margin-top: 70px;
+}
+.commentImg{
+	width:100%;
+	margin-left: 0px;
+	height:80%;
+}
+
+.flexBusiness{
+	display:flex;
+	justify-content: space-between;
+	padding-left:70px;
+	width:100%;
+}
+.onlineContentDiv{
+	margin-top: 60px;
+	width:50%;
+}
+
+.TakeYourBusiness{
+	font-size: 30px;
+	font-weight: bold;
+}
+.online{
+	color:orange;
+	font-size: 30px;
+	font-weight: bold;
+}
+.setup{
+	font-size: 20px;
+}
+
+.storeImgDiv{
+	width:50%;
+	height: 100%;
+}
+.storeImg{
+
+	width:90%;
+}
+
+.benifitsOfBillbook{
+	margin-top: 30px;
+	padding-left:70px;
+}
+.benifits{
+	font-size: 30px;
+	color:orange;
+	font-weight: bold;
+}
+.billBook{
+	font-size: 30px;
+
+}
+.flexNewIcons{
+	padding-left: 70px;
+	padding-right:70px;
+	margin-left:0px;
+	display:flex;
+	justify-content: space-between;
+	margin-top: 30px;
+}
+.safeAndSecureDiv{
+	width:30%;
+	text-align: center;
+}
+.safeAndSecureImg{
+	height: 90px;
+	width: 90px;
+	
+}
+.safeAnd{
+	font-size: 20px;
+	text-align: center;
+}
+.AssociationDiv{
+	margin-top: 30px;
+	margin-left: 70px;
+}
+.Associations{
+	font-size: 30px;
+	color:orange;
+	margin-bottom: 20px;
+}
+.And{
+	font-size: 30px;
+}
+.memberIconsDiv{
+	margin-top: 10px;
+	display:flex;
+	justify-content: space-between;
+	background-color: white;
+	width:100%;
+}
+.memberIcons{
+	width:15%;
+	display:flex;
+	justify-content: center;
+	margin-left: 0px;
+	margin-right: 0px;
+	align-items: center;
+}
+.memberIconImg{
+	width:60px;
+}
+
+.memberIconImg1{
+	width:60px;
+	height:10px;
 }
 
 
-.flexImageContent{
+
+}
+
+/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+ 
+@media(min-width:370px) and (max-width:450px){
+
+	.headerCom{
+		display: none;
+	}
+	.textDiv{
+		padding-top: 25px;
+		display: flex;
+       flex-direction: column;
+       background-color: rgb(238, 235, 232);
+	    border:2px solid red;
+		padding-right: 10px;
+	}
+	.IndiasNo1{
+		width:100%;
+		padding-left:10px;
+	 }
+	 .spanText{
+		font-size:20px;
+		font-weight: bold;
+		
+	}
+	.createGstComp{
+		font-size: 18px;
+		margin-top: 20px;
+	}
+
+	.inputTextOp{
+		width:100%;
+		margin-top: 20px;
+	 }
+	 .textOp{
+		 height: 50px;
+		 font-size: 19px;
+	 }
+
+	 .freeTrail{
+		height:50px;
+	}
+	 .desktop{
+		margin-top: 30px;
+		border:10px solid black;
+		background-color: black;
+		color:white;
+		width:70%;
+		display: flex;
+		justify-content: center;
+		align-items:center;
+		border-radius: 7px;
+		font-size: 16px;
+		margin-left: 20px;
+		height:40px;
+	}
+	
+.iso{
+	margin-top: 40px;
+	display: flex;
+	justify-content: space-between;
+	width:100%;
+	
+}
+.India{
+		font-size: 15px;
+	}
+	
+	.isoCertified{
+		width: 80px;
+	}
+
+	.customerChoice{
+		width:90px
+	}
+	.vajpaiiDiv{
+		width:100%;
+	}
+	.VajpaiiImg{	
+	  width:100%;
+	  height:100%;
+	
+	}
+	.rupee{
+		display: flex;
+		justify-content: space-between;
+		flex-direction: column;
+		margin-right: 50px;
+		width:100%;
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	.lakh{
+		text-align: center;
+		color:orange;
+		font-size:30px;
+	}
+	.trustBussiness{
+		font-size:20px;
+		text-align: center;
+	}
+	
+	.CreateAndPrint{
+		width:100%;
+	}
+
+	.lapimage{
+		width:100%;
+	}
+	
+	.invoiceImage{
+		width:100%;
+		height: 100%;
+	}
+.Create{
+	margin-top: 80px;
+	font-size: 30px;
+
+}
+.professional{
+	font-size: 25px;
+	color:red;
+	font-weight: bold;
+}
+.NonGst{
+	font-size: 25px;
+	color:red;
+	font-weight: bold;
+}
+.or{
+	font-size: 40px;
+	font-weight: bold;
+}
+.fully{
+ margin-top: 40px;
+ font-size: 20px;
+}
+.op{
+	background:white;
+	border-bottom:10px solid orange
+}
+.list{
+	margin-top: 15px;
+	font-size: 20px;
+	margin-left: 10px;
+}
+
+.flexImage{
+  display:flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-left: 10px;
+  border:2px solid pink;
+}
+
+		
+.whyUseBillBook{
+	padding-left: 70px;
+	margin-top: 30px;
+}
+.why{
+	font-size: 30px;
+	font-weight: bold;
+}
+.Flexicons{
 	display:flex;
 	justify-content: space-between;
-	width:250%;
-	}
-	.FmgcContent{
-		width:60%;
-		margin-top: 70px;
-	}
-	.commentImgDiv{
-		width:40%;
-		margin-top: 70px;
-	}
-	.commentImg{
-		width:80%;
-		margin-left:10px;
-	}
-  
-	.flexBusiness{
-		display:flex;
-		justify-content: space-between;
-		width:250%;
-		}
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.invoiceWebp{
+	margin-top: 30px;
+	width:30%;
+	text-align: center;
+}
+.imgHight{
+	height: 80px;
+	width:80px;
+}
+.manageInventory{
+	margin-top: 10px;
+	font-size: 20px;
+}
 
-		.TakeYourBusiness{
-			font-size: 40px;
-			font-weight: bold;
-			margin-left:70px;
-		
-		}
-		.online{
-			color:orange;
-			font-size: 40px;
-			font-weight: bold;
-		
-		}
-		.onlineContentDiv{
-			margin-top: 100px;
-			width:60%;
-		}
+.flexHiddenImg{
+	display:flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding-bottom: 30px;
+}
+  .ManImgDiv{
+   width:50%;
+   display:none;
+}
+
+.retailersDiv{
+	width:100%;
+	margin-left: 0px;
+}
+.ForRetailers{
+	display: flex;
+	justify-content: space-between;
+	margin-top:40px;
+	width:100%;
+	height:80px;
+	background:white;
+	padding-left: 20px;
+
+}
+
+.coneImgDiv{
+	background-color: rgb(238, 235, 232);
+	width:100%;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.manyButtons{
+	padding-left: 10px;
+	width:100%;
+ }
+
+.what{
+	font-size: 30px;
+}
+.ourUsers{
+	color:orange;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.Bussiness{
+	margin-top: 10px;
+	font-size: 20px;
+
+}
+.SayAboutUs{
+	font-size: 30px;
+}
+.Fmgc{
+	margin-top: 20px;
+	font-size: 13px;
+	border:5px solid red;
+	background:red;
+	width:20%;
+	border-radius: 20px;
+}
+.Electronics{
+	font-size: 13px;
+	border:5px solid green;
+	background:green;
+	margin-left: 20px;
+	width:20%;
+	border-radius: 20px;
 
 
-		.benifitsOfBillbook{
-			margin-top: 70px;
-			width:250%;
-		}
-		.flexNewIcons{
-			margin-left: 100px;
-			display:flex;
-			justify-content: space-between;
-			margin-top: 100px;
-			width:200%;
-		}
+}
+.Hardware{
+	font-size: 13px;
+	border:5px solid yellow;
+	background:yellow;
+	margin-left: 20px;
+	width:20%;
+	border-radius: 20px;
 
 
-		.AssociationDiv{
-			margin-top: 100px;
-			margin-left: 70px;
-			width:230%;
-		}
-		.Associations{
-			font-size: 60px;
-			color:orange;
-		}
-		.And{
-			font-size: 60px;
-		
-		}
-	
+}
+.Kirana{
+	font-size: 13px;
+	border:5px solid blue;
+	background:blue;
+	margin-left: 20px;
+	width:20%;
+	border-radius: 20px;
+}
+.Jewellery{
+	font-size: 13px;
+	border:5px solid blueviolet;
+	background:blueviolet;
+	margin-left: 10px;
+	margin-top: 20px;
+	width:20%;
+	border-radius: 20px;
+}
+.Pharma{
+	font-size: 13px;
+	border:5px solid orange;
+	background:orange;
+	width:20%;
+	border-radius: 20px;
+}
+.Transportation{
+	font-size: 13px;
+	border:5px solid rgb(121, 169, 203);
+	background: rgb(121, 169, 203);
+	margin-left: 20px;
+	border-radius: 20px;
+	width:25%;
+}
 
-		.FooterMainDiv{
-			display:flex;
-			justify-content: space-between;
-			margin-top: 50px;
-			width:250%;
-		}			
-	
+.flexImageContent{
+display:flex;
+justify-content: space-between;
+padding-left: 10px;
+}
+.FmgcContent{
+	width:75%;
+	margin-top: 70px;
+	padding-right:20px;
+    padding-left: 20px;
+}
 
-		.getInTouchDiv{
-			padding-left: 20px;
-		
-		}
+.guru{
+	font-size: 20px;
+}
+.student{
+	font-size: 18px;
+}
+.commentImgDiv{
+	width:20%;
+	margin-left: 0px;
+	margin-top: 70px;
+}
+.commentImg{
+	width:100%;
+	margin-left: 0px;
+	height:30%;
+}
 
-		.TrandingFooter{
-			padding-right: 0px;
-		}
+.flexBusiness{
+	display:flex;
+	justify-content: space-between;
+	flex-direction: column;
+	padding-left:10px;
+	width:100%;
+}
+.onlineContentDiv{
+	margin-top: 30px;
+	width:100%;
+}
 
-		.whatsAppDiv{
-			margin-top: 20px;
-			border:8px solid rgb(166, 251, 227);;
-			text-align: center;
-			background-color: rgb(166, 251, 227);
-			border-radius: 10px;
-			cursor: pointer;
-			width:80%;
-		}
-		
+.TakeYourBusiness{
+	font-size: 30px;
+	font-weight: bold;
+}
+.online{
+	color:orange;
+	font-size: 30px;
+	font-weight: bold;
+}
+.setup{
+	font-size: 20px;
+}
+
+.storeImgDiv{
+	width:100%;
+	height: 100%;
+	text-align: center;
+}
+.storeImg{
+	width:100%;
+}
+
+.benifitsOfBillbook{
+	margin-top: 30px;
+	padding-left:10px;
+}
+.benifits{
+	font-size: 30px;
+	color:orange;
+	font-weight: bold;
+}
+.billBook{
+	font-size: 30px;
+
+}
+.flexNewIcons{
+	padding-left: 10px;
+	padding-right:10px;
+	margin-left:0px;
+	display:flex;
+	justify-content: space-between;
+	margin-top: 30px;
+}
+.safeAndSecureDiv{
+	width:30%;
+	text-align: center;
+}
+.safeAndSecureImg{
+	height: 70px;
+	width: 70px;
+}
+.safeAnd{
+	font-size: 20px;
+	text-align: center;
+}
+.AssociationDiv{
+	margin-top: 30px;
+	margin-left: 10px;
+}
+.Associations{
+	font-size: 30px;
+	color:orange;
+	margin-bottom: 20px;
+}
+.And{
+	font-size: 30px;
+}
+.memberIconsDiv{
+	margin-top: 10px;
+	display:flex;
+	justify-content: space-between;
+	background-color: white;
+	width:100%;
+}
+.memberIcons{
+	width:15%;
+	display:flex;
+	justify-content: center;
+	margin-left: 0px;
+	margin-right: 0px;
+	align-items: center;
+}
+.memberIconImg{
+	width:60px;
+}
+
+.memberIconImg1{
+	width:60px;
+	height:10px;
+}
+
 
 }
