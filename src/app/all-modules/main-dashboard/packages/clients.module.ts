@@ -4,7 +4,7 @@ import { ClientsRoutingModule } from "./clients-routing.module";
 import { DataTablesModule } from "angular-datatables";
 
 import { ClientsComponent } from "./clients.component";
-import { ClientsListComponent } from "./clients-list/clients-list.component";
+import { ClientsListComponent } from "./packages-list/clients-list.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({

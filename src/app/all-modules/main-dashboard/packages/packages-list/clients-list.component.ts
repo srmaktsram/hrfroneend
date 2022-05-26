@@ -92,7 +92,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res: any[]) => {
         this.data = res;
         this.filtereddata = res;
-        this.srch = res;
+        this.srch = [...this.data];
         console.log(this.data, "???????????//");
       });
   }
@@ -184,12 +184,11 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   //search by name
   searchID(val) {
     if (val) {
-      console.log(this.data, ">>>>>>>>><<<<<<<<<<<<<<<<");
       this.data.splice(0, this.filtereddata.length);
-      let temp = this.filtereddata.filter(function (d) {
+      let temp = this.srch.filter(function (d) {
         return d.packageName.indexOf(val) !== -1 || !val;
       });
-      console.log(temp, ";;;;;;;;;;;;;;;;;;;;");
+
       this.data.push(...temp);
     } else {
       this.getPackages();
@@ -245,7 +244,10 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       status: val,
     };
     this.http
-      .patch("http://localhost:8443/admin/clients/updateClient" + "/" + id, obj)
+      .patch(
+        "http://localhost:8443/mainadmin/pricing/UpdateStatus" + "/" + id,
+        obj
+      )
       .subscribe((data: any) => {
         this.getPackages();
       });
