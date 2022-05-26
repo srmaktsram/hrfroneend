@@ -4,6 +4,8 @@ import { AuthGuardAdmin } from "./core/auth/auth-guard-admin.service";
 import { AuthGuard } from "./core/auth/auth-guard.service";
 
 const routes: Routes = [
+
+
   { path: "", redirectTo: "pages", pathMatch: "full" },
 
   {
@@ -49,4 +51,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
