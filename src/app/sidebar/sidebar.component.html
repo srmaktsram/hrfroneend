@@ -142,6 +142,8 @@
                   <a [ngClass]="{ active: urlComplete.subUrl === 'employee' }" href="javascript:">Employee Dashboard</a>
                 </li>
               </ng-container>
+              
+              
             </ul>
           </li>
          
@@ -369,14 +371,22 @@
               </ng-container>
             </ul>
           </li>
-
+        <ng-container>
           <li [ngClass]="{
               active:
-                urlComplete.subUrl === 'clientspage' ||
-                urlComplete.subUrl === 'clientslist'
+                urlComplete.subUrl === 'ticketcontent' ||
+                urlComplete.subUrl === 'ticketsview'
             }">
-            <a routerLink="/layout/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
+            <a routerLink="/layout/support/ticketcontent"><i class="la la-users"></i> <span>Support</span></a>
           </li>
+          </ng-container>
+          <li [ngClass]="{
+            active:
+              urlComplete.subUrl === 'clientspage' ||
+              urlComplete.subUrl === 'clientslist'
+          }">
+          <a routerLink="/layout/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
+        </li>
           <li class="submenu" [ngClass]="{
               active:
                 urlComplete.mainUrl === 'projects' ||
