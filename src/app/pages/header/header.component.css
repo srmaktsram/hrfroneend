@@ -1,0 +1,110 @@
+
+.mat{
+	height:70px;
+	width:100%;
+	display:flex;
+	justify-content: space-between;
+	background-color: aqua;
+	border:2px solid green
+}
+.mainFlexDiv{
+	width:80%;
+	display: flex;
+	justify-content: center;
+}
+/* .all{
+	width:100%;
+	border: 5px solid black;
+} */
+.flexItems{
+	display:flex;
+    justify-content:flex-end;
+	margin-top: 10px;
+	width:80%;
+	margin-right: 20px;
+}
+.imgDiv{
+	width:20%;
+}
+.img{
+	height: 60px;
+	width:60px;
+	margin-left:10px;
+	margin-top: -13px;
+	margin-left:100px;
+}
+
+.buttonDiv{
+	width:20%;
+}
+
+.button{
+	border:7px solid orangered;
+	background-color: orangered;
+	width: 150px;
+	border-radius: 8px;
+	text-align: center;
+	cursor: pointer;
+	margin-right: 100px;
+}
+
+.gap{
+	margin-right: 20px;
+}
+/* /////////////////////////////////////////MIDIA QUERY START FROM HERE ///////////////////////////////////////*/
+
+@media(min-width:1400px) and (max-width:1500px){
+	
+.mat{
+	height:70px;	
+	display:flex;
+	width:100%;
+
+}
+.flexItems{
+	display:flex;
+    justify-content:flex-end;
+	margin-top: 10px;
+	width:100%;
+	margin-right: 20px;
+}
+.mainFlexDiv{
+	width:80%;
+	display: flex;
+	justify-content: center;
+}
+				
+}
+
+@media(min-width:700px) and (max-width:775px){
+	.mat{
+		height:70px;	
+		display:flex;
+		width:100%;
+
+	}
+	.flexItems{
+		display:flex;
+		justify-content:flex-end;
+		margin-top: 10px;
+		width:100%;
+		margin-right: 20px;
+	}
+	.mainFlexDiv{
+		width:80%;
+		display: flex;
+		justify-content: center;
+  }
+
+}
+ @media(min-width:370px) and (max-width:450px){
+
+	.mat{
+		height:110px;	
+		display:flex;
+
+		justify-content: center;
+		width:100%;
+
+	}
+}

@@ -1,4 +1,5 @@
-<mat-card class="mat">
+<!-- <mat-card class="mat">
+
     <div>
         <img src="../../../assets/img/logo2.png" class="img">
     </div>
@@ -13,7 +14,14 @@
             <h3 class="button"> Login</h3>
         </div>
     </div>
-</mat-card>
+</mat-card> -->
+
+
+<div class="headerCom">
+    <app-header></app-header>
+</div>
+
+
 <div class="fixedHeader">
 
     <div class="textDiv">
@@ -24,13 +32,13 @@
             <span class="spanText"> and </span>
             <span class="spanText" style="color:orange">GST Billing</span>
             <h1 class="spanText">Softwere</h1>
-            <h1 style="margin-top: 20px;margin-left: 20px;">Create GST-Compliant Invoices with the Best Billing
+            <h1 class="createGstComp">Create GST-Compliant Invoices with the Best Billing
                 Software
             </h1>
 
-            <div class="input-group inputText">
-                <input type="text" class="form-control inputText" placeholder="Enter Mobile No"
-                    aria-label="Recipient's username" aria-describedby="basic-addon2" style="font-size: 30px;">
+            <div class="input-group inputTextOp">
+                <input type="text" class="form-control textOp" placeholder="Enter Mobile Number"
+                    aria-label="Recipient's username" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <span class="input-group-text freeTrail" id="basic-addon2"><span class="getfree">Get Free
                             Trial</span></span>
@@ -39,6 +47,20 @@
             <h4 class="desktop">Download Desktop App
                 <img src="  https://mybillbook.in/static-assets/images/download.webp" style="width:25px;height:25px">
             </h4>
+
+
+            <div class="iso">
+                <h2 class="India">Made with ❤️ in India</h2>
+                <div>
+                    <img src="https://mybillbook.in/static-assets/images/landing-page/iso-black.webp"
+                        class="isoCertified">
+                </div>
+                <div>
+                    <img src="https://mybillbook.in/static-assets/images/landing-page/customer%20choice.svg"
+                        class="customerChoice">
+                </div>
+
+            </div>
         </div>
 
 
@@ -48,39 +70,26 @@
         </div>
     </div>
 
-
-
-    <div class="iso">
-        <h2 class="India">Made with ❤️ in India</h2>
-        <div>
-            <img src="https://mybillbook.in/static-assets/images/landing-page/iso-black.webp" class="isoCertified">
-        </div>
-        <div>
-            <img src="https://mybillbook.in/static-assets/images/landing-page/customer%20choice.svg"
-                class="customerChoice">
-        </div>
-
-    </div>
-
-
     <div class="rupee">
         <div>
-            <h1 style="text-align: center;color:orange;font-size:45px">60 Lakh+</h1>
-            <h2>Businesses Trust us</h2>
+            <h1 class="lakh">60 Lakh+</h1>
+            <h3 class="trustBussiness">Businesses Trust us</h3>
         </div>
         <div>
-            <h1 style="text-align: center;color:orange;font-size:45px">3 Cr+ </h1>
-            <h2>Invoices created</h2>
+            <h1 class="lakh">3 Cr+ </h1>
+            <h3 class="trustBussiness">Invoices created</h3>
         </div>
         <div>
-            <h1 style="text-align: center;color:orange;font-size:45px">7000+ </h1>
-            <h2>Cities & Towns in India</h2>
+            <h1 class="lakh">7000+ </h1>
+            <h3 class="trustBussiness">Cities & Towns in India</h3>
         </div>
         <div>
-            <h1 style="text-align: center;color:orange;font-size:45px">4.7star </h1>
-            <h2> icon Rating on Google Play</h2>
+            <h1 class="lakh">4.7star </h1>
+            <h3 class="trustBussiness"> icon Rating on Google Play</h3>
         </div>
     </div>
+
+
 
     <div class="flexImage">
         <div class="CreateAndPrint">
@@ -100,6 +109,8 @@
             <img src="https://mybillbook.in/static-assets/images/landing-page/bills-invoice.webp" class="invoiceImage">
         </div>
     </div>
+
+
     <div class="whyUseBillBook">
         <span class="why" style="color:orange">Why</span>
         <span class="why">use myBillBook?</span>
@@ -109,17 +120,17 @@
         <div class="invoiceWebp">
             <img src="https://mybillbook.in/static-assets/images/landing-page/gst%20billing%20invoice.webp"
                 class="imgHight">
-            <h2 style="margin-top: 10px;">GST Invoicing/Billing</h2>
+            <h2 class="manageInventory">GST Invoicing/Billing</h2>
         </div>
         <div class="invoiceWebp">
             <img src="	https://mybillbook.in/static-assets/images/landing-page/manage-your-inventory.webp"
                 class="imgHight">
-            <h2 style="margin-top: 10px;">Manage Your Inventory</h2>
+            <h2 class="manageInventory">Manage Your Inventory</h2>
         </div>
         <div class="invoiceWebp">
             <img src="	https://mybillbook.in/static-assets/images/landing-page/easy-accounting-img.webp"
                 class="imgHight">
-            <h2 style="margin-top: 10px;">Accounting Made Easy</h2>
+            <h2 class="manageInventory">Accounting Made Easy</h2>
         </div>
     </div>
 
@@ -127,35 +138,39 @@
         <div class="invoiceWebp">
             <img src="https://mybillbook.in/static-assets/images/landing-page/Collect%20Payments%20Faster.webp"
                 class="imgHight">
-            <h2 style="margin-top: 10px;">Collect Payments Faster</h2>
+            <h2 class="manageInventory">Collect Payments Faster</h2>
         </div>
         <div class="invoiceWebp">
             <img src="https://mybillbook.in/static-assets/images/landing-page/analyze-business-reporting.webp"
                 class="imgHight">
-            <h2 style="margin-top: 10px;">Analyse business reports</h2>
+            <h2 class="manageInventory">Analyse business reports</h2>
         </div>
         <div class="invoiceWebp">
             <img src="	https://mybillbook.in/static-assets/images/landing-page/DeliveryChallan.webp" class="imgHight">
-            <h2 style="margin-top: 10px;">Delivery Challan</h2>
+            <h2 class="manageInventory">Delivery Challan</h2>
         </div>
     </div>
 
 
-    <div style="margin-top:100px;" class="StayConnected">
-        <span class="stayConnected">Stay</span>
+    <div class="StayConnected">
+        <span class="stay1">Stay</span>
         <span class="Connected">connected</span>
         <h2 class="SyncData">Sync data seamlessly between Computer & Mobile</h2>
     </div>
     <div class="text-center op">
         <img src="https://mybillbook.in/static-assets/images/landing-page/stay-connected.webp" class="mobileLaptop">
     </div>
+
+
+
+
     <div class="coneImgDiv">
 
         <div class=" flexHiddenImg">
             <div class="retailersDiv">
                 <h1 class="whoisIt">Who is it for?</h1>
                 <div class="ForRetailers">
-                    <h1 style="padding-top:20px;">For Retailers - Faster Billing and POS</h1>
+                    <h3 style="padding-top:20px;">For Retailers - Faster Billing and POS</h3>
                     <div [hidden]="plusIcon1" (click)="showText('1')">
                         <img src="https://mybillbook.in/static-assets/images/landing-page/icon-plus.webp"
                             class="plusIcon">
@@ -175,7 +190,7 @@
 
 
                 <div class="ForRetailers" style="margin-top:50px">
-                    <h1 style="padding-top:20px;">For Wholesalers and Distributors</h1>
+                    <h3 style="padding-top:20px;">For Wholesalers and Distributors</h3>
                     <div [hidden]="plusIcon2" (click)="showText('2')">
                         <img src="https://mybillbook.in/static-assets/images/landing-page/icon-plus.webp"
                             class="plusIcon">
@@ -194,7 +209,7 @@
                 </div>
 
                 <div class="ForRetailers" style="margin-top:50px">
-                    <h1 style="padding-top:20px;">Business Reports for everyone</h1>
+                    <h3 style="padding-top:20px;">Business Reports for everyone</h3>
                     <div [hidden]="plusIcon3" (click)="showText('3')">
                         <img src="https://mybillbook.in/static-assets/images/landing-page/icon-plus.webp"
                             class="plusIcon">
@@ -234,6 +249,10 @@
         </div>
     </div>
 
+
+
+
+
     <div class="manyButtons">
         <span class="what ">What</span>
         <span class="ourUsers"> our users </span>
@@ -260,8 +279,10 @@
                 <img src="https://mybillbook.in/static-assets/images/landing-page/fmcg.webp" class="commentImg">
             </div>
             <div class="FmgcContent">
-                <h1>FMCG Wholesaler</h1>
-                <h2>"With mobile app, I can manage my billing and stock when I’m on the field. Getting credit
+                <h2 class="guru"><i>FMCG Wholesaler</i></h2>
+                <h3 style="margin-top:20px;" class="student">"With mobile app, I can manage my billing and stock when
+                    I’m on the field.
+                    Getting credit
                     payment is
                     2x
                     faster with use of payment reminders and pay with UPI option. Now I have more money to grow my
@@ -269,8 +290,8 @@
                     Also, I can give app to anyone to manage, because it is so easy unlike other billing software.
                     Best
                     app
-                    myBillBook - Make In India!</h2>
-                <h1>-<i>Gurukripa Traders</i> </h1>
+                    myBillBook - Make In India!</h3>
+                <h2 style="margin-top:30px;" class="guru">-<i>Gurukripa Traders</i> </h2>
             </div>
         </div>
     </div>
@@ -287,16 +308,18 @@
                 <img src="	https://mybillbook.in/static-assets/images/landing-page/electronics.webp" class="commentImg">
             </div>
             <div class="FmgcContent">
-                <h1>Electronics Distributor</h1>
-                <h2>"Very easy to use, I have given the app to all my salesmen for entry. myBillBook team added
+                <h2 class="guru"><i>Electronics Distributor</i></h2>
+                <h3 style="margin-top: 20px;" class="student">"Very easy to use, I have given the app to all my salesmen
+                    for entry.
+                    myBillBook team added
                     option
                     for
                     IMEI and Product code for every item in invoice now. I moved all my Tally data to myBillBook,
                     made
                     my
                     business easier.
-                </h2>
-                <h1>-<i>-JLB Technologies</i> </h1>
+                </h3>
+                <h2 style="margin-top:30px;" class="guru">-<i>-JLB Technologies</i> </h2>
             </div>
         </div>
     </div>
@@ -310,8 +333,10 @@
                 <img src="https://mybillbook.in/static-assets/images/landing-page/hardware.webp" class="commentImg">
             </div>
             <div class="FmgcContent">
-                <h1>FMCG Wholesaler</h1>
-                <h2>"With mobile app, I can manage my billing and stock when I’m on the field. Getting credit
+                <h2 class="guru"><i>FMCG Wholesaler</i></h2>
+                <h3 style="margin-top: 20px;" class="student">"With mobile app, I can manage my billing and stock when
+                    I’m on the field.
+                    Getting credit
                     payment is
                     2x
                     faster with use of payment reminders and pay with UPI option. Now I have more money to grow my
@@ -319,8 +344,8 @@
                     Also, I can give app to anyone to manage, because it is so easy unlike other billing software.
                     Best
                     app
-                    myBillBook - Make In India!</h2>
-                <h1>-<i>Gurukripa Traders</i> </h1>
+                    myBillBook - Make In India!</h3>
+                <h2 style="margin-top: 30px;" class="guru">-<i>Gurukripa Traders</i> </h2>
             </div>
         </div>
     </div>
@@ -334,8 +359,10 @@
                 <img src="	https://mybillbook.in/static-assets/images/landing-page/kirana.webp" class="commentImg">
             </div>
             <div class="FmgcContent">
-                <h1>FMCG Wholesaler</h1>
-                <h2>"With mobile app, I can manage my billing and stock when I’m on the field. Getting credit
+                <h2 class="guru"><i>FMCG Wholesaler</i></h2>
+                <h3 style="margin-top: 20px;" class="student">"With mobile app, I can manage my billing and stock when
+                    I’m on the field.
+                    Getting credit
                     payment is
                     2x
                     faster with use of payment reminders and pay with UPI option. Now I have more money to grow my
@@ -343,8 +370,8 @@
                     Also, I can give app to anyone to manage, because it is so easy unlike other billing software.
                     Best
                     app
-                    myBillBook - Make In India!</h2>
-                <h1>-<i>Gurukripa Traders</i> </h1>
+                    myBillBook - Make In India!</h3>
+                <h2 style="margin-top: 30px;" class="guru">-<i>Gurukripa Traders</i> </h2>
             </div>
         </div>
     </div>
@@ -358,8 +385,10 @@
                 <img src="https://mybillbook.in/static-assets/images/landing-page/jwellery.webp" class="commentImg">
             </div>
             <div class="FmgcContent">
-                <h1>FMCG Wholesaler</h1>
-                <h2>"With mobile app, I can manage my billing and stock when I’m on the field. Getting credit
+                <h2 class="guru"><i>FMCG Wholesaler</i></h2>
+                <h3 style="margin-top: 20px;" class="student">"With mobile app, I can manage my billing and stock when
+                    I’m on the field.
+                    Getting credit
                     payment is
                     2x
                     faster with use of payment reminders and pay with UPI option. Now I have more money to grow my
@@ -367,8 +396,8 @@
                     Also, I can give app to anyone to manage, because it is so easy unlike other billing software.
                     Best
                     app
-                    myBillBook - Make In India!</h2>
-                <h1>-<i>Gurukripa Traders</i> </h1>
+                    myBillBook - Make In India!</h3>
+                <h2 style="margin-top: 30px;" class="guru">-<i>Gurukripa Traders</i> </h2>
             </div>
         </div>
     </div>
@@ -380,8 +409,10 @@
                 <img src="https://mybillbook.in/static-assets/images/landing-page/pharma.webp" class="commentImg">
             </div>
             <div class="FmgcContent">
-                <h1>FMCG Wholesaler</h1>
-                <h2>"With mobile app, I can manage my billing and stock when I’m on the field. Getting credit
+                <h2 class="guru"><i>FMCG Wholesaler</i></h2>
+                <h3 style="margin-top: 20px;" class="student">"With mobile app, I can manage my billing and stock when
+                    I’m on the field.
+                    Getting credit
                     payment is
                     2x
                     faster with use of payment reminders and pay with UPI option. Now I have more money to grow my
@@ -389,8 +420,8 @@
                     Also, I can give app to anyone to manage, because it is so easy unlike other billing software.
                     Best
                     app
-                    myBillBook - Make In India!</h2>
-                <h1>-<i>Gurukripa Traders</i> </h1>
+                    myBillBook - Make In India!</h3>
+                <h2 style="margin-top: 30px;" class="guru">-<i>Gurukripa Traders</i> </h2>
             </div>
         </div>
     </div>
@@ -403,8 +434,10 @@
                 <img src="https://mybillbook.in/static-assets/images/landing-page/transport.webp" class="commentImg">
             </div>
             <div class="FmgcContent">
-                <h1>FMCG Wholesaler</h1>
-                <h2>"With mobile app, I can manage my billing and stock when I’m on the field. Getting credit
+                <h2 class="guru"><i>FMCG Wholesaler</i></h2>
+                <h3 style="margin-top: 20px;" class="student">"With mobile app, I can manage my billing and stock when
+                    I’m on the field.
+                    Getting credit
                     payment is
                     2x
                     faster with use of payment reminders and pay with UPI option. Now I have more money to grow my
@@ -412,8 +445,8 @@
                     Also, I can give app to anyone to manage, because it is so easy unlike other billing software.
                     Best
                     app
-                    myBillBook - Make In India!</h2>
-                <h1>-<i>Gurukripa Traders</i> </h1>
+                    myBillBook - Make In India!</h3>
+                <h2 style="margin-top: 30px;" class="guru">-<i>Gurukripa Traders</i> </h2>
             </div>
         </div>
     </div>
@@ -421,6 +454,9 @@
     <div>
 
     </div>
+
+
+
     <div class="flexBusiness">
         <div class="onlineContentDiv">
             <span class="TakeYourBusiness">Take your business </span>
@@ -447,19 +483,19 @@
         <div class="safeAndSecureDiv">
             <img src="https://mybillbook.in/static-assets/images/landing-page/safeandsecure.webp"
                 class="safeAndSecureImg">
-            <h2 style="margin-top: 10px;">Safe and Secure</h2>
+            <h2 style="margin-top: 10px;" class="safeAnd">Safe and Secure</h2>
 
         </div>
         <div class="safeAndSecureDiv">
             <img src="https://mybillbook.in/static-assets/images/landing-page/AutomaticBackup.webp"
                 class="safeAndSecureImg">
-            <h2 style="margin-top: 10px;">Automatic Backup</h2>
+            <h2 style="margin-top: 10px;" class="safeAnd">Automatic Backup</h2>
 
         </div>
         <div class="safeAndSecureDiv">
             <img src="https://mybillbook.in/static-assets/images/landing-page/multilanguage.webp"
                 class="safeAndSecureImg">
-            <h2 style="margin-top: 10px;">Multiple Language Support</h2>
+            <h2 style="margin-top: 10px;" class="safeAnd">Multiple Language Support</h2>
 
         </div>
     </div>
@@ -467,20 +503,20 @@
         <div class="safeAndSecureDiv">
             <img src="https://mybillbook.in/static-assets/images/landing-page/offilnebilling.webp"
                 class="safeAndSecureImg">
-            <h2 style="margin-top: 10px;">Offline Billing</h2>
+            <h2 style="margin-top: 10px;" class="safeAnd">Offline Billing</h2>
 
         </div>
 
         <div class="safeAndSecureDiv">
             <img src="https://mybillbook.in/static-assets/images/landing-page/whatsapp.webp" class="safeAndSecureImg">
-            <h2 style="margin-top: 10px;">Whatsapp Support</h2>
+            <h2 style="margin-top: 10px;" class="safeAnd">Whatsapp Support</h2>
 
         </div>
 
         <div class="safeAndSecureDiv">
             <img src="https://mybillbook.in/static-assets/images/landing-page/datatransfer.webp"
                 class="safeAndSecureImg">
-            <h2 style="margin-top: 10px">Easy Data Transfer</h2>
+            <h2 style="margin-top: 10px" class="safeAnd">Easy Data Transfer</h2>
 
         </div>
 
@@ -517,10 +553,12 @@
 
     </div>
 
+    <app-footer></app-footer>
+
 
     <!-- //////////////////////////////////////////////---------Footer----------////////////////////////////////////////////// -->
 
-    <div class="FooterMainDiv">
+    <!-- <div class="FooterMainDiv">
 
 
         <div class="getInTouchDiv">
@@ -616,6 +654,6 @@
 
 
 
-    </div>
+    </div> -->
 
 </div>

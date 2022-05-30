@@ -22,9 +22,7 @@
   </div>
   <!-- /Header Title -->
 
-  <a id="mobile_btn" class="mobile_btn" href="javascript:"
-    ><i class="fa fa-bars"></i
-  ></a>
+  <a id="mobile_btn" class="mobile_btn" href="javascript:"><i class="fa fa-bars"></i></a>
 
   <!-- Header Menu -->
   <ul class="nav user-menu">
@@ -63,11 +61,7 @@
 
     <!-- Notifications -->
     <li class="nav-item dropdown">
-      <a
-        href="javascript:"
-        class="dropdown-toggle nav-link"
-        data-bs-toggle="dropdown"
-      >
+      <a href="javascript:" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
         <i class="fa fa-bell-o"></i>
         <ng-container *ngIf="lengthCount >= 1">
           <span class="badge rounded-pill">{{ lengthCount }}</span>
@@ -86,17 +80,16 @@
         </div>
         <!-- <div class="noti-content d-flex align-items-center justify-content-center"> -->
         <div class="noti-content">
-          <center><p *ngIf="lengthCount < 1">No notifications</p></center>
+
+          <p *ngIf="lengthCount < 1">No notifications</p>
+
           <ul class="notification-list" *ngFor="let item of dataArray; let i = index">
             <ng-container *ngIf="item.message == 'added a new employee '">
               <li class="notification-message" routerLink="/layout/employees/employeelist">
                 <a routerLink="/layout/activities/activities-main">
                   <div class="media d-flex">
                     <span class="avatar flex-shrink-0">
-                      <img
-                        alt=""
-                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                      />
+                      <img alt="" src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" />
                     </span>
                     <div class="media-body flex-grow-1">
                       <p class="noti-details">
@@ -108,7 +101,7 @@
                       <p class="noti-time">
                         <span class="notification-time">{{
                           item.time | dateAgo
-                        }}</span>
+                          }}</span>
                       </p>
                     </div>
                   </div>
@@ -121,10 +114,7 @@
                 <a routerLink="/layout/activities/activities-main">
                   <div class="media d-flex">
                     <span class="avatar flex-shrink-0">
-                      <img
-                        alt=""
-                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                      />
+                      <img alt="" src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" />
                     </span>
                     <div class="media-body flex-grow-1">
                       <p class="noti-details">
@@ -136,7 +126,7 @@
                       <p class="noti-time">
                         <span class="notification-time">{{
                           item.time | dateAgo
-                        }}</span>
+                          }}</span>
                       </p>
                     </div>
                   </div>
@@ -149,10 +139,7 @@
                 <a routerLink="/layout/activities/activities-main">
                   <div class="media d-flex">
                     <span class="avatar flex-shrink-0">
-                      <img
-                        alt=""
-                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                      />
+                      <img alt="" src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" />
                     </span>
                     <div class="media-body flex-grow-1">
                       <p class="noti-details">
@@ -164,7 +151,7 @@
                       <p class="noti-time">
                         <span class="notification-time">{{
                           item.time | dateAgo
-                        }}</span>
+                          }}</span>
                       </p>
                     </div>
                   </div>
@@ -177,10 +164,7 @@
                 <a routerLink="/layout/activities/activities-main">
                   <div class="media d-flex">
                     <span class="avatar flex-shrink-0">
-                      <img
-                        alt=""
-                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                      />
+                      <img alt="" src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" />
                     </span>
                     <div class="media-body flex-grow-1">
                       <p class="noti-details">
@@ -192,7 +176,7 @@
                       <p class="noti-time">
                         <span class="notification-time">{{
                           item.time | dateAgo
-                        }}</span>
+                          }}</span>
                       </p>
                     </div>
                   </div>
@@ -203,9 +187,7 @@
         </div>
 
         <div [hidden]="newStatus" class="topnav-dropdown-footer">
-          <a routerLink="/layout/activities/activities-main"
-            >View all Notifications</a
-          >
+          <a routerLink="/layout/activities/activities-main">View all Notifications</a>
         </div>
       </div>
     </li>
@@ -213,39 +195,25 @@
 
     <!-- Message Notifications -->
     <li class="nav-item dropdown">
-      <a
-        href="javascript:"
-        class="dropdown-toggle nav-link"
-        data-bs-toggle="dropdown"
-      >
+      <a href="javascript:" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
         <i class="fa fa-comment-o"></i>
         <span class="badge rounded-pill">8</span>
       </a>
       <div class="dropdown-menu notifications">
         <div class="topnav-dropdown-header">
           <span class="notification-title">Messages</span>
-          <a
-            (click)="clearData('message')"
-            href="javascript:"
-            class="clear-noti"
-          >
+          <a href="javascript:" class="clear-noti">
             Clear All
           </a>
         </div>
         <div class="noti-content">
           <ul class="notification-list">
-            <li
-              class="notification-message"
-              *ngFor="let data of messagesData; let i = index"
-            >
+            <li class="notification-message" *ngFor="let data of messagesData; let i = index">
               <a routerLink="/layout/apps/chat">
                 <div class="list-item">
                   <div class="list-left">
                     <span class="avatar">
-                      <img
-                        alt=""
-                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                      />
+                      <img alt="" src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" />
                     </span>
                   </div>
                   <div class="list-body">
@@ -267,15 +235,9 @@
     <!-- /Message Notifications -->
 
     <li class="nav-item dropdown has-arrow main-drop">
-      <a
-        href="javascript:"
-        class="dropdown-toggle nav-link"
-        data-bs-toggle="dropdown"
-      >
-        <span class="user-img"
-          ><img src="assets/img/profiles/avatar-21.jpg" alt="" />
-          <span class="status online"></span
-        ></span>
+      <a href="javascript:" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+        <span class="user-img"><img src="assets/img/profiles/avatar-21.jpg" alt="" />
+          <span class="status online"></span></span>
         <ng-container *ngIf="user_type == 'admin'">
           <span>Admin</span>
         </ng-container>
@@ -284,12 +246,8 @@
         </ng-container>
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" routerLink="/layout/employees/employeeprofile"
-          >My Profile</a
-        >
-        <a class="dropdown-item" routerLink="/layout/settings/company-settings"
-          >Settings</a
-        >
+        <a class="dropdown-item" routerLink="/layout/employees/employeeprofile">My Profile</a>
+        <a class="dropdown-item" routerLink="/layout/settings/company-settings">Settings</a>
         <a class="dropdown-item" (click)="Logout()">Logout</a>
       </div>
     </li>
@@ -298,16 +256,10 @@
 
   <!-- Mobile Menu -->
   <div class="dropdown mobile-user-menu">
-    <a
-      class="nav-link dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-expanded="false"
-      ><i class="fa fa-ellipsis-v"></i
-    ></a>
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
+        class="fa fa-ellipsis-v"></i></a>
     <div class="dropdown-menu dropdown-menu-right">
-      <a class="dropdown-item" routerLink="/layout/employees/employeeprofile"
-        >My Profile</a
-      >
+      <a class="dropdown-item" routerLink="/layout/employees/employeeprofile">My Profile</a>
       <a class="dropdown-item" href="javascript:">Settings</a>
       <a class="dropdown-item" (click)="Logout()">Logout</a>
     </div>

@@ -84,6 +84,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
       .subscribe((res: any) => {
         this.data = res;
+        console.log(this.data, "tttttttttttttttttttttttttt");
         this.srch = [...this.data];
       });
   }
@@ -163,7 +164,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   //search by name
   searchByName(val) {
     if (val) {
-      this.data.splice(0, this.data.length);
+      this.srch.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return (

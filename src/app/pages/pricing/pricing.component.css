@@ -1,0 +1,111 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.matCard{
+	text-align: center;
+}
+.mainDiv{
+	display:flex;
+	justify-content: space-between;
+	margin:100px;
+
+}
+.radioButton{
+	width:50px;
+}
+.blue{
+	display: flex;
+	background-color: rgb(87, 171, 202);
+	height: 70px;
+	align-items: center;
+justify-content: center;
+}
+.mat-radio-button ~ .mat-radio-button {
+	margin-left: 16px;
+  }
+  
+
+.matDiv{
+	width:25%;
+}
+.mat{
+margin:0%;
+padding:0%;
+width:100%;
+padding-bottom: 30px;
+height:100%;
+
+}
+.orange{
+	display: flex;
+	background-color: #5d9cec;
+	height: 70px;
+	justify-content: center;
+	align-items: center;
+}
+.red{
+	display: flex;
+	background-color: #f05050;
+	height:70px;
+	align-items: center;
+	justify-content: center;
+
+}
+
+.selectEmployee{
+	margin-top: -20px;
+	width:80%;
+	height:30px
+}
+.selectFlex{
+	display:flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+.selectWidth{
+	width:80%;
+	height:30px;
+	margin-left:30px;
+	margin-right:30px;
+
+}
+.button{
+	display:flex;
+	justify-content: center;
+	margin-top:20px;
+}
+/* .pricingFooter{
+	width:100%;
+} */
+@media(min-width:700px) and (max-width:800px){
+
+
+.headerCom{
+	display: none;;
+
+	}
+	
+.matDiv{
+	width:33%;
+}
+.mainDiv{
+	display:flex;
+	/* justify-content: space-between; */
+	margin:10px;
+}
+}
+
+@media(min-width:300px) and (max-width:450px){
+	.headerCom{
+		display:none;
+	}
+	
+.matDiv{
+	width:100%;
+	margin-top: 50px;
+}
+.mainDiv{
+	display:flex;
+	margin:10px;
+	flex-direction: column;
+
+}
+}

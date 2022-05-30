@@ -10,10 +10,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { AppRoutingModule } from "./app-routing.module";
 
-import { HeaderComponent } from "./header/header.component";
 import { SharingModule } from "./sharing/sharing.module";
 @NgModule({
-  declarations: [AppComponent, HeaderComponent],
+  declarations: [AppComponent,],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -30,8 +29,7 @@ import { SharingModule } from "./sharing/sharing.module";
       preventDuplicates: true,
     }),
   ],
-  
-  
+
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

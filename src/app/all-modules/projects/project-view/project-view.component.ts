@@ -20,6 +20,7 @@ export class ProjectViewComponent implements OnInit {
   public lstHold =[];
   public lstReview =[];
   public multImages=[];
+  public leader=[];
   public completeTask;
   public openTask;
   public pipe = new DatePipe("en-US");
@@ -45,7 +46,7 @@ export class ProjectViewComponent implements OnInit {
   public addusers = [];
   public userdata = [];
   public userArr = [];
-  public teamLeader: String;
+  public teamLeader:any;
   path: string;
   client: any;
 
@@ -241,19 +242,27 @@ export class ProjectViewComponent implements OnInit {
   getusers() {
     this.http
       .get(
-        "http://localhost:8443/admin/users/getAdminUsers" + "/" + this.adminId
+        "http://localhost:8443/admin/allemployees/getallEmployee" + "/" + this.adminId
       )
       .subscribe((data: any[]) => {
+       
         this.userdata = data;
+         console.log("this is the EMPLOYEE>>>>>>>>",  this.userdata )
         this.users = [...this.userdata];
       });
   }
 
-  addUsers(val1, val2) {
+  addUsers(val1, val2,id) {
     let val = val1 + " " + val2;
-    this.teamLeader = val;
 
-    this.userArr.push(val);
+    var obj = {
+      name:val,
+      id:id
+    };
+    
+
+    this.userArr.push(obj);
+    console.log("this is the Leader name and id>>>>>",this.userArr)
   }
 
   addAllTeam() {
@@ -272,13 +281,20 @@ export class ProjectViewComponent implements OnInit {
       });
   }
 
-  addLeader(val1, val2) {
+  addLeader(val1, val2,id) {
+    
     let val = val1 + " " + val2;
-    this.teamLeader = val;
+    this.teamLeader = {
+      name:val,
+      id:id
+    };
+    
+    this.leader.push( this.teamLeader)
+    console.log("this is leader", this.leader)
   }
 
   addTeamLeader() {
-    let teamLeaders = this.teamLeader;
+    let teamLeaders = this.leader;
     this.http
       .patch(
         "http://localhost:8443/admin/projects/updateProject" +
