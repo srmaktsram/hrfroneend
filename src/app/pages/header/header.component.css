@@ -3,7 +3,7 @@
 	height:70px;
 	width:100%;
 	display:flex;
-	justify-content: center;
+	justify-content: space-between;
 	background-color: aqua;
 	border:2px solid green
 }
@@ -12,10 +12,10 @@
 	display: flex;
 	justify-content: center;
 }
-.all{
+/* .all{
 	width:100%;
 	border: 5px solid black;
-}
+} */
 .flexItems{
 	display:flex;
     justify-content:flex-end;

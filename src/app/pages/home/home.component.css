@@ -1,38 +1,7 @@
-
-
-/*//////////////////////////////////// header Css ////////////////////////////////////////////////////*/
-
-.mat{
-	height:70px;
+/* .headerCom{
+	border:2px solid blue;
 	width:100%;
-	display:flex;
-	justify-content: space-between;
-	background-color: aqua;
-}
-.flexItems{
-	display:flex;
-    justify-content: space-between;
-	/* border:4px solid green; */
-	align-items: center;
-	width:100%;
-}
-.img{
-	height: 90px;
-	width:90px;
-	margin-left:10px;
-	margin-top: -10px;
-}
-.mainFlexDiv{
-	/* border:4px solid blue;	 */
-	width:90%;
-	display: flex;
-	justify-content: center;
-}
-
-
-/* ////////////////////////////////////////////////////HeaderCss close//////////////////////////////////////// */
-
-
+} */
 .button{
 	border:15px solid orange;
 	background-color: orange;
@@ -62,7 +31,6 @@
 
 .IndiasNo1{
    width:60%;
-   /* border:2px solid green; */
    padding-left: 70px;
 }
 .createGstComp{

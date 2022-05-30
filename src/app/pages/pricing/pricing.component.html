@@ -1,23 +1,14 @@
-<!-- <app-menu></app-menu> -->
+<app-header class="headerCom"></app-header>
 
-
-<p>Pricing works</p>
-<!-- <app-header></app-header>
-<app-sidenav-menu></app-sidenav-menu> -->
-
-<!-- <div class="mainDiv">
+<div class="mainDiv">
 
     <div class="matDiv">
         <mat-card class="mat" style="border:2px solid #5d9cec">
             <div class="page-header orange">
-                <h4> Up TO 10 Employee(Single User)</h4>
+                <h4>Free User(Single-User)</h4>
             </div>
             <div class="text-center">
                 <p>Use Free For 90 Days</p>
-
-                <p>1 Month : 50/- Rupees</p>
-
-                <p>1 Year : 600/- Ruppes</p>
 
                 <p> + GST 18%</p>
 
@@ -26,8 +17,13 @@
                 </div>
             </div>
 
+            <div style="display:flex;justify-content:center;">
+                <a href="" data-bs-toggle="modal" data-bs-target="#freeUser" style="text-align:center;">View
+                    Details?</a>
+            </div>
+
             <div class="button">
-                <button mat-raised-button color="accent">Make Payment</button>
+                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
             </div>
         </mat-card>
 
@@ -35,60 +31,52 @@
     <div class="matDiv">
         <mat-card class="mat" style="border:2px solid #37bc9b">
             <div class="page-header blue">
-                <h4>Employee(Multi-User)</h4>
+                <h4>Diamond(Single-User)</h4>
             </div>
             <div class="text-center">
-                <p>Use Free For 90 Days</p>
-                <p>1 Month : 50/- Rupees</p>
-                <p>1 Year : 600/- Ruppes</p>
+                <select class="form-select" aria-label="Default select example" class="selectEmployee"
+                    (click)="getUser($event.target.value,'dSingle')">
+                    <option>Select Employee</option>
+                    <option value="50">Up To 50 Employee</option>
+                    <option value="150">Up To 150 Employee</option>
+                    <option value="300">Up To 300 Employee</option>
+                    <option value="500">Up To 500 Employee</option>
+                    <option value="700">Up To 700 Employee</option>
+                    <option value="1000">Up To 1000 employee</option>
+                    <option value="1500">More than 1000 Employee</option>
+                </select>
+                <p style="margin-top: 15px;">1 Month :{{dSingleoneMonthAmount}} /- Rupees</p>
                 <p>+ GST 18%</p>
-
-                <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button value="1" (change)="yearFunction=true;dayFunction=false">Day Slab
-                    </mat-radio-button>
-                    <mat-radio-button value="2" (change)="dayFunction=true;yearFunction=false"
-                        style="margin-left:80px;">
-                        Year Slab
-                    </mat-radio-button>
-                </mat-radio-group>
+                <h4>Our Plan</h4>
 
                 <div class="selectFlex">
-                    <select class="form-select" aria-label="Default select example" class="selectWidth"
-                        [disabled]="dayFunction" (click)="daySlab($event.target.value)">
-                        <option>0</option>
-                        <option value="30">30</option>
-                        <option value="60">60</option>
-                        <option value="90">90</option>
-                        <option value="120">120</option>
-                        <option value="150">150</option>
-                        <option value="180">180</option>
-                        <option value="210">210</option>
-                        <option value="240">240</option>
-                        <option value="270">270</option>
-                        <option value="300">300</option>
-                        <option value="330">330</option>
-                    </select>
-                    <select class="form-select" aria-label="Default select example" class="selectWidth"
-                        [disabled]="yearFunction" (click)="yearSlab($event.target.value)">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
+                    <select [(ngModel)]="dSingleUserMonth" class="form-select" aria-label="Default select example"
+                        class="selectWidth" (click)="getPlan('dSingle')">
+                        <option>Select Year</option>
+                        <option value="3">For 3 Month</option>
+                        <option value="6">For 6 Month</option>
+                        <option value="12">For 1 Year</option>
+                        <option value="24">For 2 Year</option>
+                        <option value="36">For 3 Year</option>
+                        <option value="48">For 4 Year</option>
+                        <option value="60">For 5 Year</option>
+                        <option value="120"> For 10 Year</option>
                     </select>
 
                 </div>
-                <div style="margin-top: 20px;" [hidden]="dayFunction">
-                    <p>Total Payable Amount : {{totalDayAmount}} /- Only</p>
+                <div style="margin-top: 20px;">
+                    <p>Total Payable Amount : {{totaldSingleMonthAmount}} /- Only</p>
                 </div>
-                <div style="margin-top: 20px;" [hidden]="yearFunction">
-                    <p>Total Payable Amount : {{totalYearAmount}} /- Only</p>
 
-                </div>
             </div>
 
+
+            <div style="display:flex;justify-content:center;">
+                <a href="" data-bs-toggle="modal" data-bs-target="#dSingleUser" style="text-align:center;">View
+                    Details?</a>
+            </div>
             <div class="button">
-                <button mat-raised-button color="accent">Make Payment</button>
+                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
             </div>
 
         </mat-card>
@@ -96,53 +84,53 @@
     <div class="matDiv">
         <mat-card class="mat" style="border:2px solid #f05050">
             <div class="page-header red">
-                <h4> Up TO 10 Employee(Single User)</h4>
+                <h4>Diamond(Multi-User)</h4>
             </div>
             <div class="text-center">
-                <p>Use Free For 90 Days</p>
+                <select class="form-select" aria-label="Default select example" class="selectEmployee"
+                    (click)="getUser($event.target.value,'dMulti')">
+                    <option>Select Employee</option>
+                    <option value="50">Up To 50 Employee</option>
+                    <option value="150">Up To 150 Employee</option>
+                    <option value="300">Up To 300 Employee</option>
+                    <option value="500">Up To 500 Employee</option>
+                    <option value="700">Up To 700 Employee</option>
+                    <option value="1000">Up To 1000 employee</option>
+                    <option value="1500">More than 1000 Employee</option>
+                </select>
+                <p style="margin-top: 15px;">1 Month :{{dMultioneMonthAmount}}/- Rupees</p>
 
-                <p>1 Month : 50/- Rupees</p>
-
-                <p>1 Year : 600/- Ruppes</p>
                 <p>+ GST 18%</p>
-
-                <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button value="1" (change)="yearFunction=true;dayFunction=false">Day Slab
-                    </mat-radio-button>
-                    <mat-radio-button value="2" (change)="dayFunction=true;yearFunction=false"
-                        style="margin-left:80px;">
-                        Year Slab
-                    </mat-radio-button>
-                </mat-radio-group>
+                <h4>Our Plan</h4>
 
                 <div class="selectFlex">
-                    <select class="form-select" aria-label="Default select example" class="selectWidth"
-                        [disabled]="dayFunction">
-                        <option value="1">30</option>
-                        <option value="2">60</option>
-                        <option value="3">90</option>
-                        <option value="3">120</option>
-                        <option value="3">150</option>
+                    <select [(ngModel)]="dMultiUserMonth" class="form-select" aria-label="Default select example"
+                        class="selectWidth" (click)="getPlan('dMulti')">
+                        <option>Select Year</option>
+                        <option value="3">For 3 Month</option>
+                        <option value="6">For 6 Month</option>
+                        <option value="12">For 1 Year</option>
+                        <option value="24">For 2 Year</option>
+                        <option value="36">For 3 Year</option>
+                        <option value="48">For 4 Year</option>
+                        <option value="60">For 5 Year</option>
+                        <option value="120"> For 10 Year</option>
                     </select>
-                    <select class="form-select" aria-label="Default select example" class="selectWidth"
-                        [disabled]="yearFunction">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="3">4</option>
-                        <option value="3">5</option>
-                    </select>
-
                 </div>
 
                 <div style="margin-top: 20px;">
-                    <p>Total Payable Amount : 177 /- Only</p>
+                    <p>Total Payable Amount :{{totaldMultiMonthAmount}} /- Only</p>
                 </div>
 
             </div>
 
+            <div style="display:flex;justify-content:center;">
+                <a href="" data-bs-toggle="modal" data-bs-target="#dMultiUser" style="text-align:center;">View
+                    Details?</a>
+            </div>
             <div class="button">
-                <button mat-raised-button color="accent">Make Payment</button>
+                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+
             </div>
 
         </mat-card>
@@ -151,4 +139,274 @@
 </div>
 
 
-<app-footer></app-footer> -->
+
+<div class="mainDiv">
+
+    <div class="matDiv">
+        <mat-card class="mat" style="border:2px solid #5d9cec">
+            <div class="page-header blue">
+                <h4>Enterprise(Multi-User)</h4>
+            </div>
+            <div class="text-center">
+                <select class="form-select" aria-label="Default select example" class="selectEmployee"
+                    (click)="getUser($event.target.value,'epMulti')">
+                    <option>Select Employee</option>
+                    <option value="50">Up To 50 Employee</option>
+                    <option value="150">Up To 150 Employee</option>
+                    <option value="300">Up To 300 Employee</option>
+                    <option value="500">Up To 500 Employee</option>
+                    <option value="700">Up To 700 Employee</option>
+                    <option value="1000">Up To 1000 employee</option>
+                    <option value="1500">More than 1000 Employee</option>
+                </select>
+                <p style="margin-top: 15px;">1 Month :{{epMultioneMonthAmount}} /- Rupees</p>
+                <p>+ GST 18%</p>
+
+                <h4>Our Plan</h4>
+
+                <div class="selectFlex">
+                    <select [(ngModel)]="epMultiUserMonth" class="form-select" aria-label="Default select example"
+                        class="selectWidth" (click)="getPlan('epMulti')">
+                        <option>Select Year</option>
+                        <option value="3">For 3 Month</option>
+                        <option value="6">For 6 Month</option>
+                        <option value="12">For 1 Year</option>
+                        <option value="24">For 2 Year</option>
+                        <option value="36">For 3 Year</option>
+                        <option value="48">For 4 Year</option>
+                        <option value="60">For 5 Year</option>
+                        <option value="120"> For 10 Year</option>
+                    </select>
+
+                </div>
+                <div style="margin-top: 20px;">
+                    <p>Total Payable Amount : {{totalEpMonthAmount}} /- Only</p>
+                </div>
+
+            </div>
+
+            <div style="display:flex;justify-content:center;">
+                <a href="" data-bs-toggle="modal" data-bs-target="#enter_prise" style="text-align:center;">View
+                    Details?</a>
+            </div>
+
+            <div class="button">
+                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+            </div>
+
+
+        </mat-card>
+
+    </div>
+    <div class="matDiv">
+        <mat-card class="mat" style="border:2px solid #37bc9b">
+            <div class="page-header blue">
+                <h4>Platinum(Single-User)</h4>
+            </div>
+            <div class="text-center">
+                <select class="form-select" aria-label="Default select example" class="selectEmployee"
+                    (click)="getUser($event.target.value,'ptSingle')">
+                    <option>Select Employee</option>
+                    <option value="50">Up To 50 Employee</option>
+                    <option value="150">Up To 150 Employee</option>
+                    <option value="300">Up To 300 Employee</option>
+                    <option value="500">Up To 500 Employee</option>
+                    <option value="700">Up To 700 Employee</option>
+                    <option value="1000">Up To 1000 employee</option>
+                    <option value="1500">More than 1000 Employee</option>
+                </select>
+                <p style="margin-top: 15px;">1 Month :{{ptSingleoneMonthAmount}}/- Rupees</p>
+                <p>+ GST 18%</p>
+
+                <h4>Our Plan</h4>
+                <div class="selectFlex">
+                    <select [(ngModel)]="PtSingleUserMonth" class="form-select" aria-label="Default select example"
+                        class="selectWidth" (click)="getPlan('ptSingle')">
+                        <option>Select Year</option>
+                        <option value="3">For 3 Month</option>
+                        <option value="6">For 6 Month</option>
+                        <option value="12">For 1 Year</option>
+                        <option value="24">For 2 Year</option>
+                        <option value="36">For 3 Year</option>
+                        <option value="48">For 4 Year</option>
+                        <option value="60">For 5 Year</option>
+                        <option value="120"> For 10 Year</option>
+                    </select>
+
+                </div>
+                <div style="margin-top: 20px;">
+                    <p>Total Payable Amount : {{totalPtSingleMonthAmount}} /- Only</p>
+                </div>
+
+            </div>
+            <div style="display:flex;justify-content:center;">
+                <a href="" data-bs-toggle="modal" data-bs-target="#pSingleUser" style="text-align:center;">View
+                    Details?</a>
+            </div>
+            <div class="button">
+                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+            </div>
+
+        </mat-card>
+    </div>
+
+    <div class="matDiv">
+        <mat-card class="mat" style="border:2px solid #f05050">
+            <div class="page-header red">
+                <h4> Platinum(Multi-User)</h4>
+            </div>
+            <div class="text-center">
+                <select class="form-select" aria-label="Default select example" class="selectEmployee"
+                    (click)="getUser($event.target.value,'ptMulti')">
+                    <option>Select Employee</option>
+                    <option value="50">Up To 50 Employee</option>
+                    <option value="150">Up To 150 Employee</option>
+                    <option value="300">Up To 300 Employee</option>
+                    <option value="500">Up To 500 Employee</option>
+                    <option value="700">Up To 700 Employee</option>
+                    <option value="1000">Up To 1000 employee</option>
+                    <option value="1500">More than 1000 Employee</option>
+                </select>
+                <p style="margin-top: 15px;">1 Month :{{ptMultioneMonthAmount}}/- Rupees</p>
+
+                <p>+ GST 18%</p>
+
+                <h4> Our Plan</h4>
+                <div class="selectFlex">
+                    <select [(ngModel)]="PtMultiUserMonth" class="form-select" aria-label="Default select example"
+                        class="selectWidth" (click)="getPlan('ptMulti')">
+                        <option>Select Year</option>
+                        <option value="3">For 3 Month</option>
+                        <option value="6">For 6 Month</option>
+                        <option value="12">For 1 Year</option>
+                        <option value="24">For 2 Year</option>
+                        <option value="36">For 3 Year</option>
+                        <option value="48">For 4 Year</option>
+                        <option value="60">For 5 Year</option>
+                        <option value="120">For 10 Year</option>
+                    </select>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <p>Total Payable Amount :{{totalPtMultiMonthAmount}}/- Only</p>
+                </div>
+
+            </div>
+            <div style="display:flex;justify-content:center;">
+                <a href="" data-bs-toggle="modal" data-bs-target="#pMultiUser" style="text-align:center;">View
+                    Details?</a>
+            </div>
+
+            <div class="button">
+                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+            </div>
+        </mat-card>
+    </div>
+
+</div>
+<!-- ///////////////////////////////////////////////////// -->
+
+<div id="pMultiUser" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Platinum Multi-User</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Platinum Multi user</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="pSingleUser" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">platinum Single-User</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>platinum Single User</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="dSingleUser" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Diamond Single-User</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Diamond Single-User</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="dMultiUser" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Diamond Multi User</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Diamond Multi user</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="enter_prise" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Enterprisee User</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Enterprisee user</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="freeUser" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Free User</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Free user</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<app-footer></app-footer>

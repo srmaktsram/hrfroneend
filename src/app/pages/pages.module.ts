@@ -12,10 +12,11 @@ import { FooterComponent } from './footer/footer.component';
 import { SidenavMenuComponent } from './sidenav-menu/sidenav-menu.component';
 import { PagesComponent } from './pages.component';
 import { HeaderComponent } from './header/header.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, HeaderComponent, PricingComponent, FooterComponent, SidenavMenuComponent, PagesComponent],
+  declarations: [HomeComponent, HeaderComponent, PricingComponent, FooterComponent, SidenavMenuComponent, PagesComponent, CheckoutComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
