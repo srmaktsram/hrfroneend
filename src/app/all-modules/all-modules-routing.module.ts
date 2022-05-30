@@ -61,6 +61,11 @@ const routes: Routes = [
           import("./accounts/accounts.module").then((m) => m.AccountsModule),
       },
       {
+        path: "support",
+        loadChildren: () =>
+          import("./supportTickets/tickets.module").then((m) => m.SupportTicketsModule),
+      },
+      {
         path: "payroll",
         loadChildren: () =>
           import("./payroll/payroll.module").then((m) => m.PayrollModule),

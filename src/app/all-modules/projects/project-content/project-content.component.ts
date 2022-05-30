@@ -188,6 +188,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
     this.http
       .post("http://localhost:8443/admin/projects/createProject?"+params, fd)
       .subscribe((res: any) => {
+        console.log(res,"LLLLLL")
          console.log("POST API PROJECT<><><><><><><",res);
          
         this.getProjects();
