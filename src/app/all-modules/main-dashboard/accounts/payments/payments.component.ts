@@ -36,14 +36,12 @@ export class PaymentsComponent implements OnInit, OnDestroy {
     // console.log(this.adminId)
     this.http
       .get(
-        "http://localhost:8443/admin/payments/adminGetPayments" +
-          "/" +
-          this.adminId
+        "http://localhost:8443/mainadmin/paymentsMainAdmin/getPayments"
       )
       .subscribe((data: any) => {
         this.allPayments = data;
+        console.log(data,"get Payments")
 
-        this.dtTrigger.next();
       });
   }
   // for unsubscribe datatable
