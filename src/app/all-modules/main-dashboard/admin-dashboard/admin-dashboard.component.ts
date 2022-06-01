@@ -8,8 +8,6 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./admin-dashboard.component.css"],
 })
 export class AdminDashboardComponent implements OnInit {
-
-
   public chartData;
   public chartOptions;
   public lineData;
@@ -26,6 +24,7 @@ export class AdminDashboardComponent implements OnInit {
   lstClients: any;
   public rows = [];
   public srch = [];
+
   lstInvoices: any;
   lstProject: any;
   newEmployeeCount: any;
@@ -33,39 +32,47 @@ export class AdminDashboardComponent implements OnInit {
   employeeCount: any;
   lstEmployee: any;
   public pipe = new DatePipe("en-US");
-  public projectCount: any
+  public projectCount: any;
   public clientCount: any;
-  joinDateArray = []
-  name = []
+  joinDateArray = [];
+  name = [];
+  data: any;
+  EstimateArray = [];
+  premiumClientsCount: any;
+  freeClientsCount: any;
+  freeTodayClientsCount: any;
+  premiumTodayClientsCount: any;
+  invoices: Object;
+  AllPayments: any;
+  tempYear: any;
+  totalAmount: any;
+  tempDateArray: any;
+  tempDate1: any;
+  tempDate2: any;
+  createYear: any;
+  SalesArray= [];
 
-  constructor(
-    private http: HttpClient,
-  ) {
-    this.adminId = sessionStorage.getItem("adminId")
+  constructor(private http: HttpClient) {
+    this.adminId = sessionStorage.getItem("adminId");
   }
 
   ngOnInit() {
-    this.getAllEmployee();
-    this.getDataPayments()
-    this.getDataProject();
-    this.getDataClients();
-    this.getDataInvoice();
+    this.getInvoiceRevenue();
+    this.getInvoiceSales();
+    this.getPremiumAdmins();
+    this.getDemoAdmins();
+    this.getTodayDemoAdmins();
+    this.getTodayPremiumAdmins();
+    this.getAllInvoices();
+    this.getPayments();
+    this.getAllClients();
+
     this.chartOptions = {
       xkey: "y",
       ykeys: ["a", "b"],
       labels: ["Total Income", "Total Outcome"],
       barColors: [this.barColors.a, this.barColors.b],
     };
-
-    this.chartData = [
-      { y: "2006", a: 100, b: 90 },
-      { y: "2007", a: 75, b: 65 },
-      { y: "2008", a: 50, b: 40 },
-      { y: "2009", a: 75, b: 65 },
-      { y: "2010", a: 50, b: 40 },
-      { y: "2011", a: 75, b: 65 },
-      { y: "2012", a: 100, b: 90 },
-    ];
 
     this.lineOption = {
       xkey: "y",
@@ -75,82 +82,172 @@ export class AdminDashboardComponent implements OnInit {
       lineColors: [this.lineColors.a, this.lineColors.b],
     };
 
-    this.lineData = [
-      { y: '2006', a: 50, b: 90 },
-      { y: '2007', a: 75, b: 65 },
-      { y: '2008', a: 50, b: 40 },
-      { y: '2009', a: 75, b: 65 },
-      { y: '2010', a: 50, b: 40 },
-      { y: '2011', a: 75, b: 65 },
-      { y: '2012', a: 100, b: 50 }
-    ];
+    
   }
-
-  getDataClients() {
-    this.http.get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId).subscribe((res: any) => {
-      this.lstClients = res;
-      //console.log(this.lstClients, "opppppppppo")
-      this.clientCount = this.lstClients.length
-
-    })
-
-  }
-
-  getDataInvoice() {
-    this.http.get("http://localhost:8443/admin/invoices/adminGetInvoices" + "/" + this.adminId).subscribe((res: any) => {
-      this.lstInvoices = res.data
-
-    })
-  }
-
-  getDataProject() {
-    this.http.get("http://localhost:8443/admin/projects/getAdminproject" + "/" + this.adminId).subscribe((res: any) => {
-
-      this.lstProject = res;
-      this.projectCount = this.lstProject.length
-
-    })
-  }
-
-  getDataPayments() {
-    this.http.get("http://localhost:8443/admin/payments/adminGetPayments" + "/" + this.adminId).subscribe((res: any) => {
-      //console.log("getdataPayments", res)
-      this.lstPayments = res
-
-    })
-  }
-
-
-  getAllEmployee() {
-
+  public getInvoiceRevenue() {
     this.http
       .get(
-        "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+        "http://localhost:8443/mainadmin/invoiceMainAdmin/totalRevenueInvoice"
       )
       .subscribe((data: any) => {
-        this.lstEmployee = data;
-        //console.log(this.lstEmployee, "lllllllllllllp")
-        this.employeeCount = this.lstEmployee.length
+        this.tempDate1 = data[0].createDate.split(" ");
+        this.tempDate2 = this.tempDate1[0].split("-");
+        this.tempYear = this.tempDate2[2];
 
-        let todayDate = new Date()
-        let TodayDate = this.pipe.transform(
-          todayDate,
-          "dd-MM-yyyy"
-        );
+        let EstimateTotal = 0;
+        
+        for (let i = 0; i < data.length; i++) {
+          let createDateTime = data[i].createDate.split(" ");
+          let createDateSplit = createDateTime[0].split("-");
+          this.createYear = createDateSplit[2];
+         
+          if (this.createYear == this.tempYear) {
+            EstimateTotal = EstimateTotal + parseInt(data[i].grandTotal);
+            
+            if (i == data.length - 1) {
+              let totalEstimate = EstimateTotal;
 
-        let count = 0
-        this.lstEmployee.map((item) => {
-          if (TodayDate == item.joindate) {
-            count = count + 1;
+              let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
+              this.EstimateArray.push(obj);
+            }
+          } else {
+            let totalEstimate = EstimateTotal;
+
+            
+            let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
+
+            this.EstimateArray.push(obj);
+
+           
+
+            let currentDateTime = data[i].createDate.split(" ");
+            let currentDate = currentDateTime[0].split("-");
+            this.tempYear = currentDate[2];
+            EstimateTotal = parseInt(data[i].grandTotal);
+
+
+            if (i == data.length-1) {
+              let totalEstimate = EstimateTotal;
+
+              let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
+              this.EstimateArray.push(obj);
+            }
           }
-        });
-        this.newEmployeeCount = count
-      })
+        }
 
+        this.chartData = this.EstimateArray;
+      });
+  }
+  public getInvoiceSales() {
+    this.http
+      .get(
+        "http://localhost:8443/mainadmin/invoiceMainAdmin/totalRevenueInvoice"
+      )
+      .subscribe((data: any) => {
+        let tempDate1 = data[0].createDate.split(" ");
+        let tempDate2 = tempDate1[0].split("-");
+        let temYear = tempDate2[2];
 
+        let EstimateTotal = 0;
+        let totalCount = 0;
+        for (let i = 0; i < data.length; i++) {
+          let createDateTime = data[i].createDate.split(" ");
+          let createDateSplit = createDateTime[0].split("-");
+         let createYear = createDateSplit[2];
+          
+          
+          if (createYear == temYear) {
+            EstimateTotal = EstimateTotal + parseInt(data[i].grandTotal);
+            totalCount=totalCount+1
+          
+            if (i == data.length - 1) {
+              let totalEstimate = EstimateTotal;
 
+              let obj = { y: temYear, b: totalEstimate, a: totalCount };
+              this.SalesArray.push(obj);
+            }
+          } else {
+           let totalEstimate = EstimateTotal;
 
+            
+            let obj = { y: temYear, b: totalEstimate, a: totalCount };
+            this.SalesArray.push(obj);
+
+          
+            
+
+            let currentDateTime = data[i].createDate.split(" ");
+            let currentDate = currentDateTime[0].split("-");
+            temYear = currentDate[2];
+            EstimateTotal = parseInt(data[i].grandTotal);
+            totalCount=1
+
+            if (i == data.length-1) {
+             
+
+              let obj = { y: temYear, b: totalEstimate, a: totalCount };
+              this.SalesArray.push(obj);
+            }
+          }
+        }
+
+        this.lineData = this.SalesArray;
+      });
+  }
+  public getPremiumAdmins() {
+    this.http
+      .get("http://localhost:8443/mainadmin/premiumClient/getPremiumClients")
+      .subscribe((res: any) => {
+        this.data = res;
+        this.premiumClientsCount = this.data.length;
+      });
+  }
+  public getDemoAdmins() {
+    this.http
+      .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
+      .subscribe((res: any) => {
+        this.data = res;
+        this.freeClientsCount = this.data.length;
+      });
+  }
+  public getTodayDemoAdmins() {
+    this.http
+      .get("http://localhost:8443/mainadmin/freeClient/getTodayFreeClients")
+      .subscribe((res: any) => {
+        this.data = res;
+        this.freeTodayClientsCount = this.data.length;
+      });
+  }
+
+  public getTodayPremiumAdmins() {
+    this.http
+      .get(
+        "http://localhost:8443/mainadmin/premiumClient/getTodayPremiumClients"
+      )
+      .subscribe((res: any) => {
+        this.data = res;
+        this.premiumTodayClientsCount = this.data.length;
+      });
+  }
+  getAllInvoices() {
+    this.http
+      .get("http://localhost:8443/mainadmin/invoiceMainAdmin/getInvoices")
+      .subscribe((res: any) => {
+        this.invoices = res.data;
+      });
+  }
+  getPayments() {
+    this.http
+      .get("http://localhost:8443/mainadmin/paymentsMainAdmin/getPayments")
+      .subscribe((data: any) => {
+        this.AllPayments = data;
+      });
+  }
+  public getAllClients() {
+    this.http
+      .get("http://localhost:8443/mainadmin/allClient/getAllClients")
+      .subscribe((res: any) => {
+        this.data = res;
+      });
   }
 }
