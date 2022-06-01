@@ -8,8 +8,6 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./admin-dashboard.component.css"],
 })
 export class AdminDashboardComponent implements OnInit {
-
-
   public chartData;
   public chartOptions;
   public lineData;
@@ -33,23 +31,31 @@ export class AdminDashboardComponent implements OnInit {
   employeeCount: any;
   lstEmployee: any;
   public pipe = new DatePipe("en-US");
-  public projectCount: any
+  public projectCount: any;
   public clientCount: any;
-  joinDateArray = []
-  name = []
+  joinDateArray = [];
+  name = [];
+  data: any;
+  premiumClientsCount: any;
+  freeClientsCount: any;
+  freeTodayClientsCount: any;
+  premiumTodayClientsCount: any;
+  invoices: Object;
+  AllPayments: any;
 
-  constructor(
-    private http: HttpClient,
-  ) {
-    this.adminId = sessionStorage.getItem("adminId")
+  constructor(private http: HttpClient) {
+    this.adminId = sessionStorage.getItem("adminId");
   }
 
   ngOnInit() {
-    this.getAllEmployee();
-    this.getDataPayments()
-    this.getDataProject();
-    this.getDataClients();
-    this.getDataInvoice();
+    this.getPremiumAdmins();
+    this.getDemoAdmins();
+    this.getTodayDemoAdmins();
+    this.getTodayPremiumAdmins();
+    this.getAllInvoices();
+    this.getPayments();
+    this.getAllClients();
+
     this.chartOptions = {
       xkey: "y",
       ykeys: ["a", "b"],
@@ -58,7 +64,7 @@ export class AdminDashboardComponent implements OnInit {
     };
 
     this.chartData = [
-      { y: "2006", a: 100, b: 90 },
+      { y: "2006", a: 10, b: 90 },
       { y: "2007", a: 75, b: 65 },
       { y: "2008", a: 50, b: 40 },
       { y: "2009", a: 75, b: 65 },
@@ -76,81 +82,69 @@ export class AdminDashboardComponent implements OnInit {
     };
 
     this.lineData = [
-      { y: '2006', a: 50, b: 90 },
-      { y: '2007', a: 75, b: 65 },
-      { y: '2008', a: 50, b: 40 },
-      { y: '2009', a: 75, b: 65 },
-      { y: '2010', a: 50, b: 40 },
-      { y: '2011', a: 75, b: 65 },
-      { y: '2012', a: 100, b: 50 }
+      { y: "2006", a: 50, b: 90 },
+      { y: "2007", a: 75, b: 65 },
+      { y: "2008", a: 50, b: 40 },
+      { y: "2009", a: 75, b: 65 },
+      { y: "2010", a: 50, b: 40 },
+      { y: "2011", a: 75, b: 65 },
+      { y: "2012", a: 100, b: 50 },
     ];
   }
-
-  getDataClients() {
-    this.http.get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId).subscribe((res: any) => {
-      this.lstClients = res;
-      //console.log(this.lstClients, "opppppppppo")
-      this.clientCount = this.lstClients.length
-
-    })
-
+  public getPremiumAdmins() {
+    this.http
+      .get("http://localhost:8443/mainadmin/premiumClient/getPremiumClients")
+      .subscribe((res: any) => {
+        this.data = res;
+        this.premiumClientsCount = this.data.length;
+      });
+  }
+  public getDemoAdmins() {
+    this.http
+      .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
+      .subscribe((res: any) => {
+        this.data = res;
+        this.freeClientsCount = this.data.length;
+      });
+  }
+  public getTodayDemoAdmins() {
+    this.http
+      .get("http://localhost:8443/mainadmin/freeClient/getTodayFreeClients")
+      .subscribe((res: any) => {
+        this.data = res;
+        this.freeTodayClientsCount = this.data.length;
+      });
   }
 
-  getDataInvoice() {
-    this.http.get("http://localhost:8443/admin/invoices/adminGetInvoices" + "/" + this.adminId).subscribe((res: any) => {
-      this.lstInvoices = res.data
-
-    })
-  }
-
-  getDataProject() {
-    this.http.get("http://localhost:8443/admin/projects/getAdminproject" + "/" + this.adminId).subscribe((res: any) => {
-
-      this.lstProject = res;
-      this.projectCount = this.lstProject.length
-
-    })
-  }
-
-  getDataPayments() {
-    this.http.get("http://localhost:8443/admin/payments/adminGetPayments" + "/" + this.adminId).subscribe((res: any) => {
-      //console.log("getdataPayments", res)
-      this.lstPayments = res
-
-    })
-  }
-
-
-  getAllEmployee() {
-
+  public getTodayPremiumAdmins() {
     this.http
       .get(
-        "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+        "http://localhost:8443/mainadmin/premiumClient/getTodayPremiumClients"
       )
+      .subscribe((res: any) => {
+        this.data = res;
+        this.premiumTodayClientsCount = this.data.length;
+      });
+  }
+  getAllInvoices() {
+    this.http
+      .get("http://localhost:8443/mainadmin/invoiceMainAdmin/getInvoices")
+      .subscribe((res: any) => {
+        this.invoices = res.data;
+      });
+  }
+  getPayments() {
+    this.http
+      .get("http://localhost:8443/mainadmin/paymentsMainAdmin/getPayments")
       .subscribe((data: any) => {
-        this.lstEmployee = data;
-        //console.log(this.lstEmployee, "lllllllllllllp")
-        this.employeeCount = this.lstEmployee.length
-
-        let todayDate = new Date()
-        let TodayDate = this.pipe.transform(
-          todayDate,
-          "dd-MM-yyyy"
-        );
-
-        let count = 0
-        this.lstEmployee.map((item) => {
-          if (TodayDate == item.joindate) {
-            count = count + 1;
-          }
-        });
-        this.newEmployeeCount = count
-      })
-
-
-
-
+        this.AllPayments = data;
+      });
+  }
+  public getAllClients() {
+    this.http
+      .get("http://localhost:8443/mainadmin/allClient/getAllClients")
+      .subscribe((res: any) => {
+        this.data = res;
+      });
   }
 }
