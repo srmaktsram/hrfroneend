@@ -1,0 +1,385 @@
+
+.form-row input, .form-row select, .form-row textarea, .form-row select2 {
+  margin-bottom: 10px;
+}
+.backto{
+  border:4px solid red;
+ 
+}
+.op{
+  margin-left: 8px;
+}
+.op2{
+  margin-left: 5px;
+}
+#container-fluid{
+ 
+   margin-left: 10px;
+}
+.card{
+  
+  margin-left: 4px;
+}
+.select2-chosen {
+  margin-right: 26px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.select2-choices {
+    box-shadow: none;
+    border: 1px solid #d9dde0;
+    background: #f4f5f7;
+    -webkit-border-top-left-radius: 2px;
+    -webkit-border-top-right-radius: 2px;
+    -moz-border-radius-topleft: 2px;
+    -moz-border-radius-topright: 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+.select2-container .select2-choice {
+    background-image: none;
+    border-radius: 2px;
+    border: 1px solid #d9dde0;
+    padding: 3px 9px;
+    transition: border 0.2s linear 0s;
+    height: 35px;
+}
+element.style {
+  padding-top: 0 !important;
+}
+
+@media (max-width:1204px){
+
+  .op{      
+    
+    width:100%; 
+  }
+}
+
+@media (max-width:1204px){
+
+  .op2{      
+   
+    width:100%; 
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px){
+.page-content .content {
+  padding-top: 95px;
+  padding-bottom: 10px;
+}}
+
+.page-content .content {
+  padding-left: 26px;
+  padding-right: 40px;
+  padding-top: 79px;
+  padding-bottom: 10px;
+}
+
+.img-responsive {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+img {
+  vertical-align: middle;
+}
+img {
+  border: 0;
+}
+
+.grid.simple .grid-body .row {
+    padding-bottom: 5px;
+}
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+
+
+
+element.style {
+  margin-left: 0;
+  min-height: 600px !important;
+}
+.page-content {
+  background-color: #E5E9EC !important;
+}
+@media (min-width: 768px) and (max-width: 1024px){
+.page-content {
+  margin-left: 50px;
+  margin-top: 0px;
+  min-height: 911px;
+}}
+@media (min-width: 980px){
+.page-content {
+  margin-left: 250px;
+  min-height: 1006px;
+}}
+.page-content {
+  margin-top: 0px;
+  padding: 0px;
+  background-color: #d9dde0;
+  overflow: auto;
+  position: relative;
+  min-height: 911px;
+}
+
+.grid.simple .grid-body {
+  background-color: #ffffff !important;
+  color: #505458 !important;
+  border-color: #B9C1C7 !important;
+}
+
+.grid.simple .grid-body {
+  background-color: #fff;
+  padding: 26px;
+  border: 1px solid #dddddd;
+  color: #6f7b8a;
+}
+.grid-body {
+  clear: both;
+  padding: 0;
+}
+// body{
+//   margin: 0;
+//   padding: 0;
+// }
+.column-seperation > div[class*="col-"]:last-child {
+  border-right: 0px;
+}
+.grid.simple .grid-body {
+  background-color: #ffffff !important;
+  color: #505458 !important;
+  border-color: #B9C1C7 !important;
+}
+.column-seperation > div[class*="col-"] {
+  border-right: 1px solid #ddd;
+}
+
+.grid.simple .form-actions {
+  margin-right: -26px !important;
+  margin-left: -26px !important;
+  margin-bottom: -26px !important;
+}
+
+.form-actions {
+  background-color: #F2F4F6 !important;
+}
+.form-actions {
+  background-color: #F2F4F6;
+  border: 0px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  padding: 19px 20px 20px;
+}
+
+element.style {
+  margin-left: 0;
+  min-height: 600px !important;
+}
+.page-content {
+  background-color: #E5E9EC !important;
+}
+.error-body {
+  
+  background-position: 50% 50%;
+  background-size: cover;
+  background-color: #E5E9EC !important;
+  color: #505458 !important;
+}
+
+.error-body {
+  background-color: #E5E9EC !important;
+  font-family: 'Open Sans';
+  height: 100%;
+}
+.grid.simple .grid-title {
+  margin-bottom: 0px;
+  border: 1px solid #dddddd;
+  border-bottom: 0px;
+}
+.grid.simple .grid-title {
+  padding: 14px 15px 7px 15px;
+  border-bottom: 1px solid #eee;
+  color: #282323 !important;
+  background-color: #fff;
+}
+.grid-title {
+  background-color: #ffffff !important;
+  border-color: #B9C1C7 !important;
+}
+.img-responsive {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+img {
+  vertical-align: middle;
+}
+img {
+  border: 0;
+}
+.column-seperation > div[class*="col-"] {
+  border-right: 1px solid #ddd;
+}
+.form-row input, .form-row select, .form-row textarea, .form-row select2 {
+  margin-bottom: 10px;
+}
+element.style {
+  padding-top: 0 !important;
+}
+.error-body {
+  background: url(https://www.offersmake.com/uploads/backgroud/newyork.jpg);
+  background-position: 50% 50%;
+  background-size: cover;
+  background-color: #E5E9EC !important;
+  color: #505458 !important;
+}
+
+@media (max-width: 480px){
+.page-content .content {
+  padding: 8px 30px;
+  padding-top: 93px;
+  overflow-x: hidden;
+  
+ 
+}}
+.login-container {
+  margin-top: 2%;
+}
+
+.row {
+  margin-right: -10px;
+   margin-left: -10px;
+  
+}
+@media (max-width: 767px){
+.login-container {
+    padding: 0 10px;
+  
+}}
+@media (max-width: 767px){
+.page-content .content {
+  padding: 8px;
+  padding-top: 95px;
+  padding-bottom: 10px;
+}}
+.select2-container .select2-choice {
+  background-image: none;
+  border-radius: 2px;
+  border: 1px solid #d9dde0;
+  padding: 3px 9px;
+  transition: border 0.2s linear 0s;
+  height: 35px;
+}
+.grid.simple .grid-body {
+  background-color: #ffffff !important;
+  color: #505458 !important;
+  border-color: #B9C1C7 !important;
+}
+
+.grid.simple .grid-body {
+  background-color: #fff;
+  padding: 26px;
+  border: 1px solid #dddddd;
+  color: #6f7b8a;
+}
+.grid-body {
+  clear: both;
+  padding: 0;
+}
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+@media (min-width: 768px) and (max-width: 1024px){
+body {
+  padding-top: 0px;
+}}
+body {
+  color: #6f7b8a;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  padding: 0px !important;
+  margin: 0px !important;
+  line-height: 1.5;
+  font-style: normal;
+  font-weight: normal;
+}
+
+@media (min-width: 768px) and (max-width: 1024px){
+.page-content {
+  margin-left: 50px;
+  margin-top: 0px;
+  min-height: 911px;
+}
+}
+@media (min-width: 980px){
+.page-content {
+  margin-left: 250px;
+  min-height: 1006px;
+}}
+
+.page-content {
+  margin-top: 0px;
+  padding: 0px;
+  background-color: #d9dde0;
+  overflow: auto;
+  position: relative;
+  min-height: 911px;
+}
+
+
+.select2-container-active .select2-choice, .select2-container-active .select2-choices {
+    box-shadow: none;
+    border: 1px solid #d9dde0;
+    background: #f4f5f7;
+    -webkit-border-top-left-radius: 2px;
+    -webkit-border-top-right-radius: 2px;
+    -moz-border-radius-topleft: 2px;
+    -moz-border-radius-topright: 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+}
+
+.select2-container .select2-choice {
+    background-image: none;
+    border-radius: 2px;
+    border: 1px solid #d9dde0;
+    padding: 3px 9px;
+    transition: border 0.2s linear 0s;
+    height: 35px;
+}
+.select2-container .select2-choice > .select2-chosen {
+  margin-right: 26px;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+@media (min-width: 992px){
+.col-md-6 {
+    width: 50%;
+}}
+
+@media (min-width: 992px){
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11 {
+    float: left;
+}}
+@media (min-width: 768px) and (max-width: 1024px){
+body {
+    padding-top: 0px;
+}}
+

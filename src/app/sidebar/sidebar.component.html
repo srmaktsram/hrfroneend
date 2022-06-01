@@ -36,6 +36,30 @@
           }">
           <a routerLink="/layout/mainadmin/clients/democlients"><i class="la la-users"></i> <span>Clients</span></a>
         </li>
+
+
+
+
+
+
+          <li [ngClass]="{
+            active:
+              urlComplete.subUrl === 'demoaffiliate' ||
+              urlComplete.subUrl === 'premiumaffiliate' ||
+              urlComplete.subUrl === 'visitoraffiliate'
+          }">
+          <a routerLink="/layout/mainadmin/affiliates/demoaffiliate"><i class="la la-users"></i> <span>Affiliate</span></a>
+        </li>
+
+
+
+
+
+
+
+
+
+
           <li [ngClass]="{
             active:
 

@@ -16,6 +16,11 @@ const routes: Routes = [
           import("./clients/clients.module").then((m) => m.ClientAdminModule),
       },
       {
+        path:"affiliates",
+        loadChildren:()=>
+        import("./affiliate/affiliate.module").then((m)=>m.AffiliateModule)
+      },
+      {
         path: "packages",
         loadChildren: () =>
           import("./packages/clients.module").then((m) => m.PackagesModule),

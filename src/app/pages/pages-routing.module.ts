@@ -8,12 +8,21 @@ import { PricingComponent } from './pricing/pricing.component';
 
 
 
+
+
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "pricing", component: PricingComponent },
   { path: "home", component: HomeComponent },
   { path: "header", component: HeaderComponent },
   { path: "checkout", component: CheckoutComponent },
+  {
+    path: "affilate",
+    loadChildren: () =>
+      import("./affilate/affilate.module").then(
+        (m) => m.AffilateModule
+      ),
+  },
 
 ];
 

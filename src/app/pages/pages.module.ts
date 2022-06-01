@@ -15,6 +15,7 @@ import { HeaderComponent } from './header/header.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 
 
+
 @NgModule({
   declarations: [HomeComponent, HeaderComponent, PricingComponent, FooterComponent, SidenavMenuComponent, PagesComponent, CheckoutComponent],
   imports: [
