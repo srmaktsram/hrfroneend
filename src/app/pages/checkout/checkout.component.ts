@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { param } from "jquery";
@@ -19,11 +20,9 @@ export class CheckoutComponent implements OnInit {
   PtMultiUser: any;
   totalEpMonthAmount: any;
   epMultiUser: any;
+  public showPromo = true;
 
-
-
-
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
 
@@ -44,4 +43,29 @@ export class CheckoutComponent implements OnInit {
 
 
   }
+
+  // getPayment() {
+
+
+  ///////////////callApi///////////
+
+
+  //   })
+
+  // }
+
+  usePromo() {
+    this.showPromo = false;
+  }
+
+  getOffer(event) {
+    let code = event;
+    this.http.get("url").subscribe((data: any) => {
+      console.log(data, "dataComesFromApi")
+
+    })
+
+  }
+
+
 }
