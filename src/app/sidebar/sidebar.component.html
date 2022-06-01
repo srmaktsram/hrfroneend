@@ -19,7 +19,7 @@
               }">
               
                 <li routerLink="/layout/mainadmin/admindashboard">
-                  <a [ngClass]="{ active: urlComplete.subUrl === 'admindashboard' }" href="javascript:">Admin Dashboard</a>
+                  <a [ngClass]="{ active: urlComplete.subUrl === 'admindashboard' }" href="javascript:">Main Admin Dashboard</a>
                 </li>
               
              
@@ -82,7 +82,7 @@
                 : 'none'
           }">
 
-            <li routerLink="/layout/mainadmin/accounts/estimates">
+            <!-- <li routerLink="/layout/mainadmin/accounts/estimates">
               <a href="javascript:" [ngClass]="{
                 active:
                   urlComplete.subUrl === 'estimates' ||
@@ -90,7 +90,7 @@
                   urlComplete.subUrl === 'create-estimates' ||
                   urlComplete.subUrl === 'edit-estimates?id=1'
               }">Estimates</a>
-            </li>
+            </li> -->
             <li routerLink="/layout/mainadmin/accounts/invoices">
               <a href="javascript:" [ngClass]="{
                 active:
@@ -104,17 +104,17 @@
             <li routerLink="/layout/mainadmin/accounts/payments">
               <a href="javascript:" [ngClass]="{ active: urlComplete.subUrl === 'payments' }">Payments</a>
             </li>
-            <li routerLink="/layout/mainadmin/accounts/expenses">
+            <!-- <li routerLink="/layout/mainadmin/accounts/expenses">
               <a href="javascript:" [ngClass]="{ active: urlComplete.subUrl === 'expenses' }">Expenses</a>
-            </li>
-            <li routerLink="/layout/mainadmin/accounts/provident-fund">
+            </li> -->
+            <!-- <li routerLink="/layout/mainadmin/accounts/provident-fund">
               <a href="javascript:" [ngClass]="{
                 active: urlComplete.subUrl === 'provident-fund'
               }">Provident Fund</a>
-            </li>
-            <li routerLink="/layout/mainadmin/accounts/taxes">
+            </li> -->
+            <!-- <li routerLink="/layout/mainadmin/accounts/taxes">
               <a href="javascript:" [ngClass]="{ active: urlComplete.subUrl === 'taxes' }">Taxes</a>
-            </li>
+            </li> -->
           </ul>
         </li>
 

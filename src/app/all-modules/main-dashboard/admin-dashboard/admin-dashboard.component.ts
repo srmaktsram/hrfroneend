@@ -24,6 +24,7 @@ export class AdminDashboardComponent implements OnInit {
   lstClients: any;
   public rows = [];
   public srch = [];
+
   lstInvoices: any;
   lstProject: any;
   newEmployeeCount: any;
@@ -36,18 +37,28 @@ export class AdminDashboardComponent implements OnInit {
   joinDateArray = [];
   name = [];
   data: any;
+  EstimateArray = [];
   premiumClientsCount: any;
   freeClientsCount: any;
   freeTodayClientsCount: any;
   premiumTodayClientsCount: any;
   invoices: Object;
   AllPayments: any;
+  tempYear: any;
+  totalAmount: any;
+  tempDateArray: any;
+  tempDate1: any;
+  tempDate2: any;
+  createYear: any;
+  SalesArray= [];
 
   constructor(private http: HttpClient) {
     this.adminId = sessionStorage.getItem("adminId");
   }
 
   ngOnInit() {
+    this.getInvoiceRevenue();
+    this.getInvoiceSales();
     this.getPremiumAdmins();
     this.getDemoAdmins();
     this.getTodayDemoAdmins();
@@ -63,16 +74,6 @@ export class AdminDashboardComponent implements OnInit {
       barColors: [this.barColors.a, this.barColors.b],
     };
 
-    this.chartData = [
-      { y: "2006", a: 10, b: 90 },
-      { y: "2007", a: 75, b: 65 },
-      { y: "2008", a: 50, b: 40 },
-      { y: "2009", a: 75, b: 65 },
-      { y: "2010", a: 50, b: 40 },
-      { y: "2011", a: 75, b: 65 },
-      { y: "2012", a: 100, b: 90 },
-    ];
-
     this.lineOption = {
       xkey: "y",
       ykeys: ["a", "b"],
@@ -81,15 +82,125 @@ export class AdminDashboardComponent implements OnInit {
       lineColors: [this.lineColors.a, this.lineColors.b],
     };
 
-    this.lineData = [
-      { y: "2006", a: 50, b: 90 },
-      { y: "2007", a: 75, b: 65 },
-      { y: "2008", a: 50, b: 40 },
-      { y: "2009", a: 75, b: 65 },
-      { y: "2010", a: 50, b: 40 },
-      { y: "2011", a: 75, b: 65 },
-      { y: "2012", a: 100, b: 50 },
-    ];
+    // this.lineData = [
+    //   { y: "2006", a: 50, b: 90 },
+    //   { y: "2007", a: 75, b: 65 },
+    //   { y: "2008", a: 50, b: 40 },
+    //   { y: "2009", a: 75, b: 65 },
+    //   { y: "2010", a: 50, b: 40 },
+    //   { y: "2011", a: 75, b: 65 },
+    //   { y: "2012", a: 100, b: 50 },
+    // ];
+  }
+  public getInvoiceRevenue() {
+    this.http
+      .get(
+        "http://localhost:8443/mainadmin/invoiceMainAdmin/totalRevenueInvoice"
+      )
+      .subscribe((data: any) => {
+        this.tempDate1 = data[0].createDate.split(" ");
+        this.tempDate2 = this.tempDate1[0].split("-");
+        this.tempYear = this.tempDate2[2];
+
+        let EstimateTotal = 0;
+        
+        for (let i = 0; i < data.length; i++) {
+          let createDateTime = data[i].createDate.split(" ");
+          let createDateSplit = createDateTime[0].split("-");
+          this.createYear = createDateSplit[2];
+         
+          if (this.createYear == this.tempYear) {
+            EstimateTotal = EstimateTotal + parseInt(data[i].grandTotal);
+            
+            if (i == data.length - 1) {
+              let totalEstimate = EstimateTotal;
+
+              let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
+              this.EstimateArray.push(obj);
+            }
+          } else {
+            let totalEstimate = EstimateTotal;
+
+            
+            let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
+
+            this.EstimateArray.push(obj);
+
+           
+
+            let currentDateTime = data[i].createDate.split(" ");
+            let currentDate = currentDateTime[0].split("-");
+            this.tempYear = currentDate[2];
+            EstimateTotal = parseInt(data[i].grandTotal);
+
+
+            if (i == data.length-1) {
+              let totalEstimate = EstimateTotal;
+
+              let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
+              this.EstimateArray.push(obj);
+            }
+          }
+        }
+
+        this.chartData = this.EstimateArray;
+      });
+  }
+  public getInvoiceSales() {
+    this.http
+      .get(
+        "http://localhost:8443/mainadmin/invoiceMainAdmin/totalRevenueInvoice"
+      )
+      .subscribe((data: any) => {
+        let tempDate1 = data[0].createDate.split(" ");
+        let tempDate2 = tempDate1[0].split("-");
+        let temYear = tempDate2[2];
+
+        let EstimateTotal = 0;
+        let totalCount = 0;
+        for (let i = 0; i < data.length; i++) {
+          let createDateTime = data[i].createDate.split(" ");
+          let createDateSplit = createDateTime[0].split("-");
+         let createYear = createDateSplit[2];
+          
+          
+          if (createYear == temYear) {
+            EstimateTotal = EstimateTotal + parseInt(data[i].grandTotal);
+            totalCount=totalCount+1
+          
+            if (i == data.length - 1) {
+              let totalEstimate = EstimateTotal;
+
+              let obj = { y: temYear, b: totalEstimate, a: totalCount };
+              this.SalesArray.push(obj);
+            }
+          } else {
+           let totalEstimate = EstimateTotal;
+
+            
+            let obj = { y: temYear, b: totalEstimate, a: totalCount };
+            this.SalesArray.push(obj);
+
+          
+            
+
+            let currentDateTime = data[i].createDate.split(" ");
+            let currentDate = currentDateTime[0].split("-");
+            temYear = currentDate[2];
+            EstimateTotal = parseInt(data[i].grandTotal);
+            totalCount=1
+
+            if (i == data.length-1) {
+             
+
+              let obj = { y: temYear, b: totalEstimate, a: totalCount };
+              this.SalesArray.push(obj);
+            }
+          }
+        }
+
+        this.lineData = this.SalesArray;
+      });
   }
   public getPremiumAdmins() {
     this.http
