@@ -7,7 +7,7 @@ import { ClientsComponent } from "./clients.component";
 import { ClientsProfileComponent } from "./clients-profile/clients-profile.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { VisitorClientsListComponent } from "./visitor-clients-list/clients-list.component";
-import { DemoClientsListComponent } from "./free-clients-list/clients-list.component";
+import { DemoClientsListComponent } from "./demo-clients-list/clients-list.component";
 import { PremiumClientsListComponent } from "./premium-clients-list/clients-list.component";
 
 @NgModule({

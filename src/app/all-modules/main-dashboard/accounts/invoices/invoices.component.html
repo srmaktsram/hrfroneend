@@ -7,7 +7,7 @@
         <h3 class="page-title">Invoices</h3>
         <ul class="breadcrumb">
           <li class="breadcrumb-item">
-            <a routerLink="/layout/mainadmin/admindashboard">Dashboard</a>
+            <a routerLink="/layout/dashboard/admin">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Invoices</li>
         </ul>
@@ -22,7 +22,7 @@
       </div>
 
       <div class="col-auto float-end ms-auto">
-        <a routerLink="/layout/mainadmin/accounts/create-invoice" class="btn add-btn"
+        <a routerLink="/layout/accounts/create-invoice" class="btn add-btn"
           ><i class="fa fa-plus"></i> Create Invoice</a
         >
       </div>
@@ -32,16 +32,6 @@
 
   <!-- Search Filter -->
   <div class="row filter-row">
-    <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-      <div class="form-group form-focus">
-        <input
-          type="text"
-          class="form-control floating"
-          (input)="searchName($event.target.value)"
-        />
-        <label class="focus-label">Invoice details</label>
-      </div>
-    </div>
     <div class="col-sm-6 col-md-3">
       <div class="form-group form-focus">
         <div class="cal-icon">
@@ -82,14 +72,14 @@
       <div class="form-group form-focus select-focus">
         <select
           class="form-select form-control"
-          (input)="searchInvoiceType($event.target.value)"
+          (input)="searchStatus($event.target.value)"
         >
-          <option value="">Select</option>
-          
+          <option value="">Select Status</option>
+          <option value="Pending">Pending</option>
           <option value="Paid">Paid</option>
-          <option value="Refunded">Refunded</option>
+          <option value="Partially Paid">Partially Paid</option>
         </select>
-        <label class="focus-label">Invoice Type</label>
+        <label class="focus-label">Status</label>
       </div>
     </div>
     <div class="col-sm-6 col-md-3">
@@ -115,9 +105,8 @@
               <th>Email</th>
               <th>Invoice Date</th>
               <th>Due Date</th>
-              <th>Refund/Paid</th>
               <th>Amount</th>
-              <th>Invoice Type</th>
+              <th>Status</th>
               <th class="text-end">Action</th>
             </tr>
           </thead>
@@ -125,15 +114,14 @@
             <tr *ngFor="let invoice of invoices; let i = index">
               <td>{{ i + 1 }}</td>
               <td>
-                <a routerLink="/layout/mainadmin/accounts/invoice-view"  [queryParams]="{ id: invoice.id }"
-                  >INV-{{ invoice.number }}</a
+                <a routerLink="/layout/accounts/invoice-view"  [queryParams]="{ id: invoice.id }"
+                  >{{ invoice.number }}</a
                 >
               </td>
               <td>{{ invoice.client }}</td>
               <td>{{ invoice.email }}</td>
               <td>{{ invoice.invoice_date | customDate }}</td>
               <td>{{ invoice.due_date | customDate }}</td>
-              <td>{{ invoice.updateDate | customDate }}</td>
               <td>{{ invoice.totalamount }}</td>
               <td class="text-center">
                 <div class="dropdown action-label">
@@ -142,20 +130,25 @@
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    <i class="fa fa-dot-circle-o"></i> {{ invoice.invoiceType }}
+                    <i class="fa fa-dot-circle-o"></i> {{ invoice.status }}
                   </a>
                   <div class="dropdown-menu">
-                    
                     <a
                       class="dropdown-item"
-                      (click)="updateInvoiceType('Paid', invoice.id)"
+                      (click)="updateStatus('Pending', invoice.id)"
+                      ><i class="fa fa-dot-circle-o text-success"></i>
+                      Pending</a
+                    >
+                    <a
+                      class="dropdown-item"
+                      (click)="updateStatus('Paid', invoice.id)"
                       ><i class="fa fa-dot-circle-o text-danger"></i> Paid</a
                     >
                     <a
                       class="dropdown-item"
-                      (click)="updateInvoiceType('Refunded', invoice.id)"
-                      ><i class="fa fa-dot-circle-o text-danger"></i>
-                      Refunded</a
+                      (click)="updateStatus('Partially Paid', invoice.id)"
+                      ><i class="fa fa-dot-circle-o text-danger"></i> Partially
+                      Paid</a
                     >
                   </div>
                 </div>
@@ -171,12 +164,12 @@
                   <div class="dropdown-menu dropdown-menu-right">
                     <a
                       class="dropdown-item"
-                      routerLink="/layout/mainadmin/accounts/edit-invoice" [queryParams]="{ id: invoice.id }"
+                      routerLink="/layout/accounts/edit-invoice" [queryParams]="{ id: invoice.id }"
                       ><i class="fa fa-pencil m-r-5"></i> Edit</a
                     >
                     <a
                       class="dropdown-item"
-                      routerLink="/layout/mainadmin/accounts/invoice-view"
+                      routerLink="/layout/accounts/invoice-view"
                       [queryParams]="{ id: invoice.id }"
                       ><i class="fa fa-eye m-r-5"></i> View</a
                     >

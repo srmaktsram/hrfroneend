@@ -35,7 +35,6 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     sessionStorage.removeItem("invoiceNo");
-    
   }
 
   ngOnInit() {
@@ -62,35 +61,35 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   getInvNo() {
     this.http
       .get(
-        "http://localhost:8443/mainadmin/invoiceMainAdmin/getOneInvoiceNumber" +
+        "http://localhost:8443/admin/invoices/getOneInvoiceNumber" +
           "/" +
           this.adminId
       )
       .subscribe((res: any) => {
-        let total = parseInt(res.number)+ 1;
-        const newTotal=String(total)
-        sessionStorage.setItem("invoiceNo", newTotal);
+        let total = String(parseInt(res.number) + 1);
+        sessionStorage.setItem("invoiceNo", total);
       });
   }
   //get all invoices
- 
   getAllInvoices() {
+    let adminId = sessionStorage.getItem("adminId");
     this.http
       .get(
-        "http://localhost:8443/mainadmin/invoiceMainAdmin/getInvoices")
-      .subscribe((res:any) => {
-        console.log(res,"get invoce")
+        "http://localhost:8443/admin/invoices/adminGetInvoices" + "/" + adminId
+      )
+      .subscribe((res: any) => {
         this.invoices = res.data;
+
         this.rows = this.invoices;
         this.srch = [...this.rows];
       });
   }
 
-
   getcsvData(){
+    let adminId = sessionStorage.getItem("adminId");
     this.http
       .get(
-        "http://localhost:8443/mainadmin/invoiceMainAdmin/InvoicesCSV"
+        "http://localhost:8443/admin/invoices/InvoicesCSV" + "/" + adminId
       )
       .subscribe((res: any) => {
         this.csvData = res.data;
@@ -115,16 +114,16 @@ export class InvoicesComponent implements OnInit, OnDestroy {
       title: 'Invoice in csv',
       useBom: true,
       noDownload: false,
-      headers: [ "Payment Id","Order Id","Client","Email", "Invoice Date", "Due Date","Invoice Number","Total Amount","Invoice Type"]
+      headers: [ "Client","Email", "Invoice Date", "Due Date","Invoice Number","total Amount","Status"]
     };
    
     new ngxCsv(data, "Invoice",options);
   }
 
-  updateInvoiceType(val, id) {
+  updateStatus(val, id) {
     this.http
-      .patch("http://localhost:8443/mainadmin/invoiceMainAdmin/updateInvoices" + "/" + id, {
-        invoiceType: val,
+      .patch("http://localhost:8443/admin/invoices/updateInvoices" + "/" + id, {
+        status: val,
       })
       .subscribe((res: any) => {
         this.getAllInvoices();
@@ -140,11 +139,11 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   delete() {
     let id: any = this.id;
     this.http
-      .patch("http://localhost:8443/mainadmin/invoiceMainAdmin/deleteInvoices" + "/" + id, {
+      .patch("http://localhost:8443/admin/invoices/deleteInvoices" + "/" + id, {
         status: 2,
       })
       .subscribe((res) => {
-        this.router.navigate(["/layout/mainadmin/accounts/invoices"]);
+        this.router.navigate(["/layout/accounts/invoices"]);
         this.getAllInvoices();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
@@ -152,20 +151,6 @@ export class InvoicesComponent implements OnInit, OnDestroy {
       });
   }
 
-  searchName(val) {
-    if (val) {
-      this.rows.splice(0, this.rows.length);
-      let temp = this.srch.filter(function (d) {
-        val = val.toLowerCase();
-        return d.client.toLowerCase().indexOf(val) !== -1 || !val ||
-        d.email.toLowerCase().indexOf(val) !== -1 || !val
-       
-      });
-      this.rows.push(...temp);
-    } else {
-      this.getAllInvoices();
-    }
-  }
   //search by from date
   searchFromDate(val) {
     let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
@@ -202,11 +187,11 @@ export class InvoicesComponent implements OnInit, OnDestroy {
 
   //search by status
 
-  searchInvoiceType(val) {
+  searchStatus(val) {
     this.rows.splice(0, this.rows.length);
     let temp = this.srch.filter(function (d) {
       val = val.toLowerCase();
-      return d.invoiceType.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.status.toLowerCase().indexOf(val) !== -1 || !val;
     });
     this.rows.push(...temp);
   }
