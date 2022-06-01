@@ -29,12 +29,7 @@ export class InvoiceViewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.companyInvoiceLogo = `http://localhost:8443/${sessionStorage.getItem(
-      "cinvoice"
-    )}`;
-    this.path = this.companyInvoiceLogo;
     
-
     this.id = this.route.snapshot.queryParams["id"];
    
 
@@ -76,10 +71,10 @@ export class InvoiceViewComponent implements OnInit {
     let id = this.id;
     
     this.http
-      .get("http://localhost:8443/admin/invoices/getOneInvoices" + "/" + id)
+      .get("http://localhost:8443/mainadmin/invoiceMainAdmin/getOneInvoices" + "/" + id)
       .subscribe((res: any) => {
         this.invoices = res.data;
-        // this.dtTrigger.next();
+        console.log(res,"gettt")
 
         this.getdata = this.invoices.items;
         

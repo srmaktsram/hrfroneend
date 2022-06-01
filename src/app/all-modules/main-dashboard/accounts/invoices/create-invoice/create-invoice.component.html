@@ -24,23 +24,16 @@
           <div class="col-sm-6 col-md-3">
             <div class="form-group">
               <label>Client <span class="text-danger">*</span></label>
-              <select
-                class="form-select form-control"
+              <input
+                class="form-control"
+                type="client"
                 name="client"
                 [class.invalid]="
                   addInvoiceForm.get('client').invalid &&
                   addInvoiceForm.get('client').touched
                 "
                 formControlName="client"
-              >
-                <option>Please Select</option>
-                <option
-                  *ngFor="let newData of data"
-                  [value]="newData.firstName"
-                >
-                  {{ newData.firstName }}
-                </option>
-              </select>
+              />
               <div
                 *ngIf="
                   addInvoiceForm.get('client').invalid &&
@@ -93,7 +86,7 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-6 col-md-3">
+          <!-- <div class="col-sm-6 col-md-3">
             <div class="form-group">
               <label>Project <span class="text-danger">*</span></label>
               <select
@@ -127,7 +120,7 @@
                 >
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="col-sm-6 col-md-3">
             <div class="form-group">

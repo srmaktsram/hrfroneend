@@ -45,30 +45,11 @@ export class EditInvoiceComponent implements OnInit {
 
     this.id = this.route.snapshot.queryParams["id"];
     this.getInvoice();
-    this.getClients();
-    this.getProjects();
+   
     // this.getInvNo();
   }
-  getClients() {
-    this.http
-      .get(
-        "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
-      )
-      .subscribe((res: any) => {
-        this.data = res;
-      });
-  }
-  getProjects() {
-    this.http
-      .get(
-        "http://localhost:8443/admin/projects/getAdminproject" +
-          "/" +
-          this.adminId
-      )
-      .subscribe((data: any) => {
-        this.projects = data;
-      });
-  }
+ 
+  
   // getInvNo() {
   //   let id = this.id;
 
@@ -85,7 +66,6 @@ export class EditInvoiceComponent implements OnInit {
     this.editInvoiceForm = this.formBuilder.group({
       client: ["", [Validators.required]],
       number: ["", [Validators.required]],
-      project: ["", [Validators.required]],
       email: ["", [Validators.required]],
       tax: ["", [Validators.required]],
       client_address: ["", [Validators.required]],
@@ -110,7 +90,7 @@ export class EditInvoiceComponent implements OnInit {
     let id = this.id;
 
     this.http
-      .get("http://localhost:8443/admin/invoices/getOneInvoices" + "/" + id)
+      .get("http://localhost:8443/mainadmin/invoiceMainAdmin/getOneInvoices" + "/" + id)
       .subscribe((res: any) => {
         this.invoiceDetails = res.data;
         //passing edit id
@@ -194,7 +174,6 @@ export class EditInvoiceComponent implements OnInit {
       let obj = {
         client: this.editInvoiceForm.value.client,
         number: this.editInvoiceForm.value.number,
-        project: this.editInvoiceForm.value.project,
         invoice_date: this.estimateDateFormat,
         email: this.editInvoiceForm.value.email,
         tax: this.editInvoiceForm.value.tax,
@@ -202,20 +181,18 @@ export class EditInvoiceComponent implements OnInit {
         due_date: this.expiryToDateFormat,
         billing_address: this.editInvoiceForm.value.billing_address,
         other_information: this.editInvoiceForm.value.other_information,
-        // status: "Pending",
         totalamount: amount,
         discount: this.editInvoiceForm.value.discount,
         grandTotal: this.editInvoiceForm.value.grandTotal,
-        // id: this.id,
         items: getItems,
       };
       this.http
         .patch(
-          "http://localhost:8443/admin/invoices/updateInvoices" + "/" + this.id,
+          "http://localhost:8443/mainadmin/invoiceMainAdmin/updateInvoices" + "/" + this.id,
           obj
         )
         .subscribe((res) => {
-          this.router.navigate(["/layout/accounts/invoices"]);
+          this.router.navigate(["/layout/mainadmin/accounts/invoices"]);
           this.toastr.success("", "Edited successfully!");
         });
     }

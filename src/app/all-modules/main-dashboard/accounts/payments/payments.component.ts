@@ -33,17 +33,13 @@ export class PaymentsComponent implements OnInit, OnDestroy {
 
   // get payment API call
   getPayments() {
-    // console.log(this.adminId)
     this.http
       .get(
-        "http://localhost:8443/admin/payments/adminGetPayments" +
-          "/" +
-          this.adminId
+        "http://localhost:8443/mainadmin/paymentsMainAdmin/getPayments"
       )
       .subscribe((data: any) => {
         this.allPayments = data;
 
-        this.dtTrigger.next();
       });
   }
   // for unsubscribe datatable
