@@ -12,7 +12,7 @@ export class AuthenticationService {
     firstName: string,
     lastName: string,
     phone: string,
-    location: Object,
+    location: Object
   ) {
     sessionStorage.setItem("currentUser", "loggedin");
     sessionStorage.setItem("user_type", "employee");
@@ -40,7 +40,7 @@ export class AuthenticationService {
     sessionStorage.removeItem("lastName");
     sessionStorage.removeItem("phone");
   }
-  // public get loggedIn(): boolean {
-  //   return sessionStorage.getItem("currentUser") !== null;
-  // }
+  public get loggedIn(): boolean {
+    return sessionStorage.getItem("currentUser") !== null;
+  }
 }

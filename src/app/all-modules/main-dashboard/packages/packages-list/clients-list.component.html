@@ -59,11 +59,13 @@
                     <thead>
                         <tr>
                             <th>Srno</th>
-                            <th>Package Name</th>
-                            <th>Monthly Charges</th>
-                            <th>Yearly Charges</th>
-                            <th>Offer Monthly Charges</th>
-                            <th>Offer Yearly Charges</th>
+                            <th>Offer Name</th>
+                            <th>Offer Code</th>
+                            <th>Offer Value(%)</th>
+                            <th>Offer Valid From</th>
+                            <th>Offer Valid Till</th>
+                            <th>Modify Date</th>
+                            <th>Create Date</th>
                             <th>Status</th>
                             <th class="text-end">Action</th>
                         </tr>
@@ -72,11 +74,13 @@
                         <tr *ngFor="let package of data; let i = index">
                             
                             <td>{{i+1}}</td>
-                            <td>{{package.packageName}}</td>
-                            <td>{{package.monthlyPrice}}</td>
-                            <td>{{package.yearlyPrice}}</td>
-                            <td>{{package.offerMonthlyPrice}}</td>
-                            <td>{{package.offerYearlyPrice}}</td>
+                            <td>{{package.name}}</td>
+                            <td>{{package.code}}</td>
+                            <td>{{package.codeValue}}</td>
+                            <td>{{package.validFrom}}</td>
+                            <td>{{package.validTill}}</td>
+                            <td>{{package.createDate}}</td>
+                            <td>{{package.updateDate}}</td>
 
                             <!-- <td >
                                 <span *ngIf="package.status==0" class="text-danger">Inactive</span>
@@ -131,7 +135,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Package</h5>
+                <h5 class="modal-title">Add Offer</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -141,66 +145,126 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Package Name Status<span class="text-danger">*</span></label>
+                                <label class="col-form-label">Offer Name<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="addPackageForm.get('packageName').invalid && addPackageForm.get('packageName').touched"
-                                    formControlName="packageName">
+                                    [class.invalid]="addPackageForm.get('name').invalid && addPackageForm.get('name').touched"
+                                    formControlName="name">
                                 <div
-                                    *ngIf="addPackageForm.get('packageName').invalid && addPackageForm.get('packageName').touched">
+                                    *ngIf="addPackageForm.get('name').invalid && addPackageForm.get('name').touched">
                                     <small
-                                        *ngIf="addPackageForm.get('packageName').invalid && addPackageForm.get('packageName').touched"
-                                        class="text-danger"> *Name is required</small>
+                                        *ngIf="addPackageForm.get('name').invalid && addPackageForm.get('name').touched"
+                                        class="text-danger"> *Offer Name is required</small>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Monthly Charges <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Offer Code <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="addPackageForm.get('monthlyPrice').invalid && addPackageForm.get('monthlyPrice').touched"
-                                    formControlName="monthlyPrice">
+                                    [class.invalid]="addPackageForm.get('code').invalid && addPackageForm.get('code').touched"
+                                    formControlName="code">
                                 <div
-                                    *ngIf="addPackageForm.get('monthlyPrice').invalid && addPackageForm.get('monthlyPrice').touched">
+                                    *ngIf="addPackageForm.get('code').invalid && addPackageForm.get('code').touched">
                                     <small
-                                        *ngIf="addPackageForm.get('monthlyPrice').invalid && addPackageForm.get('monthlyPrice').touched"
-                                        class="text-danger"> *Monthly Charges is required</small>
+                                        *ngIf="addPackageForm.get('code').invalid && addPackageForm.get('code').touched"
+                                        class="text-danger"> *Offer Code is required</small>
                                 </div>
                             </div>
                         </div>
                        
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Yearly Charges <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Offer Value (%) <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="addPackageForm.get('yearlyPrice').invalid && addPackageForm.get('yearlyPrice').touched"
-                                    formControlName="yearlyPrice">
+                                    [class.invalid]="addPackageForm.get('codeValue').invalid && addPackageForm.get('codeValue').touched"
+                                    formControlName="codeValue">
                                 <div
-                                    *ngIf="addPackageForm.get('yearlyPrice').invalid && addPackageForm.get('yearlyPrice').touched">
+                                    *ngIf="addPackageForm.get('codeValue').invalid && addPackageForm.get('codeValue').touched">
                                     <small
-                                        *ngIf="addPackageForm.get('yearlyPrice').invalid && addPackageForm.get('yearlyPrice').touched"
-                                        class="text-danger"> *Yearly Charges is required</small>
+                                        *ngIf="addPackageForm.get('codeValue').invalid && addPackageForm.get('codeValue').touched"
+                                        class="text-danger"> *Offer Value is required</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Offer Monthly Chages </label>
-                                <input class="form-control" type="text"
-                                    formControlName="offerMonthlyPrice">
-                                
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Offer Year Chages</label>
-                                <input class="form-control" type="text"
+                                <label class="col-form-label">Valid From<span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                  <input
+                                    class="form-control datetimepicker"
+                                    type="text"
+                                    bsDatepicker
+                                    type="text"
+                                    [bsConfig]="{
+                                      dateInputFormat: 'DD-MM-YYYY',
+                                      returnFocusToInput: true
+                                    }"
+                                    [class.invalid]="
+                                      addPackageForm.get('validFrom').invalid &&
+                                      addPackageForm.get('validFrom').touched
+                                    "
+                                    formControlName="validFrom"
+                                   
+                                  />
+                                  <div
+                                    *ngIf="
+                                      addPackageForm.get('validFrom').invalid &&
+                                      addPackageForm.get('validFrom').touched
+                                    "
+                                  >
+                                    <small
+                                      *ngIf="
+                                        addPackageForm.get('validFrom').invalid &&
+                                        addPackageForm.get('validFrom').touched
+                                      "
+                                      class="text-danger"
+                                    >
+                                      *ValidFrom is required</small
+                                    >
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="col-form-label">Valid Till<span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                  <input
+                                    class="form-control datetimepicker"
+                                    type="text"
+                                    bsDatepicker
+                                    type="text"
+                                    [bsConfig]="{
+                                      dateInputFormat: 'DD-MM-YYYY',
+                                      returnFocusToInput: true
+                                    }"
+                                    [class.invalid]="
+                                      addPackageForm.get('validTill').invalid &&
+                                      addPackageForm.get('validTill').touched
+                                    "
+                                    formControlName="validTill"
                                     
-                                    formControlName="offerYearlyPrice">
-                                
+                                  />
+                                  <div
+                                    *ngIf="
+                                      addPackageForm.get('validTill').invalid &&
+                                      addPackageForm.get('validTill').touched
+                                    "
+                                  >
+                                    <small
+                                      *ngIf="
+                                        addPackageForm.get('validTill').invalid &&
+                                        addPackageForm.get('validTill').touched
+                                      "
+                                      class="text-danger"
+                                    >
+                                      *ValidTill is required</small
+                                    >
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                        </div>
-                        
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">Offer Status</label>
@@ -208,8 +272,8 @@
                                     [class.invalid]="addPackageForm.get('status').invalid && addPackageForm.get('status').touched"
                                     formControlName="status">
                                 <select></select>
-                                <option value="1">Show</option>
-                                <option value="0">Hide</option>
+                                <option value="1" class="text-success">Active</option>
+                                <option value="0" class="text-danger">Inactive</option>
                                 </select>
                                     <div
                                     *ngIf="addPackageForm.get('status').invalid && addPackageForm.get('status').touched">
@@ -246,65 +310,126 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Package Name <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Offer Name<span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editPackageForm.get('editpackageName').invalid && editPackageForm.get('editpackageName').touched"
-                                    formControlName="editpackageName">
+                                    [class.invalid]="editPackageForm.get('editname').invalid && editPackageForm.get('editname').touched"
+                                    formControlName="editname">
                                 <div
-                                    *ngIf="editPackageForm.get('editpackageName').invalid && editPackageForm.get('editpackageName').touched">
+                                    *ngIf="editPackageForm.get('editname').invalid && editPackageForm.get('editname').touched">
                                     <small
-                                        *ngIf="editPackageForm.get('editpackageName').invalid && editPackageForm.get('editpackageName').touched"
-                                        class="text-danger"> *Name is required</small>
+                                        *ngIf="editPackageForm.get('editname').invalid && editPackageForm.get('editname').touched"
+                                        class="text-danger"> *Offer Name is required</small>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Monthly Charges <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Offer Code <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editPackageForm.get('editmonthlyPrice').invalid && editPackageForm.get('editmonthlyPrice').touched"
-                                    formControlName="editmonthlyPrice">
+                                    [class.invalid]="editPackageForm.get('editcode').invalid && editPackageForm.get('editcode').touched"
+                                    formControlName="editcode">
                                 <div
-                                    *ngIf="editPackageForm.get('editmonthlyPrice').invalid && editPackageForm.get('editmonthlyPrice').touched">
+                                    *ngIf="editPackageForm.get('editcode').invalid && editPackageForm.get('editcode').touched">
                                     <small
-                                        *ngIf="editPackageForm.get('editmonthlyPrice').invalid && editPackageForm.get('editmonthlyPrice').touched"
-                                        class="text-danger"> *Monthly Charges is required</small>
+                                        *ngIf="editPackageForm.get('editcode').invalid && editPackageForm.get('editcode').touched"
+                                        class="text-danger"> *Offer Code is required</small>
                                 </div>
                             </div>
                         </div>
                        
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Yearly Charges <span class="text-danger">*</span></label>
+                                <label class="col-form-label">Offer Value (%) <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text"
-                                    [class.invalid]="editPackageForm.get('edityearlyPrice').invalid && editPackageForm.get('edityearlyPrice').touched"
-                                    formControlName="edityearlyPrice">
+                                    [class.invalid]="editPackageForm.get('editcodeValue').invalid && editPackageForm.get('editcodeValue').touched"
+                                    formControlName="editcodeValue">
                                 <div
-                                    *ngIf="editPackageForm.get('edityearlyPrice').invalid && editPackageForm.get('edityearlyPrice').touched">
+                                    *ngIf="editPackageForm.get('editcodeValue').invalid && editPackageForm.get('editcodeValue').touched">
                                     <small
-                                        *ngIf="editPackageForm.get('edityearlyPrice').invalid && editPackageForm.get('edityearlyPrice').touched"
-                                        class="text-danger"> *Yearly Charges is required</small>
+                                        *ngIf="editPackageForm.get('editcodeValue').invalid && editPackageForm.get('editcodeValue').touched"
+                                        class="text-danger"> *Offer Value is required</small>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="col-form-label">Offer Monthly Chages </label>
-                                <input class="form-control" type="text"
-                                    
-                                    formControlName="editofferMonthlyPrice">
-                                
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-form-label">Offer Yearly Charges</label>
-                                <input class="form-control" type="text"
-                                    formControlName="editofferYearlyPrice">
+                                <label class="col-form-label">Valid From<span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                  <input
+                                    class="form-control datetimepicker"
+                                    type="text"
+                                    bsDatepicker
+                                    type="text"
+                                    [bsConfig]="{
+                                      dateInputFormat: 'DD-MM-YYYY',
+                                      returnFocusToInput: true
+                                    }"
+                                    [class.invalid]="
+                                      editPackageForm.get('editvalidFrom').invalid &&
+                                      editPackageForm.get('editvalidFrom').touched
+                                    "
+                                    formControlName="editvalidFrom"
                                    
+                                  />
+                                  <div
+                                    *ngIf="
+                                      editPackageForm.get('editvalidFrom').invalid &&
+                                      editPackageForm.get('editvalidFrom').touched
+                                    "
+                                  >
+                                    <small
+                                      *ngIf="
+                                        editPackageForm.get('editvalidFrom').invalid &&
+                                        editPackageForm.get('editvalidFrom').touched
+                                      "
+                                      class="text-danger"
+                                    >
+                                      *ValidFrom is required</small
+                                    >
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              <div class="col-md-6">
+                              <div class="form-group">
+                                <label class="col-form-label">Valid Till<span class="text-danger">*</span></label>
+                                <div class="cal-icon">
+                                  <input
+                                    class="form-control datetimepicker"
+                                    type="text"
+                                    bsDatepicker
+                                    type="text"
+                                    [bsConfig]="{
+                                      dateInputFormat: 'DD-MM-YYYY',
+                                      returnFocusToInput: true
+                                    }"
+                                    [class.invalid]="
+                                      editPackageForm.get('editvalidTill').invalid &&
+                                      editPackageForm.get('editvalidTill').touched
+                                    "
+                                    formControlName="editvalidTill"
+                                    
+                                  />
+                                  <div
+                                    *ngIf="
+                                      editPackageForm.get('editvalidTill').invalid &&
+                                      editPackageForm.get('editvalidTill').touched
+                                    "
+                                  >
+                                    <small
+                                      *ngIf="
+                                        editPackageForm.get('editvalidTill').invalid &&
+                                        editPackageForm.get('editvalidTill').touched
+                                      "
+                                      class="text-danger"
+                                    >
+                                      *ValidTill is required</small
+                                    >
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                        </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="col-form-label">Offer Status</label>
@@ -312,8 +437,8 @@
                                     [class.invalid]="editPackageForm.get('editstatus').invalid && editPackageForm.get('editstatus').touched"
                                     formControlName="editstatus">
                                 <select></select>
-                                <option value="1" class="text-success bold">Active</option>
-                                <option value="0" class="text-danger bold">Inactive</option>
+                                <option value="1" class="text-success">Active</option>
+                                <option value="0" class="text-danger">Inactive</option>
                                 </select>
                                     <div
                                     *ngIf="editPackageForm.get('editstatus').invalid && editPackageForm.get('editstatus').touched">
@@ -323,7 +448,6 @@
                                 </div>
                             </div>
                         </div>
-                    
                     </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn" (click)="onSave()">Submit</button>

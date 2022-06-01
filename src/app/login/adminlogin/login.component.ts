@@ -39,7 +39,7 @@ export class AdminLoginComponent implements OnInit {
     let password = this.form.value.password;
     alert(username);
     this.http
-      .post("http://localhost:8443/mainadmin/login/login", {
+      .post("http://localhost:8443/auth/mainadminlogin/login", {
         username,
         password,
       })
@@ -47,13 +47,11 @@ export class AdminLoginComponent implements OnInit {
         console.log(res);
         if (res.result == 2) {
           this.router.navigate(["/layout/dashboard/admin"]);
-          // location.replace("http://localhost:51245/layout/dashboard/admin");
+
           this.adminAuthenticationService.login();
         } else {
           alert("wrong Id or pass");
         }
-
-        // location.replace("http://localhost:4200/layout/dashboard/admin");
       });
   }
 

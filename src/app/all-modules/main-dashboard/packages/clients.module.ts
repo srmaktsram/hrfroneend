@@ -6,6 +6,7 @@ import { DataTablesModule } from "angular-datatables";
 import { ClientsComponent } from "./clients.component";
 import { ClientsListComponent } from "./packages-list/clients-list.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 
 @NgModule({
   declarations: [ClientsComponent, ClientsListComponent],
@@ -15,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
+    BsDatepickerModule.forRoot(),
   ],
 })
 export class PackagesModule {}

@@ -38,6 +38,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   searchName: any;
   public employeeId: any;
   searchCompany: any;
+  editFromDate: string;
+  editTillDate: string;
 
   constructor(
     // private allModulesService: AllModulesService,
@@ -60,21 +62,21 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
     //Add clients form
     this.addPackageForm = this.formBuilder.group({
-      packageName: ["", [Validators.required]],
-      monthlyPrice: ["", [Validators.required]],
-      yearlyPrice: ["", [Validators.required]],
-      offerMonthlyPrice: [""],
-      offerYearlyPrice: [""],
+      name: ["", [Validators.required]],
+      code: ["", [Validators.required]],
+      codeValue: ["", [Validators.required]],
+      validFrom: ["", [Validators.required]],
+      validTill: ["", [Validators.required]],
       status: ["", [Validators.required]],
     });
 
     //Edit Clients Form
     this.editPackageForm = this.formBuilder.group({
-      editpackageName: ["", [Validators.required]],
-      editmonthlyPrice: ["", [Validators.required]],
-      edityearlyPrice: ["", [Validators.required]],
-      editofferMonthlyPrice: [""],
-      editofferYearlyPrice: [""],
+      editname: ["", [Validators.required]],
+      editcode: ["", [Validators.required]],
+      editcodeValue: ["", [Validators.required]],
+      editvalidFrom: ["", [Validators.required]],
+      editvalidTill: ["", [Validators.required]],
       editstatus: ["", [Validators.required]],
     });
   }
@@ -88,7 +90,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   //Get all Clients data
   public getPackages() {
     this.http
-      .get("http://localhost:8443/mainadmin/pricing/getPackages")
+      .get("http://localhost:8443/mainadmin/promocode/getPackages")
       .subscribe((res: any[]) => {
         this.data = res;
         this.filtereddata = res;
@@ -97,17 +99,27 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       });
   }
 
+  //reset form
+
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
   // Edit client
   public onEditClient(id: any) {
     this.editId = id;
     let pkg = this.data.filter((item) => item.id == id);
     console.log("edit recards kkkk", pkg);
     this.editPackageForm.patchValue({
-      editpackageName: pkg[0]?.packageName,
-      editmonthlyPrice: pkg[0]?.monthlyPrice,
-      edityearlyPrice: pkg[0]?.yearlyPrice,
-      editofferMonthlyPrice: pkg[0]?.offerMonthlyPrice,
-      editofferYearlyPrice: pkg[0]?.offerYearlyPrice,
+      editname: pkg[0]?.name,
+      editcode: pkg[0]?.code,
+      editcodeValue: pkg[0]?.codeValue,
+      editvalidFrom: pkg[0]?.validFrom,
+      editvalidTill: pkg[0]?.validTill,
       editstatus: pkg[0]?.status,
     });
   }
@@ -118,18 +130,30 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
   // Save Client
   public onSave() {
+    if (this.editPackageForm.invalid) {
+      this.markFormGroupTouched(this.editPackageForm);
+      return;
+    }
+    let editFromDate = this.pipe.transform(
+      this.addPackageForm.value.validFrom,
+      "dd-MM-yyyy"
+    );
+    let editTillDate = this.pipe.transform(
+      this.addPackageForm.value.validTill,
+      "dd-MM-yyyy"
+    );
     let obj = {
-      packageName: this.addPackageForm.value.editpackageName,
-      monthlyPrice: this.addPackageForm.value.editmonthlyPrice,
-      yearlyPrice: this.addPackageForm.value.edityearlyPrice,
-      offerMonthlyPrice: this.addPackageForm.value.editofferMonthlyPrice,
-      offerYearlyPrice: this.addPackageForm.value.editofferYearlyPrice,
-      status: this.addPackageForm.value.editstatus,
+      editname: this.editPackageForm.value.editname,
+      editcode: this.editPackageForm.value.editcode,
+      editcodeValue: this.editPackageForm.value.editcodeValue,
+      editvalidFrom: editFromDate,
+      editvalidTill: editTillDate,
+      status: this.editPackageForm.value.editstatus,
     };
     let id = this.editId;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/pricing/updatePackage" + "/" + id,
+        "http://localhost:8443/mainadmin/promocode/updatePackage" + "/" + id,
         obj
       )
       .subscribe((data) => {
@@ -143,17 +167,29 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
   //Add new client
   public onAddPackage() {
+    if (this.addPackageForm.invalid) {
+      this.markFormGroupTouched(this.addPackageForm);
+      return;
+    }
+    let editFromDate = this.pipe.transform(
+      this.addPackageForm.value.validFrom,
+      "dd-MM-yyyy"
+    );
+    let editTillDate = this.pipe.transform(
+      this.addPackageForm.value.validTill,
+      "dd-MM-yyyy"
+    );
     let obj = {
-      packageName: this.addPackageForm.value.packageName,
-      monthlyPrice: this.addPackageForm.value.monthlyPrice,
-      yearlyPrice: this.addPackageForm.value.yearlyPrice,
-      offerMonthlyPrice: this.addPackageForm.value.offerMonthlyPrice,
-      offerYearlyPrice: this.addPackageForm.value.offerYearlyPrice,
+      name: this.addPackageForm.value.name,
+      code: this.addPackageForm.value.code,
+      codeValue: this.addPackageForm.value.codeValue,
+      validFrom: editFromDate,
+      validTill: editTillDate,
       status: this.addPackageForm.value.status,
     };
     //console.log("mydata>>>>>>>>", newClient);
     this.http
-      .post("http://localhost:8443/mainadmin/pricing/createPackage", obj)
+      .post("http://localhost:8443/mainadmin/promocode/createPackage", obj)
       .subscribe((data) => {
         //console.log("postApi", data);
         this.getPackages();
@@ -161,7 +197,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
     $("#add_client").modal("hide");
     this.addPackageForm.reset();
-    this.toastr.success("Client added sucessfully...!", "Success");
+    this.toastr.success("Offer Added sucessfully...!", "Success");
   }
 
   //Delete Client
@@ -170,7 +206,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     let id = this.tempId;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/pricing/deletePackage" + "/" + id,
+        "http://localhost:8443/mainadmin/promocode/deletePackage" + "/" + id,
         {}
       )
       .subscribe((data: any) => {
@@ -178,7 +214,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       });
 
     $("#delete_client").modal("hide");
-    this.toastr.success("Client deleted sucessfully...!", "Success");
+    this.toastr.success("Offer deleted sucessfully...!", "Success");
   }
 
   //search by name
@@ -186,7 +222,14 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     if (val) {
       this.data.splice(0, this.filtereddata.length);
       let temp = this.srch.filter(function (d) {
-        return d.packageName.indexOf(val) !== -1 || !val;
+        val = val.toLowerCase();
+
+        return (
+          d.name.toLowerCase().indexOf(val) !== -1 ||
+          !val ||
+          d.code.toLowerCase().indexOf(val) !== -1 ||
+          !val
+        );
       });
 
       this.data.push(...temp);
@@ -194,50 +237,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       this.getPackages();
     }
   }
+  //date
 
-  //search by name
-  // searchByName(val) {
-  //   if (val) {
-  //     this.data.splice(0, this.data.length);
-  //     let temp = this.srch.filter(function (d) {
-  //       val = val.toLowerCase();
-  //       return d.name.toLowerCase().indexOf(val) !== -1 || !val;
-  //     });
-  //     this.data.push(...temp);
-  //   } else {
-  //     this.getPackages();
-  //   }
-  // }
-
-  //search by company
-
-  // onSearch(id, name, company) {
-  //   this.filtereddata = [];
-  //   this.searchId = id;
-  //   this.searchName = name;
-  //   this.searchCompany = company;
-  //   this.clientsData = this.data;
-  //   if (this.searchId) {
-  //     this.filtereddata = this.clientsData.filter((data) =>
-  //       data.clientId.toLowerCase().includes(this.searchId.toLowerCase())
-  //     );
-  //     if (this.searchName) {
-  //       let nameFilter = this.filtereddata.filter((data) =>
-  //         data.firstName.toLowerCase().includes(this.searchName.toLowerCase())
-  //       );
-  //       if (nameFilter.length != 0) {
-  //         this.filtereddata = nameFilter;
-  //       }
-  //     }
-  //   }
-
-  //   if (this.searchId || this.searchCompany || this.searchName) {
-  //     this.clientsData =
-  //       this.filtereddata.length != 0 ? this.filtereddata : this.clientsData;
-  //   } else {
-  //     this.clientsData = [];
-  //   }
-  // }
   //getting the status value
   getStatus(val, id) {
     let obj = {
@@ -245,7 +246,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     };
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/pricing/UpdateStatus" + "/" + id,
+        "http://localhost:8443/mainadmin/promocode/UpdateStatus" + "/" + id,
         obj
       )
       .subscribe((data: any) => {

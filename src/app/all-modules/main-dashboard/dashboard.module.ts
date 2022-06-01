@@ -5,14 +5,9 @@ import { DashboardRoutingModule } from "./dashboard-routing.module";
 import { DashboardComponent } from "./dashboard.component";
 import { AdminDashboardComponent } from "./admin-dashboard/admin-dashboard.component";
 import { MorrisJsModule } from "angular-morris-js";
-import { LeavesEmployeeComponent } from "../employees/leaves-employee/leaves-employee.component";
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-    AdminDashboardComponent,
-    LeavesEmployeeComponent,
-  ],
+  declarations: [DashboardComponent, AdminDashboardComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,

@@ -205,20 +205,18 @@ export class LeavesEmployeeComponent implements OnInit {
           let author = document.employeeName;
           let functions = document.leaveType;
           let time = document.createDate;
-            if (this.leaves == true) {
-
-              this.http
-                .post(
-                  "http://localhost:8443/admin/allNotification/createNotification" +
-                    "/" +
-                    this.adminId,
-                  { message, author, functions, time }
-                )
-                .subscribe((data: any) => {
-                  this.loadLeaves();
-                });
-            }
-          
+          if (this.leaves == true) {
+            this.http
+              .post(
+                "http://localhost:8443/admin/allNotification/createNotification" +
+                  "/" +
+                  this.adminId,
+                { message, author, functions, time }
+              )
+              .subscribe((data: any) => {
+                this.loadLeaves();
+              });
+          }
         });
 
       // this.loadLeaves();

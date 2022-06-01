@@ -86,7 +86,7 @@
         </div>
         <!-- <div class="noti-content d-flex align-items-center justify-content-center"> -->
         <div class="noti-content">
-          <center><p *ngIf="lengthCount < 1">No notifications</p></center>
+          <p *ngIf="lengthCount < 1">No notifications</p>
           <ul class="notification-list" *ngFor="let item of dataArray; let i = index">
             <ng-container *ngIf="item.message == 'added a new employee '">
               <li class="notification-message" routerLink="/layout/employees/employeelist">
@@ -225,7 +225,7 @@
         <div class="topnav-dropdown-header">
           <span class="notification-title">Messages</span>
           <a
-            (click)="clearData('message')"
+            (click)="clearData()"
             href="javascript:"
             class="clear-noti"
           >
