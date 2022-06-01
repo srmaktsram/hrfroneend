@@ -6,6 +6,7 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import { id } from "src/assets/all-modules-data/id";
 
 declare const $: any;
 @Component({
@@ -13,7 +14,7 @@ declare const $: any;
   templateUrl: "./clients-list.component.html",
   styleUrls: ["./clients-list.component.css"],
 })
-export class PremiumClientsListComponent implements OnInit, OnDestroy {
+export class DemoClientsListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -50,19 +51,17 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
-
-    
   }
 
   ngOnInit() {
-    this.getPremiumAdmins();
+    this.getDemoAdmins();
 
     this.dtOptions = {
+      // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
 
-   
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
       editClientCompany: ["", [Validators.required]],
@@ -70,10 +69,8 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       editClientEmail: ["", [Validators.required]],
       editClientPhone: ["", [Validators.required]],
       editCompanyEmail: ["", [Validators.required]],
-
     });
   }
-
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -81,21 +78,16 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  public getPremiumAdmins() {
+  //Get all Clients data
+  public getDemoAdmins() {
     this.http
-      .get(
-        "http://localhost:8443/mainadmin/premiumClient/getPremiumClients"
-      )
+      .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
       .subscribe((res: any) => {
-
         this.data = res;
+        console.log(this.data, "tttttttttttttttttttttttttt");
         this.srch = [...this.data];
-
-
-      
       });
   }
-  
 
   // Edit client
   public onEditClient(clientId: any) {
@@ -107,8 +99,6 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       editClientEmail: client[0]?.email,
       editClientPhone: client[0]?.mobile,
       editCompanyEmail: client[0]?.companyEmail,
-
-
     });
   }
   //Reset form
@@ -124,13 +114,17 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       email: this.editClientForm.value.editClientEmail,
       mobile: this.editClientForm.value.editClientPhone,
       companyEmail: this.editClientForm.value.editCompanyEmail,
-
     };
     let id = this.editId;
     this.http
-      .patch("http://localhost:8443/mainadmin/premiumClient/updatePremiumClient" + "/" + id, obj)
+      .patch(
+        "http://localhost:8443/mainadmin/freeClient/updateFreeClient" +
+          "/" +
+          id,
+        obj
+      )
       .subscribe((data) => {
-        this.getPremiumAdmins();
+        this.getDemoAdmins();
       });
 
     $("#edit_client").modal("hide");
@@ -138,24 +132,39 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
     this.toastr.success("Client updated sucessfully...!", "Success");
   }
 
+  //////////////
   getStatus(data, id) {
     const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/demoClient/updatedemoClientStatus" + "/" + id,
+        "http://localhost:8443/mainadmin/freeClient/updateFreeClientStatus" +
+          "/" +
+          id,
         { status }
       )
       .subscribe((res) => {
-        this.getPremiumAdmins();
-
-       
+        this.getDemoAdmins();
       });
-  } 
+  }
+
+  //search by name
+  // searchID(val) {
+  //   if (val) {
+  //     this.data.splice(0, this.data.length);
+  //     let temp = this.srch.filter(function (d) {
+  //       val = val.toLowerCase();
+  //       return d.clientId.toLowerCase().indexOf(val) !== -1 || !val;
+  //     });
+  //     this.data.push(...temp);
+  //   } else {
+  //     // this.getClients();
+  //   }
+  // }
 
   //search by name
   searchByName(val) {
     if (val) {
-      this.data.splice(0, this.data.length);
+      this.srch.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return (
@@ -164,14 +173,14 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
           d.email.toLowerCase().indexOf(val) !== -1 ||
           !val ||
           d.mobile.toLowerCase().indexOf(val) !== -1 ||
-          !val
-          ||
+          !val ||
           d.companyEmail.toLowerCase().indexOf(val) !== -1 ||
           !val
-        );})
+        );
+      });
       this.data.push(...temp);
     } else {
-      this.getPremiumAdmins();
+      this.getDemoAdmins();
     }
   }
 
@@ -185,8 +194,7 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       });
       this.srch.push(...temp);
     } else {
-      this.getPremiumAdmins();
-
+      this.getDemoAdmins();
     }
   }
   onSearch(name, company) {
@@ -210,9 +218,6 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       this.clientsData = [];
     }
   }
- 
-
-  
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();

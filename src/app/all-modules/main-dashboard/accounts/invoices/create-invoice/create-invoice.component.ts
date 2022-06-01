@@ -44,10 +44,30 @@ export class CreateInvoiceComponent implements OnInit {
     private toastr: ToastrService,
     private formBuilder: FormBuilder
   ) {
+    this.getClients();
+    this.getProjects();
     this.invoiceNo = sessionStorage.getItem("invoiceNo");
   }
-  
-  
+  getClients() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
+      )
+      .subscribe((res: any) => {
+        this.data = res;
+      });
+  }
+  getProjects() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/projects/getAdminproject" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.projects = data;
+      });
+  }
 
   ngOnInit() {
     //get id value of invoice list
@@ -56,6 +76,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.addInvoiceForm = this.formBuilder.group({
       client: ["", [Validators.required]],
       number: [this.invoiceNo, [Validators.required]],
+      project: ["", [Validators.required]],
       email: ["", [Validators.required]],
       tax: ["", [Validators.required]],
       client_address: ["", [Validators.required]],
@@ -63,7 +84,7 @@ export class CreateInvoiceComponent implements OnInit {
       invoice_date: ["", [Validators.required]],
       due_date: ["", [Validators.required]],
       other_information: ["", [Validators.required]],
-      invoiceType: [""],
+      status: [""],
       totalamount: ["", [Validators.required]],
       discount: ["", [Validators.required]],
       grandTotal: [""],
@@ -95,9 +116,11 @@ export class CreateInvoiceComponent implements OnInit {
 
   // getting invoice
   getAllInvoices() {
+    let adminId = sessionStorage.getItem("adminId");
     this.http
       .get(
-        "http://localhost:8443/mainadmin/invoiceMainAdmin/getInvoices")
+        "http://localhost:8443/admin/invoices/adminGetInvoices" + "/" + adminId
+      )
       .subscribe((res) => {
         this.invoices = res;
       });
@@ -172,8 +195,11 @@ export class CreateInvoiceComponent implements OnInit {
       let amount = this.addInvoiceForm.value.totalamount.toString();
 
       let obj = {
+        adminId: adminId,
+        // employeeid:employeeid,
         client: this.addInvoiceForm.value.client,
         number: this.addInvoiceForm.value.number,
+        project: this.addInvoiceForm.value.project,
         invoice_date: invoiceDateFormat,
         email: this.addInvoiceForm.value.email,
         tax: this.addInvoiceForm.value.tax,
@@ -181,27 +207,24 @@ export class CreateInvoiceComponent implements OnInit {
         due_date: dueDateFormat,
         billing_address: this.addInvoiceForm.value.billing_address,
         other_information: this.addInvoiceForm.value.other_information,
-        invoiceType: "Paid",
+        status: "Pending",
         totalamount: amount,
         discount: this.addInvoiceForm.value.discount,
         grandTotal: this.addInvoiceForm.value.grandTotal,
         items: getItems,
       };
       this.http
-        .post("http://localhost:8443/mainadmin/invoiceMainAdmin/createInvoices", obj)
+        .post("http://localhost:8443/admin/invoices/createInvoices", obj)
         .subscribe((res: any) => {
-
           if (res.result == 0) {
             this.show = true;
             this.buttondisable = false;
             this.invErrorMsg = "Already exist !";
           } else if (res.result == 1) {
             this.buttondisable = false;
+
             this.toastr.success("", "Added successfully!");
-            this.router.navigate(["/layout/mainadmin/accounts/invoices"]);
-
-
-            
+            this.router.navigate(["/layout/accounts/invoices"]);
           }
         });
     }

@@ -39,7 +39,7 @@ export class AdminLoginComponent implements OnInit {
     let password = this.form.value.password;
     alert(username);
     this.http
-      .post("http://localhost:8443/mainadmin/login/login", {
+      .post("http://localhost:8443/auth/mainadminlogin/login", {
         username,
         password,
       })

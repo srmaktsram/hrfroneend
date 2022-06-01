@@ -4,19 +4,19 @@ import { ClientsRoutingModule } from "./clients-routing.module";
 import { DataTablesModule } from "angular-datatables";
 
 import { ClientsComponent } from "./clients.component";
-import { ClientsListComponent } from "./packages-list/clients-list.component";
+// import { ClientsContentPageComponent } from "./clients-content-page/clients-content-page.component";
+// import { ClientsListComponent } from "./clients-list/clients-list.component";
+import { ClientsProfileComponent } from "./clients-profile/clients-profile.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 
 @NgModule({
-  declarations: [ClientsComponent, ClientsListComponent],
+  declarations: [ClientsComponent, ClientsProfileComponent],
   imports: [
     CommonModule,
     ClientsRoutingModule,
     DataTablesModule,
     FormsModule,
     ReactiveFormsModule,
-    BsDatepickerModule.forRoot(),
   ],
 })
-export class PackagesModule {}
+export class ClientsDashboardModule {}

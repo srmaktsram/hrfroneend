@@ -23,25 +23,19 @@
                         <tr>
                             <th>Invoice ID</th>
                             <th>Client</th>
-                            <th>Payment Id</th>
-                            <th>Order Id</th>
                             <th>Payment Type</th>
                             <th>Paid Date</th>
-                            <th>Refund/Paid</th>
                             <th>Paid Amount</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let payments of allPayments;let i = index">
-                            <td><a routerLink="/layout/accounts/invoice-view">{{payments.number}}</a></td>
+                            <td><a routerLink="/layout/accounts/invoice-view">{{payments.invoiceNumber}}</a></td>
                             <td>
                                 <h2><a>{{payments.client}}</a></h2>
                             </td>
-                            <td>{{payments.paymentId}}</td>
-                            <td>{{payments.orderId}}</td>
-                            <td>{{payments.paymentType}}</td>
-                            <td>{{payments.createDate | customDate}}</td>
-                            <td>{{payments.updateDate | customDate}}</td>
+                            <td>{{payments.paymenttype}}</td>
+                            <td>{{payments.paidDate}}</td>
                             <td>{{payments.grandTotal}}</td>
                         </tr>
                         <tr *ngIf="allPayments.length === 0">
