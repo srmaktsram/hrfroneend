@@ -1,7 +1,11 @@
 /* .headerCom{
-	border:2px solid blue;
+	position: fixed;
+	top:0%;
 	width:100%;
 } */
+.fixedHeader{
+	margin-top: 80px;
+}
 .button{
 	border:15px solid orange;
 	background-color: orange;
@@ -448,70 +452,6 @@ padding-left: 20px;
 
 
 
-
-/* .FooterMainDiv{
-	display:flex;
-	justify-content: space-between;
-	margin-top: 50px;
-}
-
-
-.getInTouchDiv{
-	padding-left: 70px;
-
-}
-
-.getInTouch{
-	color:orangered
-
-}
-
-.paragraph{
-	font-size:22px;
-}
-
-.TrandingFooter{
-	padding-right: 70px;
-}
-
-.whatsAppIcon{
- width:30px
-}
-.whatsApp{
-	font-size: 20px;
-	margin-left: 20px;
-	color:green;
-
-}
-.whatsAppDiv{
-	margin-top: 20px;
-	border:8px solid rgb(166, 251, 227);;
-	text-align: center;
-	background-color: rgb(166, 251, 227);
-	border-radius: 10px;
-	cursor: pointer;
-}
-.followus{
-	margin-top: 20px;
-
-}
-.matfooter{
-	margin-top: 30px;
-	width:53px;
-	border-radius: 50%;
-	cursor: pointer;
-	text-align: center;
-
-}
-.flexYoutubeIcons{
-	display:flex;
-	justify-content:space-between;
-}
-
-.manyButtons{
-  margin-top: 40px;
-
-} */
 
 /* /////////////////////////////////////////MIDIA QUERY START FROM HERE ///////////////////////////////////////*/
 

@@ -1,36 +1,4 @@
-<app-header></app-header>
-
-
-<!-- <div class="miniHeader">
-    <h3 style="color:white">Welcome to Hr Management System</h3>
-
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12 mainDiv">
-            <h4 style="color: white;">User Account Information</h4>
-        </div>
-        <div class="col-md-12 childDiv">
-            <form class="formCheckout">
-                <label>Total Employee :-</label>
-                <input type="text" id="lname" name="lname" disabled placeholder="Employee" class="inputEmp"><br><br>
-
-                <label>Payable Amount :-</label>
-                <input type="text" id="lname" name="lname" disabled placeholder="Employee" class="inputEmp"><br><br>
-
-
-                <label>Corporate ID :- :-</label>
-                <input class="form-control" type="text" id="lname" name="lname" placeholder="Corporate id"
-                    class="inputEmp">
-            </form>
-
-
-
-        </div>
-    </div>
-</div> -->
-
+<app-header class="headerCom"></app-header>
 
 
 <div class="row">
@@ -38,17 +6,15 @@
         <div class="card">
             <div class="card-header bg-primary text-center text-white"
                 style="font-size: large; font-weight: 600; background-color: #337ab7">
-
-                <span id="ContentPlaceHolder1_asd_lbl">Welcome e-Timeoffice Softech Pvt. Ltd. Please Enter Your Payment
-                    Information</span>
+                <span id="ContentPlaceHolder1_asd_lbl">Welcome To Employee Management System </span>
             </div>
         </div>
     </div>
 </div>
 <br />
-<div class="row">
-    <div class="col-sm-2"></div>
-    <div class="col-sm-8">
+<div class="row itemTopDiv">
+    <div class=" col-sm-2"></div>
+    <div class="col-sm-8 itemDiv">
         <div class="card border-danger">
             <div class="card-header bg-danger text-white " style="font-size: medium; font-weight: 600">
                 <span id="ContentPlaceHolder1_Label1">User Account Information</span>
@@ -59,14 +25,35 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <span id="ContentPlaceHolder1_lb1" style="font-weight:bold;">Employee Up To
+                                    <span id="ContentPlaceHolder1_lb1">Employee Up To
                                         :-</span>
                                 </div>
-                                <div class="col-sm-4 float-left">
-
-                                    <input name="ctl00$ContentPlaceHolder1$emp_count_lbl" type="text" value="50"
-                                        readonly="readonly" id="ContentPlaceHolder1_emp_count_lbl"
-                                        class="form-control" />
+                                <div class=" col-sm-4 float-left">
+                                    <ng-container *ngIf="dSingleUser">
+                                        <input name="ctl00$ContentPlaceHolder1$emp_count_lbl" type="text"
+                                            value="{{dSingleUser}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_emp_count_lbl" class="form-control" />
+                                    </ng-container>
+                                    <ng-container *ngIf="dMultiUser">
+                                        <input name="ctl00$ContentPlaceHolder1$emp_count_lbl" type="text"
+                                            value="{{dMultiUser}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_emp_count_lbl" class="form-control" />
+                                    </ng-container>
+                                    <ng-container *ngIf="PtSingleUser">
+                                        <input name="ctl00$ContentPlaceHolder1$emp_count_lbl" type="text"
+                                            value="{{PtSingleUser}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_emp_count_lbl" class="form-control" />
+                                    </ng-container>
+                                    <ng-container *ngIf="PtMultiUser">
+                                        <input name="ctl00$ContentPlaceHolder1$emp_count_lbl" type="text"
+                                            value="{{PtMultiUser}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_emp_count_lbl" class="form-control" />
+                                    </ng-container>
+                                    <ng-container *ngIf="epMultiUser">
+                                        <input name="ctl00$ContentPlaceHolder1$emp_count_lbl" type="text"
+                                            value="{{epMultiUser}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_emp_count_lbl" class="form-control" />
+                                    </ng-container>
                                 </div>
                                 <div class="col-sm-4">
                                     <span id="ContentPlaceHolder1_user_login_type_lbl" style="font-size:Large;">Multi
@@ -77,20 +64,42 @@
                             <div class="row">
 
                                 <div class="col-sm-4">
-                                    <span id="ContentPlaceHolder1_Label20" style="font-weight:bold;">Payable Amount
+                                    <span id="ContentPlaceHolder1_Label20">Payable Amount
                                         :-</span>
                                 </div>
                                 <div class="col-sm-8 text-left" style="font-size: large">
-
-                                    <input name="ctl00$ContentPlaceHolder1$pay_lbl" type="text" value="3540"
-                                        readonly="readonly" id="ContentPlaceHolder1_pay_lbl" class="form-control" />
+                                    <ng-container *ngIf="totaldSingleMonthAmount">
+                                        <input name="ctl00$ContentPlaceHolder1$pay_lbl" type="text"
+                                            value="{{totaldSingleMonthAmount}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_pay_lbl" class="form-control" />
+                                    </ng-container>
+                                    <ng-container *ngIf="totaldMultiMonthAmount">
+                                        <input name="ctl00$ContentPlaceHolder1$pay_lbl" type="text"
+                                            value="{{totaldMultiMonthAmount}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_pay_lbl" class="form-control" />
+                                    </ng-container>
+                                    <ng-container *ngIf="totalPtSingleMonthAmount">
+                                        <input name="ctl00$ContentPlaceHolder1$pay_lbl" type="text"
+                                            value="{{totalPtSingleMonthAmount}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_pay_lbl" class="form-control" />
+                                    </ng-container>
+                                    <ng-container *ngIf="totalPtMultiMonthAmount">
+                                        <input name="ctl00$ContentPlaceHolder1$pay_lbl" type="text"
+                                            value="{{totalPtMultiMonthAmount}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_pay_lbl" class="form-control" />
+                                    </ng-container>
+                                    <ng-container *ngIf="totalEpMonthAmount">
+                                        <input name="ctl00$ContentPlaceHolder1$pay_lbl" type="text"
+                                            value="{{totalEpMonthAmount}}" readonly="readonly"
+                                            id="ContentPlaceHolder1_pay_lbl" class="form-control" />
+                                    </ng-container>
                                 </div>
 
                             </div>
                             <br />
                             <div class="row">
                                 <div class="col-sm-4 text-center">
-                                    <span id="ContentPlaceHolder1_Label2" style="font-weight:bold;">Corporate ID
+                                    <span id="ContentPlaceHolder1_Label2">Corporate ID
                                         :-</span>
                                 </div>
                                 <div class="col-sm-5">
@@ -102,7 +111,7 @@
                                 <div class="col-sm-3">
                                     <input type="submit" name="ctl00$ContentPlaceHolder1$check_corporate_id_btn"
                                         value="Check ID" id="ContentPlaceHolder1_check_corporate_id_btn"
-                                        class="btn btn-info" />
+                                        class="btn btn-info checkButton" />
                                 </div>
 
                             </div>
@@ -114,7 +123,7 @@
                             <br />
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <span id="ContentPlaceHolder1_Label4" style="font-weight:bold;">Login Created On
+                                    <span id="ContentPlaceHolder1_Label4">Login Created On
                                         :-</span>
                                 </div>
                                 <div class="col-sm-7 text-left" style="font-size: large; color: green">
@@ -124,7 +133,7 @@
                             <br />
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <span id="ContentPlaceHolder1_Label6" style="font-weight:bold;">Expired On :-</span>
+                                    <span id="ContentPlaceHolder1_Label6">Expired On :-</span>
                                 </div>
                                 <div class="col-sm-7 text-left" style="font-size: large; color: red">
                                     <span id="ContentPlaceHolder1_exp_date_lbl" style="font-size:Medium;"></span>
@@ -133,7 +142,7 @@
                             <br />
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <span id="ContentPlaceHolder1_Label5" style="font-weight:bold;">After Renew Exp. On
+                                    <span id="ContentPlaceHolder1_Label5">After Renew Exp. On
                                         :-</span>
                                 </div>
                                 <div class="col-sm-7 " style="font-size: large; color: red">
@@ -142,16 +151,17 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 marginTop">
                             <div class="text-center">
-                                <span id="ContentPlaceHolder1_Label7">Billing Details / Invoice Details</span>
+                                <span id="ContentPlaceHolder1_Label7" style="font-weight: bold;">Billing Details /
+                                    Invoice Details</span>
                             </div>
                             <br />
                             <div class="row">
                                 <div class="col-sm-4">
                                     <div class="row">
-                                        <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left">
+                                        <div class="col-sm ">
+                                            <div class="float-lg-right float-sm-left labelop">
                                                 <span id="ContentPlaceHolder1_name_lbl">Company Name :-</span>
                                                 <span id="ContentPlaceHolder1_Label12"
                                                     style="color:Red;font-size:Large;">*</span>
@@ -159,7 +169,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 ok">
                                     <input name="ctl00$ContentPlaceHolder1$comp_text" type="text"
                                         id="ContentPlaceHolder1_comp_text" class="form-control"
                                         placeholder="Company Name" />
@@ -169,7 +179,7 @@
                                 <div class="col-sm-4">
                                     <div class="row">
                                         <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left">
+                                            <div class="float-lg-right float-sm-left labelop">
                                                 <span id="ContentPlaceHolder1_Label3">Address :-</span>
                                                 <span id="ContentPlaceHolder1_Label13"
                                                     style="color:Red;font-size:Large;">*</span>
@@ -177,7 +187,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 ok">
                                     <textarea name="ctl00$ContentPlaceHolder1$add_text"
                                         id="ContentPlaceHolder1_add_text" class="form-control" placeholder="Address..."
                                         aria-multiline="true"></textarea>
@@ -191,7 +201,7 @@
                                 <div class="col-sm-4">
                                     <div class="row">
                                         <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left">
+                                            <div class="float-lg-right float-sm-left labelop">
                                                 <span id="ContentPlaceHolder1_Label8">PAN No. :-</span>
                                                 <span id="ContentPlaceHolder1_Label17"
                                                     style="color:Red;font-size:Large;">*</span>
@@ -199,7 +209,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 ok">
                                     <input name="ctl00$ContentPlaceHolder1$pan_ttext" type="text"
                                         id="ContentPlaceHolder1_pan_ttext" placeholder="PAN No." maxlength="20"
                                         class="form-control" />
@@ -212,7 +222,7 @@
                                 <div class="col-sm-4">
                                     <div class="row">
                                         <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left">
+                                            <div class="float-lg-right float-sm-left labelop">
                                                 <span id="ContentPlaceHolder1_Label9">GST No. :-</span>
                                                 <span id="ContentPlaceHolder1_Label18"
                                                     style="color:Red;font-size:Large;">*</span>
@@ -220,7 +230,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 ok">
                                     <input name="ctl00$ContentPlaceHolder1$gst_text" type="text"
                                         id="ContentPlaceHolder1_gst_text" placeholder="GST No." maxlength="20"
                                         class="form-control" />
@@ -232,7 +242,7 @@
                                 <div class="col-sm-4">
                                     <div class="row">
                                         <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left">
+                                            <div class="float-lg-right float-sm-left labelop">
                                                 <span id="ContentPlaceHolder1_Label10">E-Mail :-</span>
                                                 <span id="ContentPlaceHolder1_Label23"
                                                     style="color:Red;font-size:Large;">*</span>
@@ -240,7 +250,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 ok">
                                     <input name="ctl00$ContentPlaceHolder1$email_text" type="text"
                                         id="ContentPlaceHolder1_email_text" placeholder="E-mail" maxlength="100"
                                         class="form-control" />
@@ -251,7 +261,7 @@
                                 <div class="col-sm-4">
                                     <div class="row">
                                         <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left">
+                                            <div class="float-lg-right float-sm-left labelop">
                                                 <span id="ContentPlaceHolder1_Label11">Mo. :-</span>
                                                 <span id="ContentPlaceHolder1_Label19"
                                                     style="color:Red;font-size:Large;">*</span>
@@ -259,7 +269,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-8 ok">
                                     <input name="ctl00$ContentPlaceHolder1$mo_text" type="text"
                                         id="ContentPlaceHolder1_mo_text" placeholder="Mobile No." maxlength="15"
                                         class="form-control" />
@@ -277,8 +287,6 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-8">
-
-
                                 </div>
                             </div>
                         </div>
@@ -291,11 +299,12 @@
             <div class="row text-center m-3">
                 <div class="col-sm m-2">
                     <input type="submit" name="ctl00$ContentPlaceHolder1$go_back_btn" value="Go Back"
-                        id="ContentPlaceHolder1_go_back_btn" class="btn-danger btn" />
+                        id="ContentPlaceHolder1_go_back_btn" class="btn-danger btn goBack"
+                        routerLink="/pages/pricing" />
                 </div>
                 <div class="col-sm m-2">
                     <input type="submit" name="ctl00$ContentPlaceHolder1$make_pay_btn" value="Make Payment"
-                        id="ContentPlaceHolder1_make_pay_btn" class="btn-success btn"
+                        id="ContentPlaceHolder1_make_pay_btn" class="btn-success btn makePayment"
                         style="background-color:#83B111;border-color:#83B111;" />
                 </div>
             </div>

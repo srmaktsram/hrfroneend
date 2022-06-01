@@ -1,4 +1,4 @@
-<app-header class="headerCom"></app-header>
+<app-header class="fixed-top headerCom"></app-header>
 
 <div class="mainDiv">
 
@@ -28,6 +28,9 @@
         </mat-card>
 
     </div>
+
+
+
     <div class="matDiv">
         <mat-card class="mat" style="border:2px solid #37bc9b">
             <div class="page-header blue">
@@ -35,7 +38,7 @@
             </div>
             <div class="text-center">
                 <select class="form-select" aria-label="Default select example" class="selectEmployee"
-                    (click)="getUser($event.target.value,'dSingle')">
+                    (click)="getUser($event.target.value,'dSingle')" (click)="getPlan('dSingle',select1.value);">
                     <option>Select Employee</option>
                     <option value="50">Up To 50 Employee</option>
                     <option value="150">Up To 150 Employee</option>
@@ -50,8 +53,8 @@
                 <h4>Our Plan</h4>
 
                 <div class="selectFlex">
-                    <select [(ngModel)]="dSingleUserMonth" class="form-select" aria-label="Default select example"
-                        class="selectWidth" (click)="getPlan('dSingle')">
+                    <select #select1 class="form-select" aria-label="Default select example" class="selectWidth"
+                        (click)="getPlan('dSingle',select1.value);">
                         <option>Select Year</option>
                         <option value="3">For 3 Month</option>
                         <option value="6">For 6 Month</option>
@@ -76,11 +79,15 @@
                     Details?</a>
             </div>
             <div class="button">
-                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+                <button mat-raised-button color="accent" (click)="getData('dSingle')">Make Payment</button>
             </div>
 
         </mat-card>
     </div>
+
+
+
+
     <div class="matDiv">
         <mat-card class="mat" style="border:2px solid #f05050">
             <div class="page-header red">
@@ -88,8 +95,8 @@
             </div>
             <div class="text-center">
                 <select class="form-select" aria-label="Default select example" class="selectEmployee"
-                    (click)="getUser($event.target.value,'dMulti')">
-                    <option>Select Employee</option>
+                    (click)="getUser($event.target.value,'dMulti')" (click)="getPlan('dMulti',select2.value);">
+                    <option>select Employee</option>
                     <option value="50">Up To 50 Employee</option>
                     <option value="150">Up To 150 Employee</option>
                     <option value="300">Up To 300 Employee</option>
@@ -104,8 +111,8 @@
                 <h4>Our Plan</h4>
 
                 <div class="selectFlex">
-                    <select [(ngModel)]="dMultiUserMonth" class="form-select" aria-label="Default select example"
-                        class="selectWidth" (click)="getPlan('dMulti')">
+                    <select #select2 class="form-select" aria-label="Default select example" class="selectWidth"
+                        (click)="getPlan('dMulti',select2.value);">
                         <option>Select Year</option>
                         <option value="3">For 3 Month</option>
                         <option value="6">For 6 Month</option>
@@ -129,7 +136,7 @@
                     Details?</a>
             </div>
             <div class="button">
-                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+                <button mat-raised-button color="accent" (click)="getData('dMulti')">Make Payment</button>
 
             </div>
 
@@ -137,6 +144,8 @@
     </div>
 
 </div>
+
+
 
 
 
@@ -149,8 +158,8 @@
             </div>
             <div class="text-center">
                 <select class="form-select" aria-label="Default select example" class="selectEmployee"
-                    (click)="getUser($event.target.value,'epMulti')">
-                    <option>Select Employee</option>
+                    (click)="getUser($event.target.value,'epMulti')" (click)="getPlan('epMulti',select3.value);">
+                    <option selected>Select Employee</option>
                     <option value="50">Up To 50 Employee</option>
                     <option value="150">Up To 150 Employee</option>
                     <option value="300">Up To 300 Employee</option>
@@ -165,9 +174,9 @@
                 <h4>Our Plan</h4>
 
                 <div class="selectFlex">
-                    <select [(ngModel)]="epMultiUserMonth" class="form-select" aria-label="Default select example"
-                        class="selectWidth" (click)="getPlan('epMulti')">
-                        <option>Select Year</option>
+                    <select #select3 class="form-select" aria-label="Default select example" class="selectWidth"
+                        (click)="getPlan('epMulti',select3.value);">
+                        <option selected>Select Year</option>
                         <option value="3">For 3 Month</option>
                         <option value="6">For 6 Month</option>
                         <option value="12">For 1 Year</option>
@@ -191,7 +200,7 @@
             </div>
 
             <div class="button">
-                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+                <button mat-raised-button color="accent" (click)=" getData('epMulti')">Make Payment</button>
             </div>
 
 
@@ -205,7 +214,7 @@
             </div>
             <div class="text-center">
                 <select class="form-select" aria-label="Default select example" class="selectEmployee"
-                    (click)="getUser($event.target.value,'ptSingle')">
+                    (click)="getUser($event.target.value,'ptSingle')" (click)="getPlan('ptSingle',select4.value);">
                     <option>Select Employee</option>
                     <option value="50">Up To 50 Employee</option>
                     <option value="150">Up To 150 Employee</option>
@@ -220,8 +229,8 @@
 
                 <h4>Our Plan</h4>
                 <div class="selectFlex">
-                    <select [(ngModel)]="PtSingleUserMonth" class="form-select" aria-label="Default select example"
-                        class="selectWidth" (click)="getPlan('ptSingle')">
+                    <select #select4 class="form-select" aria-label="Default select example" class="selectWidth"
+                        (click)="getPlan('ptSingle',select4.value);">
                         <option>Select Year</option>
                         <option value="3">For 3 Month</option>
                         <option value="6">For 6 Month</option>
@@ -244,7 +253,7 @@
                     Details?</a>
             </div>
             <div class="button">
-                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+                <button mat-raised-button color="accent" (click)="getData('ptSingle')">Make Payment</button>
             </div>
 
         </mat-card>
@@ -257,7 +266,7 @@
             </div>
             <div class="text-center">
                 <select class="form-select" aria-label="Default select example" class="selectEmployee"
-                    (click)="getUser($event.target.value,'ptMulti')">
+                    (click)="getUser($event.target.value,'ptMulti')" (click)="getPlan('ptMulti',select5.value);">
                     <option>Select Employee</option>
                     <option value="50">Up To 50 Employee</option>
                     <option value="150">Up To 150 Employee</option>
@@ -273,8 +282,8 @@
 
                 <h4> Our Plan</h4>
                 <div class="selectFlex">
-                    <select [(ngModel)]="PtMultiUserMonth" class="form-select" aria-label="Default select example"
-                        class="selectWidth" (click)="getPlan('ptMulti')">
+                    <select #select5 class="form-select" aria-label="Default select example" class="selectWidth"
+                        (click)="getPlan('ptMulti',select5.value);">
                         <option>Select Year</option>
                         <option value="3">For 3 Month</option>
                         <option value="6">For 6 Month</option>
@@ -298,13 +307,13 @@
             </div>
 
             <div class="button">
-                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+                <button mat-raised-button color="accent" (click)="getData('ptMulti')">Make Payment</button>
             </div>
         </mat-card>
     </div>
 
 </div>
-<!-- ///////////////////////////////////////////////////// -->
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 <div id="pMultiUser" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
