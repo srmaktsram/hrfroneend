@@ -9,6 +9,7 @@ import { DateAgoPipe } from "src/assets/pipes/timeAgo";
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatInputModule } from '@angular/material/input';
 
 // import { HttpClientModule } from "@angular/common/http";
 
@@ -24,7 +25,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ReactiveFormsModule,
     MatSidenavModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatInputModule
   ],
   imports: [
     CommonModule,
@@ -35,7 +37,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ReactiveFormsModule,
     MatSidenavModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatInputModule
   ],
 })
 export class SharingModule { }
