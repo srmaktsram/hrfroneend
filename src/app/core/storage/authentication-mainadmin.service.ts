@@ -14,7 +14,7 @@ export class MainAdminAuthenticationService {
     sessionStorage.removeItem("user_type");
     sessionStorage.removeItem("mainadminrole");
   }
-  // public get loggedIn(): boolean {
-  //   return sessionStorage.getItem("currentAdminLgn") !== null;
-  // }
+  public get loggedIn(): boolean {
+    return sessionStorage.getItem("currentAdminLgn") !== null;
+  }
 }
