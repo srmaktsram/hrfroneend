@@ -8,13 +8,13 @@ import { LockscreenComponent } from "./lockscreen/lockscreen.component";
 import { UserLoginComponent } from "./userlogin/userlogin.component";
 import { AdminLoginComponent } from "./adminlogin/login.component";
 import { ClientLoginComponent } from "./clientlogin/login.component";
-import { AffiliateLoginComponent } from "./affiliatelogin/login.component";
+import { AffilateLoginComponent } from "./affilatelogin/login.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "adminlogin", pathMatch: "full" },
   { path: "userlogin", component: UserLoginComponent },
   { path: "clientlogin", component: ClientLoginComponent },
-  { path: "affiliatelogin", component: AffiliateLoginComponent },
+  { path: "affilatelogin", component: AffilateLoginComponent },
   { path: "adminhrlogin", component: AdminLoginComponent },
   { path: "adminlogin", component: LoginComponent },
   { path: "forgot", component: ForgotComponent },
