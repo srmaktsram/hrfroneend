@@ -60,6 +60,7 @@ export class AdminDashboardComponent implements OnInit {
     this.getAllAffiliates();
     this.getInvoiceRevenue();
     this.getInvoiceSales();
+    this.getAffiliateRevenue();
     this.getPremiumAdmins();
     this.getDemoAdmins();
     this.getTodayDemoAdmins();
@@ -195,6 +196,17 @@ export class AdminDashboardComponent implements OnInit {
         this.lineData = this.SalesArray;
       });
   }
+
+  public getAffiliateRevenue() {
+    this.http
+      .get("http://localhost:8443/mainadmin/affiliate/getAllAffiliate")
+      .subscribe((res: any) => {
+        console.log(res,"kkkk")
+        this.data = res;
+      });
+  }
+
+
   public getPremiumAdmins() {
     this.http
       .get("http://localhost:8443/mainadmin/premiumClient/getPremiumClients")
@@ -256,7 +268,6 @@ export class AdminDashboardComponent implements OnInit {
     this.http
       .get("http://localhost:8443/mainadmin/affiliate/getAllAffiliate")
       .subscribe((res: any) => {
-        console.log(res,"lllll")
         this.data = res;
       });
   }
