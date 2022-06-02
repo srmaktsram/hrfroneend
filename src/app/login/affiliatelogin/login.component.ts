@@ -10,7 +10,7 @@ import { MainAdminAuthenticationService } from "src/app/core/storage/authenticat
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
-export class AffilateLoginComponent implements OnInit {
+export class AffiliateLoginComponent implements OnInit {
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
