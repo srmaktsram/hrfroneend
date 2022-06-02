@@ -4,9 +4,10 @@
     <perfect-scrollbar [scrollIndicators]="false">
       <div id="sidebar-menu" class="sidebar-menu">
         <ul *ngIf="sidebarMenus.default">
+          
           <ng-container *ngIf="user_type=='mainadmin'">
           <li class="menu-title">
-            <span>Main-Admin</span>
+            <span>Main Admin Dashboard</span>
           </li>
           <li class="submenu" [ngClass]="{ active: urlComplete.mainUrl === 'dashboard' }">
             <a href="javascript:" [ngClass]="{ subdrop: urlComplete.mainUrl === 'dashboard' }">
@@ -19,7 +20,7 @@
               }">
               
                 <li routerLink="/layout/mainadmin/admindashboard">
-                  <a [ngClass]="{ active: urlComplete.subUrl === 'admindashboard' }" href="javascript:">Main-Admin Dashboard</a>
+                  <a [ngClass]="{ active: urlComplete.subUrl === 'admindashboard' }" href="javascript:">Admin Dashboard</a>
                 </li>
               
              
@@ -36,30 +37,6 @@
           }">
           <a routerLink="/layout/mainadmin/clients/democlients"><i class="la la-users"></i> <span>Clients</span></a>
         </li>
-
-
-
-
-
-
-          <li [ngClass]="{
-            active:
-              urlComplete.subUrl === 'demoaffiliate' ||
-              urlComplete.subUrl === 'premiumaffiliate' ||
-              urlComplete.subUrl === 'visitoraffiliate'
-          }">
-          <a routerLink="/layout/mainadmin/affiliates/demoaffiliate"><i class="la la-users"></i> <span>Affiliate</span></a>
-        </li>
-
-
-
-
-
-
-
-
-
-
           <li [ngClass]="{
             active:
 
@@ -83,39 +60,18 @@
         }">
         <a routerLink="/layout/mainadmin/tickets/ticketscontent"><i class="la la-ticket"></i> <span>Tickets</span></a>
       </li>
-      <li [ngClass]="{
-        active:
-          urlComplete.subUrl === 'ticketscontent' ||
-          urlComplete.subUrl === 'ticketsview'
-      }">
-      <a routerLink="/layout/mainadmin/withdrawalrequests/withdrawalrequest"><i class="la la-ticket"></i> <span>Withdrawal Request</span></a>
-    </li>
-    <li [ngClass]="{
-      active:
-        urlComplete.subUrl === 'withdrawalrequest' ||
-        urlComplete.subUrl === 'releasehistory'
-    }">
-    <a routerLink="/layout/mainadmin/pendingkyc/pendingkyc"><i class="la la-ticket"></i> <span>KYC</span></a>
-  </li><li [ngClass]="{
-    active:
-      urlComplete.subUrl === 'pendingkyc' ||
-      urlComplete.subUrl === 'verifykyc' ||
-      urlComplete.subUrl === 'rejectkyc' 
-  }">
-
-
 
      
 
         <li class="submenu" [ngClass]="{
           active:
-            urlComplete.mainUrl === 'accounts' ||
-            urlComplete.mainUrl === 'reports'
+            urlComplete.mainUrl === 'accounts'
+           
         }">
           <a href="javascript:" [ngClass]="{
             subdrop:
-              urlComplete.mainUrl === 'accounts' ||
-              urlComplete.mainUrl === 'reports'
+              urlComplete.mainUrl === 'accounts' 
+             
           }">
 
             <i class="la la-files-o"></i> <span> Sales </span>
@@ -123,11 +79,19 @@
           <ul style="display: none" [ngStyle]="{
             display:
               urlComplete.mainUrl === 'accounts'
-                ? 'block' || urlComplete.mainUrl === 'reports'
+                ? 'block'
                 : 'none'
           }">
 
-            
+            <li routerLink="/layout/mainadmin/accounts/estimates">
+              <a href="javascript:" [ngClass]="{
+                active:
+                  urlComplete.subUrl === 'estimates' ||
+                  urlComplete.subUrl === 'estimates-view' ||
+                  urlComplete.subUrl === 'create-estimates' ||
+                  urlComplete.subUrl === 'edit-estimates?id=1'
+              }">Estimates</a>
+            </li>
             <li routerLink="/layout/mainadmin/accounts/invoices">
               <a href="javascript:" [ngClass]="{
                 active:
@@ -141,9 +105,17 @@
             <li routerLink="/layout/mainadmin/accounts/payments">
               <a href="javascript:" [ngClass]="{ active: urlComplete.subUrl === 'payments' }">Payments</a>
             </li>
-            
-            
-           
+            <li routerLink="/layout/mainadmin/accounts/expenses">
+              <a href="javascript:" [ngClass]="{ active: urlComplete.subUrl === 'expenses' }">Expenses</a>
+            </li>
+            <li routerLink="/layout/mainadmin/accounts/provident-fund">
+              <a href="javascript:" [ngClass]="{
+                active: urlComplete.subUrl === 'provident-fund'
+              }">Provident Fund</a>
+            </li>
+            <li routerLink="/layout/mainadmin/accounts/taxes">
+              <a href="javascript:" [ngClass]="{ active: urlComplete.subUrl === 'taxes' }">Taxes</a>
+            </li>
           </ul>
         </li>
 
@@ -152,12 +124,27 @@
 
 
         </ng-container>
+        
+       <ng-container *ngIf="user_type=='client'">
+        <li class="menu-title">
+          <span>Cleint Dashboard</span>
+        </li>
+
+          <li [ngClass]="{
+            active:
+              urlComplete.subUrl === 'clientspage' ||
+              urlComplete.subUrl === 'clientslist'
+          }">
+          <a routerLink="/layout/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
+        </li>
+         
+
+          
+        </ng-container>
 
 
-
-<!-- ///////////////////////////client admin -->
-
-        <ng-container *ngIf="user_type!='mainadmin'">
+<!-- ///////////////////////////client Admin -->
+        <ng-container *ngIf="user_type!='mainadmin' && user_type!='client'">
           <li class="menu-title">
             <span>Main</span>
           </li>
@@ -180,8 +167,6 @@
                   <a [ngClass]="{ active: urlComplete.subUrl === 'employee' }" href="javascript:">Employee Dashboard</a>
                 </li>
               </ng-container>
-              
-              
             </ul>
           </li>
          
@@ -409,22 +394,14 @@
               </ng-container>
             </ul>
           </li>
-        <ng-container>
+
           <li [ngClass]="{
               active:
-                urlComplete.subUrl === 'ticketcontent' ||
-                urlComplete.subUrl === 'ticketsview'
+                urlComplete.subUrl === 'clientspage' ||
+                urlComplete.subUrl === 'clientslist'
             }">
-            <a routerLink="/layout/support/ticketcontent"><i class="la la-users"></i> <span>Support</span></a>
+            <a routerLink="/layout/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
           </li>
-          </ng-container>
-          <li [ngClass]="{
-            active:
-              urlComplete.subUrl === 'clientspage' ||
-              urlComplete.subUrl === 'clientslist'
-          }">
-          <a routerLink="/layout/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
-        </li>
           <li class="submenu" [ngClass]="{
               active:
                 urlComplete.mainUrl === 'projects' ||
@@ -479,13 +456,12 @@
 
             <li class="submenu" [ngClass]="{
               active:
-                urlComplete.mainUrl === 'accounts' ||
-                urlComplete.mainUrl === 'reports'
+                urlComplete.mainUrl === 'accounts'
+               
             }">
               <a href="javascript:" [ngClass]="{
                 subdrop:
-                  urlComplete.mainUrl === 'accounts' ||
-                  urlComplete.mainUrl === 'reports'
+                  urlComplete.mainUrl === 'accounts' 
               }">
 
                 <i class="la la-files-o"></i> <span> Sales </span>
@@ -493,7 +469,7 @@
               <ul style="display: none" [ngStyle]="{
                 display:
                   urlComplete.mainUrl === 'accounts'
-                    ? 'block' || urlComplete.mainUrl === 'reports'
+                    ? 'block'
                     : 'none'
               }">
 
@@ -606,7 +582,7 @@
             </li>
             <li class="submenu" [ngClass]="{
               active:
-                urlComplete.mainUrl === 'reports' ||
+               
                 urlComplete.mainUrl === 'employeereports' ||
                 urlComplete.mainUrl === 'payslipreports' ||
                 urlComplete.mainUrl === 'projectreports' ||
@@ -619,7 +595,7 @@
             }">
               <a href="javascript:" [ngClass]="{
                 subdrop:
-                  urlComplete.mainUrl === 'reports' ||
+                 
                   urlComplete.mainUrl === 'employeereports' ||
                   urlComplete.mainUrl === 'payslipreports' ||
                   urlComplete.mainUrl === 'projectreports' ||
@@ -633,7 +609,7 @@
                 <span class="menu-arrow"></span></a>
               <ul style="display: none" [ngStyle]="{
                 display:
-                  urlComplete.mainUrl === 'reports' ||
+                 
                   urlComplete.mainUrl === 'employeereports' ||
                   urlComplete.mainUrl === 'payslipreports' ||
                   urlComplete.mainUrl === 'projectreports' ||
@@ -1230,7 +1206,7 @@
             <a href="javascript:" data-bs-toggle="modal" data-bs-target="#add_group"><i class="la la-plus"></i></a>
           </li>
           <li>
-            <a href="javascript:" *ngFor="let item of groups.total">
+            <a href="javascript:" *ngFor="let item of groups">
               <span class="chat-avatar-sm user-img">
                 <img class="rounded-circle" alt="" src="assets/img/profiles/avatar-5.jpg" />
               </span>
@@ -1241,8 +1217,8 @@
             Direct Chats
             <a data-bs-toggle="modal" data-bs-target="#add_chat_user"><i class="la la-plus"></i></a>
           </li>
-
-          <li [ngClass]="{ active: members.active == item.name }" (click)="setActive(item.name)"
+<!-- ////////////////can be revert26-05-2022 -->
+          <!-- <li [ngClass]="--{ active: members.active == item.name }" (click)="setActive(item.name)"
             *ngFor="let item of members.total">
             <a href="javascript:">
               <span class="chat-avatar-sm user-img">
@@ -1252,7 +1228,7 @@
               <span class="chat-user">{{ item.name }}</span>
               <span class="badge rounded-pill bg-danger" [hidden]="item.count < 1">{{ item.count }}</span>
             </a>
-          </li>
+          </li> -->
 
         </ul>
       </div>
