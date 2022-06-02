@@ -118,12 +118,10 @@ export class DemoAffiliateListComponent implements OnInit, OnDestroy {
     let id = this.editId;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" +
-          "/" +
-          id,
-       obj
+        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
+        obj
       )
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
         this.getDemoAdmins();
       });
 
@@ -132,31 +130,24 @@ export class DemoAffiliateListComponent implements OnInit, OnDestroy {
     this.toastr.success("Client updated sucessfully...!", "Success");
   }
 
-
-deleteAffiliate(deleteId){
-  let id = deleteId;
-  this.http
-    .patch(
-      "http://localhost:8443/mainadmin/affiliate/updateAffiliate" +
-        "/" +
-        id,
-      {status:"2"}
-    )
-    .subscribe((data:any) => {
-      this.getDemoAdmins();
-    });
-
-}
-
+  deleteAffiliate(deleteId) {
+    let id = deleteId;
+    this.http
+      .patch(
+        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
+        { status: "2" }
+      )
+      .subscribe((data: any) => {
+        this.getDemoAdmins();
+      });
+  }
 
   //////////////
   getStatus(data, id) {
     const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" +
-          "/" +
-          id,
+        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
         { status }
       )
       .subscribe((res) => {
@@ -200,41 +191,6 @@ deleteAffiliate(deleteId){
       this.getDemoAdmins();
     }
   }
-
-  //search by company
-  // searchByCompany(val) {
-  //   if (val.trim()) {
-  //     this.srch.splice(0, this.data.length);
-  //     let temp = this.srch.filter(function (d) {
-  //       val = val.toLowerCase();
-  //       return d.companyName.toLowerCase().indexOf(val) !== -1 || !val;
-  //     });
-  //     this.srch.push(...temp);
-  //   } else {
-  //     this.getDemoAdmins();
-  //   }
-  // }
-  // onSearch(name, company) {
-  //   this.filtereddata = [];
-  //   this.searchName = name;
-  //   this.searchCompany = company;
-  //   this.clientsData = this.data;
-
-  //   if (this.searchName) {
-  //     let nameFilter = this.filtereddata.filter((data) =>
-  //       data.name.toLowerCase().includes(this.searchName.toLowerCase())
-  //     );
-  //     if (nameFilter.length != 0) {
-  //       this.filtereddata = nameFilter;
-  //     }
-  //   }
-  //   if (this.searchCompany || this.searchName) {
-  //     this.clientsData =
-  //       this.filtereddata.length != 0 ? this.filtereddata : this.clientsData;
-  //   } else {
-  //     this.clientsData = [];
-  //   }
-  // }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
