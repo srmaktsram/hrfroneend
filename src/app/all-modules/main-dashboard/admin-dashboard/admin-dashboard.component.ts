@@ -57,6 +57,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllAffiliates();
     this.getInvoiceRevenue();
     this.getInvoiceSales();
     this.getPremiumAdmins();
@@ -247,6 +248,15 @@ export class AdminDashboardComponent implements OnInit {
     this.http
       .get("http://localhost:8443/mainadmin/allClient/getAllClients")
       .subscribe((res: any) => {
+        this.data = res;
+      });
+  }
+
+  public getAllAffiliates() {
+    this.http
+      .get("http://localhost:8443/mainadmin/affiliate/getAllAffiliate")
+      .subscribe((res: any) => {
+        console.log(res,"lllll")
         this.data = res;
       });
   }
