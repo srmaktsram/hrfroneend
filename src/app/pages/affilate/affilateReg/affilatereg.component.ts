@@ -207,7 +207,7 @@ myStopFunction() {
   this.sendOtpBtn=false
   this.reSendOtpBtn=true
   this.myStopFunction()
-}, 5000);
+}, 60*1000);
  
     
      if(val.length>9){
