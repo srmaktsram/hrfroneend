@@ -83,6 +83,27 @@
         }">
         <a routerLink="/layout/mainadmin/tickets/ticketscontent"><i class="la la-ticket"></i> <span>Tickets</span></a>
       </li>
+      <li [ngClass]="{
+        active:
+          urlComplete.subUrl === 'ticketscontent' ||
+          urlComplete.subUrl === 'ticketsview'
+      }">
+      <a routerLink="/layout/mainadmin/withdrawalrequests/withdrawalrequest"><i class="la la-ticket"></i> <span>Withdrawal Request</span></a>
+    </li>
+    <li [ngClass]="{
+      active:
+        urlComplete.subUrl === 'withdrawalrequest' ||
+        urlComplete.subUrl === 'releasehistory'
+    }">
+    <a routerLink="/layout/mainadmin/pendingkyc/pendingkyc"><i class="la la-ticket"></i> <span>KYC</span></a>
+  </li><li [ngClass]="{
+    active:
+      urlComplete.subUrl === 'pendingkyc' ||
+      urlComplete.subUrl === 'verifykyc' ||
+      urlComplete.subUrl === 'rejectkyc' 
+  }">
+
+
 
      
 

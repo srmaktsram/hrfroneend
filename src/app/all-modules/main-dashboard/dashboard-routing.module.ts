@@ -36,6 +36,31 @@ const routes: Routes = [
           import("./tickets/tickets.module").then((m) => m.TicketsModule),
       },
       {
+        path: "withdrawalrequests",
+        loadChildren: () =>
+          import("./withdrawal-requests/clients.module").then((m) => m.WithdrawalRequestModule),
+      },
+      {
+        path: "releasehistory",
+        loadChildren: () =>
+          import("./withdrawal-requests/clients.module").then((m) => m.WithdrawalRequestModule),
+      },
+      {
+        path: "pendingkyc",
+        loadChildren: () =>
+          import("./kyc/clients.module").then((m) => m.KycModule),
+      },
+      {
+        path: "verifykyc",
+        loadChildren: () =>
+          import("./kyc/clients.module").then((m) => m.KycModule),
+      },
+      {
+        path: "rejectkyc",
+        loadChildren: () =>
+          import("./kyc/clients.module").then((m) => m.KycModule),
+      },
+      {
         path: "accounts",
         loadChildren: () =>
           import("./accounts/accounts.module").then((m) => m.AccountsModule),
