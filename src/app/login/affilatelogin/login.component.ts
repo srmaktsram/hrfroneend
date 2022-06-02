@@ -6,11 +6,11 @@ import { Subscription } from "rxjs";
 import { MainAdminAuthenticationService } from "src/app/core/storage/authentication-mainadmin.service";
 
 @Component({
-  selector: "app-adminlogin",
+  selector: "app-affilatelogin",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
-export class AdminLoginComponent implements OnInit {
+export class AffilateLoginComponent implements OnInit {
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -39,7 +39,7 @@ export class AdminLoginComponent implements OnInit {
     let password = this.form.value.password;
     alert(username);
     this.http
-      .post("http://localhost:8443/auth/mainadminlogin/login", {
+      .post("http://localhost:8443/mainadmin/login/login", {
         username,
         password,
       })
@@ -47,11 +47,13 @@ export class AdminLoginComponent implements OnInit {
         console.log(res);
         if (res.result == 2) {
           this.router.navigate(["/layout/dashboard/admin"]);
-
+          // location.replace("http://localhost:51245/layout/dashboard/admin");
           this.adminAuthenticationService.login();
         } else {
           alert("wrong Id or pass");
         }
+
+        // location.replace("http://localhost:4200/layout/dashboard/admin");
       });
   }
 

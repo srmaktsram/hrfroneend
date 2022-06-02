@@ -11,6 +11,8 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { SharingModule } from "../sharing/sharing.module";
 import { UserLoginComponent } from "./userlogin/userlogin.component";
 import { AdminLoginComponent } from "./adminlogin/login.component";
+import { AffilateLoginComponent } from "./affilatelogin/login.component";
+import { ClientLoginComponent } from "./clientlogin/login.component";
 export const routes = [
   { path: "", component: LoginComponent, pathMatch: "full" },
   { path: "forgot", component: ForgotComponent, pathMatch: "" },
@@ -18,6 +20,8 @@ export const routes = [
 @NgModule({
   declarations: [
     LoginComponent,
+    ClientLoginComponent,
+    AffilateLoginComponent,
     AdminLoginComponent,
     UserLoginComponent,
     ForgotComponent,

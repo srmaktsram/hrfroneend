@@ -3,18 +3,18 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { MainAdminAuthenticationService } from "src/app/core/storage/authentication-mainadmin.service";
+import { ClientAuthenticationService } from "src/app/core/storage/authentication-client.service";
 
 @Component({
-  selector: "app-adminlogin",
+  selector: "app-clientlogin",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
-export class AdminLoginComponent implements OnInit {
+export class ClientLoginComponent implements OnInit {
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
-  form = new FormGroup({
+  public form = new FormGroup({
     username: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required]),
   });
@@ -27,7 +27,7 @@ export class AdminLoginComponent implements OnInit {
     // private storage: WebStorage,
     private http: HttpClient,
     private router: Router,
-    private adminAuthenticationService: MainAdminAuthenticationService
+    private clientAuthenticationService: ClientAuthenticationService
   ) {}
 
   ngOnInit() {}
@@ -37,18 +37,19 @@ export class AdminLoginComponent implements OnInit {
   submit() {
     let username = this.form.value.username;
     let password = this.form.value.password;
-    alert(username);
+
     this.http
-      .post("http://localhost:8443/auth/mainadminlogin/login", {
+      .post("http://localhost:8443/auth/clientlogin/login", {
         username,
         password,
       })
       .subscribe((res: any) => {
         console.log(res);
+        let client = res.data;
         if (res.result == 2) {
-          this.router.navigate(["/layout/dashboard/admin"]);
-
-          this.adminAuthenticationService.login();
+          console.log(client.id);
+          this.clientAuthenticationService.login(client.id);
+          this.router.navigate(["/layout/client/clientsprofile"]);
         } else {
           alert("wrong Id or pass");
         }

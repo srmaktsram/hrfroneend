@@ -51,7 +51,7 @@ export class AdminAuthenticationService {
     sessionStorage.removeItem("cinvoice");
     sessionStorage.removeItem("cinvoicepre");
   }
-  // public get loggedIn(): boolean {
-  //   return sessionStorage.getItem("currentAdminLgn") !== null;
-  // }
+  public get loggedIn(): boolean {
+    return sessionStorage.getItem("currentAdminLgn") !== null;
+  }
 }
