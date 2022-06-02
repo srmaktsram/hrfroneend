@@ -46,7 +46,7 @@ export class AdminLoginComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res);
         if (res.result == 2) {
-          this.router.navigate(["/layout/dashboard/admin"]);
+          this.router.navigate(["/layout/mainadmin/admindashboard"]);
 
           this.adminAuthenticationService.login();
         } else {
