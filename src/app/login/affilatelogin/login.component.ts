@@ -45,10 +45,11 @@ export class AffiliateLoginComponent implements OnInit {
       })
       .subscribe((res: any) => {
         console.log("affiliates data", res);
+        let affiliate = res.data;
         if (res.result == 2) {
           this.router.navigate(["/layout/affiliates/affiliatedashboard"]);
           // location.replace("http://localhost:51245/layout/dashboard/admin");
-          // this.affilateAuthenticationService.login();
+          this.affilateAuthenticationService.login(affiliate.id);
         } else {
           alert("wrong Id or pass");
         }
