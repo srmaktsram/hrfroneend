@@ -38,6 +38,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: "affiliates",
+        loadChildren: () =>
+          import("./affiliate-dashboard/dashboard.module").then(
+            (m) => m.AffiliateModule
+          ),
+      },
+      {
         path: "employees",
         loadChildren: () =>
           import("./employees/employees.module").then((m) => m.EmployeesModule),
