@@ -7,19 +7,47 @@
 
     <div class="mainFlexDiv">
         <div class='flexItems'>
-            <h4 class="gap" routerLink="/pages/affilate"> Affilate</h4>
-         
+            <h4 class="gap"> Why Use hr Management?</h4>
             <h4 class="gap">Who is it For?</h4>
             <h4 class="gap">Online Store</h4>
             <h4 class="gap">Retail POS</h4>
             <h4 class="gap"> Pricing</h4>
             <h4 class="gap"> FAQs</h4>
-            
         </div>
 
-        <div class="buttonDiv">
+        <div ngbDropdown class="d-inline-block">
+            <button type="button" class="btn btn-danger" id="dropdown1" ngbDropdownToggle>Sign In</button>
+            <div ngbDropdownMenu aria-labelledby="dropdown" class="mainDrop">
+                <div class="tri"></div>
+                <p class="profile">Signed in as :-</p>
+                <div class="childDiv">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon"
+                        style="margin-left:10px;color:orange;font-size:30px;">
+                        account_circle</mat-icon>
+                    <p class="profile1">webShubh123</p>
+                </div>
+                <div class="manageDiv">
+                    <div style="border-bottom:2px solid white">
+                        <p class="manageCustomer">New Customer :-</p>
+                        <p class="createAn">Create an Account</p>
+                    </div>
+                    <p class="manage"> Manage Account</p>
 
-            <h4 class="button"> Login</h4>
+                    <p class="manage">My Product</p>
+                    <p class="manage">My Company</p>
+                    <p class="manage">Sign Out </p>
+
+                </div>
+
+
+            </div>
         </div>
+
+
+
     </div>
+
+
+
+
 </mat-card>
