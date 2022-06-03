@@ -13,7 +13,6 @@ import { MatInputModule } from '@angular/material/input';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
-// import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [CustomDatePipe, DateAgoPipe],
@@ -29,7 +28,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSidenavModule,
     MatIconModule,
     MatToolbarModule,
-    MatInputModule
+    MatInputModule,
   ],
   imports: [
     NgbModule,
