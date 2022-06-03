@@ -424,7 +424,7 @@
               </ng-container>
             </ul>
           </li>
-        <ng-container>
+          <ng-container *ngIf="user_type=='admin'">
           <li [ngClass]="{
               active:
                 urlComplete.subUrl === 'ticketcontent' ||
