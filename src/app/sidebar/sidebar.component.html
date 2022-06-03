@@ -185,6 +185,24 @@
           </ng-container>
 
           <!-- ///////////////////////////client admin -->
+        </ng-container>
+
+        <ng-container *ngIf="user_type=='client'">
+          <li class="menu-title">
+            <span>Cleint Dashboard</span>
+          </li>
+  
+            <li [ngClass]="{
+              active:
+                urlComplete.subUrl === 'clientspage' ||
+                urlComplete.subUrl === 'clientslist'
+            }">
+            <a routerLink="/layout/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
+          </li>
+           
+  
+            
+          </ng-container>
 
           <ng-container *ngIf="user_type != 'mainadmin'">
             <li class="menu-title">
@@ -301,6 +319,22 @@
                       >
                     </li>
                   </ul>
+        <ng-container *ngIf="user_type!='mainadmin' && user_type!='client'">
+          <li class="menu-title">
+            <span>Main</span>
+          </li>
+          <li class="submenu" [ngClass]="{ active: urlComplete.mainUrl === 'dashboard' }">
+            <a href="javascript:" [ngClass]="{ subdrop: urlComplete.mainUrl === 'dashboard' }">
+              <i class="la la-dashboard"></i>
+              <span>Dashboard</span>
+              <span class="menu-arrow"></span>
+            </a>
+            <ul style="display: none" [ngStyle]="{
+                display: urlComplete.mainUrl === 'dashboard' ? 'block' : 'none'
+              }">
+              <ng-container *ngIf="user_type=='admin'">
+                <li routerLink="/layout/dashboard/admin">
+                  <a [ngClass]="{ active: urlComplete.subUrl === 'admin' }" href="javascript:">Admin Dashboard</a>
                 </li>
                 <li routerLink="/layout/apps/calendar">
                   <a
