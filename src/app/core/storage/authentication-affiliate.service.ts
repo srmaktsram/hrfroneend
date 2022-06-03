@@ -19,7 +19,7 @@ export class AffilateAuthenticationService {
     // sessionStorage.setItem("firstName", firstName);
     // sessionStorage.setItem("lastName", lastName);
     // sessionStorage.setItem("phone", phone);
-
+    //
     return true;
   }
 
