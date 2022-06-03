@@ -153,7 +153,22 @@
 
         </ng-container>
 
-
+        <ng-container *ngIf="user_type=='client'">
+          <li class="menu-title">
+            <span>Cleint Dashboard</span>
+          </li>
+  
+            <li [ngClass]="{
+              active:
+                urlComplete.subUrl === 'clientspage' ||
+                urlComplete.subUrl === 'clientslist'
+            }">
+            <a routerLink="/layout/clients/clientspage"><i class="la la-users"></i> <span>Clients</span></a>
+          </li>
+           
+  
+            
+          </ng-container>
 
 <!-- ///////////////////////////client admin -->
 
