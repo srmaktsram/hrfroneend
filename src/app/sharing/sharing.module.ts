@@ -10,12 +10,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 // import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [CustomDatePipe, DateAgoPipe],
   exports: [
+    NgbModule,
     CustomDatePipe,
     DateAgoPipe,
     MatCardModule,
@@ -29,6 +32,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule
   ],
   imports: [
+    NgbModule,
     CommonModule,
     MatCardModule,
     MatSelectModule,
