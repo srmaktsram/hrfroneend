@@ -1,74 +1,75 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { AffiliateAdminDashboardComponent } from "./admin-dashboard/admin-dashboard.component";
 import { DashboardComponent } from "./dashboard.component";
-import { AdminDashboardComponent } from "./admin-dashboard/admin-dashboard.component";
+// import { AdminDashboardComponent } from "./affiliate-admin-dashboard/admin-dashboard.component";
 
 const routes: Routes = [
   {
     path: "",
     component: DashboardComponent,
     children: [
-      { path: "affiliatedashboard", component: AdminDashboardComponent },
+      { path: "affiliatedashboard", component: AffiliateAdminDashboardComponent },
 
       {
-        path: "clients",
+        path: "myleads",
         loadChildren: () =>
-          import("./clients/clients.module").then((m) => m.ClientAdminModule),
+          import("./my-leads/clients.module").then((m) => m.MyLeadsModule),
       },
       {
-        path: "affiliates",
+        path: "myconversion",
         loadChildren: () =>
-          import("./affiliate/affiliate.module").then((m) => m.AffiliateModule),
+          import("./my-conversions/affiliate.module").then((m) => m.MyConversionsModule),
       },
       {
-        path: "packages",
+        path: "mywallet",
         loadChildren: () =>
-          import("./packages/clients.module").then((m) => m.PackagesModule),
+          import("./my-wallet/clients.module").then((m) => m.MyWalletModule),
       },
       {
         path: "subadmins",
         loadChildren: () =>
-          import("./sub-admin/clients.module").then((m) => m.SubAdminModule),
+          import("./withdrawal-history/clients.module").then((m) => m.withdrawalHistoryModule),
       },
-      {
-        path: "tickets",
-        loadChildren: () =>
-          import("./tickets/tickets.module").then((m) => m.TicketsModule),
-      },
-      {
-        path: "withdrawalrequests",
-        loadChildren: () =>
-          import("./withdrawal-requests/clients.module").then(
-            (m) => m.WithdrawalRequestModule
-          ),
-      },
-      {
-        path: "releasehistory",
-        loadChildren: () =>
-          import("./withdrawal-requests/clients.module").then(
-            (m) => m.WithdrawalRequestModule
-          ),
-      },
-      {
-        path: "pendingkyc",
-        loadChildren: () =>
-          import("./kyc/clients.module").then((m) => m.KycModule),
-      },
-      {
-        path: "verifykyc",
-        loadChildren: () =>
-          import("./kyc/clients.module").then((m) => m.KycModule),
-      },
-      {
-        path: "rejectkyc",
-        loadChildren: () =>
-          import("./kyc/clients.module").then((m) => m.KycModule),
-      },
-      {
-        path: "accounts",
-        loadChildren: () =>
-          import("./accounts/accounts.module").then((m) => m.AccountsModule),
-      },
+      // {
+      //   path: "tickets",
+      //   loadChildren: () =>
+      //     import("./clicks/tickets.module").then((m) => m.ClicksModule),
+      // },
+      // {
+      //   path: "withdrawalrequests",
+      //   loadChildren: () =>
+      //     import("./withdrawal-requests/clients.module").then(
+      //       (m) => m.WithdrawalRequestModule
+      //     ),
+      // },
+      // {
+      //   path: "releasehistory",
+      //   loadChildren: () =>
+      //     import("./withdrawal-requests/clients.module").then(
+      //       (m) => m.WithdrawalRequestModule
+      //     ),
+      // },
+      // {
+      //   path: "pendingkyc",
+      //   loadChildren: () =>
+      //     import("./kyc/clients.module").then((m) => m.KycModule),
+      // },
+      // {
+      //   path: "verifykyc",
+      //   loadChildren: () =>
+      //     import("./kyc/clients.module").then((m) => m.KycModule),
+      // },
+      // {
+      //   path: "rejectkyc",
+      //   loadChildren: () =>
+      //     import("./kyc/clients.module").then((m) => m.KycModule),
+      // },
+      // {
+      //   path: "accounts",
+      //   loadChildren: () =>
+      //     import("./accounts/accounts.module").then((m) => m.AccountsModule),
+      // },
     ],
   },
 ];
