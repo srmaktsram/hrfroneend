@@ -7,7 +7,7 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./admin-dashboard.component.html",
   styleUrls: ["./admin-dashboard.component.css"],
 })
-export class AdminDashboardComponent implements OnInit {
+export class AffiliateAdminDashboardComponent implements OnInit {
   public chartData;
   public chartOptions;
   public lineData;
