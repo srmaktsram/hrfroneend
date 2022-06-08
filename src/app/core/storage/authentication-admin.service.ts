@@ -5,11 +5,10 @@ import { Injectable } from "@angular/core";
 export class AdminAuthenticationService {
   login(
     id: string,
-
+    corporateId: string,
     companyEmail: string,
     companyName: string,
     companySite: string,
-    companyId: string,
     pinCode: string,
     companyAddress: string,
     phone: string,
@@ -21,13 +20,13 @@ export class AdminAuthenticationService {
   ) {
     sessionStorage.setItem("currentAdminLgn", "loggedin");
     sessionStorage.setItem("user_type", "admin");
+    sessionStorage.setItem("corporateId", corporateId);
     sessionStorage.setItem("adminId", id);
     sessionStorage.setItem("companyEmail", companyEmail);
     sessionStorage.setItem("companyName", companyName);
     sessionStorage.setItem("phone", phone);
     sessionStorage.setItem("mobile", mobile);
     sessionStorage.setItem("companySite", companySite);
-    sessionStorage.setItem("companyId", companyId);
     sessionStorage.setItem("pinCode", pinCode);
     sessionStorage.setItem("companyAddress", companyAddress);
     sessionStorage.setItem("clogo", clogo);
@@ -43,7 +42,7 @@ export class AdminAuthenticationService {
     sessionStorage.removeItem("companyEmail");
     sessionStorage.removeItem("companyName");
     sessionStorage.removeItem("companySite");
-    sessionStorage.removeItem("companyId");
+
     sessionStorage.removeItem("pinCode");
     sessionStorage.removeItem("companyAddress");
     sessionStorage.removeItem("current_location");

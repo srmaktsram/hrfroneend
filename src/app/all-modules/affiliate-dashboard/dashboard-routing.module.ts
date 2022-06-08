@@ -27,12 +27,12 @@ const routes: Routes = [
           ),
       },
       {
-        path: "mywallet",
+        path: "my-wallet",
         loadChildren: () =>
           import("./my-wallet/clients.module").then((m) => m.MyWalletModule),
       },
       {
-        path: "subadmins",
+        path: "withdrawalhistory",
         loadChildren: () =>
           import("./withdrawal-history/clients.module").then(
             (m) => m.withdrawalHistoryModule

@@ -8,7 +8,7 @@ const routes: Routes = [
     component: ClientsComponent,
     children: [
       {
-        path: "packageslist",
+        path: "my-wallet",
         component: ClientsListComponent,
       },
     ],

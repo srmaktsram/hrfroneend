@@ -17,34 +17,27 @@ import { Router, ActivatedRoute } from "@angular/router";
 })
 export class AffilateRegComponent implements OnInit {
   public ipAddress: any;
-  public sendOtpBtn=true
-  public reSendOtpBtn=false
+  public sendOtpBtn = true;
+  public reSendOtpBtn = false;
   public pass_error: any;
   public dataNew: any;
   public myTimeout: any;
-  public otpCode:number;
-  public saveBtn=true;
-  public emailBtn=false;
-  public reSendOtp="sendOtp";
-  public otpBtn=true;
-  public verifyShow=false;
-  public showVerify=true;
-  public setTimer:any;
-  public currentTime:any;
-  public pastTime:any;
+  public otpCode: number;
+  public saveBtn = true;
+  public emailBtn = false;
+  public reSendOtp = "sendOtp";
+  public otpBtn = true;
+  public verifyShow = false;
+  public showVerify = true;
+  public setTimer: any;
+  public currentTime: any;
+  public pastTime: any;
   public advertiseType: any;
   public pass_error_hide: any;
-  otpmessage=true;
-  constructor(private http: HttpClient, private router: Router) {
-    
-  }
+  otpmessage = true;
+  constructor(private http: HttpClient, private router: Router) {}
 
-  ngOnInit(): void {
- 
-   
-
-   
-  }
+  ngOnInit(): void {}
 
   registerForm = new FormGroup({
     first_name: new FormControl("", [
@@ -82,9 +75,6 @@ export class AffilateRegComponent implements OnInit {
     ]),
     check: new FormControl("", [Validators.required]),
   });
-
- 
-
 
   genrate(length) {
     const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -164,74 +154,61 @@ export class AffilateRegComponent implements OnInit {
       this.pass_error_hide = true;
     }
   }
- 
-/////////otp verify./////////////////
-  
-  otpVer(val){
-   
 
+  /////////otp verify./////////////////
 
-  if(val==this.otpCode){
-    this.myStopFunction();
-    //
-    this.saveBtn=false;
-    this.verifyShow=true;
-    this.showVerify=false;
-
-   }else{
-     this.otpmessage=false;
-     this.saveBtn=true
-   }
-
- 
-
-  
+  otpVer(val) {
+    if (val == this.otpCode) {
+      this.myStopFunction();
+      //
+      this.saveBtn = false;
+      this.verifyShow = true;
+      this.showVerify = false;
+    } else {
+      this.otpmessage = false;
+      this.saveBtn = true;
+    }
   }
 
+  //////send otp/////////////////////////////////
 
-//////send otp/////////////////////////////////
+  //  myStopFunction() {
+  //   clearTimeout(this.myTimeout);
+  // }
+  myStopFunction() {
+    clearTimeout(this.myTimeout);
+  }
 
+  sendOtp(val) {
+    this.myTimeout = setTimeout(async () => {
+      this.otpCode = 0;
+      this.sendOtpBtn = false;
+      this.reSendOtpBtn = true;
+      this.myStopFunction();
+    }, 60 * 1000);
 
+    if (val.length > 9) {
+      this.emailBtn = true;
+      this.otpBtn = false;
 
-//  myStopFunction() {
-//   clearTimeout(this.myTimeout);
-// }
-myStopFunction() {
-  clearTimeout(this.myTimeout);
-}
+      this.otpCode = Math.floor(1000 + Math.random() * 9000);
 
-   sendOtp(val){
-     
- this.myTimeout = setTimeout(async()=>{
-   this.otpCode=0;
-  this.sendOtpBtn=false
-  this.reSendOtpBtn=true
-  this.myStopFunction()
-}, 60*1000);
- 
-    
-     if(val.length>9){
-      this.emailBtn=true;
-      this.otpBtn=false;
+      console.log(
+        "this is set timer",
+        this.setTimer,
+        " the OTP>>>>> ",
+        this.otpCode
+      );
 
-          
-this.otpCode=Math.floor(1000 + Math.random() * 9000)
- 
-
-console.log("this is set timer",this.setTimer," the OTP>>>>> ",this.otpCode);
-     
-     let code=this.otpCode;
-    this.http.post("http://localhost:8443/mainadmin/affiliate/sendOTP",{email:val,otp:code}).subscribe((res:any)=>{
-     
-     
-    })
-    
-
-     }
-
-   }
-
-
+      let code = this.otpCode;
+      this.http
+        .post("http://localhost:8443/mainadmin/affiliate/sendOTP", {
+          email: val,
+          otp: code,
+        })
+        .subscribe((res: any) => {});
+    }
+  }
 
   userLogin() {
     // console.log(this.registerForm.value);
@@ -239,29 +216,29 @@ console.log("this is set timer",this.setTimer," the OTP>>>>> ",this.otpCode);
     if (this.registerForm.valid) {
       // console.log(this.registerForm.value);
 
-      var obj={
-       first_name : this.registerForm.value.first_name,
-       last_name : this.registerForm.value.last_name,
-       company : this.registerForm.value.company,
-       email : this.registerForm.value.email,
-       phone : this.registerForm.value.phone,
-       country : this.registerForm.value.country,
-       city : this.registerForm.value.city,
-       state : this.registerForm.value.state,
-       zip : this.registerForm.value.zip,
-       address : this.registerForm.value.address,
-       password : this.registerForm.value.password,
-       job_title : this.registerForm.value.job_title,
-       status:"Pending"
-      }
+      var obj = {
+        first_name: this.registerForm.value.first_name,
+        last_name: this.registerForm.value.last_name,
+        company: this.registerForm.value.company,
+
+        email: this.registerForm.value.email,
+        phone: this.registerForm.value.phone,
+        country: this.registerForm.value.country,
+        city: this.registerForm.value.city,
+        state: this.registerForm.value.state,
+        zip: this.registerForm.value.zip,
+        address: this.registerForm.value.address,
+        password: this.registerForm.value.password,
+        job_title: this.registerForm.value.job_title,
+        status: "Pending",
+      };
     }
     this.http
-    .post("http://localhost:8443/mainadmin/affiliate/create", obj)
-    .subscribe((response: any) => {
-      console.log(response)
-      this.resetForm();
-      
-    });
+      .post("http://localhost:8443/mainadmin/affiliate/create", obj)
+      .subscribe((response: any) => {
+        console.log(response);
+        this.resetForm();
+      });
   }
 
   resetForm() {

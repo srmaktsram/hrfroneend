@@ -13,7 +13,7 @@ declare const $: any;
   templateUrl: "./clients-list.component.html",
   styleUrls: ["./clients-list.component.css"],
 })
-export class ReleaseHistoryComponent implements OnInit, OnDestroy {
+export class RejectedHistoryComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -55,7 +55,7 @@ export class ReleaseHistoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getReleaseRequest();
+    this.getRejectedRequest();
 
     this.dtOptions = {
       pageLength: 10,
@@ -63,7 +63,7 @@ export class ReleaseHistoryComponent implements OnInit, OnDestroy {
     };
 
     
-    
+   
   }
 
   ngAfterViewInit(): void {
@@ -73,20 +73,31 @@ export class ReleaseHistoryComponent implements OnInit, OnDestroy {
   }
 
   //Get all Clients data
-  public getReleaseRequest() {
+  public getRejectedRequest() {
     this.http
       .get(
-        "http://localhost:8443/affiliates/affiliate/getPaymentReleaseRequest"
+        "http://localhost:8443/affiliates/affiliate/getPaymentRequestReject"
       )
       .subscribe((res: any) => {
-        console.log(res,"kkkkkkkhhhhbbbbbbb")
+        console.log(res,"hhhhhhh")
 
         this.data = res;
-       
+        // this.srch = [...this.data];
+
+        // this.srch = res;
       });
   }
   
 
+  
+  
+  
+
+    
+
+ 
+  
+  
   
 
   ngOnDestroy(): void {

@@ -4,22 +4,25 @@ import { Injectable } from "@angular/core";
 })
 export class AffilateAuthenticationService {
   login(
-    id: string
-    // username: string,
-    // email: string,
-    // firstName: string,
-    // lastName: string,
-    // phone: string
+    id: string,
+    bankDetails: Object,
+    email: string,
+    first_name: string,
+    last_name: string,
+    phone: string,
+    aId: any
   ) {
     sessionStorage.setItem("currentUser", "loggedin");
     sessionStorage.setItem("user_type", "affiliate");
+
     sessionStorage.setItem("affiliateId", id);
-    // sessionStorage.setItem("username", username);
-    // sessionStorage.setItem("email", email);
-    // sessionStorage.setItem("firstName", firstName);
-    // sessionStorage.setItem("lastName", lastName);
-    // sessionStorage.setItem("phone", phone);
-    //
+    sessionStorage.setItem("bankDetails", JSON.stringify(bankDetails));
+    sessionStorage.setItem("email", email);
+    sessionStorage.setItem("first_name", first_name);
+    sessionStorage.setItem("last_name", last_name);
+    sessionStorage.setItem("phone", phone);
+    sessionStorage.setItem("aId", aId);
+
     return true;
   }
 
@@ -32,6 +35,7 @@ export class AffilateAuthenticationService {
     sessionStorage.removeItem("firstName");
     sessionStorage.removeItem("lastName");
     sessionStorage.removeItem("phone");
+    sessionStorage.removeItem("aId");
   }
   public get loggedIn(): boolean {
     return sessionStorage.getItem("currentUser") !== null;

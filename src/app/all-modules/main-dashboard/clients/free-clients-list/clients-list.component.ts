@@ -84,6 +84,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
       .subscribe((res: any) => {
         this.data = res;
+        console.log(this.data, "tttttttttttttttttttttttttt");
         this.srch = [...this.data];
       });
   }
