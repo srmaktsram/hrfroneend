@@ -22,12 +22,12 @@ const routes: Routes = [
           import("./my-conversions/affiliate.module").then((m) => m.MyConversionsModule),
       },
       {
-        path: "mywallet",
+        path: "my-wallet",
         loadChildren: () =>
           import("./my-wallet/clients.module").then((m) => m.MyWalletModule),
       },
       {
-        path: "subadmins",
+        path: "withdrawalhistory",
         loadChildren: () =>
           import("./withdrawal-history/clients.module").then((m) => m.withdrawalHistoryModule),
       },

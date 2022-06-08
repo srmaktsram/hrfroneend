@@ -9,7 +9,7 @@ const routes: Routes = [
     children: [
       
       {
-        path: 'subadminlist',
+        path: 'withdrawalhistorylist',
         component: ClientsListComponent
       },
      

@@ -222,9 +222,7 @@
 
             <li
               [ngClass]="{
-                active:
-                  urlComplete.subUrl === 'myleads' 
-                 
+                active: urlComplete.subUrl === 'myleads'
               }"
             >
               <a routerLink="/layout/affiliates/myleads/myleads"
@@ -233,9 +231,7 @@
             </li>
             <li
               [ngClass]="{
-                active:
-                  urlComplete.subUrl === 'myconversion'
-                 
+                active: urlComplete.subUrl === 'myconversion'
               }"
             >
               <a routerLink="/layout/affiliates/myconversion/myconversion"
@@ -244,23 +240,22 @@
             </li>
             <li
               [ngClass]="{
-                active:
-                  urlComplete.subUrl === 'packagesgrid' ||
-                  urlComplete.subUrl === 'packageslist'
+                active: urlComplete.subUrl === 'my-wallet'
               }"
             >
-              <a routerLink="/layout/mainadmin/packages/packageslist"
+              <a routerLink="/layout/affiliates/my-wallet/my-wallet"
                 ><i class="la la-users"></i> <span>My Wallet</span></a
               >
             </li>
+            
             <li
               [ngClass]="{
                 active:
-                  urlComplete.subUrl === 'subadminpage' ||
-                  urlComplete.subUrl === 'subadminlist'
+                 
+                  urlComplete.subUrl === 'withdrawalhistorylist'
               }"
             >
-              <a routerLink="/layout/mainadmin/subadmins/subadminlist"
+              <a routerLink="/layout/affiliates/withdrawalhistory/withdrawalhistorylist"
                 ><i class="la la-users"></i> <span>Withdrawal History</span></a
               >
             </li>
@@ -283,7 +278,7 @@
                   urlComplete.subUrl === 'ticketsview'
               }"
             ></li -->
-         </ng-container>
+          </ng-container>
 
           <ng-container *ngIf="user_type == 'client'">
             <li class="menu-title">

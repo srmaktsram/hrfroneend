@@ -49,7 +49,15 @@ export class AffiliateLoginComponent implements OnInit {
         if (res.result == 2) {
           this.router.navigate(["/layout/affiliates/affiliatedashboard"]);
           // location.replace("http://localhost:51245/layout/dashboard/admin");
-          this.affilateAuthenticationService.login(affiliate.id);
+          this.affilateAuthenticationService.login(
+            affiliate.id,
+            affiliate.bankDetails,
+            affiliate.email,
+            affiliate.first_name,
+            affiliate.last_name,
+            affiliate.phone,
+            affiliate.aId
+          );
         } else {
           alert("wrong Id or pass");
         }
