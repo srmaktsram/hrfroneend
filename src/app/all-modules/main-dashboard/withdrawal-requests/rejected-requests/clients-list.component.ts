@@ -55,24 +55,15 @@ export class RejectedHistoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.getCompanyName()
-    this.getVisitorAdmins();
+    this.getRejectedRequest();
 
     this.dtOptions = {
-      // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
 
     
-    this.editClientForm = this.formBuilder.group({
-      editClientCompany: ["", [Validators.required]],
-      editContactPerson: ["", [Validators.required]],
-      editClientEmail: ["", [Validators.required]],
-      editClientPhone: ["", [Validators.required]],
-      editCompanyEmail: ["", [Validators.required]],
-
-    });
+   
   }
 
   ngAfterViewInit(): void {
@@ -82,134 +73,31 @@ export class RejectedHistoryComponent implements OnInit, OnDestroy {
   }
 
   //Get all Clients data
-  public getVisitorAdmins() {
+  public getRejectedRequest() {
     this.http
       .get(
-        "http://localhost:8443/mainadmin/visitorClient/getVisitorClients"
+        "http://localhost:8443/affiliates/affiliate/getPaymentRequestReject"
       )
       .subscribe((res: any) => {
+        console.log(res,"hhhhhhh")
 
         this.data = res;
-        this.srch = [...this.data];
+        // this.srch = [...this.data];
 
         // this.srch = res;
       });
   }
   
 
-  // Edit client
-  public onEditClient(clientId: any) {
-    this.editId = clientId;
-    let client = this.data.filter((client) => client.id === clientId);
-    this.editClientForm.patchValue({
-      editClientCompany: client[0]?.companyName,
-      editContactPerson: client[0]?.name,
-      editClientEmail: client[0]?.email,
-      editClientPhone: client[0]?.mobile,
-      editCompanyEmail: client[0]?.companyEmail,
+  
+  
+  
 
-    });
-  }
-  //Reset form
-  public resetForm() {
-    this.addClientForm.reset();
-  }
+    
 
-  // Save Client
-  public onSave() {
-    let obj = {
-      companyName: this.editClientForm.value.editClientCompany,
-      name: this.editClientForm.value.editContactPerson,
-      email: this.editClientForm.value.editClientEmail,
-      mobile: this.editClientForm.value.editClientPhone,
-      companyEmail: this.editClientForm.value.editCompanyEmail,
-
-    };
-    let id = this.editId;
-    this.http
-      .patch("http://localhost:8443/mainadmin/visitorClient/updateVisitorClient" + "/" + id, obj)
-      .subscribe((data) => {
-        this.getVisitorAdmins();
-      });
-
-    $("#edit_client").modal("hide");
-    this.editClientForm.reset();
-    this.toastr.success("Client updated sucessfully...!", "Success");
-  }
-
-  getStatus(data, id) {
-    const status = data;
-    this.http
-      .patch(
-        "http://localhost:8443/mainadmin/visitorClient/updateVisitorClientStatus" + "/" + id,
-        { status }
-      )
-      .subscribe((res) => {
-        this.getVisitorAdmins();
-
-       
-      });
-  }
-  //search by name
-  searchByName(val) {
-    if (val) {
-      this.data.splice(0, this.data.length);
-      let temp = this.srch.filter(function (d) {
-        val = val.toLowerCase();
-        return (
-          d.name.toLowerCase().indexOf(val) !== -1 ||
-          !val ||
-          d.email.toLowerCase().indexOf(val) !== -1 ||
-          !val ||
-          d.mobile.toLowerCase().indexOf(val) !== -1 ||
-          !val||
-          d.companyEmail.toLowerCase().indexOf(val) !== -1 ||
-          !val
-        );
-      });
-      this.data.push(...temp);
-    } else {
-      this.getVisitorAdmins();
-    }
-  }
-
-  //search by company
-  searchByCompany(val) {
-    if (val.trim()) {
-      this.srch.splice(0, this.data.length);
-      let temp = this.srch.filter(function (d) {
-        val = val.toLowerCase();
-        return d.companyName.toLowerCase().indexOf(val) !== -1 || !val;
-      });
-      this.srch.push(...temp);
-    } else {
-      this.getVisitorAdmins();
-
-    }
-  }
-  onSearch(name, company) {
-    this.filtereddata = [];
-    this.searchName = name;
-    this.searchCompany = company;
-    this.clientsData = this.data;
-
-    if (this.searchName) {
-      let nameFilter = this.filtereddata.filter((data) =>
-        data.name.toLowerCase().includes(this.searchName.toLowerCase())
-      );
-      if (nameFilter.length != 0) {
-        this.filtereddata = nameFilter;
-      }
-    }
-    if (this.searchCompany || this.searchName) {
-      this.clientsData =
-        this.filtereddata.length != 0 ? this.filtereddata : this.clientsData;
-    } else {
-      this.clientsData = [];
-    }
-  }
-
-
+ 
+  
+  
   
 
   ngOnDestroy(): void {

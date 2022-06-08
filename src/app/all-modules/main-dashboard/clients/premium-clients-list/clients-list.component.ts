@@ -142,7 +142,7 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
     const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/demoClient/updatedemoClientStatus" + "/" + id,
+        "http://localhost:8443/mainadmin/premiumClient/updatepremiumClientStatus" + "/" + id,
         { status }
       )
       .subscribe((res) => {
