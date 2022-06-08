@@ -46,6 +46,11 @@ const routes: Routes = [
           import("./withdrawal-requests/clients.module").then((m) => m.WithdrawalRequestModule),
       },
       {
+        path: "rejected-requests",
+        loadChildren: () =>
+          import("./withdrawal-requests/clients.module").then((m) => m.WithdrawalRequestModule),
+      },
+      {
         path: "pendingkyc",
         loadChildren: () =>
           import("./kyc/clients.module").then((m) => m.KycModule),

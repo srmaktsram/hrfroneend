@@ -22,8 +22,19 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   addPackageForm: FormGroup;
   editPackageForm: FormGroup;
   public tempId: any;
-  public adminId: any;
   public companiesList = [];
+  public actualAmount:any
+  public withdrawalAmount:any
+  public newAmount:any
+
+
+  public affilateId:any
+  public bankdetails:any
+  public email:string
+  public first_name:string
+  public last_name:string
+  public phone:string
+  public aId:any
 
   public data = [];
   public srch = [];
@@ -40,45 +51,37 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   searchCompany: any;
   editFromDate: string;
   editTillDate: string;
+  currentBalance: any;
+  totalBalance: any;
+  pendingWithdraw: any;
+  totalWithdraw: any;
+  addRejectForm: FormGroup;
 
   constructor(
-    // private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
-    this.adminId = sessionStorage.getItem("adminId");
+    this.affilateId=sessionStorage.getItem("affilateId")
+    this.email=sessionStorage.getItem("email")
+    this.first_name=sessionStorage.getItem("first_name")
+    this.last_name=sessionStorage.getItem("last_name")
+    this.phone=sessionStorage.getItem("phone")
+    this.aId=sessionStorage.getItem("aId")
+     this.bankdetails = 
+    sessionStorage.getItem("bankDetails");
+    console.log(sessionStorage.getItem("aId"),"aId ")
   }
 
   ngOnInit() {
-    // this.getCompanyName()
-    this.getPackages();
+    this.getWallet();
 
     this.dtOptions = {
-      // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
+   
 
-    //Add clients form
-    this.addPackageForm = this.formBuilder.group({
-      name: ["", [Validators.required]],
-      code: ["", [Validators.required]],
-      codeValue: ["", [Validators.required]],
-      validFrom: ["", [Validators.required]],
-      validTill: ["", [Validators.required]],
-      status: ["", [Validators.required]],
-    });
-
-    //Edit Clients Form
-    this.editPackageForm = this.formBuilder.group({
-      editname: ["", [Validators.required]],
-      editcode: ["", [Validators.required]],
-      editcodeValue: ["", [Validators.required]],
-      editvalidFrom: ["", [Validators.required]],
-      editvalidTill: ["", [Validators.required]],
-      editstatus: ["", [Validators.required]],
-    });
   }
 
   ngAfterViewInit(): void {
@@ -88,17 +91,48 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   //Get all Clients data
-  public getPackages() {
+  public getWallet() {
+    let id=this.affilateId
+    
     this.http
-      .get("http://localhost:8443/mainadmin/promocode/getPackages")
-      .subscribe((res: any[]) => {
-        this.data = res;
-        this.filtereddata = res;
-        this.srch = [...this.data];
-        console.log(this.data, "???????????//");
+      .get("http://localhost:8443/affiliates/affiliate/getAffiliateWallet"+"/"+id)
+      .subscribe((res: any) => {
+        this.currentBalance=res.current_balance
+        this.totalBalance=res.total_balance
+        this.pendingWithdraw=res.pending_withdraw
+        this.totalWithdraw=res.total_withdraw
+        console.log(res, "Get Wallet");
       });
   }
 
+  requestAmount(val) {
+
+    
+      this.actualAmount = val;
+      this.newAmount = this.actualAmount * 0.1
+      this.withdrawalAmount=this.actualAmount-this.newAmount
+  
+  }
+
+  public paymentRequest(){
+    let obj = {
+      id:this.affilateId,
+      aId:this.aId,
+      bankDetails:this.bankdetails,
+      email:this.email,
+      fullName:this.first_name+" "+this.last_name,
+      phone:this.phone,
+      amount:this.actualAmount
+    };
+    this.http
+
+      .post(
+        "http://localhost:8443/affiliates/affiliate/createPaymentRequest" ,obj
+      )
+      .subscribe((res: any) => {
+        console.log(res, "abc");
+      });
+  }
   //reset form
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -109,153 +143,11 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       }
     });
   }
-  // Edit client
-  public onEditClient(id: any) {
-    this.editId = id;
-    let pkg = this.data.filter((item) => item.id == id);
-    console.log("edit recards kkkk", pkg);
-    this.editPackageForm.patchValue({
-      editname: pkg[0]?.name,
-      editcode: pkg[0]?.code,
-      editcodeValue: pkg[0]?.codeValue,
-      editvalidFrom: pkg[0]?.validFrom,
-      editvalidTill: pkg[0]?.validTill,
-      editstatus: pkg[0]?.status,
-    });
-  }
-  //Reset form
-  public resetForm() {
-    this.addPackageForm.reset();
-  }
+  
 
-  // Save Client
-  public onSave() {
-    if (this.editPackageForm.invalid) {
-      this.markFormGroupTouched(this.editPackageForm);
-      return;
-    }
-    let editFromDate = this.pipe.transform(
-      this.addPackageForm.value.validFrom,
-      "dd-MM-yyyy"
-    );
-    let editTillDate = this.pipe.transform(
-      this.addPackageForm.value.validTill,
-      "dd-MM-yyyy"
-    );
-    let obj = {
-      editname: this.editPackageForm.value.editname,
-      editcode: this.editPackageForm.value.editcode,
-      editcodeValue: this.editPackageForm.value.editcodeValue,
-      editvalidFrom: editFromDate,
-      editvalidTill: editTillDate,
-      status: this.editPackageForm.value.editstatus,
-    };
-    let id = this.editId;
-    this.http
-      .patch(
-        "http://localhost:8443/mainadmin/promocode/updatePackage" + "/" + id,
-        obj
-      )
-      .subscribe((data) => {
-        this.getPackages();
-      });
-
-    $("#edit_client").modal("hide");
-    this.editPackageForm.reset();
-    this.toastr.success("Package updated sucessfully...!", "Success");
-  }
-
-  //Add new client
-  public onAddPackage() {
-    if (this.addPackageForm.invalid) {
-      this.markFormGroupTouched(this.addPackageForm);
-      return;
-    }
-    let editFromDate = this.pipe.transform(
-      this.addPackageForm.value.validFrom,
-      "dd-MM-yyyy"
-    );
-    let editTillDate = this.pipe.transform(
-      this.addPackageForm.value.validTill,
-      "dd-MM-yyyy"
-    );
-    let obj = {
-      name: this.addPackageForm.value.name,
-      code: this.addPackageForm.value.code,
-      codeValue: this.addPackageForm.value.codeValue,
-      validFrom: editFromDate,
-      validTill: editTillDate,
-      status: this.addPackageForm.value.status,
-    };
-    //console.log("mydata>>>>>>>>", newClient);
-    this.http
-      .post("http://localhost:8443/mainadmin/promocode/createPackage", obj)
-      .subscribe((data) => {
-        //console.log("postApi", data);
-        this.getPackages();
-      });
-
-    $("#add_client").modal("hide");
-    this.addPackageForm.reset();
-    this.toastr.success("Offer Added sucessfully...!", "Success");
-  }
-
-  //Delete Client
-  onDelete() {
-    // this.allModulesService.delete(this.tempId, "clients").subscribe((data) => {
-    let id = this.tempId;
-    this.http
-      .patch(
-        "http://localhost:8443/mainadmin/promocode/deletePackage" + "/" + id,
-        {}
-      )
-      .subscribe((data: any) => {
-        this.getPackages();
-      });
-
-    $("#delete_client").modal("hide");
-    this.toastr.success("Offer deleted sucessfully...!", "Success");
-  }
-
-  //search by name
-  searchID(val) {
-    if (val) {
-      this.data.splice(0, this.filtereddata.length);
-      let temp = this.srch.filter(function (d) {
-        val = val.toLowerCase();
-
-        return (
-          d.name.toLowerCase().indexOf(val) !== -1 ||
-          !val ||
-          d.code.toLowerCase().indexOf(val) !== -1 ||
-          !val
-        );
-      });
-
-      this.data.push(...temp);
-    } else {
-      this.getPackages();
-    }
-  }
-  //date
-
-  //getting the status value
-  getStatus(val, id) {
-    let obj = {
-      status: val,
-    };
-    this.http
-      .patch(
-        "http://localhost:8443/mainadmin/promocode/UpdateStatus" + "/" + id,
-        obj
-      )
-      .subscribe((data: any) => {
-        this.getPackages();
-      });
-  }
+ 
 
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
 }
