@@ -14,14 +14,15 @@ export class AffilateAuthenticationService {
   ) {
     sessionStorage.setItem("currentUser", "loggedin");
     sessionStorage.setItem("user_type", "affiliate");
-    sessionStorage.setItem("affilateId", id);
+
+    sessionStorage.setItem("affiliateId", id);
     sessionStorage.setItem("bankDetails", JSON.stringify(bankDetails));
     sessionStorage.setItem("email", email);
     sessionStorage.setItem("first_name", first_name);
     sessionStorage.setItem("last_name", last_name);
     sessionStorage.setItem("phone", phone);
     sessionStorage.setItem("aId", aId);
-    //
+
     return true;
   }
 

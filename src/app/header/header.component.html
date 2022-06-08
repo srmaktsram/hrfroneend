@@ -244,12 +244,41 @@
         <ng-container *ngIf="user_type == 'employee'">
           <span>Employee</span>
         </ng-container>
+        <ng-container *ngIf="user_type == 'affiliate'">
+          <span>Affiliate</span>
+        </ng-container>
+        <ng-container *ngIf="user_type == 'client'">
+          <span>Client</span>
+        </ng-container>
       </a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" routerLink="/layout/employees/employeeprofile">My Profile</a>
-        <a class="dropdown-item" routerLink="/layout/settings/company-settings">Settings</a>
-        <a class="dropdown-item" (click)="Logout()">Logout</a>
-      </div>
+      <ng-container *ngIf="user_type == 'admin'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/layout/settings/company-settings">Settings</a>
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="user_type == 'employee'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/layout/employees/employeeprofile">My Profile</a>
+          <a class="dropdown-item" routerLink="/layout/settings/company-settings">Settings</a>
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="user_type == 'client'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/layout/employees/employeeprofile">My Profile</a>
+          <a class="dropdown-item" routerLink="/layout/settings/company-settings">Settings</a>
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="user_type == 'affiliate'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/layout/affiliates/settings">Settings</a>
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+     
+      
     </li>
   </ul>
   <!-- /Header Menu -->
