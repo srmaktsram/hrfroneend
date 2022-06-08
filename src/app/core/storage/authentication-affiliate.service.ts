@@ -13,7 +13,7 @@ export class AffilateAuthenticationService {
   ) {
     sessionStorage.setItem("currentUser", "loggedin");
     sessionStorage.setItem("user_type", "affiliate");
-    sessionStorage.setItem("affilateId", id);
+    sessionStorage.setItem("affiliateId", id);
     // sessionStorage.setItem("username", username);
     // sessionStorage.setItem("email", email);
     // sessionStorage.setItem("firstName", firstName);
