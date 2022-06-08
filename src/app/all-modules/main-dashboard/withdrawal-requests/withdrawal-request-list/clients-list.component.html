@@ -34,6 +34,21 @@
     </div>
   </div>
   <!-- /Page Header -->
+  <!-- Search Filter -->
+  <div class="row filter-row">
+    <div class="col-sm-6 col-md-3">
+      <div class="form-group form-focus">
+        <input
+          type="text"
+          class="form-control floating"
+          #clientusername
+          (input)="search($event.target.value)"
+        />
+        <label class="focus-label">Enter details</label>
+      </div>
+    </div>
+  </div>
+  <!-- Search Filter -->
 
   <div class="row">
     <div class="col-md-12">
@@ -66,7 +81,7 @@
               <td>{{ item.amount - (item.amount * 10) / 100 }}</td>
               <td>{{ item.email }}</td>
               <td>{{ item.phone }}</td>
-              <td>{{ item.createDate}}</td>
+              <td>{{ item.createDate }}</td>
               <td>{{ item.bankDetails }}</td>
 
               <td>

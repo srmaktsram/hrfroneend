@@ -25,7 +25,6 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
   public adminId: any;
   public companiesList = [];
 
-
   public data = [];
   public srch = [];
   public statusValue;
@@ -56,9 +55,6 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
-    
-
-    
   }
 
   ngOnInit() {
@@ -71,11 +67,7 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
 
     this.addRejectForm = this.formBuilder.group({
       addRemark: ["", [Validators.required]],
-      
     });
-
-
-
   }
 
   ngAfterViewInit(): void {
@@ -86,57 +78,77 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
 
   public getPaymentRequest() {
     this.http
-      .get(
-        "http://localhost:8443/affiliates/affiliate/getPaymentRequest"
-      )
+      .get("http://localhost:8443/affiliates/affiliate/getPaymentRequest")
       .subscribe((res: any) => {
-        console.log(res,"Hello Requests")
+        console.log(res, "Hello Requests");
         this.data = res;
-        
-    });
+        this.srch = [...this.data];
+       
+      });
   }
 
   getPay() {
-       this.newAmount = this.actualAmount -(this.actualAmount*0.1)
-     let obj = {
+    this.newAmount = this.actualAmount - this.actualAmount * 0.1;
+    let obj = {
       status: "1",
-      withdrawAmount:this.newAmount
+      withdrawAmount: this.newAmount,
     };
     this.http
       .patch(
-        "http://localhost:8443/affiliates/affiliate/updatePaymentRequestPay" + "/" +this.id,obj
+        "http://localhost:8443/affiliates/affiliate/updatePaymentRequestPay" +
+          "/" +
+          this.id,
+        obj
       )
       .subscribe((res) => {
-        console.log(res,"updatePay")
+        console.log(res, "updatePay");
         this.getPaymentRequest();
       });
-      $("#delete_pay").modal("hide");
-      this.toastr.success("Pay Added", "Success");
-  } 
+    $("#delete_pay").modal("hide");
+    this.toastr.success("Pay Added", "Success");
+  }
 
   getReject() {
-    alert(this.id)
-     let obj = {
+    alert(this.id);
+    let obj = {
       status: "2",
-      remark:this.addRejectForm.value.addRemark
+      remark: this.addRejectForm.value.addRemark,
     };
     this.http
       .patch(
-        "http://localhost:8443/affiliates/affiliate/updatePaymentRequestReject" + "/" +this.id,obj
+        "http://localhost:8443/affiliates/affiliate/updatePaymentRequestReject" +
+          "/" +
+          this.id,
+        obj
       )
       .subscribe((res) => {
-        console.log(res,"updateReject")
+        console.log(res, "updateReject");
         this.getPaymentRequest();
       });
-      $("#add_holiday").modal("hide");
-      this.toastr.success("Reject request Added", "Success");
-     
-  } 
+    $("#add_holiday").modal("hide");
+    this.toastr.success("Reject request Added", "Success");
+  }
 
-
-
-
-  
+  //search by name
+  search(val) {
+    if (val) {
+      this.data.splice(0, this.data.length);
+      let temp = this.srch.filter(function (d) {
+        val = val.toLowerCase();
+        return (
+          d.email.toLowerCase().indexOf(val) !== -1 ||
+          !val ||
+          d.aId.toLowerCase().indexOf(val) !== -1 ||
+          !val ||
+          d.phone.toLowerCase().indexOf(val) !== -1 ||
+          !val
+        );
+      });
+      this.data.push(...temp);
+    } else {
+      this.getPaymentRequest();
+    }
+  }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
