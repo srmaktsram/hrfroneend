@@ -48,6 +48,7 @@
                                         <input name="ctl00$ContentPlaceHolder1$emp_count_lbl" type="text"
                                             value="{{PtMultiUser}}" readonly="readonly"
                                             id="ContentPlaceHolder1_emp_count_lbl" class="form-control" />
+
                                     </ng-container>
                                     <ng-container *ngIf="epMultiUser">
                                         <input name="ctl00$ContentPlaceHolder1$emp_count_lbl" type="text"
@@ -56,8 +57,31 @@
                                     </ng-container>
                                 </div>
                                 <div class="col-sm-4">
-                                    <span id="ContentPlaceHolder1_user_login_type_lbl" style="font-size:Large;">Multi
-                                        User</span>
+                                    <ng-container *ngIf="dSingleUser">
+                                        <span id="ContentPlaceHolder1_user_login_type_lbl"
+                                            style="font-size:14px;">Diamond(Single-User)
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="dMultiUser">
+                                        <span id="ContentPlaceHolder1_user_login_type_lbl"
+                                            style="font-size:14px;">Diamond(Multi-User)
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="PtSingleUser">
+                                        <span id="ContentPlaceHolder1_user_login_type_lbl"
+                                            style="font-size:14px;">Platinum(Single-User)
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="PtMultiUser">
+                                        <span id="ContentPlaceHolder1_user_login_type_lbl"
+                                            style="font-size:14px;">Platinum(Multi-User)
+                                        </span>
+                                    </ng-container>
+                                    <ng-container *ngIf="epMultiUser">
+                                        <span id="ContentPlaceHolder1_user_login_type_lbl"
+                                            style="font-size:14px;">Enterprise(Multi-User)
+                                        </span>
+                                    </ng-container>
                                 </div>
                             </div>
                             <br />
@@ -108,18 +132,20 @@
                                         id="ContentPlaceHolder1_login_TextBox" class="form-control"
                                         placeholder="CorporateID" maxlength="15" style="font-size: small;" />
                                 </div>
+
                                 <div class="col-sm-3">
                                     <input type="submit" name="ctl00$ContentPlaceHolder1$check_corporate_id_btn"
                                         value="Check ID" id="ContentPlaceHolder1_check_corporate_id_btn"
                                         class="btn btn-info checkButton" />
                                 </div>
-
                             </div>
+
                             <div class="row">
                                 <div class="col-sm-12">
 
                                 </div>
                             </div>
+
                             <br />
                             <div class="row">
                                 <div class="col-sm-5">
@@ -197,7 +223,6 @@
 
 
                             <div class="row">
-
                                 <div class="col-sm-4">
                                     <div class="row">
                                         <div class="col-sm">
@@ -303,7 +328,7 @@
                         routerLink="/pages/pricing" />
                 </div>
 
-                <div class=" col-sm ">
+                <div class="col-sm">
                     <div [hidden]="showPromo">
                         <mat-form-field class="example-form-field" appearance="fill">
                             <mat-label> Enter Promo Code</mat-label>

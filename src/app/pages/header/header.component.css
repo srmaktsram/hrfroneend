@@ -73,10 +73,7 @@ width:250px;
 	display: flex;
 	justify-content: center;
 }
-/* .all{
-	width:100%;
-	border: 5px solid black;
-} */
+
 .flexItems{
 	display:flex;
     justify-content:flex-end;
@@ -94,7 +91,6 @@ width:250px;
 	margin-top: -13px;
 	margin-left:100px;
 }
-
 .buttonDiv{
 	width:20%;
 }

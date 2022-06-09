@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
 
+
     this.totaldSingleMonthAmount = this.route.snapshot.queryParams["totaldSingleMonthAmount"];
     this.dSingleUser = this.route.snapshot.queryParams["dSingleUser"];
 
