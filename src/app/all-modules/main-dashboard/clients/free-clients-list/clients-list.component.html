@@ -7,7 +7,7 @@
         <h3 class="page-title">Clients</h3>
         <ul class="breadcrumb">
           <li class="breadcrumb-item">
-            <a routerLink="/layout/dashboard/admin">Dashboard</a>
+            <a routerLink="/layout/mainadmin/admindashboard">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Clients</li>
         </ul>
@@ -56,7 +56,7 @@
           #clientn
           (input)="searchByName($event.target.value)"
         />
-        <label class="focus-label">Search by user details </label>
+        <label class="focus-label">Search by user details</label>
       </div>
     </div>
     <div class="col-sm-6 col-md-3">
@@ -890,7 +890,7 @@
         <div class="modal-btn delete-action">
           <div class="row">
             <div class="col-6">
-              <a class="btn btn-primary continue-btn" (click)="onDelete()"
+              <a class="btn btn-primary continue-btn" 
                 >Delete</a
               >
             </div>

@@ -1,8 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { switchMap } from "rxjs/operators";
+import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
 
 // import { WebStorage } from "src/app/core/storage/web.storage";
 // import { HttpClient } from "@angular/common/http";
@@ -48,7 +50,11 @@ export class RegisterComponent implements OnInit {
     return this.form.controls;
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private adminAuthenticationService: AdminAuthenticationService
+  ) {}
 
   ngOnInit() {
     this.getip();
@@ -95,7 +101,7 @@ export class RegisterComponent implements OnInit {
     let password = this.form.value.password;
     let confirmPassword = this.form.value.confirmPassword;
     let location = this.location;
-    let status="Free"
+    let status = "Free";
     console.log(
       companyName,
       companySite,
@@ -131,10 +137,28 @@ export class RegisterComponent implements OnInit {
         username,
         password,
         location,
-        status
+        status,
       })
-      .subscribe((response: any) => {
-        console.log("result", response);
+      .subscribe((res: any) => {
+        console.log("result", res);
+        this.router.navigate(["/pages/pricing"]);
+
+        // location.replace("http://localhost:51245/layout/dashboard/admin");
+        this.adminAuthenticationService.login(
+          res.data.id,
+          res.data.corporateId,
+          res.data.companyEmail,
+          res.data.companyName,
+          res.data.companySite,
+          res.data.pinCode,
+          res.data.companyAddress,
+          res.data.phone,
+          res.data.mobile,
+          res.data.location,
+          res.data.cicon,
+          res.data.cinvoice,
+          res.data.cinvoicepre
+        );
       });
   }
   hideShow() {

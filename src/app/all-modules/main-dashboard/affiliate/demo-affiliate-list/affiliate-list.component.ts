@@ -45,6 +45,7 @@ export class DemoAffiliateListComponent implements OnInit, OnDestroy {
   searchName: any;
   public employeeId: any;
   searchCompany: any;
+  statusData: any;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
@@ -150,8 +151,25 @@ export class DemoAffiliateListComponent implements OnInit, OnDestroy {
         "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
         { status }
       )
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         this.getDemoAdmins();
+
+        this.statusData = res.status;
+        if (this.statusData == "Approve") {
+          
+        
+          let obj = {
+            id
+          };
+          this.http
+
+            .post(
+              "http://localhost:8443/affiliates/affiliate/createAffiliateWallet" ,obj
+            )
+            .subscribe((res: any) => {
+              console.log(res, "xxxxxx");
+            });
+        }
       });
   }
 
