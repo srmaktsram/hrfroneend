@@ -45,8 +45,15 @@ const routes: Routes = [
             (m) => m.AffiliateSettingsModule
           ),
       },
-    ],
-  },
+
+      {
+        path: "wallet-history",
+        loadChildren: () =>
+          import("./wallet-history/clients.module").then((m) => m.walletHistoryModule),
+      }
+     
+    ]
+  }
 ];
 
 @NgModule({
