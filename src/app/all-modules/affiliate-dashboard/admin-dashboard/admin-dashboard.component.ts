@@ -50,10 +50,15 @@ export class AffiliateAdminDashboardComponent implements OnInit {
   tempDate1: any;
   tempDate2: any;
   createYear: any;
-  SalesArray= [];
+  SalesArray = [];
+  aId: string;
+  affilateUrl: string;
 
   constructor(private http: HttpClient) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.aId = sessionStorage.getItem("aId");
+    alert(this.aId);
+    this.affilateUrl = `http://localhost:4200/pages/affilate/affilatereg?aid=${this.aId}`;
   }
 
   ngOnInit() {
@@ -83,8 +88,6 @@ export class AffiliateAdminDashboardComponent implements OnInit {
       resize: true,
       lineColors: [this.lineColors.a, this.lineColors.b],
     };
-
-    
   }
   public getInvoiceRevenue() {
     this.http
@@ -97,15 +100,15 @@ export class AffiliateAdminDashboardComponent implements OnInit {
         this.tempYear = this.tempDate2[2];
 
         let EstimateTotal = 0;
-        
+
         for (let i = 0; i < data.length; i++) {
           let createDateTime = data[i].createDate.split(" ");
           let createDateSplit = createDateTime[0].split("-");
           this.createYear = createDateSplit[2];
-         
+
           if (this.createYear == this.tempYear) {
             EstimateTotal = EstimateTotal + parseInt(data[i].grandTotal);
-            
+
             if (i == data.length - 1) {
               let totalEstimate = EstimateTotal;
 
@@ -115,20 +118,16 @@ export class AffiliateAdminDashboardComponent implements OnInit {
           } else {
             let totalEstimate = EstimateTotal;
 
-            
             let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
 
             this.EstimateArray.push(obj);
-
-           
 
             let currentDateTime = data[i].createDate.split(" ");
             let currentDate = currentDateTime[0].split("-");
             this.tempYear = currentDate[2];
             EstimateTotal = parseInt(data[i].grandTotal);
 
-
-            if (i == data.length-1) {
+            if (i == data.length - 1) {
               let totalEstimate = EstimateTotal;
 
               let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
@@ -155,13 +154,12 @@ export class AffiliateAdminDashboardComponent implements OnInit {
         for (let i = 0; i < data.length; i++) {
           let createDateTime = data[i].createDate.split(" ");
           let createDateSplit = createDateTime[0].split("-");
-         let createYear = createDateSplit[2];
-          
-          
+          let createYear = createDateSplit[2];
+
           if (createYear == temYear) {
             EstimateTotal = EstimateTotal + parseInt(data[i].grandTotal);
-            totalCount=totalCount+1
-          
+            totalCount = totalCount + 1;
+
             if (i == data.length - 1) {
               let totalEstimate = EstimateTotal;
 
@@ -169,24 +167,18 @@ export class AffiliateAdminDashboardComponent implements OnInit {
               this.SalesArray.push(obj);
             }
           } else {
-           let totalEstimate = EstimateTotal;
+            let totalEstimate = EstimateTotal;
 
-            
             let obj = { y: temYear, b: totalEstimate, a: totalCount };
             this.SalesArray.push(obj);
-
-          
-            
 
             let currentDateTime = data[i].createDate.split(" ");
             let currentDate = currentDateTime[0].split("-");
             temYear = currentDate[2];
             EstimateTotal = parseInt(data[i].grandTotal);
-            totalCount=1
+            totalCount = 1;
 
-            if (i == data.length-1) {
-             
-
+            if (i == data.length - 1) {
               let obj = { y: temYear, b: totalEstimate, a: totalCount };
               this.SalesArray.push(obj);
             }
@@ -201,11 +193,10 @@ export class AffiliateAdminDashboardComponent implements OnInit {
     this.http
       .get("http://localhost:8443/mainadmin/affiliate/getAllAffiliate")
       .subscribe((res: any) => {
-        console.log(res,"kkkk")
+        console.log(res, "kkkk");
         this.data = res;
       });
   }
-
 
   public getPremiumAdmins() {
     this.http

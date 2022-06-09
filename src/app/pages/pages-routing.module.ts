@@ -13,6 +13,7 @@ import { ProfileComponent } from './profile/profile.component';
 
 
 
+
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
   { path: "pricing", component: PricingComponent },
@@ -23,17 +24,14 @@ const routes: Routes = [
   { path: "profile", component: ProfileComponent },
   { path: "hr_registration", component: HrregistrationComponent },
   {
-    path: "affilate",
+    path: "affiliate",
     loadChildren: () =>
-      import("./affilate/affilate.module").then(
-        (m) => m.AffilateModule
-      ),
+      import("./affiliate/affiliate.module").then((m) => m.AffilateModule),
   },
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}

@@ -242,6 +242,6 @@ export class AffilateRegComponent implements OnInit {
   }
 
   resetForm() {
-    this.router.navigate(["/pages/affilate"]);
+    this.router.navigate(["/login/affiliatelogin"]);
   }
 }
