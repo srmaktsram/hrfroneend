@@ -15,7 +15,6 @@ export class CheckoutComponent implements OnInit {
 
   totalUser: any;
 
-
   public checkoutForm: FormGroup;
   public showPromo = true;
   public corporateId: any;
@@ -24,6 +23,7 @@ export class CheckoutComponent implements OnInit {
   public companyName: any;
   public tl: any;
   ordersId: any;
+  packageName: any;
   _window(): any {
     return window;
   }
@@ -38,7 +38,6 @@ export class CheckoutComponent implements OnInit {
     private http: HttpClient
   ) {
     this.corporateId = sessionStorage.getItem("corporateId");
-
   }
 
   ngOnInit() {
