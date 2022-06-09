@@ -24,13 +24,15 @@ export class ProfileSettingsComponent implements OnInit {
       "------------------------->"
     );
     this.profileSettings = this.formBuilder.group({
-      bankName: ["", [Validators.required]],
-      branchName: ["", [Validators.required]],
-      accountHolderName: ["", [Validators.required]],
-      accountNumber: ["", [Validators.required]],
-      ifsc: ["", [Validators.required]],
-      phone: ["", [Validators.required]],
+      firstName: ["", [Validators.required]],
+      lastName: ["", [Validators.required]],
+      address: ["", [Validators.required]],
+      country: ["", [Validators.required]],
+      state: ["", [Validators.required]],
+      city: ["", [Validators.required]],
+      pinCode: ["", [Validators.required]],
       email: ["", [Validators.required]],
+      phone: ["", [Validators.required]],
     });
     this.getBankDetails();
   }

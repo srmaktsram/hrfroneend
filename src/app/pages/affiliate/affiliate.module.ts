@@ -3,13 +3,13 @@ import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 import { ReactiveFormsModule } from "@angular/forms";
 // import { SharedModule } from '../../shared/shared.module';
-import { AffilateRegComponent } from "./affilateReg/affilatereg.component";
-import { AffilateComponent } from "./affilate.component";
+import { AffilateRegComponent } from "./affiliateReg/affilatereg.component";
+import { AffilateComponent } from "./affiliate.component";
 import { SharingModule } from "src/app/sharing/sharing.module";
 
 export const routes = [
   { path: "", component: AffilateComponent, pathMatch: "full" },
-  { path: "affilatereg", component: AffilateRegComponent },
+  { path: "affiliate-registration", component: AffilateRegComponent },
 ];
 
 @NgModule({

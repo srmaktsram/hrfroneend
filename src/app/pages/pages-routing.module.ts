@@ -1,14 +1,9 @@
-
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { CheckoutComponent } from './checkout/checkout.component';
-import { HeaderComponent } from './header/header.component';
-import { HomeComponent } from './home/home.component';
-import { PricingComponent } from './pricing/pricing.component';
-
-
-
-
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { CheckoutComponent } from "./checkout/checkout.component";
+import { HeaderComponent } from "./header/header.component";
+import { HomeComponent } from "./home/home.component";
+import { PricingComponent } from "./pricing/pricing.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
@@ -17,17 +12,14 @@ const routes: Routes = [
   { path: "header", component: HeaderComponent },
   { path: "checkout", component: CheckoutComponent },
   {
-    path: "affilate",
+    path: "affiliate",
     loadChildren: () =>
-      import("./affilate/affilate.module").then(
-        (m) => m.AffilateModule
-      ),
+      import("./affiliate/affiliate.module").then((m) => m.AffilateModule),
   },
-
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class PagesRoutingModule { }
+export class PagesRoutingModule {}
