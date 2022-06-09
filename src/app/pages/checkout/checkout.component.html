@@ -29,12 +29,14 @@
                                         :-</span>
                                 </div>
                                 <div class=" col-sm-4 float-left">
+
                                         <input  type="text"
                                             value="{{totalUser}}" readonly="readonly" 
                                              class="form-control"  />
                                 </div>
                                 <div class="col-sm-4">                                  
                                         <span id="ContentPlaceHolder1_user_login_type_lbl" style="font-size:14px;">{{packageName}}</span>                    
+
                                 </div>
                             </div>
                             <br />
@@ -61,18 +63,22 @@
                                         id="ContentPlaceHolder1_login_TextBox" class="form-control"  readonly="readonly" 
                                        value="{{corporateId}}" maxlength="15" style="font-size: small;" />
                                 </div>
-                                <!-- <div class="col-sm-3">
+
+
+                                <div class="col-sm-3">
                                     <input type="submit" name="ctl00$ContentPlaceHolder1$check_corporate_id_btn"
                                         value="Check ID" id="ContentPlaceHolder1_check_corporate_id_btn"
                                         class="btn btn-info checkButton" />
-                                </div> -->
+                                </div>
 
                             </div>
+
                             <div class="row">
                                 <div class="col-sm-12">
 
                                 </div>
                             </div>
+
                             <br />
                             <div class="row">
                                 <div class="col-sm-5">
@@ -150,7 +156,6 @@
 
 
                             <div class="row">
-
                                 <div class="col-sm-4">
                                     <div class="row">
                                         <div class="col-sm">
@@ -256,7 +261,7 @@
                         routerLink="/pages/pricing" />
                 </div>
 
-                <div class=" col-sm ">
+                <div class="col-sm">
                     <div [hidden]="showPromo">
                         <mat-form-field class="example-form-field" appearance="fill">
                             <mat-label> Enter Promo Code</mat-label>
@@ -274,19 +279,5 @@
     </div>
     <div class="col-sm-2"></div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <app-footer></app-footer>

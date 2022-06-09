@@ -6,7 +6,10 @@ import { Router } from "@angular/router";
   styleUrls: ["./pricing.component.css"],
 })
 export class PricingComponent implements OnInit {
-  check = true;
+
+
+  check = true
+
 
   public corporateId: any;
   public PtSingleUserMonth: any;
@@ -18,6 +21,7 @@ export class PricingComponent implements OnInit {
   public mobile: any;
   public companyName: any;
   public address: any;
+
 
   public dSingleMonthCost = 10;
   public dMultiMonthCost = 15;
@@ -31,11 +35,14 @@ export class PricingComponent implements OnInit {
   public dMultiUser: any;
   public epMultiUser: any;
 
+
   public totalPtSingleMonthAmount: any;
   public totalPtMultiMonthAmount: any;
   public totaldSingleMonthAmount: any;
   public totaldMultiMonthAmount: any;
   public totalEpMonthAmount: any;
+
+
 
   public ptSingleoneMonthAmount: any;
   public ptMultioneMonthAmount: any;
@@ -43,7 +50,10 @@ export class PricingComponent implements OnInit {
   public dSingleoneMonthAmount: any;
   public dMultioneMonthAmount: any;
 
-  constructor(private router: Router) {}
+
+  constructor(private router: Router) {
+  }
+
 
   ngOnInit() {}
 
@@ -67,10 +77,13 @@ export class PricingComponent implements OnInit {
       this.dMultiUser = event;
       this.dMultioneMonthAmount = this.dMultiMonthCost * this.dMultiUser;
     }
-    if (val == "epMulti") {
+
+
+    if (val == 'epMulti') {
       this.epMultiUser = event;
-      console.log(this.epMultiUser, "<<<<<<<<<<<<<<>>>>>>>>>>");
-      this.epMultioneMonthAmount = this.epMultiMonthCost * this.epMultiUser;
+      this.epMultioneMonthAmount = (this.epMultiMonthCost * this.epMultiUser)
+
+
     }
   }
   getPlan(val, val2) {
