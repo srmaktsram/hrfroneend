@@ -31,6 +31,12 @@ const routes: Routes = [
         loadChildren: () =>
           import("./withdrawal-history/clients.module").then((m) => m.withdrawalHistoryModule),
       },
+
+      {
+        path: "wallet-history",
+        loadChildren: () =>
+          import("./wallet-history/clients.module").then((m) => m.walletHistoryModule),
+      },
       // {
       //   path: "tickets",
       //   loadChildren: () =>
