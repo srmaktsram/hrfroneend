@@ -55,7 +55,7 @@ export class PricingComponent implements OnInit {
   }
 
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   getUser(event, val) {
     if (val == "ptSingle") {
