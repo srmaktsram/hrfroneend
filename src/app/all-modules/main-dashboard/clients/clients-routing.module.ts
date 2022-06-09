@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ClientsComponent } from './clients.component';
-import { DemoClientsListComponent } from './free-clients-list/clients-list.component';
-import { VisitorClientsListComponent } from './visitor-clients-list/clients-list.component';
-import { PremiumClientsListComponent } from './premium-clients-list/clients-list.component';
+import { DemoClientsListComponent } from './free-clients-list/free-clients-list.component';
+import { VisitorClientsListComponent } from './visitor-clients-list/visitor-clients-list.component';
+import { PremiumClientsListComponent } from './premium-clients-list/premium-clients-list.component';
 import { ClientsProfileComponent } from './clients-profile/clients-profile.component';
 const routes: Routes = [
   {

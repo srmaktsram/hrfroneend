@@ -1,0 +1,330 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="page-title">Welcome Affiliate</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+            <div class="card-body">
+                <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+                <div class="dash-widget-info">
+                    <h3>{{premiumClientsCount}}</h3>
+                    <span>Total Premium Clients</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+            <div class="card-body">
+                <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                <div class="dash-widget-info">
+                    <h3>{{freeClientsCount}}</h3>
+                    <span>Total Free Clients</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+            <div class="card-body">
+                <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+                <div class="dash-widget-info">
+                    <h3>{{premiumTodayClientsCount}}</h3>
+                    <span>Today Premium Clients</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+        <div class="card dash-widget">
+            <div class="card-body">
+                <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+                <div class="dash-widget-info">
+                    <h3>{{freeTodayClientsCount}}</h3>
+                    <span>Today Free Clients</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-6 text-center">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Total Revenue</h3>
+              <div
+                mk-morris-js
+                [options]="chartOptions"
+                [data]="chartData"
+                type="Bar"
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 text-center">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Sales Overview</h3>
+              <div
+                mk-morris-js
+                [options]="lineOption"
+                [data]="lineData"
+                type="Line"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ////////////////////////////////////////// Invoices Table ////////////////////////////////////////////////////// -->
+
+  <div class="row">
+    <div class="col-md-6 d-flex">
+      <div class="card card-table flex-fill">
+        <div class="card-header">
+          <h3 class="card-title mb-0">Invoices</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-nowrap custom-table mb-0">
+              <thead>
+                <tr>
+                  <th>Invoice ID</th>
+                  <th>Client</th>
+                  <th>Due Date</th>
+                  <th>Total</th>
+                  <th>Invoice Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of invoices">
+                  <td>
+                    <a routerLink="/layout/accounts/invoice-view">{{
+                      item.number
+                    }}</a>
+                  </td>
+                  <td>
+                    <h2>
+                      <a>{{ item.client }}</a>
+                    </h2>
+                  </td>
+                  <td>{{ item.due_date }}</td>
+                  <td>{{ item.grandTotal }}</td>
+                  <td>
+                    <span class="badge bg-inverse-warning">{{
+                      item.invoiceType
+                    }}</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a routerLink="/layout/mainadmin/accounts/invoices">View all invoices</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ////////////////////////////////////////// Payments Table //////////////////////////////////////// -->
+
+    <div class="col-md-6 d-flex">
+      <div class="card card-table flex-fill">
+        <div class="card-header">
+          <h3 class="card-title mb-0">Payments</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table custom-table table-nowrap mb-0">
+              <thead>
+                <tr>
+                  <th>Invoice ID</th>
+                  <th>Client</th>
+                  <th>Payment Type</th>
+                  <th>Paid Date</th>
+                  <th>Paid Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of AllPayments">
+                  <td>
+                    <a routerLink="/layout/accounts/invoice-view">{{
+                      item.number
+                    }}</a>
+                  </td>
+                  <td>
+                    <h2>
+                      <a>{{ item.client }}</a>
+                    </h2>
+                  </td>
+                  <td>Razor Pay</td>
+                  <td>{{ item.createDate }}</td>
+                  <td>{{ item.grandTotal }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a routerLink="/layout/mainadmin/accounts/payments">View all payments</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ////////////////////////////////////////  CLIENTS Table////////////////////////////////////////////////////////////// -->
+
+  <div class="row">
+    <div class="col-md-6 d-flex">
+      <div class="card card-table flex-fill">
+        <div class="card-header">
+          <h3 class="card-title mb-0">Clients</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table custom-table mb-0">
+              <thead>
+                <tr>
+                  <th> Company Name</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of data">
+                  <td>
+                    <h2 class="table-avatar">
+                      <a
+                        routerLink="/layout/employees/employeeprofile"
+                        class="avatar"
+                        ><img alt="" src="assets/img/profiles/avatar-5.jpg"
+                      /></a>
+                      <a routerLink="/layout/employees/employeeprofile"
+                        >{{ item.companyName }} <span>{{ item.role }}</span></a
+                      >
+                    </h2>
+                  </td>
+                  <td>{{ item.email }}</td>
+                  <td>
+                    <div class="dropdown action-label">
+                      <a
+                        class="btn btn-white btn-sm btn-rounded"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        
+                          <i class="fa fa-dot-circle-o text-success">{{
+                            item.status
+                          }}</i>
+                       
+                        
+                         
+                      </a>
+                      <!-- <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
+                                                    Active</a>
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                                    Inactive</a>
+                                            </div> -->
+                    </div>
+                  </td>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a routerLink="/layout/mainadmin/clients/premiumclients">View all clients</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- //////////////////////////////////////  Affiliate Tables ///////////////////////////////////////////////////////////////////// -->
+
+    <div class="col-md-6 d-flex">
+      <div class="card card-table flex-fill">
+        <div class="card-header">
+          <h3 class="card-title mb-0">Affiliates</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table custom-table mb-0">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of data">
+                  <td>
+                    <h2 class="table-avatar">
+                      <a
+                        routerLink="/layout/employees/employeeprofile"
+                        class="avatar"
+                        ><img alt="" src="assets/img/profiles/avatar-5.jpg"
+                      /></a>
+                      <a routerLink="/layout/employees/employeeprofile"
+                        >{{ item.company }} <span>{{ item.role }}</span></a
+                      >
+                    </h2>
+                  </td>
+                  <td>{{ item.email }}</td>
+                  <td>
+                    <div class="dropdown action-label">
+                      <a
+                        class="btn btn-white btn-sm btn-rounded"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                      >
+                        
+                          <i class="fa fa-dot-circle-o text-success">{{
+                            item.status
+                          }}</i>
+                        
+                        
+                         
+                      </a>
+                      <!-- <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
+                                                    Active</a>
+                                                <a class="dropdown-item"><i class="fa fa-dot-circle-o text-danger"></i>
+                                                    Inactive</a>
+                                            </div> -->
+                    </div>
+                  </td>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card-footer">
+          <a routerLink="/layout/mainadmin/affiliates/premiumaffiliate">View all affiliates</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->

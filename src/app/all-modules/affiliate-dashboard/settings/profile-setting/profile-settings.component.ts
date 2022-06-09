@@ -14,70 +14,91 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./profile-settings.component.css"],
 })
 export class ProfileSettingsComponent implements OnInit {
-  public profileSettings: FormGroup;
-
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  public companySettings: FormGroup;
+  current_location: any;
+  companyEmail: string;
+  companySite: string;
+  companyName: string;
+  phone: string;
+  mobile: string;
+  companyAddress: string;
+  adminId: string;
+  fax: string;
+  constructor(
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private http: HttpClient
+  ) {
+    this.current_location = JSON.parse(
+      sessionStorage.getItem("current_location")
+    );
+    this.adminId = sessionStorage.getItem("adminId");
+    this.companyName = sessionStorage.getItem("companyName");
+    this.companyEmail = sessionStorage.getItem("companyEmail");
+    this.companySite = sessionStorage.getItem("companySite");
+    this.companyAddress = sessionStorage.getItem("companyAddress");
+    this.phone = sessionStorage.getItem("phone");
+    this.mobile = sessionStorage.getItem("mobile");
+    this.fax = sessionStorage.getItem("fax");
+  }
 
   ngOnInit() {
-    console.log(
-      sessionStorage.getItem("affiliateId"),
-      "------------------------->"
-    );
-    this.profileSettings = this.formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
+    console.log(this.current_location);
+
+    this.companySettings = this.formBuilder.group({
+      companyName: ["", [Validators.required]],
+      contactPerson: ["", [Validators.required]],
       address: ["", [Validators.required]],
       country: ["", [Validators.required]],
-      state: ["", [Validators.required]],
       city: ["", [Validators.required]],
-      pinCode: ["", [Validators.required]],
+      state: ["", [Validators.required]],
+      postalCode: ["", [Validators.required]],
       email: ["", [Validators.required]],
-      phone: ["", [Validators.required]],
+      phoneNumber: ["", [Validators.required]],
+      mobileNumber: ["", [Validators.required]],
+      fax: [""],
+      website: ["", [Validators.required]],
     });
-    this.getBankDetails();
   }
+  private markFormGroupTouched(formGroup: FormGroup) {
+    (<any>Object).values(formGroup.controls).forEach((control) => {
+      control.markAsTouched();
+      if (control.controls) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+  submitCompany() {
+    if (this.companySettings.invalid) {
+      this.markFormGroupTouched(this.companySettings);
+      return;
+    } else if (this.companySettings.valid) {
+      let obj = this.companySettings.value;
 
-  getBankDetails() {
-    this.http
-      .get(
-        "http://localhost:8443/affiliate/settings/getBankDetails" +
-          "/" +
-          sessionStorage.getItem("affiliateId")
-      )
-      .subscribe((response: any) => {
-        let res: any = response.data;
-        this.profileSettings.patchValue({
-          bankName: res.bankName,
-          branchName: res.branchName,
-          accountHolderName: res.accountHolderName,
-          accountNumber: res.accountNumber,
-          ifsc: res.ifsc,
-          phone: res.phone,
-          email: res.email,
+      console.log("new details", obj);
+      this.http
+        .patch(
+          "http://localhost:8443/admin/companysetting/updateCompanyDetails" +
+            "/" +
+            this.adminId,
+          obj
+        )
+        .subscribe((res: any) => {
+          console.log("---->>>>>>>>>>>>>>>>>>>", res);
+          sessionStorage.setItem("companyEmail", res.companyEmail);
+          sessionStorage.setItem("companyName", res.companyName);
+          sessionStorage.setItem("phone", res.phone);
+          sessionStorage.setItem("mobile", res.mobile);
+          sessionStorage.setItem("companySite", res.companySite);
+          sessionStorage.setItem("fax", res.fax);
+          sessionStorage.setItem("companyAddress", res.companyAddress);
+          sessionStorage.setItem(
+            "current_location",
+            JSON.stringify(res.location)
+          );
         });
-      });
-  }
-  updateBankDetails() {
-    console.log(this.profileSettings.value, "--------------->>>");
-    let obj = {
-      bankName: this.profileSettings.value.bankName,
-      branchName: this.profileSettings.value.branchName,
-      accountHolderName: this.profileSettings.value.accountHolderName,
-      accountNumber: this.profileSettings.value.accountNumber,
-      ifsc: this.profileSettings.value.ifsc,
-      phone: this.profileSettings.value.phone,
-      email: this.profileSettings.value.email,
-    };
-    this.http
-      .patch(
-        "http://localhost:8443/affiliate/settings/updateBankDetails" +
-          "/" +
-          sessionStorage.getItem("affiliateId"),
-        { obj }
-      )
-      .subscribe((res: any) => {
-        console.log(res);
-        this.getBankDetails();
-      });
+      window.location.reload();
+      this.toastr.success("Company Details Updated Sucessfully", "Success");
+    }
   }
 }
