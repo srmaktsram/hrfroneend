@@ -12,8 +12,9 @@ import { FormGroup, FormControl } from "@angular/forms";
 export class CheckoutComponent implements OnInit {
   totalAmount: any;
   dMultiUser: any;
+
   totalUser: any;
-  public packageName: any;
+
 
   public checkoutForm: FormGroup;
   public showPromo = true;
@@ -38,8 +39,6 @@ export class CheckoutComponent implements OnInit {
   ) {
     this.corporateId = sessionStorage.getItem("corporateId");
 
-    // this.email=sessionStorage.getItem("email");
-    // this.mobile=sessionStorage.getItem("mobile");
   }
 
   ngOnInit() {

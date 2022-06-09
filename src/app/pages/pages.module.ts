@@ -13,11 +13,14 @@ import { SidenavMenuComponent } from './sidenav-menu/sidenav-menu.component';
 import { PagesComponent } from './pages.component';
 import { HeaderComponent } from './header/header.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ProductsComponent } from './products/products.component';
+import { HrregistrationComponent } from './hr_Registration/hr_registration.component';
 
 
 
 @NgModule({
-  declarations: [HomeComponent, HeaderComponent, PricingComponent, FooterComponent, SidenavMenuComponent, PagesComponent, CheckoutComponent],
+  declarations: [HomeComponent, HeaderComponent, PricingComponent, FooterComponent, SidenavMenuComponent, PagesComponent, CheckoutComponent, ProfileComponent, ProductsComponent, HrregistrationComponent],
   imports: [
     CommonModule,
     PagesRoutingModule,
