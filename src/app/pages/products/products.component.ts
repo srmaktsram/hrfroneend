@@ -12,15 +12,20 @@ import { AdminAuthenticationService } from "src/app/core/storage/authentication-
 export class ProductsComponent implements OnInit {
   AllProductList: any;
   public corporateId: any;
-  constructor(private http: HttpClient, private adminAuthenticationService: AdminAuthenticationService, private router: Router) { }
+  constructor(private http: HttpClient, private adminAuthenticationService: AdminAuthenticationService, private router: Router) {
 
-  ngOnInit() {
     this.corporateId = sessionStorage.getItem('corporateId')
 
   }
+
+  ngOnInit() {
+    this.getAllProduct();
+  }
   getAllProduct() {
+    console.log(this.corporateId, "corporatevjjhjfhj>>>>>>>>>>>")
     this.http.get("http://localhost:8443/checkout/getPremiumDetails" + "/" + this.corporateId).subscribe((res: any) => {
       this.AllProductList = res
+      console.log(this.AllProductList, "??????????????????????????????????????")
     })
   }
 
