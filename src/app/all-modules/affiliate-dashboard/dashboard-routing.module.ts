@@ -9,7 +9,10 @@ const routes: Routes = [
     path: "",
     component: DashboardComponent,
     children: [
-      { path: "affiliatedashboard", component: AffiliateAdminDashboardComponent },
+      {
+        path: "affiliatedashboard",
+        component: AffiliateAdminDashboardComponent,
+      },
 
       {
         path: "myleads",
@@ -19,7 +22,9 @@ const routes: Routes = [
       {
         path: "myconversion",
         loadChildren: () =>
-          import("./my-conversions/affiliate.module").then((m) => m.MyConversionsModule),
+          import("./my-conversions/affiliate.module").then(
+            (m) => m.MyConversionsModule
+          ),
       },
       {
         path: "my-wallet",
@@ -29,55 +34,26 @@ const routes: Routes = [
       {
         path: "withdrawalhistory",
         loadChildren: () =>
-          import("./withdrawal-history/clients.module").then((m) => m.withdrawalHistoryModule),
+          import("./withdrawal-history/clients.module").then(
+            (m) => m.withdrawalHistoryModule
+          ),
+      },
+      {
+        path: "settings",
+        loadChildren: () =>
+          import("./settings/settings.module").then(
+            (m) => m.AffiliateSettingsModule
+          ),
       },
 
       {
         path: "wallet-history",
         loadChildren: () =>
           import("./wallet-history/clients.module").then((m) => m.walletHistoryModule),
-      },
-      // {
-      //   path: "tickets",
-      //   loadChildren: () =>
-      //     import("./clicks/tickets.module").then((m) => m.ClicksModule),
-      // },
-      // {
-      //   path: "withdrawalrequests",
-      //   loadChildren: () =>
-      //     import("./withdrawal-requests/clients.module").then(
-      //       (m) => m.WithdrawalRequestModule
-      //     ),
-      // },
-      // {
-      //   path: "releasehistory",
-      //   loadChildren: () =>
-      //     import("./withdrawal-requests/clients.module").then(
-      //       (m) => m.WithdrawalRequestModule
-      //     ),
-      // },
-      // {
-      //   path: "pendingkyc",
-      //   loadChildren: () =>
-      //     import("./kyc/clients.module").then((m) => m.KycModule),
-      // },
-      // {
-      //   path: "verifykyc",
-      //   loadChildren: () =>
-      //     import("./kyc/clients.module").then((m) => m.KycModule),
-      // },
-      // {
-      //   path: "rejectkyc",
-      //   loadChildren: () =>
-      //     import("./kyc/clients.module").then((m) => m.KycModule),
-      // },
-      // {
-      //   path: "accounts",
-      //   loadChildren: () =>
-      //     import("./accounts/accounts.module").then((m) => m.AccountsModule),
-      // },
-    ],
-  },
+      }
+     
+    ]
+  }
 ];
 
 @NgModule({
