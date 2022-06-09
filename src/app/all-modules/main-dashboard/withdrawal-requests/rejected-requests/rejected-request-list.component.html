@@ -1,0 +1,113 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Rejected Requests</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/layout/mainadmin/admindashboard">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Rejected Requests</li>
+        </ul>
+      </div>
+      <div class="col-auto float-end ms-auto">
+        <div class="view-icons">
+          <a
+            routerLink="/layout/mainadmin/withdrawalrequests/withdrawalrequest"
+            class="list-view btn btn-link active"
+            ><i class="fa fa-bars"></i
+          ></a>
+          <a
+            routerLink="/layout/mainadmin/releasehistory/releasehistory"
+            class="list-view btn btn-link active"
+            ><i class="fa fa-bars"></i
+          ></a>
+          <a
+            routerLink="/layout/mainadmin/rejected-requests/rejected-requests"
+            class="list-view btn btn-link active"
+            ><i class="fa fa-bars"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table
+          datatable
+          [dtOptions]="dtOptions"
+          [dtTrigger]="dtTrigger"
+          id="datatable"
+          class="table table-striped custom-table datatable"
+        >
+          <thead>
+            <tr>
+              <th>Sr.no</th>
+              <th>Affiliate Id</th>
+              <th> Request Amount</th>
+              <th>Payout Amount</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Create Date</th>
+              <th>Update Date</th>
+              <th>Remark</th>
+              <th>Bank Details</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of data; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.aId }}</td>
+              <td>{{ item.amount }}</td>
+              <td>{{ item.amount - (item.amount * 10) / 100 }}</td>
+              <td>{{ item.email }}</td>
+              <td>{{ item.phone }}</td>
+              <td>{{ item.createDate }}</td>
+              <td>{{item.updateDate}}</td>
+              <td>{{item.remark}}</td>
+              <td>
+                <tr>
+                  A/c Holder
+                  <p>{{ item.bankDetails.accountHolderName }}</p>
+                </tr>
+                <tr>
+                  A/c No.
+                  <p>{{ item.bankDetails.accountNumber }}</p>
+                </tr>
+                <tr>
+                  Bank Name
+                  <p>{{ item.bankDetails.bankName }}</p>
+                </tr>
+                <tr>
+                  Branch
+                  <p>{{ item.bankDetails.branchName }}</p>
+                </tr>
+                <tr>
+                  IFSC Code
+                  <p>{{ item.bankDetails.ifsc }}</p>
+                </tr>
+                <tr>
+                  e-mail
+                  <p>{{ item.bankDetails.email }}</p>
+                </tr>
+                <tr>
+                  Phone
+                  <p>{{ item.bankDetails.phone }}</p>
+                </tr>
+              </td>
+
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->
