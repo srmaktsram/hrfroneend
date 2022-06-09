@@ -126,6 +126,7 @@ export class PricingComponent implements OnInit {
             totalUser: this.dSingleUser,
             corporate: this.corporateId,
             packageName: "Diamond(Single-User)",
+            days: this.dSingleUserMonth,
           },
           skipLocationChange: true,
         });
@@ -137,6 +138,7 @@ export class PricingComponent implements OnInit {
             totalUser: this.dMultiUser,
             corporate: this.corporateId,
             packageName: "Diamond(Multi-User)",
+            days: this.dMultiUserMonth,
           },
           skipLocationChange: true,
         });
@@ -148,6 +150,7 @@ export class PricingComponent implements OnInit {
             totalUser: this.epMultiUser,
             corporate: this.corporateId,
             packageName: "Enterprise(Multi-User)",
+            days: this.epMultiUserMonth,
           },
           skipLocationChange: true,
         });
@@ -159,6 +162,7 @@ export class PricingComponent implements OnInit {
             totalUser: this.PtSingleUser,
             corporate: this.corporateId,
             packageName: "Platinum(Single-User)",
+            days: this.PtSingleUserMonth,
           },
           skipLocationChange: true,
         });
@@ -170,6 +174,7 @@ export class PricingComponent implements OnInit {
             totalUser: this.PtMultiUser,
             corporate: this.corporateId,
             packageName: "Platinum(Multi-User)",
+            days: this.PtMultiUserMonth,
           },
           skipLocationChange: true,
         });
