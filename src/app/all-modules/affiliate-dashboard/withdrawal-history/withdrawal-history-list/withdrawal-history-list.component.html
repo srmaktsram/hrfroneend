@@ -1,0 +1,68 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Withdrawal History</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/layout/affiliates/affiliatedashboard">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Withdrawal history</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table
+          datatable
+          [dtOptions]="dtOptions"
+          [dtTrigger]="dtTrigger"
+          id="datatable"
+          class="table table-striped custom-table datatable"
+        >
+          <thead>
+            <tr>
+              <th>Sr.no</th>
+              <th>Affiliate Id</th>
+              <th>Request Amount</th>
+              <th>Payout Amount</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Create Date</th>
+              <th>Update Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let client of data; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ client.aId }}</td>
+              <td>{{ client.amount }}</td>
+              <td>{{ client.amount - (client.amount * 10) / 100 }}</td>
+              <td>{{ client.email }}</td>
+              <td>{{ client.phone }}</td>
+              <td>{{ client.createDate }}</td>
+              <td>{{ client.updateDate }}</td>
+              <ng-container *ngIf="client.status == 1">
+                <td class="text-success">Approved</td>
+              </ng-container>
+              <ng-container *ngIf="client.status == 0">
+                <td class="text-warning">Pending</td>
+              </ng-container>
+              <ng-container *ngIf="client.status == 2">
+                <td class="text-danger">Rejected</td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->

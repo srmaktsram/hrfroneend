@@ -26,7 +26,7 @@ const routes: Routes = [
       {
         path: "mainadmin",
         loadChildren: () =>
-          import("./main-dashboard/dashboard.module").then(
+          import("./main-dashboard/main-dashboard.module").then(
             (m) => m.MainDashboardModule
           ),
       },
@@ -40,7 +40,7 @@ const routes: Routes = [
       {
         path: "affiliates",
         loadChildren: () =>
-          import("./affiliate-dashboard/dashboard.module").then(
+          import("./affiliate-dashboard/affiliate-dashboard.module").then(
             (m) => m.AffiliateModule
           ),
       },

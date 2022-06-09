@@ -185,7 +185,7 @@ export class CheckoutComponent implements OnInit {
         }
       )
       .subscribe((res: any) => {
-        // console.log("this is the saveDetails>>>>>>>>>>", res);
+         console.log("this is the saveDetails>>>>>>>>>>", res);
       });
   }
 

@@ -162,7 +162,7 @@ export class PricingComponent implements OnInit {
         });
       }
     } else {
-      this.router.navigate(["/login/adminlogin"]);
+      this.router.navigate(["/login/register"]);
     }
   }
 }
