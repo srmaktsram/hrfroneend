@@ -23,6 +23,7 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   public editClientForm: FormGroup;
   public tempId: any;
   public adminId: any;
+  public aId: any;
   public companiesList = [];
 
   public data = [];
@@ -52,6 +53,8 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.aId = sessionStorage.getItem("aId");
+    console.log(this.aId,"aIddddd")
   }
 
   ngOnInit() {
@@ -70,7 +73,7 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   }
   getLeads() {
     this.http
-      .get("http://localhost:8443/affiliates/leads/getLeads")
+      .get("http://localhost:8443/affiliates/leads/getLeads"+"/"+this.aId)
       .subscribe((res: any) => {
         console.log(res,"Total Leads")
         this.leads = res;
