@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { param } from "jquery";
 import { FormGroup, FormControl } from "@angular/forms";
+import { CookieService } from "ngx-cookie-service";
 
 @Component({
   selector: "app-checkout",
@@ -35,7 +36,8 @@ export class CheckoutComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private cookieService: CookieService
   ) {
     this.corporateId = sessionStorage.getItem("corporateId");
   }
@@ -66,6 +68,7 @@ export class CheckoutComponent implements OnInit {
       email: this.checkoutForm.value.email,
       companyName: this.checkoutForm.value.companyName,
       address: this.checkoutForm.value.address,
+      aId: this.cookieService.get("aid"),
       status: "0",
     };
 
