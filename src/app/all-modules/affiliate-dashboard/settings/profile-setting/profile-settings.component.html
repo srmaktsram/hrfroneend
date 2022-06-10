@@ -7,150 +7,149 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3 class="page-title">Bank Settings</h3>
+                        <h3 class="page-title">Profile Settings</h3>
                     </div>
                 </div>
             </div>
             <!-- /Page Header -->
 
-            <form [formGroup]="bankSettings">
+            <form [formGroup]="profileSettings">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Bank Name <span class="text-danger">*</span></label>
+                            <label>First Name <span class="text-danger">*</span></label>
                             <input class="form-control" type="text" 
-                                [class.invalid]="companySettings.get('bankName').invalid && companySettings.get('bankName').touched"
-                                formControlName="bankName"[(ngModel)]="bankName">
+                                [class.invalid]="profileSettings.get('firstName').invalid && profileSettings.get('firstName').touched"
+                                formControlName="firstName">
                             <div
-                                *ngIf="companySettings.get('bankName').invalid && companySettings.get('bankName').touched">
+                                *ngIf="profileSettings.get('firstName').invalid && profileSettings.get('firstName').touched">
                                 <small
-                                    *ngIf="companySettings.get('bankName').invalid && companySettings.get('bankName').touched"
-                                    class="text-danger"> *Bank name is required</small>
+                                    *ngIf="profileSettings.get('firstName').invalid && profileSettings.get('firstName').touched"
+                                    class="text-danger"> *Name is required</small>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Brankch Name <span class="text-danger">*</span></label>
+                            <label>Last Name <span class="text-danger">*</span></label>
                             <input class="form-control" type="text" 
-                                [class.invalid]="companySettings.get('bankName').invalid && companySettings.get('branchName').touched"
-                                formControlName="branchName">
+                                [class.invalid]="profileSettings.get('lastName').invalid && profileSettings.get('lastName').touched"
+                                formControlName="lastName">
                             <div
-                                *ngIf="companySettings.get('branchName').invalid && companySettings.get('branchName').touched">
+                                *ngIf="profileSettings.get('lastName').invalid && profileSettings.get('lastName').touched">
                                 <small
-                                    *ngIf="companySettings.get('branchName').invalid && companySettings.get('branchName').touched"
-                                    class="text-danger"> *Branch name is required</small>
+                                    *ngIf="profileSettings.get('lastName').invalid && profileSettings.get('lastName').touched"
+                                    class="text-danger"> *Last name is required</small>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Account Holder Name</label>
+                            <label>Address</label>
                             <input class="form-control "  type="text"
-                                [class.invalid]="companySettings.get('accountHolderName').invalid && companySettings.get('accountHolderName').touched"
-                                formControlName="accountHolderName" >
+                                [class.invalid]="profileSettings.get('address').invalid && profileSettings.get('address').touched"
+                                formControlName="address" >
                             <div
-                                *ngIf="companySettings.get('accountHolderName').invalid && companySettings.get('accountHolderName').touched">
+                                *ngIf="profileSettings.get('address').invalid && profileSettings.get('address').touched">
                                 <small
-                                    *ngIf="companySettings.get('accountHolderName').invalid && companySettings.get('accountHolderName').touched"
-                                    class="text-danger"> *Contact person is required</small>
+                                    *ngIf="profileSettings.get('address').invalid && profileSettings.get('address').touched"
+                                    class="text-danger"> *Address is required</small>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
+              
+                
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Account No.</label>
+                            <label>Country</label>
                             <input class="form-control"
                                 type="text"
-                                [class.invalid]="companySettings.get('accountNumber').invalid && companySettings.get('accountNumber').touched"
-                                formControlName="accountNumber" >
+                                [class.invalid]="profileSettings.get('country').invalid && profileSettings.get('country').touched"
+                                formControlName="country" >
                             <div
-                                *ngIf="companySettings.get('accountNumber').invalid && companySettings.get('accountNumber').touched">
+                                *ngIf="profileSettings.get('country').invalid && profileSettings.get('country').touched">
                                 <small
-                                    *ngIf="companySettings.get('accountNumber').invalid && companySettings.get('accountNumber').touched"
-                                    class="text-danger"> *Account Number is required</small>
+                                    *ngIf="profileSettings.get('country').invalid && profileSettings.get('country').touched"
+                                    class="text-danger"> *Country is required</small>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label>IFSC Code</label>
+                            <label>State</label>
                             <input class="form-control"
-                                [class.invalid]="companySettings.get('ifsc').invalid && companySettings.get('ifsc').touched"
-                                formControlName="ifsc" >
+                                [class.invalid]="profileSettings.get('state').invalid && profileSettings.get('state').touched"
+                                formControlName="state" >
                                 
                             <div
-                                *ngIf="companySettings.get('ifsc').invalid && companySettings.get('ifsc').touched">
+                                *ngIf="profileSettings.get('state').invalid && profileSettings.get('state').touched">
                                 <small
-                                    *ngIf="companySettings.get('ifsc').invalid && companySettings.get('ifsc').touched"
-                                    class="text-danger"> *IFSC Code is required</small>
+                                    *ngIf="profileSettings.get('state').invalid && profileSettings.get('state').touched"
+                                    class="text-danger"> *State is required</small>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Account phone No</label>
+                            <label>City</label>
                             <input class="form-control"  type="text"
-                                [class.invalid]="companySettings.get('phone').invalid && companySettings.get('phone').touched"
-                                formControlName="phone" >
-                            <div *ngIf="companySettings.get('phone').invalid && companySettings.get('phone').touched">
+                                [class.invalid]="profileSettings.get('city').invalid && profileSettings.get('city').touched"
+                                formControlName="city" >
+                            <div *ngIf="profileSettings.get('city').invalid && profileSettings.get('city').touched">
                                 <small
-                                    *ngIf="companySettings.get('phone').invalid && companySettings.get('phone').touched"
+                                    *ngIf="profileSettings.get('city').invalid && profileSettings.get('city').touched"
+                                    class="text-danger"> *city is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Pin Code</label>
+                            <input class="form-control"  type="text"
+                                [class.invalid]="profileSettings.get('city').invalid && profileSettings.get('city').touched"
+                                formControlName="pinCode" >
+                            <div *ngIf="profileSettings.get('pinCode').invalid && profileSettings.get('pinCode').touched">
+                                <small
+                                    *ngIf="profileSettings.get('pinCode').invalid && profileSettings.get('pinCode').touched"
+                                    class="text-danger"> *Pin Code is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 ">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control"
+                                [class.invalid]="profileSettings.get('email').invalid && profileSettings.get('email').touched"
+                                formControlName="email">
+                                
+                            <div *ngIf="profileSettings.get('email').invalid && profileSettings.get('email').touched">
+                                <small
+                                    *ngIf="profileSettings.get('email').invalid && profileSettings.get('email').touched"
+                                    class="text-danger"> *Email is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 ">
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input class="form-control"
+                                [class.invalid]="profileSettings.get('phone').invalid && profileSettings.get('phone').touched"
+                                formControlName="phone">
+                                
+                            <div *ngIf="profileSettings.get('phone').invalid && profileSettings.get('phone').touched">
+                                <small
+                                    *ngIf="profileSettings.get('phone').invalid && profileSettings.get('phone').touched"
                                     class="text-danger"> *Phone is required</small>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3">
-                        <div class="form-group">
-                            <label>Account Email</label>
-                            <input class="form-control"
-                                [class.invalid]="companySettings.get('email').invalid && companySettings.get('email').touched"
-                                formControlName="email" [(ngModel)]="current_location.region">
-                                
-                            <div *ngIf="companySettings.get('email').invalid && companySettings.get('email').touched">
-                                <small
-                                    *ngIf="companySettings.get('email').invalid && companySettings.get('email').touched"
-                                    class="text-danger"> *Email is required</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-6 col-lg-3">
-                        <div class="form-group">
-                            <label>Postal Code</label>
-                            <input class="form-control"  type="text"
-                                [class.invalid]="companySettings.get('postalCode').invalid && companySettings.get('postalCode').touched"
-                                formControlName="postalCode" [(ngModel)]="current_location.postal">
-                            <div
-                                *ngIf="companySettings.get('postalCode').invalid && companySettings.get('postalCode').touched">
-                                <small
-                                    *ngIf="companySettings.get('postalCode').invalid && companySettings.get('postalCode').touched"
-                                    class="text-danger"> *Postal code is required</small>
-                            </div>
-                        </div>
-                    </div>
+                  
                 </div>
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input class="form-control" placeholder="bank@srmakts.com" type="email"
-                                [class.invalid]="companySettings.get('email').invalid && companySettings.get('email').touched"
-                                formControlName="email" [(ngModel)]="companyEmail">
-                            <div *ngIf="companySettings.get('email').invalid && companySettings.get('email').touched">
-                                <small
-                                    *ngIf="companySettings.get('email').invalid && companySettings.get('email').touched"
-                                    class="text-danger"> *Email is required</small>
-                            </div>
-                        </div>
-                    </div>
-                   
-                </div>
+                
                
                 
                 <div class="submit-section">
-                    <button class="btn btn-primary submit-btn" (click)="submitCompany()">Update</button>
+                    <button class="btn btn-primary submit-btn" (click)="updateProfileDetails()">Update</button>
                 </div>
             </form>
         </div>

@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res);
         if (res.result == 2) {
-          this.router.navigate(["/pages/pricing"]);
+          this.router.navigate(["/layout/dashboard/admin"]);
           // location.replace("http://localhost:51245/layout/dashboard/admin");
           this.adminAuthenticationService.login(
             res.data.id,
