@@ -16,7 +16,7 @@ import { PremiumClientsListComponent } from "./premium-clients-list/premium-clie
     ClientsProfileComponent,
     VisitorClientsListComponent,
     DemoClientsListComponent,
-    PremiumClientsListComponent
+    PremiumClientsListComponent,
   ],
   imports: [
     CommonModule,

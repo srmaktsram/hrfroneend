@@ -1,40 +1,37 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { ClientsComponent } from './clients.component';
-import { DemoClientsListComponent } from './free-clients-list/free-clients-list.component';
-import { VisitorClientsListComponent } from './visitor-clients-list/visitor-clients-list.component';
-import { PremiumClientsListComponent } from './premium-clients-list/premium-clients-list.component';
-import { ClientsProfileComponent } from './clients-profile/clients-profile.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { ClientsComponent } from "./clients.component";
+import { DemoClientsListComponent } from "./free-clients-list/free-clients-list.component";
+import { VisitorClientsListComponent } from "./visitor-clients-list/visitor-clients-list.component";
+import { PremiumClientsListComponent } from "./premium-clients-list/premium-clients-list.component";
+import { ClientsProfileComponent } from "./clients-profile/clients-profile.component";
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: ClientsComponent,
     children: [
-      
       {
-        path: 'democlients',
-        component: DemoClientsListComponent
+        path: "democlients",
+        component: DemoClientsListComponent,
       },
       {
-        path: 'visitorclients',
-        component: VisitorClientsListComponent
+        path: "visitorclients",
+        component: VisitorClientsListComponent,
       },
       {
-        path: 'premiumclients',
-        component: PremiumClientsListComponent
+        path: "premiumclients",
+        component: PremiumClientsListComponent,
       },
       {
-        path: 'clientsprofile/:id',
-        component: ClientsProfileComponent
+        path: "clientsprofile/:id",
+        component: ClientsProfileComponent,
       },
-
-
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ClientsRoutingModule { }
+export class ClientsRoutingModule {}
