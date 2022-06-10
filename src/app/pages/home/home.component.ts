@@ -1,15 +1,27 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+  constructor(
+    private cookieService: CookieService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-
+    const aid = this.route.snapshot.queryParamMap.get("aid");
+    if (aid) {
+      var now = new Date();
+      var time = now.getTime();
+      var expireTime = time + 300000;
+      now.setTime(expireTime);
+      this.cookieService.set("aid", aid, { expires: now });
+    }
+    alert(this.cookieService.get("aid"));
   }
 
   plusIcon1 = false;
@@ -20,7 +32,6 @@ export class HomeComponent implements OnInit {
   minusIcon2 = true;
   minusIcon3 = true;
 
-
   public FMGC = false;
   public Electronics = true;
   public Hardwere = true;
@@ -29,10 +40,8 @@ export class HomeComponent implements OnInit {
   public Pharma = true;
   public Transportation = true;
 
-
   showText(val) {
-
-    if (val === '1') {
+    if (val === "1") {
       this.plusIcon1 = true;
       this.plusIcon2 = false;
       this.plusIcon3 = false;
@@ -40,10 +49,9 @@ export class HomeComponent implements OnInit {
       this.minusIcon1 = false;
       this.minusIcon2 = true;
       this.minusIcon3 = true;
-
     }
 
-    if (val === '11') {
+    if (val === "11") {
       this.plusIcon1 = false;
       this.plusIcon2 = false;
       this.plusIcon3 = false;
@@ -51,71 +59,51 @@ export class HomeComponent implements OnInit {
       this.minusIcon1 = true;
       this.minusIcon2 = true;
       this.minusIcon3 = true;
-
-
     }
 
     ////////////////////////////////////////////////////////////
-
-    else if (val === '2') {
-
+    else if (val === "2") {
       this.plusIcon1 = false;
       this.plusIcon2 = true;
       this.plusIcon3 = false;
 
-
       this.minusIcon1 = true;
       this.minusIcon2 = false;
       this.minusIcon3 = true;
-
     }
 
-    if (val == '22') {
-
+    if (val == "22") {
       this.plusIcon1 = false;
       this.plusIcon2 = false;
       this.plusIcon3 = false;
 
-
       this.minusIcon1 = true;
       this.minusIcon2 = true;
       this.minusIcon3 = true;
-    }
-    else if (val === '3') {
-
-
+    } else if (val === "3") {
       this.plusIcon1 = false;
       this.plusIcon2 = false;
       this.plusIcon3 = true;
 
-
       this.minusIcon1 = true;
       this.minusIcon2 = true;
       this.minusIcon3 = false;
-
     }
-    if (val === '33') {
-
+    if (val === "33") {
       this.plusIcon1 = false;
       this.plusIcon2 = false;
       this.plusIcon3 = false;
 
-
       this.minusIcon1 = true;
       this.minusIcon2 = true;
       this.minusIcon3 = true;
-
-
     }
-
   }
 
   //////////////////////////////////////////////////////////////////////////////////////
 
   showComment(val) {
-
-    if (val == '1') {
-
+    if (val == "1") {
       this.FMGC = false;
       this.Electronics = true;
       this.Hardwere = true;
@@ -123,9 +111,7 @@ export class HomeComponent implements OnInit {
       this.Jewellary = true;
       this.Pharma = true;
       this.Transportation = true;
-
-    }
-    else if (val == '2') {
+    } else if (val == "2") {
       this.FMGC = true;
       this.Electronics = false;
       this.Hardwere = true;
@@ -133,9 +119,7 @@ export class HomeComponent implements OnInit {
       this.Jewellary = true;
       this.Pharma = true;
       this.Transportation = true;
-
-    }
-    else if (val == '3') {
+    } else if (val == "3") {
       this.FMGC = true;
       this.Electronics = true;
       this.Hardwere = false;
@@ -143,9 +127,7 @@ export class HomeComponent implements OnInit {
       this.Jewellary = true;
       this.Pharma = true;
       this.Transportation = true;
-
-    }
-    else if (val == '4') {
+    } else if (val == "4") {
       this.FMGC = true;
       this.Electronics = true;
       this.Hardwere = true;
@@ -153,9 +135,7 @@ export class HomeComponent implements OnInit {
       this.Jewellary = true;
       this.Pharma = true;
       this.Transportation = true;
-
-    }
-    else if (val == '5') {
+    } else if (val == "5") {
       this.FMGC = true;
       this.Electronics = true;
       this.Hardwere = true;
@@ -163,9 +143,7 @@ export class HomeComponent implements OnInit {
       this.Jewellary = false;
       this.Pharma = true;
       this.Transportation = true;
-
-    }
-    else if (val == '6') {
+    } else if (val == "6") {
       this.FMGC = true;
       this.Electronics = true;
       this.Hardwere = true;
@@ -173,9 +151,7 @@ export class HomeComponent implements OnInit {
       this.Jewellary = true;
       this.Pharma = false;
       this.Transportation = true;
-
-    }
-    else if (val == '7') {
+    } else if (val == "7") {
       this.FMGC = true;
       this.Electronics = true;
       this.Hardwere = true;
@@ -183,8 +159,6 @@ export class HomeComponent implements OnInit {
       this.Jewellary = true;
       this.Pharma = true;
       this.Transportation = false;
-
     }
-
   }
 }
