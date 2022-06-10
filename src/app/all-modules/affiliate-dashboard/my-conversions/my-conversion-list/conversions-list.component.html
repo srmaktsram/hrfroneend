@@ -35,55 +35,7 @@
     </div>
     <!-- /Page Header -->
   
-    <!-- Search Filter -->
-    <div class="row filter-row">
-      <!-- <div class="col-sm-6 col-md-3">
-        <div class="form-group form-focus">
-          <input
-            type="text"
-            class="form-control floating"
-            #id
-            (input)="searchID($event.target.value)"
-          />
-          <label class="focus-label">Client ID</label>
-        </div>
-      </div> -->
-      <div class="col-sm-6 col-md-3">
-        <div class="form-group form-focus">
-          <input
-            type="text"
-            class="form-control floating"
-            #clientn
-            (input)="searchByName($event.target.value)"
-          />
-          <label class="focus-label">Enter Details </label>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <div class="form-group form-focus select-focus">
-          <select
-            class="form-select floating form-control"
-            #companyn
-            
-          >
-            <option value="">Select Company</option>
-            <option *ngFor="let client of data">
-              {{ client.companyName }}
-            </option>
-          </select>
-          <label class="focus-label">Company</label>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <a
-          class="btn btn-success w-100"
-         
-        >
-          Search
-        </a>
-      </div>
-    </div>
-    <!-- Search Filter -->
+    
   
     <div class="row">
       <div class="col-md-12">

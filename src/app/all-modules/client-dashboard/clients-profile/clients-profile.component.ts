@@ -12,7 +12,7 @@ import { HttpClient } from "@angular/common/http";
 export class ClientsProfileComponent implements OnInit {
   public allClients = [];
   public client: any;
-  public clientData = [];
+  public clientData :any;
   public allProjects = [];
   public clientName: any;
   public clientId;
@@ -29,15 +29,19 @@ export class ClientsProfileComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.clientId = sessionStorage.getItem("clientId");
+    this.adminId = sessionStorage.getItem("adminId");
+    console.log(this.clientId,"ClientId")
+    console.log(this.adminId,"adminId")
   }
 
   ngOnInit() {
     this.http
       .get(
-        "http://localhost:8443/admin/clients/getClients" + "/" + this.clientId
+        "http://localhost:8443/admin/clients/getClient" + "/" + this.clientId
       )
       .subscribe((data: any) => {
-        this.client = data;
+        console.log(data,"Data")
+        this.clientData = data;
 
         this.projects();
       });
@@ -45,11 +49,12 @@ export class ClientsProfileComponent implements OnInit {
   projects() {
     this.http
       .get(
-        "http://localhost:8443/admin/projects/getAdminproject" +
+        "http://localhost:8443/admin/projects/getClientproject" +
           "/" +
-          this.adminId
+          this.adminId+"/"+this.clientId
       )
       .subscribe((res: any) => {
+        console.log(res,"projects")
         this.allProjects = res;
 
         this.project = this.allProjects.filter(
@@ -57,7 +62,7 @@ export class ClientsProfileComponent implements OnInit {
         );
 
         this.project.map((item) => {
-          console.log(item);
+          console.log(item,"item");
           if (item.lstTasks) {
             item.lstTasks.map((data) => {
               this.pendingTasks.push(data);

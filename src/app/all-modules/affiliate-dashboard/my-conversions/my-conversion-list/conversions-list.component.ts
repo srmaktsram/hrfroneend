@@ -23,6 +23,8 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   public editClientForm: FormGroup;
   public tempId: any;
   public adminId: any;
+  public aId: any;
+
   public companiesList = [];
 
   public data = [];
@@ -52,6 +54,8 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.aId = sessionStorage.getItem("aId");
+    console.log(this.aId,"aIddddd")
   }
 
   ngOnInit() {
@@ -71,7 +75,7 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
 
   getConversions() {
     this.http
-      .get("http://localhost:8443/affiliates/leads/getConversions")
+      .get("http://localhost:8443/affiliates/leads/getConversions"+"/"+this.aId)
       .subscribe((res: any) => {
         console.log(res,"Total Conversions")
         this.conversions = res;

@@ -1,0 +1,158 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3 class="page-title">Profile Settings</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+
+            <form [formGroup]="profileSettings">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>First Name <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" 
+                                [class.invalid]="profileSettings.get('firstName').invalid && profileSettings.get('firstName').touched"
+                                formControlName="firstName">
+                            <div
+                                *ngIf="profileSettings.get('firstName').invalid && profileSettings.get('firstName').touched">
+                                <small
+                                    *ngIf="profileSettings.get('firstName').invalid && profileSettings.get('firstName').touched"
+                                    class="text-danger"> *Name is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Last Name <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" 
+                                [class.invalid]="profileSettings.get('lastName').invalid && profileSettings.get('lastName').touched"
+                                formControlName="lastName">
+                            <div
+                                *ngIf="profileSettings.get('lastName').invalid && profileSettings.get('lastName').touched">
+                                <small
+                                    *ngIf="profileSettings.get('lastName').invalid && profileSettings.get('lastName').touched"
+                                    class="text-danger"> *Last name is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input class="form-control "  type="text"
+                                [class.invalid]="profileSettings.get('address').invalid && profileSettings.get('address').touched"
+                                formControlName="address" >
+                            <div
+                                *ngIf="profileSettings.get('address').invalid && profileSettings.get('address').touched">
+                                <small
+                                    *ngIf="profileSettings.get('address').invalid && profileSettings.get('address').touched"
+                                    class="text-danger"> *Address is required</small>
+                            </div>
+                        </div>
+                    </div>
+              
+                
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input class="form-control"
+                                type="text"
+                                [class.invalid]="profileSettings.get('country').invalid && profileSettings.get('country').touched"
+                                formControlName="country" >
+                            <div
+                                *ngIf="profileSettings.get('country').invalid && profileSettings.get('country').touched">
+                                <small
+                                    *ngIf="profileSettings.get('country').invalid && profileSettings.get('country').touched"
+                                    class="text-danger"> *Country is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>State</label>
+                            <input class="form-control"
+                                [class.invalid]="profileSettings.get('state').invalid && profileSettings.get('state').touched"
+                                formControlName="state" >
+                                
+                            <div
+                                *ngIf="profileSettings.get('state').invalid && profileSettings.get('state').touched">
+                                <small
+                                    *ngIf="profileSettings.get('state').invalid && profileSettings.get('state').touched"
+                                    class="text-danger"> *State is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input class="form-control"  type="text"
+                                [class.invalid]="profileSettings.get('city').invalid && profileSettings.get('city').touched"
+                                formControlName="city" >
+                            <div *ngIf="profileSettings.get('city').invalid && profileSettings.get('city').touched">
+                                <small
+                                    *ngIf="profileSettings.get('city').invalid && profileSettings.get('city').touched"
+                                    class="text-danger"> *city is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Pin Code</label>
+                            <input class="form-control"  type="text"
+                                [class.invalid]="profileSettings.get('city').invalid && profileSettings.get('city').touched"
+                                formControlName="pinCode" >
+                            <div *ngIf="profileSettings.get('pinCode').invalid && profileSettings.get('pinCode').touched">
+                                <small
+                                    *ngIf="profileSettings.get('pinCode').invalid && profileSettings.get('pinCode').touched"
+                                    class="text-danger"> *Pin Code is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 ">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input class="form-control"
+                                [class.invalid]="profileSettings.get('email').invalid && profileSettings.get('email').touched"
+                                formControlName="email">
+                                
+                            <div *ngIf="profileSettings.get('email').invalid && profileSettings.get('email').touched">
+                                <small
+                                    *ngIf="profileSettings.get('email').invalid && profileSettings.get('email').touched"
+                                    class="text-danger"> *Email is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 ">
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input class="form-control"
+                                [class.invalid]="profileSettings.get('phone').invalid && profileSettings.get('phone').touched"
+                                formControlName="phone">
+                                
+                            <div *ngIf="profileSettings.get('phone').invalid && profileSettings.get('phone').touched">
+                                <small
+                                    *ngIf="profileSettings.get('phone').invalid && profileSettings.get('phone').touched"
+                                    class="text-danger"> *Phone is required</small>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+                
+               
+                
+                <div class="submit-section">
+                    <button class="btn btn-primary submit-btn" (click)="updateProfileDetails()">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /Page Content -->
