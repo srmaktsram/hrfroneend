@@ -19,10 +19,7 @@ export class BankSettingsComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
 
   ngOnInit() {
-    console.log(
-      sessionStorage.getItem("affiliateId"),
-      "------------------------->"
-    );
+   
     this.bankSettings = this.formBuilder.group({
       bankName: ["", [Validators.required]],
       branchName: ["", [Validators.required]],
@@ -38,7 +35,7 @@ export class BankSettingsComponent implements OnInit {
   getBankDetails() {
     this.http
       .get(
-        "http://localhost:8443/affiliate/settings/getBankDetails" +
+        "http://localhost:8443/affiliates/settings/getBankDetails" +
           "/" +
           sessionStorage.getItem("affiliateId")
       )
@@ -56,7 +53,6 @@ export class BankSettingsComponent implements OnInit {
       });
   }
   updateBankDetails() {
-    console.log(this.bankSettings.value, "--------------->>>");
     let obj = {
       bankName: this.bankSettings.value.bankName,
       branchName: this.bankSettings.value.branchName,
@@ -68,13 +64,12 @@ export class BankSettingsComponent implements OnInit {
     };
     this.http
       .patch(
-        "http://localhost:8443/affiliate/settings/updateBankDetails" +
+        "http://localhost:8443/affiliates/settings/updateBankDetails" +
           "/" +
           sessionStorage.getItem("affiliateId"),
         { obj }
       )
       .subscribe((res: any) => {
-        console.log(res);
         this.getBankDetails();
       });
   }

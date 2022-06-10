@@ -14,91 +14,70 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./profile-settings.component.css"],
 })
 export class ProfileSettingsComponent implements OnInit {
-  public companySettings: FormGroup;
-  current_location: any;
-  companyEmail: string;
-  companySite: string;
-  companyName: string;
-  phone: string;
-  mobile: string;
-  companyAddress: string;
-  adminId: string;
-  fax: string;
-  constructor(
-    private formBuilder: FormBuilder,
-    private toastr: ToastrService,
-    private http: HttpClient
-  ) {
-    this.current_location = JSON.parse(
-      sessionStorage.getItem("current_location")
-    );
-    this.adminId = sessionStorage.getItem("adminId");
-    this.companyName = sessionStorage.getItem("companyName");
-    this.companyEmail = sessionStorage.getItem("companyEmail");
-    this.companySite = sessionStorage.getItem("companySite");
-    this.companyAddress = sessionStorage.getItem("companyAddress");
-    this.phone = sessionStorage.getItem("phone");
-    this.mobile = sessionStorage.getItem("mobile");
-    this.fax = sessionStorage.getItem("fax");
-  }
+  public profileSettings: FormGroup;
+
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
 
   ngOnInit() {
-    console.log(this.current_location);
-
-    this.companySettings = this.formBuilder.group({
-      companyName: ["", [Validators.required]],
-      contactPerson: ["", [Validators.required]],
+   
+    this.profileSettings = this.formBuilder.group({
+      firstName: ["", [Validators.required]],
+      lastName: ["", [Validators.required]],
       address: ["", [Validators.required]],
       country: ["", [Validators.required]],
-      city: ["", [Validators.required]],
       state: ["", [Validators.required]],
-      postalCode: ["", [Validators.required]],
+      city: ["", [Validators.required]],
+      pinCode: ["", [Validators.required]],
       email: ["", [Validators.required]],
-      phoneNumber: ["", [Validators.required]],
-      mobileNumber: ["", [Validators.required]],
-      fax: [""],
-      website: ["", [Validators.required]],
+      phone: ["", [Validators.required]],
     });
+    this.getprofileDetails();
   }
-  private markFormGroupTouched(formGroup: FormGroup) {
-    (<any>Object).values(formGroup.controls).forEach((control) => {
-      control.markAsTouched();
-      if (control.controls) {
-        this.markFormGroupTouched(control);
-      }
-    });
-  }
-  submitCompany() {
-    if (this.companySettings.invalid) {
-      this.markFormGroupTouched(this.companySettings);
-      return;
-    } else if (this.companySettings.valid) {
-      let obj = this.companySettings.value;
 
-      console.log("new details", obj);
-      this.http
-        .patch(
-          "http://localhost:8443/admin/companysetting/updateCompanyDetails" +
-            "/" +
-            this.adminId,
-          obj
-        )
-        .subscribe((res: any) => {
-          console.log("---->>>>>>>>>>>>>>>>>>>", res);
-          sessionStorage.setItem("companyEmail", res.companyEmail);
-          sessionStorage.setItem("companyName", res.companyName);
-          sessionStorage.setItem("phone", res.phone);
-          sessionStorage.setItem("mobile", res.mobile);
-          sessionStorage.setItem("companySite", res.companySite);
-          sessionStorage.setItem("fax", res.fax);
-          sessionStorage.setItem("companyAddress", res.companyAddress);
-          sessionStorage.setItem(
-            "current_location",
-            JSON.stringify(res.location)
-          );
+  getprofileDetails() {
+    this.http
+      .get(
+        "http://localhost:8443/affiliates/settings/getProfileDetails" +
+          "/" +
+          sessionStorage.getItem("affiliateId")
+      )
+      .subscribe((data: any) => {
+        let res: any =data;
+        
+        this.profileSettings.patchValue({
+          firstName: res.first_name,
+          lastName:  res.last_name,
+          address:  res.address,
+          country:  res.country,
+          state:  res.state,
+          city:  res.city,
+          pinCode:  res.zip,
+          email:  res.email,
+          phone:  res.phone,
         });
-      window.location.reload();
-      this.toastr.success("Company Details Updated Sucessfully", "Success");
-    }
+      });
+  }
+  updateProfileDetails() {
+    let obj = {
+      first_name: this.profileSettings.value.firstName,
+      last_name: this.profileSettings.value.lastName,
+      address: this.profileSettings.value.address,
+      country: this.profileSettings.value.country,
+      state: this.profileSettings.value.state,
+      city: this.profileSettings.value.city,
+      zip: this.profileSettings.value.pinCode,
+      email: this.profileSettings.value.email,
+      phone: this.profileSettings.value.phone,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/affiliates/settings/updateProfileDetails" +
+          "/" +
+          sessionStorage.getItem("affiliateId"),
+      obj 
+      )
+      .subscribe((res: any) => {
+         this.getprofileDetails();
+      });
   }
 }

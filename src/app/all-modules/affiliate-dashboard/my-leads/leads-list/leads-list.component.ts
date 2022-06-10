@@ -45,6 +45,7 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   public employeeId: any;
   searchCompany: any;
   conversions: any;
+  leads: any;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
@@ -54,11 +55,9 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.getCompanyName()
-    // this.getVisitorAdmins();
+    this.getLeads()
 
     this.dtOptions = {
-      // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
@@ -69,13 +68,15 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       this.dtTrigger.next();
     }, 1000);
   }
-  getConversions() {
+  getLeads() {
     this.http
-      .get("http://localhost:8443/mainadmin/affiliate/getRejectedAffiliate")
+      .get("http://localhost:8443/affiliates/leads/getLeads")
       .subscribe((res: any) => {
-        this.conversions = res;
+        console.log(res,"Total Leads")
+        this.leads = res;
       });
   }
+  
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
