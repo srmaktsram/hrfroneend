@@ -4,15 +4,28 @@ import { ClientsComponent } from "./clients.component";
 // import { ClientsContentPageComponent } from "./clients-content-page/clients-content-page.component";
 // import { ClientsListComponent } from "./clients-list/clients-list.component";
 import { ClientsProfileComponent } from "./clients-profile/clients-profile.component";
+import { ClientDashboardComponent } from "./client-dashboard/client-dashboard.component";
 const routes: Routes = [
   {
     path: "",
     component: ClientsComponent,
     children: [
       {
+        path: "client-dashboard",
+        component: ClientDashboardComponent,
+      },
+      {
         path: "clientsprofile",
         component: ClientsProfileComponent,
       },
+      {
+        path: "setting",
+        loadChildren: () =>
+          import("./settings/settings.module").then(
+            (m) => m.SettingsModule
+          ),
+      },
+      
     ],
   },
 ];

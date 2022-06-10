@@ -44,12 +44,16 @@ export class ClientLoginComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
-        console.log(res);
+        console.log(res,"hhhhhhhhhhhhhhhhh");
         let client = res.data;
         if (res.result == 2) {
           console.log(client.id);
-          this.clientAuthenticationService.login(client.id);
-          this.router.navigate(["/layout/client/clientsprofile"]);
+          console.log(client.adminId)
+          this.clientAuthenticationService.login(
+            client.id,
+            client.adminId
+            );
+          this.router.navigate(["/layout/client/client-dashboard"]);
         } else {
           alert("wrong Id or pass");
         }

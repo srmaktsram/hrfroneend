@@ -44,6 +44,8 @@ export class TaskBoardComponent implements OnInit {
   public lead=[];
   public editId:any;
   public teamMember=[];
+  public user_type = sessionStorage.getItem("user_type");
+
      public allTasks=[];
   projectId: any;
   projects: any;

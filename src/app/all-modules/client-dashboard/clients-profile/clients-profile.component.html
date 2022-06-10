@@ -5,10 +5,10 @@
     <div class="page-header">
         <div class="row">
             <div class="col-sm-12">
-                <h3 class="page-title">Profile</h3>
+                <h3 class="page-title"> My Details</h3>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Profile</li>
+                    <li class="breadcrumb-item"><a routerLink="/layout/client/client-dashboard">Dashboard</a></li>
+                    <li class="breadcrumb-item active"> All Details</li>
                 </ul>
             </div>
         </div>
@@ -31,10 +31,10 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="profile-info-left">
-                                        <h3 class="user-name m-t-0">{{client.companyName}}</h3>
-                                        <h5 class="company-role m-t-0 mb-0">{{client.firstName}} {{client.lastName}}</h5>
-                                        <small class="text-muted">{{ client.role}}</small>
-                                        <div class="staff-id">Employee ID : {{client.clientId}}</div>
+                                        <h3 class="user-name m-t-0">{{clientData.companyName}}</h3>
+                                        <h5 class="company-role m-t-0 mb-0">{{clientData.firstName}} {{clientData.lastName}}</h5>
+                                        <small class="text-muted">{{ clientData.role}}</small>
+                                        <div class="staff-id">Employee ID : {{clientData.clientId}}</div>
                                         <div class="staff-msg"><a routerLink="/layout/apps/chat" class="btn btn-custom">Send
                                                 Message</a></div>
                                     </div>
@@ -43,23 +43,23 @@
                                     <ul class="personal-info">
                                         <li>
                                             <span class="title">Phone:</span>
-                                            <span class="text"><a href="">{{client.phone}}</a></span>
+                                            <span class="text"><a href="">{{clientData.phone}}</a></span>
                                         </li>
                                         <li>
                                             <span class="title">Email:</span>
-                                            <span class="text"><a href="">{{client.email}}</a></span>
+                                            <span class="text"><a href="">{{clientData.email}}</a></span>
                                         </li>
                                         <li>
                                             <span class="title">Birthday:</span>
-                                            <span class="text">{{client.birthday}}</span>
+                                            <span class="text">{{clientData.birthday}}</span>
                                         </li>
                                         <li>
                                             <span class="title">Address:</span>
-                                            <span class="text">{{client.address}}</span>
+                                            <span class="text">{{clientData.address}}</span>
                                         </li>
                                         <li>
                                             <span class="title">Gender:</span>
-                                            <span class="text">{{client.gender}}</span>
+                                            <span class="text">{{clientData.gender}}</span>
                                         </li>
                                     </ul>
                                 </div>

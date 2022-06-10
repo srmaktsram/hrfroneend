@@ -1,150 +1,224 @@
 <!-- Page Content -->
 <div class="content container-fluid">
-
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="row">
-            <div class="col-sm-12">
-                <h3 class="page-title">{{projects.name}}</h3>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Task Board</li>
-                </ul>
-            </div>
-        </div>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row">
+      <div class="col-sm-12">
+        <h3 class="page-title">{{ projects.name }}</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/layout/dashboard/admin">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Task Board</li>
+        </ul>
+      </div>
     </div>
-    <!-- /Page Header -->
+  </div>
+  <!-- /Page Header -->
 
-    <div class="row board-view-header">
-        <div class="col-4">
-            <div class="pro-teams">
-                <div class="pro-team-lead">
-                    <h4>Lead</h4>
-                    <div class="avatar-group">
-                        <div class="avatar">
-                            <img class="avatar-img rounded-circle border border-white" alt="User Image"
-                                src="assets/img/profiles/avatar-9.jpg">
-                        </div>
-                        <div class="avatar">
-                            <img class="avatar-img rounded-circle border border-white" alt="User Image"
-                                src="assets/img/profiles/avatar-1.jpg">
-                        </div>
-                        <div class="avatar">
-                            <img class="avatar-img rounded-circle border border-white" alt="User Image"
-                                src="assets/img/profiles/avatar-3.jpg">
-                        </div>
-                        <div class="avatar">
-                            <a href="" class="avatar-title rounded-circle border border-white" data-bs-toggle="modal"
-                                data-bs-target="#assign_leader"><i class="fa fa-plus"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="pro-team-members">
-                    <h4>Team</h4>
-                    <div class="avatar-group">
-                        <div class="avatar">
-                            <img class="avatar-img rounded-circle border border-white" alt="User Image"
-                                src="assets/img/profiles/avatar-2.jpg">
-                        </div>
-                        <div class="avatar">
-                            <img class="avatar-img rounded-circle border border-white" alt="User Image"
-                                src="assets/img/profiles/avatar-9.jpg">
-                        </div>
-                        <div class="avatar">
-                            <img class="avatar-img rounded-circle border border-white" alt="User Image"
-                                src="assets/img/profiles/avatar-5.jpg">
-                        </div>
-                        <div class="avatar">
-                            <a href="" class="avatar-title rounded-circle border border-white" data-bs-toggle="modal"
-                                data-bs-target="#assign_user"><i class="fa fa-plus">T</i></a>
-                        </div>
-                    </div>
-                </div>
+  <div class="row board-view-header">
+    <div class="col-4">
+      <div class="pro-teams">
+        <div class="pro-team-lead">
+          <h4>Lead</h4>
+          <div class="avatar-group">
+            <div class="avatar">
+              <img
+                class="avatar-img rounded-circle border border-white"
+                alt="User Image"
+                src="assets/img/profiles/avatar-9.jpg"
+              />
             </div>
+            <div class="avatar">
+              <img
+                class="avatar-img rounded-circle border border-white"
+                alt="User Image"
+                src="assets/img/profiles/avatar-1.jpg"
+              />
+            </div>
+            <div class="avatar">
+              <img
+                class="avatar-img rounded-circle border border-white"
+                alt="User Image"
+                src="assets/img/profiles/avatar-3.jpg"
+              />
+            </div>
+            <ng-container *ngIf="user_type !== 'client'">
+              <div class="avatar">
+                <a
+                  href=""
+                  class="avatar-title rounded-circle border border-white"
+                  data-bs-toggle="modal"
+                  data-bs-target="#assign_leader"
+                  ><i class="fa fa-plus"></i
+                ></a>
+              </div>
+            </ng-container>
+          </div>
         </div>
-        <div class="col-8 text-end">
-            <!-- <a class="btn btn-white float-end ms-2" data-bs-toggle="modal" data-bs-target="#add_task_board"><i
+        <div class="pro-team-members">
+          <h4>Team</h4>
+          <div class="avatar-group">
+            <div class="avatar">
+              <img
+                class="avatar-img rounded-circle border border-white"
+                alt="User Image"
+                src="assets/img/profiles/avatar-2.jpg"
+              />
+            </div>
+            <div class="avatar">
+              <img
+                class="avatar-img rounded-circle border border-white"
+                alt="User Image"
+                src="assets/img/profiles/avatar-9.jpg"
+              />
+            </div>
+            <div class="avatar">
+              <img
+                class="avatar-img rounded-circle border border-white"
+                alt="User Image"
+                src="assets/img/profiles/avatar-5.jpg"
+              />
+            </div>
+            <ng-container *ngIf="user_type !== 'client'">
+              <div class="avatar">
+                <a
+                  href=""
+                  class="avatar-title rounded-circle border border-white"
+                  data-bs-toggle="modal"
+                  data-bs-target="#assign_user"
+                  ><i class="fa fa-plus">T</i></a
+                >
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-8 text-end">
+      <!-- <a class="btn btn-white float-end ms-2" data-bs-toggle="modal" data-bs-target="#add_task_board"><i
                     class="fa fa-plus"></i> Create List</a> -->
-            <a routerLink="/layout/projects/projectview/{{projects.projectId}}" class="btn btn-white float-end" title="View Board"><i
-                    class="fa fa-link"></i></a>
-        </div>
-
-        <div class="col-12">
-            <div class="pro-progress">
-                <div class="pro-progress-bar">
-                    <h4>Progress</h4>
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" [ngStyle]="{'width': progess}"></div>
-                    </div>
-                    <span (click)="getAllData()">{{progess}}</span>
-                </div>
-            </div>
-        </div>
+      <a
+        routerLink="/layout/projects/projectview/{{ projects.projectId }}"
+        class="btn btn-white float-end"
+        title="View Board"
+        ><i class="fa fa-link"></i
+      ></a>
     </div>
 
+    <div class="col-12">
+      <div class="pro-progress">
+        <div class="pro-progress-bar">
+          <h4>Progress</h4>
+          <div class="progress">
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+              [ngStyle]="{ width: progess }"
+            ></div>
+          </div>
+          <span (click)="getAllData()">{{ progess }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <div class="kanban-board card mb-0">
-        <div class="card-body">
-            <div class="kanban-cont">
-                <div class="kanban-list kanban-danger">
-                    <div class="kanban-header">
-                        <span class="status-title">Pending</span>
-                        <!-- <div class="dropdown kanban-action">
+  <div class="kanban-board card mb-0">
+    <div class="card-body">
+      <div class="kanban-cont">
+        <div class="kanban-list kanban-danger">
+          <div class="kanban-header">
+            <span class="status-title">Pending</span>
+            <!-- <div class="dropdown kanban-action">
                             <a href="" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
                             </a>
                            
                         </div> -->
+          </div>
+
+          <div
+            class="kanban-wrap"
+            cdkDropList
+            #pendingList="cdkDropList"
+            [cdkDropListData]="lstTasks"
+            [cdkDropListConnectedTo]="[progressList]"
+            (cdkDropListDropped)="onDrop($event)"
+          >
+            <div class="card panel" *ngFor="let task of lstTasks" cdkDrag>
+              <div class="kanban-box" [cdkDropListData]="task.id">
+                <div class="task-board-header">
+                  <span class="status-title"
+                    ><a>{{ task.taskName }}</a></span
+                  >
+                  <ng-container *ngIf="user_type !== 'client'">
+                    <div class="dropdown kanban-task-action">
+                      <a href="" data-bs-toggle="dropdown">
+                        <i class="fa fa-angle-down"></i>
+                      </a>
+                      <div class="dropdown-menu dropdown-menu-right">
+                        <a
+                          class="dropdown-item"
+                          data-bs-toggle="modal"
+                          data-bs-target="#edit_task_modal"
+                          (click)="editTasks(task.id)"
+                          >Edit</a
+                        >
+                        <a class="dropdown-item" (click)="deleteTask(task.id)"
+                          >Delete</a
+                        >
+                      </div>
                     </div>
-                    <div class="kanban-wrap" cdkDropList #pendingList="cdkDropList" [cdkDropListData]="lstTasks"
-                        [cdkDropListConnectedTo]="[progressList]" (cdkDropListDropped)="onDrop($event)">
-                        <div class="card panel" *ngFor="let task of lstTasks" cdkDrag>
-                            <div class="kanban-box"   [cdkDropListData]="task.id" >
-                                <div class="task-board-header">
-                                    <span class="status-title"><a >{{task.taskName}}</a></span>
-                                    <div class="dropdown kanban-task-action">
-                                        <a href="" data-bs-toggle="dropdown">
-                                            <i class="fa fa-angle-down"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#edit_task_modal" (click)="editTasks(task.id)" >Edit</a>
-                                            <a class="dropdown-item" (click)="deleteTask(task.id)">Delete</a>
-                                        </div>
-                                    </div>
-                                   
-                                </div>
-                                <div class="task-board-body">
-                                    <div class="kanban-info">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar" role="progressbar" style="width: 0.0%"
-                                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>0.0%</span>
-                                    </div>
-                                    <div class="kanban-footer">
-                                        <span class="task-info-cont">
-                                            <span class="task-date"><i class="fa fa-clock-o"></i>{{task.dueDate}}</span>
-                                            <span
-                                                class="task-priority badge bg-inverse-danger">{{task.taskPriority}}</span>
-                                        </span>
-                                        <span class="task-users">
-                                            <img src="assets/img/profiles/avatar-9.jpg" class="task-avatar" width="24"
-                                                height="24">
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="add-new-task">
-                        <a  data-bs-toggle="modal" data-bs-target="#add_task_modal">Add New Task</a>
-                    </div>
+                  </ng-container>
                 </div>
-                <div class="kanban-list kanban-info">
-                    <div class="kanban-header">
-                        <span class="status-title">Progress</span>
-                        <!-- <div class="dropdown kanban-action">
+                <div class="task-board-body">
+                  <div class="kanban-info">
+                    <div class="progress progress-xs">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 0%"
+                        aria-valuenow="20"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <span>0.0%</span>
+                  </div>
+                  <div class="kanban-footer">
+                    <span class="task-info-cont">
+                      <span class="task-date"
+                        ><i class="fa fa-clock-o"></i>{{ task.dueDate }}</span
+                      >
+                      <span class="task-priority badge bg-inverse-danger">{{
+                        task.taskPriority
+                      }}</span>
+                    </span>
+                    <span class="task-users">
+                      <img
+                        src="assets/img/profiles/avatar-9.jpg"
+                        class="task-avatar"
+                        width="24"
+                        height="24"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ng-container *ngIf="user_type !== 'client'">
+            <div class="add-new-task">
+              <a data-bs-toggle="modal" data-bs-target="#add_task_modal"
+                >Add New Task</a
+              >
+            </div>
+          </ng-container>
+        </div>
+        <div class="kanban-list kanban-info">
+          <div class="kanban-header">
+            <span class="status-title">Progress</span>
+            <!-- <div class="dropdown kanban-action">
                             <a href="" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
                             </a>
@@ -153,14 +227,22 @@
                                 <a class="dropdown-item">Delete</a>
                             </div>
                         </div> -->
-                    </div>
-                    <div class="kanban-wrap" cdkDropList #progressList="cdkDropList" [cdkDropListData]="lstProgress"
-                        [cdkDropListConnectedTo]="[pendingList,completedList]" (cdkDropListDropped)="onDrop($event)">
-                        <div class="card panel" *ngFor="let item of lstProgress" cdkDrag>
-                            <div class="kanban-box">
-                                <div class="task-board-header">
-                                    <span class="status-title"><a >{{item.taskName}}</a></span>
-                                    <!-- <div class="dropdown kanban-task-action">
+          </div>
+          <div
+            class="kanban-wrap"
+            cdkDropList
+            #progressList="cdkDropList"
+            [cdkDropListData]="lstProgress"
+            [cdkDropListConnectedTo]="[pendingList, completedList]"
+            (cdkDropListDropped)="onDrop($event)"
+          >
+            <div class="card panel" *ngFor="let item of lstProgress" cdkDrag>
+              <div class="kanban-box">
+                <div class="task-board-header">
+                  <span class="status-title"
+                    ><a>{{ item.taskName }}</a></span
+                  >
+                  <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
                                             <i class="fa fa-angle-down"></i>
                                         </a>
@@ -170,37 +252,48 @@
                                             <a class="dropdown-item" (click)="deleteTask(item.id)">Delete</a>
                                         </div>
                                     </div> -->
-                                </div>
-                                <div class="task-board-body">
-                                    <div class="kanban-info">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar" role="progressbar" style="width: 20%"
-                                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>20%</span>
-                                    </div>
-                                    <div class="kanban-footer">
-                                        <span class="task-info-cont">
-                                            <span class="task-date"><i class="fa fa-clock-o"></i>{{item.dueDate}}</span>
-                                            <span
-                                                class="task-priority badge bg-inverse-warning">{{item.taskPriority}}</span>
-                                        </span>
-                                        <span class="task-users">
-                                            <img src="assets/img/profiles/avatar-5.jpg" class="task-avatar" width="24"
-                                                height="24">
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                       
-                    </div>
-                   
                 </div>
-                <div class="kanban-list kanban-success">
-                    <div class="kanban-header">
-                        <span class="status-title">Completed</span>
-                        <!-- <div class="dropdown kanban-action">
+                <div class="task-board-body">
+                  <div class="kanban-info">
+                    <div class="progress progress-xs">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 20%"
+                        aria-valuenow="20"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <span>20%</span>
+                  </div>
+                  <div class="kanban-footer">
+                    <span class="task-info-cont">
+                      <span class="task-date"
+                        ><i class="fa fa-clock-o"></i>{{ item.dueDate }}</span
+                      >
+                      <span class="task-priority badge bg-inverse-warning">{{
+                        item.taskPriority
+                      }}</span>
+                    </span>
+                    <span class="task-users">
+                      <img
+                        src="assets/img/profiles/avatar-5.jpg"
+                        class="task-avatar"
+                        width="24"
+                        height="24"
+                      />
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="kanban-list kanban-success">
+          <div class="kanban-header">
+            <span class="status-title">Completed</span>
+            <!-- <div class="dropdown kanban-action">
                             <a href="" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
                             </a>
@@ -209,15 +302,26 @@
                                 <a class="dropdown-item">Delete</a>
                             </div>
                         </div> -->
-                    </div>
-                    <div class="kanban-wrap" cdkDropList #completedList="cdkDropList" [cdkDropListData]="lstCompleted"
-                        [cdkDropListConnectedTo]="[progressList,InprogressList]" (cdkDropListDropped)="onDrop($event)">
-                        <div class="card panel" *ngFor="let completed of lstCompleted" cdkDrag>
-                            <div class="kanban-box">
-                                <div class="task-board-header">
-                                    <span class="status-title"><a
-                                            >{{completed.taskName}}</a></span>
-                                    <!-- <div class="dropdown kanban-task-action">
+          </div>
+          <div
+            class="kanban-wrap"
+            cdkDropList
+            #completedList="cdkDropList"
+            [cdkDropListData]="lstCompleted"
+            [cdkDropListConnectedTo]="[progressList, InprogressList]"
+            (cdkDropListDropped)="onDrop($event)"
+          >
+            <div
+              class="card panel"
+              *ngFor="let completed of lstCompleted"
+              cdkDrag
+            >
+              <div class="kanban-box">
+                <div class="task-board-header">
+                  <span class="status-title"
+                    ><a>{{ completed.taskName }}</a></span
+                  >
+                  <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
                                             <i class="fa fa-angle-down"></i>
                                         </a>
@@ -227,39 +331,51 @@
                                             <a class="dropdown-item"  (click)="deleteTask(completed.id)">Delete</a>
                                         </div>
                                     </div> -->
-                                </div>
-                                <div class="task-board-body">
-                                    <div class="kanban-info">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar" role="progressbar" style="width: 100%"
-                                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>100%</span>
-                                    </div>
-                                    <div class="kanban-footer">
-                                        <span class="task-info-cont">
-                                            <span class="task-date"><i
-                                                    class="fa fa-clock-o"></i>{{completed.dueDate}}</span>
-                                            <span
-                                                class="task-priority badge bg-inverse-success">{{completed.taskPriority}}</span>
-                                        </span>
-                                        <span class="task-users">
-                                            <img src="assets/img/profiles/avatar-7.jpg" class="task-avatar" width="24"
-                                                height="24">
-                                            <!-- <span class="task-user-count">+2</span> -->
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   
                 </div>
+                <div class="task-board-body">
+                  <div class="kanban-info">
+                    <div class="progress progress-xs">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 100%"
+                        aria-valuenow="20"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <span>100%</span>
+                  </div>
+                  <div class="kanban-footer">
+                    <span class="task-info-cont">
+                      <span class="task-date"
+                        ><i class="fa fa-clock-o"></i
+                        >{{ completed.dueDate }}</span
+                      >
+                      <span class="task-priority badge bg-inverse-success">{{
+                        completed.taskPriority
+                      }}</span>
+                    </span>
+                    <span class="task-users">
+                      <img
+                        src="assets/img/profiles/avatar-7.jpg"
+                        class="task-avatar"
+                        width="24"
+                        height="24"
+                      />
+                      <!-- <span class="task-user-count">+2</span> -->
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                <div class="kanban-list kanban-warning">
-                    <div class="kanban-header">
-                        <span class="status-title">Inprogress</span>
-                        <!-- <div class="dropdown kanban-action">
+        <div class="kanban-list kanban-warning">
+          <div class="kanban-header">
+            <span class="status-title">Inprogress</span>
+            <!-- <div class="dropdown kanban-action">
                             <a href="" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
                             </a>
@@ -268,14 +384,22 @@
                                 <a class="dropdown-item">Delete</a>
                             </div>
                         </div> -->
-                    </div>
-                    <div class="kanban-wrap" cdkDropList #InprogressList="cdkDropList" [cdkDropListData]="lstInprogress"
-                        [cdkDropListConnectedTo]="[completedList,holdList]" (cdkDropListDropped)="onDrop($event)">
-                        <div class="card panel" *ngFor="let data of lstInprogress" cdkDrag>
-                            <div class="kanban-box">
-                                <div class="task-board-header">
-                                    <span class="status-title"><a >{{data.taskName}}</a></span>
-                                    <!-- <div class="dropdown kanban-task-action">
+          </div>
+          <div
+            class="kanban-wrap"
+            cdkDropList
+            #InprogressList="cdkDropList"
+            [cdkDropListData]="lstInprogress"
+            [cdkDropListConnectedTo]="[completedList, holdList]"
+            (cdkDropListDropped)="onDrop($event)"
+          >
+            <div class="card panel" *ngFor="let data of lstInprogress" cdkDrag>
+              <div class="kanban-box">
+                <div class="task-board-header">
+                  <span class="status-title"
+                    ><a>{{ data.taskName }}</a></span
+                  >
+                  <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
                                             <i class="fa fa-angle-down"></i>
                                         </a>
@@ -285,38 +409,50 @@
                                             <a class="dropdown-item"  (click)="deleteTask(data.id)">Delete</a>
                                         </div>
                                     </div> -->
-                                </div>
-                                <div class="task-board-body">
-                                    <div class="kanban-info">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar" role="progressbar" style="width: 60%"
-                                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>60%</span>
-                                    </div>
-                                    <div class="kanban-footer">
-                                        <span class="task-info-cont">
-                                            <span class="task-date"><i class="fa fa-clock-o"></i>{{data.dueDate}}</span>
-                                            <span
-                                                class="task-priority badge bg-inverse-success">{{data.taskPriority}}</span>
-                                        </span>
-                                        <span class="task-users">
-                                            <img src="assets/img/profiles/avatar-6.jpg" class="task-avatar" width="24"
-                                                height="24">
-                                            <!-- <span class="task-user-count">+2</span> -->
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   
                 </div>
+                <div class="task-board-body">
+                  <div class="kanban-info">
+                    <div class="progress progress-xs">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 60%"
+                        aria-valuenow="20"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <span>60%</span>
+                  </div>
+                  <div class="kanban-footer">
+                    <span class="task-info-cont">
+                      <span class="task-date"
+                        ><i class="fa fa-clock-o"></i>{{ data.dueDate }}</span
+                      >
+                      <span class="task-priority badge bg-inverse-success">{{
+                        data.taskPriority
+                      }}</span>
+                    </span>
+                    <span class="task-users">
+                      <img
+                        src="assets/img/profiles/avatar-6.jpg"
+                        class="task-avatar"
+                        width="24"
+                        height="24"
+                      />
+                      <!-- <span class="task-user-count">+2</span> -->
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                <div class="kanban-list kanban-purple">
-                    <div class="kanban-header">
-                        <span class="status-title">On Hold</span>
-                        <!-- <div class="dropdown kanban-action">
+        <div class="kanban-list kanban-purple">
+          <div class="kanban-header">
+            <span class="status-title">On Hold</span>
+            <!-- <div class="dropdown kanban-action">
                             <a href="" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
                             </a>
@@ -325,15 +461,26 @@
                                 <a class="dropdown-item">Delete</a>
                             </div>
                         </div> -->
-                    </div>
-                    <div class="kanban-wrap" cdkDropList #holdList="cdkDropList" [cdkDropListData]="lstHold"
-                        [cdkDropListConnectedTo]="[completedList,InprogressList,reviewList]"
-                        (cdkDropListDropped)="onDrop($event)">
-                        <div class="card panel" *ngFor="let itm of lstHold" cdkDrag>
-                            <div class="kanban-box">
-                                <div class="task-board-header">
-                                    <span class="status-title"><a >{{itm.taskName}}</a></span>
-                                    <!-- <div class="dropdown kanban-task-action">
+          </div>
+          <div
+            class="kanban-wrap"
+            cdkDropList
+            #holdList="cdkDropList"
+            [cdkDropListData]="lstHold"
+            [cdkDropListConnectedTo]="[
+              completedList,
+              InprogressList,
+              reviewList
+            ]"
+            (cdkDropListDropped)="onDrop($event)"
+          >
+            <div class="card panel" *ngFor="let itm of lstHold" cdkDrag>
+              <div class="kanban-box">
+                <div class="task-board-header">
+                  <span class="status-title"
+                    ><a>{{ itm.taskName }}</a></span
+                  >
+                  <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
                                             <i class="fa fa-angle-down"></i>
                                         </a>
@@ -343,38 +490,50 @@
                                             <a class="dropdown-item"  (click)="deleteTask(itm.id)">Delete</a>
                                         </div>
                                     </div> -->
-                                </div>
-                                <div class="task-board-body">
-                                    <div class="kanban-info">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar" role="progressbar" style="width: 50%"
-                                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>50%</span>
-                                    </div>
-                                    <div class="kanban-footer">
-                                        <span class="task-info-cont">
-                                            <span class="task-date"><i class="fa fa-clock-o"></i>{{itm.dueDate}}</span>
-                                            <span
-                                                class="task-priority badge bg-inverse-success">{{itm.taskPriority}}</span>
-                                        </span>
-                                        <span class="task-users">
-                                            <img src="assets/img/profiles/avatar-9.jpg" class="task-avatar" width="24"
-                                                height="24">
-                                            <!-- <span class="task-user-count">+2</span> -->
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   
                 </div>
+                <div class="task-board-body">
+                  <div class="kanban-info">
+                    <div class="progress progress-xs">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 50%"
+                        aria-valuenow="20"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <span>50%</span>
+                  </div>
+                  <div class="kanban-footer">
+                    <span class="task-info-cont">
+                      <span class="task-date"
+                        ><i class="fa fa-clock-o"></i>{{ itm.dueDate }}</span
+                      >
+                      <span class="task-priority badge bg-inverse-success">{{
+                        itm.taskPriority
+                      }}</span>
+                    </span>
+                    <span class="task-users">
+                      <img
+                        src="assets/img/profiles/avatar-9.jpg"
+                        class="task-avatar"
+                        width="24"
+                        height="24"
+                      />
+                      <!-- <span class="task-user-count">+2</span> -->
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-                <div class="kanban-list kanban-primary">
-                    <div class="kanban-header">
-                        <span class="status-title">Review</span>
-                        <!-- <div class="dropdown kanban-action">
+        <div class="kanban-list kanban-primary">
+          <div class="kanban-header">
+            <span class="status-title">Review</span>
+            <!-- <div class="dropdown kanban-action">
                             <a href="" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
                             </a>
@@ -383,15 +542,22 @@
                                 <a class="dropdown-item">Delete</a>
                             </div>
                         </div> -->
-                    </div>
-                    <div class="kanban-wrap" cdkDropList #reviewList="cdkDropList" [cdkDropListData]="lstReview"
-                        [cdkDropListConnectedTo]="[completedList,InprogressList,holdList]"
-                        (cdkDropListDropped)="onDrop($event)">
-                        <div class="card panel" *ngFor="let review of lstReview" cdkDrag>
-                            <div class="kanban-box">
-                                <div class="task-board-header">
-                                    <span class="status-title"><a >{{review.taskName}}</a></span>
-                                    <!-- <div class="dropdown kanban-task-action">
+          </div>
+          <div
+            class="kanban-wrap"
+            cdkDropList
+            #reviewList="cdkDropList"
+            [cdkDropListData]="lstReview"
+            [cdkDropListConnectedTo]="[completedList, InprogressList, holdList]"
+            (cdkDropListDropped)="onDrop($event)"
+          >
+            <div class="card panel" *ngFor="let review of lstReview" cdkDrag>
+              <div class="kanban-box">
+                <div class="task-board-header">
+                  <span class="status-title"
+                    ><a>{{ review.taskName }}</a></span
+                  >
+                  <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
                                             <i class="fa fa-angle-down"></i>
                                         </a>
@@ -401,385 +567,584 @@
                                             <a class="dropdown-item"  (click)="deleteTask(review.id)">Delete</a>
                                         </div>
                                     </div> -->
-                                </div>
-                                <div class="task-board-body">
-                                    <div class="kanban-info">
-                                        <div class="progress progress-xs">
-                                            <div class="progress-bar" role="progressbar" style="width: 80%"
-                                                aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <span>80%</span>
-                                    </div>
-                                    <div class="kanban-footer">
-                                        <span class="task-info-cont">
-                                            <span class="task-date"><i
-                                                    class="fa fa-clock-o"></i>{{review.dueDate}}</span>
-                                            <span
-                                                class="task-priority badge bg-inverse-success">{{review.taskPriority}}</span>
-                                        </span>
-                                        <span class="task-users">
-                                            <img src="assets/img/profiles/avatar-4.jpg" class="task-avatar" width="24"
-                                                height="24">
-                                            <!-- <span class="task-user-count">+2</span> -->
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   
                 </div>
-
+                <div class="task-board-body">
+                  <div class="kanban-info">
+                    <div class="progress progress-xs">
+                      <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style="width: 80%"
+                        aria-valuenow="20"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>
+                    <span>80%</span>
+                  </div>
+                  <div class="kanban-footer">
+                    <span class="task-info-cont">
+                      <span class="task-date"
+                        ><i class="fa fa-clock-o"></i>{{ review.dueDate }}</span
+                      >
+                      <span class="task-priority badge bg-inverse-success">{{
+                        review.taskPriority
+                      }}</span>
+                    </span>
+                    <span class="task-users">
+                      <img
+                        src="assets/img/profiles/avatar-4.jpg"
+                        class="task-avatar"
+                        width="24"
+                        height="24"
+                      />
+                      <!-- <span class="task-user-count">+2</span> -->
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-
+  </div>
 </div>
 <!-- /Page Content -->
 
 <div id="add_task_board" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Add Task Board</h4>
-                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Task Board</h4>
+        <button type="button" class="close" data-bs-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label>Task Board Name</label>
+            <input type="text" class="form-control" />
+          </div>
+          <div class="form-group task-board-color">
+            <label>Task Board Color</label>
+            <div class="board-color-list">
+              <label class="board-control board-primary">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="primary"
+                  checked=""
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-success">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="success"
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-info">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="info"
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-purple">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="purple"
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-warning">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="warning"
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-danger">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="danger"
+                />
+                <span class="board-indicator"></span>
+              </label>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label>Task Board Name</label>
-                        <input type="text" class="form-control">
-                    </div>
-                    <div class="form-group task-board-color">
-                        <label>Task Board Color</label>
-                        <div class="board-color-list">
-                            <label class="board-control board-primary">
-                                <input name="radio" type="radio" class="board-control-input" value="primary" checked="">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-success">
-                                <input name="radio" type="radio" class="board-control-input" value="success">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-info">
-                                <input name="radio" type="radio" class="board-control-input" value="info">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-purple">
-                                <input name="radio" type="radio" class="board-control-input" value="purple">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-warning">
-                                <input name="radio" type="radio" class="board-control-input" value="warning">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-danger">
-                                <input name="radio" type="radio" class="board-control-input" value="danger">
-                                <span class="board-indicator"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="m-t-20 text-center">
-                        <button class="btn btn-primary btn-lg" type="submit" (click)="onsubmit()">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+          </div>
+          <div class="m-t-20 text-center">
+            <button
+              class="btn btn-primary btn-lg"
+              type="submit"
+              (click)="onsubmit()"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <div id="edit_task_board" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Edit Task Board</h4>
-                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Task Board</h4>
+        <button type="button" class="close" data-bs-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label>Task Board Name</label>
+            <input type="text" class="form-control" value="Pending" />
+          </div>
+          <div class="form-group task-board-color">
+            <label>Task Board Color</label>
+            <div class="board-color-list">
+              <label class="board-control board-primary">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="primary"
+                  checked=""
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-success">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="success"
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-info">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="info"
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-purple">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="purple"
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-warning">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="warning"
+                />
+                <span class="board-indicator"></span>
+              </label>
+              <label class="board-control board-danger">
+                <input
+                  name="radio"
+                  type="radio"
+                  class="board-control-input"
+                  value="danger"
+                />
+                <span class="board-indicator"></span>
+              </label>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label>Task Board Name</label>
-                        <input type="text" class="form-control" value="Pending">
-                    </div>
-                    <div class="form-group task-board-color">
-                        <label>Task Board Color</label>
-                        <div class="board-color-list">
-                            <label class="board-control board-primary">
-                                <input name="radio" type="radio" class="board-control-input" value="primary" checked="">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-success">
-                                <input name="radio" type="radio" class="board-control-input" value="success">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-info">
-                                <input name="radio" type="radio" class="board-control-input" value="info">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-purple">
-                                <input name="radio" type="radio" class="board-control-input" value="purple">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-warning">
-                                <input name="radio" type="radio" class="board-control-input" value="warning">
-                                <span class="board-indicator"></span>
-                            </label>
-                            <label class="board-control board-danger">
-                                <input name="radio" type="radio" class="board-control-input" value="danger">
-                                <span class="board-indicator"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="m-t-20 text-center">
-                        <button class="btn btn-primary btn-lg">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+          </div>
+          <div class="m-t-20 text-center">
+            <button class="btn btn-primary btn-lg">Submit</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 
 <div id="new_project" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Create New Project</h4>
-                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label>Project Name</label>
-                        <input class="form-control" type="text">
-                    </div>
-                    <div class="submit-section">
-                        <button class="btn btn-primary submit-btn">Create Project</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Create New Project</h4>
+        <button type="button" class="close" data-bs-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label>Project Name</label>
+            <input class="form-control" type="text" />
+          </div>
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btn">Create Project</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
-
-
 
 <!-- Assign User Modal -->
 <div id="assign_user" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Assign the user to this project</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="input-group m-b-30">
-                    <input placeholder="Search a user to assign" class="form-control search-input" type="text"  (input)="filterUser($event.target.value)">
-                    <button class="btn btn-primary">Search</button>
-                </div>
-                <div>
-                    <ul class="chat-user-list"  *ngFor="let item of getAllUser ">
-                        <li>
-                            <a>
-                                <div class="media d-flex" >
-                                    <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-4.jpg"></span>
-                                    <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div class="user-name" (click)="team(item.firstName,item.lastName)" >{{item.firstName}} {{item.lastName}}</div>
-                                        <span class="designation">{{item.designation}}</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        
-                        
-                    </ul>
-                    <div>
-                        <div *ngFor="let name of teamMember" class="main">
-                         <div class="child">   <span class="avatar flex-shrink-0"  ><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
-                            <span class="text-danger">{{name}}</span>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="submit-section">
-                    <button class="btn btn-primary submit-btn" type="button" (click)="onSubmitUser()">Submit</button>
-                </div>
-            </div>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assign the user to this project</h5>
+        <button
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group m-b-30">
+          <input
+            placeholder="Search a user to assign"
+            class="form-control search-input"
+            type="text"
+            (input)="filterUser($event.target.value)"
+          />
+          <button class="btn btn-primary">Search</button>
         </div>
+        <div>
+          <ul class="chat-user-list" *ngFor="let item of getAllUser">
+            <li>
+              <a>
+                <div class="media d-flex">
+                  <span class="avatar flex-shrink-0"
+                    ><img alt="" src="assets/img/profiles/avatar-4.jpg"
+                  /></span>
+                  <div
+                    class="media-body align-self-center text-nowrap flex-grow-1"
+                  >
+                    <div
+                      class="user-name"
+                      (click)="team(item.firstName, item.lastName)"
+                    >
+                      {{ item.firstName }} {{ item.lastName }}
+                    </div>
+                    <span class="designation">{{ item.designation }}</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <div>
+            <div *ngFor="let name of teamMember" class="main">
+              <div class="child">
+                <span class="avatar flex-shrink-0"
+                  ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+                /></span>
+                <span class="text-danger">{{ name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="submit-section">
+          <button
+            class="btn btn-primary submit-btn"
+            type="button"
+            (click)="onSubmitUser()"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <!-- /Assign User Modal -->
 
 <!-- Add Task Modal -->
 
 <div id="add_task_modal" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">ADD TASK</h4>
-                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">ADD TASK</h4>
+        <button type="button" class="close" data-bs-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addTaskboardForm">
+          <div class="form-group">
+            <label>Task Name</label>
+            <input
+              type="text"
+              formControlName="taskName"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group">
+            <label>Task Priority</label>
+            <select
+              class="form-select form-control"
+              formControlName="taskPriority"
+            >
+              <option>Select</option>
+              <option>High</option>
+              <option>Normal</option>
+              <option>Low</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Due Date</label>
+            <div class="cal-icon">
+              <input
+                class="form-control datetimepicker"
+                formControlName="dueDate"
+                type="text"
+                bsDatepicker
+                type="text"
+                [bsConfig]="{
+                  dateInputFormat: 'DD-MM-YYYY',
+                  returnFocusToInput: true
+                }"
+              />
             </div>
-            <div class="modal-body">
-                <form [formGroup]="addTaskboardForm"   >
-                    <div class="form-group">
-                        <label>Task Name</label>
-                        <input type="text" formControlName="taskName" class="form-control">
-
-                    </div>
-                    <div class="form-group">
-                        <label>Task Priority</label>
-                        <select class="form-select form-control" formControlName="taskPriority">
-                            <option>Select</option>
-                            <option>High</option>
-                            <option>Normal</option>
-                            <option>Low</option>
-                        </select>
-                    </div> 
-                    <div class="form-group">
-                        <label>Due Date</label>
-                        <div class="cal-icon">
-                            <input class="form-control datetimepicker"    formControlName="dueDate" type="text"
-                            bsDatepicker
-                            type="text"
-                            [bsConfig]="{
-                              dateInputFormat: 'DD-MM-YYYY',
-                              returnFocusToInput: true
-                            }">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Task Followers</label>
-                        <input type="text"   formControlName="followers"  class="form-control" placeholder="Search to add">
-                        <div class="task-follower-list">
-                           
-                            <span data-bs-toggle="tooltip" title="Mike Litorus">
-                                <img src="assets/img/profiles/avatar-4.jpg" class="avatar" alt="Mike Litorus"
-                                    width="20" height="20">
-                                <i class="fa fa-times"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="submit-section text-center">
-                        <button class="btn btn-primary submit-btn" type="button"
-                            (click)="addTaskboard()">SubmitTask</button>
-                    </div>
-                </form>
+          </div>
+          <div class="form-group">
+            <label>Task Followers</label>
+            <input
+              type="text"
+              formControlName="followers"
+              class="form-control"
+              placeholder="Search to add"
+            />
+            <div class="task-follower-list">
+              <span data-bs-toggle="tooltip" title="Mike Litorus">
+                <img
+                  src="assets/img/profiles/avatar-4.jpg"
+                  class="avatar"
+                  alt="Mike Litorus"
+                  width="20"
+                  height="20"
+                />
+                <i class="fa fa-times"></i>
+              </span>
             </div>
-        </div>
+          </div>
+          <div class="submit-section text-center">
+            <button
+              class="btn btn-primary submit-btn"
+              type="button"
+              (click)="addTaskboard()"
+            >
+              SubmitTask
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 <!-- /Add Task Modal -->
 
 <!-- Edit Task Modal -->
 <div id="edit_task_modal" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Edit Task</h4>
-                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Task</h4>
+        <button type="button" class="close" data-bs-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editTaskForm">
+          <div class="form-group">
+            <label>Task Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="edittaskName"
+            />
+          </div>
+          <div class="form-group">
+            <label>Task Priority</label>
+            <select
+              class="form-select form-control"
+              formControlName="edittaskPriority"
+            >
+              <option>Select</option>
+              <option>Low</option>
+
+              <option>Normal</option>
+              <option>High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Due Date</label>
+            <div class="cal-icon">
+              <input
+                formControlName="editdueDate"
+                class="form-control datetimepicker"
+                type="text"
+              />
             </div>
-            <div class="modal-body">
-                <form  [formGroup]="editTaskForm">
-                    <div class="form-group">
-                        <label>Task Name</label>
-                        <input type="text" class="form-control"  formControlName="edittaskName">
-                    </div>
-                    <div class="form-group">
-                        <label>Task Priority</label>
-                        <select class="form-select form-control"   formControlName="edittaskPriority" >
-                            <option>Select</option>
-                            <option>Low</option>
-                           
-                            <option>Normal</option>
-                            <option >High</option>
-                            
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Due Date</label>
-                        <div class="cal-icon">
-                            <input   formControlName="editdueDate"  class="form-control datetimepicker" type="text" >
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Task Followers</label>
-                        <input  formControlName="editfollowers"  type="text" class="form-control" placeholder="Search to add">
-                        <div class="task-follower-list">
-                            <span data-bs-toggle="tooltip" title="John Doe">
-                                <img src="assets/img/profiles/avatar-2.jpg" class="avatar" alt="John Doe" width="20"
-                                    height="20">
-                                <i class="fa fa-times"></i>
-                            </span>
-                            <span data-bs-toggle="tooltip" title="Richard Miles">
-                                <img src="assets/img/profiles/avatar-9.jpg" class="avatar" alt="Richard Miles"
-                                    width="20" height="20">
-                                <i class="fa fa-times"></i>
-                            </span>
-                            <span data-bs-toggle="tooltip" title="John Smith">
-                                <img src="assets/img/profiles/avatar-7.jpg" class="avatar" alt="John Smith" width="20"
-                                    height="20">
-                                <i class="fa fa-times"></i>
-                            </span>
-                            <span data-bs-toggle="tooltip" title="Mike Litorus">
-                                <img src="assets/img/profiles/avatar-5.jpg" class="avatar" alt="Mike Litorus"
-                                    width="20" height="20">
-                                <i class="fa fa-times"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="submit-section text-center">
-                        <button class="btn btn-primary submit-btn"  (click)="editSaveTask()">Submit</button>
-                    </div>
-                </form>
+          </div>
+          <div class="form-group">
+            <label>Task Followers</label>
+            <input
+              formControlName="editfollowers"
+              type="text"
+              class="form-control"
+              placeholder="Search to add"
+            />
+            <div class="task-follower-list">
+              <span data-bs-toggle="tooltip" title="John Doe">
+                <img
+                  src="assets/img/profiles/avatar-2.jpg"
+                  class="avatar"
+                  alt="John Doe"
+                  width="20"
+                  height="20"
+                />
+                <i class="fa fa-times"></i>
+              </span>
+              <span data-bs-toggle="tooltip" title="Richard Miles">
+                <img
+                  src="assets/img/profiles/avatar-9.jpg"
+                  class="avatar"
+                  alt="Richard Miles"
+                  width="20"
+                  height="20"
+                />
+                <i class="fa fa-times"></i>
+              </span>
+              <span data-bs-toggle="tooltip" title="John Smith">
+                <img
+                  src="assets/img/profiles/avatar-7.jpg"
+                  class="avatar"
+                  alt="John Smith"
+                  width="20"
+                  height="20"
+                />
+                <i class="fa fa-times"></i>
+              </span>
+              <span data-bs-toggle="tooltip" title="Mike Litorus">
+                <img
+                  src="assets/img/profiles/avatar-5.jpg"
+                  class="avatar"
+                  alt="Mike Litorus"
+                  width="20"
+                  height="20"
+                />
+                <i class="fa fa-times"></i>
+              </span>
             </div>
-        </div>
+          </div>
+          <div class="submit-section text-center">
+            <button class="btn btn-primary submit-btn" (click)="editSaveTask()">
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 <!-- /Edit Task Modal -->
 <!-- Assign Leader Modal -->
 <div id="assign_leader" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Assign Leader to this project</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="input-group m-b-30">
-                    <input placeholder="Search to add a leader" class="form-control search-input" type="text"  (input)="filterUser($event.target.value)">
-                    <button class="btn btn-primary" >Search</button>
-                </div>
-                <div>
-                    <ul class="chat-user-list"  *ngFor="let item of rows ">
-                        <li>
-                            <a>
-                                <div class="media d-flex">
-                                    <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-3.jpg"></span>
-                                    <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div class="user-name"  (click)="addLeader(item.firstName,item.lastName)">{{item.firstName}} {{item.lastName}}</div>
-                                        <span class="designation">{{item.designation}}</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                       
-                       
-                    </ul>
-                    <div>
-                        <div *ngFor="let name of lead" class="main">
-                         <div class="child">   <span class="avatar flex-shrink-0"  ><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
-                            <span class="text-danger">{{name}}</span>
-                        </div>
-                        </div>
-                    </div>
-                <div class="submit-section">
-                    <button class="btn btn-primary submit-btn" type="button" (click)="onSubmitLeader()">Submit</button>
-                </div>
-            </div>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assign Leader to this project</h5>
+        <button
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group m-b-30">
+          <input
+            placeholder="Search to add a leader"
+            class="form-control search-input"
+            type="text"
+            (input)="filterUser($event.target.value)"
+          />
+          <button class="btn btn-primary">Search</button>
         </div>
+        <div>
+          <ul class="chat-user-list" *ngFor="let item of rows">
+            <li>
+              <a>
+                <div class="media d-flex">
+                  <span class="avatar flex-shrink-0"
+                    ><img alt="" src="assets/img/profiles/avatar-3.jpg"
+                  /></span>
+                  <div
+                    class="media-body align-self-center text-nowrap flex-grow-1"
+                  >
+                    <div
+                      class="user-name"
+                      (click)="addLeader(item.firstName, item.lastName)"
+                    >
+                      {{ item.firstName }} {{ item.lastName }}
+                    </div>
+                    <span class="designation">{{ item.designation }}</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+          <div>
+            <div *ngFor="let name of lead" class="main">
+              <div class="child">
+                <span class="avatar flex-shrink-0"
+                  ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+                /></span>
+                <span class="text-danger">{{ name }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="submit-section">
+            <button
+              class="btn btn-primary submit-btn"
+              type="button"
+              (click)="onSubmitLeader()"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <!-- /Assign Leader Modal -->
 </div>
-<!-- /Assign Leader Modal -->

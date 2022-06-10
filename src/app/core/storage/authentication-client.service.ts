@@ -3,10 +3,15 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 export class ClientAuthenticationService {
-  login(id: string) {
+  login(
+    id: string,
+    adminId:string
+    ) {
     sessionStorage.setItem("currentUser", "loggedin");
     sessionStorage.setItem("user_type", "client");
     sessionStorage.setItem("clientId", id);
+    sessionStorage.setItem("adminId", adminId);
+
 
     return true;
   }
@@ -15,6 +20,7 @@ export class ClientAuthenticationService {
     sessionStorage.removeItem("currentUser");
     sessionStorage.removeItem("user_type");
     sessionStorage.removeItem("clientId");
+    sessionStorage.removeItem("adminId");
   }
   public get loggedIn(): boolean {
     return sessionStorage.getItem("currentUser") !== null;
