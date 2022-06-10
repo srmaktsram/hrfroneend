@@ -47,9 +47,7 @@ export class LoginComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res);
         if (res.result == 2) {
-
           this.router.navigate(["/pages/pricing"]);
-
           this.adminAuthenticationService.login(
             res.data.id,
             res.data.corporateId,

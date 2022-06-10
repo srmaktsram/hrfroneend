@@ -116,8 +116,8 @@ export class PricingComponent implements OnInit {
   }
   getData(val) {
     this.corporateId = sessionStorage.getItem("corporateId");
-
-    if (sessionStorage.getItem("currentAdminLgn") === "loggedin") {
+    console.log(sessionStorage.getItem("currentUser"), this.corporateId)
+    if (sessionStorage.getItem("currentUser") == "loggedin") {
       if (val == "dSingle") {
         this.router.navigate(["/pages/checkout"], {
           queryParams: {
@@ -178,7 +178,8 @@ export class PricingComponent implements OnInit {
           skipLocationChange: true,
         });
       }
-    } else {
+    }
+    else {
       this.router.navigate(["/pages/hr_registration"]);
     }
   }

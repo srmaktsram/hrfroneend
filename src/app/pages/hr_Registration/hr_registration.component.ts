@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
+import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
 @Component({
   selector: "app-hr_registration",
@@ -18,7 +18,7 @@ export class HrregistrationComponent implements OnInit {
   public showLogin = true;
   isvalidconfirmpassword: boolean;
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router,
-    private adminAuthenticationService: AdminAuthenticationService) { }
+    private hrUserAuthenticationService: HrUserAuthenticationService) { }
 
   ngOnInit() {
 
@@ -39,7 +39,6 @@ export class HrregistrationComponent implements OnInit {
       password: ["", [Validators.required]],
 
     })
-
   }
 
   showData() {
@@ -71,9 +70,25 @@ export class HrregistrationComponent implements OnInit {
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
     }
-    console.log(obj, "mmmmmmmmmmtesti h bhai ji")
     this.http.post("http://localhost:8443/mainadmin/create/registration", obj).subscribe((res: any) => {
-      console.log("postApi", res)
+      sessionStorage.setItem("corporateId", res.corporateId)
+      console.log(res.corporateId, ">>>>>>>>>>>>>>>>>>>>>>???????????????????")
+      sessionStorage.setItem("corporateId", res.corporateId)
+
+      this.router.navigate(["/pages/home"]);
+
+      this.hrUserAuthenticationService.login(
+
+        res.data.id,
+        res.data.corporateId,
+        res.data.email,
+        res.data.firstName,
+        res.data.lastName,
+
+        res.data.phone,
+
+
+      );
 
     })
 
@@ -81,22 +96,33 @@ export class HrregistrationComponent implements OnInit {
   userLogin() {
     let email = this.addloginForm.value.email;
     let password = this.addloginForm.value.password;
-
-    console.log("EEEEEE", email, "PPPPPPP", password)
-
     this.http
       .post("http://localhost:8443/mainadmin/create/log-in", {
         email,
         password,
       })
       .subscribe((res: any) => {
+        console.log(res, ">>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<")
+        if (res.result == 2) {
+          this.router.navigate(["/pages/home"]);
+          this.hrUserAuthenticationService.login(
 
-        this.router.navigate(["/pages/pricing"]);
+            res.data.id,
+            res.data.corporateId,
+            res.data.email,
+            res.data.firstName,
+            res.data.lastName,
+
+            res.data.phone,
+
+
+          );
+        } else {
+          alert("wrong Id or pass");
+        }
       });
 
   }
-
-
 
 }
 
