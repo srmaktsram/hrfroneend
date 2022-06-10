@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
 
           this.router.navigate(["/layout/dashboard/admin"]);
 
+
           this.adminAuthenticationService.login(
             res.data.id,
             res.data.corporateId,
