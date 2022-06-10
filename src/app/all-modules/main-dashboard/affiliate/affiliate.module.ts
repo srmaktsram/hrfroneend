@@ -3,14 +3,12 @@ import { CommonModule } from "@angular/common";
 import { AffiliateRoutingModule } from "./affiliate-routing.module";
 import { DataTablesModule } from "angular-datatables";
 
-
-
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AffiliateComponent } from "./affiliate.component";
 import { AffiliateProfileComponent } from "./affiliate-profile/affiliate-profile.component";
 import { VisitorAffiliateListComponent } from "./visitor-affiliate-list/visitor-affiliate-list.component";
-import { DemoAffiliateListComponent } from "./free-affiliate-list/free-affiliate-list.component";
+import { FreeAffiliateListComponent } from "./free-affiliate-list/free-affiliate-list.component";
 import { PremiumAffiliateListComponent } from "./premium-affiliate-list/premium-affiliate-list.component";
 
 @NgModule({
@@ -18,8 +16,8 @@ import { PremiumAffiliateListComponent } from "./premium-affiliate-list/premium-
     AffiliateComponent,
     AffiliateProfileComponent,
     VisitorAffiliateListComponent,
-    DemoAffiliateListComponent,
-    PremiumAffiliateListComponent
+    FreeAffiliateListComponent,
+    PremiumAffiliateListComponent,
   ],
   imports: [
     CommonModule,
