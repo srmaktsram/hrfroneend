@@ -58,6 +58,7 @@ export class ClientsProfileComponent implements OnInit {
   }
   projects() {
     this.http.get("http://localhost:8443/admin/projects/getAdminproject" + "/" + this.adminId).subscribe((res: any) => {
+      console.log(res,"jjjjjjjjjjjjjjjjjjjjjjjj")
 
       this.allProjects = res;
 

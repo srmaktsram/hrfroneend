@@ -47,6 +47,8 @@ export class ProjectViewComponent implements OnInit {
   public userdata = [];
   public userArr = [];
   public teamLeader:any;
+  public user_type = sessionStorage.getItem("user_type");
+
   path: string;
   client: any;
 

@@ -1,699 +1,875 @@
 <!-- Page Content -->
 <div class="content container-fluid">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">{{ projectTitle }}</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/layout/dashboard/admin">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Project</li>
+        </ul>
+      </div>
+      <ng-container *ngIf="user_type !== 'client'">
+        <div class="col-auto float-end ms-auto">
+          
+          <a
+            class="btn add-btn"
+            data-bs-toggle="modal"
+            data-bs-target="#edit_project"
+            (click)="editProject()"
+            ><i class="fa fa-plus"></i> Edit Project</a
+          >
+        
 
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <h3 class="page-title">{{projectTitle}} </h3>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Project</li>
+          <a
+            routerLink="/layout/projects/taskboard/{{ projects.projectId }}"
+            class="btn btn-white float-end m-r-10"
+            data-bs-toggle="tooltip"
+            title="Task Board"
+            ><i class="fa fa-bars"></i
+          ></a>
+          
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <div class="row">
+    <div class="col-lg-8 col-xl-9">
+      <div class="card">
+        <div class="card-body">
+          <div class="project-title">
+            <h5 class="card-title">{{ projectTitle }}</h5>
+            <small class="block text-ellipsis m-b-15"
+              ><span class="text-xs text-primary"> </span
+            ></small>
+            {{ openTask }}
+            <small>
+              <span class="text-danger">open tasks, </span
+              ><span class="text-xs text-success"></span>
+            </small>
+            {{ completeTask }}
+            <small> <span class="text-success">tasks completed</span></small>
+          </div>
+
+          <p>{{ projects.description }}</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title m-b-20">Uploaded image files</h5>
+          <div class="row">
+            <div
+              class="col-md-3 col-sm-4 col-lg-4 col-xl-3"
+              *ngFor="let image of projectImage"
+            >
+              <div class="uploaded-box">
+                <div class="uploaded-img">
+                  <img
+                    src="http://localhost:8443/{{ image.imagePath }}"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </div>
+                <a href="http://localhost:8443/{{ image.imagePath }}">
+                  <div class="uploaded-img-name">
+                    {{ image.imageName }}
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title m-b-20">Uploaded files</h5>
+          <ul class="files-list">
+            <li *ngFor="let file of projectFile">
+              <div class="files-cont">
+                <a href="http://localhost:8443/{{ file.filePath }}">
+                  <div class="file-type">
+                    <span class="files-icon"
+                      ><i class="fa fa-file-pdf-o"></i
+                    ></span>
+                  </div>
+                  <div class="files-info">
+                    <span class="file-name text-ellipsis">
+                      {{ file.fileName }}</span
+                    >
+                  </div>
+                </a>
+                <ul class="files-action">
+                  <li class="dropdown dropdown-action">
+                    <a
+                      href="{{ file }}"
+                      class="dropdown-toggle btn btn-link"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      ><i class="material-icons">more_horiz</i></a
+                    >
+                    <div class="dropdown-menu dropdown-menu-right">
+                      <a class="dropdown-item" href="javascript:void(0)"
+                        >Download</a
+                      >
+                      <a
+                        class="dropdown-item"
+                        data-bs-toggle="modal"
+                        data-bs-target="#share_files"
+                        >Share</a
+                      >
+                      <a class="dropdown-item" href="javascript:void(0)"
+                        >Delete</a
+                      >
+                    </div>
+                  </li>
                 </ul>
-            </div>
-            <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#edit_project"   (click)="editProject()"><i class="fa fa-plus"></i> Edit
-                    Project</a>
-                <a routerLink="/layout/projects/taskboard/{{projects.projectId}}" class="btn btn-white float-end m-r-10" data-bs-toggle="tooltip"
-                    title="Task Board"><i class="fa fa-bars"></i></a>
-            </div>
+              </div>
+            </li>
+          </ul>
         </div>
-    </div>
-    <!-- /Page Header -->
+      </div>
+      <div class="project-task">
+        <ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
+          <li class="nav-item">
 
-    <div class="row">
-        <div class="col-lg-8 col-xl-9">
-            <div class="card">
-                <div class="card-body">
-                    <div class="project-title">
-                        <h5 class="card-title">{{projectTitle}}</h5>
-                        <small class="block text-ellipsis m-b-15"><span class="text-xs text-primary"> </span></small>
-                        {{openTask}}  
-                        <small> <span class="text-danger">open tasks, </span><span class="text-xs text-success"></span> </small>
-                            {{completeTask}}  
-                            <small>  <span class="text-success">tasks completed</span></small>
-                    </div>
-                    
-                    <p>{{projects.description}} </p>
-                </div>
-            </div>
+            <a
+              class="nav-link active"
+              href="#all_tasks"
+              data-bs-toggle="tab"
+              aria-expanded="true"
+              (click)="allTasks()"
+              >Pending Tasks</a
+            >
+          </li>
+          <li class="nav-item">
 
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title m-b-20">Uploaded image files</h5>
-                    <div class="row" >
-                       
-                        <div class="col-md-3 col-sm-4 col-lg-4 col-xl-3"   *ngFor="let image of projectImage">
-                            <div class="uploaded-box">
-                               
-                                <div class="uploaded-img">
-                                    <img src="http://localhost:8443/{{image.imagePath}}" class="img-fluid" alt="">
-                                </div>
-                                <a href="http://localhost:8443/{{image.imagePath}}">
-                                <div class="uploaded-img-name">
-                                    {{image.imageName}}
-                                </div>
-                            </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title m-b-20">Uploaded files</h5>
-                    <ul class="files-list" >
-                        <li *ngFor="let file of projectFile">
-                            <div class="files-cont">
-                               <a  href="http://localhost:8443/{{file.filePath}}">
-                                <div class="file-type">
-                                    <span class="files-icon"><i class="fa fa-file-pdf-o"></i></span>
-                                </div>
-                                <div class="files-info">
-                                    <span class="file-name text-ellipsis"> {{file.fileName}}</span>
-                                   
-                                </div>
-                            </a>
-                                <ul class="files-action">
-                                    <li class="dropdown dropdown-action">
-                                        <a href="{{file}}" class="dropdown-toggle btn btn-link" data-bs-toggle="dropdown"
-                                            aria-expanded="false"><i class="material-icons">more_horiz</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="javascript:void(0)">Download</a>
-                                            <a class="dropdown-item" data-bs-toggle="modal"
-                                                data-bs-target="#share_files">Share</a>
-                                            <a class="dropdown-item" href="javascript:void(0)">Delete</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                       
-                    </ul>
-                </div>
-            </div>
-            <div class="project-task">
-                
-                <ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
-                  <li class="nav-item"><a class="nav-link active" href="#all_tasks" data-bs-toggle="tab"
-                          aria-expanded="true"  (click)="allTasks()">Pending Tasks</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#pending_tasks" data-bs-toggle="tab"
-                          aria-expanded="true"  (click)="allTasks()" >Completed Tasks</a></li>
-                  <!-- <li class="nav-item"><a class="nav-link" href="#completed_tasks" data-bs-toggle="tab"
+            <a
+              class="nav-link"
+              href="#pending_tasks"
+              data-bs-toggle="tab"
+              aria-expanded="true"
+              (click)="allTasks()"
+              >Completed Tasks</a
+            >
+          </li>
+          <!-- <li class="nav-item"><a class="nav-link" href="#completed_tasks" data-bs-toggle="tab"
                           aria-expanded="false"  (click)="allTasks()">Completed Tasks</a></li> -->
-              </ul>
-                <div class="tab-content">
-                    <div class="tab-pane show active" id="all_tasks">
-                        <div class="task-wrapper">
-                            <div class="task-list-container">
-                                <div class="task-list-body">
-                                    <ul id="task-list">
-                                        <li class="task" *ngFor="let task of tasks">
-                                            <div class="task-container">
-                                                <span class="task-action-btn task-check">
-                                                    <span class="action-circle large complete-btn "
-                                                        title="Mark Complete">
-                                                        <i class="material-icons">check</i>
-                                                    </span>
-                                                </span>
-                                                <span class="task-label" contenteditable="true">{{task.taskName}}</span>
-                                                <span class="task-action-btn task-btn-right">
-                                                    <span class="action-circle large" title="Assign">
-                                                        <i class="material-icons" data-bs-toggle="modal"
-                                                        data-bs-target="#assign_user" >person_add</i>
-                                                    </span>
-                                                    <span class="action-circle large delete-btn" title="Delete Task">
-                                                        <i class="material-icons" (click)="deletedTask(task.id)">delete</i>
-                                                    </span>
-                                                </span>
-                                            </div>
-                                        </li>
-                                        
-                                        
-                                        
-                                        
-                                        
-                                    </ul>
-                                </div>
-                                <div class="task-list-footer">
-                                    <div class="new-task-wrapper">
-                                        <textarea id="new-task" placeholder="Enter new task here. . ."></textarea>
-                                        <span class="error-message hidden">You need to enter a task first</span>
-                                        <span class="add-new-task-btn btn" id="add-task">Add Task</span>
-                                        <span class="btn" id="close-task-panel">Close</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="pending_tasks">
-                      <div class="task-wrapper">
-                        <div class="task-list-container">
-                            <div class="task-list-body">
-                                <ul id="task-list">
-                                    <li class="task" *ngFor="let task of completedTask">
-                                        <div class="task-container">
-                                            <span class="task-action-btn task-check">
-                                                <span class="action-circle large complete-btn"
-                                                    title="Mark Complete">
-                                                    <i class="material-icons">check</i>
-                                                </span>
-                                            </span>
-                                            <span class="task-label" contenteditable="true">{{task.taskName}}</span>
-                                            <span class="task-action-btn task-btn-right">
-                                                <span class="action-circle large" title="Assign">
-                                                    <i class="material-icons" data-bs-toggle="modal"
-                                                    data-bs-target="#assign_user" >person_add</i>
-                                                </span>
-                                                <span class="action-circle large delete-btn" title="Delete Task">
-                                                    <i class="material-icons" (click)="deletedTask(task.id)">delete</i>
-                                                </span>
-                                            </span>
-                                        </div>
-                                    </li>
-                                    
-                                    
-                                    
-                                    
-                                    
-                                </ul>
-                            </div>
-                            <div class="task-list-footer">
-                                <div class="new-task-wrapper">
-                                    <textarea id="new-task" placeholder="Enter new task here. . ."></textarea>
-                                    <span class="error-message hidden">You need to enter a task first</span>
-                                    <span class="add-new-task-btn btn" id="add-task">Add Task</span>
-                                    <span class="btn" id="close-task-panel">Close</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane show active" id="all_tasks">
+            <div class="task-wrapper">
+              <div class="task-list-container">
+                <div class="task-list-body">
+                  <ul id="task-list">
+                    <li class="task" *ngFor="let task of tasks">
+                      <div class="task-container">
+                        <span class="task-action-btn task-check">
+                          <span
+                            class="action-circle large complete-btn"
+                            title="Mark Complete"
+                          >
+                            <i class="material-icons">check</i>
+                          </span>
+                        </span>
+                        <span class="task-label" contenteditable="true">{{
+                          task.taskName
+                        }}</span>
+                        <ng-container *ngIf="user_type !== 'client'">
 
-
-
-
-                    </div>
-                    <div class="tab-pane" id="completed_tasks"></div>
+                        <span class="task-action-btn task-btn-right">
+                          <span class="action-circle large" title="Assign">
+                            <i
+                              class="material-icons"
+                              data-bs-toggle="modal"
+                              data-bs-target="#assign_user"
+                              >person_add</i
+                            >
+                          </span>
+                          <span
+                            class="action-circle large delete-btn"
+                            title="Delete Task"
+                          >
+                            <i
+                              class="material-icons"
+                              (click)="deletedTask(task.id)"
+                              >delete</i
+                            >
+                          </span>
+                        </span>
+                        </ng-container>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
+                <div class="task-list-footer">
+                  <div class="new-task-wrapper">
+                    <textarea
+                      id="new-task"
+                      placeholder="Enter new task here. . ."
+                    ></textarea>
+                    <span class="error-message hidden"
+                      >You need to enter a task first</span
+                    >
+                    <span class="add-new-task-btn btn" id="add-task"
+                      >Add Task</span
+                    >
+                    <span class="btn" id="close-task-panel">Close</span>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="tab-pane" id="pending_tasks">
+            <div class="task-wrapper">
+              <div class="task-list-container">
+                <div class="task-list-body">
+                  <ul id="task-list">
+                    <li class="task" *ngFor="let task of completedTask">
+                      <div class="task-container">
+                        <span class="task-action-btn task-check">
+                          <span
+                            class="action-circle large complete-btn"
+                            title="Mark Complete"
+                          >
+                            <i class="material-icons">check</i>
+                          </span>
+                        </span>
+                        <span class="task-label" contenteditable="true">{{
+                          task.taskName
+                        }}</span>
+                        <span class="task-action-btn task-btn-right">
+                          <span class="action-circle large" title="Assign">
+                            <i
+                              class="material-icons"
+                              data-bs-toggle="modal"
+                              data-bs-target="#assign_user"
+                              >person_add</i
+                            >
+                          </span>
+                          <span
+                            class="action-circle large delete-btn"
+                            title="Delete Task"
+                          >
+                            <i
+                              class="material-icons"
+                              (click)="deletedTask(task.id)"
+                              >delete</i
+                            >
+                          </span>
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <div class="task-list-footer">
+                  <div class="new-task-wrapper">
+                    <textarea
+                      id="new-task"
+                      placeholder="Enter new task here. . ."
+                    ></textarea>
+                    <span class="error-message hidden"
+                      >You need to enter a task first</span
+                    >
+                    <span class="add-new-task-btn btn" id="add-task"
+                      >Add Task</span
+                    >
+                    <span class="btn" id="close-task-panel">Close</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="completed_tasks"></div>
         </div>
-        <div class="col-lg-4 col-xl-3">
-            <div class="card">
-                <div class="card-body">
-                    <h6 class="card-title m-b-15">Project details</h6>
-                    <table class="table table-striped table-border">
-                        <tbody>
-                            <tr>
-                                <td>Cost:</td>
-                                <td class="text-end">${{projects.rate}}</td>
-                            </tr>
-                            <tr>
-                                <td>Total Hours:</td>
-                                <td class="text-end">100 Hours</td>
-                            </tr>
-                            <tr>
-                                <td>Created:</td>
-                                <td class="text-end">{{projectStart}}</td>
-                            </tr>
-                            <tr>
-                                <td>Deadline:</td>
-                                <td class="text-end">{{projectEnd}}</td>
-                            </tr>
-                            <tr>
-                                <td>Priority:</td>
-                                <td class="text-end">
-                                    <div class="btn-group">
-                                        <li class="badge badge-danger dropdown-toggle" data-bs-toggle="dropdown">{{projects.priority}}
-                                        </li>
-                                       
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Created by:</td>
-                                <td class="text-end"><a routerLink="/layout/profile/profilelist">{{projects.client}}</a></td>
-                            </tr>
-                            <tr>
-                                <td>Status:</td>
-                        <td class="text-end">{{projects.status}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p class="m-b-5">Progress <span class="text-success float-end">{{progess}}</span></p>
-                    <div class="progress progress-xs mb-0">
-                        <div class="progress-bar bg-success" role="progressbar" data-bs-toggle="tooltip" title={{progess}}
-                        [ngStyle]="{'width': progess}"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="card project-user">
-                <div class="card-body">
-                    <h6 class="card-title m-b-20">Assigned Leader <button type="button"
-                            class="float-end btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#assign_leader"><i class="fa fa-plus"></i> Add</button></h6>
-                    <ul class="list-box" >
-                        <li *ngFor="let item of projects.projectLeader">
-                            <a routerLink="/layout/employees/employeeprofile">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar"><img alt=""
-                                                src="assets/img/profiles/avatar-11.jpg"></span>
-                                    </div>
-                                    <div class="list-body">
-                                        <span class="message-author">{{item.name}}</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">Team Leader</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                       
-                    </ul>
-                </div>
-            </div>
-            <div class="card project-user">
-                <div class="card-body">
-                    <h6 class="card-title m-b-20">
-                        Assigned users
-                        <button type="button" class="float-end btn btn-primary btn-sm" data-bs-toggle="modal"
-                            data-bs-target="#assign_user"><i class="fa fa-plus"></i> Add</button>
-                    </h6>
-                    <ul class="list-box"  *ngFor="let users of projects.teamMember ">
-                        <li >
-
-                            <a routerLink="/layout/employees/employeeprofile">
-                                <div class="list-item">
-                                    <div class="list-left">
-                                        <span class="avatar"><img alt="" src="assets/img/profiles/avatar-2.jpg"></span>
-                                    </div >
-                                    <div class="list-body">
-                                        <span class="message-author">{{users.name}}</span>
-                                        <div class="clearfix"></div>
-                                        <span class="message-content">projects team Member</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                      
-                    </ul>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="col-lg-4 col-xl-3">
+      <div class="card">
+        <div class="card-body">
+          <h6 class="card-title m-b-15">Project details</h6>
+          <table class="table table-striped table-border">
+            <tbody>
+              <tr>
+                <td>Cost:</td>
+                <td class="text-end">${{ projects.rate }}</td>
+              </tr>
+              <tr>
+                <td>Total Hours:</td>
+                <td class="text-end">100 Hours</td>
+              </tr>
+              <tr>
+                <td>Created:</td>
+                <td class="text-end">{{ projectStart }}</td>
+              </tr>
+              <tr>
+                <td>Deadline:</td>
+                <td class="text-end">{{ projectEnd }}</td>
+              </tr>
+              <tr>
+                <td>Priority:</td>
+                <td class="text-end">
+                  <div class="btn-group">
+                    <li
+                      class="badge badge-danger dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                    >
+                      {{ projects.priority }}
+                    </li>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>Created by:</td>
+                <td class="text-end">
+                  <a routerLink="/layout/profile/profilelist">{{
+                    projects.client
+                  }}</a>
+                </td>
+              </tr>
+              <tr>
+                <td>Status:</td>
+                <td class="text-end">{{ projects.status }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="m-b-5">
+            Progress <span class="text-success float-end">{{ progess }}</span>
+          </p>
+          <div class="progress progress-xs mb-0">
+            <div
+              class="progress-bar bg-success"
+              role="progressbar"
+              data-bs-toggle="tooltip"
+              title="{{ progess }}"
+              [ngStyle]="{ width: progess }"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="card project-user">
+        <div class="card-body">
+          <h6 class="card-title m-b-20">
+            Assigned Leader
+            <ng-container *ngIf="user_type !== 'client'">
+
+            <button
+              type="button"
+              class="float-end btn btn-primary btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#assign_leader"
+            >
+              <i class="fa fa-plus"></i> Add
+            </button>
+            </ng-container>
+          </h6>
+          <ul class="list-box">
+            <li *ngFor="let item of projects.projectLeader">
+              <a routerLink="/layout/employees/employeeprofile">
+                <div class="list-item">
+                  <div class="list-left">
+                    <span class="avatar"
+                      ><img alt="" src="assets/img/profiles/avatar-11.jpg"
+                    /></span>
+                  </div>
+                  <div class="list-body">
+                    <span class="message-author">{{ item.name }}</span>
+                    <div class="clearfix"></div>
+                    <span class="message-content">Team Leader</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="card project-user">
+        <div class="card-body">
+          <h6 class="card-title m-b-20">
+            Assigned users
+            <ng-container *ngIf="user_type !== 'client'">
+
+            <button
+              type="button"
+              class="float-end btn btn-primary btn-sm"
+              data-bs-toggle="modal"
+              data-bs-target="#assign_user"
+            >
+              <i class="fa fa-plus"></i> Add
+            </button>
+            </ng-container>
+          </h6>
+          <ul class="list-box" *ngFor="let users of projects.teamMember">
+            <li>
+              <a routerLink="/layout/employees/employeeprofile">
+                <div class="list-item">
+                  <div class="list-left">
+                    <span class="avatar"
+                      ><img alt="" src="assets/img/profiles/avatar-2.jpg"
+                    /></span>
+                  </div>
+                  <div class="list-body">
+                    <span class="message-author">{{ users.name }}</span>
+                    <div class="clearfix"></div>
+                    <span class="message-content">projects team Member</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- /Page Content -->
 
 <!-- Assign Leader Modal -->
 <div id="assign_leader" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Assign Leader to this project</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="input-group m-b-30">
-                    <input placeholder="Search to add a leader" class="form-control search-input" type="text"  (input)="filterUser($event.target.value)">
-                    <button class="btn btn-primary">Search</button>
-                </div>
-                <div>
-                    <ul class="chat-user-list" *ngFor="let user of userdata">
-                        <li>
-                            <a>
-                                <div class="media d-flex">
-                                    <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
-                                    <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div  (click)="addLeader(user.firstName,user.lastName,user.id)" class="user-name">{{user.firstName}} {{user.lastName}}</div>
-                                        <span class="designation">{{user.designation}}</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                       
-                       
-                    </ul>
-                </div>
-                <div>
-                  <div *ngFor="let name of leader" class="main">
-                   <div class="child">   <span class="avatar flex-shrink-0"  ><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
-                      <span class="text-danger">{{name.name}}</span>
-                  </div>
-                  </div>
-              </div>
-                <div class="submit-section">
-                    <button class="btn btn-primary submit-btn" (click)="addTeamLeader()">Submit</button>
-                </div>
-            </div>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assign Leader to this project</h5>
+        <button
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group m-b-30">
+          <input
+            placeholder="Search to add a leader"
+            class="form-control search-input"
+            type="text"
+            (input)="filterUser($event.target.value)"
+          />
+          <button class="btn btn-primary">Search</button>
         </div>
+        <div>
+          <ul class="chat-user-list" *ngFor="let user of userdata">
+            <li>
+              <a>
+                <div class="media d-flex">
+                  <span class="avatar flex-shrink-0"
+                    ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+                  /></span>
+                  <div
+                    class="media-body align-self-center text-nowrap flex-grow-1"
+                  >
+                    <div
+                      (click)="
+                        addLeader(user.firstName, user.lastName, user.id)
+                      "
+                      class="user-name"
+                    >
+                      {{ user.firstName }} {{ user.lastName }}
+                    </div>
+                    <span class="designation">{{ user.designation }}</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div *ngFor="let name of leader" class="main">
+            <div class="child">
+              <span class="avatar flex-shrink-0"
+                ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+              /></span>
+              <span class="text-danger">{{ name.name }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="submit-section">
+          <button class="btn btn-primary submit-btn" (click)="addTeamLeader()">
+            Submit
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <!-- /Assign Leader Modal -->
 
 <!-- Assign User Modal -->
 <div id="assign_user" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Assign the user to this project</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="input-group m-b-30">
-                    <input  placeholder="Search a user to assign" class="form-control search-input" type="text" (input)="filterUser($event.target.value)">
-                    <button class="btn btn-primary" >Search</button>
-                </div>
-                <div>
-                    <ul class="chat-user-list">
-                        <li>
-                            <a *ngFor="let user of userdata">
-                                <div class="media d-flex">
-                                    <span class="avatar flex-shrink-0"><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
-                                    <div class="media-body align-self-center text-nowrap flex-grow-1">
-                                        <div  (click)="addUsers(user.firstName,user.lastName,user.id)" class="user-name">{{user.firstName}} {{user.lastName}}</div>
-                                        <span class="designation">{{user.designation}}</span>
-                                    </div>
-                                   
-                                </div>
-                            </a>
-                        </li>
-                       
-                    </ul>
-                </div>
-                 <div>
-                    <div *ngFor="let name of userArr" class="main">
-                     <div class="child">   <span class="avatar flex-shrink-0"  ><img alt="" src="assets/img/profiles/avatar-9.jpg"></span>
-                        <span class="text-danger">{{name.name}}</span>
-                    </div>
-                    </div>
-                </div>
-                <div class="submit-section">
-                    <button class="btn btn-primary submit-btn" (click)="addAllTeam()">Submit</button>
-                </div>
-            </div>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assign the user to this project</h5>
+        <button
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group m-b-30">
+          <input
+            placeholder="Search a user to assign"
+            class="form-control search-input"
+            type="text"
+            (input)="filterUser($event.target.value)"
+          />
+          <button class="btn btn-primary">Search</button>
         </div>
+        <div>
+          <ul class="chat-user-list">
+            <li>
+              <a *ngFor="let user of userdata">
+                <div class="media d-flex">
+                  <span class="avatar flex-shrink-0"
+                    ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+                  /></span>
+                  <div
+                    class="media-body align-self-center text-nowrap flex-grow-1"
+                  >
+                    <div
+                      (click)="addUsers(user.firstName, user.lastName, user.id)"
+                      class="user-name"
+                    >
+                      {{ user.firstName }} {{ user.lastName }}
+                    </div>
+                    <span class="designation">{{ user.designation }}</span>
+                  </div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div *ngFor="let name of userArr" class="main">
+            <div class="child">
+              <span class="avatar flex-shrink-0"
+                ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+              /></span>
+              <span class="text-danger">{{ name.name }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="submit-section">
+          <button class="btn btn-primary submit-btn" (click)="addAllTeam()">
+            Submit
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 <!-- /Assign User Modal -->
 
 <!-- Edit Project Modal -->
 <div id="edit_project" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Project</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Project</h5>
+        <button
+          type="button"
+          class="close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editProjectForm">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Project Name</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  [class.invalid]="
+                    editProjectForm.get('editProjectName').invalid &&
+                    editProjectForm.get('editProjectName').touched
+                  "
+                  formControlName="editProjectName"
+                />
+                <div
+                  *ngIf="
+                    editProjectForm.get('editProjectName').invalid &&
+                    editProjectForm.get('editProjectName').touched
+                  "
+                >
+                  <small
+                    *ngIf="
+                      editProjectForm.get('editProjectName').invalid &&
+                      editProjectForm.get('editProjectName').touched
+                    "
+                    class="text-danger"
+                  >
+                    *Name is required</small
+                  >
+                </div>
+              </div>
             </div>
-            <div class="modal-body">
-                <form [formGroup]="editProjectForm">
-                    <div class="row">
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>Project Name</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            [class.invalid]="
-                              editProjectForm.get('editProjectName').invalid &&
-                              editProjectForm.get('editProjectName').touched
-                            "
-                            formControlName="editProjectName"
-                          />
-                          <div
-                            *ngIf="
-                              editProjectForm.get('editProjectName').invalid &&
-                              editProjectForm.get('editProjectName').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
-                                editProjectForm.get('editProjectName').invalid &&
-                                editProjectForm.get('editProjectName').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Name is required</small
-                            >
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>Client</label>
-                          <select
-                            formControlName="client"
-                            class="form-select form-control"
-                          >
-                            <option>Select client</option>
-                            <option *ngFor="let item of client">
-                              {{ item.firstName }} {{ item.lastName }}
-                            </option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>Start Date</label>
-                          <div class="cal-icon">
-                            <input
-                              class="form-control datetimepicker"
-                              type="text"
-                              bsDatepicker
-                              type="text"
-                              [bsConfig]="{
-                                dateInputFormat: 'DD-MM-YYYY',
-                                returnFocusToInput: true
-                              }"
-                              [class.invalid]="
-                                editProjectForm.get('editProjectStartDate').invalid &&
-                                editProjectForm.get('editProjectStartDate').touched
-                              "
-                              formControlName="editProjectStartDate"
-                            />
-                            <div
-                              *ngIf="
-                                editProjectForm.get('editProjectStartDate').invalid &&
-                                editProjectForm.get('editProjectStartDate').touched
-                              "
-                            >
-                              <small
-                                *ngIf="
-                                  editProjectForm.get('editProjectStartDate').invalid &&
-                                  editProjectForm.get('editProjectStartDate').touched
-                                "
-                                class="text-danger"
-                              >
-                                *Start date is required</small
-                              >
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>End Date</label>
-                          <div class="cal-icon">
-                            <input
-                              class="form-control datetimepicker"
-                              type="text"
-                              bsDatepicker
-                              type="text"
-                              [bsConfig]="{
-                                dateInputFormat: 'DD-MM-YYYY',
-                                returnFocusToInput: true
-                              }"
-                              [class.invalid]="
-                                editProjectForm.get('editProjectEndDate').invalid &&
-                                editProjectForm.get('editProjectEndDate').touched
-                              "
-                              formControlName="editProjectEndDate"
-                            />
-                            <div
-                              *ngIf="
-                                editProjectForm.get('editProjectEndDate').invalid &&
-                                editProjectForm.get('editProjectEndDate').touched
-                              "
-                            >
-                              <small
-                                *ngIf="
-                                  editProjectForm.get('editProjectEndDate').invalid &&
-                                  editProjectForm.get('editProjectEndDate').touched
-                                "
-                                class="text-danger"
-                              >
-                                *End date is required</small
-                              >
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <label>Rate</label>
-                          <input
-                            formControlName="rate"
-                            placeholder="$50"
-                            class="form-control"
-                            value="$5000"
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <label>&nbsp;</label>
-                          <select class="form-select form-control">
-                            <option>Hourly</option>
-                            <option selected>Fixed</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>Priority</label>
-                          <select
-                            class="form-select form-control"
-                            [class.invalid]="
-                              editProjectForm.get('editProjectPriority').invalid &&
-                              editProjectForm.get('editProjectPriority').touched
-                            "
-                            formControlName="editProjectPriority"
-                          >
-                            <option selected>High</option>
-                            <option>Medium</option>
-                            <option>Low</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>Add Project Leader</label>
-                          <input
-                            formControlName="projectLeader"
-                            class="form-control"
-                            type="text"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>Team Leader</label>
-                          <div class="project-members">
-                            <a
-                              data-bs-toggle="tooltip"
-                              title="Jeffery Lalor"
-                              class="avatar"
-                            >
-                              <img src="assets/img/profiles/avatar-5.jpg" alt="" />
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>Add Team</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            [class.invalid]="
-                              editProjectForm.get('editaddTeamMembers').invalid &&
-                              editProjectForm.get('editaddTeamMembers').touched
-                            "
-                            formControlName="editaddTeamMembers"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-sm-6">
-                        <div class="form-group">
-                          <label>Team Members</label>
-                          <div class="project-members">
-                            <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
-                              <img src="assets/img/profiles/avatar-8.jpg" alt="" />
-                            </a>
-                            <a
-                              data-bs-toggle="tooltip"
-                              title="Richard Miles"
-                              class="avatar"
-                            >
-                              <img src="assets/img/profiles/avatar-9.jpg" alt="" />
-                            </a>
-                            <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
-                              <img src="assets/img/profiles/avatar-5.jpg" alt="" />
-                            </a>
-                            <a
-                              data-bs-toggle="tooltip"
-                              title="Mike Litorus"
-                              class="avatar"
-                            >
-                              <img src="assets/img/profiles/avatar-4.jpg" alt="" />
-                            </a>
-                            <span class="all-team">+2</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label>Description</label>
-                      <textarea
-                        rows="4"
-                        class="form-control summernote"
-                        placeholder="Enter your message here"
-                        [class.invalid]="
-                          editProjectForm.get('editProjectDescription').invalid &&
-                          editProjectForm.get('editProjectDescription').touched
-                        "
-                        formControlName="editProjectDescription"
-                      ></textarea>
-                      <div
-                        *ngIf="
-                          editProjectForm.get('editProjectDescription').invalid &&
-                          editProjectForm.get('editProjectDescription').touched
-                        "
-                      >
-                        <small
-                          *ngIf="
-                            editProjectForm.get('editProjectDescription').invalid &&
-                            editProjectForm.get('editProjectDescription').touched
-                          "
-                          class="text-danger"
-                        >
-                          *Description is required</small
-                        >
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label>Upload Files</label>
-                      <input
-                        class="form-control"
-                        type="file"
-                        multiple
-                        formControlName="file"
-                        (change)="selectImage($event)"
-                      />
-                    </div>
-                    <div class="submit-section">
-                      <button class="btn btn-primary submit-btn" (click)="saveProject()">
-                        Save
-                      </button>
-                    </div>
-                  </form>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Client</label>
+                <select
+                  formControlName="client"
+                  class="form-select form-control"
+                >
+                  <option>Select client</option>
+                  <option *ngFor="let item of client">
+                    {{ item.firstName }} {{ item.lastName }}
+                  </option>
+                </select>
+              </div>
             </div>
-        </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Start Date</label>
+                <div class="cal-icon">
+                  <input
+                    class="form-control datetimepicker"
+                    type="text"
+                    bsDatepicker
+                    type="text"
+                    [bsConfig]="{
+                      dateInputFormat: 'DD-MM-YYYY',
+                      returnFocusToInput: true
+                    }"
+                    [class.invalid]="
+                      editProjectForm.get('editProjectStartDate').invalid &&
+                      editProjectForm.get('editProjectStartDate').touched
+                    "
+                    formControlName="editProjectStartDate"
+                  />
+                  <div
+                    *ngIf="
+                      editProjectForm.get('editProjectStartDate').invalid &&
+                      editProjectForm.get('editProjectStartDate').touched
+                    "
+                  >
+                    <small
+                      *ngIf="
+                        editProjectForm.get('editProjectStartDate').invalid &&
+                        editProjectForm.get('editProjectStartDate').touched
+                      "
+                      class="text-danger"
+                    >
+                      *Start date is required</small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>End Date</label>
+                <div class="cal-icon">
+                  <input
+                    class="form-control datetimepicker"
+                    type="text"
+                    bsDatepicker
+                    type="text"
+                    [bsConfig]="{
+                      dateInputFormat: 'DD-MM-YYYY',
+                      returnFocusToInput: true
+                    }"
+                    [class.invalid]="
+                      editProjectForm.get('editProjectEndDate').invalid &&
+                      editProjectForm.get('editProjectEndDate').touched
+                    "
+                    formControlName="editProjectEndDate"
+                  />
+                  <div
+                    *ngIf="
+                      editProjectForm.get('editProjectEndDate').invalid &&
+                      editProjectForm.get('editProjectEndDate').touched
+                    "
+                  >
+                    <small
+                      *ngIf="
+                        editProjectForm.get('editProjectEndDate').invalid &&
+                        editProjectForm.get('editProjectEndDate').touched
+                      "
+                      class="text-danger"
+                    >
+                      *End date is required</small
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>Rate</label>
+                <input
+                  formControlName="rate"
+                  placeholder="$50"
+                  class="form-control"
+                  value="$5000"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <div class="form-group">
+                <label>&nbsp;</label>
+                <select class="form-select form-control">
+                  <option>Hourly</option>
+                  <option selected>Fixed</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Priority</label>
+                <select
+                  class="form-select form-control"
+                  [class.invalid]="
+                    editProjectForm.get('editProjectPriority').invalid &&
+                    editProjectForm.get('editProjectPriority').touched
+                  "
+                  formControlName="editProjectPriority"
+                >
+                  <option selected>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Add Project Leader</label>
+                <input
+                  formControlName="projectLeader"
+                  class="form-control"
+                  type="text"
+                />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Team Leader</label>
+                <div class="project-members">
+                  <a
+                    data-bs-toggle="tooltip"
+                    title="Jeffery Lalor"
+                    class="avatar"
+                  >
+                    <img src="assets/img/profiles/avatar-5.jpg" alt="" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Add Team</label>
+                <input
+                  class="form-control"
+                  type="text"
+                  [class.invalid]="
+                    editProjectForm.get('editaddTeamMembers').invalid &&
+                    editProjectForm.get('editaddTeamMembers').touched
+                  "
+                  formControlName="editaddTeamMembers"
+                />
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label>Team Members</label>
+                <div class="project-members">
+                  <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
+                    <img src="assets/img/profiles/avatar-8.jpg" alt="" />
+                  </a>
+                  <a
+                    data-bs-toggle="tooltip"
+                    title="Richard Miles"
+                    class="avatar"
+                  >
+                    <img src="assets/img/profiles/avatar-9.jpg" alt="" />
+                  </a>
+                  <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
+                    <img src="assets/img/profiles/avatar-5.jpg" alt="" />
+                  </a>
+                  <a
+                    data-bs-toggle="tooltip"
+                    title="Mike Litorus"
+                    class="avatar"
+                  >
+                    <img src="assets/img/profiles/avatar-4.jpg" alt="" />
+                  </a>
+                  <span class="all-team">+2</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea
+              rows="4"
+              class="form-control summernote"
+              placeholder="Enter your message here"
+              [class.invalid]="
+                editProjectForm.get('editProjectDescription').invalid &&
+                editProjectForm.get('editProjectDescription').touched
+              "
+              formControlName="editProjectDescription"
+            ></textarea>
+            <div
+              *ngIf="
+                editProjectForm.get('editProjectDescription').invalid &&
+                editProjectForm.get('editProjectDescription').touched
+              "
+            >
+              <small
+                *ngIf="
+                  editProjectForm.get('editProjectDescription').invalid &&
+                  editProjectForm.get('editProjectDescription').touched
+                "
+                class="text-danger"
+              >
+                *Description is required</small
+              >
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Upload Files</label>
+            <input
+              class="form-control"
+              type="file"
+              multiple
+              formControlName="file"
+              (change)="selectImage($event)"
+            />
+          </div>
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btn" (click)="saveProject()">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 <!-- /Edit Project Modal -->

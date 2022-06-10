@@ -9,10 +9,10 @@ import { ToastrModule } from "ngx-toastr";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { AppRoutingModule } from "./app-routing.module";
-
+import { CookieService } from "ngx-cookie-service";
 import { SharingModule } from "./sharing/sharing.module";
 @NgModule({
-  declarations: [AppComponent,],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -29,7 +29,7 @@ import { SharingModule } from "./sharing/sharing.module";
       preventDuplicates: true,
     }),
   ],
-
+  providers: [CookieService],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
