@@ -6,9 +6,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./pricing.component.css"],
 })
 export class PricingComponent implements OnInit {
-
-
-  check = true
+  check = true;
 
   public corporateId: any;
   public PtSingleUserMonth: any;
@@ -20,7 +18,6 @@ export class PricingComponent implements OnInit {
   public mobile: any;
   public companyName: any;
   public address: any;
-
 
   public dSingleMonthCost = 10;
   public dMultiMonthCost = 15;
@@ -34,14 +31,11 @@ export class PricingComponent implements OnInit {
   public dMultiUser: any;
   public epMultiUser: any;
 
-
   public totalPtSingleMonthAmount: any;
   public totalPtMultiMonthAmount: any;
   public totaldSingleMonthAmount: any;
   public totaldMultiMonthAmount: any;
   public totalEpMonthAmount: any;
-
-
 
   public ptSingleoneMonthAmount: any;
   public ptMultioneMonthAmount: any;
@@ -49,12 +43,9 @@ export class PricingComponent implements OnInit {
   public dSingleoneMonthAmount: any;
   public dMultioneMonthAmount: any;
 
+  constructor(private router: Router) {}
 
-  constructor(private router: Router) {
-  }
-
-
-  ngOnInit() { }
+  ngOnInit() {}
 
   getUser(event, val) {
     if (val == "ptSingle") {
@@ -77,12 +68,9 @@ export class PricingComponent implements OnInit {
       this.dMultioneMonthAmount = this.dMultiMonthCost * this.dMultiUser;
     }
 
-
-    if (val == 'epMulti') {
+    if (val == "epMulti") {
       this.epMultiUser = event;
-      this.epMultioneMonthAmount = (this.epMultiMonthCost * this.epMultiUser)
-
-
+      this.epMultioneMonthAmount = this.epMultiMonthCost * this.epMultiUser;
     }
   }
   getPlan(val, val2) {
@@ -117,69 +105,69 @@ export class PricingComponent implements OnInit {
   getData(val) {
     this.corporateId = sessionStorage.getItem("corporateId");
 
-    if (sessionStorage.getItem("currentAdminLgn") === "loggedin") {
-      if (val == "dSingle") {
-        this.router.navigate(["/pages/checkout"], {
-          queryParams: {
-            totalAmount: this.totaldSingleMonthAmount,
-            totalUser: this.dSingleUser,
-            corporate: this.corporateId,
-            packageName: "Diamond(Single-User)",
-            days: this.dSingleUserMonth,
-          },
-          skipLocationChange: true,
-        });
-      }
-      if (val == "dMulti") {
-        this.router.navigate(["/pages/checkout"], {
-          queryParams: {
-            totalAmount: this.totaldMultiMonthAmount,
-            totalUser: this.dMultiUser,
-            corporate: this.corporateId,
-            packageName: "Diamond(Multi-User)",
-            days: this.dMultiUserMonth,
-          },
-          skipLocationChange: true,
-        });
-      }
-      if (val == "epMulti") {
-        this.router.navigate(["/pages/checkout"], {
-          queryParams: {
-            totalAmount: this.totalEpMonthAmount,
-            totalUser: this.epMultiUser,
-            corporate: this.corporateId,
-            packageName: "Enterprise(Multi-User)",
-            days: this.epMultiUserMonth,
-          },
-          skipLocationChange: true,
-        });
-      }
-      if (val == "ptSingle") {
-        this.router.navigate(["/pages/checkout"], {
-          queryParams: {
-            totalAmount: this.totalPtSingleMonthAmount,
-            totalUser: this.PtSingleUser,
-            corporate: this.corporateId,
-            packageName: "Platinum(Single-User)",
-            days: this.PtSingleUserMonth,
-          },
-          skipLocationChange: true,
-        });
-      }
-      if (val == "ptMulti") {
-        this.router.navigate(["/pages/checkout"], {
-          queryParams: {
-            totalAmount: this.totalPtMultiMonthAmount,
-            totalUser: this.PtMultiUser,
-            corporate: this.corporateId,
-            packageName: "Platinum(Multi-User)",
-            days: this.PtMultiUserMonth,
-          },
-          skipLocationChange: true,
-        });
-      }
-    } else {
-      this.router.navigate(["/pages/hr_registration"]);
+    // if (sessionStorage.getItem("currentAdminLgn") === "loggedin") {
+    if (val == "dSingle") {
+      this.router.navigate(["/pages/checkout"], {
+        queryParams: {
+          totalAmount: this.totaldSingleMonthAmount,
+          totalUser: this.dSingleUser,
+          corporate: this.corporateId,
+          packageName: "Diamond(Single-User)",
+          days: this.dSingleUserMonth,
+        },
+        skipLocationChange: true,
+      });
     }
+    if (val == "dMulti") {
+      this.router.navigate(["/pages/checkout"], {
+        queryParams: {
+          totalAmount: this.totaldMultiMonthAmount,
+          totalUser: this.dMultiUser,
+          corporate: this.corporateId,
+          packageName: "Diamond(Multi-User)",
+          days: this.dMultiUserMonth,
+        },
+        skipLocationChange: true,
+      });
+    }
+    if (val == "epMulti") {
+      this.router.navigate(["/pages/checkout"], {
+        queryParams: {
+          totalAmount: this.totalEpMonthAmount,
+          totalUser: this.epMultiUser,
+          corporate: this.corporateId,
+          packageName: "Enterprise(Multi-User)",
+          days: this.epMultiUserMonth,
+        },
+        skipLocationChange: true,
+      });
+    }
+    if (val == "ptSingle") {
+      this.router.navigate(["/pages/checkout"], {
+        queryParams: {
+          totalAmount: this.totalPtSingleMonthAmount,
+          totalUser: this.PtSingleUser,
+          corporate: this.corporateId,
+          packageName: "Platinum(Single-User)",
+          days: this.PtSingleUserMonth,
+        },
+        skipLocationChange: true,
+      });
+    }
+    if (val == "ptMulti") {
+      this.router.navigate(["/pages/checkout"], {
+        queryParams: {
+          totalAmount: this.totalPtMultiMonthAmount,
+          totalUser: this.PtMultiUser,
+          corporate: this.corporateId,
+          packageName: "Platinum(Multi-User)",
+          days: this.PtMultiUserMonth,
+        },
+        skipLocationChange: true,
+      });
+    }
+    // } else {
+    //   this.router.navigate(["/pages/hr_registration"]);
+    // }
   }
 }

@@ -142,8 +142,7 @@ export class CheckoutComponent implements OnInit {
         console.log("this is the testPayment>>>>>", responce);
         if (responce.data === "Signature Verified") {
           /////create premium details
-          this.previous(paymentId);
-          this.saveDetails();
+          this.premium(paymentId);
         }
       });
   }
@@ -151,7 +150,7 @@ export class CheckoutComponent implements OnInit {
     this.showPromo = false;
   }
 
-  previous(paymentId) {
+  premium(paymentId) {
     let obj = {
       paymentId: paymentId,
       amount: this.totalAmount,
@@ -165,23 +164,45 @@ export class CheckoutComponent implements OnInit {
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
         console.log("KKKKKKKKKKKK  Previous>>>>>>>>>>>", res);
+        this.createAdminRegister(res);
       });
   }
 
-  saveDetails() {
+  // saveAdminDetails() {
+  //   this.http
+  //     .post(
+  //       "http://localhost:8443/checkout/create/Details" +
+  //         "/" +
+  //         this.corporateId,
+  //       {
+  //         amount: this.totalAmount,
+  //         packageName: this.packageName,
+  //         status: 1,
+  //       }
+  //     )
+  //     .subscribe((res: any) => {
+  //       console.log("this is the saveDetails>>>>>>>>>>", res);
+  //     });
+  // }
+  createAdminRegister(res: any) {
+    var obj = {
+      corporateId: this.corporateId,
+      amount: this.totalAmount,
+      companyPan: this.checkoutForm.value.panNo,
+      companyGst: this.checkoutForm.value.gstNo,
+      mobile: this.checkoutForm.value.mobile,
+      companyEmail: this.checkoutForm.value.email,
+      companyName: this.checkoutForm.value.companyName,
+      companyAddress: this.checkoutForm.value.address,
+      packageName: this.packageName,
+      status: 1,
+      expiryDate: res.expiryDate,
+    };
+
     this.http
-      .post(
-        "http://localhost:8443/checkout/create/Details" +
-          "/" +
-          this.corporateId,
-        {
-          amount: this.totalAmount,
-          packageName: this.packageName,
-          status: 1,
-        }
-      )
+      .post("http://localhost:8443/checkout/create/adminRegister", obj)
       .subscribe((res: any) => {
-        console.log("this is the saveDetails>>>>>>>>>>", res);
+        console.log("this is the adminRegister>>>>>>>>>>>>>>>>>>>", res);
       });
   }
 
