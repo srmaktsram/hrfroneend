@@ -29,6 +29,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
+  public user_type = sessionStorage.getItem("user_type");
+ 
+
   constructor(
     private formBuilder: FormBuilder,
     private http:HttpClient,
@@ -38,7 +41,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.adminId=sessionStorage.getItem("adminId");
     this.getClients();
   }
-
   ngOnInit() {
     this.dtOptions = {
       // ... skipped ...

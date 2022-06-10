@@ -14,7 +14,7 @@ declare const $: any;
   templateUrl: "./free-affiliate-list.component.html",
   styleUrls: ["./free-affiliate-list.component.css"],
 })
-export class DemoAffiliateListComponent implements OnInit, OnDestroy {
+export class FreeAffiliateListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -156,15 +156,14 @@ export class DemoAffiliateListComponent implements OnInit, OnDestroy {
 
         this.statusData = res.status;
         if (this.statusData == "Approve") {
-          
-        
           let obj = {
-            id
+            id,
           };
           this.http
 
             .post(
-              "http://localhost:8443/affiliates/affiliate/createAffiliateWallet" ,obj
+              "http://localhost:8443/affiliates/affiliate/createAffiliateWallet",
+              obj
             )
             .subscribe((res: any) => {
               console.log(res, "xxxxxx");

@@ -45,6 +45,7 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   public employeeId: any;
   searchCompany: any;
   leads: any;
+  conversions: any;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
@@ -70,9 +71,10 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
 
   getConversions() {
     this.http
-      .get("http://localhost:8443/mainadmin/affiliate/getRejectedAffiliate")
+      .get("http://localhost:8443/affiliates/leads/getConversions")
       .subscribe((res: any) => {
-        this.leads = res;
+        console.log(res,"Total Conversions")
+        this.conversions = res;
       });
   }
 

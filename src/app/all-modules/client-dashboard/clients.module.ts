@@ -8,9 +8,10 @@ import { ClientsComponent } from "./clients.component";
 // import { ClientsListComponent } from "./clients-list/clients-list.component";
 import { ClientsProfileComponent } from "./clients-profile/clients-profile.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ClientDashboardComponent } from "./client-dashboard/client-dashboard.component";
 
 @NgModule({
-  declarations: [ClientsComponent, ClientsProfileComponent],
+  declarations: [ClientsComponent, ClientsProfileComponent,ClientDashboardComponent],
   imports: [
     CommonModule,
     ClientsRoutingModule,
