@@ -29,9 +29,9 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private adminAuthenticationService: AdminAuthenticationService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   sendTo() {
     this.router.navigate(["/login/forgot"]);
   }
@@ -48,14 +48,12 @@ export class LoginComponent implements OnInit {
         console.log(res);
         if (res.result == 2) {
           this.router.navigate(["/pages/pricing"]);
-          // location.replace("http://localhost:51245/layout/dashboard/admin");
           this.adminAuthenticationService.login(
             res.data.id,
             res.data.corporateId,
             res.data.companyEmail,
             res.data.companyName,
             res.data.companySite,
-
             res.data.pinCode,
             res.data.companyAddress,
             res.data.phone,

@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private adminAuthenticationService: AdminAuthenticationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getip();
