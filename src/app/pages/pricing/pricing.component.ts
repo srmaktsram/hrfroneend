@@ -10,7 +10,6 @@ export class PricingComponent implements OnInit {
 
   check = true
 
-
   public corporateId: any;
   public PtSingleUserMonth: any;
   public PtMultiUserMonth: any;
@@ -180,7 +179,7 @@ export class PricingComponent implements OnInit {
         });
       }
     } else {
-      this.router.navigate(["/login/adminlogin"]);
+      this.router.navigate(["/pages/hr_registration"]);
     }
   }
 }
