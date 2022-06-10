@@ -16,6 +16,7 @@ export class CheckoutComponent implements OnInit {
   totalUser: any;
 
   public checkoutForm: FormGroup;
+  public month: any;
   public showPromo = true;
   public corporateId: any;
   public email: any;
@@ -55,6 +56,8 @@ export class CheckoutComponent implements OnInit {
     this.totalUser = this.route.snapshot.queryParams["totalUser"];
     this.corporateId = this.route.snapshot.queryParams["corporate"];
     this.packageName = this.route.snapshot.queryParams["packageName"];
+    this.month = this.route.snapshot.queryParams["days"] * 30;
+    alert(this.month);
   }
 
   getPayment() {
@@ -75,7 +78,7 @@ export class CheckoutComponent implements OnInit {
         obj
       )
       .subscribe((res: any) => {
-        // console.log("this is the Api>>>>", res);
+        console.log("this is the Api>>>>", res);
 
         if (res) {
           this.createOrderId();
@@ -93,7 +96,6 @@ export class CheckoutComponent implements OnInit {
   }
 
   completPayment(amount, orderid) {
-    alert(amount);
     let options: any = {
       key: "rzp_test_isZmsi0Pb9wEcU",
       amount: amount, // amount should be in paise format to display Rs 1255 without decimal point
@@ -118,14 +120,10 @@ export class CheckoutComponent implements OnInit {
       const razorpay_order_id = response.razorpay_order_id;
       const razorpay_signature = response.razorpay_signature;
 
-      // console.log("::::::::::::", response);
-
       this.evaluate(razorpay_payment_id, razorpay_order_id, razorpay_signature);
     };
 
     options.modal.ondismiss = () => {
-      // handle the case when user closes the form while transaction is in progress
-      //console.log('Transaction cancelled.');
       window.location.reload();
     };
     var rzp1 = new this.nativeWindow.Razorpay(options);
@@ -141,7 +139,7 @@ export class CheckoutComponent implements OnInit {
         signature: razorpay_signature,
       })
       .subscribe((responce: any) => {
-        // console.log("this is the testPayment>>>>>", responce);
+        console.log("this is the testPayment>>>>>", responce);
         if (responce.data === "Signature Verified") {
           /////create premium details
           this.previous(paymentId);
@@ -160,13 +158,13 @@ export class CheckoutComponent implements OnInit {
       totalUser: this.totalUser,
       corporateId: this.corporateId,
       packageName: this.packageName,
+      month: this.month,
     };
 
-    // console.log("KKKKKKKKKKKKKKKKKKKKKKK", obj);
     this.http
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
-        console.log("<><><><<><>>444444", res);
+        console.log("KKKKKKKKKKKK  Previous>>>>>>>>>>>", res);
       });
   }
 
@@ -183,7 +181,7 @@ export class CheckoutComponent implements OnInit {
         }
       )
       .subscribe((res: any) => {
-        // console.log("this is the saveDetails>>>>>>>>>>", res);
+        console.log("this is the saveDetails>>>>>>>>>>", res);
       });
   }
 

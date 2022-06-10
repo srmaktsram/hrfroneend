@@ -41,7 +41,7 @@ export class ChangePasswordComponent implements OnInit {
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
-    this.id = sessionStorage.getItem("adminId");
+    this.id = sessionStorage.getItem("affiliateId")
   }
 
   ngOnInit() {
@@ -53,25 +53,35 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   submitChangePassword() {
+   
     if (this.changePassword.valid) {
+      
       let oldPassword = this.changePassword.value.oldPassword;
       let newPassword = this.changePassword.value.newPassword;
+      let confirmPassword = this.changePassword.value.confirmPassword;
+      if(newPassword===confirmPassword){
+        
       this.http
         .patch(
-          "http://localhost:8443/admin/psetting/updatePassword" + "/" + this.id,
+          "http://localhost:8443/affiliates/setting/updatePassword" + "/" + this.id,
           { oldPassword, newPassword }
         )
         .subscribe((res: any) => {
-          console.log(res);
           this.reset();
           if (res.result == 1) {
             this._snackBar.open("Password Changed successfully!", "X", {
               duration: 1000,
               panelClass: "my-custom-snackbar",
             });
+          }if(res.result == 0) {
+            alert("Incorrect Password")
           }
-        });
+        }
+        );
+    }else{
+      alert("New Password and Confirm password do no match")
     }
+  }
   }
   reset() {
     this.changePassword.patchValue({

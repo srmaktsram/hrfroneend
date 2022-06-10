@@ -8,12 +8,14 @@ import { SharingModule } from "src/app/sharing/sharing.module";
 import { SettingsComponent } from "./settings.component";
 import { BankSettingsComponent } from "./bank-setting/bank-settings.component";
 import { ProfileSettingsComponent } from "./profile-setting/profile-settings.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
 
 @NgModule({
   declarations: [
     SettingsComponent,
     BankSettingsComponent,
     ProfileSettingsComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
