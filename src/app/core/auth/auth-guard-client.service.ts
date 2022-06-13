@@ -8,7 +8,7 @@ import {
 @Injectable({ providedIn: "root" })
 export class AuthGuardClient implements CanActivate {
   constructor(private _router: Router) {
-    sessionStorage.getItem("currentUser");
+    // sessionStorage.getItem("currentUser");
   }
   canActivate(): boolean {
     if (sessionStorage.getItem("currentUser")) {

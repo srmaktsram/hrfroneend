@@ -3,17 +3,15 @@ import { Injectable } from "@angular/core";
   providedIn: "root",
 })
 export class HrUserAuthenticationService {
-
   login(
     id: string,
     corporateId: string,
     email: string,
     firstName: string,
     lastName: string,
-    phone: string,
-
+    phone: string
   ) {
-    sessionStorage.setItem("currentUser", "loggedin");
+    sessionStorage.setItem("currentHrUserLgn", "loggedin");
     sessionStorage.setItem("user_type", "hrUser");
     sessionStorage.setItem("corporateId", corporateId);
     sessionStorage.setItem("hrUserId", id);
@@ -24,7 +22,7 @@ export class HrUserAuthenticationService {
     return true;
   }
   logout() {
-    sessionStorage.removeItem("currentUser");
+    sessionStorage.removeItem("currentHrUserLgn");
     sessionStorage.removeItem("corporateId");
     sessionStorage.removeItem("user_type");
     sessionStorage.removeItem("hrUserId");
@@ -33,6 +31,6 @@ export class HrUserAuthenticationService {
     sessionStorage.removeItem("lastName");
   }
   public get loggedIn(): boolean {
-    return sessionStorage.getItem("currentUser") !== null;
+    return sessionStorage.getItem("currentHrUserLgn") !== null;
   }
 }
