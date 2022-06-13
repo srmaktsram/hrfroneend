@@ -18,7 +18,7 @@ export class AdminAuthenticationService {
     cinvoice: string,
     cinvoicepre: string
   ) {
-    sessionStorage.setItem("currentUser", "loggedin");
+    sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", "admin");
     sessionStorage.setItem("corporateId", corporateId);
     sessionStorage.setItem("adminId", id);

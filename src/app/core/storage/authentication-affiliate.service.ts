@@ -12,7 +12,7 @@ export class AffilateAuthenticationService {
     phone: string,
     aId: any
   ) {
-    sessionStorage.setItem("currentUser", "loggedin");
+    sessionStorage.setItem("currentUser", "AffiliateLogin");
     sessionStorage.setItem("user_type", "affiliate");
 
     sessionStorage.setItem("affiliateId", id);

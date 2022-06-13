@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 })
 export class ClientAuthenticationService {
   login(id: string, adminId: string) {
-    sessionStorage.setItem("currentUser", "loggedin");
+    sessionStorage.setItem("currentUser", "ClientLogin");
     sessionStorage.setItem("user_type", "client");
     sessionStorage.setItem("clientId", id);
     sessionStorage.setItem("adminId", adminId);

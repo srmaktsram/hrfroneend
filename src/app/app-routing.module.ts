@@ -30,7 +30,6 @@ const routes: Routes = [
       import("./all-modules/all-modules.module").then(
         (m) => m.AllModulesModule
       ),
-    // canActivate: [AuthGuardAdmin],
   },
 
   { path: "**", redirectTo: "/error/error404" },

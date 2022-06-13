@@ -4,7 +4,7 @@ import { Injectable } from "@angular/core";
 })
 export class MainAdminAuthenticationService {
   login() {
-    sessionStorage.setItem("currentUser", "loggedin");
+    sessionStorage.setItem("currentUser", "MainAdminLogin");
     sessionStorage.setItem("user_type", "mainadmin");
     sessionStorage.setItem("mainadminrole", "all");
     return true;

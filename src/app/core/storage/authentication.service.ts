@@ -1,8 +1,11 @@
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 @Injectable({
   providedIn: "root",
 })
 export class AuthenticationService {
+  constructor(private router: Router) {}
+
   login(
     adminId: string,
     id: string,
@@ -14,7 +17,7 @@ export class AuthenticationService {
     phone: string,
     location: Object
   ) {
-    sessionStorage.setItem("currentUser", "loggedin");
+    sessionStorage.setItem("currentUser", "EmployeeLogin");
     sessionStorage.setItem("user_type", "employee");
     sessionStorage.setItem("adminId", adminId);
     sessionStorage.setItem("employee_login_id", id);
@@ -25,7 +28,7 @@ export class AuthenticationService {
     sessionStorage.setItem("lastName", lastName);
     sessionStorage.setItem("phone", phone);
     sessionStorage.setItem("current_location", JSON.stringify(location));
-
+    this.router.navigate(["/layout/dashboard/employee"]);
     return true;
   }
 
