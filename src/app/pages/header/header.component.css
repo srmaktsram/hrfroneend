@@ -1,3 +1,16 @@
+.setName{
+	margin-top:8px;
+	margin-left:10px;
+	cursor: pointer;
+	font-weight: bold;
+}
+.accountCircle{
+	font-size: 30px;
+	margin-left:0px;
+	margin-top: 5px;
+	color: rgb(86, 6, 245);
+}
+
 .profile{
 	margin-left: 20px;
 	font-size: 20px;
@@ -5,10 +18,11 @@
 
 }
 .profile1{
-	font-size:22px ;
-	font-weight: bold;
+	font-size:20px ;
+	margin-left: 20px;
 	color:orange;
-	margin-left: 10px;
+	cursor: pointer;
+
 
 }
 .mainDrop{
