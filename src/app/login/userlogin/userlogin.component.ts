@@ -48,7 +48,7 @@ export class UserLoginComponent implements OnInit {
         console.log(res);
         if (res.result == 2) {
           // location.replace("http://localhost:51245/layout/dashboard/employee");
-          this.router.navigate(["/layout/dashboard/employee"]);
+
           this.authenticationService.login(
             res.data.adminId,
             res.data.id,

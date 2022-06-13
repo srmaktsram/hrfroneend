@@ -11,7 +11,7 @@ export class AuthGuardEmployee implements CanActivate {
     // sessionStorage.getItem("currentEmployee");
   }
   canActivate(): boolean {
-    if (sessionStorage.getItem("currentUser")) {
+    if (sessionStorage.getItem("currentUser") == "EmployeeLogin") {
       return true;
     } else {
       this._router.navigate([""]);

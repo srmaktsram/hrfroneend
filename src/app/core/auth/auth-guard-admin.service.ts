@@ -9,7 +9,7 @@ import {
 export class AuthGuardAdmin implements CanActivate {
   constructor(private _router: Router) {}
   canActivate(): boolean {
-    if (sessionStorage.getItem("currentUser")) {
+    if (sessionStorage.getItem("currentUser") == "AdminLogin") {
       return true;
     } else {
       this._router.navigate([""]);

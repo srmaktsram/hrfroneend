@@ -12,7 +12,7 @@ import { AffiliateLoginComponent } from "./affilatelogin/login.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "adminlogin", pathMatch: "full" },
-  { path: "userlogin", component: UserLoginComponent },
+  { path: "employeelogin", component: UserLoginComponent },
   { path: "clientlogin", component: ClientLoginComponent },
   { path: "affiliatelogin", component: AffiliateLoginComponent },
   { path: "adminhrlogin", component: AdminLoginComponent },

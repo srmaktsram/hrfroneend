@@ -11,7 +11,7 @@ export class AuthGuardClient implements CanActivate {
     // sessionStorage.getItem("currentUser");
   }
   canActivate(): boolean {
-    if (sessionStorage.getItem("currentUser")) {
+    if (sessionStorage.getItem("currentUser") == "ClientLogin") {
       return true;
     } else {
       this._router.navigate([""]);
