@@ -50,7 +50,7 @@ export class PricingComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private cookieService: CookieService) {}
+  constructor(private router: Router, private cookieService: CookieService) { }
 
 
   ngOnInit() { }
@@ -115,7 +115,7 @@ export class PricingComponent implements OnInit {
     this.corporateId = sessionStorage.getItem("corporateId");
 
     console.log(sessionStorage.getItem("currentUser"), this.corporateId)
-    if (sessionStorage.getItem("currentUser") == "loggedin") {
+    if (sessionStorage.getItem("currentUser") == "HrUserLogin") {
       if (val == "dSingle") {
         this.router.navigate(["/pages/checkout"], {
           queryParams: {
