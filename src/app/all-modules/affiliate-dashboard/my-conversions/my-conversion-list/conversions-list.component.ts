@@ -48,6 +48,7 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   searchCompany: any;
   leads: any;
   conversions: any;
+  newStatus: any;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
@@ -55,7 +56,7 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.aId = sessionStorage.getItem("aId");
-    console.log(this.aId,"aIddddd")
+    console.log(this.aId, "aIddddd");
   }
 
   ngOnInit() {
@@ -75,10 +76,13 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
 
   getConversions() {
     this.http
-      .get("http://localhost:8443/affiliates/leads/getConversions"+"/"+this.aId)
+      .get(
+        "http://localhost:8443/affiliates/leads/getConversions" + "/" + this.aId
+      )
       .subscribe((res: any) => {
-        console.log(res,"Total Conversions")
+        console.log(res, "Total Conversions");
         this.conversions = res;
+        
       });
   }
 

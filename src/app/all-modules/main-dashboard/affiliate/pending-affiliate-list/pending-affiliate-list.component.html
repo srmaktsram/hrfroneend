@@ -151,17 +151,17 @@
                   <div class="dropdown-menu">
                     <a
                       class="dropdown-item"
-                      (click)="getStatus('Pending', client.id)"
+                      (click)="getStatus('Pending', client.id,client.aId)"
                       ><i class="fa fa-dot-circle-o text-center"></i> Pending</a
                     >
                     <a
                       class="dropdown-item"
-                      (click)="getStatus('Approve', client.id)"
+                      (click)="getStatus('Approve', client.id,client.aId)"
                       ><i class="fa fa-dot-circle-o text-success "></i> Approve</a
                     >
                     <a
                       class="dropdown-item"
-                      (click)="getStatus('Rejected', client.id)"
+                      (click)="getStatus('Rejected', client.id,client.aId)"
                       ><i class="fa fa-dot-circle-o  text-danger"></i>
                       Rejected</a
                     >

@@ -6,15 +6,14 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
-import { id } from "src/assets/all-modules-data/id";
 
 declare const $: any;
 @Component({
-  selector: "app-free-affiliate-list",
-  templateUrl: "./free-affiliate-list.component.html",
-  styleUrls: ["./free-affiliate-list.component.css"],
+  selector: "app-rejected-affiliate-list",
+  templateUrl: "./rejected-affiliate-list.component.html",
+  styleUrls: ["./rejected-affiliate-list.component.css"],
 })
-export class FreeAffiliateListComponent implements OnInit, OnDestroy {
+export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -52,10 +51,13 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+
+   
   }
 
   ngOnInit() {
-    this.getDemoAdmins();
+    // this.getCompanyName()
+    this.getVisitorAdmins();
 
     this.dtOptions = {
       // ... skipped ...
@@ -63,13 +65,14 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
       dom: "lrtip",
     };
 
-    //Edit Clients Form
+    
     this.editClientForm = this.formBuilder.group({
       editClientCompany: ["", [Validators.required]],
       editContactPerson: ["", [Validators.required]],
       editClientEmail: ["", [Validators.required]],
       editClientPhone: ["", [Validators.required]],
       editCompanyEmail: ["", [Validators.required]],
+
     });
   }
 
@@ -80,15 +83,29 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
   }
 
   //Get all Clients data
-  public getDemoAdmins() {
+  public getVisitorAdmins() {
     this.http
-      .get("http://localhost:8443/mainadmin/affiliate/getPendingAffiliate")
+      .get(
+        "http://localhost:8443/mainadmin/affiliate/getRejectedAffiliate"
+      )
       .subscribe((res: any) => {
+      console.log(res)
         this.data = res;
-        console.log(this.data, "tttttttttttttttttttttttttt");
         this.srch = [...this.data];
+
+        // this.srch = res;
       });
   }
+  // public getCompanyName() {
+  //   this.http
+  //     .get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId)
+  //     .subscribe((data) => {
+  //       this.data = data;
+
+  //       this.clientsData = this.data.data;
+  //       this.companys = this.clientsData;
+  //     });
+  // }
 
   // Edit client
   public onEditClient(clientId: any) {
@@ -96,10 +113,11 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
     let client = this.data.filter((client) => client.id === clientId);
     this.editClientForm.patchValue({
       editClientCompany: client[0]?.company,
-      editContactPerson: client[0]?.first_name,
+      editContactPerson: client[0]?.name,
       editClientEmail: client[0]?.email,
       editClientPhone: client[0]?.phone,
       editCompanyEmail: client[0]?.last_name,
+
     });
   }
   //Reset form
@@ -111,39 +129,43 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
   public onSave() {
     let obj = {
       company: this.editClientForm.value.editClientCompany,
-      first_name: this.editClientForm.value.editContactPerson,
+      name: this.editClientForm.value.editContactPerson,
       email: this.editClientForm.value.editClientEmail,
       phone: this.editClientForm.value.editClientPhone,
       last_name: this.editClientForm.value.editCompanyEmail,
+
     };
     let id = this.editId;
     this.http
-      .patch(
-        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
-        obj
-      )
-      .subscribe((data: any) => {
-        this.getDemoAdmins();
+      .patch("http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id, obj)
+      .subscribe((data:any) => {
+        this.getVisitorAdmins();
       });
 
     $("#edit_client").modal("hide");
     this.editClientForm.reset();
-    this.toastr.success("Client updated sucessfully...!", "Success");
+    this.toastr.success("Affiliate updated sucessfully...!", "Success");
   }
 
-  deleteAffiliate(deleteId) {
+
+  deleteAffiliate(deleteId){
     let id = deleteId;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
-        { status: "2" }
+        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" +
+          "/" +
+          id,
+        {status:"2"}
       )
-      .subscribe((data: any) => {
-        this.getDemoAdmins();
+      .subscribe((data:any) => {
+        this.getVisitorAdmins();
       });
+  
   }
 
-  //////////////
+
+  
+
   getStatus(data, id) {
     const status = data;
     this.http
@@ -151,45 +173,33 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
         "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
         { status }
       )
-      .subscribe((res: any) => {
-        this.getDemoAdmins();
-
+      .subscribe((res:any) => {
+        this.getVisitorAdmins();
         this.statusData = res.status;
+
         if (this.statusData == "Approve") {
+        
           let obj = {
-            id,
+            id
+      
           };
           this.http
 
             .post(
-              "http://localhost:8443/affiliates/affiliate/createAffiliateWallet",
-              obj
+              "http://localhost:8443/affiliates/affiliate/createAffiliateWallet" ,obj
             )
             .subscribe((res: any) => {
-              console.log(res, "xxxxxx");
+              console.log(res, "YYYYYYYYYYYYYY");
             });
         }
+
+       
       });
   }
-
-  //search by name
-  // searchID(val) {
-  //   if (val) {
-  //     this.data.splice(0, this.data.length);
-  //     let temp = this.srch.filter(function (d) {
-  //       val = val.toLowerCase();
-  //       return d.clientId.toLowerCase().indexOf(val) !== -1 || !val;
-  //     });
-  //     this.data.push(...temp);
-  //   } else {
-  //     // this.getClients();
-  //   }
-  // }
-
   //search by name
   searchByName(val) {
     if (val) {
-      this.srch.splice(0, this.data.length);
+      this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return (
@@ -198,18 +208,58 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
           d.email.toLowerCase().indexOf(val) !== -1 ||
           !val ||
           d.phone.toLowerCase().indexOf(val) !== -1 ||
-          !val ||
+          !val||
           d.company.toLowerCase().indexOf(val) !== -1 ||
           !val
         );
       });
       this.data.push(...temp);
     } else {
-      this.getDemoAdmins();
+      this.getVisitorAdmins();
     }
   }
 
+  //search by company
+  // searchByCompany(val) {
+  //   if (val.trim()) {
+  //     this.srch.splice(0, this.data.length);
+  //     let temp = this.srch.filter(function (d) {
+  //       val = val.toLowerCase();
+  //       return d.companyName.toLowerCase().indexOf(val) !== -1 || !val;
+  //     });
+  //     this.srch.push(...temp);
+  //   } else {
+  //     this.getVisitorAdmins();
+
+  //   }
+  // }
+  // onSearch(name, company) {
+  //   this.filtereddata = [];
+  //   this.searchName = name;
+  //   this.searchCompany = company;
+  //   this.clientsData = this.data;
+
+  //   if (this.searchName) {
+  //     let nameFilter = this.filtereddata.filter((data) =>
+  //       data.name.toLowerCase().includes(this.searchName.toLowerCase())
+  //     );
+  //     if (nameFilter.length != 0) {
+  //       this.filtereddata = nameFilter;
+  //     }
+  //   }
+  //   if (this.searchCompany || this.searchName) {
+  //     this.clientsData =
+  //       this.filtereddata.length != 0 ? this.filtereddata : this.clientsData;
+  //   } else {
+  //     this.clientsData = [];
+  //   }
+  // }
+
+
+  
+
   ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
 }

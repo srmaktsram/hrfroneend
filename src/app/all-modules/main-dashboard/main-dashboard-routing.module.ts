@@ -66,6 +66,21 @@ const routes: Routes = [
           import("./kyc/kyc.module").then((m) => m.KycModule),
       },
       {
+        path: "commission",
+        loadChildren: () =>
+          import("./Commissions/commissions.module").then((m) => m.CommissionModule),
+      },
+      {
+        path: "reject-commission",
+        loadChildren: () =>
+          import("./Commissions/commissions.module").then((m) => m.CommissionModule),
+      },
+      {
+        path: "approved-commission",
+        loadChildren: () =>
+          import("./Commissions/commissions.module").then((m) => m.CommissionModule),
+      },
+      {
         path: "accounts",
         loadChildren: () =>
           import("./accounts/accounts.module").then((m) => m.AccountsModule),

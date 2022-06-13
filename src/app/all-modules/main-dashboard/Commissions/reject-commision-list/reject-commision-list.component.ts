@@ -6,14 +6,15 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import { id } from "src/assets/all-modules-data/id";
 
 declare const $: any;
 @Component({
-  selector: "app-wallet-history-list",
-  templateUrl: "./wallet-history-list.component.html",
-  styleUrls: ["./wallet-history-list.component.css"],
+  selector: "app-reject-commision-list",
+  templateUrl: "./reject-commision-list.component.html",
+  styleUrls: ["./reject-commision-list.component.css"],
 })
-export class ClientsListComponent implements OnInit, OnDestroy {
+export class RejectCommissionListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -23,7 +24,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public editClientForm: FormGroup;
   public tempId: any;
   public adminId: any;
-  public aId: any;
   public companiesList = [];
 
   public data = [];
@@ -33,45 +33,35 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
 
   editId: any;
+  invoices: any;
+  projects: any;
+  tasks: any;
+  chats: any;
+  estimates: any;
+  timingSheets: any;
   companys: any[];
   filtereddata: any[];
   searchId: any;
   searchName: any;
   public employeeId: any;
   searchCompany: any;
-  dataArray: any;
-  newData: any;
-  dataNew: any;
-
-  newId: any;
-  dashboard: any;
-  premiumClients: any;
-  freeClients: any;
-  visitorClients: any;
-  tickets: any;
-  invoices: any;
-  orders: any;
-  searchUser: any;
-  searchMobile: any;
-  searchEmail: any;
-
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
-    this.aId = sessionStorage.getItem("aId");
-    console.log(this.aId,"AID")
-
   }
+
   ngOnInit() {
-    this.getWalletHistory();
+    this.getRejectedCommisions();
 
     this.dtOptions = {
       pageLength: 10,
       dom: "lrtip",
     };
+
+    
   }
 
   ngAfterViewInit(): void {
@@ -80,15 +70,13 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  // Get Wallet History Details
-
-  public getWalletHistory() {
+  //Get all Clients data
+  public getRejectedCommisions() {
     this.http
-      .get("http://localhost:8443/affiliates/affiliteWalletDetails/getAffiliteWalletDetails"+"/"+this.aId)
+      .get("http://localhost:8443/affiliates/Commisions/getRejectCommisions")
       .subscribe((res: any) => {
-        console.log(res,"Wallet History Details")
+        console.log(res,"get Reject Commisions")
         this.data = res;
-        
       });
   }
 

@@ -9,9 +9,9 @@ import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
-  selector: "app-clients-list",
-  templateUrl: "./clients-list.component.html",
-  styleUrls: ["./clients-list.component.css"],
+  selector: "app-wallet-list",
+  templateUrl: "./wallet-list.component.html",
+  styleUrls: ["./wallet-list.component.css"],
 })
 export class ClientsListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
@@ -129,6 +129,16 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       )
       .subscribe((res: any) => {
         console.log(res, "abc");
+        if(res.result==1){
+          let object={
+            pendingWithdraw:res.data.amount
+          }
+          console.log(object,"kkkkobj")
+          this.http.patch("http://localhost:8443/affiliates/wallet/updateWalletRequestAmount"+"/"+this.aId,object).subscribe((res:any)=>{
+            this.getWallet()
+            console.log(res,"wallet Pending")
+          })
+        }
       });
   }
   //reset form

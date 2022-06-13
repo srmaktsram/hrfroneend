@@ -100,9 +100,17 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
           this.id,
         obj
       )
-      .subscribe((res) => {
+      .subscribe((res:any) => {
         console.log(res, "updatePay");
         this.getPaymentRequest();
+        if(res.result==1){
+          let object={
+            withdraw:res.data.amount
+          }
+          this.http.patch("http://localhost:8443/affiliates/wallet/updateWalletPaidAmount"+"/"+res.data.aId,object).subscribe((res:any)=>{
+            console.group(res,"wallet lllllUpdated")
+          })
+        }
       });
     $("#delete_pay").modal("hide");
     this.toastr.success("Pay Added", "Success");
@@ -121,8 +129,16 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
           this.id,
         obj
       )
-      .subscribe((res) => {
+      .subscribe((res:any) => {
         console.log(res, "updateReject");
+        if(res.result==1){
+          let object={
+            reject:res.data.amount
+          }
+          this.http.patch("http://localhost:8443/affiliates/wallet/updateWalletRejectAmount"+"/"+res.data.aId,object).subscribe((res:any)=>{
+            console.group(res,"wallet reject req update")
+          })
+        }
         this.getPaymentRequest();
       });
     $("#add_holiday").modal("hide");

@@ -1,0 +1,85 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Approved Commissions</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/layout/mainadmin/admindashboard">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Approved Commissions</li>
+        </ul>
+      </div>
+      <div class="col-auto float-end ms-auto">
+        <div class="view-icons">
+          <a
+              routerLink="/layout/mainadmin/commission/commission"
+              class="list-view btn btn-link active"
+              ><i class="fa fa-bars"></i
+            ></a>
+            <a
+              routerLink="/layout/mainadmin/reject-commission/reject-commission"
+              class="list-view btn btn-link active"
+              ><i class="fa fa-bars"></i
+            ></a>
+            <a
+              routerLink="/layout/mainadmin/approved-commission/approved-commission"
+              class="list-view btn btn-link active"
+              ><i class="fa fa-bars"></i
+            ></a>
+            
+            
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table
+          datatable
+          [dtOptions]="dtOptions"
+          [dtTrigger]="dtTrigger"
+          id="datatable"
+          class="table table-striped custom-table datatable"
+        >
+          <thead>
+            <tr>
+              <th>aId</th>
+              <th>Company Name</th>
+              <th>Amount</th>
+              <th>Package Name</th>
+              <th>Create Date</th>
+              <th>Update Date</th>
+
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let client of data; let i = index">
+              
+              <td>{{ client.aId }}</td>
+              <td>{{ client.companyName }}</td>
+              <td>{{ client.amount }}</td>
+              <td>{{ client.packageName }}</td>
+              <td>{{ client.createDate }}</td>
+              <td>{{ client.updateDate }}</td>
+              <td> <ng-container *ngIf="client.status==2">
+                <span class="text-success">Approved</span>
+              </ng-container>
+                 </td>
+              
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /Page Content -->
+
