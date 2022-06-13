@@ -81,7 +81,7 @@ export class CheckoutComponent implements OnInit {
         obj
       )
       .subscribe((res: any) => {
-        console.log("this is the Api>>>>", res);
+        console.log("this is the create order History>>>>", res);
 
         if (res) {
           this.createOrderId();
@@ -166,27 +166,28 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
-        console.log("KKKKKKKKKKKK  Previous>>>>>>>>>>>", res);
+        console.log("this is the  PreviousDetails>>>>>>>>>>>", res);
         this.createAdminRegister(res);
+        this.saveOrderDetails();
       });
   }
 
-  // saveAdminDetails() {
-  //   this.http
-  //     .post(
-  //       "http://localhost:8443/checkout/create/Details" +
-  //         "/" +
-  //         this.corporateId,
-  //       {
-  //         amount: this.totalAmount,
-  //         packageName: this.packageName,
-  //         status: 1,
-  //       }
-  //     )
-  //     .subscribe((res: any) => {
-  //       console.log("this is the saveDetails>>>>>>>>>>", res);
-  //     });
-  // }
+  saveOrderDetails() {
+    this.http
+      .post(
+        "http://localhost:8443/checkout/create/Details" +
+          "/" +
+          this.corporateId,
+        {
+          amount: this.totalAmount,
+          packageName: this.packageName,
+          status: 1,
+        }
+      )
+      .subscribe((res: any) => {
+        console.log("this is the orderDetails>>>>>>>>>>", res);
+      });
+  }
   createAdminRegister(res: any) {
     var obj = {
       corporateId: this.corporateId,
