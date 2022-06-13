@@ -1,6 +1,10 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { AuthGuard } from "../core/auth/auth-guard.service";
+import { AuthGuardAdmin } from "../core/auth/auth-guard-admin.service";
+import { AuthGuardAffiliate } from "../core/auth/auth-guard-affiliate.service";
+import { AuthGuardClient } from "../core/auth/auth-guard-client.service";
+import { AuthGuardMainAdmin } from "../core/auth/auth-guard-mainadmin.service";
+// import { AuthGuard } from "../core/auth/auth-guard.service";
 import { AllModulesComponent } from "./all-modules.component";
 
 const routes: Routes = [
@@ -17,11 +21,13 @@ const routes: Routes = [
         path: "dashboard",
         loadChildren: () =>
           import("./dashboard/dashboard.module").then((m) => m.DashboardModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "apps",
         loadChildren: () =>
           import("./apps/apps.module").then((m) => m.AppsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "mainadmin",
@@ -29,6 +35,7 @@ const routes: Routes = [
           import("./main-dashboard/main-dashboard.module").then(
             (m) => m.MainDashboardModule
           ),
+        canActivate: [AuthGuardMainAdmin],
       },
       {
         path: "client",
@@ -36,6 +43,7 @@ const routes: Routes = [
           import("./client-dashboard/clients.module").then(
             (m) => m.ClientsDashboardModule
           ),
+        canActivate: [AuthGuardClient],
       },
       {
         path: "affiliates",
@@ -43,6 +51,7 @@ const routes: Routes = [
           import("./affiliate-dashboard/affiliate-dashboard.module").then(
             (m) => m.AffiliateModule
           ),
+        canActivate: [AuthGuardAffiliate],
       },
       {
         path: "employees",
@@ -53,41 +62,49 @@ const routes: Routes = [
         path: "clients",
         loadChildren: () =>
           import("./clients/clients.module").then((m) => m.ClientsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "projects",
         loadChildren: () =>
           import("./projects/projects.module").then((m) => m.ProjectsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "leads",
         loadChildren: () =>
           import("./leads/leads.module").then((m) => m.LeadsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "tickets",
         loadChildren: () =>
           import("./tickets/tickets.module").then((m) => m.TicketsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "accounts",
         loadChildren: () =>
           import("./accounts/accounts.module").then((m) => m.AccountsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "payroll",
         loadChildren: () =>
           import("./payroll/payroll.module").then((m) => m.PayrollModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "policies",
         loadChildren: () =>
           import("./policies/policies.module").then((m) => m.PoliciesModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "reports",
         loadChildren: () =>
           import("./reports/reports.module").then((m) => m.ReportsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "performance",
@@ -95,21 +112,25 @@ const routes: Routes = [
           import("./performance/performance.module").then(
             (m) => m.PerformanceModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "goals",
         loadChildren: () =>
           import("./goals/goals.module").then((m) => m.GoalsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "training",
         loadChildren: () =>
           import("./training/training.module").then((m) => m.TrainingModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "promotion",
         loadChildren: () =>
           import("./promotion/promotion.module").then((m) => m.PromotionModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "resignation",
@@ -117,6 +138,7 @@ const routes: Routes = [
           import("./resignation/resignation.module").then(
             (m) => m.ResignationModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "termination",
@@ -124,16 +146,19 @@ const routes: Routes = [
           import("./termination/termination.module").then(
             (m) => m.TerminationModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "assets",
         loadChildren: () =>
           import("./assets/assets.module").then((m) => m.AssetsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "jobs",
         loadChildren: () =>
           import("./jobs/jobs.module").then((m) => m.JobsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "knowledgebase",
@@ -141,6 +166,7 @@ const routes: Routes = [
           import("./knowledgebase/knowledgebase.module").then(
             (m) => m.KnowledgebaseModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "activities",
@@ -148,21 +174,25 @@ const routes: Routes = [
           import("./activities/activities.module").then(
             (m) => m.ActivitiesModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "users",
         loadChildren: () =>
           import("./users/users.module").then((m) => m.UsersModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "settings",
         loadChildren: () =>
           import("./settings/settings.module").then((m) => m.SettingsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "pages",
         loadChildren: () =>
           import("./pages/pages.module").then((m) => m.PagesModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "components",
@@ -170,16 +200,19 @@ const routes: Routes = [
           import("./components/components.module").then(
             (m) => m.ComponentsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "forms",
         loadChildren: () =>
           import("./forms/forms.module").then((m) => m.FormsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "tables",
         loadChildren: () =>
           import("./tables/tables.module").then((m) => m.TablesModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "scheduling",
@@ -187,21 +220,25 @@ const routes: Routes = [
           import("./scheduling/scheduling.module").then(
             (m) => m.SchedulingModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "shift",
         loadChildren: () =>
           import("./shift/shift.module").then((m) => m.ShiftModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "category",
         loadChildren: () =>
           import("./category/category.module").then((m) => m.CategoryModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "budget",
         loadChildren: () =>
           import("./budget/budget.module").then((m) => m.BudgetModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "budgetexpenses",
@@ -209,6 +246,7 @@ const routes: Routes = [
           import("./budgetexpenses/budgetexpenses.module").then(
             (m) => m.BudgetexpensesModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "budgetrevenues",
@@ -216,6 +254,7 @@ const routes: Routes = [
           import("./budgetrevenues/budgetrevenues.module").then(
             (m) => m.BudgetrevenuesModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "paymentreports",
@@ -223,6 +262,7 @@ const routes: Routes = [
           import("./paymentreports/paymentreports.module").then(
             (m) => m.PaymentreportsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "projectreports",
@@ -230,6 +270,7 @@ const routes: Routes = [
           import("./projectreports/projectreports.module").then(
             (m) => m.ProjectreportsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "taskreports",
@@ -237,6 +278,7 @@ const routes: Routes = [
           import("./taskreports/taskreports.module").then(
             (m) => m.TaskreportsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "userreports",
@@ -244,6 +286,7 @@ const routes: Routes = [
           import("./userreports/userreports.module").then(
             (m) => m.UserreportsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "employeereports",
@@ -251,6 +294,7 @@ const routes: Routes = [
           import("./employeereports/employeereports.module").then(
             (m) => m.EmployeereportsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "payslipreports",
@@ -258,6 +302,7 @@ const routes: Routes = [
           import("./payslipreports/payslipreports.module").then(
             (m) => m.PayslipreportsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "attendancereports",
@@ -265,6 +310,7 @@ const routes: Routes = [
           import("./attendancereports/attendancereports.module").then(
             (m) => m.AttendancereportsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "leavereports",
@@ -272,6 +318,7 @@ const routes: Routes = [
           import("./leavereports/leavereports.module").then(
             (m) => m.LeavereportsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "dailyreports",
@@ -279,6 +326,7 @@ const routes: Routes = [
           import("./dailyreports/dailyreports.module").then(
             (m) => m.DailyreportsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "userdashboard",
@@ -286,6 +334,7 @@ const routes: Routes = [
           import("./userdashboard/userdashboard.module").then(
             (m) => m.UserdashboardModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "jobsdashboard",
@@ -293,6 +342,7 @@ const routes: Routes = [
           import("./jobsdashboard/jobsdashboard.module").then(
             (m) => m.JobsdashboardModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "manageresume",
@@ -300,21 +350,25 @@ const routes: Routes = [
           import("./manageresume/manageresume.module").then(
             (m) => m.ManageresumeModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "candidate",
         loadChildren: () =>
           import("./candidate/candidate.module").then((m) => m.CandidateModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "interview",
         loadChildren: () =>
           import("./interview/interview.module").then((m) => m.InterviewModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "offer",
         loadChildren: () =>
           import("./offer/offer.module").then((m) => m.OfferModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "experience",
@@ -322,6 +376,7 @@ const routes: Routes = [
           import("./experience/experience.module").then(
             (m) => m.ExperienceModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "studentcandidate",
@@ -329,6 +384,7 @@ const routes: Routes = [
           import("./studentcandidate/studentcandidate.module").then(
             (m) => m.StudentcandidateModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "scheduletiming",
@@ -336,11 +392,13 @@ const routes: Routes = [
           import("./scheduletiming/scheduletiming.module").then(
             (m) => m.ScheduletimingModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "aptitute",
         loadChildren: () =>
           import("./aptitute/aptitute.module").then((m) => m.AptituteModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "useralljobs",
@@ -348,11 +406,13 @@ const routes: Routes = [
           import("./useralljobs/useralljobs.module").then(
             (m) => m.UseralljobsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "savedjobs",
         loadChildren: () =>
           import("./savedjobs/savedjobs.module").then((m) => m.SavedjobsModule),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "appliedjobs",
@@ -360,6 +420,7 @@ const routes: Routes = [
           import("./appliedjobs/appliedjobs.module").then(
             (m) => m.AppliedjobsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "interviewing",
@@ -367,6 +428,7 @@ const routes: Routes = [
           import("./interviewing/interviewing.module").then(
             (m) => m.InterviewingModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "offeredjobs",
@@ -374,6 +436,7 @@ const routes: Routes = [
           import("./offeredjobs/offeredjobs.module").then(
             (m) => m.OfferedjobsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "visitedjobs",
@@ -381,6 +444,7 @@ const routes: Routes = [
           import("./visitedjobs/visitedjobs.module").then(
             (m) => m.VisitedjobsModule
           ),
+        canActivate: [AuthGuardAdmin],
       },
       {
         path: "archivedjobs",

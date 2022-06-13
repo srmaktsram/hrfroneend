@@ -6,9 +6,9 @@ import {
   RouterStateSnapshot,
 } from "@angular/router";
 @Injectable({ providedIn: "root" })
-export class AuthGuardAffilate implements CanActivate {
+export class AuthGuardAffiliate implements CanActivate {
   constructor(private _router: Router) {
-    sessionStorage.getItem("currentUser");
+    // sessionStorage.getItem("currentUser");
   }
   canActivate(): boolean {
     if (sessionStorage.getItem("currentUser")) {

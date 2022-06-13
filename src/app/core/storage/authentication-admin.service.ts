@@ -18,7 +18,7 @@ export class AdminAuthenticationService {
     cinvoice: string,
     cinvoicepre: string
   ) {
-    sessionStorage.setItem("currentAdminLgn", "loggedin");
+    sessionStorage.setItem("currentUser", "loggedin");
     sessionStorage.setItem("user_type", "admin");
     sessionStorage.setItem("corporateId", corporateId);
     sessionStorage.setItem("adminId", id);
@@ -36,7 +36,7 @@ export class AdminAuthenticationService {
     return true;
   }
   logout() {
-    sessionStorage.removeItem("currentAdminLgn");
+    sessionStorage.removeItem("currentUser");
     sessionStorage.removeItem("user_type");
     sessionStorage.removeItem("adminId");
     sessionStorage.removeItem("companyEmail");
@@ -51,6 +51,6 @@ export class AdminAuthenticationService {
     sessionStorage.removeItem("cinvoicepre");
   }
   public get loggedIn(): boolean {
-    return sessionStorage.getItem("currentAdminLgn") !== null;
+    return sessionStorage.getItem("currentUser") !== null;
   }
 }

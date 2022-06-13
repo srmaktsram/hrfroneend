@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
       now.setTime(expireTime);
       this.cookieService.set("aid", aid, { expires: now });
     }
-    alert(this.cookieService.get("aid"));
+    // alert(this.cookieService.get("aid"));
   }
 
   plusIcon1 = false;
