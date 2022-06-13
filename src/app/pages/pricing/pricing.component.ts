@@ -8,7 +8,9 @@ import { CookieService } from "ngx-cookie-service";
 })
 export class PricingComponent implements OnInit {
 
+
   check = true;
+
 
 
   public corporateId: any;
@@ -46,9 +48,13 @@ export class PricingComponent implements OnInit {
   public dSingleoneMonthAmount: any;
   public dMultioneMonthAmount: any;
 
-  constructor(private router: Router, private cookieService: CookieService) { }
+
+
+  constructor(private router: Router, private cookieService: CookieService) {}
+
 
   ngOnInit() { }
+
 
   getUser(event, val) {
     if (val == "ptSingle") {
@@ -107,6 +113,7 @@ export class PricingComponent implements OnInit {
   }
   getData(val) {
     this.corporateId = sessionStorage.getItem("corporateId");
+
     console.log(sessionStorage.getItem("currentUser"), this.corporateId)
     if (sessionStorage.getItem("currentUser") == "loggedin") {
       if (val == "dSingle") {
@@ -172,6 +179,10 @@ export class PricingComponent implements OnInit {
     }
     else {
       this.router.navigate(["/pages/hr_registration"]);
+
     }
+    // } else {
+    //   this.router.navigate(["/pages/hr_registration"]);
+    // }
   }
 }

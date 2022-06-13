@@ -48,106 +48,30 @@
             class="table table-striped custom-table datatable"
           >
           <thead>
-            
-
-
             <tr>
-              <th>Name</th>
-              <th>Company </th>
-              <th> Email</th>
-              <th>job_title</th>
+              <th>Sr.No.</th>
+              <th>Company Name</th>
+              <th>Co-operate ID</th>
+              <th>Email</th>
               <th>Mobile</th>
-             
-              <th>state</th>
-              <th>city</th>
-              <th>country</th>
+              <th>Package Name</th>
               <th>Status</th>
-              <th class="text-end">Action</th>
-            </tr>
+              </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let client of data; let i = index">
+            <tr *ngFor="let data of conversions; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{ data.companyName }}</td>
+              <td>{{ data.corporateId }}</td>
+              <td>{{ data.email }}</td>
+              <td>{{ data.mobile }}</td>
+              <td>{{ data.packageName }}</td>
               <td>
-                <h2 class="table-avatar">
-                  <a
-                    routerLink="/layout/affiliates/affiliateprofile/{{ client.id }}"
-                    class="avatar"
-                    ><img
-                      src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                      alt=""
-                  /></a>
-                  <a
-                    routerLink="/layout/affiliates/affiliateprofile/{{ client.id }}"
-                    >{{ client.first_name }} {{ client.last_name }}</a
-                  >
-                </h2>
-              </td>
-              <td>{{ client.company }}</td>
-              <td>{{ client.email }}</td>
-              <td>{{ client.job_title }}</td>
-              <td>{{ client.phone }}</td>
-              <td>{{ client.state }}</td>
-              <td>{{ client.city }}</td>
-              <td>{{ client.country }}</td>
-              <td>
-                <div class="dropdown action-label">
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-danger">{{
-                      client.status
-                    }}</i>
-                  </a>
-                  <div class="dropdown-menu">
-                    <a
-                      class="dropdown-item"
-                      (click)="getStatus('Pending', client.id)"
-                      ><i class="fa fa-dot-circle-o text-center"></i> Pending</a
-                    >
-                    <a
-                      class="dropdown-item"
-                      (click)="getStatus('Approve', client.id)"
-                      ><i class="fa fa-dot-circle-o text-success "></i> Approve</a
-                    >
-                    <a
-                      class="dropdown-item"
-                      (click)="getStatus('Rejected', client.id)"
-                      ><i class="fa fa-dot-circle-o  text-danger"></i>
-                      Rejected</a
-                    >
-                  </div>
-                </div>
-              </td>
+              <ng-container *ngIf="data.status==1">
+                <span class="text-success">Completed</span>
+              </ng-container>
+            </td>
               
-              
-              <td class="text-end">
-                <div class="dropdown dropdown-action">
-                  <a
-                    class="action-icon dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    ><i class="material-icons">more_vert</i></a
-                  >
-                  <div class="dropdown-menu dropdown-menu-right">
-                    <a
-                      class="dropdown-item"
-                      data-bs-toggle="modal"
-                      data-bs-target="#edit_client"
-                      (click)="onEditClient(client.id)"
-                      ><i class="fa fa-pencil m-r-5"></i> edit</a
-                    >
-                    <a
-                    class="dropdown-item"
-                    
-                    (click)="deleteAffiliate(client.id)"
-                    ><i class="fa fa-pencil m-r-5"></i> Delete</a
-                  >
-                    
-                  </div>
-                </div>
-              </td>
             </tr>
           </tbody>
           </table>

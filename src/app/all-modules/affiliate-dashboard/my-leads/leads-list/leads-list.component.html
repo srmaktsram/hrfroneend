@@ -40,87 +40,29 @@
           >
             <thead>
               <tr>
-                <th>Lead Name</th>
-                <th>Company Email</th>
-                <th>Contact Person</th>
+                <th>Sr.No.</th>
+                <th>Company Name</th>
+                <th>Co-operate ID</th>
                 <th>Email</th>
                 <th>Mobile</th>
+                <th>Package Name</th>
                 <th>Status</th>
-                <th class="text-end">Action</th>
-              </tr>
+                </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let client of data; let i = index">
+              <tr *ngFor="let item of leads; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{ data.companyName }}</td>
+                <td>{{ data.corporateId }}</td>
+                <td>{{ data.email }}</td>
+                <td>{{ data.mobile }}</td>
+                <td>{{ data.packageName }}</td>
                 <td>
-                  <h2 class="table-avatar">
-                    <a
-                      routerLink="/layout/clients/clientsprofile/{{ client.id }}"
-                      class="avatar"
-                      ><img
-                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                        alt=""
-                    /></a>
-                    <a
-                      routerLink="/layout/clients/clientsprofile/{{ client.id }}"
-                      >{{ client.companyName }}</a
-                    >
-                  </h2>
-                </td>
-                <td>{{ client.companyEmail }}</td>
-                <td>{{ client.name }}</td>
-                <td>{{ client.email }}</td>
-                <td>{{ client.mobile }}</td>
-                <td>
-                  <div class="dropdown action-label">
-                    <a
-                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <i class="fa fa-dot-circle-o text-success">{{
-                        client.status
-                      }}</i>
-                    </a>
-                    <div class="dropdown-menu">
-                      <a
-                        class="dropdown-item"
-                        (click)="getStatus('Free', client.id)"
-                        ><i class="fa fa-dot-circle-o text-success"></i> Free</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        (click)="getStatus('Visitor', client.id)"
-                        ><i class="fa fa-dot-circle-o text-danger"></i> Visitor</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        (click)="getStatus('Premium', client.id)"
-                        ><i class="fa fa-dot-circle-o text-success"></i>
-                        Premium</a
-                      >
-                    </div>
-                  </div>
-                </td>
-                <td class="text-end">
-                  <div class="dropdown dropdown-action">
-                    <a
-                      class="action-icon dropdown-toggle"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      ><i class="material-icons">more_vert</i></a
-                    >
-                    <div class="dropdown-menu dropdown-menu-right">
-                      <a
-                        class="dropdown-item"
-                        data-bs-toggle="modal"
-                        data-bs-target="#edit_client"
-                        (click)="onEditClient(client.id)"
-                        ><i class="fa fa-pencil m-r-5"></i> Edit</a
-                      >
-                      
-                    </div>
-                  </div>
-                </td>
+                <ng-container *ngIf="data.status==0">
+                  <span class="text-warning">Pending</span>
+                </ng-container>
+              </td>
+                
               </tr>
             </tbody>
           </table>
