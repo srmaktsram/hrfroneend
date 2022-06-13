@@ -11,7 +11,7 @@ export class HrUserAuthenticationService {
     lastName: string,
     phone: string
   ) {
-    sessionStorage.setItem("currentHrUserLgn", "HrUserLogin");
+    sessionStorage.setItem("currentUser", "HrUserLogin");
     sessionStorage.setItem("user_type", "hrUser");
     sessionStorage.setItem("corporateId", corporateId);
     sessionStorage.setItem("hrUserId", id);
