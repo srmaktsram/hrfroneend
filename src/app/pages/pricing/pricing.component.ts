@@ -49,7 +49,9 @@ export class PricingComponent implements OnInit {
   public dMultioneMonthAmount: any;
 
 
+
   constructor(private router: Router, private cookieService: CookieService) {}
+
 
   ngOnInit() { }
 

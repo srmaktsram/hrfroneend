@@ -71,27 +71,20 @@ export class HrregistrationComponent implements OnInit {
       securityAns: this.registerForm.value.securityAns,
     }
     this.http.post("http://localhost:8443/mainadmin/create/registration", obj).subscribe((res: any) => {
-      sessionStorage.setItem("corporateId", res.corporateId)
-      console.log(res.corporateId, ">>>>>>>>>>>>>>>>>>>>>>???????????????????")
-      sessionStorage.setItem("corporateId", res.corporateId)
+      console.log(res, "res>>>>>>>>KKKKKKKKKKKK")
+      // console.log(res.corporateId, ">>>>>>>>>>>>>>>>>>>>>>???????????????????")
+      // sessionStorage.setItem("corporateId", res.corporateId)
 
-      this.router.navigate(["/pages/home"]);
-
+      this.router.navigate(["/pages/pricing"]);
       this.hrUserAuthenticationService.login(
-
-        res.data.id,
-        res.data.corporateId,
-        res.data.email,
-        res.data.firstName,
-        res.data.lastName,
-
-        res.data.phone,
-
-
+        res.id,
+        res.corporateId,
+        res.email,
+        res.firstName,
+        res.lastName,
+        res.phone,
       );
-
     })
-
   }
   userLogin() {
     let email = this.addloginForm.value.email;
@@ -106,15 +99,12 @@ export class HrregistrationComponent implements OnInit {
         if (res.result == 2) {
           this.router.navigate(["/pages/home"]);
           this.hrUserAuthenticationService.login(
-
             res.data.id,
             res.data.corporateId,
             res.data.email,
             res.data.firstName,
             res.data.lastName,
-
             res.data.phone,
-
 
           );
         } else {
