@@ -7,9 +7,9 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { AffiliateComponent } from "./affiliate.component";
 import { AffiliateProfileComponent } from "./affiliate-profile/affiliate-profile.component";
-import { VisitorAffiliateListComponent } from "./visitor-affiliate-list/visitor-affiliate-list.component";
-import { FreeAffiliateListComponent } from "./free-affiliate-list/free-affiliate-list.component";
-import { PremiumAffiliateListComponent } from "./premium-affiliate-list/premium-affiliate-list.component";
+import { VisitorAffiliateListComponent } from "./rejected-affiliate-list/rejected-affiliate-list.component";
+import { FreeAffiliateListComponent } from "./pending-affiliate-list/pending-affiliate-list.component";
+import { PremiumAffiliateListComponent } from "./approved-affiliate-list/approved-affiliate-list.component";
 
 @NgModule({
   declarations: [

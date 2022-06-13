@@ -4,7 +4,7 @@ import { ClientsRoutingModule } from "./wallet-routing.module";
 import { DataTablesModule } from "angular-datatables";
 
 import { ClientsComponent } from "./wallet.component";
-import { ClientsListComponent } from "./wallet-list/clients-list.component";
+import { ClientsListComponent } from "./wallet-list/wallet-list.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
 

@@ -9,9 +9,9 @@ import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
-  selector: "app-premium-affiliate-list",
-  templateUrl: "./premium-affiliate-list.component.html",
-  styleUrls: ["./premium-affiliate-list.component.css"],
+  selector: "app-approved-affiliate-list",
+  templateUrl: "./approved-affiliate-list.component.html",
+  styleUrls: ["./approved-affiliate-list.component.css"],
 })
 export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })

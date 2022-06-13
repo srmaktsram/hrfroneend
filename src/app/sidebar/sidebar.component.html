@@ -102,8 +102,8 @@
             <li
               [ngClass]="{
                 active:
-                  urlComplete.subUrl === 'ticketscontent' ||
-                  urlComplete.subUrl === 'ticketsview'
+                  urlComplete.subUrl === 'withdrawalrequest' ||
+                  urlComplete.subUrl === 'releasehistory'
               }"
             >
               <a
@@ -114,8 +114,9 @@
             <li
               [ngClass]="{
                 active:
-                  urlComplete.subUrl === 'withdrawalrequest' ||
-                  urlComplete.subUrl === 'releasehistory'
+                  urlComplete.subUrl === 'pendingkyc' ||
+                  urlComplete.subUrl === 'verifykyc' ||
+                  urlComplete.subUrl === 'rejectkyc'
               }"
             >
               <a routerLink="/layout/mainadmin/pendingkyc/pendingkyc"
@@ -125,11 +126,17 @@
             <li
               [ngClass]="{
                 active:
-                  urlComplete.subUrl === 'pendingkyc' ||
-                  urlComplete.subUrl === 'verifykyc' ||
-                  urlComplete.subUrl === 'rejectkyc'
+                  urlComplete.subUrl === 'approved-commission' ||
+                  urlComplete.subUrl === 'commission' ||
+                  urlComplete.subUrl === 'reject-commission' 
+                 
               }"
-            ></li>
+            >
+              <a routerLink="/layout/mainadmin/commission/commission"
+                ><i class="la la-ticket"></i> <span>Commisions</span></a
+              >
+            </li>
+            
 
             <li
               class="submenu"
