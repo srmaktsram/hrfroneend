@@ -20,14 +20,24 @@
                                     <input type="text" class="form-control" formControlName="firstName"
                                         placeholder="First Name *" value="" />
                                 </div>
+                                <small
+                                    *ngIf="registerForm.get('firstName').invalid && registerForm.get('firstName').touched"
+                                    class="text-danger"> *First Name is required</small>
                                 <div class="form-group">
                                     <input type="text" class="form-control" formControlName="lastName"
                                         placeholder="Last Name *" value="" />
                                 </div>
+                                <small
+                                    *ngIf="registerForm.get('lastName').invalid && registerForm.get('lastName').touched"
+                                    class="text-danger"> *Last Name is required</small>
                                 <div class="form-group">
                                     <input type="password" class="form-control" formControlName="password"
                                         placeholder="Password *" value="" />
                                 </div>
+                                <small
+                                    *ngIf="registerForm.get('password').invalid && registerForm.get('password').touched"
+                                    class="text-danger"> *Password is required</small>
+
                                 <div class="form-group">
                                     <input type="password" class="form-control" formControlName="confirmPassword"
                                         placeholder="Confirm Password *" value="" />
@@ -44,6 +54,9 @@
                                             <span>Female </span>
                                         </label>
                                     </div>
+                                    <small
+                                        *ngIf="registerForm.get('gender').invalid && registerForm.get('gender').touched"
+                                        class="text-danger"> *Gender is required</small>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -51,11 +64,15 @@
                                     <input type="email" class="form-control" formControlName="email"
                                         placeholder="Your Email *" value="" />
                                 </div>
+                                <small *ngIf="registerForm.get('email').invalid && registerForm.get('email').touched"
+                                    class="text-danger"> *Email is required</small>
                                 <div class="form-group">
                                     <input type="text" minlength="10" maxlength="10" name="txtEmpPhone"
                                         class="form-control" formControlName="phone" placeholder="Your Phone *"
                                         value="" />
                                 </div>
+                                <small *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched"
+                                    class="text-danger"> *Phone is required</small>
                                 <div class="form-group">
                                     <select class="form-control" formControlName="securityQues">
                                         <option class="hidden" selected disabled>Please select your Sequrity Question
@@ -65,10 +82,16 @@
                                         <option>What is your Pet Name?</option>
                                     </select>
                                 </div>
+                                <small
+                                    *ngIf="registerForm.get('securityQues').invalid && registerForm.get('securityQues').touched"
+                                    class="text-danger"> *SecurityQues is required</small>
                                 <div class="form-group">
                                     <input type="text" class="form-control" formControlName="securityAns"
                                         placeholder="Enter Your Answer *" value="" />
                                 </div>
+                                <small
+                                    *ngIf="registerForm.get('securityAns').invalid && registerForm.get('securityAns').touched"
+                                    class="text-danger"> *SecurityAns is required</small>
                                 <input type="submit" class="btnRegister" value="Register" />
                             </div>
                         </div>

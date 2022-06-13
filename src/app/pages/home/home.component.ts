@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private cookieService: CookieService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     const aid = this.route.snapshot.queryParamMap.get("aid");

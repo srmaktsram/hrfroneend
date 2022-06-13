@@ -14,15 +14,23 @@
         </div>
 
         <div ngbDropdown class="d-inline-block">
-            <button type="button" class="btn btn-outline-success" id="dropdown1" ngbDropdownToggle>Sign In</button>
+            <ng-container *ngIf="user_type!='hrUser'">
+                <div>
+                    <button type="button" class="btn btn-outline-success" id="dropdown1" ngbDropdownToggle>Sign
+                        In</button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="user_type=='hrUser'">
+                <div class="d-flex">
+                    <mat-icon class="accountCircle">account_circle </mat-icon>
+                    <p class="setName" id="dropdown1" ngbDropdownToggle>{{firstName}}</p>
+                </div>
+            </ng-container>
             <div ngbDropdownMenu aria-labelledby="dropdown" class="mainDrop">
                 <div class="tri"></div>
-                <p class="profile">Signed in as :-</p>
+                <p class="profile">Existing Customer :-</p>
                 <div class="childDiv">
-                    <mat-icon aria-hidden="false" aria-label="Example home icon"
-                        style="margin-left:10px;color:orange;font-size:30px;">
-                        account_circle</mat-icon>
-                    <p class="profile1">webShubh123</p>
+                    <p class="profile1" routerLink="/pages/hr_registration">Login An Account</p>
                 </div>
                 <div class="manageDiv">
                     <div style="border-bottom:2px solid white">

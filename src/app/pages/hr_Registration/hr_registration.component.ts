@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, MinLengthValidator, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
@@ -72,8 +72,6 @@ export class HrregistrationComponent implements OnInit {
     }
     this.http.post("http://localhost:8443/mainadmin/create/registration", obj).subscribe((res: any) => {
       console.log(res, "res>>>>>>>>KKKKKKKKKKKK")
-      // console.log(res.corporateId, ">>>>>>>>>>>>>>>>>>>>>>???????????????????")
-      // sessionStorage.setItem("corporateId", res.corporateId)
 
       this.router.navigate(["/pages/pricing"]);
       this.hrUserAuthenticationService.login(

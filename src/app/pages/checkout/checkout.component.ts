@@ -59,7 +59,7 @@ export class CheckoutComponent implements OnInit {
     this.corporateId = this.route.snapshot.queryParams["corporate"];
     this.packageName = this.route.snapshot.queryParams["packageName"];
     this.month = this.route.snapshot.queryParams["days"] * 30;
-    alert(this.month);
+    // alert(this.month);
   }
 
   getPayment() {
