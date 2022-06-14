@@ -32,7 +32,7 @@
               <th>Sr.no</th>
               <th>Affiliate Id</th>
               <th>Amount</th>
-              <th>Package Name</th>
+              <th>Description</th>
               <th>Create Date</th>
               <th>Update Date</th>
               <th>Status</th>
@@ -48,13 +48,11 @@
               <td>{{ client.createDate }}</td>
               <td>{{ client.updateDate }}</td>
               <ng-container *ngIf="client.status==1">
-              <td class="text-success">Approved</td>
+              <td class="text-danger">Debited</td>
             </ng-container>
-              <ng-container *ngIf="client.status==0">
-              <td class="text-warning">Pending</td>
-            </ng-container>
+              
               <ng-container *ngIf="client.status==2">
-              <td class="text-success">Paid</td>
+              <td class="text-success">Credited</td>
             </ng-container>
             </tr>
           </tbody>

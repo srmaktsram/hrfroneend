@@ -162,7 +162,7 @@
         <form (ngSubmit)="getReject()" [formGroup]="addRejectForm">
           <div class="form-group">
             <label>Remark <span class="text-danger">*</span></label>
-            <input
+            <textarea
               class="form-control"
               type="text-area"
               [class.invalid]="
@@ -170,7 +170,7 @@
                 addRejectForm.get('addRemark').touched
               "
               formControlName="addRemark"
-            />
+            ></textarea>
             <div
               *ngIf="
                 addRejectForm.get('addRemark').invalid &&
