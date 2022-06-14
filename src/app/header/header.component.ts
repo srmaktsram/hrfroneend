@@ -3,6 +3,10 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AdminAuthenticationService } from "../core/storage/authentication-admin.service";
+import { AffilateAuthenticationService } from "../core/storage/authentication-affiliate.service";
+import { ClientAuthenticationService } from "../core/storage/authentication-client.service";
+import { MainAdminAuthenticationService } from "../core/storage/authentication-mainadmin.service";
+import { AuthenticationService } from "../core/storage/authentication.service";
 import { HeaderService } from "./header.service";
 
 @Component({
@@ -36,6 +40,10 @@ export class HeaderComponent implements OnInit {
     private headerService: HeaderService,
     private router: Router,
     private adminAuthenticationService: AdminAuthenticationService,
+    private mainAdminAuthenticationService: MainAdminAuthenticationService,
+    private affilateAuthenticationService: AffilateAuthenticationService,
+    private clientAuthenticationService: ClientAuthenticationService,
+    private authenticationService: AuthenticationService,
     private http: HttpClient
   ) {
     this.user_type = sessionStorage.getItem("user_type");
@@ -192,7 +200,21 @@ export class HeaderComponent implements OnInit {
   }
 
   Logout() {
-    this.adminAuthenticationService.logout();
-    this.router.navigate(["/login"]);
+    if (this.user_type == "admin") {
+      this.router.navigate(["/login/adminlogin"]);
+      this.adminAuthenticationService.logout();
+    } else if (this.user_type == "employee") {
+      this.router.navigate(["/login/employeelogin"]);
+      this.authenticationService.logout();
+    } else if (this.user_type == "affiliate") {
+      this.router.navigate(["/login/affiliatelogin"]);
+      this.affilateAuthenticationService.logout();
+    } else if (this.user_type == "client") {
+      this.router.navigate(["/login/clientlogin"]);
+      this.clientAuthenticationService.logout();
+    } else if (this.user_type == "mainadmin") {
+      this.router.navigate(["/login/adminhrlogin"]);
+      this.mainAdminAuthenticationService.logout();
+    }
   }
 }
