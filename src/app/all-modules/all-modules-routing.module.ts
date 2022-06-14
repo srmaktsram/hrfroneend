@@ -61,19 +61,16 @@ const routes: Routes = [
         path: "clients",
         loadChildren: () =>
           import("./clients/clients.module").then((m) => m.ClientsModule),
-        canActivate: [AuthGuardAdmin],
       },
       {
         path: "projects",
         loadChildren: () =>
           import("./projects/projects.module").then((m) => m.ProjectsModule),
-        canActivate: [AuthGuardAdmin],
       },
       {
         path: "leads",
         loadChildren: () =>
           import("./leads/leads.module").then((m) => m.LeadsModule),
-        canActivate: [AuthGuardAdmin],
       },
       {
         path: "tickets",

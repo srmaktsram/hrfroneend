@@ -13,6 +13,7 @@ import { UserLoginComponent } from "./userlogin/userlogin.component";
 import { AdminLoginComponent } from "./adminlogin/login.component";
 import { AffiliateLoginComponent } from "./affilatelogin/login.component";
 import { ClientLoginComponent } from "./clientlogin/login.component";
+import { SubAdminLoginComponent } from "./subadmin/login.component";
 export const routes = [
   { path: "", component: LoginComponent, pathMatch: "full" },
   { path: "forgot", component: ForgotComponent, pathMatch: "" },
@@ -22,6 +23,7 @@ export const routes = [
     LoginComponent,
     ClientLoginComponent,
     AffiliateLoginComponent,
+    SubAdminLoginComponent,
     AdminLoginComponent,
     UserLoginComponent,
     ForgotComponent,
