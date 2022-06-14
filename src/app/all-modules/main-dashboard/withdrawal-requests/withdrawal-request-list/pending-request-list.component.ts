@@ -111,6 +111,30 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
             console.group(res,"wallet lllllUpdated")
           })
         }
+        ////
+        if (res.result == 1) {
+            
+          let obj = {
+            aId:res.data.aId,
+            amount:res.data.amount,
+            package_name:"Type:- Withdrawal",
+            status:res.data.status,
+            createDate:res.data.createDate,
+            updateDate:res.data.updateDate,
+
+          };
+          this.http
+            .post(
+              "http://localhost:8443/affiliates/affiliteWalletDetails/createAffiliteWalletDetails",
+              obj
+            )
+            .subscribe((res: any) => {
+              console.log(res, " withdraw details Created");
+              
+              
+            });
+        }
+
       });
     $("#delete_pay").modal("hide");
     this.toastr.success("Pay Added", "Success");

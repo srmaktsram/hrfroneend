@@ -63,7 +63,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
   }
   ngOnInit() {
-    this.getSubAdmins();
+    this.getWithdrawalHistory();
 
     this.dtOptions = {
       pageLength: 10,
@@ -78,7 +78,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   //Get all Clients data
-  public getSubAdmins() {
+  public getWithdrawalHistory() {
     this.http
       .get("http://localhost:8443/affiliates/affiliate/getWithdrawalHistory")
       .subscribe((res: any) => {
