@@ -162,7 +162,7 @@ export class CheckoutComponent implements OnInit {
       packageName: this.packageName,
       month: this.month,
     };
-
+    console.log(obj, "ggggggggggggggggggggggggggggggggggg")
     this.http
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
@@ -176,8 +176,8 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post(
         "http://localhost:8443/checkout/create/Details" +
-          "/" +
-          this.corporateId,
+        "/" +
+        this.corporateId,
         {
           amount: this.totalAmount,
           packageName: this.packageName,

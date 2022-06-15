@@ -2,85 +2,173 @@
 <div class="container mt-3">
     <h1><u>My Products -:</u></h1>
     <div class="row">
-        <div class="col-md-4">
-            <mat-card style="border:2px solid  #37bc9b">
-                <div class="d-flex justify-content-between">
-                    <h4>Package Name</h4>
-                    <h4>Diamond(Single-User)</h4>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h4>Total Employee</h4>
-                    <h4>50</h4>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h4>Purchage Date</h4>
-                    <h4>25-05-2020</h4>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h4>Expairy Date</h4>
-                    <h4>30-05-2020</h4>
-                </div>
 
-                <div class="raisedButton">
-                    <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
-                        dashboard</button>
-                </div>
+        <div class="col-md-4" *ngFor="let item of productDetails">
+            <ng-container *ngIf="item.packageName=='Platinum(Multi-User)'">
+                <mat-card class="designCard" style="border-top-color: orangered;border-bottom-color: orangered">
+                    <div class="d-flex justify-content-between">
+                        <h4>Package Name</h4>
+                        <h4>{{item.packageName}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Total Employee</h4>
+                        <h4>{{item.totalUser}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Purchage Date</h4>
+                        <h4>{{item.from |customDate}} </h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Expairy Date</h4>
+                        <h4>{{item.to |customDate}} </h4>
+                    </div>
 
-            </mat-card>
+                    <div class="raisedButton">
+                        <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
+                            dashboard</button>
+                    </div>
+
+                </mat-card>
+            </ng-container>
+
+
+            <ng-container *ngIf="item.packageName=='Platinum(Single-User)'">
+                <mat-card class="designCard" style="border-top-color: #921e4e;border-bottom-color: #921e4e">
+                    <div class="d-flex justify-content-between">
+                        <h4>Package Name</h4>
+                        <h4>{{item.packageName}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Total Employee</h4>
+                        <h4>{{item.totalUser}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Purchage Date</h4>
+                        <h4>{{item.from |customDate}} </h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Expairy Date</h4>
+                        <h4>{{item.to |customDate}} </h4>
+                    </div>
+
+                    <div class="raisedButton">
+                        <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
+                            dashboard</button>
+                    </div>
+
+                </mat-card>
+            </ng-container>
+
+            <ng-container *ngIf="item.packageName=='Diamond(Multi-User)'">
+                <mat-card class="designCard" style="border-top-color: #043a5d;border-bottom-color:#043a5d">
+                    <div class="d-flex justify-content-between">
+                        <h4>Package Name</h4>
+                        <h4>{{item.packageName}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Total Employee</h4>
+                        <h4>{{item.totalUser}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Purchage Date</h4>
+                        <h4>{{item.from |customDate}} </h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Expairy Date</h4>
+                        <h4>{{item.to |customDate}} </h4>
+                    </div>
+
+                    <div class="raisedButton">
+                        <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
+                            dashboard</button>
+                    </div>
+
+                </mat-card>
+            </ng-container>
+            <ng-container *ngIf="item.packageName=='Diamond(Single-User)'">
+                <mat-card class="designCard" style="border-top-color: #21618C;border-bottom-color:#21618C">
+                    <div class="d-flex justify-content-between">
+                        <h4>Package Name</h4>
+                        <h4>{{item.packageName}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Total Employee</h4>
+                        <h4>{{item.totalUser}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Purchage Date</h4>
+                        <h4>{{item.from |customDate }} </h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Expairy Date</h4>
+                        <h4>{{item.to |customDate}} </h4>
+                    </div>
+
+                    <div class="raisedButton">
+                        <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
+                            dashboard</button>
+                    </div>
+
+                </mat-card>
+            </ng-container>
+
+
+            <ng-container *ngIf="item.packageName=='Enterprise(Multi-User)'">
+                <mat-card class="designCard" style="border-top-color:#3d0e09;border-bottom-color:#3d0e09">
+                    <div class="d-flex justify-content-between">
+                        <h4>Package Name</h4>
+                        <h4>{{item.packageName}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Total Employee</h4>
+                        <h4>{{item.totalUser}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Purchage Date</h4>
+                        <h4>{{item.from |customDate}} </h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Expairy Date</h4>
+                        <h4>{{item.to |customDate}} </h4>
+                    </div>
+
+                    <div class="raisedButton">
+                        <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
+                            dashboard</button>
+                    </div>
+
+                </mat-card>
+            </ng-container>
+
+            <ng-container *ngIf="item.packageName=='Free User(Single-User)'">
+                <mat-card class="designCard" style="border-top-color: #5d9cec;border-bottom-color:#5d9cec">
+                    <div class="d-flex justify-content-between">
+                        <h4>Package Name</h4>
+                        <h4>{{item.packageName}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Total Employee</h4>
+                        <h4>{{item.totalUser}}</h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Purchage Date</h4>
+                        <h4>{{item.from |customDate}} </h4>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Expairy Date</h4>
+                        <h4>{{item.to |customDate}} </h4>
+                    </div>
+
+                    <div class="raisedButton">
+                        <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
+                            dashboard</button>
+                    </div>
+                </mat-card>
+            </ng-container>
+
         </div>
-        <div class="col-md-4 mb-3">
-            <mat-card style="border:2px solid #f05050">
-                <div class="d-flex justify-content-between">
-                    <h4>Product Name</h4>
-                    <h4>Diamond(Multi-User)</h4>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h4>Total Employee </h4>
-                    <h4>150</h4>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h4>Purchage Date</h4>
-                    <h4>25-05-2020</h4>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h4>Expairy Date</h4>
-                    <h4>30-05-2020</h4>
-                </div>
 
-                <div class="raisedButton">
-                    <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
-                        Dashboard</button>
-                </div>
 
-            </mat-card>
-
-        </div>
-        <div class="col-md-4 mb-3">
-            <mat-card style="border:2px solid orange">
-                <div class="d-flex justify-content-between">
-                    <h4>Product Name</h4>
-                    <h4>Platinum(Single-User)</h4>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h4>Total Employee </h4>
-                    <h4>100</h4>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h4>Purchage Date</h4>
-                    <h4>25-05-2020</h4>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <h4>Expairy Date</h4>
-                    <h4>30-05-2020</h4>
-                </div>
-                <div class="raisedButton">
-                    <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
-                        dashboard</button>
-                </div>
-
-            </mat-card>
-
-        </div>
     </div>
 </div>
 <app-footer></app-footer>

@@ -1,7 +1,159 @@
-<div>
-    <h1>shubham tiwariprofile</h1>
+<div class="fixed-top headerCom">
+    <app-header></app-header>
 </div>
 
-<div>
+<!-- Page Content -->
+<div class="content container-fluid" style="margin-top:70px;">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h3 class="page-title">Profile Settings</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+
+            <form [formGroup]="registerForm">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label> First Name<span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" value="Dreamguy's Technologies"
+                                [class.invalid]="registerForm.get('firstName').invalid && registerForm.get('firstName').touched"
+                                formControlName="firstName">
+                            <div *ngIf="registerForm.get('firstName').invalid && registerForm.get('firstName').touched">
+                                <small
+                                    *ngIf="registerForm.get('firstName').invalid && registerForm.get('firstName').touched"
+                                    class="text-danger"> *First Name is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label> Last Name<span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" value="Dreamguy's Technologies"
+                                [class.invalid]="registerForm.get('lastName').invalid && registerForm.get('lastName').touched"
+                                formControlName="lastName">
+                            <div *ngIf="registerForm.get('lastName').invalid && registerForm.get('lastName').touched">
+                                <small
+                                    *ngIf="registerForm.get('lastName').invalid && registerForm.get('lastName').touched"
+                                    class="text-danger"> *Last Name is required</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+
+
+                    <div class="col-sm-6">
+
+                        <div class="form-group">
+                            <label>Address<span class="text-danger">*</span></label>
+                            <textarea rows="4" class="form-control" formControlName="address"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label> Phone <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text"
+                                [class.invalid]="registerForm.get('phone').invalid && registerForm.get('phone').touched"
+                                formControlName="phone">
+                            <div *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched">
+                                <small *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched"
+                                    class="text-danger"> *Phone is required</small>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- </div> -->
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label> Gender <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text"
+                                [class.invalid]="registerForm.get('gender').invalid && registerForm.get('gender').touched"
+                                formControlName="gender">
+                            <div *ngIf="registerForm.get('gender').invalid && registerForm.get('gender').touched">
+                                <small *ngIf="registerForm.get('gender').invalid && registerForm.get('gender').touched"
+                                    class="text-danger"> *Gender is required</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Zip Code <span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" formControlName="zipCode">
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="submit-section">
+                    <button class="btn btn-primary submit-btn" (click)="updateData()">Update</button>
+                </div>
+
+            </form>
+
+            <!-- /////////////////////////////////////////////////////////////////////////////////////////// -->
+
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Reset Password</h3>
+                </div>
+            </div>
+            <form [formGroup]="changePassForm" (ngSubmit)="updatePassword()">
+                <div class="row" style="margin-top:30px;">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label> Old Password<span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" formControlName="password">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label> New Password<span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" formControlName="newPassword">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label> Confirm Password<span class="text-danger">*</span></label>
+                            <input class="form-control" type="text" formControlName="confirmPassword">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-section">
+                    <button class="btn btn-primary submit-btn">Update Password</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
 
 </div>
+
+<!-- /Page Content -->
+
+
+
+<app-footer></app-footer>

@@ -40,7 +40,7 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadholidays();
     this.getNotifications();
-    
+
 
     this.addHolidayForm = this.formBuilder.group({
       HolidayName: ["", [Validators.required]],
@@ -69,18 +69,18 @@ export class HolidaysComponent implements OnInit, OnDestroy {
       this.srch = [...this.rows];
     });
   }
-////
-getNotifications() {
-  this.http
-    .get(
-      "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
+  ////
+  getNotifications() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
         "/" +
         this.adminId
-    )
-    .subscribe((data: any) => {
-      this.holiday = data[0].notification.holidays;
-    });
-}
+      )
+      .subscribe((data: any) => {
+        this.holiday = data[0].notification.holidays;
+      });
+  }
 
   // Add holidays Modal Api Call
 
@@ -98,24 +98,25 @@ getNotifications() {
       let adminId = sessionStorage.getItem("adminId")
       let obj = {
         title: this.addHolidayForm.value.HolidayName,
-        holidayDate:holiday,
+        holidayDate: holiday,
         day: this.addHolidayForm.value.DaysName,
         adminId: this.adminId,
 
       };
 
-      this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res:any) => {
-          this.loadholidays();
-          let document=res.data
-          let author="Admin"
-          let message="added holiday of "          
-          let functions=document.title
-          let time=document.createDate
-          if (this.holiday== true) {
-          this.http.post("http://localhost:8443/admin/allNotification/createNotification"+"/"+this.adminId, {message,author,functions,time}).subscribe((data:any) => {
+      this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res: any) => {
+        this.loadholidays();
+        let document = res.data
+        let author = "Admin"
+        let message = "added holiday of "
+        let functions = document.title
+        let time = document.createDate
+        if (this.holiday == true) {
+          this.http.post("http://localhost:8443/admin/allNotification/createNotification" + "/" + this.adminId, { message, author, functions, time }).subscribe((data: any) => {
             this.loadholidays();
-          });}
-        })
+          });
+        }
+      })
 
       $("#add_holiday").modal("hide");
       this.addHolidayForm.reset();
@@ -140,7 +141,7 @@ getNotifications() {
       // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
       this.http.patch("http://localhost:8443/admin/holidays/updateHolidays" + "/" + this.id, obj).subscribe((res) => {
         this.loadholidays();
-        });
+      });
 
       $("#edit_holiday").modal("hide");
       this.toastr.success("Holidays Updated succesfully", "Success");
@@ -157,10 +158,10 @@ getNotifications() {
 
     this.http.patch("http://localhost:8443/admin/holidays/deleteHoliday" + "/" + id, obj).subscribe((res) => {
       this.loadholidays();
-      });
+    });
 
-      $("#delete_holiday").modal("hide");
-      this.toastr.success("Holidays Deleted", "Success");
+    $("#delete_holiday").modal("hide");
+    this.toastr.success("Holidays Deleted", "Success");
   }
 
   // To Get The holidays Edit Id And Set Values To Edit Modal Form
