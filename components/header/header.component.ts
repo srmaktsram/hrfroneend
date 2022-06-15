@@ -4,21 +4,17 @@ import { Component, OnInit, ViewChild } from "@angular/core";
   selector: "app-header",
   templateUrl: "./header.component.html",
   styleUrls: ["./header.component.css"],
-
 })
 export class HeaderComponent implements OnInit {
-
   public user_type: any;
   public firstName: any;
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-
     this.firstName = sessionStorage.getItem("firstName");
     this.user_type = sessionStorage.getItem("user_type");
 
-    console.log(this.firstName, "kjhdkjwehjwj>>>>>>>>>>>>>")
-
+    console.log(this.firstName, "kjhdkjwehjwj>>>>>>>>>>>>>");
   }
 
   logout() {

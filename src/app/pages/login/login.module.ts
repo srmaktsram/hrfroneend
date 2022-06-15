@@ -8,7 +8,7 @@ import { OtpComponent } from "./otp/otp.component";
 import { LockscreenComponent } from "./lockscreen/lockscreen.component";
 import { ReactiveFormsModule } from "@angular/forms";
 // import { MatCardModule } from "@angular/material/card";
-import { SharingModule } from "../sharing/sharing.module";
+import { SharingModule } from "../../sharing/sharing.module";
 import { UserLoginComponent } from "./userlogin/userlogin.component";
 import { AdminLoginComponent } from "./adminlogin/login.component";
 import { AffiliateLoginComponent } from "./affilatelogin/login.component";
