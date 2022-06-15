@@ -20,6 +20,16 @@ const routes: Routes = [
           import("./my-leads/leads.module").then((m) => m.MyLeadsModule),
       },
       {
+        path: "my-kyc",
+        loadChildren: () =>
+          import("./my-kyc/kyc.module").then((m) => m.MyKycModule),
+      },
+      {
+        path: "myleads",
+        loadChildren: () =>
+          import("./my-leads/leads.module").then((m) => m.MyLeadsModule),
+      },
+      {
         path: "myconversion",
         loadChildren: () =>
           import("./my-conversions/conversion.module").then(
