@@ -1,0 +1,125 @@
+<!-- Page Content -->
+<div class="content container-fluid">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">My KYC</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/layout/affiliates/affiliatedashboard">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">My KYC</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /Page Header -->
+
+  <form [formGroup]="addKyc">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>Aadhaar Card No. <span class="text-danger">*</span></label>
+          <input
+            class="form-control"
+            type="text"
+            [class.invalid]="
+              addKyc.get('aadhaarCardNo').invalid &&
+              addKyc.get('aadhaarCardNo').touched
+            "
+            formControlName="aadhaarCardNo"
+          />
+          <div
+            *ngIf="
+              addKyc.get('aadhaarCardNo').invalid &&
+              addKyc.get('aadhaarCardNo').touched
+            "
+          >
+            <small
+              *ngIf="
+                addKyc.get('aadhaarCardNo').invalid &&
+                addKyc.get('aadhaarCardNo').touched
+              "
+              class="text-danger"
+            >
+              *Aadhaar Card No. is required</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Aadhaar Front Photo</label>
+        <input
+          class="form-control"
+          type="file"
+          formControlName="aadhaarCard"
+          (change)="selectAadhaar($event)"
+        />
+        <p class="text-danger" [hidden]="errorAadhaarExtension">Only .jpeg, .png, .jpg formats are allowed</p>
+        <p class="text-danger" [hidden]="errAadhaarSize">Upload size should be less than 200KB</p>
+
+      </div>
+      <div class="form-group">
+        <label>Aadhaar Back Photo</label>
+        <input
+          class="form-control"
+          type="file"
+          formControlName="aadhaarCardBack"
+          (change)="selectAadhaarBack($event)"
+        />
+        <p class="text-danger" [hidden]="errorBackAdhaarExtension">Only .jpeg, .png, .jpg formats are allowed</p>
+        <p class="text-danger" [hidden]="errBackAadhaarSize">Upload size should be less than 200KB</p>
+
+
+      </div>
+      <div class="col-sm-6">
+        <div class="form-group">
+          <label>PAN Card No.</label>
+          <input
+            class="form-control"
+            type="text"
+            [class.invalid]="
+              addKyc.get('panCardNo').invalid && addKyc.get('panCardNo').touched
+            "
+            formControlName="panCardNo"
+          />
+          <div
+            *ngIf="
+              addKyc.get('panCardNo').invalid && addKyc.get('panCardNo').touched
+            "
+          >
+            <small
+              *ngIf="
+                addKyc.get('panCardNo').invalid &&
+                addKyc.get('panCardNo').touched
+              "
+              class="text-danger"
+            >
+              *PAN Card No. is required</small
+            >
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>PAN Card Photo</label>
+        <input
+          class="form-control"
+          type="file"
+          formControlName="panCard"
+          (change)="selectPan($event)"
+        />
+        <p class="text-danger" [hidden]="errorPanExtension">Only .jpeg, .png, .jpg formats are allowed</p>
+        <p class="text-danger" [hidden]="errPanSize">Upload size should be less than 200KB</p>
+
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <button class="btn btn-primary submit-btn" (click)="updateKyc()">
+        Submit KYC
+      </button>
+    </div>
+  </form>
+</div>
+<!-- /Page Content -->

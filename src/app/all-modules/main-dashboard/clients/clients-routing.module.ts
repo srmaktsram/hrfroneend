@@ -11,7 +11,7 @@ const routes: Routes = [
     component: ClientsComponent,
     children: [
       {
-        path: "democlients",
+        path: "freeClients",
         component: DemoClientsListComponent,
       },
       {

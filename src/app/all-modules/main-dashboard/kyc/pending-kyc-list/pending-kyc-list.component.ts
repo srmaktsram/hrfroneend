@@ -32,6 +32,8 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
 
   editId: any;
+  id: any;
+
   invoices: any;
   projects: any;
   tasks: any;
@@ -44,36 +46,30 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
   searchName: any;
   public employeeId: any;
   searchCompany: any;
+  pendingData: any;
+  addRejectForm: FormGroup;
+  aadhaarPath: any;
+  aadhaarCardPath: string;
+  panCardPath: string;
+  panPath: any;
+  aadhaarCardBackPath: string;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
-  ) {
-    this.adminId = sessionStorage.getItem("adminId");
-
-    
-  }
+  ) {}
 
   ngOnInit() {
-    this.getPremiumAdmins();
+    this.getPendingKyc();
 
     this.dtOptions = {
       pageLength: 10,
       dom: "lrtip",
     };
-
-   
-    //Edit Clients Form
-    this.editClientForm = this.formBuilder.group({
-      editClientCompany: ["", [Validators.required]],
-      editContactPerson: ["", [Validators.required]],
-      editClientEmail: ["", [Validators.required]],
-      editClientPhone: ["", [Validators.required]],
-      editCompanyEmail: ["", [Validators.required]],
-
+    this.addRejectForm = this.formBuilder.group({
+      addRemark: ["", [Validators.required]],
     });
   }
-
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -81,138 +77,104 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  public getPremiumAdmins() {
+  public getPendingKyc() {
     this.http
-      .get(
-        "http://localhost:8443/mainadmin/premiumClient/getPremiumClients"
-      )
+      .get("http://localhost:8443/affiliates/kyc/getPendingKyc")
       .subscribe((res: any) => {
-
-        this.data = res;
-        this.srch = [...this.data];
-
-
-      
+        console.log(res, "gett pending");
+        this.pendingData = res;
       });
   }
-  
-
-  // Edit client
-  public onEditClient(clientId: any) {
-    this.editId = clientId;
-    let client = this.data.filter((client) => client.id === clientId);
-    this.editClientForm.patchValue({
-      editClientCompany: client[0]?.companyName,
-      editContactPerson: client[0]?.name,
-      editClientEmail: client[0]?.email,
-      editClientPhone: client[0]?.mobile,
-      editCompanyEmail: client[0]?.companyEmail,
-
-
-    });
+  setCuurentDetailsPan(id, panCard) {
+    this.id = id;
+    this.panCardPath = `http://localhost:8443/${panCard}`;
   }
-  //Reset form
-  public resetForm() {
-    this.addClientForm.reset();
+  setCuurentDetailsAadhar(id, aadhaarCard, aadhaarCardBack) {
+    this.id = id;
+    this.aadhaarCardPath = `http://localhost:8443/${aadhaarCard}`;
+
+    this.aadhaarCardBackPath = `http://localhost:8443/${aadhaarCardBack}`;
   }
 
-  // Save Client
-  public onSave() {
+  getPanApprove() {
     let obj = {
-      companyName: this.editClientForm.value.editClientCompany,
-      name: this.editClientForm.value.editContactPerson,
-      email: this.editClientForm.value.editClientEmail,
-      mobile: this.editClientForm.value.editClientPhone,
-      companyEmail: this.editClientForm.value.editCompanyEmail,
-
+      panVerified: "2",
     };
-    let id = this.editId;
-    this.http
-      .patch("http://localhost:8443/mainadmin/premiumClient/updatePremiumClient" + "/" + id, obj)
-      .subscribe((data) => {
-        this.getPremiumAdmins();
-      });
-
-    $("#edit_client").modal("hide");
-    this.editClientForm.reset();
-    this.toastr.success("Client updated sucessfully...!", "Success");
-  }
-
-  getStatus(data, id) {
-    const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/demoClient/updatedemoClientStatus" + "/" + id,
-        { status }
+        "http://localhost:8443/affiliates/kyc/updatePanApprove" + "/" + this.id,
+        obj
       )
       .subscribe((res) => {
-        this.getPremiumAdmins();
-
-       
+        this.getPendingKyc();
+        console.log(res, "update Pan Approved");
       });
-  } 
-
-  //search by name
-  searchByName(val) {
-    if (val) {
-      this.data.splice(0, this.data.length);
-      let temp = this.srch.filter(function (d) {
-        val = val.toLowerCase();
-        return (
-          d.name.toLowerCase().indexOf(val) !== -1 ||
-          !val ||
-          d.email.toLowerCase().indexOf(val) !== -1 ||
-          !val ||
-          d.mobile.toLowerCase().indexOf(val) !== -1 ||
-          !val
-          ||
-          d.companyEmail.toLowerCase().indexOf(val) !== -1 ||
-          !val
-        );})
-      this.data.push(...temp);
-    } else {
-      this.getPremiumAdmins();
-    }
+    $("#viewPanButton").modal("hide");
+    this.toastr.success("Approved Added", "Success");
   }
+  getPanReject() {
+    alert(this.id);
+    let obj = {
+      panVerified: "3",
+      panRemark: this.addRejectForm.value.addRemark,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/affiliates/kyc/updatePanReject" + "/" + this.id,
+        obj
+      )
+      .subscribe((res: any) => {
+        console.log(res, "update Pan Reject");
 
-  //search by company
-  searchByCompany(val) {
-    if (val.trim()) {
-      this.srch.splice(0, this.data.length);
-      let temp = this.srch.filter(function (d) {
-        val = val.toLowerCase();
-        return d.companyName.toLowerCase().indexOf(val) !== -1 || !val;
+        this.getPendingKyc();
       });
-      this.srch.push(...temp);
-    } else {
-      this.getPremiumAdmins();
-
-    }
+    $("#add_reject").modal("hide");
+    this.toastr.success("Reject request Added", "Success");
   }
-  onSearch(name, company) {
-    this.filtereddata = [];
-    this.searchName = name;
-    this.searchCompany = company;
-    this.clientsData = this.data;
 
-    if (this.searchName) {
-      let nameFilter = this.filtereddata.filter((data) =>
-        data.name.toLowerCase().includes(this.searchName.toLowerCase())
-      );
-      if (nameFilter.length != 0) {
-        this.filtereddata = nameFilter;
-      }
-    }
-    if (this.searchCompany || this.searchName) {
-      this.clientsData =
-        this.filtereddata.length != 0 ? this.filtereddata : this.clientsData;
-    } else {
-      this.clientsData = [];
-    }
+  /////////////////////////////////
+
+  getAadhaarApprove() {
+    let obj = {
+      aadhaarVerified: "2",
+      aadhaarBackVerified: "2",
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/affiliates/kyc/updateAadhaarApprove" +
+          "/" +
+          this.id,
+        obj
+      )
+      .subscribe((res) => {
+        this.getPendingKyc();
+        console.log(res, "update Aadhaar Approved");
+      });
+    $("#viewAadhaarButton").modal("hide");
+    this.toastr.success("Approved Added", "Success");
   }
- 
+  getAadhaarReject() {
+    alert(this.id);
+    let obj = {
+      aadhaarVerified: "3",
+      aadhaarBackVerified: "3",
+      aadhaarRemark: this.addRejectForm.value.addRemark,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/affiliates/kyc/updateAadhaarReject" +
+          "/" +
+          this.id,
+        obj
+      )
+      .subscribe((res: any) => {
+        console.log(res, "update Aadhaar Reject");
 
-  
+        this.getPendingKyc();
+      });
+    $("#add_reject_aadhaar").modal("hide");
+    this.toastr.success("Reject request Added", "Success");
+  }
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
