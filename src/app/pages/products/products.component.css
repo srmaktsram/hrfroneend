@@ -2,3 +2,10 @@
     text-align: center;
     margin-top: 20px;
 }
+.designCard{
+    border-top:10px solid;
+    border-bottom:10px solid;
+    border-radius:25px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}

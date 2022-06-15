@@ -7,10 +7,10 @@ import { AdminAuthenticationService } from "src/app/core/storage/authentication-
   selector: "app-products",
   templateUrl: "./products.component.html",
   styleUrls: ["./products.component.css"],
-
 })
 export class ProductsComponent implements OnInit {
   AllProductList: any;
+  public productDetails: any;
   public corporateId: any;
   constructor(private http: HttpClient, private adminAuthenticationService: AdminAuthenticationService, private router: Router) {
 
@@ -21,18 +21,9 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.getAllProduct();
   }
-  getAllProduct() {
-    console.log(this.corporateId, "corporatevjjhjfhj>>>>>>>>>>>")
-    this.http.get("http://localhost:8443/checkout/getPremiumDetails" + "/" + this.corporateId).subscribe((res: any) => {
-      this.AllProductList = res
-      console.log(this.AllProductList, "??????????????????????????????????????")
-    })
-  }
-
   login(id) {
     this.http.get("http://localhost:8443/auth/login" + "/" + id).subscribe((res: any) => {
       this.router.navigate(["/layout/dashboard/admin"]);
-
       this.adminAuthenticationService.login(
         res.data.id,
         res.data.companyEmail,
@@ -49,6 +40,14 @@ export class ProductsComponent implements OnInit {
         res.data.cinvoicepre
       );
 
+    })
+  }
+
+  getAllProduct() {
+    this.http.get("http://localhost:8443/mainadmin/myProducts" + "/" + this.corporateId).subscribe((res: any) => {
+      this.productDetails = res[0].group
+      console.log(this.productDetails, "bdgjhgjgdjhg")
+      console.log(res, "KKKKKKKKKKKKKKK:::::::::::")
     })
   }
 }

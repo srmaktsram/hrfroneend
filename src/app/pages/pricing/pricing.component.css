@@ -15,11 +15,33 @@
 }
 .blue{
 	display: flex;
-	background-color: rgb(87, 171, 202);
+	background-color: #21618C;
 	height: 70px;
 	align-items: center;
 justify-content: center;
 }
+.epblue{
+	display: flex;
+	background-color: #3d0e09;
+	height: 70px;
+	align-items: center;
+justify-content: center;
+}
+.ptSingleblue{
+	display: flex;
+	background-color: #921e4e;
+	height: 70px;
+	align-items: center;
+justify-content: center;
+}
+.dMultiblue{
+	display: flex;
+	background-color:#043a5d;
+	height: 70px;
+	align-items: center;
+justify-content: center;
+}
+
 .mat-radio-button ~ .mat-radio-button {
 	margin-left: 16px;
   }

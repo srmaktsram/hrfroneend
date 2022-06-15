@@ -7,8 +7,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 
 })
 export class HeaderComponent implements OnInit {
-  // public show1 = false;
-  // public show2 = true;
+
   public user_type: any;
   public firstName: any;
   constructor() { }
@@ -22,4 +21,14 @@ export class HeaderComponent implements OnInit {
 
   }
 
+  logout() {
+    sessionStorage.removeItem("currentHrUserLgn");
+    sessionStorage.removeItem("corporateId");
+    sessionStorage.removeItem("user_type");
+    sessionStorage.removeItem("hrUserId");
+    sessionStorage.removeItem("email");
+    sessionStorage.removeItem("firstName");
+    sessionStorage.removeItem("lastName");
+    // window.location.reload();
+  }
 }
