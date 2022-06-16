@@ -1,24 +1,48 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
+import { PagesComponent } from "./pages/pages.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "pages", pathMatch: "full" },
-
   {
-    path: "pages",
-    loadChildren: () =>
-      import("./pages/pages.module").then((m) => m.PagesModule),
+    path: "",
+    component: PagesComponent,
+    children: [
+      {
+        path: "",
+        loadChildren: () =>
+          import("./pages/home/home.module").then((m) => m.HomeModule),
+      },
+      {
+        path: "affiliates",
+        loadChildren: () =>
+          import("./pages/affiliate/affiliate.module").then(
+            (m) => m.AffilateModule
+          ),
+      },
+      {
+        path: "pricings",
+        loadChildren: () =>
+          import("./pages/pricing/pricing.module").then((m) => m.PricingModule),
+      },
+      {
+        path: "products",
+        loadChildren: () =>
+          import("./pages/products/products.module").then(
+            (m) => m.ProductModule
+          ),
+      },
+      {
+        path: "profiles",
+        loadChildren: () =>
+          import("./pages/profile/profile.module").then((m) => m.ProfileModule),
+      },
+      {
+        path: "login",
+        loadChildren: () =>
+          import("./pages/login/login.module").then((m) => m.LoginModule),
+      },
+    ],
   },
-  {
-    path: "login",
-    loadChildren: () =>
-      import("./login/login.module").then((m) => m.LoginModule),
-  },
-  // {
-  //   path: "pages",
-  //   loadChildren: () =>
-  //     import("./pages/pages.module").then((m) => m.PagesModule),
-  // },
   {
     path: "error",
     loadChildren: () =>

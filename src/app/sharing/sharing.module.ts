@@ -6,14 +6,13 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DateAgoPipe } from "src/assets/pipes/timeAgo";
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatInputModule } from '@angular/material/input';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-
-
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatIconModule } from "@angular/material/icon";
+import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
+import { MatListModule } from "@angular/material/list";
 @NgModule({
   declarations: [CustomDatePipe, DateAgoPipe],
   exports: [
@@ -28,7 +27,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSidenavModule,
     MatIconModule,
     MatToolbarModule,
+    MatButtonModule,
     MatInputModule,
+    MatListModule,
   ],
   imports: [
     NgbModule,
@@ -41,7 +42,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MatSidenavModule,
     MatIconModule,
     MatToolbarModule,
-    MatInputModule
+    MatButtonModule,
+    MatInputModule,
+    MatListModule,
   ],
 })
-export class SharingModule { }
+export class SharingModule {}

@@ -11,8 +11,18 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { AppRoutingModule } from "./app-routing.module";
 import { CookieService } from "ngx-cookie-service";
 import { SharingModule } from "./sharing/sharing.module";
+import { PagesComponent } from "./pages/pages.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { FooterComponent } from "./components/footer/footer.component";
+
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    PagesComponent,
+    HeaderComponent,
+
+    FooterComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
