@@ -34,6 +34,11 @@ export class KycListComponent implements OnInit, OnDestroy {
 
    public aadhaarRemark:string;
    public panRemark:string;
+   public aadhaarFrontStatus:string;
+   public aadhaarBackStatus:string;
+   public aadhaarPanStatus:string;
+   public aadhaarKycStatus:string;
+
 
   editId: any;
 
@@ -176,8 +181,6 @@ export class KycListComponent implements OnInit, OnDestroy {
     fd.append("file", this.adharImg);
     let params = new HttpParams();
     params = params.set("aId", this.aId);
-    // params = params.set("aadhaarRemark", this.addKyc.value.aadhaarRemark);
-
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc1?" + params, fd)
       .subscribe((res: any) => {
@@ -233,6 +236,7 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/kyc/getKyc" + "/" + this.aId)
       .subscribe((response: any) => {
+        console.log(response,"kyc Details")
         this.panCard = response.panCard;
         this.aadhaarCardBack = response.aadhaarCardBack;
         this.aadhaarCard = response.aadhaarCard;
@@ -242,6 +246,15 @@ export class KycListComponent implements OnInit, OnDestroy {
         this.panCardPath = `http://localhost:8443/${this.panCard}`;
         this.aadhaarBackCardPath = `http://localhost:8443/${this.aadhaarCardBack}`;
         this.aadhaarCardPath = `http://localhost:8443/${this.aadhaarCard}`;
+        
+        this.aadhaarFrontStatus=response.aadhaarVerified
+        this.aadhaarBackStatus=response.aadhaarBackVerified
+        this.aadhaarPanStatus=response.panVerified
+        this.aadhaarKycStatus=response.kycVerified
+        console.log(this.aadhaarFrontStatus,"A")
+        console.log(this.aadhaarBackStatus,"B")
+        console.log(this.aadhaarPanStatus,"C")
+        console.log(this.aadhaarKycStatus,"D")
 
         this.addKyc.patchValue({
           aadhaarCardNo: response.aadhaarCardNo,

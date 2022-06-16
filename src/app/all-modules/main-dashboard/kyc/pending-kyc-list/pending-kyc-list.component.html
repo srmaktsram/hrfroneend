@@ -67,44 +67,50 @@
               <td>{{ item.phone }}</td>
               <td>{{ item.panCardNo }}</td>
               <td>{{ item.aadhaarCardNo }}</td>
-              
+
               <td>
-                <ng-container *ngIf="item.panVerified==1">
-                <div class="d-inline p-2 bg-primary text-white">
-                  <a
-                    data-bs-toggle="modal"
-                    data-bs-target="#viewPanButton"
-                    (click)="setCuurentDetailsPan(item.id,item.panCard)"
-                  >
-                    View PAN</a
-                  >
-                </div>
-              </ng-container>
-                <ng-container *ngIf="item.panVerified==2">
+                <ng-container *ngIf="item.panVerified == 1">
+                  <div class="d-inline p-2 bg-primary text-white">
+                    <a
+                      data-bs-toggle="modal"
+                      data-bs-target="#viewPanButton"
+                      (click)="setCuurentDetailsPan(item.id, item.panCard)"
+                    >
+                      View PAN</a
+                    >
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="item.panVerified == 2">
                   <td class="text-success">Approved</td>
-              </ng-container>
-                <ng-container *ngIf="item.panVerified==3">
+                </ng-container>
+                <ng-container *ngIf="item.panVerified == 3">
                   <td class="text-danger">Rejected</td>
-              </ng-container>
+                </ng-container>
               </td>
               <td>
-                <ng-container *ngIf="item.aadhaarVerified==1">
-                <div class="d-inline p-2 bg-primary text-white">
-                  <a
-                    data-bs-toggle="modal"
-                    data-bs-target="#viewAadhaarButton"
-                    (click)="setCuurentDetailsAadhar(item.id,item.aadhaarCard,item.aadhaarCardBack)"
-                  >
-                    View Aadhaar</a
-                  >
-                </div>
-              </ng-container>
-              <ng-container *ngIf="item.aadhaarVerified==2">
-                <td class="text-success">Approved</td>
-            </ng-container>
-              <ng-container *ngIf="item.aadhaarVerified==3">
-                <td class="text-danger">Rejected</td>
-            </ng-container>
+                <ng-container *ngIf="item.aadhaarVerified == 1">
+                  <div class="d-inline p-2 bg-primary text-white">
+                    <a
+                      data-bs-toggle="modal"
+                      data-bs-target="#viewAadhaarButton"
+                      (click)="
+                        setCuurentDetailsAadhar(
+                          item.id,
+                          item.aadhaarCard,
+                          item.aadhaarCardBack
+                        )
+                      "
+                    >
+                      View Aadhaar</a
+                    >
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="item.aadhaarVerified == 2">
+                  <td class="text-success">Approved</td>
+                </ng-container>
+                <ng-container *ngIf="item.aadhaarVerified == 3">
+                  <td class="text-danger">Rejected</td>
+                </ng-container>
               </td>
             </tr>
           </tbody>
@@ -121,7 +127,6 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-body">
-      
         <div class="form-header">
           <h3>PAN Card View</h3>
           <button
@@ -133,9 +138,9 @@
           >
             <span aria-hidden="true">&times;</span>
           </button>
-          <p > View PAN Photo mode     </p>
-          <img src="{{panCardPath}}" alt="noImg">
-         
+          <p>View PAN Photo mode</p>
+          <img src="{{ panCardPath }}" alt="noImg" height="450 px"
+          width="450px" />
         </div>
 
         <div class="modal-btn delete-action">
@@ -148,15 +153,15 @@
 
             <div class="col-6">
               <tr *ngFor="let item of pendingData; let i = index">
-              <a
-                class="btn btn-primary continue-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#add_reject"
-                (click)="id = item.id"
+                <a
+                  class="btn btn-primary continue-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add_reject"
+                  (click)="id = item.id"
                 >
-                Reject</a
-              >
-            </tr>
+                  Reject</a
+                >
+              </tr>
             </div>
           </div>
         </div>
@@ -183,30 +188,40 @@
           >
             <span aria-hidden="true">&times;</span>
           </button>
-          <p > View Aadhaar Photo mode     </p>
-          <img src="{{aadhaarCardPath}}" alt="noImage">
-          <img src="{{aadhaarCardBackPath}}" alt="noImg">
+          <p>View Aadhaar front photo</p>
+          <img
+            src="{{ aadhaarCardPath }}"
+            alt="noImage"
+            height="450 px"
+            width="450px"
+          />
+          <p>View Aadhaar back photo</p>
+
+          <img src="{{ aadhaarCardBackPath }}" alt="noImg" height="450 px"
+          width="450px" />
         </div>
 
         <div class="modal-btn delete-action">
           <div class="row">
             <div class="col-6">
-              <a class="btn btn-primary continue-btn" (click)="getAadhaarApprove()"
+              <a
+                class="btn btn-primary continue-btn"
+                (click)="getAadhaarApprove()"
                 >Approve</a
               >
             </div>
 
             <div class="col-6">
               <tr *ngFor="let item of pendingData; let i = index">
-              <a
-                class="btn btn-primary continue-btn"
-                data-bs-toggle="modal"
-                data-bs-target="#add_reject_aadhaar"
-                (click)="id = item.id"
+                <a
+                  class="btn btn-primary continue-btn"
+                  data-bs-toggle="modal"
+                  data-bs-target="#add_reject_aadhaar"
+                  (click)="id = item.id"
                 >
-                Reject</a
-              >
-            </tr>
+                  Reject</a
+                >
+              </tr>
             </div>
           </div>
         </div>
@@ -215,7 +230,6 @@
   </div>
 </div>
 <!-- /View Aadhaar Button -->
-
 
 <!--  PAN Reject Button -->
 
@@ -276,7 +290,6 @@
 </div>
 <!-- /PAN reject Button -->
 
-
 <!-- Aadhaar Reject Button -->
 
 <div class="modal custom-modal fade" id="add_reject_aadhaar" role="dialog">
@@ -335,5 +348,3 @@
   </div>
 </div>
 <!-- /Aadhaar Reject Button -->
-
-
