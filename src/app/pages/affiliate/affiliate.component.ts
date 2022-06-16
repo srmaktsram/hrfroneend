@@ -29,11 +29,11 @@ export class AffilateComponent implements OnInit {
     public formBuilder: FormBuilder,
     private http: HttpClient,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   navigateUrl() {
-    this.router.navigate(["/pages/affiliate/affiliate-registration"]);
+    this.router.navigate(["/affiliates/affiliate-registration"]);
   }
 }
