@@ -12,15 +12,15 @@ import { AppRoutingModule } from "./app-routing.module";
 import { CookieService } from "ngx-cookie-service";
 import { SharingModule } from "./sharing/sharing.module";
 import { PagesComponent } from "./pages/pages.component";
-import { HeaderComponent } from "components/header/header.component";
-import { SidenavMenuComponent } from "components/sidenav-menu/sidenav-menu.component";
-import { FooterComponent } from "components/footer/footer.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { FooterComponent } from "./components/footer/footer.component";
+
 @NgModule({
   declarations: [
     AppComponent,
     PagesComponent,
     HeaderComponent,
-    SidenavMenuComponent,
+
     FooterComponent,
   ],
   imports: [
