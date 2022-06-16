@@ -19,10 +19,24 @@ const routes: Routes = [
             (m) => m.AffilateModule
           ),
       },
+
+      {
+        path: "hr_registration",
+        loadChildren: () =>
+          import("./pages/hr_registration/hr_registration.module").then(
+            (m) => m.HrRegistrationModule
+          ),
+      },
+
       {
         path: "pricings",
         loadChildren: () =>
           import("./pages/pricing/pricing.module").then((m) => m.PricingModule),
+      },
+      {
+        path: "checkout",
+        loadChildren: () =>
+          import("./pages/checkout/checkout.module").then((m) => m.CheckoutModule),
       },
       {
         path: "products",
@@ -63,4 +77,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

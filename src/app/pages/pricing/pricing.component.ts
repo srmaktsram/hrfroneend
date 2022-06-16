@@ -129,7 +129,7 @@ export class PricingComponent implements OnInit {
         });
       }
       if (val == "dMulti") {
-        this.router.navigate(["/pages/checkout"], {
+        this.router.navigate(["/checkout"], {
           queryParams: {
             totalAmount: this.totaldMultiMonthAmount,
             totalUser: this.dMultiUser,
@@ -141,7 +141,7 @@ export class PricingComponent implements OnInit {
         });
       }
       if (val == "epMulti") {
-        this.router.navigate(["/pages/checkout"], {
+        this.router.navigate(["/checkout"], {
           queryParams: {
             totalAmount: this.totalEpMonthAmount,
             totalUser: this.epMultiUser,
@@ -153,7 +153,7 @@ export class PricingComponent implements OnInit {
         });
       }
       if (val == "ptSingle") {
-        this.router.navigate(["/pages/checkout"], {
+        this.router.navigate(["/checkout"], {
           queryParams: {
             totalAmount: this.totalPtSingleMonthAmount,
             totalUser: this.PtSingleUser,
@@ -165,7 +165,7 @@ export class PricingComponent implements OnInit {
         });
       }
       if (val == "ptMulti") {
-        this.router.navigate(["/pages/checkout"], {
+        this.router.navigate(["/checkout"], {
           queryParams: {
             totalAmount: this.totalPtMultiMonthAmount,
             totalUser: this.PtMultiUser,
@@ -178,7 +178,7 @@ export class PricingComponent implements OnInit {
       }
     }
     else {
-      this.router.navigate(["/pages/hr_registration"]);
+      this.router.navigate(["/hr_registration"]);
 
     }
     // } else {

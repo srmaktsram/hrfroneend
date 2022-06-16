@@ -1,6 +1,3 @@
-<app-header class="headerCom"></app-header>
-
-
 <div class="row">
     <div class="col-sm-12">
         <div class="card">
@@ -19,7 +16,7 @@
             <div class="card-header bg-danger text-white " style="font-size: medium; font-weight: 600">
                 <span id="ContentPlaceHolder1_Label1">User Account Information</span>
             </div>
-            <form  [formGroup]="checkoutForm"  >
+            <form [formGroup]="checkoutForm">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
@@ -30,12 +27,11 @@
                                 </div>
                                 <div class=" col-sm-4 float-left">
 
-                                        <input  type="text"
-                                            value="{{totalUser}}" readonly="readonly" 
-                                             class="form-control"  />
+                                    <input type="text" value="{{totalUser}}" readonly="readonly" class="form-control" />
                                 </div>
-                                <div class="col-sm-4">                                  
-                                        <span id="ContentPlaceHolder1_user_login_type_lbl" style="font-size:14px;">{{packageName}}</span>                    
+                                <div class="col-sm-4">
+                                    <span id="ContentPlaceHolder1_user_login_type_lbl"
+                                        style="font-size:14px;">{{packageName}}</span>
 
                                 </div>
                             </div>
@@ -46,9 +42,8 @@
                                         :-</span>
                                 </div>
                                 <div class="col-sm-8 text-left" style="font-size: large">
-                                        <input id="totaldSingleMonthAmount" name="totaldSingleMonthAmount" type="text"
-                                            value="{{totalAmount}}" readonly="readonly"
-                                      class="form-control"/>                   
+                                    <input id="totaldSingleMonthAmount" name="totaldSingleMonthAmount" type="text"
+                                        value="{{totalAmount}}" readonly="readonly" class="form-control" />
                                 </div>
 
                             </div>
@@ -60,8 +55,8 @@
                                 <div class="col-sm-5">
 
                                     <input name="ctl00$ContentPlaceHolder1$login_TextBox" type="text"
-                                        id="ContentPlaceHolder1_login_TextBox" class="form-control"  readonly="readonly" 
-                                       value="{{corporateId}}" maxlength="15" style="font-size: small;" />
+                                        id="ContentPlaceHolder1_login_TextBox" class="form-control" readonly="readonly"
+                                        value="{{corporateId}}" maxlength="15" style="font-size: small;" />
                                 </div>
 
 
@@ -130,8 +125,8 @@
                                 </div>
                                 <div class="col-sm-8 ok">
                                     <input name="ctl00$ContentPlaceHolder1$comp_text" type="text"
-                                        id="ContentPlaceHolder1_comp_text" formControlName="companyName"  value="{{companyName}}" class="form-control" 
-                                        placeholder="Company Name" />
+                                        id="ContentPlaceHolder1_comp_text" formControlName="companyName"
+                                        value="{{companyName}}" class="form-control" placeholder="Company Name" />
                                 </div>
                             </div>
                             <div class="row">
@@ -148,8 +143,8 @@
                                 </div>
                                 <div class="col-sm-8 ok">
                                     <textarea name="ctl00$ContentPlaceHolder1$add_text"
-                                        id="ContentPlaceHolder1_add_text" class="form-control"    formControlName="address" placeholder="Address..."
-                                        aria-multiline="true"></textarea>
+                                        id="ContentPlaceHolder1_add_text" class="form-control" formControlName="address"
+                                        placeholder="Address..." aria-multiline="true"></textarea>
 
                                 </div>
                             </div>
@@ -168,9 +163,9 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-8 ok">
-                                    <input name="ctl00$ContentPlaceHolder1$pan_ttext" type="text" formControlName="panNo"
-                                        id="ContentPlaceHolder1_pan_ttext" placeholder="PAN No." maxlength="20"
-                                        class="form-control" />
+                                    <input name="ctl00$ContentPlaceHolder1$pan_ttext" type="text"
+                                        formControlName="panNo" id="ContentPlaceHolder1_pan_ttext" placeholder="PAN No."
+                                        maxlength="20" class="form-control" />
 
                                 </div>
 
@@ -210,8 +205,8 @@
                                 </div>
                                 <div class="col-sm-8 ok">
                                     <input name="ctl00$ContentPlaceHolder1$email_text" type="text"
-                                        id="ContentPlaceHolder1_email_text"   value="{{email}}" formControlName="email" placeholder="E-mail" maxlength="100"
-                                        class="form-control" />
+                                        id="ContentPlaceHolder1_email_text" value="{{email}}" formControlName="email"
+                                        placeholder="E-mail" maxlength="100" class="form-control" />
 
                                 </div>
                             </div>
@@ -228,7 +223,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-8 ok">
-                                    <input name="ctl00$ContentPlaceHolder1$mo_text" type="text"   value="{{mobile}}"
+                                    <input name="ctl00$ContentPlaceHolder1$mo_text" type="text" value="{{mobile}}"
                                         id="ContentPlaceHolder1_mo_text" formControlName="mobile"
                                         class="form-control" />
 
@@ -271,13 +266,11 @@
                     <a class="promoCode" (click)="usePromo()">Have a Promo Code</a>
                 </div>
                 <div class="col-sm m-2">
-                    <button class="btn-success "
-                        style="background-color:#83B111;border-color:#83B111;"  (click)="getPayment()" >Make Payment</button>
+                    <button class="btn-success " style="background-color:#83B111;border-color:#83B111;"
+                        (click)="getPayment()">Make Payment</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-sm-2"></div>
 </div>
-
-<app-footer></app-footer>

@@ -3,7 +3,6 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { AppComponent } from "./app.component";
-// Bootstrap DataTable to open pull request
 import { DataTablesModule } from "angular-datatables";
 import { ToastrModule } from "ngx-toastr";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
@@ -42,4 +41,4 @@ import { FooterComponent } from "./components/footer/footer.component";
   providers: [CookieService],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

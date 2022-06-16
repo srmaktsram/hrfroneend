@@ -594,6 +594,11 @@ width:100%
 
 
 @media(min-width:700px) and (max-width:775px){
+
+
+	.fixedHeader{
+		margin-top:5px;
+	}
 	.headerCom{
 		display: none;
 	}
@@ -1017,6 +1022,10 @@ padding-left: 20px;
 /* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
  
 @media(min-width:370px) and (max-width:450px){
+
+	.fixedHeader{
+		margin-top:5px;
+	}
 
 	.headerCom{
 		display: none;

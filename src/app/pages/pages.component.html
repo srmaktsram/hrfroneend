@@ -1,32 +1,68 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="fixed-top" class=" hideSidenavContainer">
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-     <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-   </button>
-   
+        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <div ngbDropdown class="d-inline-block">
+        <ng-container *ngIf="user_type!='hrUser'">
+            <div style="margin-left:220px;">
+                <button type="button" class="btn btn-outline-success" id="dropdown1" ngbDropdownToggle>Sign
+                    In</button>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="user_type=='hrUser'">
+            <div class="d-flex">
+                <mat-icon class="accountCircle">account_circle </mat-icon>
+                <p class="setName" id="dropdown1" ngbDropdownToggle>{{firstName}}</p>
+            </div>
+        </ng-container>
+        <div ngbDropdownMenu aria-labelledby="dropdown" class="mainDrop">
+            <div class="tri"></div>
+            <p class="profile">Existing Customer :-</p>
+            <div class="childDiv">
+                <p class="profile1" routerLink="/hr_registration">Login An Account</p>
+            </div>
+            <div class="manageDiv">
+                <div style="border-bottom:2px solid white">
+                    <p class="manageCustomer">New Customer :-</p>
+                    <p class="createAn" routerLink="/hr_registration">Create an Account</p>
+                </div>
+                <p class="manage" routerLink="/profiles">Manage Account</p>
+                <p class="manage" routerLink="/products">My Product</p>
+                <p class="manage" routerLink="/home" (click)="logout()">Sign Out </p>
 
- </mat-toolbar>
-      
- 
+            </div>
+        </div>
+    </div>
+</mat-toolbar>
+<app-header class="fixed-top showHeader"></app-header>
+
 <mat-sidenav-container>
-       <mat-sidenav #sidenav>
+    <mat-sidenav #sidenav style="width:200px;">
         <mat-nav-list>
-            <a mat-list-item>Home</a>
-            <a mat-list-item>Pricing</a>
+            <a mat-list-item routerLink="">
+                <mat-icon style="margin-right:10px;">home</mat-icon>
+                Home
+            </a>
+            <a mat-list-item routerLink="">
+                <mat-icon style="margin-right:10px;">people</mat-icon>
+                Affiliate
+            </a>
+            <a mat-list-item routerLink="">
+                <mat-icon style="margin-right:10px;">party_mode</mat-icon>
+                Pricing
+            </a>
+            <a mat-list-item routerLink="">
+                <mat-icon style="margin-right:10px;">check_box</mat-icon>Retail POS
+            </a>
+            <a mat-list-item routerLink="">
+                <mat-icon style="margin-right:10px;">sms</mat-icon>Fax
+            </a>
+
         </mat-nav-list>
-       </mat-sidenav>
-<mat-sidenav-content>
-    <router-outlet></router-outlet>
-    <app-footer>  
-    </app-footer>
-
-</mat-sidenav-content>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+        <app-footer>
+        </app-footer>
+    </mat-sidenav-content>
 </mat-sidenav-container>
-
-      
-    
-
-
-    
-
-   
-    
