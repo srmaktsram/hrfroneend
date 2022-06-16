@@ -32,8 +32,14 @@ export class KycListComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
 
+   public aadhaarRemark:string;
+   public panRemark:string;
+
   editId: any;
+
   invoices: any;
+  panCardPath: string;
+
   projects: any;
   tasks: any;
   chats: any;
@@ -56,8 +62,14 @@ export class KycListComponent implements OnInit, OnDestroy {
   errAadhaarSize = true;
   errorBackAdhaarExtension = true;
   errBackAadhaarSize = true;
-  errorPanExtension=true;
-  errPanSize=true;
+  errorPanExtension = true;
+  errPanSize = true;
+  id: any;
+  panCard: any;
+  aadhaarCardBack: any;
+  aadhaarCardPath: string;
+  aadhaarBackCardPath: string;
+  aadhaarCard: any;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
@@ -84,6 +96,12 @@ export class KycListComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
+  // setCuurentDetailsPan(id, panCard) {
+  //   alert("111")
+  //   this.id = id;
+
+  // }
+
   selectAadhaar(event: any) {
     if (event.target.files.length > 0) {
       this.adharImg = event.target.files[0];
@@ -96,7 +114,6 @@ export class KycListComponent implements OnInit, OnDestroy {
         if (event.target.files[0].size < 200 * 1024) {
           this.errAadhaarSize = true;
           this.updateAadhaar();
-
         } else {
           this.errAadhaarSize = false;
         }
@@ -120,34 +137,30 @@ export class KycListComponent implements OnInit, OnDestroy {
           {
             this.errBackAadhaarSize = true;
             this.updateBackAadhaar();
-
           }
         } else {
-          
           this.errBackAadhaarSize = false;
         }
       } else {
         this.errBackAadhaarSize = true;
         this.errorBackAdhaarExtension = false;
       }
-      
     }
   }
   selectPan(event: any) {
     if (event.target.files.length > 0) {
       this.panImg = event.target.files[0];
 
-     if (
+      if (
         event.target.files[0].type === "image/jpeg" ||
         event.target.files[0].type === "image/png" ||
         event.target.files[0].type === "image/jpg"
       ) {
         this.errorPanExtension = true;
         if (event.target.files[0].size < 200 * 1024) {
-            this.errPanSize = true;
-            this.updatePan();
-
-          }else {
+          this.errPanSize = true;
+          this.updatePan();
+        } else {
           this.errPanSize = false;
         }
       } else {
@@ -155,7 +168,6 @@ export class KycListComponent implements OnInit, OnDestroy {
 
         this.errorPanExtension = false;
       }
-      
     }
   }
   updateAadhaar() {
@@ -164,10 +176,12 @@ export class KycListComponent implements OnInit, OnDestroy {
     fd.append("file", this.adharImg);
     let params = new HttpParams();
     params = params.set("aId", this.aId);
+    // params = params.set("aadhaarRemark", this.addKyc.value.aadhaarRemark);
+
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc1?" + params, fd)
       .subscribe((res: any) => {
-        console.log(res,"front")
+        console.log(res, "front");
         this.getKycDetails();
       });
   }
@@ -180,7 +194,7 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc2?" + params, fd)
       .subscribe((res: any) => {
-        console.log(res,"Back")
+        console.log(res, "Back");
 
         this.getKycDetails();
       });
@@ -194,7 +208,8 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc3?" + params, fd)
       .subscribe((res: any) => {
-        console.log(res,"Pan")
+        console.log(res, "Pan");
+        this.id = res.id;
 
         this.getKycDetails();
       });
@@ -208,7 +223,7 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc4?" + params, {})
       .subscribe((res: any) => {
-        console.log(res,"Details")
+        console.log(res, "Details");
 
         this.getKycDetails();
       });
@@ -218,6 +233,16 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/kyc/getKyc" + "/" + this.aId)
       .subscribe((response: any) => {
+        this.panCard = response.panCard;
+        this.aadhaarCardBack = response.aadhaarCardBack;
+        this.aadhaarCard = response.aadhaarCard;
+        this.aadhaarRemark = response.aadhaarRemark;
+        this.panRemark = response.panRemark;
+        console.log(this.panRemark,"for Pan")
+        this.panCardPath = `http://localhost:8443/${this.panCard}`;
+        this.aadhaarBackCardPath = `http://localhost:8443/${this.aadhaarCardBack}`;
+        this.aadhaarCardPath = `http://localhost:8443/${this.aadhaarCard}`;
+
         this.addKyc.patchValue({
           aadhaarCardNo: response.aadhaarCardNo,
           panCardNo: response.panCardNo,

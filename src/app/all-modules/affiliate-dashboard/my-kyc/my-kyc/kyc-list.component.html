@@ -30,6 +30,10 @@
             "
             formControlName="aadhaarCardNo"
           />
+          <ng-container *ngIf='aadhaarRemark!="" '>
+            <p  class="text-danger" [hidden]>{{aadhaarRemark}}</p>
+          </ng-container>
+          
           <div
             *ngIf="
               addKyc.get('aadhaarCardNo').invalid &&
@@ -52,26 +56,45 @@
         <label>Aadhaar Front Photo</label>
         <input
           class="form-control"
+          style="width: 600px"
           type="file"
           formControlName="aadhaarCard"
           (change)="selectAadhaar($event)"
         />
-        <p class="text-danger" [hidden]="errorAadhaarExtension">Only .jpeg, .png, .jpg formats are allowed</p>
-        <p class="text-danger" [hidden]="errAadhaarSize">Upload size should be less than 200KB</p>
-
+        <img
+          src="{{aadhaarCardPath}}"
+          alt="noIMG"
+          height="40 px"
+          style="position: relative; left: 700px; top: -35px"
+        />
+        <p class="text-danger" [hidden]="errorAadhaarExtension">
+          Only .jpeg, .png, .jpg formats are allowed
+        </p>
+        <p class="text-danger" [hidden]="errAadhaarSize">
+          Upload size should be less than 200KB
+        </p>
       </div>
       <div class="form-group">
         <label>Aadhaar Back Photo</label>
         <input
           class="form-control"
+          style="width: 600px"
           type="file"
           formControlName="aadhaarCardBack"
           (change)="selectAadhaarBack($event)"
         />
-        <p class="text-danger" [hidden]="errorBackAdhaarExtension">Only .jpeg, .png, .jpg formats are allowed</p>
-        <p class="text-danger" [hidden]="errBackAadhaarSize">Upload size should be less than 200KB</p>
-
-
+        <img
+          src="{{aadhaarBackCardPath}}"
+          alt="noIMG"
+          height="40 px"
+          style="position: relative; left: 700px; top: -35px"
+        />
+        <p class="text-danger" [hidden]="errorBackAdhaarExtension">
+          Only .jpeg, .png, .jpg formats are allowed
+        </p>
+        <p class="text-danger" [hidden]="errBackAadhaarSize">
+          Upload size should be less than 200KB
+        </p>
       </div>
       <div class="col-sm-6">
         <div class="form-group">
@@ -84,6 +107,9 @@
             "
             formControlName="panCardNo"
           />
+          <ng-container *ngIf='panRemark!="" '>
+            <p class="text-danger"  [hidden]>{{panRemark}}</p>
+          </ng-container>
           <div
             *ngIf="
               addKyc.get('panCardNo').invalid && addKyc.get('panCardNo').touched
@@ -105,18 +131,33 @@
         <label>PAN Card Photo</label>
         <input
           class="form-control"
+          style="width: 600px"
           type="file"
           formControlName="panCard"
           (change)="selectPan($event)"
         />
-        <p class="text-danger" [hidden]="errorPanExtension">Only .jpeg, .png, .jpg formats are allowed</p>
-        <p class="text-danger" [hidden]="errPanSize">Upload size should be less than 200KB</p>
+        <img
+          src="{{ panCardPath }}"
+          alt="noIMG"
+          height="40 px"
+          style="position: relative; left: 700px; top: -35px"
+        />
 
+        <p class="text-danger" [hidden]="errorPanExtension">
+          Only .jpeg, .png, .jpg formats are allowed
+        </p>
+        <p class="text-danger" [hidden]="errPanSize">
+          Upload size should be less than 200KB
+        </p>
       </div>
     </div>
 
     <div class="submit-section">
-      <button class="btn btn-primary submit-btn" (click)="updateKyc()">
+      <button
+        class="btn btn-primary submit-btn"
+        style="float: left"
+        (click)="updateKyc()"
+      >
         Submit KYC
       </button>
     </div>
