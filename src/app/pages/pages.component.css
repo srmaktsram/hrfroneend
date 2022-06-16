@@ -15,3 +15,107 @@
 	padding: 20px;
   }
   
+
+ .buttonSmall{
+      display:flex;
+	  justify-content: flex-end;
+	  border:2px solid red;
+  }
+
+  .setName{
+	margin-top:12px;
+	margin-left:10px;
+	cursor: pointer;
+	font-weight: bold;
+	color:white;
+}
+.accountCircle{
+	font-size: 30px;
+	margin-left:190px;
+	margin-top: 15px;
+	color: white;
+}
+
+.profile{
+	margin-left: 20px;
+	font-size: 20px;
+	color:aliceblue;
+
+}
+.profile1{
+	font-size:20px ;
+	margin-left: 20px;
+	color:orange;
+	cursor: pointer;
+
+
+}
+.mainDrop{
+	background-color: rgb(34, 20, 20);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	margin-top: 15px;
+}
+.tri{
+	border-top: 20px solid rgb(34, 20, 20);;
+	position: absolute;
+	margin-top:-15px;
+	width:30px;
+	right: 10%;
+	transform: rotate(45deg); 
+
+}
+
+
+
+
+.childDiv{
+	display:flex;
+	margin-top:-10px;
+	width:250px;
+	
+	}
+	.caret{
+			width:100%;
+	}
+	.manageDiv{
+		border-top: 2px solid whitesmoke;
+	}
+	.manage{
+		margin-left: 20px;
+		color:whitesmoke ;
+		cursor:pointer;
+		font-size: 20px;
+	}
+	.manageCustomer{
+		margin-left: 20px;
+		margin-top: 10px;
+		color: aliceblue;
+		font-size: 20px;
+	}
+	
+	.createAn{
+		margin-left: 20px;
+		margin-top: -17px;
+		color: aliceblue;
+		font-size: 20px;
+		cursor: pointer;
+	}
+
+
+  @media(min-width:800px){
+   .hideSidenavContainer{
+	display:none
+}
+  }
+
+  @media(max-width:800px){
+	.showHeader{
+		display:none
+	}
+	.op{
+		position: relative;
+		right:5px;
+	}
+
+  }
