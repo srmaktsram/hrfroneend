@@ -69,6 +69,10 @@
         <div class="col-md-6 text-center">
           <div class="card">
             <div class="card-body">
+              <p class="text-danger" [hidden]="insufficientBalance" >Requested amount is greater than current wallet amount, kindly enter a valid amount!</p>
+              <p class="text-danger" [hidden]="newStatus" >Kyc is not Completed,kindly complete your kyc using given link to make payment request! <span class="text-primary" routerLink="/layout/affiliates/my-kyc/my-kyc">Click here</span></p>
+              <p class="text-danger" [hidden]="minApprovalAmount" >Min. Withdrawal amount should be atleast $500 in order to make payment request!</p>
+              <p class="text-danger" [hidden]="pendingAlready" >There is already a pending withdrawal in the list, wait for it to be Approved/Rejected in order to make another payment request !</p>
               <h3 class="card-title">Withdrawal request</h3>
               <label>Actual Amount</label>
 
@@ -77,14 +81,16 @@
                 type="text"
                 placeholder="Enter Request Amount"
               />
-              <label>Withdrawal Amount</label>
+              <label  style="position: relative; left: -308px;top: 28px ">Withdrawal Amount</label>
               <input
               disabled
                 value={{withdrawalAmount}}
                 type="text"
+                style="position: relative; left:-18px; "
+
                 
               />
-              <div class="col-auto float-end ms-auto">
+              <div class="col-auto float-end ms-auto" style="margin-top:10px; margin-right:200px">
                 <a class="btn add-btn" (click)="paymentRequest()"
                   >Make Payment Request</a
                 >
@@ -95,7 +101,7 @@
         <div class="col-md-6 text-center">
           <div class="card">
             <div class="card-body">
-              <h3 class="card-title">You Can Request a Payout 24X7 !</h3>
+              <h3 class="card-title" class="text-success">You Can Request a Payout 24X7 !</h3>
               <div>
                 <p>
                   Note : Min. Withdraw amount is 500 5.00% TDS + 5.00% admin fee

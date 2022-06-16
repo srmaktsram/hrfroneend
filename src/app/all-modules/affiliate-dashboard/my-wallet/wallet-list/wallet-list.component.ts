@@ -26,7 +26,10 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public actualAmount: any;
   public withdrawalAmount: any;
   public newAmount: any;
-
+  insufficientBalance=true
+  newStatus=true
+  minApprovalAmount=true
+  pendingAlready=true
   public affilateId: any;
   public bankdetails: any;
   public email: string;
@@ -34,6 +37,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public last_name: string;
   public phone: string;
   public aId: any;
+  public kycStatus: string;
+  
 
   public data = [];
   public srch = [];
@@ -73,6 +78,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getWallet();
+    this.getKycDetails();
+
 
     this.dtOptions = {
       pageLength: 10,
@@ -85,6 +92,18 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       this.dtTrigger.next();
     }, 1000);
   }
+  getKycDetails() {
+    this.http
+      .get("http://localhost:8443/affiliates/kyc/getKyc" + "/" + this.aId)
+      .subscribe((response: any) => {
+        console.log(response,"kyc Detailsssss")
+        this.kycStatus=response.kycVerified
+        console.log(this.kycStatus,"status Detailsssss")
+
+        
+      });
+  }
+
 
   //Get all Clients data
   public getWallet() {
@@ -112,6 +131,12 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   public paymentRequest() {
+    if(this.actualAmount>this.currentBalance){
+      this.insufficientBalance=false
+     }
+    if(this.kycStatus!="3"){
+      this.newStatus=false
+    }else{
     let obj = {
       id: this.affilateId,
       aId: this.aId,
@@ -139,7 +164,15 @@ export class ClientsListComponent implements OnInit, OnDestroy {
             console.log(res,"wallet Pending")
           })
         }
+        if(res.result==3){
+          this.minApprovalAmount=false
+        }
+        if(res.result==0){
+          this.pendingAlready=false
+        }
+
       });
+    }
   }
   //reset form
 
