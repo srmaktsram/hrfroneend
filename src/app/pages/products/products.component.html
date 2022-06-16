@@ -22,6 +22,11 @@
                         <h4>Expairy Date</h4>
                         <h4>{{item.to |customDate}} </h4>
                     </div>
+                    <ng-container *ngFor="let data of totalRemaining">
+                        <div *ngIf="data.packageName=='Platinum(Multi-User)'">
+                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
+                        </div>
+                    </ng-container>
 
                     <div class="raisedButton">
                         <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
@@ -51,6 +56,11 @@
                         <h4>{{item.to |customDate}} </h4>
                     </div>
 
+                    <ng-container *ngFor="let data of totalRemaining">
+                        <div *ngIf="data.packageName=='Platinum(Single-User)'">
+                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
+                        </div>
+                    </ng-container>
                     <div class="raisedButton">
                         <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
                             dashboard</button>
@@ -77,7 +87,11 @@
                         <h4>Expairy Date</h4>
                         <h4>{{item.to |customDate}} </h4>
                     </div>
-
+                    <ng-container *ngFor="let data of totalRemaining">
+                        <div *ngIf="data.packageName=='Diamond(Multi-User)'">
+                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
+                        </div>
+                    </ng-container>
                     <div class="raisedButton">
                         <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
                             dashboard</button>
@@ -103,7 +117,11 @@
                         <h4>Expairy Date</h4>
                         <h4>{{item.to |customDate}} </h4>
                     </div>
-
+                    <ng-container *ngFor="let data of totalRemaining">
+                        <div *ngIf="data.packageName=='Diamond(Single-User)'">
+                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
+                        </div>
+                    </ng-container>
                     <div class="raisedButton">
                         <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
                             dashboard</button>
@@ -131,12 +149,16 @@
                         <h4>Expairy Date</h4>
                         <h4>{{item.to |customDate}} </h4>
                     </div>
+                    <ng-container *ngFor="let data of totalRemaining">
+                        <div *ngIf="data.packageName=='Enterprise(Multi-User)'">
+                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
+                        </div>
+                    </ng-container>
 
                     <div class="raisedButton">
                         <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
                             dashboard</button>
                     </div>
-
                 </mat-card>
             </ng-container>
 
@@ -158,6 +180,11 @@
                         <h4>Expairy Date</h4>
                         <h4>{{item.to |customDate}} </h4>
                     </div>
+                    <ng-container *ngFor="let data of totalRemaining">
+                        <div *ngIf="data.packageName =='Free User(Single-User)'">
+                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} days Remaining</h4>
+                        </div>
+                    </ng-container>
 
                     <div class="raisedButton">
                         <button mat-raised-button color="primary" routerLink="/layout/dashboard/admin">Launch
@@ -167,7 +194,6 @@
             </ng-container>
 
         </div>
-
 
     </div>
 </div>
