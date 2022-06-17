@@ -4,6 +4,7 @@ import { AuthGuardAdmin } from "../core/auth/auth-guard-admin.service";
 import { AuthGuardAffiliate } from "../core/auth/auth-guard-affiliate.service";
 import { AuthGuardClient } from "../core/auth/auth-guard-client.service";
 import { AuthGuardMainAdmin } from "../core/auth/auth-guard-mainadmin.service";
+import { AuthGuardSubAdmin } from "../core/auth/auth-guard-subadmin.service";
 // import { AuthGuard } from "../core/auth/auth-guard.service";
 import { AllModulesComponent } from "./all-modules.component";
 
@@ -28,14 +29,16 @@ const routes: Routes = [
           import("./apps/apps.module").then((m) => m.AppsModule),
         canActivate: [AuthGuardAdmin],
       },
+
       {
         path: "mainadmin",
         loadChildren: () =>
           import("./main-dashboard/main-dashboard.module").then(
             (m) => m.MainDashboardModule
           ),
-        canActivate: [AuthGuardMainAdmin],
+        canActivate: [AuthGuardSubAdmin],
       },
+
       {
         path: "client",
         loadChildren: () =>
