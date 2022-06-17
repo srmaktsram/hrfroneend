@@ -4,7 +4,7 @@
     <perfect-scrollbar [scrollIndicators]="false">
       <div id="sidebar-menu" class="sidebar-menu">
         <ul *ngIf="sidebarMenus.default">
-          <ng-container *ngIf="user_type == 'mainadmin'">
+          <ng-container *ngIf="user_type == 'mainadmin'||'subadmin'">
             <li class="menu-title">
               <span>Main-Admin</span>
             </li>
@@ -335,7 +335,8 @@
             *ngIf="
               user_type != 'mainadmin' &&
               user_type != 'affiliate' &&
-              user_type != 'client'
+              user_type != 'client' &&
+              user_type != 'subadmin'
             "
           >
             <li class="menu-title">

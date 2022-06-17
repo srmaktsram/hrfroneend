@@ -5,8 +5,7 @@ import { Injectable } from "@angular/core";
 export class SubAdminAuthenticationService {
   login() {
     sessionStorage.setItem("currentUser", "SubAdminLogin");
-    sessionStorage.setItem("user_type", "mainadmin");
-    sessionStorage.setItem("mainadminrole", "all");
+    sessionStorage.setItem("user_type", "subadmin");
     return true;
   }
   logout() {

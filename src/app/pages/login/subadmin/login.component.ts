@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { MainAdminAuthenticationService } from "src/app/core/storage/authentication-mainadmin.service";
+import { SubAdminAuthenticationService } from "src/app/core/storage/authentication-subadmin.service";
 
 @Component({
   selector: "app-subadmin",
@@ -27,7 +28,7 @@ export class SubAdminLoginComponent implements OnInit {
     // private storage: WebStorage,
     private http: HttpClient,
     private router: Router,
-    private adminAuthenticationService: MainAdminAuthenticationService
+    private subAdminAuthenticationService: SubAdminAuthenticationService
   ) {}
 
   ngOnInit() {}
@@ -39,7 +40,7 @@ export class SubAdminLoginComponent implements OnInit {
     let password = this.form.value.password;
     alert(username);
     this.http
-      .post("http://localhost:8443/auth/mainadminlogin/login", {
+      .post("http://localhost:8443/auth/subadminlogin/login", {
         username,
         password,
       })
@@ -48,7 +49,7 @@ export class SubAdminLoginComponent implements OnInit {
         if (res.result == 2) {
           this.router.navigate(["/layout/mainadmin/admindashboard"]);
 
-          this.adminAuthenticationService.login();
+          this.subAdminAuthenticationService.login();
         } else {
           alert("wrong Id or pass");
         }
