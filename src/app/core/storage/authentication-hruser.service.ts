@@ -22,15 +22,16 @@ export class HrUserAuthenticationService {
     return true;
   }
   logout() {
-    sessionStorage.removeItem("currentHrUserLgn");
+    sessionStorage.removeItem("currentUser");
     sessionStorage.removeItem("corporateId");
     sessionStorage.removeItem("user_type");
     sessionStorage.removeItem("hrUserId");
     sessionStorage.removeItem("email");
+    sessionStorage.removeItem("phone");
     sessionStorage.removeItem("firstName");
     sessionStorage.removeItem("lastName");
   }
   public get loggedIn(): boolean {
-    return sessionStorage.getItem("currentHrUserLgn") !== null;
+    return sessionStorage.getItem("currentUser") !== null;
   }
 }

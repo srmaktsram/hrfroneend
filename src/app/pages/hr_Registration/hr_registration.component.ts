@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, MinLengthValidator, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
+
 
 @Component({
   selector: "app-hr_registration",
@@ -13,12 +14,15 @@ import { HrUserAuthenticationService } from "src/app/core/storage/authentication
 export class HrregistrationComponent implements OnInit {
 
   public registerForm: FormGroup;
+  public signIn: any;
+  public signUp: any;
   public addloginForm: FormGroup;
   public showRegister = false;
   public showLogin = true;
   isvalidconfirmpassword: boolean;
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router,
-    private hrUserAuthenticationService: HrUserAuthenticationService) { }
+    private hrUserAuthenticationService: HrUserAuthenticationService, private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
 
@@ -39,6 +43,24 @@ export class HrregistrationComponent implements OnInit {
       password: ["", [Validators.required]],
 
     })
+    this.route.queryParams
+      .subscribe(params => {
+        this.signIn = params.signIn;
+        console.log(this.signIn, "///////////////////////<<<<<<<<<<<<<<<");
+      })
+
+    this.showPage()
+  }
+
+  showPage() {
+    if (this.signIn == 'signIn') {
+      this.showLogin = false;
+      this.showRegister = true;
+    }
+    else if (this.signIn == 'signUp') {
+      this.showLogin = true;
+      this.showRegister = false;
+    }
   }
 
   showData() {
@@ -47,7 +69,6 @@ export class HrregistrationComponent implements OnInit {
     this.showRegister = this.showLogin;
     this.showLogin = temp;
   }
-
   registerUsers() {
 
     if (this.registerForm.valid) {
@@ -72,8 +93,7 @@ export class HrregistrationComponent implements OnInit {
     }
     this.http.post("http://localhost:8443/mainadmin/create/registration", obj).subscribe((res: any) => {
       console.log(res, "res>>>>>>>>KKKKKKKKKKKK")
-
-      this.router.navigate(["/pricings"]);
+      window.location.replace("http://localhost:4200")
       this.hrUserAuthenticationService.login(
         res.id,
         res.corporateId,
@@ -84,6 +104,7 @@ export class HrregistrationComponent implements OnInit {
       );
     })
   }
+
   userLogin() {
     let email = this.addloginForm.value.email;
     let password = this.addloginForm.value.password;
@@ -96,6 +117,7 @@ export class HrregistrationComponent implements OnInit {
         console.log(res, ">>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<")
         if (res.result == 2) {
           window.location.replace("http://localhost:4200")
+
           this.hrUserAuthenticationService.login(
             res.data.id,
             res.data.corporateId,
