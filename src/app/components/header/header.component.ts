@@ -8,12 +8,11 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 export class HeaderComponent implements OnInit {
   public user_type: any;
   public firstName: any;
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.firstName = sessionStorage.getItem("firstName");
     this.user_type = sessionStorage.getItem("user_type");
-
     console.log(this.firstName, "kjhdkjwehjwj>>>>>>>>>>>>>");
   }
 

@@ -117,7 +117,7 @@ export class PricingComponent implements OnInit {
     console.log(sessionStorage.getItem("currentUser"), this.corporateId)
     if (sessionStorage.getItem("currentUser") == "HrUserLogin") {
       if (val == "dSingle") {
-        this.router.navigate(["/pages/checkout"], {
+        this.router.navigate(["/checkouts"], {
           queryParams: {
             totalAmount: this.totaldSingleMonthAmount,
             totalUser: this.dSingleUser,
@@ -129,7 +129,7 @@ export class PricingComponent implements OnInit {
         });
       }
       if (val == "dMulti") {
-        this.router.navigate(["/checkout"], {
+        this.router.navigate(["/checkouts"], {
           queryParams: {
             totalAmount: this.totaldMultiMonthAmount,
             totalUser: this.dMultiUser,
@@ -141,7 +141,7 @@ export class PricingComponent implements OnInit {
         });
       }
       if (val == "epMulti") {
-        this.router.navigate(["/checkout"], {
+        this.router.navigate(["/checkouts"], {
           queryParams: {
             totalAmount: this.totalEpMonthAmount,
             totalUser: this.epMultiUser,
@@ -153,7 +153,7 @@ export class PricingComponent implements OnInit {
         });
       }
       if (val == "ptSingle") {
-        this.router.navigate(["/checkout"], {
+        this.router.navigate(["/checkouts"], {
           queryParams: {
             totalAmount: this.totalPtSingleMonthAmount,
             totalUser: this.PtSingleUser,
@@ -165,7 +165,7 @@ export class PricingComponent implements OnInit {
         });
       }
       if (val == "ptMulti") {
-        this.router.navigate(["/checkout"], {
+        this.router.navigate(["/checkouts"], {
           queryParams: {
             totalAmount: this.totalPtMultiMonthAmount,
             totalUser: this.PtMultiUser,
