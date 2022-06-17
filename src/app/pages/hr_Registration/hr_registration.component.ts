@@ -73,7 +73,7 @@ export class HrregistrationComponent implements OnInit {
     this.http.post("http://localhost:8443/mainadmin/create/registration", obj).subscribe((res: any) => {
       console.log(res, "res>>>>>>>>KKKKKKKKKKKK")
 
-      this.router.navigate(["/pages/pricing"]);
+      this.router.navigate(["/pricings"]);
       this.hrUserAuthenticationService.login(
         res.id,
         res.corporateId,
@@ -95,7 +95,7 @@ export class HrregistrationComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res, ">>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<")
         if (res.result == 2) {
-          this.router.navigate(["/pages/home"]);
+          window.location.replace("http://localhost:4200")
           this.hrUserAuthenticationService.login(
             res.data.id,
             res.data.corporateId,
@@ -105,6 +105,7 @@ export class HrregistrationComponent implements OnInit {
             res.data.phone,
 
           );
+
         } else {
           alert("wrong Id or pass");
         }
