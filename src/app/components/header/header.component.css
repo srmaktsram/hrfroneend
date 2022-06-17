@@ -14,8 +14,9 @@
 
 .profile{
 	margin-left: 20px;
-	font-size: 20px;
-	color:aliceblue;
+	font-size: 18px;
+	color:black;
+	margin-top: 10px;
 
 }
 .profile1{
@@ -27,13 +28,13 @@
 
 }
 .mainDrop{
-	background-color: rgb(34, 20, 20);
+	background-color: white;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	margin-top: 15px;
 }
 .tri{
-	border-top: 20px solid rgb(34, 20, 20);;
+	border-top: 20px solid white;
 	position: absolute;
 	margin-top:-15px;
 	width:30px;
@@ -52,25 +53,26 @@ width:250px;
 		width:100%;
 }
 .manageDiv{
-	border-top: 2px solid whitesmoke;
+	border-top: 2px solid rgb(242, 234, 234);
 }
 .manage{
 	margin-left: 20px;
-	color:whitesmoke ;
+	color:black ;
 	cursor:pointer;
 	font-size: 20px;
 }
 .manageCustomer{
 	margin-left: 20px;
 	margin-top: 10px;
-	color: aliceblue;
-	font-size: 20px;
+	color: black;
+	font-size: 18px;
+	margin-right: 5px;
 }
 
 .createAn{
 	margin-left: 20px;
-	margin-top: -17px;
-	color: aliceblue;
+	margin-top: -8px;
+	color: orange;
 	font-size: 20px;
 	cursor: pointer;
 }

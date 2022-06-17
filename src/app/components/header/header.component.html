@@ -27,18 +27,20 @@
             </ng-container>
             <div ngbDropdownMenu aria-labelledby="dropdown" class="mainDrop">
                 <div class="tri"></div>
-                <p class="profile">Existing Customer :-</p>
+                <p class="profile">Have An account? Login in now.</p>
                 <div class="childDiv">
-                    <p class="profile1" routerLink="/hr_registration">Login An Account</p>
+                    <p class="profile1" routerLink="/hr_registration" [queryParams]="{signIn: 'signIn'}">Login An
+                        Account</p>
                 </div>
                 <div class="manageDiv">
-                    <div style="border-bottom:2px solid white">
-                        <p class="manageCustomer">New Customer :-</p>
-                        <p class="createAn" routerLink="/hr_registration">Create an Account</p>
+                    <div style="border-bottom:2px solid rgb(242, 234, 234)">
+                        <p class="manageCustomer">New to Srmak? Create an account to get started today.</p>
+                        <p class="createAn" routerLink="/hr_registration" [queryParams]="{signIn:'signUp'}">Create An
+                            Account</p>
                     </div>
-                    <p class="manage" routerLink="/profiles">Manage Account</p>
-                    <p class="manage" routerLink="/products">My Product</p>
-                    <p class="manage" routerLink="/" (click)="logout()">Sign Out </p>
+                    <p [hidden]="isShow" class="manage" routerLink="/profiles">Manage Account</p>
+                    <p [hidden]="isShow" class="manage" routerLink="/products">My Product</p>
+                    <p [hidden]="isShow" class="manage" (click)="logout()">Sign Out </p>
 
                 </div>
             </div>

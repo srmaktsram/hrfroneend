@@ -1,14 +1,15 @@
 import { Component, OnInit } from "@angular/core";
+import { HrUserAuthenticationService } from "../core/storage/authentication-hruser.service";
 @Component({
   selector: "app-pages",
   templateUrl: "./pages.component.html",
   styleUrls: ["./pages.component.css"],
 })
 export class PagesComponent implements OnInit {
-
+  public isShow = true
   public firstName: any
   public user_type: any;
-  constructor() { }
+  constructor(private hrUserAuthenticationService: HrUserAuthenticationService) { }
 
   ngOnInit() {
 
@@ -17,16 +18,20 @@ export class PagesComponent implements OnInit {
 
     console.log(this.firstName, "kjhdkjwehjwj>>>>>>>>>>>>>");
 
+    this.visible()
+
   }
+
   logout() {
-    sessionStorage.removeItem("currentHrUserLgn");
-    sessionStorage.removeItem("corporateId");
-    sessionStorage.removeItem("user_type");
-    sessionStorage.removeItem("hrUserId");
-    sessionStorage.removeItem("email");
-    sessionStorage.removeItem("firstName");
-    sessionStorage.removeItem("lastName");
-    // window.location.reload();
+    this.hrUserAuthenticationService.logout()
+    window.location.replace("")
+  }
+
+  visible() {
+    if (this.firstName) {
+      this.isShow = false;
+    }
+
   }
 
 }
