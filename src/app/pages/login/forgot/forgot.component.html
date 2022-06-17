@@ -15,9 +15,10 @@
 
         <!-- Account Form -->
         <form [formGroup]="form" (ngSubmit)="submit()">
-          <div class="form-group">
+          <div class="form-group" [hidden]=sendOtpBox>
             <label>Email Address</label>
-            <input class="form-control" type="text" formControlName="email" id="email" />
+            <div id="email"  >    
+             <input #email class="form-control" type="text" formControlName="email" id="email" />
             <div *ngIf="f['email'].touched && f['email'].invalid" class="text-danger">
               <div *ngIf="f['email'].errors && f['email'].errors['required']">Email is required.</div>
               <div *ngIf="f['email'].errors && f['email'].errors['email']">Please, enter valid email address.</div>
@@ -25,10 +26,33 @@
             <div *ngIf='CustomControler !=0' class="text-danger">
               {{CustomControler}}
             </div>
+            <div><button [disabled]="sendOtpDisable" class="sendOtp" (click)="sendOtp(email.value); sendOtpDisable=true;">Send OTP</button></div>
           </div>
-          <div class="form-group text-center">
-            <button class="btn btn-primary account-btn" [disabled]="form.invalid" type="submit">Reset Password</button>
+
           </div>
+          <div class="form-group"  [hidden]=verifyOtpBox>
+            
+            <div class="otpBox">
+              
+            <input  class="input1" #otpInput type="text" maxlength="4"  placeholder="Enter OTP"  (keyup)="messOtp=''" />
+
+          
+            <button  class="input5"  (click)="verifyOtp(otpInput.value)"> Verify OTP</button>
+            <p class="text-danger">{{messOtp}}</p>
+          </div>
+           
+          </div>
+          <div class="form-group text-center" id="inputPass"  [hidden]=resetPasswordBox     >
+            <input  #password1  type="password"  class="form-control"  placeholder="Emter Password..."  />
+            <br>
+            <input  #password2  type="password"  class="form-control"    placeholder="Emter Confirm Password..."   />
+            
+            <p [hidden]=matchPass class="text-danger">Password invalid...... </p>
+            <br> 
+            <br>
+            <button class="btn btn-primary account-btn" (click)="resetPassword(password1.value,password2.value)" type="submit">Set Password</button>
+          </div>
+          
           <div class="account-footer">
             <p>
               Remember your password? <a routerLink="/login">Login</a>
