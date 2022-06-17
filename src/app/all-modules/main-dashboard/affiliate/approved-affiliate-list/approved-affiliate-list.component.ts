@@ -88,7 +88,6 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
         "http://localhost:8443/mainadmin/affiliate/getApproveAffiliate"
       )
       .subscribe((res: any) => {
-        console.log(res)
         this.data = res;
         this.srch = [...this.data];
 
@@ -167,26 +166,7 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
       )
       .subscribe((res:any) => {
         this.getPremiumAdmins();
-        // this.statusData = res.status;
-        // console.log(this.statusData, "status data");
-
-        // if (this.statusData == "Approve") {
-        
-        //   let obj = {
-      
-        //   };
-        //   this.http
-
-        //     .post(
-        //       "http://localhost:8443/affiliates/affiliate/createAffiliateWallet" ,obj
-        //     )
-        //     .subscribe((res: any) => {
-        //       console.log(res, "xxxxxx");
-        //     });
-        // }
-
-       
-      });
+       });
   } 
 
   //search by name

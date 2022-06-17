@@ -82,7 +82,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/affiliate/getWithdrawalHistory")
       .subscribe((res: any) => {
-        console.log(res,"llllllllsssssss")
         this.data = res;
         
       });

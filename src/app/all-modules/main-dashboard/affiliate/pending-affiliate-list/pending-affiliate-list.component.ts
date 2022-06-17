@@ -85,7 +85,6 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/mainadmin/affiliate/getPendingAffiliate")
       .subscribe((res: any) => {
         this.data = res;
-        console.log(this.data, "tttttttttttttttttttttttttt");
         this.srch = [...this.data];
       });
   }
@@ -166,7 +165,6 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
               obj
             )
             .subscribe((res: any) => {
-              console.log(res, "xxxxxx");
             });
         }
       });

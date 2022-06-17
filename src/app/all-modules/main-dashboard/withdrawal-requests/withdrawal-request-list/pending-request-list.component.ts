@@ -80,7 +80,6 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/affiliate/getPaymentRequest")
       .subscribe((res: any) => {
-        console.log(res, "Hello Requests");
         this.data = res;
         this.srch = [...this.data];
        
@@ -92,6 +91,7 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
     let obj = {
       status: "1",
       withdrawAmount: this.newAmount,
+      approveRemark:"Completed"
     };
     this.http
       .patch(
@@ -101,14 +101,12 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((res:any) => {
-        console.log(res, "updatePay");
         this.getPaymentRequest();
         if(res.result==1){
           let object={
             withdraw:res.data.amount
           }
           this.http.patch("http://localhost:8443/affiliates/wallet/updateWalletPaidAmount"+"/"+res.data.aId,object).subscribe((res:any)=>{
-            console.group(res,"wallet lllllUpdated")
           })
         }
         ////
@@ -129,7 +127,6 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
               obj
             )
             .subscribe((res: any) => {
-              console.log(res, " withdraw details Created");
               
               
             });
@@ -141,7 +138,6 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
   }
 
   getReject() {
-    alert(this.id);
     let obj = {
       status: "2",
       remark: this.addRejectForm.value.addRemark,
@@ -154,13 +150,11 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((res:any) => {
-        console.log(res, "updateReject");
         if(res.result==1){
           let object={
             reject:res.data.amount
           }
           this.http.patch("http://localhost:8443/affiliates/wallet/updateWalletRejectAmount"+"/"+res.data.aId,object).subscribe((res:any)=>{
-            console.group(res,"wallet reject req update")
           })
         }
         this.getPaymentRequest();

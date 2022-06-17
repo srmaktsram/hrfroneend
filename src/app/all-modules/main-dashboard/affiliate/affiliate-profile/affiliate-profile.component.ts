@@ -73,7 +73,6 @@ export class AffiliateProfileComponent implements OnInit {
         );
 
         this.project.map((item) => {
-          console.log(item);
           if (item.lstTasks) {
             item.lstTasks.map((data) => {
               this.pendingTasks.push(data);

@@ -89,7 +89,6 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
         "http://localhost:8443/mainadmin/affiliate/getRejectedAffiliate"
       )
       .subscribe((res: any) => {
-      console.log(res)
         this.data = res;
         this.srch = [...this.data];
 
@@ -189,7 +188,6 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
               "http://localhost:8443/affiliates/affiliate/createAffiliateWallet" ,obj
             )
             .subscribe((res: any) => {
-              console.log(res, "YYYYYYYYYYYYYY");
             });
         }
 
