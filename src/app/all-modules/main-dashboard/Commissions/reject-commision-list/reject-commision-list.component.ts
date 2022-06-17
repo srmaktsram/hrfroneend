@@ -75,7 +75,6 @@ export class RejectCommissionListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/Commisions/getRejectCommisions")
       .subscribe((res: any) => {
-        console.log(res,"get Reject Commisions")
         this.data = res;
       });
   }

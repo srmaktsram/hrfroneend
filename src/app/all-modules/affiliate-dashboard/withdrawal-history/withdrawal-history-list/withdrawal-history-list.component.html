@@ -34,6 +34,7 @@
               <th>Payout Amount</th>
               <th>Email</th>
               <th>Mobile</th>
+              <th>Description</th>
               <th>Create Date</th>
               <th>Update Date</th>
               <th>Status</th>
@@ -47,6 +48,14 @@
               <td>{{ client.amount - (client.amount * 10) / 100 }}</td>
               <td>{{ client.email }}</td>
               <td>{{ client.phone }}</td>
+              <td>
+                <ng-container *ngIf="client.approveRemark">
+                <td class="text-success">{{client.approveRemark}}</td>
+              </ng-container>
+             <ng-container *ngIf="client.remark">
+                <td class="text-danger">{{client.remark}}</td>
+              </ng-container>
+               </td>
               <td>{{ client.createDate }}</td>
               <td>{{ client.updateDate }}</td>
               <ng-container *ngIf="client.status == 1">

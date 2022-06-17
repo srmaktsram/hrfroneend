@@ -79,7 +79,6 @@ export class InvoicesComponent implements OnInit, OnDestroy {
       .get(
         "http://localhost:8443/mainadmin/invoiceMainAdmin/getInvoices")
       .subscribe((res:any) => {
-        console.log(res,"get invoce")
         this.invoices = res.data;
         this.rows = this.invoices;
         this.srch = [...this.rows];

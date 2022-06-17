@@ -38,6 +38,7 @@ export class KycListComponent implements OnInit, OnDestroy {
    public aadhaarBackStatus:string;
    public aadhaarPanStatus:string;
    public aadhaarKycStatus:string;
+   public aadhaarKycResult4:string;
 
 
   editId: any;
@@ -69,12 +70,17 @@ export class KycListComponent implements OnInit, OnDestroy {
   errBackAadhaarSize = true;
   errorPanExtension = true;
   errPanSize = true;
+  kycResult4=true
+   public disableButton = false;
+
+
   id: any;
   panCard: any;
   aadhaarCardBack: any;
   aadhaarCardPath: string;
   aadhaarBackCardPath: string;
   aadhaarCard: any;
+  newResult: any;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
@@ -102,7 +108,6 @@ export class KycListComponent implements OnInit, OnDestroy {
   }
 
   // setCuurentDetailsPan(id, panCard) {
-  //   alert("111")
   //   this.id = id;
 
   // }
@@ -184,7 +189,6 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc1?" + params, fd)
       .subscribe((res: any) => {
-        console.log(res, "front");
         this.getKycDetails();
       });
   }
@@ -197,7 +201,6 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc2?" + params, fd)
       .subscribe((res: any) => {
-        console.log(res, "Back");
 
         this.getKycDetails();
       });
@@ -211,7 +214,6 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc3?" + params, fd)
       .subscribe((res: any) => {
-        console.log(res, "Pan");
         this.id = res.id;
 
         this.getKycDetails();
@@ -226,9 +228,19 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc4?" + params, {})
       .subscribe((res: any) => {
-        console.log(res, "Details");
+       
 
-        this.getKycDetails();
+        if(res.result==5){
+        this.kycResult4=false
+        }
+        
+        
+        else{
+          this.kycResult4=true
+          this.getKycDetails();
+         
+          
+        }
       });
   }
 
@@ -236,13 +248,11 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/kyc/getKyc" + "/" + this.aId)
       .subscribe((response: any) => {
-        console.log(response,"kyc Details")
         this.panCard = response.panCard;
         this.aadhaarCardBack = response.aadhaarCardBack;
         this.aadhaarCard = response.aadhaarCard;
         this.aadhaarRemark = response.aadhaarRemark;
         this.panRemark = response.panRemark;
-        console.log(this.panRemark,"for Pan")
         this.panCardPath = `http://localhost:8443/${this.panCard}`;
         this.aadhaarBackCardPath = `http://localhost:8443/${this.aadhaarCardBack}`;
         this.aadhaarCardPath = `http://localhost:8443/${this.aadhaarCard}`;
@@ -251,10 +261,11 @@ export class KycListComponent implements OnInit, OnDestroy {
         this.aadhaarBackStatus=response.aadhaarBackVerified
         this.aadhaarPanStatus=response.panVerified
         this.aadhaarKycStatus=response.kycVerified
-        console.log(this.aadhaarFrontStatus,"A")
-        console.log(this.aadhaarBackStatus,"B")
-        console.log(this.aadhaarPanStatus,"C")
-        console.log(this.aadhaarKycStatus,"D")
+       
+        if(response.kycVerified=="3"){
+          this.disableButton = true;
+        }
+       
 
         this.addKyc.patchValue({
           aadhaarCardNo: response.aadhaarCardNo,

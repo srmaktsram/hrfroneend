@@ -80,7 +80,6 @@ export class CommissionListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/commisions/getCommisions")
       .subscribe((res: any) => {
-        console.log(res,"get Commisions")
         this.data = res;
       });
   }
@@ -98,12 +97,9 @@ export class CommissionListComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((res:any) => {
-        console.log(res, "updateStatus");
         this.getCommisions();
         this.commissionData=res.data
-        console.log(this.commissionData,"Commm data")
         this.newStatus=res.data.status
-        console.log( this.newStatus,"lllll")
          
           if (this.newStatus == 2) {
             
@@ -122,17 +118,13 @@ export class CommissionListComponent implements OnInit, OnDestroy {
                 obj
               )
               .subscribe((res: any) => {
-                console.log(res, "Created");
                 this.newData=res.result
                 this.newAmount=res.data.amount
-                console.log(this.newAmount,"New Amount")
-                console.log(this.newData)
                 if(this.newData==1){
                   let object={
                     current_balance:this.commissionData.amount
                   }
                   this.http.patch("http://localhost:8443/affiliates/wallet/updateWallet"+"/"+this.commissionData.aId,object).subscribe((res:any)=>{
-                    console.group(res,"wallet Updated")
                   })
                 }
               });
@@ -155,7 +147,6 @@ getRejectStatus() {
       obj
     )
     .subscribe((res) => {
-      console.log(res, "updateRejectStatus");
       this.getCommisions();
     });
   $("#add_reject").modal("hide");

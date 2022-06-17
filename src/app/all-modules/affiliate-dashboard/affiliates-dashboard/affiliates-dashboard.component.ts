@@ -8,6 +8,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./affiliates-dashboard.component.css"],
 })
 export class AffiliateAdminDashboardComponent implements OnInit {
+  public aId:any;
   public chartData;
   public chartOptions;
   public lineData;
@@ -52,214 +53,79 @@ export class AffiliateAdminDashboardComponent implements OnInit {
   createYear: any;
   SalesArray = [];
   affiliateUrl: any;
+  freeTodayLeads: any;
+  allLeadsCount: any;
+  totalConversionCount: any;
+  todayconversions: any;
+  totalIncome: any;
+  totalWithdraw: any;
+  
 
   constructor(private http: HttpClient) {
-    this.adminId = sessionStorage.getItem("adminId");
+    this.aId = sessionStorage.getItem("aId");
 
-    this.affiliateUrl = `http://localhost:4200/pages/home?aid=${sessionStorage.getItem(
+    this.affiliateUrl = `http://localhost:4200?aid=${sessionStorage.getItem(
       "aId"
     )}`;
   }
 
   ngOnInit() {
-    this.getAllAffiliates();
-    this.getInvoiceRevenue();
-    this.getInvoiceSales();
-    this.getAffiliateRevenue();
-    this.getPremiumAdmins();
-    this.getDemoAdmins();
-    this.getTodayDemoAdmins();
-    this.getTodayPremiumAdmins();
-    this.getAllInvoices();
-    this.getPayments();
-    this.getAllClients();
-
-    this.chartOptions = {
-      xkey: "y",
-      ykeys: ["a", "b"],
-      labels: ["Total Income", "Total Outcome"],
-      barColors: [this.barColors.a, this.barColors.b],
-    };
-
-    this.lineOption = {
-      xkey: "y",
-      ykeys: ["a", "b"],
-      labels: ["Total Sales", "Total Revenue"],
-      resize: true,
-      lineColors: [this.lineColors.a, this.lineColors.b],
-    };
+    this.getTodayLeads();
+    this.getAllLeads();
+    this.getTodayConversions();
+    this.getTotalConversions();
+    this.getWallet();
   }
-  public getInvoiceRevenue() {
+
+  public getTodayLeads() {
+    this.http
+      .get("http://localhost:8443/affiliates/leads/getTodayLeads"+"/"+this.aId)
+      .subscribe((res: any) => {
+        this.data = res;
+        this.freeTodayLeads = this.data.length;
+      });
+  }
+
+  public getAllLeads() {
+    this.http
+      .get("http://localhost:8443/affiliates/leads/getLeads"+"/"+this.aId)
+      .subscribe((res: any) => {
+        this.data = res;
+        this.allLeadsCount = this.data.length;
+      });
+  }
+  public getTodayConversions() {
+    this.http
+      .get("http://localhost:8443/affiliates/conversions/getTodayConversions"+"/"+this.aId)
+      .subscribe((res: any) => {
+        this.data = res;
+        this.todayconversions = this.data.length;
+      });
+  }
+
+  getTotalConversions() {
     this.http
       .get(
-        "http://localhost:8443/mainadmin/invoiceMainAdmin/totalRevenueInvoice"
+        "http://localhost:8443/affiliates/leads/getConversions" + "/" + this.aId
       )
-      .subscribe((data: any) => {
-        this.tempDate1 = data[0].createDate.split(" ");
-        this.tempDate2 = this.tempDate1[0].split("-");
-        this.tempYear = this.tempDate2[2];
-
-        let EstimateTotal = 0;
-
-        for (let i = 0; i < data.length; i++) {
-          let createDateTime = data[i].createDate.split(" ");
-          let createDateSplit = createDateTime[0].split("-");
-          this.createYear = createDateSplit[2];
-
-          if (this.createYear == this.tempYear) {
-            EstimateTotal = EstimateTotal + parseInt(data[i].grandTotal);
-
-            if (i == data.length - 1) {
-              let totalEstimate = EstimateTotal;
-
-              let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
-              this.EstimateArray.push(obj);
-            }
-          } else {
-            let totalEstimate = EstimateTotal;
-
-            let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
-
-            this.EstimateArray.push(obj);
-
-            let currentDateTime = data[i].createDate.split(" ");
-            let currentDate = currentDateTime[0].split("-");
-            this.tempYear = currentDate[2];
-            EstimateTotal = parseInt(data[i].grandTotal);
-
-            if (i == data.length - 1) {
-              let totalEstimate = EstimateTotal;
-
-              let obj = { y: this.tempYear, a: totalEstimate, b: 60 };
-              this.EstimateArray.push(obj);
-            }
-          }
-        }
-
-        this.chartData = this.EstimateArray;
+      .subscribe((res: any) => {
+        this.totalConversionCount = res.length;
+        
       });
   }
-  public getInvoiceSales() {
+  public getWallet() {
+    let id=this.aId
+
     this.http
       .get(
-        "http://localhost:8443/mainadmin/invoiceMainAdmin/totalRevenueInvoice"
-      )
-      .subscribe((data: any) => {
-        let tempDate1 = data[0].createDate.split(" ");
-        let tempDate2 = tempDate1[0].split("-");
-        let temYear = tempDate2[2];
+        "http://localhost:8443/affiliates/affiliate/getAffiliateWalletForDashboard" +
+          "/" + id
 
-        let EstimateTotal = 0;
-        let totalCount = 0;
-        for (let i = 0; i < data.length; i++) {
-          let createDateTime = data[i].createDate.split(" ");
-          let createDateSplit = createDateTime[0].split("-");
-          let createYear = createDateSplit[2];
-
-          if (createYear == temYear) {
-            EstimateTotal = EstimateTotal + parseInt(data[i].grandTotal);
-            totalCount = totalCount + 1;
-
-            if (i == data.length - 1) {
-              let totalEstimate = EstimateTotal;
-
-              let obj = { y: temYear, b: totalEstimate, a: totalCount };
-              this.SalesArray.push(obj);
-            }
-          } else {
-            let totalEstimate = EstimateTotal;
-
-            let obj = { y: temYear, b: totalEstimate, a: totalCount };
-            this.SalesArray.push(obj);
-
-            let currentDateTime = data[i].createDate.split(" ");
-            let currentDate = currentDateTime[0].split("-");
-            temYear = currentDate[2];
-            EstimateTotal = parseInt(data[i].grandTotal);
-            totalCount = 1;
-
-            if (i == data.length - 1) {
-              let obj = { y: temYear, b: totalEstimate, a: totalCount };
-              this.SalesArray.push(obj);
-            }
-          }
-        }
-
-        this.lineData = this.SalesArray;
-      });
-  }
-
-  public getAffiliateRevenue() {
-    this.http
-      .get("http://localhost:8443/mainadmin/affiliate/getAllAffiliate")
-      .subscribe((res: any) => {
-        console.log(res, "kkkk");
-        this.data = res;
-      });
-  }
-
-  public getPremiumAdmins() {
-    this.http
-      .get("http://localhost:8443/mainadmin/premiumClient/getPremiumClients")
-      .subscribe((res: any) => {
-        this.data = res;
-        this.premiumClientsCount = this.data.length;
-      });
-  }
-  public getDemoAdmins() {
-    this.http
-      .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
-      .subscribe((res: any) => {
-        this.data = res;
-        this.freeClientsCount = this.data.length;
-      });
-  }
-  public getTodayDemoAdmins() {
-    this.http
-      .get("http://localhost:8443/mainadmin/freeClient/getTodayFreeClients")
-      .subscribe((res: any) => {
-        this.data = res;
-        this.freeTodayClientsCount = this.data.length;
-      });
-  }
-
-  public getTodayPremiumAdmins() {
-    this.http
-      .get(
-        "http://localhost:8443/mainadmin/premiumClient/getTodayPremiumClients"
       )
       .subscribe((res: any) => {
-        this.data = res;
-        this.premiumTodayClientsCount = this.data.length;
-      });
-  }
-  getAllInvoices() {
-    this.http
-      .get("http://localhost:8443/mainadmin/invoiceMainAdmin/getInvoices")
-      .subscribe((res: any) => {
-        this.invoices = res.data;
-      });
-  }
-  getPayments() {
-    this.http
-      .get("http://localhost:8443/mainadmin/paymentsMainAdmin/getPayments")
-      .subscribe((data: any) => {
-        this.AllPayments = data;
-      });
-  }
-  public getAllClients() {
-    this.http
-      .get("http://localhost:8443/mainadmin/allClient/getAllClients")
-      .subscribe((res: any) => {
-        this.data = res;
+        this.totalIncome = res.total_balance;
+        this.totalWithdraw = res.total_withdraw;
       });
   }
 
-  public getAllAffiliates() {
-    this.http
-      .get("http://localhost:8443/mainadmin/affiliate/getAllAffiliate")
-      .subscribe((res: any) => {
-        this.data = res;
-      });
-  }
 }

@@ -74,7 +74,6 @@ export class VerifyKycListComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/affiliates/kyc/getApprovedKyc")
       .subscribe((res: any) => {
         this.data = res;
-        console.log(this.data, "get Approved Kyc");
       });
   }
   ngOnDestroy(): void {

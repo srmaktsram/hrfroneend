@@ -52,13 +52,13 @@
             <tbody>
               <tr *ngFor="let item of leads; let i = index">
                 <td>{{i+1}}</td>
-                <td>{{ data.companyName }}</td>
-                <td>{{ data.corporateId }}</td>
-                <td>{{ data.email }}</td>
-                <td>{{ data.mobile }}</td>
-                <td>{{ data.packageName }}</td>
+                <td>{{ item.companyName }}</td>
+                <td>{{ item.corporateId }}</td>
+                <td>{{ item.email }}</td>
+                <td>{{ item.mobile }}</td>
+                <td>{{ item.packageName }}</td>
                 <td>
-                <ng-container *ngIf="data.status==0">
+                <ng-container *ngIf="item.status==0">
                   <span class="text-warning">Pending</span>
                 </ng-container>
               </td>

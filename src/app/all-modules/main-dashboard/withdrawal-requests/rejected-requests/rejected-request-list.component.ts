@@ -79,7 +79,6 @@ export class RejectedHistoryComponent implements OnInit, OnDestroy {
         "http://localhost:8443/affiliates/affiliate/getPaymentRequestReject"
       )
       .subscribe((res: any) => {
-        console.log(res,"hhhhhhh")
 
         this.data = res;
         // this.srch = [...this.data];

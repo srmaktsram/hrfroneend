@@ -56,7 +56,6 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.aId = sessionStorage.getItem("aId");
-    console.log(this.aId, "aIddddd");
   }
 
   ngOnInit() {
@@ -80,7 +79,6 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
         "http://localhost:8443/affiliates/leads/getConversions" + "/" + this.aId
       )
       .subscribe((res: any) => {
-        console.log(res, "Total Conversions");
         this.conversions = res;
         
       });

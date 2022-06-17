@@ -81,7 +81,6 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/kyc/getPendingKyc")
       .subscribe((res: any) => {
-        console.log(res, "gett pending");
         this.pendingData = res;
       });
   }
@@ -107,13 +106,11 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
       )
       .subscribe((res) => {
         this.getPendingKyc();
-        console.log(res, "update Pan Approved");
       });
     $("#viewPanButton").modal("hide");
     this.toastr.success("Approved Added", "Success");
   }
   getPanReject() {
-    alert(this.id);
     let obj = {
       panVerified: "3",
       panRemark: this.addRejectForm.value.addRemark,
@@ -124,7 +121,6 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((res: any) => {
-        console.log(res, "update Pan Reject");
 
         this.getPendingKyc();
       });
@@ -148,13 +144,11 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
       )
       .subscribe((res) => {
         this.getPendingKyc();
-        console.log(res, "update Aadhaar Approved");
       });
     $("#viewAadhaarButton").modal("hide");
     this.toastr.success("Approved Added", "Success");
   }
   getAadhaarReject() {
-    alert(this.id);
     let obj = {
       aadhaarVerified: "3",
       aadhaarBackVerified: "3",
@@ -168,7 +162,6 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((res: any) => {
-        console.log(res, "update Aadhaar Reject");
 
         this.getPendingKyc();
       });

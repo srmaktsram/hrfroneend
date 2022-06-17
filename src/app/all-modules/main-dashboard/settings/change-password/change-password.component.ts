@@ -62,7 +62,6 @@ export class ChangePasswordComponent implements OnInit {
           { oldPassword, newPassword }
         )
         .subscribe((res: any) => {
-          console.log(res);
           this.reset();
           if (res.result == 1) {
             this._snackBar.open("Password Changed successfully!", "X", {

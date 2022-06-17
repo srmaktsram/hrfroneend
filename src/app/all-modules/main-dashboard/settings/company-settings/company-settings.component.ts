@@ -43,7 +43,6 @@ export class CompanySettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.current_location);
 
     this.companySettings = this.formBuilder.group({
       companyName: ["", [Validators.required]],
@@ -75,7 +74,6 @@ export class CompanySettingsComponent implements OnInit {
     } else if (this.companySettings.valid) {
       let obj = this.companySettings.value;
 
-      console.log("new details", obj);
       this.http
         .patch(
           "http://localhost:8443/admin/companysetting/updateCompanyDetails" +
@@ -84,7 +82,6 @@ export class CompanySettingsComponent implements OnInit {
           obj
         )
         .subscribe((res: any) => {
-          console.log("---->>>>>>>>>>>>>>>>>>>", res);
           sessionStorage.setItem("companyEmail", res.companyEmail);
           sessionStorage.setItem("companyName", res.companyName);
           sessionStorage.setItem("phone", res.phone);

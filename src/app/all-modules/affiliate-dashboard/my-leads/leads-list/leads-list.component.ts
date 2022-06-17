@@ -54,7 +54,6 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.aId = sessionStorage.getItem("aId");
-    console.log(this.aId,"aIddddd")
   }
 
   ngOnInit() {
@@ -75,7 +74,6 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/leads/getLeads"+"/"+this.aId)
       .subscribe((res: any) => {
-        console.log(res,"Total Leads")
         this.leads = res;
       });
   }

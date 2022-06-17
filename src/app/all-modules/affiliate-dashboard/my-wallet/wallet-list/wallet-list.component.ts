@@ -73,7 +73,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.phone = sessionStorage.getItem("phone");
     this.aId = sessionStorage.getItem("aId");
     this.bankdetails = JSON.parse(sessionStorage.getItem("bankDetails"));
-    console.log(sessionStorage.getItem("bankDetails"), "bankDetails ");
   }
 
   ngOnInit() {
@@ -96,11 +95,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/kyc/getKyc" + "/" + this.aId)
       .subscribe((response: any) => {
-        console.log(response,"kyc Detailsssss")
         this.kycStatus=response.kycVerified
-        console.log(this.kycStatus,"status Detailsssss")
-
-        
       });
   }
 
@@ -120,7 +115,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
         this.totalBalance = res.total_balance;
         this.pendingWithdraw = res.pending_withdraw;
         this.totalWithdraw = res.total_withdraw;
-        console.log(res, "Get Wallet");
       });
   }
 
@@ -153,15 +147,12 @@ export class ClientsListComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((res: any) => {
-        console.log(res, "abc");
         if(res.result==1){
           let object={
             pendingWithdraw:res.data.amount
           }
-          console.log(object,"kkkkobj")
           this.http.patch("http://localhost:8443/affiliates/wallet/updateWalletRequestAmount"+"/"+this.aId,object).subscribe((res:any)=>{
             this.getWallet()
-            console.log(res,"wallet Pending")
           })
         }
         if(res.result==3){
