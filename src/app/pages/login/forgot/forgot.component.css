@@ -1,0 +1,29 @@
+
+
+ .input1{
+  
+   
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.input5{
+   
+
+    margin-left: 30px;
+    border: 3px solid rgb(49, 38, 38);
+    background-color: rgb(222, 230, 237);
+        border-radius: 5px;
+} 
+           
+
+.sendOtp{
+    margin-left: 10px;
+    width: 90px;
+    margin-top: 10px;
+    border: 3px solid rgb(49, 38, 38);
+    background-color: rgb(222, 230, 237);
+        border-radius: 5px;
+}
+
+
