@@ -1,6 +1,6 @@
-<!-- <div class="fixed-top headerCom">
-    <app-header></app-header>
-</div> -->
+<!-- //////////////////////////////HR--USER--REGISTRATION SECTION--/////////////////////////////////////////////////// -->
+
+
 <div [hidden]="showRegister" class="container register">
     <div class="row">
         <div class="col-md-3 register-left">
@@ -12,7 +12,7 @@
         <div class="col-md-9 register-right">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <h3 class="register-heading">Apply as a Employee</h3>
+                    <h3 class="register-heading"><u>Register as a Employee</u></h3>
                     <form [formGroup]="registerForm" (ngSubmit)="registerUsers()">
                         <div class="row register-form">
                             <div class="col-md-6">
@@ -106,6 +106,11 @@
 
 <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
+
+<!-----------------HR--USER--LOGIN--SECTION---------------->
+
+
+
 <div [hidden]="showLogin" class="container register">
     <div class="row">
         <div class="col-md-3 register-left">
@@ -117,7 +122,7 @@
         <div class="col-md-9 register-right">
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <h3 class="register-heading">Apply as a Employee</h3>
+                    <h3 class="register-heading"><u>Login as a Employee</u></h3>
                     <form [formGroup]="addloginForm" (ngSubmit)="userLogin()">
                         <div class="row register-form">
 
@@ -126,25 +131,105 @@
                                     <input type="email" class="form-control inputWidth
                                 " formControlName="email" placeholder="Your Email *" value="" />
                                 </div>
-
                                 <div class="col-md-12">
                                     <div class="form-group flexDiv">
                                         <input type="password" class="form-control inputWidth
                                     " formControlName="password" placeholder="Password *" value="" />
                                     </div>
                                 </div>
-
+                                <div class="forgotPassword">
+                                    <p (click)="showForgotPassword()" style="color:blueviolet">Forgot password?</p>
+                                </div>
                                 <input type="submit" class="btnWidth" value="Login" />
                             </div>
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--------- //////////////////////////////////////////////////////////////////////////////////////////////////////////// ----------->
+
+<!-- ----------- Processs-OF-RESET-PASSWORD------------- -->
 
 
+<div class="container register" [hidden]="showForgot">
+    <div class="row">
+        <div class="col-md-3 register-left" style="margin-top:150px;">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+        </div>
+        <div class="col-md-9 register-right">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading"><u>Forgot Password</u></h3>
+                    <form [formGroup]="resetForm">
+                        <div class="row register-form">
+                            <div class="col-md-12">
+                                <div [hidden]="showEmail">
+                                    <div class="form-group flexDiv">
+                                        <input type="email" class="form-control inputWidth
+                                " formControlName="email" placeholder=" Enter Your Verified Email *" value="" />
+                                    </div>
+                                    <input type="submit" class="sendOtpWidth" value="Send OTP"
+                                        (click)="showVerifyOtp()" />
+                                </div>
+                                <div class="col-md-9" [hidden]="veryfyOtp">
+                                    <div class="form-group verifyOtpInput">
+                                        <input type="password" maxlength="4" class="form-control 
+                                    " formControlName="otp" placeholder="Enter Your OTP*" value="">
+                                    </div>
+                                    <div>
+                                        <input type="submit" class="otpWidth" value="VerifyOTP"
+                                            (click)="showChangePassword()" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
+<!--------- //////////////////////////////////////////////////////////////////////////////////////////////////////////// ----------->
 
+<!-- ---------------PROCESS--OF SET--PASSWORD--------------------->
+
+<div [hidden]="changePass" class="container register">
+    <div class="row">
+        <div class="col-md-3 register-left" style="margin-top:150px ;">
+            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+        </div>
+        <div class="col-md-9 register-right">
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <h3 class="register-heading"><u>Change Password</u></h3>
+                    <form [formroup]="changePassForm">
+                        <div class="row register-form">
+                            <div class="col-md-12">
+                                <div class="form-group flexDiv">
+                                    <input type="text" class="form-control inputWidth
+                                " formControlName="password" placeholder="Enter New Password*" value="" />
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group flexDiv">
+                                        <input type="password" class="form-control inputWidth
+                                    " formControlName="confirmPassword" placeholder="Confirm Password *" value="" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <input type="submit" class="changePassWidth" value="Change Password"
+                                        (click)="openSnackBar()" />
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
