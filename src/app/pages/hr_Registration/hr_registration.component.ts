@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormBuilder, FormGroup, MinLengthValidator, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
@@ -13,16 +14,28 @@ import { HrUserAuthenticationService } from "src/app/core/storage/authentication
 })
 export class HrregistrationComponent implements OnInit {
 
+
+  public horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  public verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   public registerForm: FormGroup;
+  public resetForm: FormGroup;
+  public changePassForm: FormGroup;
   public signIn: any;
   public signUp: any;
+  public showEmail = false;
+  public veryfyOtp = true;
   public addloginForm: FormGroup;
   public showRegister = false;
   public showLogin = true;
+  public showForgot = true;
+  public changePass = true;
   isvalidconfirmpassword: boolean;
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router,
     private hrUserAuthenticationService: HrUserAuthenticationService, private route: ActivatedRoute,
-  ) { }
+    private _snackBar: MatSnackBar,
+  ) {
+
+  }
 
   ngOnInit() {
 
@@ -49,8 +62,21 @@ export class HrregistrationComponent implements OnInit {
         console.log(this.signIn, "///////////////////////<<<<<<<<<<<<<<<");
       })
 
+
+    this.resetForm = this.formBuilder.group({
+
+      email: ["", Validators.required],
+      otp: ["", Validators.required],
+
+    })
+
+    this.changePassForm = this.formBuilder.group({
+      password: ["", Validators.required],
+      confirmPassword: ["", Validators.required],
+    })
     this.showPage()
   }
+
 
   showPage() {
     if (this.signIn == 'signIn') {
@@ -69,8 +95,9 @@ export class HrregistrationComponent implements OnInit {
     this.showRegister = this.showLogin;
     this.showLogin = temp;
   }
-  registerUsers() {
 
+
+  registerUsers() {
     if (this.registerForm.valid) {
       if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
         this.isvalidconfirmpassword = true;
@@ -134,6 +161,35 @@ export class HrregistrationComponent implements OnInit {
       });
 
   }
+
+
+  showForgotPassword() {
+    this.showForgot = false;
+    this.showLogin = true;
+    this.showEmail = false;
+  }
+
+  showVerifyOtp() {
+    this.veryfyOtp = false;
+    this.showEmail = true;
+  }
+
+  showChangePassword() {
+    this.changePass = false;
+    this.showForgot = true;
+  }
+  openSnackBar() {
+    this._snackBar.open('Password Changed Successfully', 'Close', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition
+    });
+
+    // let email = this.addloginForm.value.email;
+    // this.http.patch("http://localhost:8443/mainadmin/updatePassword",email ).subscribe((res: any) => {
+    //   console.log(res, "whatEver>>>>>>>>>>>>>>>>>>>....")
+    // })
+  }
+
 
 }
 
