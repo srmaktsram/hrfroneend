@@ -77,7 +77,6 @@ export class HrregistrationComponent implements OnInit {
     this.showPage()
   }
 
-
   showPage() {
     if (this.signIn == 'signIn') {
       this.showLogin = false;
