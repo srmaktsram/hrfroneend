@@ -4,7 +4,7 @@
 	justify-content: space-between;
 	/* margin-top: 50px; */
 	/* background-color: rgb(188, 234, 212); */
-	background-color: aqua
+	background-color: #3f51b5;
 }
 
 
@@ -20,7 +20,9 @@
 
 .paragraph{
 	font-size:22px;
-	color:red;
+
+	color: white;
+
 }
 
 .TrandingFooter{
@@ -116,6 +118,7 @@
 			}
 			.paragraph{
 				font-size:15px;
+				
 			}
 			.whatsAppIcon{
 				width:20px;
@@ -139,6 +142,7 @@
 			text-align: center;
 		
 		}
+		
 		.informationDiv{
          text-align: center;
 		 margin-top: 15px;
@@ -150,10 +154,13 @@
 
 
 		}
-		.invoiceFooter{
+		.ourProducts{
 			text-align: center;
 			margin-top: 15px;
+			margin-top:8px;
 		}
+
+
 		.TrandingFooter{
 			text-align: center;
 			margin-top: 15px;
