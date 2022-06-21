@@ -73,7 +73,6 @@ export class RejectKycListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/kyc/getRejectedKyc")
       .subscribe((res: any) => {
-        console.log(res,"get Rejected KYC")
         this.data = res;
       });
   }

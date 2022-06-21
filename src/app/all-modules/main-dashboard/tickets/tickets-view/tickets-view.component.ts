@@ -10,7 +10,6 @@ export class TicketsViewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  console.log("tickets");
   }
 
 }

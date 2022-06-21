@@ -33,7 +33,6 @@ export class ProfileComponent implements OnInit {
     })
 
     this.getDetails();
-
     this.changePassForm = this.formBuilder.group({
       password: [""],
       newPassword: [""],
@@ -95,6 +94,8 @@ export class ProfileComponent implements OnInit {
   //     }
   //   }
   // }
+
+
   updatePassword() {
     let obj = {
       password: this.changePassForm.value.password,

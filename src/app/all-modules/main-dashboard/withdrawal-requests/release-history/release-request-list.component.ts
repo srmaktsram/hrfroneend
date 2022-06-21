@@ -79,7 +79,6 @@ export class ReleaseHistoryComponent implements OnInit, OnDestroy {
         "http://localhost:8443/affiliates/affiliate/getPaymentReleaseRequest"
       )
       .subscribe((res: any) => {
-        console.log(res,"kkkkkkkhhhhbbbbbbb")
 
         this.data = res;
        

@@ -111,14 +111,88 @@
     background: #0062cc;
     font-weight: bold;
     color: #fff;
-    margin-top: 5%;
     float: right;
     margin-right: 15%;
 
+}
+
+.otpWidth{
+    border:none;
+    width:30%;
+    border-radius:5px;
+    padding: 1%;
+    background: #0062cc;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 5%;
+    margin-left:37%;
+}
+.changePassWidth{
+    border:none;
+    width:23%;
+    border-radius:5px;
+    padding: 1%;
+    background: #0062cc;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+    margin-right: 15%;
+
+
+}
+.sendOtpWidth{
+    border:none;
+    width:23%;
+    border-radius: 1.5rem;
+    padding: 1%;
+    background: #0062cc;
+    font-weight: bold;
+    color: #fff;
+    float: right;
+    margin-right: 15%;
+}
+.forgotPassword{
+    margin-left:110px;
+    margin-top:30px;
+    cursor: pointer;
+}
+
+.verifyOtpInput{
+   margin-left:200px;
 }
 
 @media(min-width:200px) and (max-width:780px){
     .headerCom{
         display:none;
     }
+
+    .sendOtpWidth{
+        border:none;
+        width:35%;
+        border-radius: 1.5rem;
+        padding: 1%;
+        background: #0062cc;
+        font-weight: bold;
+        color: #fff;
+        float: right;
+        margin-right: 15%;
+    }
+
+    .verifyOtpInput{
+        margin-left:20px;
+     }
+
+ .changePassWidth{
+     border:none;
+     width:55%;
+     border-radius:5px;
+     padding: 1%;
+     background: #0062cc;
+     font-weight: bold;
+     color: #fff;
+     float: right;
+     margin-right: 15%;
+ 
+ }
+
 }

@@ -51,6 +51,9 @@ export class AdminDashboardComponent implements OnInit {
   tempDate2: any;
   createYear: any;
   SalesArray= [];
+  affiliateData: any;
+  clientData: any;
+  todayFreeData: any;
 
   constructor(private http: HttpClient) {
     this.adminId = sessionStorage.getItem("adminId");
@@ -201,7 +204,6 @@ export class AdminDashboardComponent implements OnInit {
     this.http
       .get("http://localhost:8443/mainadmin/affiliate/getAllAffiliate")
       .subscribe((res: any) => {
-        console.log(res,"kkkk")
         this.data = res;
       });
   }
@@ -211,24 +213,23 @@ export class AdminDashboardComponent implements OnInit {
     this.http
       .get("http://localhost:8443/mainadmin/premiumClient/getPremiumClients")
       .subscribe((res: any) => {
-        this.data = res;
-        this.premiumClientsCount = this.data.length;
+        this.premiumClientsCount = res.length;
       });
   }
   public getDemoAdmins() {
     this.http
       .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
       .subscribe((res: any) => {
-        this.data = res;
-        this.freeClientsCount = this.data.length;
+       
+        this.freeClientsCount = res.length;
       });
   }
   public getTodayDemoAdmins() {
     this.http
       .get("http://localhost:8443/mainadmin/freeClient/getTodayFreeClients")
       .subscribe((res: any) => {
-        this.data = res;
-        this.freeTodayClientsCount = this.data.length;
+        this.todayFreeData = res;
+        this.freeTodayClientsCount = this.todayFreeData.length;
       });
   }
 
@@ -238,8 +239,7 @@ export class AdminDashboardComponent implements OnInit {
         "http://localhost:8443/mainadmin/premiumClient/getTodayPremiumClients"
       )
       .subscribe((res: any) => {
-        this.data = res;
-        this.premiumTodayClientsCount = this.data.length;
+        this.premiumTodayClientsCount = res.length;
       });
   }
   getAllInvoices() {
@@ -260,7 +260,7 @@ export class AdminDashboardComponent implements OnInit {
     this.http
       .get("http://localhost:8443/mainadmin/allClient/getAllClients")
       .subscribe((res: any) => {
-        this.data = res;
+        this.clientData = res;
       });
   }
 
@@ -268,7 +268,7 @@ export class AdminDashboardComponent implements OnInit {
     this.http
       .get("http://localhost:8443/mainadmin/affiliate/getAllAffiliate")
       .subscribe((res: any) => {
-        this.data = res;
+        this.affiliateData = res;
       });
   }
 }

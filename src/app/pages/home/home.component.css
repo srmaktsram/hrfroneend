@@ -1021,7 +1021,7 @@ padding-left: 20px;
 
 /* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
  
-@media(min-width:370px) and (max-width:450px){
+@media(min-width:280px) and (max-width:450px){
 
 	.fixedHeader{
 		margin-top:5px;
@@ -1035,8 +1035,441 @@ padding-left: 20px;
 		display: flex;
        flex-direction: column;
        background-color: rgb(238, 235, 232);
-	    border:2px solid red;
 		padding-right: 10px;
+	}
+	.IndiasNo1{
+		width:100%;
+		padding-left:10px;
+	 }
+	 .spanText{
+		font-size:20px;
+		font-weight: bold;
+		
+	}
+	.createGstComp{
+		font-size: 18px;
+		margin-top: 20px;
+	}
+
+	.inputTextOp{
+		width:100%;
+		margin-top: 20px;
+	 }
+	 .textOp{
+		 height: 50px;
+		 font-size: 19px;
+	 }
+
+	 .freeTrail{
+		height:50px;
+	}
+	 .desktop{
+		margin-top: 30px;
+		border:10px solid black;
+		background-color: black;
+		color:white;
+		width:70%;
+		display: flex;
+		justify-content: center;
+		align-items:center;
+		border-radius: 7px;
+		font-size: 16px;
+		margin-left: 20px;
+		height:40px;
+	}
+	
+.iso{
+	margin-top: 40px;
+	display: flex;
+	justify-content: space-between;
+	width:100%;
+	
+}
+.India{
+		font-size: 15px;
+	}
+	
+	.isoCertified{
+		width: 80px;
+	}
+
+	.customerChoice{
+		width:90px
+	}
+	.vajpaiiDiv{
+		width:100%;
+	}
+	.VajpaiiImg{	
+	  width:100%;
+	  height:100%;
+	
+	}
+	.rupee{
+		display: flex;
+		justify-content: space-between;
+		flex-direction: column;
+		margin-right: 50px;
+		width:100%;
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+
+	.lakh{
+		text-align: center;
+		color:orange;
+		font-size:30px;
+	}
+	.trustBussiness{
+		font-size:20px;
+		text-align: center;
+	}
+	
+	.CreateAndPrint{
+		width:100%;
+	}
+
+	.lapimage{
+		width:100%;
+	}
+	
+	.invoiceImage{
+		width:100%;
+		height: 100%;
+	}
+.Create{
+	margin-top: 80px;
+	font-size: 30px;
+
+}
+.professional{
+	font-size: 25px;
+	color:red;
+	font-weight: bold;
+}
+.NonGst{
+	font-size: 25px;
+	color:red;
+	font-weight: bold;
+}
+.or{
+	font-size: 40px;
+	font-weight: bold;
+}
+.fully{
+ margin-top: 40px;
+ font-size: 20px;
+}
+.op{
+	background:white;
+	border-bottom:10px solid orange
+}
+.list{
+	margin-top: 15px;
+	font-size: 20px;
+	margin-left: 10px;
+}
+
+.flexImage{
+  display:flex;
+  justify-content: space-between;
+  flex-direction: column;
+  padding-left: 10px;
+  border:2px solid pink;
+}
+
+		
+.whyUseBillBook{
+	padding-left: 70px;
+	margin-top: 30px;
+}
+.why{
+	font-size: 30px;
+	font-weight: bold;
+}
+.Flexicons{
+	display:flex;
+	justify-content: space-between;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.invoiceWebp{
+	margin-top: 30px;
+	width:30%;
+	text-align: center;
+}
+.imgHight{
+	height: 80px;
+	width:80px;
+}
+.manageInventory{
+	margin-top: 10px;
+	font-size: 20px;
+}
+
+.flexHiddenImg{
+	display:flex;
+	flex-direction: column;
+	justify-content: space-between;
+	padding-bottom: 30px;
+}
+  .ManImgDiv{
+   width:50%;
+   display:none;
+}
+
+.retailersDiv{
+	width:100%;
+	margin-left: 0px;
+}
+.ForRetailers{
+	display: flex;
+	justify-content: space-between;
+	margin-top:40px;
+	width:100%;
+	height:80px;
+	background:white;
+	padding-left: 20px;
+
+}
+
+.coneImgDiv{
+	background-color: rgb(238, 235, 232);
+	width:100%;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.manyButtons{
+	padding-left: 10px;
+	width:100%;
+ }
+
+.what{
+	font-size: 30px;
+}
+.ourUsers{
+	color:orange;
+	font-size: 30px;
+	font-weight: bold;
+}
+
+.Bussiness{
+	margin-top: 10px;
+	font-size: 20px;
+
+}
+.SayAboutUs{
+	font-size: 30px;
+}
+.Fmgc{
+	margin-top: 20px;
+	font-size: 13px;
+	background:red;
+	width:20%;
+	border-radius: 20px;
+}
+.Electronics{
+	font-size: 13px;
+	border:5px solid green;
+	background:green;
+	margin-left: 20px;
+	width:20%;
+	border-radius: 20px;
+
+
+}
+.Hardware{
+	font-size: 13px;
+	border:5px solid yellow;
+	background:yellow;
+	margin-left: 20px;
+	width:20%;
+	border-radius: 20px;
+
+
+}
+.Kirana{
+	font-size: 13px;
+	border:5px solid blue;
+	background:blue;
+	margin-left: 20px;
+	width:20%;
+	border-radius: 20px;
+}
+.Jewellery{
+	font-size: 13px;
+	border:5px solid blueviolet;
+	background:blueviolet;
+	margin-left: 10px;
+	margin-top: 20px;
+	width:20%;
+	border-radius: 20px;
+}
+.Pharma{
+	font-size: 13px;
+	border:5px solid orange;
+	background:orange;
+	width:20%;
+	border-radius: 20px;
+}
+.Transportation{
+	font-size: 13px;
+	border:5px solid rgb(121, 169, 203);
+	background: rgb(121, 169, 203);
+	margin-left: 20px;
+	border-radius: 20px;
+	width:25%;
+}
+
+.flexImageContent{
+display:flex;
+justify-content: space-between;
+padding-left: 10px;
+}
+.FmgcContent{
+	width:75%;
+	margin-top: 70px;
+	padding-right:20px;
+    padding-left: 20px;
+}
+
+.guru{
+	font-size: 20px;
+}
+.student{
+	font-size: 18px;
+}
+.commentImgDiv{
+	width:20%;
+	margin-left: 0px;
+	margin-top: 70px;
+}
+.commentImg{
+	width:100%;
+	margin-left: 0px;
+	height:30%;
+}
+
+.flexBusiness{
+	display:flex;
+	justify-content: space-between;
+	flex-direction: column;
+	padding-left:10px;
+	width:100%;
+}
+.onlineContentDiv{
+	margin-top: 30px;
+	width:100%;
+}
+
+.TakeYourBusiness{
+	font-size: 30px;
+	font-weight: bold;
+}
+.online{
+	color:orange;
+	font-size: 30px;
+	font-weight: bold;
+}
+.setup{
+	font-size: 20px;
+}
+
+.storeImgDiv{
+	width:100%;
+	height: 100%;
+	text-align: center;
+}
+.storeImg{
+	width:100%;
+}
+
+.benifitsOfBillbook{
+	margin-top: 30px;
+	padding-left:10px;
+}
+.benifits{
+	font-size: 30px;
+	color:orange;
+	font-weight: bold;
+}
+.billBook{
+	font-size: 30px;
+
+}
+.flexNewIcons{
+	padding-left: 10px;
+	padding-right:10px;
+	margin-left:0px;
+	display:flex;
+	justify-content: space-between;
+	margin-top: 30px;
+}
+.safeAndSecureDiv{
+	width:30%;
+	text-align: center;
+}
+.safeAndSecureImg{
+	height: 70px;
+	width: 70px;
+}
+.safeAnd{
+	font-size: 20px;
+	text-align: center;
+}
+.AssociationDiv{
+	margin-top: 30px;
+	margin-left: 10px;
+}
+.Associations{
+	font-size: 30px;
+	color:orange;
+	margin-bottom: 20px;
+}
+.And{
+	font-size: 30px;
+}
+.memberIconsDiv{
+	margin-top: 10px;
+	display:flex;
+	justify-content: space-between;
+	background-color: white;
+	width:100%;
+}
+.memberIcons{
+	width:15%;
+	display:flex;
+	justify-content: center;
+	margin-left: 0px;
+	margin-right: 0px;
+	align-items: center;
+}
+.memberIconImg{
+	width:60px;
+}
+
+.memberIconImg1{
+	width:60px;
+	height:10px;
+}
+
+
+}
+/* 
+@media(min-width:280px) and (max-width:368px){
+	.fixedHeader{
+		margin-top:5px;
+	}
+	.headerCom{
+		display: none;
+	}
+	.textDiv{
+		padding-top:2px;
+		display: flex;
+        flex-direction: column;
+        background-color: rgb(238, 235, 232);
+		padding-right: 10px;
+		border:2px solid red;
 	}
 	.IndiasNo1{
 		width:100%;
@@ -1455,5 +1888,4 @@ padding-left: 10px;
 	height:10px;
 }
 
-
-}
+} */

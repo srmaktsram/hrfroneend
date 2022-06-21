@@ -31,10 +31,10 @@
             "
             formControlName="aadhaarCardNo"
           />
-          <ng-container *ngIf='aadhaarRemark!="" '>
-            <p  class="text-danger" [hidden]>{{aadhaarRemark}}</p>
+          <ng-container *ngIf="aadhaarRemark != ''">
+            <p class="text-danger" [hidden]>{{ aadhaarRemark }}</p>
           </ng-container>
-          
+
           <div
             *ngIf="
               addKyc.get('aadhaarCardNo').invalid &&
@@ -54,28 +54,30 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Aadhaar Front Photo</label> 
-        <ng-container *ngIf="aadhaarFrontStatus==0">
+        <label>Aadhaar Front Photo</label>
+        <ng-container *ngIf="aadhaarFrontStatus == 0">
           <td class="text-info">Not Uploaded</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarFrontStatus==1">
+        <ng-container *ngIf="aadhaarFrontStatus == 1">
           <td class="text-warning">Pending for Approval</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarFrontStatus==2">
+        <ng-container *ngIf="aadhaarFrontStatus == 2">
           <td class="text-success">Approved</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarFrontStatus==3">
+        <ng-container *ngIf="aadhaarFrontStatus == 3">
           <td class="text-danger">Rejected</td>
         </ng-container>
         <input
           class="form-control"
           style="width: 600px"
+          [hidden]="disableButton"
+
           type="file"
           formControlName="aadhaarCard"
           (change)="selectAadhaar($event)"
         />
         <img
-          src="{{aadhaarCardPath}}"
+          src="{{ aadhaarCardPath }}"
           alt="noIMG"
           height="80 px"
           width="80px"
@@ -90,27 +92,28 @@
       </div>
       <div class="form-group">
         <label>Aadhaar Back Photo</label>
-        <ng-container *ngIf="aadhaarBackStatus==0">
+        <ng-container *ngIf="aadhaarBackStatus == 0">
           <td class="text-info">Not Uploaded</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarBackStatus==1">
+        <ng-container *ngIf="aadhaarBackStatus == 1">
           <td class="text-warning">Pending for Approval</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarBackStatus==2">
+        <ng-container *ngIf="aadhaarBackStatus == 2">
           <td class="text-success">Approved</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarBackStatus==3">
+        <ng-container *ngIf="aadhaarBackStatus == 3">
           <td class="text-danger">Rejected</td>
         </ng-container>
         <input
           class="form-control"
           style="width: 600px"
           type="file"
+          [hidden]="disableButton"
           formControlName="aadhaarCardBack"
           (change)="selectAadhaarBack($event)"
         />
         <img
-          src="{{aadhaarBackCardPath}}"
+          src="{{ aadhaarBackCardPath }}"
           alt="noIMG"
           height="80 px"
           width="80px"
@@ -135,8 +138,8 @@
             "
             formControlName="panCardNo"
           />
-          <ng-container *ngIf='panRemark!="" '>
-            <p class="text-danger"  [hidden]>{{panRemark}}</p>
+          <ng-container *ngIf="panRemark != ''">
+            <p class="text-danger" [hidden]>{{ panRemark }}</p>
           </ng-container>
           <div
             *ngIf="
@@ -157,22 +160,23 @@
       </div>
       <div class="form-group">
         <label>PAN Card Photo</label>
-        <ng-container *ngIf="aadhaarPanStatus==0">
+        <ng-container *ngIf="aadhaarPanStatus == 0">
           <td class="text-info">Not Uploaded</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarPanStatus==1">
+        <ng-container *ngIf="aadhaarPanStatus == 1">
           <td class="text-warning">Pending for Approval</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarPanStatus==2">
+        <ng-container *ngIf="aadhaarPanStatus == 2">
           <td class="text-success">Approved</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarPanStatus==3">
+        <ng-container *ngIf="aadhaarPanStatus == 3">
           <td class="text-danger">Rejected</td>
         </ng-container>
         <input
           class="form-control"
           style="width: 600px"
           type="file"
+          [hidden]="disableButton"
           formControlName="panCard"
           (change)="selectPan($event)"
         />
@@ -193,23 +197,27 @@
       </div>
     </div>
 
-    <div class="submit-section" >
-      <ng-container *ngIf="aadhaarKycStatus==0" >
+    <div class="submit-section">
+      <ng-container *ngIf="aadhaarKycStatus == 0">
         <p text-align:center class="text-info">Final Submit is not done!</p>
       </ng-container>
-      <ng-container *ngIf="aadhaarKycStatus==1">
+      <ng-container *ngIf="aadhaarKycStatus == 1">
         <p text-align:center class="text-warning">Pending for Approval</p>
       </ng-container>
-      <ng-container *ngIf="aadhaarKycStatus==2">
+      <ng-container *ngIf="aadhaarKycStatus == 2">
         <p text-align:center class="text-warning">Pending for Approval</p>
       </ng-container>
-      <ng-container *ngIf="aadhaarKycStatus==3">
+      <ng-container *ngIf="aadhaarKycStatus == 3">
         <p text-align:center class="text-success">KYC Completed</p>
       </ng-container>
-      
+      <p class="text-danger" [hidden]="kycResult4">
+        Duplicate Aadhaar card or PAN card of an existing user! Do you have
+        another account ?
+      </p>
+
       <button
+        [hidden]="disableButton"
         class="btn btn-primary submit-btn"
-        
         (click)="updateKyc()"
       >
         Submit KYC

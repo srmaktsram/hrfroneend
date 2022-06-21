@@ -9,6 +9,7 @@ import { UserLoginComponent } from "./userlogin/userlogin.component";
 import { AdminLoginComponent } from "./adminlogin/login.component";
 import { ClientLoginComponent } from "./clientlogin/login.component";
 import { AffiliateLoginComponent } from "./affilatelogin/login.component";
+import { SubAdminLoginComponent } from "./subadmin/login.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "adminlogin", pathMatch: "full" },
@@ -16,7 +17,7 @@ const routes: Routes = [
   { path: "clientlogin", component: ClientLoginComponent },
   { path: "affiliatelogin", component: AffiliateLoginComponent },
   { path: "mainadminlogin", component: AdminLoginComponent },
-  { path: "subadminlogin", component: AdminLoginComponent },
+  { path: "subadminlogin", component: SubAdminLoginComponent },
   { path: "adminlogin", component: LoginComponent },
   { path: "forgot", component: ForgotComponent },
   { path: "register", component: RegisterComponent },

@@ -75,7 +75,6 @@ export class ApprovedCommissionListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/commisions/getApprovedCommisions")
       .subscribe((res: any) => {
-        console.log(res,"get Approved Commisions")
         this.data = res;
       });
   }

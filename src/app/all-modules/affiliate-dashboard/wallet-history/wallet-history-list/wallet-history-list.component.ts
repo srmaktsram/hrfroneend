@@ -62,7 +62,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.aId = sessionStorage.getItem("aId");
-    console.log(this.aId,"AID")
 
   }
   ngOnInit() {
@@ -86,7 +85,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/affiliteWalletDetails/getAffiliteWalletDetails"+"/"+this.aId)
       .subscribe((res: any) => {
-        console.log(res,"Wallet History Details")
         this.data = res;
         
       });
