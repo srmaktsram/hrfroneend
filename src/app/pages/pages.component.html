@@ -1,19 +1,19 @@
 <mat-toolbar color="primary" class="fixed-top" class=" hideSidenavContainer">
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-        <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
-    </button>
-    <div ngbDropdown class="d-inline-block">
-        <ng-container *ngIf="user_type!='hrUser'">
-            <div style="margin-left:220px;">
-                <button type="button" class="btn btn-outline-success" id="dropdown1" ngbDropdownToggle>Sign
-                    In</button>
-            </div>
-        </ng-container>
-        <ng-container *ngIf="user_type=='hrUser'">
-            <div class="d-flex">
-                <mat-icon class="accountCircle">account_circle </mat-icon>
-                <p class="setName" id="dropdown1" ngbDropdownToggle>{{firstName}}</p>
-            </div>
+            <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+        </button>
+        <div ngbDropdown class="d-inline-block">
+            <ng-container *ngIf="user_type!='hrUser'">
+                <div style="margin-left:220px;">
+                    <button type="button" class="btn btn-outline-success" id="dropdown1" ngbDropdownToggle>Sign
+                        In</button>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="user_type=='hrUser'">
+                <div class="d-flex">
+                    <mat-icon class="accountCircle">account_circle </mat-icon>
+                    <p class="setName" id="dropdown1" ngbDropdownToggle>{{firstName}}</p>
+                </div>
         </ng-container>
         <div ngbDropdownMenu aria-labelledby="dropdown" class="mainDrop">
             <div class="tri"></div>
