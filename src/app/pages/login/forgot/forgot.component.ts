@@ -3,7 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { CookieService } from "ngx-cookie-service";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 // import { WebStorage } from "src/app/core/storage/web.storage";
 
 @Component({
@@ -25,41 +25,69 @@ export class ForgotComponent implements OnInit {
   public messOtp: any;
   public matchPass = true;
   sendOtpDisable = false;
+  loginType: any;
   constructor(
     private http: HttpClient,
     private router: Router,
-    private cookieService: CookieService
-  ) { }
+    private cookieService: CookieService,
+    private route: ActivatedRoute
+  ) {
+    this.loginType = this.route.snapshot.queryParams["loginType"];
+  }
   get f() {
     return this.form.controls;
   }
-  ngOnInit() { }
+  ngOnInit() {}
   submit() {
     this.CustomControler = 0;
     // this.storage.Forgotpassword(this.form.value);
   }
   sendOtp(val) {
-    this.http
-      .patch("http://localhost:8443/auth/register/sendOtpInEmail", {
-        email: val,
-      })
-      .subscribe((res: any) => {
-        this.newOtp = res.OTP;
-        this.sendOtpDisable = false;
-        if (this.newOtp) {
-          let otp = this.newOtp;
-          console.log(otp);
-          var now = new Date();
-          var time = now.getTime();
-          var expiryTime = time + 30000;
-          now.setTime(expiryTime);
-          this.cookieService.set("otp", otp, { expires: now });
-          this.cookieService.set("loginEmail", res.companyEmail);
-          this.sendOtpBox = true;
-          this.verifyOtpBox = false;
-          this.resetPasswordBox = true;
-        }
-      });
+    if (this.loginType === "admin") {
+      this.http
+        .patch("http://localhost:8443/auth/register/sendOtpInEmail", {
+          email: val,
+        })
+        .subscribe((res: any) => {
+          this.newOtp = res.OTP;
+          this.sendOtpDisable = false;
+          if (this.newOtp) {
+            let otp = this.newOtp;
+
+            var now = new Date();
+            var time = now.getTime();
+            var expiryTime = time + 30000;
+            now.setTime(expiryTime);
+            this.cookieService.set("otp", otp, { expires: now });
+            this.cookieService.set("loginEmail", res.companyEmail);
+            this.sendOtpBox = true;
+            this.verifyOtpBox = false;
+            this.resetPasswordBox = true;
+          }
+        });
+    } else if (this.loginType === "employee") {
+      this.http
+        .patch("http://localhost:8443/auth/employeelogin/sendEmail", {
+          email: val,
+        })
+        .subscribe((res: any) => {
+          this.newOtp = res.otp;
+          this.sendOtpDisable = false;
+          if (this.newOtp) {
+            let otp = this.newOtp;
+
+            var now = new Date();
+            var time = now.getTime();
+            var expiryTime = time + 30000;
+            now.setTime(expiryTime);
+            this.cookieService.set("otp", otp, { expires: now });
+            this.cookieService.set("loginEmail", res.email);
+            this.sendOtpBox = true;
+            this.verifyOtpBox = false;
+            this.resetPasswordBox = true;
+          }
+        });
+    }
   }
   verifyOtp(otpInput) {
     let OTP = this.cookieService.get("otp");
@@ -78,7 +106,7 @@ export class ForgotComponent implements OnInit {
     let pass1 = val1;
     let pass2 = val2;
 
-    if (pass1 === pass2) {
+    if (pass1 === pass2 && this.loginType === "admin") {
       var obj = {
         email: email,
         password: pass1,
@@ -87,6 +115,16 @@ export class ForgotComponent implements OnInit {
         .patch("http://localhost:8443/auth/register/forgetPassword", obj)
         .subscribe((res: any) => {
           this.router.navigate(["/login/adminlogin"]);
+        });
+    } else if (pass1 === pass2 && this.loginType === "employee") {
+      var obj = {
+        email: email,
+        password: pass1,
+      };
+      this.http
+        .patch("http://localhost:8443/auth/employeelogin/forgetPassword", obj)
+        .subscribe((res: any) => {
+          this.router.navigate(["/login/employeelogin"]);
         });
     } else {
       this.matchPass = false;
