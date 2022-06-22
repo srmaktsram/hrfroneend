@@ -49,11 +49,8 @@ export class ClientLoginComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
-        console.log(res, "hhhhhhhhhhhhhhhhh");
         let client = res.data;
         if (res.result == 2) {
-          console.log(client.id);
-          console.log(client.adminId);
           this.clientAuthenticationService.login(client.id, client.adminId);
           this.router.navigate(["/layout/client/client-dashboard"]);
         } else {
