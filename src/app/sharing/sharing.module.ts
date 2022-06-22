@@ -13,6 +13,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
 import { MatListModule } from "@angular/material/list";
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [CustomDatePipe, DateAgoPipe],
   exports: [
@@ -30,6 +31,7 @@ import { MatListModule } from "@angular/material/list";
     MatButtonModule,
     MatInputModule,
     MatListModule,
+    MatDialogModule,
   ],
   imports: [
     NgbModule,
@@ -45,6 +47,7 @@ import { MatListModule } from "@angular/material/list";
     MatButtonModule,
     MatInputModule,
     MatListModule,
+    MatDialogModule,
   ],
 })
 export class SharingModule {}
