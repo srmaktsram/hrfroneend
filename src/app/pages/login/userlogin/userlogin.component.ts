@@ -23,7 +23,12 @@ export class UserLoginComponent implements OnInit {
     return this.form.controls;
   }
   sendTo() {
-    this.router.navigate(["/login/forgot"]);
+    this.router.navigate(["/login/forgot"], {
+      queryParams: {
+        loginType: "employee",
+      },
+      skipLocationChange: true,
+    });
   }
   constructor(
     private authenticationService: AuthenticationService,

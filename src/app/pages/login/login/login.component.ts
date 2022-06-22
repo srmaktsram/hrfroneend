@@ -29,11 +29,16 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private adminAuthenticationService: AdminAuthenticationService
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
   sendTo() {
-    this.router.navigate(["/login/forgot"]);
+    this.router.navigate(["/login/forgot"], {
+      queryParams: {
+        loginType: "admin",
+      },
+      skipLocationChange: true,
+    });
   }
   submit() {
     let email = this.form.value.email;
@@ -47,9 +52,7 @@ export class LoginComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res);
         if (res.result == 2) {
-
           this.router.navigate(["/layout/dashboard/admin"]);
-
 
           this.adminAuthenticationService.login(
             res.data.id,
