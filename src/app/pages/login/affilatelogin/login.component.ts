@@ -32,7 +32,12 @@ export class AffiliateLoginComponent implements OnInit {
 
   ngOnInit() {}
   sendTo() {
-    this.router.navigate(["/login/forgot"]);
+    this.router.navigate(["/login/forgot"], {
+      queryParams: {
+        loginType: "affiliate",
+      },
+      skipLocationChange: true,
+    });
   }
   submit() {
     let username = this.form.value.username;

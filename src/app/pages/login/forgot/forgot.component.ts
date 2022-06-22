@@ -87,6 +87,50 @@ export class ForgotComponent implements OnInit {
             this.resetPasswordBox = true;
           }
         });
+    } else if (this.loginType === "affiliate") {
+      this.http
+        .patch("http://localhost:8443/auth/affiliatelogin/forget_password", {
+          email: val,
+        })
+        .subscribe((res: any) => {
+          this.newOtp = res.otp;
+          this.sendOtpDisable = false;
+          if (this.newOtp) {
+            let otp = this.newOtp;
+
+            var now = new Date();
+            var time = now.getTime();
+            var expiryTime = time + 30000;
+            now.setTime(expiryTime);
+            this.cookieService.set("otp", otp, { expires: now });
+            this.cookieService.set("loginEmail", res.email);
+            this.sendOtpBox = true;
+            this.verifyOtpBox = false;
+            this.resetPasswordBox = true;
+          }
+        });
+    } else if (this.loginType === "client") {
+      this.http
+        .patch("http://localhost:8443/auth/clientlogin/sendEmail", {
+          email: val,
+        })
+        .subscribe((res: any) => {
+          this.newOtp = res.otp;
+          this.sendOtpDisable = false;
+          if (this.newOtp) {
+            let otp = this.newOtp;
+
+            var now = new Date();
+            var time = now.getTime();
+            var expiryTime = time + 30000;
+            now.setTime(expiryTime);
+            this.cookieService.set("otp", otp, { expires: now });
+            this.cookieService.set("loginEmail", res.email);
+            this.sendOtpBox = true;
+            this.verifyOtpBox = false;
+            this.resetPasswordBox = true;
+          }
+        });
     }
   }
   verifyOtp(otpInput) {
@@ -125,6 +169,26 @@ export class ForgotComponent implements OnInit {
         .patch("http://localhost:8443/auth/employeelogin/forgetPassword", obj)
         .subscribe((res: any) => {
           this.router.navigate(["/login/employeelogin"]);
+        });
+    } else if (pass1 === pass2 && this.loginType === "affiliate") {
+      var obj = {
+        email: email,
+        password: pass1,
+      };
+      this.http
+        .patch("http://localhost:8443/auth/affiliatelogin/changePassword", obj)
+        .subscribe((res: any) => {
+          this.router.navigate(["/login/affiliatelogin"]);
+        });
+    } else if (pass1 === pass2 && this.loginType === "client") {
+      var obj = {
+        email: email,
+        password: pass1,
+      };
+      this.http
+        .patch("http://localhost:8443/auth/clientlogin/change_Password", obj)
+        .subscribe((res: any) => {
+          this.router.navigate(["/login/clientlogin"]);
         });
     } else {
       this.matchPass = false;
