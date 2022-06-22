@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
+import { CookieService } from "ngx-cookie-service";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
 
@@ -28,10 +29,12 @@ export class HrregistrationComponent implements OnInit {
   public showLogin = true;
   public showForgot = true;
   public changePass = true;
+  public otp: any;
+  public messOtp: any;
   isvalidconfirmpassword: boolean;
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router,
     private hrUserAuthenticationService: HrUserAuthenticationService, private route: ActivatedRoute,
-    private _snackBar: MatSnackBar,
+    private _snackBar: MatSnackBar, private cookieService: CookieService,
   ) {
 
   }
@@ -163,13 +166,36 @@ export class HrregistrationComponent implements OnInit {
     this.showEmail = false;
     this.veryfyOtp = true;
   }
-  showVerifyOtp() {
-    this.veryfyOtp = false;
-    this.showEmail = true;
+
+  sendOtp() {
+    let email = this.resetForm.value.verifiedEmail
+    console.log(email, "kj..........<<<<<<<<<<<<<<>>>>>>>>>>>")
+    this.http.post("http://localhost:8443/mainadmin/hr_user/sendOtp", { email }).subscribe((res: any) => {
+      console.log(res, "postApi====XXXXXXXXXXXXXXXXXXXX")
+      this.otp = res.otp;
+      if (this.otp) {
+        let date = new Date();
+        let time = date.getTime();
+        let expairyTime = time + 120000;
+        date.setTime(expairyTime);
+        this.cookieService.set("otp", this.otp, { expires: date });
+        this.cookieService.set("loginEmail", res.email);
+        this.veryfyOtp = false;
+        this.showEmail = true;
+      }
+    })
+
   }
-  showChangePassword() {
-    this.changePass = false;
-    this.showForgot = true;
+  showVeryfyOtp() {
+
+    let OTP = this.cookieService.get("otp");
+    let otpInput = this.resetForm.value.otp;
+    if (otpInput === OTP) {
+      this.changePass = false;
+      this.showForgot = true;
+    } else {
+      this.messOtp = " Invalid Otp......";
+    }
   }
   openSnackBar() {
     if (this.changePassForm.valid) {
@@ -181,10 +207,16 @@ export class HrregistrationComponent implements OnInit {
           verticalPosition: this.verticalPosition
         });
 
-        // let email = this.addloginForm.value.email;
-        // this.http.patch("http://localhost:8443/mainadmin/updatePassword",email ).subscribe((res: any) => {
-        //   console.log(res, "whatEver>>>>>>>>>>>>>>>>>>>....")
-        // })
+        let email = this.resetForm.value.verifiedEmail;
+        let password = this.changePassForm.value.password;
+        let confirmPassword = this.changePassForm.value.confirmPassword;
+
+        if (password === confirmPassword) {
+          this.http.patch("http://localhost:8443/mainadmin/hr_users/changePassword", { email, password }).subscribe((res: any) => {
+            console.log(res, "whatEver>>>>>>>>>>>>>>>>>>>....")
+          })
+        }
+
       }
     }
   }
