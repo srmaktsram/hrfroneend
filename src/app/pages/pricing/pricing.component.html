@@ -139,63 +139,6 @@
 
 
 <div class="mainDiv">
-
-    <div class="matDiv">
-        <mat-card class="mat" style="border:2px solid #3c3f43">
-            <div class="page-header epblue">
-                <h4 style="color:white;">Enterprise(Multi-User)</h4>
-            </div>
-            <div class="text-center">
-                <select class="form-select" aria-label="Default select example" class="selectEmployee"
-                    (click)="getUser($event.target.value,'epMulti')" (click)="getPlan('epMulti',select3.value);">
-                    <option selected>Select Employee</option>
-                    <option value="50">Up To 50 Employee</option>
-                    <option value="150">Up To 150 Employee</option>
-                    <option value="300">Up To 300 Employee</option>
-                    <option value="500">Up To 500 Employee</option>
-                    <option value="700">Up To 700 Employee</option>
-                    <option value="1000">Up To 1000 employee</option>
-                    <option value="1500">More than 1000 Employee</option>
-                </select>
-                <p style="margin-top: 15px;">1 Month :{{epMultioneMonthAmount}} /- Rupees</p>
-                <p>+ GST 18%</p>
-
-                <h4>Our Plan</h4>
-
-                <div class="selectFlex">
-                    <select #select3 class="form-select" aria-label="Default select example" class="selectWidth"
-                        (click)="getPlan('epMulti',select3.value);">
-                        <option selected>Select Year</option>
-                        <option value="3">For 3 Month</option>
-                        <option value="6">For 6 Month</option>
-                        <option value="12">For 1 Year</option>
-                        <option value="24">For 2 Year</option>
-                        <option value="36">For 3 Year</option>
-                        <option value="48">For 4 Year</option>
-                        <option value="60">For 5 Year</option>
-                        <option value="120"> For 10 Year</option>
-                    </select>
-
-                </div>
-                <div style="margin-top: 20px;">
-                    <p>Total Payable Amount : {{totalEpMonthAmount}} /- Only</p>
-                </div>
-
-            </div>
-
-            <div style="display:flex;justify-content:center;">
-                <a href="" data-bs-toggle="modal" data-bs-target="#enter_prise" style="text-align:center;">View
-                    Details?</a>
-            </div>
-
-            <div class="button">
-                <button mat-raised-button color="accent" (click)=" getData('epMulti')">Make Payment</button>
-            </div>
-
-
-        </mat-card>
-
-    </div>
     <div class="matDiv">
         <mat-card class="mat" style="border:2px solid #d76274">
             <div class="page-header ptSingleblue">
@@ -301,6 +244,68 @@
         </mat-card>
     </div>
 
+    <div class="matDiv" style="
+        pointer-events: none;
+        opacity: 0.4;
+    ">
+        <mat-card class="mat" style="border:2px solid #3c3f43">
+            <div class="page-header epblue">
+                <h4 style="color:white;">Enterprise(Multi-User)</h4>
+            </div>
+            <div class="text-center">
+                <select class="form-select" aria-label="Default select example" class="selectEmployee"
+                    (click)="getUser($event.target.value,'epMulti')" (click)="getPlan('epMulti',select3.value);">
+                    <option selected>Select Employee</option>
+                    <option value="50">Up To 50 Employee</option>
+                    <option value="150">Up To 150 Employee</option>
+                    <option value="300">Up To 300 Employee</option>
+                    <option value="500">Up To 500 Employee</option>
+                    <option value="700">Up To 700 Employee</option>
+                    <option value="1000">Up To 1000 employee</option>
+                    <option value="1500">More than 1000 Employee</option>
+                </select>
+                <!-- <p style="margin-top: 15px;">1 Month :{{epMultioneMonthAmount}} /- Rupees</p>
+                <p>+ GST 18%</p>
+
+                <h4>Our Plan</h4> -->
+
+                <h1 style="color:rgb(87, 15, 202) ;margin-top: 30px;">...Coming Soon...</h1>
+                <div class="selectFlex">
+                    <select #select3 class="form-select" aria-label="Default select example" class="selectWidth"
+                        (click)="getPlan('epMulti',select3.value);">
+                        <option selected>Select Year</option>
+                        <option value="3">For 3 Month</option>
+                        <option value="6">For 6 Month</option>
+                        <option value="12">For 1 Year</option>
+                        <option value="24">For 2 Year</option>
+                        <option value="36">For 3 Year</option>
+                        <option value="48">For 4 Year</option>
+                        <option value="60">For 5 Year</option>
+                        <option value="120"> For 10 Year</option>
+                    </select>
+
+                </div>
+                <div style="margin-top: 20px;">
+                    <p>Total Payable Amount : {{totalEpMonthAmount}} /- Only</p>
+                </div>
+
+            </div>
+
+            <div style="display:flex;justify-content:center;">
+                <a href="" data-bs-toggle="modal" data-bs-target="#enter_prise" style="text-align:center;">View
+                    Details?</a>
+            </div>
+
+            <div class="button">
+                <button mat-raised-button color="accent" (click)=" getData('epMulti')">Make Payment</button>
+
+            </div>
+
+
+        </mat-card>
+
+    </div>
+
 </div>
 <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
@@ -403,3 +408,4 @@
         </div>
     </div>
 </div>
+
