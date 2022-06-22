@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+
+declare const $: any;
 @Component({
   selector: "app-pricing",
   templateUrl: "./pricing.component.html",
@@ -8,11 +10,7 @@ import { CookieService } from "ngx-cookie-service";
 })
 export class PricingComponent implements OnInit {
 
-
   check = true;
-
-
-
   public corporateId: any;
   public PtSingleUserMonth: any;
   public PtMultiUserMonth: any;
@@ -47,8 +45,6 @@ export class PricingComponent implements OnInit {
   public epMultioneMonthAmount: any;
   public dSingleoneMonthAmount: any;
   public dMultioneMonthAmount: any;
-
-
 
   constructor(private router: Router, private cookieService: CookieService) { }
 
@@ -185,4 +181,5 @@ export class PricingComponent implements OnInit {
     //   this.router.navigate(["/pages/hr_registration"]);
     // }
   }
+
 }

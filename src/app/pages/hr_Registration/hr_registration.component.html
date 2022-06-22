@@ -129,12 +129,23 @@
                             <div class="col-md-12">
                                 <div class="form-group flexDiv">
                                     <input type="email" class="form-control inputWidth
-                                " formControlName="email" placeholder="Your Email *" value="" />
+                                    " formControlName="email" placeholder="Your Email *" value="" />
                                 </div>
+                                <div class="errorMessage">
+                                    <small
+                                        *ngIf="addloginForm.get('email').invalid && addloginForm.get('email').touched"
+                                        class="text-danger"> *Email is required</small>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="form-group flexDiv">
                                         <input type="password" class="form-control inputWidth
                                     " formControlName="password" placeholder="Password *" value="" />
+                                    </div>
+                                    <div class="errorMessage">
+                                        <small
+                                            *ngIf="addloginForm.get('password').invalid && addloginForm.get('password').touched"
+                                            class="text-danger"> *Password is required</small>
                                     </div>
                                 </div>
                                 <div class="forgotPassword">
@@ -171,7 +182,13 @@
                                 <div [hidden]="showEmail">
                                     <div class="form-group flexDiv">
                                         <input type="email" class="form-control inputWidth
-                                " formControlName="email" placeholder=" Enter Your Verified Email *" value="" />
+                                " formControlName="verifiedEmail" placeholder=" Enter Your Verified Email *"
+                                            value="" />
+                                    </div>
+                                    <div class="errorMessage">
+                                        <small
+                                            *ngIf="resetForm.get('verifiedEmail').invalid && resetForm.get('verifiedEmail').touched"
+                                            class="text-danger"> *Email is required</small>
                                     </div>
                                     <input type="submit" class="sendOtpWidth" value="Send OTP"
                                         (click)="showVerifyOtp()" />
@@ -209,17 +226,32 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <h3 class="register-heading"><u>Change Password</u></h3>
-                    <form [formroup]="changePassForm">
+                    <form [formGroup]="changePassForm">
                         <div class="row register-form">
                             <div class="col-md-12">
                                 <div class="form-group flexDiv">
                                     <input type="text" class="form-control inputWidth
                                 " formControlName="password" placeholder="Enter New Password*" value="" />
                                 </div>
+                                <div class="errorMessage">
+                                    <small
+                                        *ngIf="changePassForm.get('password').invalid && changePassForm.get('password').touched"
+                                        class="text-danger"> *Password is required</small>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="form-group flexDiv">
                                         <input type="password" class="form-control inputWidth
                                     " formControlName="confirmPassword" placeholder="Confirm Password *" value="" />
+                                    </div>
+                                    <div class="errorMessage">
+                                        <small
+                                            *ngIf="changePassForm.get('confirmPassword').invalid && changePassForm.get('confirmPassword').touched"
+                                            class="text-danger"> *Confirm Password is required</small>
+                                        <small
+                                            *ngIf="changePassForm.get('confirmPassword') != changePassForm.get('password')"
+                                            class="text-danger"> *password do not match.
+                                        </small>
                                     </div>
                                 </div>
                                 <div>

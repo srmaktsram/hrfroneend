@@ -160,6 +160,9 @@
 .verifyOtpInput{
    margin-left:200px;
 }
+.errorMessage{
+    margin-left:110px;
+}
 
 @media(min-width:200px) and (max-width:780px){
     .headerCom{
@@ -194,5 +197,9 @@
      margin-right: 15%;
  
  }
+ .errorMessage{
+    margin-left:50px;
+}
+
 
 }

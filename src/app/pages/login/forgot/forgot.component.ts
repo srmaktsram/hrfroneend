@@ -29,11 +29,11 @@ export class ForgotComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private cookieService: CookieService
-  ) {}
+  ) { }
   get f() {
     return this.form.controls;
   }
-  ngOnInit() {}
+  ngOnInit() { }
   submit() {
     this.CustomControler = 0;
     // this.storage.Forgotpassword(this.form.value);
@@ -55,7 +55,6 @@ export class ForgotComponent implements OnInit {
           now.setTime(expiryTime);
           this.cookieService.set("otp", otp, { expires: now });
           this.cookieService.set("loginEmail", res.companyEmail);
-
           this.sendOtpBox = true;
           this.verifyOtpBox = false;
           this.resetPasswordBox = true;

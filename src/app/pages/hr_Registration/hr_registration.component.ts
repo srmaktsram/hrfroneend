@@ -14,7 +14,6 @@ import { HrUserAuthenticationService } from "src/app/core/storage/authentication
 })
 export class HrregistrationComponent implements OnInit {
 
-
   public horizontalPosition: MatSnackBarHorizontalPosition = 'center';
   public verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   public registerForm: FormGroup;
@@ -64,8 +63,7 @@ export class HrregistrationComponent implements OnInit {
 
 
     this.resetForm = this.formBuilder.group({
-
-      email: ["", Validators.required],
+      verifiedEmail: ["", Validators.required],
       otp: ["", Validators.required],
 
     })
@@ -95,7 +93,6 @@ export class HrregistrationComponent implements OnInit {
     this.showLogin = temp;
   }
 
-
   registerUsers() {
     if (this.registerForm.valid) {
       if (this.registerForm.value.password != this.registerForm.value.confirmPassword) {
@@ -106,6 +103,7 @@ export class HrregistrationComponent implements OnInit {
       }
     }
   }
+
   saveData() {
     let obj = {
       firstName: this.registerForm.value.firstName,
@@ -151,46 +149,49 @@ export class HrregistrationComponent implements OnInit {
             res.data.firstName,
             res.data.lastName,
             res.data.phone,
-
           );
 
         } else {
           alert("wrong Id or pass");
         }
       });
-
   }
-
 
   showForgotPassword() {
     this.showForgot = false;
     this.showLogin = true;
     this.showEmail = false;
+    this.veryfyOtp = true;
   }
-
   showVerifyOtp() {
     this.veryfyOtp = false;
     this.showEmail = true;
   }
-
   showChangePassword() {
     this.changePass = false;
     this.showForgot = true;
   }
   openSnackBar() {
-    this._snackBar.open('Password Changed Successfully', 'Close', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition
-    });
+    if (this.changePassForm.valid) {
+      if (this.changePassForm.value.password == this.changePassForm.value.confirmPassword) {
+        this.showLogin = false;
+        this.changePass = true;
+        this._snackBar.open('Password Changed Successfully', 'Close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition
+        });
 
-    // let email = this.addloginForm.value.email;
-    // this.http.patch("http://localhost:8443/mainadmin/updatePassword",email ).subscribe((res: any) => {
-    //   console.log(res, "whatEver>>>>>>>>>>>>>>>>>>>....")
-    // })
+        // let email = this.addloginForm.value.email;
+        // this.http.patch("http://localhost:8443/mainadmin/updatePassword",email ).subscribe((res: any) => {
+        //   console.log(res, "whatEver>>>>>>>>>>>>>>>>>>>....")
+        // })
+      }
+    }
   }
-
-
 }
+
+
+
 
 
 
