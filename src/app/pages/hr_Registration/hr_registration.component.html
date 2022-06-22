@@ -248,10 +248,10 @@
                                         <small
                                             *ngIf="changePassForm.get('confirmPassword').invalid && changePassForm.get('confirmPassword').touched"
                                             class="text-danger"> *Confirm Password is required</small>
-                                        <small
-                                            *ngIf="changePassForm.get('confirmPassword') != changePassForm.get('password')"
-                                            class="text-danger"> *password do not match.
-                                        </small>
+                                        <ng-container
+                                            *ngIf="changePassForm.get('confirmPassword').value!= changePassForm.get('password').value">
+                                            <p class="text-danger"> *Password and Confirm password not match.</p>
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div>
