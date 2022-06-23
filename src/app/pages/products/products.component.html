@@ -2,7 +2,7 @@
     <h1><u>My Products -:</u></h1>
     <div class="row">
 
-        <div class="col-md-4" *ngFor="let item of productDetails">
+        <div class="col-md-4" *ngFor="let item of productDetailsGroup">
             <ng-container *ngIf="item.packageName=='Platinum(Multi-User)'">
                 <mat-card class="designCard" style="border-top-color: orangered;border-bottom-color: orangered">
                     <div class="d-flex justify-content-between">
@@ -161,7 +161,7 @@
                 </mat-card>
             </ng-container>
 
-            <ng-container *ngIf="item.packageName=='Free User(Single-User)'">
+            <ng-container *ngIf="item.packageName=='Basic(Single-User)'">
                 <mat-card class="designCard" style="border-top-color: #5d9cec;border-bottom-color:#5d9cec">
                     <div class="d-flex justify-content-between">
                         <h4>Package Name</h4>
@@ -177,11 +177,11 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Expairy Date</h4>
-                        <h4>{{item.to |customDate}} </h4>
+                        <h4>Unlimited </h4>
                     </div>
                     <ng-container *ngFor="let data of totalRemaining">
-                        <div *ngIf="data.packageName =='Free User(Single-User)'">
-                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} days Remaining</h4>
+                        <div *ngIf="data.packageName =='Basic(Single-User)'">
+                            <h4 style="text-align: center;margin-top: 15px;">Lifetime Unlimited Access</h4>
                         </div>
                     </ng-container>
                     <div class="raisedButton">

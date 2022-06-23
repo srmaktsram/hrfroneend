@@ -12,6 +12,7 @@ export class ProductsComponent implements OnInit {
   AllProductList: any;
   public productDetails: any;
   public corporateId: any;
+  public productDetailsGroup = [];
   todayDate: Date;
   date1: any;
   date2: any;
@@ -68,18 +69,16 @@ export class ProductsComponent implements OnInit {
         "http://localhost:8443/mainadmin/myProducts" + "/" + this.corporateId
       )
       .subscribe((res: any) => {
-        this.productDetails = res[0].group;
-        console.log(
-          "<><><><><><>< this.totalRemaining><><><><><><><><><",
-          this.productDetails
-        );
+        this.productDetails = res;
+        console.log("<><><><><><>< this.totalRemaining><><><><><><><><><", res);
         this.productDetails.map((item) => {
-          let data = this.calculateExpiryDays(item.to);
+          let data = this.calculateExpiryDays(item.group[0].to);
           var obj = {
             remaininigDays: data,
-            packageName: item.packageName
-          }
+            packageName: item.packageName,
+          };
           this.totalRemaining.push(obj);
+          this.productDetailsGroup.push(item.group[0]);
         });
         console.log(
           "<><><><><><>< this.totalRemaining><><><><><><><><><",

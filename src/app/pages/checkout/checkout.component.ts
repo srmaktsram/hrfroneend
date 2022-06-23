@@ -59,7 +59,6 @@ export class CheckoutComponent implements OnInit {
     this.corporateId = this.route.snapshot.queryParams["corporate"];
     this.packageName = this.route.snapshot.queryParams["packageName"];
     this.month = this.route.snapshot.queryParams["days"] * 30;
-    // alert(this.month);
   }
 
   getPayment() {
@@ -82,10 +81,10 @@ export class CheckoutComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log("this is the create order History>>>>", res);
-
-        if (res) {
-          this.createOrderId();
+        if (this.packageName === "Basic(Single-User)") {
+          this.premium(0);
         } else {
+          this.createOrderId();
         }
       });
   }
@@ -162,7 +161,7 @@ export class CheckoutComponent implements OnInit {
       packageName: this.packageName,
       month: this.month,
     };
-    console.log(obj, "ggggggggggggggggggggggggggggggggggg")
+
     this.http
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
@@ -176,8 +175,8 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post(
         "http://localhost:8443/checkout/create/Details" +
-        "/" +
-        this.corporateId,
+          "/" +
+          this.corporateId,
         {
           amount: this.totalAmount,
           packageName: this.packageName,
@@ -186,6 +185,7 @@ export class CheckoutComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log("this is the orderDetails>>>>>>>>>>", res);
+        this.router.navigate(["/products"]);
       });
   }
   createAdminRegister(res: any) {
