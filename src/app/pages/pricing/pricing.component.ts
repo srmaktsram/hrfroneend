@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
@@ -9,7 +10,6 @@ declare const $: any;
   styleUrls: ["./pricing.component.css"],
 })
 export class PricingComponent implements OnInit {
-
   check = true;
   public corporateId: any;
   public PtSingleUserMonth: any;
@@ -46,11 +46,13 @@ export class PricingComponent implements OnInit {
   public dSingleoneMonthAmount: any;
   public dMultioneMonthAmount: any;
 
-  constructor(private router: Router, private cookieService: CookieService) { }
+  constructor(
+    private router: Router,
+    private cookieService: CookieService,
+    private http: HttpClient
+  ) {}
 
-
-  ngOnInit() { }
-
+  ngOnInit() {}
 
   getUser(event, val) {
     if (val == "ptSingle") {
@@ -110,8 +112,20 @@ export class PricingComponent implements OnInit {
   getData(val) {
     this.corporateId = sessionStorage.getItem("corporateId");
 
-    console.log(sessionStorage.getItem("currentUser"), this.corporateId)
+    console.log(sessionStorage.getItem("currentUser"), this.corporateId);
     if (sessionStorage.getItem("currentUser") == "HrUserLogin") {
+      if (val == "Basic(Single-User)") {
+        this.router.navigate(["/checkouts"], {
+          queryParams: {
+            totalAmount: 0,
+            totalUser: 10,
+            corporate: this.corporateId,
+            packageName: "Basic(Single-User)",
+            days: 0,
+          },
+          skipLocationChange: true,
+        });
+      }
       if (val == "dSingle") {
         this.router.navigate(["/checkouts"], {
           queryParams: {
@@ -172,14 +186,11 @@ export class PricingComponent implements OnInit {
           skipLocationChange: true,
         });
       }
-    }
-    else {
+    } else {
       this.router.navigate(["/hr_registration"]);
-
     }
     // } else {
     //   this.router.navigate(["/pages/hr_registration"]);
     // }
   }
-
 }
