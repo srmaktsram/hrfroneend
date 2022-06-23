@@ -190,7 +190,8 @@
                                             *ngIf="resetForm.get('verifiedEmail').invalid && resetForm.get('verifiedEmail').touched"
                                             class="text-danger"> *Email is required</small>
                                     </div>
-                                    <input type="submit" class="sendOtpWidth" value="Send OTP" (click)="sendOtp()" />
+                                    <input type="submit" class="sendOtpWidth" value="Send OTP"
+                                        (click)="showVerifyOtp()" />
                                 </div>
                                 <div class="col-md-9" [hidden]="veryfyOtp">
                                     <div class="form-group verifyOtpInput">
@@ -199,7 +200,7 @@
                                     </div>
                                     <div>
                                         <input type="submit" class="otpWidth" value="VerifyOTP"
-                                            (click)="showVeryfyOtp()" />
+                                            (click)="showChangePassword()" />
                                     </div>
                                 </div>
                             </div>
