@@ -12,31 +12,84 @@
     </div>
   </div>
   <!-- /Page Header -->
-  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-12">
-    <div class="card dash-widget">
-      <div class="card-body">
-        <span class="dash-widget-icon"><i class="fa fa-link"></i></span>
-        <h3>My Refferal Link</h3>
-        <div class="dash-widget-info">
-          <h3>{{ affiliateUrl }}</h3>
-          <span> Copy Link</span>
-        </div>
-      </div>
+ 
+  <div class="row reffer_back my-2 gradient-amber">
+    <div class="col-12 col-sm-2 col-md-2 col-lg-2 col-xlg-2">
+      <h4 class="align-center text-blue pt-1">My Refferal Link</h4>
+    </div>
+    <div class="col-12 col-sm-7 col-md-7 col-lg-7 col-xlg-7 mb-2">
+      <input
+        type="text"
+        id="myInput"
+        name="referallink"
+        value="{{ affiliateUrl }}"
+        #myInput
+      />
+    </div>
+    <div class="col-12 col-sm-3 col-md-2 col-lg-2 col-xlg-3">
+      <a mat-raised-button (click)="copyInputMessage(myInput)">Copy Link</a>
     </div>
   </div>
-  
-  <div class="col-md-6 col-sm-6 col-lg-6 col-xl-12">
+  <div class="row reffer_back my-2 gradient-amber gradient-social">
+    <div class="col-12 col-sm-3 col-md-3 col-lg-3 col-xlg-3 text-left">
+      <span class="dash-widget-icon"><i class="fa fa-share"></i></span>
+      <h4 class="text-white pt-1">Share Your Referral Link on</h4>
+    </div>
+    <div class="col-12 col-sm-9 col-md-9 col-lg-9 col-xlg-9 mb-2 text-left">
+      <a
+        href="https://facebook.com/sharer.php?u={{ affiliateUrl }}"
+        target="_blank"
+        class="social_icon mymatcard"
+      >
+        <i class="fa fa-facebook" aria-hidden="true"></i
+      ></a>
+      <a
+        href="https://wa.me/?text={{ affiliateUrl }}"
+        class="social_icon"
+        target="_blank"
+        class="social_icon mymatcard"
+      >
+        <i class="fa fa-whatsapp" aria-hidden="true"></i
+      ></a>
+      <a
+        href="https://www.instagram.com/?url={{ affiliateUrl }}"
+        class="social_icon"
+        target="_blank"
+        class="social_icon mymatcard"
+      >
+        <i class="fa fa-instagram" aria-hidden="true"></i
+      ></a>
+      <a
+        href="https://web.skype.com/?text={{ affiliateUrl }}"
+        class="social_icon"
+        target="_blank"
+        class="social_icon mymatcard"
+      >
+        <i class="fa fa-skype" aria-hidden="true"></i
+      ></a>
+      <a
+        href="https://telegram.me/share/url?url={{ affiliateUrl }}"
+        class="social_icon"
+        target="_blank"
+        class="social_icon mymatcard"
+      >
+        <i class="fa fa-telegram" aria-hidden="true"></i
+      ></a>
+    </div>
+  </div>
+
+  <!-- <div class="col-md-6 col-sm-6 col-lg-6 col-xl-12">
     <div class="card dash-widget">
       <div class="card-body">
         <span class="dash-widget-icon"><i class="fa fa-share"></i></span>
         <h3>Share On</h3>
         <div class="dash-widget-info">
-          <!-- <h3>{{affiliateUrl}}</h3> -->
+          <h3>{{affiliateUrl}}</h3>
           <span> Share Now</span>
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <div class="row">
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">

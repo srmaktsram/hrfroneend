@@ -1,11 +1,11 @@
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-
+declare const $:any
 @Component({
   selector: "app-affiliates-dashboard",
   templateUrl: "./affiliates-dashboard.component.html",
-  styleUrls: ["./affiliates-dashboard.component.css"],
+  styleUrls: ["./affiliates-dashboard.component.scss"],
 })
 export class AffiliateAdminDashboardComponent implements OnInit {
   public aId:any;
@@ -75,6 +75,13 @@ export class AffiliateAdminDashboardComponent implements OnInit {
     this.getTodayConversions();
     this.getTotalConversions();
     this.getWallet();
+    
+    $("#myInput").prop('readonly', true);
+  }
+  copyInputMessage(inputElement) {
+    inputElement.select();
+    document.execCommand('copy');
+    inputElement.setSelectionRange(0, 0);
   }
 
   public getTodayLeads() {
