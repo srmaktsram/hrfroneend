@@ -235,6 +235,11 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       tickets: this.tickets,
       invoices: this.invoices,
       orders: this.orders,
+      Affiliates: this.Affiliates,
+      PromoCodes: this.PromoCodes,
+      Commisions: this.Commisions,
+      Withdrawals: this.Withdrawals,
+      Kyc: this.Kyc,
     };
     this.http
       .post(
@@ -485,18 +490,18 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = true;
+        this.Affiliates[objIndex].read = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = false;
+        const objIndex = this.Affiliates.findIndex((obj) => obj.id == val);
+        this.Affiliates[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = true;
+        const objIndex = this.Affiliates.findIndex((obj) => obj.id == val);
+        this.Affiliates[objIndex].write = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = false;
+        const objIndex = this.Affiliates.findIndex((obj) => obj.id == val);
+        this.Affiliates[objIndex].write = false;
       }
     }
   }
@@ -504,75 +509,75 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     if (val == 0) {
       if (event.target.checked == true) {
         const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = true;
+        this.PromoCodes[objIndex].read = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = false;
+        const objIndex = this.PromoCodes.findIndex((obj) => obj.id == val);
+        this.PromoCodes[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = true;
+        const objIndex = this.PromoCodes.findIndex((obj) => obj.id == val);
+        this.PromoCodes[objIndex].write = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = false;
+        const objIndex = this.PromoCodes.findIndex((obj) => obj.id == val);
+        this.PromoCodes[objIndex].write = false;
       }
     }
   }
   checkCheckBoxvalueKyc(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = true;
+        const objIndex = this.Kyc.findIndex((obj) => obj.id == val);
+        this.Kyc[objIndex].read = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = false;
+        const objIndex = this.Kyc.findIndex((obj) => obj.id == val);
+        this.Kyc[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = true;
+        const objIndex = this.Kyc.findIndex((obj) => obj.id == val);
+        this.Kyc[objIndex].write = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = false;
+        const objIndex = this.Kyc.findIndex((obj) => obj.id == val);
+        this.Kyc[objIndex].write = false;
       }
     }
   }
   checkCheckBoxvalueWithdrawal(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = true;
+        const objIndex = this.Withdrawals.findIndex((obj) => obj.id == val);
+        this.Withdrawals[objIndex].read = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = false;
+        const objIndex = this.Withdrawals.findIndex((obj) => obj.id == val);
+        this.Withdrawals[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = true;
+        const objIndex = this.Withdrawals.findIndex((obj) => obj.id == val);
+        this.Withdrawals[objIndex].write = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = false;
+        const objIndex = this.Withdrawals.findIndex((obj) => obj.id == val);
+        this.Withdrawals[objIndex].write = false;
       }
     }
   }
   checkCheckBoxvalueCommisions(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = true;
+        const objIndex = this.Commisions.findIndex((obj) => obj.id == val);
+        this.Commisions[objIndex].read = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = false;
+        const objIndex = this.Commisions.findIndex((obj) => obj.id == val);
+        this.Commisions[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = true;
+        const objIndex = this.Commisions.findIndex((obj) => obj.id == val);
+        this.Commisions[objIndex].write = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = false;
+        const objIndex = this.Commisions.findIndex((obj) => obj.id == val);
+        this.Commisions[objIndex].write = false;
       }
     }
   }
