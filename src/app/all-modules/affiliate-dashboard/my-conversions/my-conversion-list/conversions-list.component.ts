@@ -49,6 +49,7 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   leads: any;
   conversions: any;
   newStatus: any;
+  thirtyPercentCommission: any;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
@@ -80,6 +81,8 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
       )
       .subscribe((res: any) => {
         this.conversions = res;
+        console.log(res,"11111")
+        
         
       });
   }

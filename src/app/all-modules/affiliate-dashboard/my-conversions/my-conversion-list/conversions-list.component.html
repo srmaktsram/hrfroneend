@@ -55,6 +55,7 @@
               <th>Email</th>
               <th>Mobile</th>
               <th>Package Name</th>
+              <th>Commission</th>
               <th>Status</th>
               </tr>
           </thead>
@@ -66,8 +67,12 @@
               <td>{{ data.email }}</td>
               <td>{{ data.mobile }}</td>
               <td>{{ data.packageName }}</td>
+              <td>{{ data.amount*(30/100) }}<span class="text-success"> (New-30%)</span></td>
               <td>
               <ng-container *ngIf="data.status==1">
+                <span class="text-warning">Pending</span>
+              </ng-container>
+              <ng-container *ngIf="data.status==2">
                 <span class="text-success">Completed</span>
               </ng-container>
             </td>

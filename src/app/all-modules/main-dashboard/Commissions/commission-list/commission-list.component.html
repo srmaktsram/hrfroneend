@@ -50,7 +50,8 @@
             <tr>
               <th>aId</th>
               <th>Company Name</th>
-              <th>Amount</th>
+              <th>Total Amount</th>
+              <th>Commission Amount</th>
               <th>Package Name</th>
               <th>Create Date</th>
               <th>Action</th>
@@ -62,6 +63,7 @@
               <td>{{ client.aId }}</td>
               <td>{{ client.companyName }}</td>
               <td>{{ client.amount }}</td>
+              <td>{{ client.amount*(30/100) }}</td>
               <td>{{ client.packageName }}</td>
               <td>{{ client.createDate }}</td>
               <td>
@@ -71,7 +73,7 @@
                     data-bs-target="#delete_pay"
                     (click)="id = client.id"
                   >
-                    Paid</a
+                    Pay</a
                   >
                 </div>
                 &nbsp;
