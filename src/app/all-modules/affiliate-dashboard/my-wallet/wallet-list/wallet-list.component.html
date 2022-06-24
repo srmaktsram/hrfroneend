@@ -74,14 +74,14 @@
               <p class="text-danger" [hidden]="minApprovalAmount" >Min. Withdrawal amount should be atleast $500 in order to make payment request!</p>
               <p class="text-danger" [hidden]="pendingAlready" >There is already a pending withdrawal in the list, wait for it to be Approved/Rejected in order to make another payment request !</p>
               <h3 class="card-title">Withdrawal request</h3>
-              <label>Actual Amount</label>
+              <label>Actual Amount</label>&nbsp;
 
               <input
                 (keyup)="requestAmount($event.target.value)"
                 type="text"
                 placeholder="Enter Request Amount"
-              />
-              <label  style="position: relative; left: -308px;top: 28px ">Withdrawal Amount</label>
+              /><br><br>
+              <label  style="position: relative; left: -20px;top: 1px ">Withdrawal Amount</label>&nbsp;
               <input
               disabled
                 value={{withdrawalAmount}}

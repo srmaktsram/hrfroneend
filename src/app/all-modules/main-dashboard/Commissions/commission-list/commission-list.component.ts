@@ -65,8 +65,6 @@ export class CommissionListComponent implements OnInit, OnDestroy {
       pageLength: 10,
       dom: "lrtip",
     };
-
-    
   }
 
   ngAfterViewInit(): void {
@@ -96,70 +94,72 @@ export class CommissionListComponent implements OnInit, OnDestroy {
           this.id,
         obj
       )
-      .subscribe((res:any) => {
+      .subscribe((res: any) => {
         this.getCommisions();
-        this.commissionData=res.data
-        this.newStatus=res.data.status
-         
-          if (this.newStatus == 2) {
-            
-            let obj = {
-              aId:this.commissionData.aId,
-              amount:this.commissionData.amount,
-              package_name:this.commissionData.packageName,
-              status:this.commissionData.status,
-              createDate:this.commissionData.createDate,
-              updateDate:this.commissionData.updateDate,
+        this.commissionData = res.data;
+        this.newStatus = res.data.status;
 
-            };
-            this.http
-              .post(
-                "http://localhost:8443/affiliates/affiliteWalletDetails/createAffiliteWalletDetails",
-                obj
-              )
-              .subscribe((res: any) => {
-                this.newData=res.result
-                this.newAmount=res.data.amount
-                if(this.newData==1){
-                  let object={
-                    current_balance:this.commissionData.amount
-                  }
-                  this.http.patch("http://localhost:8443/affiliates/wallet/updateWallet"+"/"+this.commissionData.aId,object).subscribe((res:any)=>{
-                  })
-                }
-              });
-          }
+        if (this.newStatus == 2) {
+          let obj = {
+            aId: this.commissionData.aId,
+            amount: this.commissionData.amount,
+            package_name: this.commissionData.packageName,
+            status: this.commissionData.status,
+            createDate: this.commissionData.createDate,
+            updateDate: this.commissionData.updateDate,
+          };
+          this.http
+            .post(
+              "http://localhost:8443/affiliates/affiliteWalletDetails/createAffiliteWalletDetails",
+              obj
+            )
+            .subscribe((res: any) => {
+              this.newData = res.result;
+              if (res.renewStatus == 0) {
+                this.newAmount = (parseFloat(res.data.amount) * 30) / 100;
+              } else if (res.renewStatus == 1) {
+                this.newAmount = (parseFloat(res.data.amount) * 10) / 100;
+              }
+              if (this.newData == 1) {
+                let object = {
+                  current_balance: this.newAmount
+                };
+                this.http
+                  .patch(
+                    "http://localhost:8443/affiliates/wallet/updateWallet" +
+                      "/" +
+                      this.commissionData.aId,
+                    object
+                  )
+                  .subscribe((res: any) => {});
+              }
+            });
+        }
       });
     $("#delete_pay").modal("hide");
     this.toastr.success("Added As Paid", "Success");
   }
 
-///////////////////////////
-getRejectStatus() {
-  let obj = {
-    status: "3",
-  };
-  this.http
-    .patch(
-      "http://localhost:8443/affiliates/commisions/updateCommissionStatus" +
-        "/" +
-        this.id,
-      obj
-    )
-    .subscribe((res) => {
-      this.getCommisions();
-    });
-  $("#add_reject").modal("hide");
-  this.toastr.success("Marked As Rejected", "Success");
-}
-
-
-
-   ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
+  ///////////////////////////
+  getRejectStatus() {
+    let obj = {
+      status: "3",
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/affiliates/commisions/updateCommissionStatus" +
+          "/" +
+          this.id,
+        obj
+      )
+      .subscribe((res) => {
+        this.getCommisions();
+      });
+    $("#add_reject").modal("hide");
+    this.toastr.success("Marked As Rejected", "Success");
   }
 
-
-
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
 }
-
