@@ -6,6 +6,7 @@ import { AdminAuthenticationService } from "../core/storage/authentication-admin
 import { AffilateAuthenticationService } from "../core/storage/authentication-affiliate.service";
 import { ClientAuthenticationService } from "../core/storage/authentication-client.service";
 import { MainAdminAuthenticationService } from "../core/storage/authentication-mainadmin.service";
+import { SubAdminAuthenticationService } from "../core/storage/authentication-subadmin.service";
 import { AuthenticationService } from "../core/storage/authentication.service";
 import { HeaderService } from "./header.service";
 
@@ -43,6 +44,7 @@ export class HeaderComponent implements OnInit {
     private mainAdminAuthenticationService: MainAdminAuthenticationService,
     private affilateAuthenticationService: AffilateAuthenticationService,
     private clientAuthenticationService: ClientAuthenticationService,
+    private subAdminAuthenticationService: SubAdminAuthenticationService,
     private authenticationService: AuthenticationService,
     private http: HttpClient
   ) {
@@ -215,6 +217,9 @@ export class HeaderComponent implements OnInit {
     } else if (this.user_type == "mainadmin") {
       this.router.navigate(["/login/adminhrlogin"]);
       this.mainAdminAuthenticationService.logout();
+    } else if (this.user_type == "subadmin") {
+      this.router.navigate(["/login/subadminlogin"]);
+      this.subAdminAuthenticationService.logout();
     }
   }
 }
