@@ -266,11 +266,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
         fd
       )
       .subscribe((data) => {
-        //  $("#datatable").DataTable().clear();
-        //  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        //    dtInstance.destroy();
-        //  });
-        //  this.dtTrigger.next();
+       
 
         this.getTickets();
       });
@@ -309,12 +305,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((data) => {
-        //   $("#datatable").DataTable().clear();
-        //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        //     dtInstance.destroy();
-        //   });
-        //   this.dtTrigger.next();
-        // });
+       
         this.getTickets();
       });
     $("#delete_ticket").modal("hide");
@@ -341,24 +332,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       this.getTickets();
     }
   }
-  // getSearchData(val, val1) {
-  //   if (val && val1) {
-  //     this.rows.splice(0, this.rows.length);
-  //     let temp = this.srch.filter(function (d) {
-  //       val = val.toLowerCase();
-  //       val1 = val1.toLowerCase();
-  //       return (
-  //         (d.createdDate.toLowerCase().indexOf(val) !== -1 || !val) &&
-  //         (d.lastReply.toLowerCase().indexOf(val1) !== -1 || !val1)
-  //       );
-  //     });
-
-  //     this.rows.push(...temp);
-  //   } else {
-  //     this.getTickets();
-  //   }
-  // }
-
+ 
   //search by status
   searchStatus(val) {
     if (val) {
@@ -419,21 +393,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     }
   }
 
-  //getting the status value
-  // getStatus(data, id) {
-  //   const status = data;
-  //   this.http
-  //     .patch(
-  //       "http://localhost:8443/mainadmin/supportTickets/updateTicketStatus" +
-  //         "/" +
-  //         id,
-  //       { status }
-  //     )
-  //     .subscribe((res) => {
-  //       this.getTickets();
-  //       this.getTicketsCount();
-  //     });
-  // }
+ 
   getPriority(data, id) {
     const priority = data;
 
@@ -450,7 +410,6 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
 }

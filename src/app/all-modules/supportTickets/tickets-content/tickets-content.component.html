@@ -34,7 +34,6 @@
                 <span class="d-block">New Tickets</span>
               </div>
               <div>
-                <span class="text-success">+11%</span>
               </div>
             </div>
             <h3 class="mb-3">{{ newTickets }}</h3>
@@ -58,7 +57,6 @@
                 <span class="d-block">Solved Tickets</span>
               </div>
               <div>
-                <span class="text-success">+12.5%</span>
               </div>
             </div>
             <h3 class="mb-3">{{ countResolved }}</h3>
@@ -82,7 +80,6 @@
                 <span class="d-block">Open Tickets</span>
               </div>
               <div>
-                <span class="text-danger">-2.8%</span>
               </div>
             </div>
             <h3 class="mb-3">{{ countOpen }}</h3>
@@ -106,7 +103,6 @@
                 <span class="d-block">Pending Tickets</span>
               </div>
               <div>
-                <span class="text-danger">-75%</span>
               </div>
             </div>
             <h3 class="mb-3">{{ countPending }}</h3>
@@ -166,42 +162,7 @@
         <label class="focus-label">Priority</label>
       </div>
     </div>
-    <!-- <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-      <div class="form-group form-focus">
-        <div class="cal-icon">
-          <input
-            class="form-control floating datetimepicker"
-            bsDatepicker
-            #from
-            type="text"
-            [bsConfig]="{
-              dateInputFormat: 'DD-MM-YYYY',
-              returnFocusToInput: true
-            }"
-            (bsValueChange)="searchFrom($event, to.value)"
-          />
-        </div>
-        <label class="focus-label">From</label>
-      </div>
-    </div>.... -->
-    <!-- <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-      <div class="form-group form-focus">
-        <div class="cal-icon">
-          <input
-            class="form-control floating datetimepicker"
-            bsDatepicker
-            #to
-            type="text"
-            [bsConfig]="{
-              dateInputFormat: 'DD-MM-YYYY',
-              returnFocusToInput: true
-            }"
-            (bsValueChange)="searchTo($event, from.value)"
-          />
-        </div>
-        <label class="focus-label">To</label>
-      </div>
-    </div>.... -->
+    
     <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
       <button
         [disabled]="disableButton"
@@ -244,6 +205,8 @@
               <td>{{ tickets.replyEmail }}</td>
               <td>
                 <div class="dropdown action-label">
+                  <ng-container *ngIf="tickets.priority == 'High'">
+                   
                   <a
                     class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                     data-bs-toggle="dropdown"
@@ -251,6 +214,27 @@
                     ><i class="fa fa-dot-circle-o text-danger"></i>
                     {{ tickets.priority }}
                   </a>
+                  </ng-container>
+                  <ng-container *ngIf="tickets.priority == 'Medium'">
+                   
+                  <a
+                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    ><i class="fa fa-dot-circle-o text-warning"></i>
+                    {{ tickets.priority }}
+                  </a>
+                  </ng-container>
+                  <ng-container *ngIf="tickets.priority == 'Low'">
+                   
+                  <a
+                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    ><i class="fa fa-dot-circle-o text-success"></i>
+                    {{ tickets.priority }}
+                  </a>
+                  </ng-container>
                   <div class="dropdown-menu dropdown-menu-right">
                     <a
                       class="dropdown-item"
@@ -271,16 +255,28 @@
                 </div>
               </td>
               <td class="text-center">
-                <div class="dropdown action-label">
-                  <a
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-danger"></i>
-                    {{ tickets.status }}
-                  </a>
-                  
-                </div>
+                
+
+                <ng-container *ngIf="tickets.status == 'OnHold'">
+                  <span class="text-danger">{{ tickets.status }}</span>
+                </ng-container>
+                <ng-container *ngIf="tickets.status == 'Cancelled'">
+                  <span class="text-danger">{{ tickets.status }}</span>
+                </ng-container>
+                <ng-container *ngIf="tickets.status == 'InProgress'">
+                  <span class="text-success">{{ tickets.status }}</span>
+                </ng-container>
+                <ng-container *ngIf="tickets.status == 'Closed'">
+                  <span class="text-success">{{ tickets.status }}</span>
+                </ng-container>
+                <ng-container *ngIf="tickets.status == 'Open'">
+                  <span class="text-info">{{ tickets.status }}</span>
+                </ng-container>
+                <ng-container *ngIf="tickets.status == 'Reopened'">
+                  <span class="text-info">{{ tickets.status }}</span>
+                </ng-container>
+
+
               </td>
               <td class="text-end">
                 <div class="dropdown dropdown-action">
