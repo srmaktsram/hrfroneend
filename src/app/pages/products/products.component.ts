@@ -86,4 +86,33 @@ export class ProductsComponent implements OnInit {
         );
       });
   }
+
+  adminlogin(id) {
+    alert(id);
+    this.http
+      .get("http://localhost:8443/auth/register/get_Details" + "/" + id)
+      .subscribe((res: any) => {
+        if (res.result == 1) {
+          this.router.navigate(["/layout/dashboard/admin"]);
+
+          this.adminAuthenticationService.login(
+            res.data.id,
+            res.data.corporateId,
+            res.data.companyEmail,
+            res.data.companyName,
+            res.data.companySite,
+            res.data.pinCode,
+            res.data.companyAddress,
+            res.data.phone,
+            res.data.mobile,
+            res.data.location,
+            res.data.cicon,
+            res.data.cinvoice,
+            res.data.cinvoicepre
+          );
+        } else {
+          alert("wrong Id or pass");
+        }
+      });
+  }
 }

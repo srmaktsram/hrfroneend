@@ -2,7 +2,7 @@
     <h1><u>My Products -:</u></h1>
     <div class="row">
 
-        <div class="col-md-4" *ngFor="let item of productDetailsGroup">
+        <div class="col-md-4" *ngFor="let item of productDetails">
             <ng-container *ngIf="item.packageName=='Platinum(Multi-User)'">
                 <mat-card class="designCard" style="border-top-color: orangered;border-bottom-color: orangered">
                     <div class="d-flex justify-content-between">
@@ -11,24 +11,22 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Total Employee</h4>
-                        <h4>{{item.totalUser}}</h4>
+                        <h4>{{item.group[0].totalUser}}</h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Purchage Date</h4>
-                        <h4>{{item.from |customDate}} </h4>
+                        <h4>{{item.group[0].from |customDate}} </h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Expairy Date</h4>
-                        <h4>{{item.to |customDate}} </h4>
+                        <h4>{{item.group[0].to |customDate}} </h4>
                     </div>
-                    <ng-container *ngFor="let data of totalRemaining">
-                        <div *ngIf="data.packageName=='Platinum(Multi-User)'">
-                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
-                        </div>
-                    </ng-container>
+                    
+                            <h4 style="text-align: center;margin-top: 15px;">{{item.group[0].remaininigDays}} Days Remaining</h4>
+                     
 
                     <div class="raisedButton">
-                        <button mat-raised-button color="primary" routerLink="/login/adminlogin">Launch
+                        <button mat-raised-button color="primary"  (click)="adminlogin(item.id)">Launch
                             dashboard</button>
                     </div>
 
@@ -44,24 +42,22 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Total Employee</h4>
-                        <h4>{{item.totalUser}}</h4>
+                        <h4>{{item.group[0].totalUser}}</h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Purchage Date</h4>
-                        <h4>{{item.from |customDate}} </h4>
+                        <h4>{{item.group[0].from |customDate}} </h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Expairy Date</h4>
-                        <h4>{{item.to |customDate}} </h4>
+                        <h4>{{item.group[0].to |customDate}} </h4>
                     </div>
 
-                    <ng-container *ngFor="let data of totalRemaining">
-                        <div *ngIf="data.packageName=='Platinum(Single-User)'">
-                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
-                        </div>
-                    </ng-container>
+                   
+                            <h4 style="text-align: center;margin-top: 15px;">{{item.group[0].remaininigDays}} Days Remaining</h4>
+                     
                     <div class="raisedButton">
-                        <button mat-raised-button color="primary" routerLink="/login/adminlogin">Launch
+                        <button mat-raised-button color="primary"  (click)="adminlogin(item.id)">Launch
                             dashboard</button>
                     </div>
 
@@ -76,23 +72,21 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Total Employee</h4>
-                        <h4>{{item.totalUser}}</h4>
+                        <h4>{{item.group[0].totalUser}}</h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Purchage Date</h4>
-                        <h4>{{item.from |customDate}} </h4>
+                        <h4>{{item.group[0].from |customDate}} </h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Expairy Date</h4>
-                        <h4>{{item.to |customDate}} </h4>
+                        <h4>{{item.group[0].to |customDate}} </h4>
                     </div>
-                    <ng-container *ngFor="let data of totalRemaining">
-                        <div *ngIf="data.packageName=='Diamond(Multi-User)'">
-                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
-                        </div>
-                    </ng-container>
+                   
+                            <h4 style="text-align: center;margin-top: 15px;">{{item.group[0].remaininigDays}} Days Remaining</h4>
+                    
                     <div class="raisedButton">
-                        <button mat-raised-button color="primary" routerLink="/login/adminlogin">Launch
+                        <button mat-raised-button color="primary"  (click)="adminlogin(item.id)">Launch
                             dashboard</button>
                     </div>
 
@@ -106,23 +100,21 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Total Employee</h4>
-                        <h4>{{item.totalUser}}</h4>
+                        <h4>{{item.group[0].totalUser}}</h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Purchage Date</h4>
-                        <h4>{{item.from |customDate }} </h4>
+                        <h4>{{item.group[0].from |customDate }} </h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Expairy Date</h4>
-                        <h4>{{item.to |customDate}} </h4>
+                        <h4>{{item.group[0].to |customDate}} </h4>
                     </div>
-                    <ng-container *ngFor="let data of totalRemaining">
-                        <div *ngIf="data.packageName=='Diamond(Single-User)'">
-                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
-                        </div>
-                    </ng-container>
+                  
+                            <h4 style="text-align: center;margin-top: 15px;">{{item.group[0].remaininigDays}} Days Remaining</h4>
+                      
                     <div class="raisedButton">
-                        <button mat-raised-button color="primary" routerLink="/login/adminlogin">Launch
+                        <button mat-raised-button color="primary"  (click)="adminlogin(item.id)">Launch
                             dashboard</button>
                     </div>
 
@@ -138,24 +130,22 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Total Employee</h4>
-                        <h4>{{item.totalUser}}</h4>
+                        <h4>{{item.group[0].totalUser}}</h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Purchage Date</h4>
-                        <h4>{{item.from |customDate}} </h4>
+                        <h4>{{item.group[0].from |customDate}} </h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Expairy Date</h4>
-                        <h4>{{item.to |customDate}} </h4>
+                        <h4>{{item.group[0].to |customDate}} </h4>
                     </div>
-                    <ng-container *ngFor="let data of totalRemaining">
-                        <div *ngIf="data.packageName=='Enterprise(Multi-User)'">
-                            <h4 style="text-align: center;margin-top: 15px;">{{data.remaininigDays}} Days Remaining</h4>
-                        </div>
-                    </ng-container>
+                   
+                            <h4 style="text-align: center;margin-top: 15px;">{{item.group[0].remaininigDays}} Days Remaining</h4>
+                    
 
                     <div class="raisedButton">
-                        <button mat-raised-button color="primary" routerLink="/login/adminlogin">Launch
+                        <button mat-raised-button color="primary"  (click)="adminlogin(item.id)">Launch
                             dashboard</button>
                     </div>
                 </mat-card>
@@ -169,23 +159,21 @@
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Total Employee</h4>
-                        <h4>{{item.totalUser}}</h4>
+                        <h4>{{item.group[0].totalUser}}</h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Purchage Date</h4>
-                        <h4>{{item.from |customDate}} </h4>
+                        <h4>{{item.group[0].from |customDate}} </h4>
                     </div>
                     <div class="d-flex justify-content-between">
                         <h4>Expairy Date</h4>
                         <h4>Unlimited </h4>
                     </div>
-                    <ng-container *ngFor="let data of totalRemaining">
-                        <div *ngIf="data.packageName =='Basic(Single-User)'">
-                            <h4 style="text-align: center;margin-top: 15px;">Lifetime Unlimited Access</h4>
-                        </div>
-                    </ng-container>
+                   
+                            <h4 style="text-align: center;margin-top: 15px;">Lifetime  Access</h4>
+                       
                     <div class="raisedButton">
-                        <button mat-raised-button color="primary" routerLink="/login/adminlogin">Launch
+                        <button mat-raised-button color="primary" (click)="adminlogin(item.id)">Launch
                             dashboard</button>
                     </div>
                 </mat-card>
