@@ -4,11 +4,16 @@
     <perfect-scrollbar [scrollIndicators]="false">
       <div id="sidebar-menu" class="sidebar-menu">
         <ul *ngIf="sidebarMenus.default">
-          <ng-container *ngIf="user_type == 'mainadmin'||'subadmin'">
+          <ng-container
+            *ngIf="user_type == 'mainadmin' || user_type == 'subadmin'"
+          >
             <li class="menu-title">
-              <span>Main-Admin</span>
+              <span *ngIf="user_type == 'admin'">Main-Admin</span>
+              <span *ngIf="user_type == 'subadmin'">Sub-Admin</span>
             </li>
+
             <li
+              *ngIf="dashboardwrite == 'true' || dashboardread == 'true'"
               class="submenu"
               [ngClass]="{ active: urlComplete.mainUrl === 'dashboard' }"
             >
@@ -33,13 +38,20 @@
                       active: urlComplete.subUrl === 'admindashboard'
                     }"
                     href="javascript:"
-                    >Main-Admin Dashboard</a
+                    >Dashboard</a
                   >
                 </li>
               </ul>
             </li>
-
             <li
+              *ngIf="
+                freeClientsread == 'true' ||
+                freeClientswrite == 'true' ||
+                premiumClientsread == 'true' ||
+                premiumClientswrite == 'true' ||
+                visitorClientsread == 'true' ||
+                visitorClientswrite == 'true'
+              "
               [ngClass]="{
                 active:
                   urlComplete.subUrl === 'freeClients' ||
@@ -52,7 +64,14 @@
               >
             </li>
 
-            <li
+            <li  *ngIf="
+            demoaffiliateread == 'true' ||
+            demoaffiliatewrite == 'true' ||
+            premiumaffiliateread == 'true' ||
+            premiumaffiliatewrite == 'true' ||
+            visitoraffiliateread == 'true' ||
+            visitoraffiliatewrite == 'true'
+          "
               [ngClass]="{
                 active:
                   urlComplete.subUrl === 'demoaffiliate' ||
@@ -73,7 +92,7 @@
               }"
             >
               <a routerLink="/layout/mainadmin/packages/packageslist"
-                ><i class="la la-code-fork"></i> <span>Packages</span></a
+                ><i class="la la-code-fork"></i> <span>Promo Codes</span></a
               >
             </li>
             <li
@@ -128,15 +147,13 @@
                 active:
                   urlComplete.subUrl === 'approved-commission' ||
                   urlComplete.subUrl === 'commission' ||
-                  urlComplete.subUrl === 'reject-commission' 
-                 
+                  urlComplete.subUrl === 'reject-commission'
               }"
             >
               <a routerLink="/layout/mainadmin/commission/commission"
                 ><i class="la la-usd"></i> <span>Commisions</span></a
               >
             </li>
-            
 
             <li
               class="submenu"
@@ -254,31 +271,29 @@
                 ><i class="la la-google-wallet"></i> <span>My Wallet</span></a
               >
             </li>
-            
+
             <li
               [ngClass]="{
-                active:
-                 
-                  urlComplete.subUrl === 'withdrawalhistorylist'
+                active: urlComplete.subUrl === 'withdrawalhistorylist'
               }"
             >
-              <a routerLink="/layout/affiliates/withdrawalhistory/withdrawalhistorylist"
-                ><i class="la la-history"></i> <span>Withdrawal History</span></a
+              <a
+                routerLink="/layout/affiliates/withdrawalhistory/withdrawalhistorylist"
+                ><i class="la la-history"></i>
+                <span>Withdrawal History</span></a
               >
             </li>
 
             <li
               [ngClass]="{
-                active:
-                 
-                  urlComplete.subUrl === 'wallet-historylist'
+                active: urlComplete.subUrl === 'wallet-historylist'
               }"
             >
-              <a routerLink="/layout/affiliates/wallet-history/wallet-historylist"
+              <a
+                routerLink="/layout/affiliates/wallet-history/wallet-historylist"
                 ><i class="la la-history"></i> <span>Wallet History</span></a
               >
             </li>
-
 
             <!-- <li
               [ngClass]="{
@@ -307,8 +322,7 @@
 
             <li
               [ngClass]="{
-                active:
-                  urlComplete.subUrl === 'client-dashboard'
+                active: urlComplete.subUrl === 'client-dashboard'
               }"
             >
               <a routerLink="/layout/client/client-dashboard"
@@ -318,25 +332,22 @@
 
             <li
               [ngClass]="{
-                active:
-                 
-                  urlComplete.subUrl === 'clientsprofile'
+                active: urlComplete.subUrl === 'clientsprofile'
               }"
             >
               <a routerLink="/layout/client/clientsprofile"
                 ><i class="la la-users"></i> <span>My Details</span></a
               >
             </li>
-            
           </ng-container>
           <!-- ///////////////////////////service  admin -->
 
           <ng-container
             *ngIf="
               user_type != 'mainadmin' &&
+              user_type != 'subadmin' &&
               user_type != 'affiliate' &&
-              user_type != 'client' &&
-              user_type != 'subadmin'
+              user_type != 'client'
             "
           >
             <li class="menu-title">

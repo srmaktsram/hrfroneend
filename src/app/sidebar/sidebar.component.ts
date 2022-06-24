@@ -24,10 +24,28 @@ export class SidebarComponent implements OnInit {
   groups = {};
   user_type: any;
 
+  //subadmin autority
+  dashboardread = sessionStorage.getItem("dashboardread");
+  dashboardwrite = sessionStorage.getItem("dashboardwrite");
+  freeClientsread = sessionStorage.getItem("freeClientsread");
+  freeClientswrite = sessionStorage.getItem("freeClientswrite");
+  invoicesread = sessionStorage.getItem("invoicesread");
+  invoiceswrite = sessionStorage.getItem("invoiceswrite");
+  ordersread = sessionStorage.getItem("ordersread");
+  orderswrite = sessionStorage.getItem("orderswrite");
+  premiumClientsread = sessionStorage.getItem("premiumClientsread");
+  premiumClientswrite = sessionStorage.getItem("premiumClientswrite");
+  ticketsread = sessionStorage.getItem("ticketsread");
+  ticketswrite = sessionStorage.getItem("ticketswrite");
+  visitorClientsread = sessionStorage.getItem("visitorClientsread");
+  visitorClientswrite = sessionStorage.getItem("visitorClientswrite");
+  //////
   constructor(
     private router: Router,
     private allModulesService: AllModulesService
   ) {
+    console.log(this.dashboardread, this.dashboardwrite);
+
     this.user_type = sessionStorage.getItem("user_type");
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
