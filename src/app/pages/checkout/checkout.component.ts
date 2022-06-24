@@ -73,6 +73,7 @@ export class CheckoutComponent implements OnInit {
       address: this.checkoutForm.value.address,
       aId: this.cookieService.get("aid"),
       status: "0",
+      renewStatus: "0",
     };
 
     this.http
@@ -205,6 +206,7 @@ export class CheckoutComponent implements OnInit {
       companyAddress: this.checkoutForm.value.address,
       packageName: this.packageName,
       status: 1,
+      renewStatus: 1,
     };
 
     this.http
