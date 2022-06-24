@@ -64,6 +64,7 @@ export class CheckoutComponent implements OnInit {
   getPayment() {
     let corporateId = this.corporateId;
     var obj = {
+      packageName: this.packageName,
       panNo: this.checkoutForm.value.panNo,
       gstNo: this.checkoutForm.value.gstNo,
       mobile: this.checkoutForm.value.mobile,
@@ -144,6 +145,7 @@ export class CheckoutComponent implements OnInit {
         console.log("this is the testPayment>>>>>", responce);
         if (responce.data === "Signature Verified") {
           /////create premium details
+          this.createAdminRegister();
           this.premium(paymentId);
         }
       });
@@ -166,7 +168,7 @@ export class CheckoutComponent implements OnInit {
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
         console.log("this is the  PreviousDetails>>>>>>>>>>>", res);
-        this.createAdminRegister(res);
+
         this.saveOrderDetails();
       });
   }
@@ -188,8 +190,11 @@ export class CheckoutComponent implements OnInit {
         this.router.navigate(["/products"]);
       });
   }
-  createAdminRegister(res: any) {
+  createAdminRegister() {
+    const generateId = Math.random().toString(36).slice(5);
+
     var obj = {
+      adminId: generateId,
       corporateId: this.corporateId,
       amount: this.totalAmount,
       companyPan: this.checkoutForm.value.panNo,
@@ -200,7 +205,6 @@ export class CheckoutComponent implements OnInit {
       companyAddress: this.checkoutForm.value.address,
       packageName: this.packageName,
       status: 1,
-      expiryDate: res.expiryDate,
     };
 
     this.http
