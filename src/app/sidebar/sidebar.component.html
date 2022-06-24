@@ -8,12 +8,12 @@
             *ngIf="user_type == 'mainadmin' || user_type == 'subadmin'"
           >
             <li class="menu-title">
-              <span *ngIf="user_type == 'admin'">Main-Admin</span>
+              <span *ngIf="user_type == 'mainadmin'">Main-Admin</span>
               <span *ngIf="user_type == 'subadmin'">Sub-Admin</span>
             </li>
 
             <li
-              *ngIf="dashboardwrite == 'true' || dashboardread == 'true'"
+              *ngIf="user_type=='mainadmin||dashboardwrite == 'true' || dashboardread == 'true'"
               class="submenu"
               [ngClass]="{ active: urlComplete.mainUrl === 'dashboard' }"
             >

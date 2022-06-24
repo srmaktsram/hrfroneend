@@ -440,6 +440,7 @@
                       (click)="checkCheckBoxvalueOrders($event, 1)"
                     />
                   </td>
+                </tr>
                 <tr>
                   <td>Affiliate</td>
                   <td class="text-center">
@@ -454,6 +455,7 @@
                       (click)="checkCheckBoxvalueAffiliate($event, 1)"
                     />
                   </td>
+                </tr>
                 <tr>
                   <td>Promo Code</td>
                   <td class="text-center">
@@ -783,6 +785,81 @@
                     <input
                       type="checkbox" [checked]="orders[1].write"
                       (click)="checkCheckBoxvalueOrders($event, 1)"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Affiliate</td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="Affiliates[0].read"
+                      (click)="checkCheckBoxvalueAffiliate($event, 0)"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="Affiliates[1].write"
+                      (click)="checkCheckBoxvalueAffiliate($event, 1)"
+                    />
+                  </td>
+                  </tr>
+                <tr>
+                  <td>Promo Code</td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="PromoCodes[0].read"
+                      (click)="checkCheckBoxvaluePromoCode($event, 0)"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="PromoCodes[1].write"
+                      (click)="checkCheckBoxvaluePromoCode($event, 1)"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Kyc</td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="Kyc[0].read"
+                      (click)="checkCheckBoxvalueKyc($event, 0)"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="Kyc[1].write"
+                      (click)="checkCheckBoxvalueKyc($event, 1)"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Withdrawal Request</td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="Withdrawals[0].read"
+                      (click)="checkCheckBoxvalueWithdrawal($event, 0)"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="Withdrawals[1].write"
+                      (click)="checkCheckBoxvalueWithdrawal($event, 1)"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Affiliate Commisions</td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="Commisions[0].read"
+                      (click)="checkCheckBoxvalueCommisions($event, 0)"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="Commisions[1].write"
+                      (click)="checkCheckBoxvalueCommisions($event, 1)"
                     />
                   </td>
                 </tr>
