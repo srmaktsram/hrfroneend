@@ -54,12 +54,14 @@
                                 </div>
                                 <div class="col-sm-5">
 
-                                    <input name="ctl00$ContentPlaceHolder1$login_TextBox" type="text"
-                                        id="ContentPlaceHolder1_login_TextBox" class="form-control" readonly="readonly"
+                                    <input #corpoId  type="text" 
+                                        class="form-control" 
                                         value="{{corporateId}}" maxlength="15" style="font-size: small;" />
                                 </div>
+                            <div >
+                                <button  class="btn-primary"  (click)="fillData(corpoId.value)">Check Id</button>
 
-
+                            </div>
                                
 
                             </div>
