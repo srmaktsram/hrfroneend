@@ -15,7 +15,7 @@ export class AdminLoginComponent implements OnInit {
   public subscription: Subscription;
   public Toggledata = true;
   form = new FormGroup({
-    username: new FormControl("", [Validators.required]),
+    username: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required]),
   });
 
@@ -24,13 +24,12 @@ export class AdminLoginComponent implements OnInit {
   }
 
   constructor(
-    // private storage: WebStorage,
     private http: HttpClient,
     private router: Router,
     private adminAuthenticationService: MainAdminAuthenticationService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   sendTo() {
     this.router.navigate(["/login/forgot"]);
   }
@@ -55,9 +54,7 @@ export class AdminLoginComponent implements OnInit {
       });
   }
 
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe();
-  // }
+
 
   iconLogle() {
     this.Toggledata = !this.Toggledata;

@@ -32,7 +32,7 @@
             </div>
             <div class="text-center">
                 <select class="form-select" aria-label="Default select example" class="selectEmployee"
-                    (click)="getUser($event.target.value,'dSingle')" (click)="getPlan('dSingle',select1.value);">
+                    (input)="getUser($event.target.value,'dSingle')" (input)="getPlan('dSingle',select1.value);">
                     <option>Select Employee</option>
                     <option value="50">Up To 50 Employee</option>
                     <option value="150">Up To 150 Employee</option>
@@ -48,7 +48,7 @@
 
                 <div class="selectFlex">
                     <select #select1 class="form-select" aria-label="Default select example" class="selectWidth"
-                        (click)="getPlan('dSingle',select1.value);">
+                        (change)="getPlan('dSingle',select1.value);">
                         <option>Select Year</option>
                         <option value="3">For 3 Month</option>
                         <option value="6">For 6 Month</option>
@@ -69,7 +69,8 @@
                     Details?</a>
             </div>
             <div class="button">
-                <button mat-raised-button color="accent" (click)="getData('dSingle')">Make Payment</button>
+                <button mat-raised-button color="accent" (click)="getData('dSingle')" [disabled]=isShow3>Make
+                    Payment</button>
             </div>
 
         </mat-card>
@@ -125,7 +126,8 @@
             </div>
 
             <div class="button">
-                <button mat-raised-button color="accent" (click)="getData('dMulti')">Make Payment</button>
+                <button mat-raised-button color="accent" (click)="getData('dMulti')" [disabled]=isShow4>Make
+                    Payment</button>
 
             </div>
 
@@ -185,7 +187,8 @@
                     Details?</a>
             </div>
             <div class="button">
-                <button mat-raised-button color="accent" (click)="getData('ptSingle')">Make Payment</button>
+                <button mat-raised-button color="accent" (click)="getData('ptSingle')" [disabled]=isShow1>Make
+                    Payment</button>
             </div>
 
         </mat-card>
@@ -239,7 +242,8 @@
             </div>
 
             <div class="button">
-                <button mat-raised-button color="accent" (click)="getData('ptMulti')">Make Payment</button>
+                <button mat-raised-button color="accent" (click)="getData('ptMulti')" [disabled]=isShow2>Make
+                    Payment</button>
             </div>
         </mat-card>
     </div>
@@ -264,10 +268,7 @@
                     <option value="1000">Up To 1000 employee</option>
                     <option value="1500">More than 1000 Employee</option>
                 </select>
-                <!-- <p style="margin-top: 15px;">1 Month :{{epMultioneMonthAmount}} /- Rupees</p>
-                <p>+ GST 18%</p>
 
-                <h4>Our Plan</h4> -->
 
                 <h1 style="color:rgb(87, 15, 202) ;margin-top: 30px;">...Coming Soon...</h1>
                 <div class="selectFlex">
@@ -297,7 +298,8 @@
             </div>
 
             <div class="button">
-                <button mat-raised-button color="accent" (click)=" getData('epMulti')">Make Payment</button>
+                <button mat-raised-button color="accent" (click)=" getData('epMulti')" [disabled]=isShow5>Make
+                    Payment</button>
 
             </div>
 
@@ -404,4 +406,3 @@
         </div>
     </div>
 </div>
-

@@ -37,7 +37,7 @@ export class ForgotComponent implements OnInit {
   get f() {
     return this.form.controls;
   }
-  ngOnInit() {}
+  ngOnInit() { }
   submit() {
     this.CustomControler = 0;
     // this.storage.Forgotpassword(this.form.value);
@@ -75,7 +75,6 @@ export class ForgotComponent implements OnInit {
           this.sendOtpDisable = false;
           if (this.newOtp) {
             let otp = this.newOtp;
-
             var now = new Date();
             var time = now.getTime();
             var expiryTime = time + 30000;
@@ -97,7 +96,6 @@ export class ForgotComponent implements OnInit {
           this.sendOtpDisable = false;
           if (this.newOtp) {
             let otp = this.newOtp;
-
             var now = new Date();
             var time = now.getTime();
             var expiryTime = time + 30000;

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
 
@@ -42,10 +43,10 @@ export class HrregistrationComponent implements OnInit {
   ngOnInit() {
 
     this.registerForm = this.formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
-      email: ["", [Validators.required]],
-      phone: ["", [Validators.required]],
+      firstName: ["", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]],
+      lastName: ["", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]],
+      email: ["", [Validators.required, Validators.email,]],
+      phone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       gender: ["", [Validators.required]],
       password: ["", [Validators.required]],
       confirmPassword: ["", [Validators.required]],
@@ -54,20 +55,19 @@ export class HrregistrationComponent implements OnInit {
     })
 
     this.addloginForm = this.formBuilder.group({
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]],
 
     })
     this.route.queryParams
       .subscribe(params => {
         this.signIn = params.signIn;
-        console.log(this.signIn, "///////////////////////<<<<<<<<<<<<<<<");
       })
 
 
     this.resetForm = this.formBuilder.group({
-      verifiedEmail: ["", Validators.required],
-      otp: ["", Validators.required],
+      verifiedEmail: ["", [Validators.required, Validators.email]],
+      otp: ["", [Validators.required]],
 
     })
 
@@ -119,7 +119,6 @@ export class HrregistrationComponent implements OnInit {
       securityAns: this.registerForm.value.securityAns,
     }
     this.http.post("http://localhost:8443/mainadmin/create/registration", obj).subscribe((res: any) => {
-      console.log(res, "res>>>>>>>>KKKKKKKKKKKK")
       window.location.replace("http://localhost:4200")
       this.hrUserAuthenticationService.login(
         res.id,
@@ -141,7 +140,6 @@ export class HrregistrationComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
-        console.log(res, ">>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<")
         if (res.result == 2) {
           window.location.replace("http://localhost:4200")
 
@@ -169,9 +167,7 @@ export class HrregistrationComponent implements OnInit {
 
   sendOtp() {
     let email = this.resetForm.value.verifiedEmail
-    console.log(email, "kj..........<<<<<<<<<<<<<<>>>>>>>>>>>")
     this.http.post("http://localhost:8443/mainadmin/hr_user/sendOtp", { email }).subscribe((res: any) => {
-      console.log(res, "postApi====XXXXXXXXXXXXXXXXXXXX")
       this.otp = res.otp;
       if (this.otp) {
         let date = new Date();
@@ -187,7 +183,6 @@ export class HrregistrationComponent implements OnInit {
 
   }
   showVeryfyOtp() {
-
     let OTP = this.cookieService.get("otp");
     let otpInput = this.resetForm.value.otp;
     if (otpInput === OTP) {
@@ -213,7 +208,6 @@ export class HrregistrationComponent implements OnInit {
 
         if (password === confirmPassword) {
           this.http.patch("http://localhost:8443/mainadmin/hr_users/changePassword", { email, password }).subscribe((res: any) => {
-            console.log(res, "whatEver>>>>>>>>>>>>>>>>>>>....")
           })
         }
 
