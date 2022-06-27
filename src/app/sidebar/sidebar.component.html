@@ -14,7 +14,7 @@
 
             <li
 
-              *ngIf="user_type=='mainadmin||dashboardwrite == 'true' || dashboardread == 'true'"
+              *ngIf="dashboardwrite == 'true' || dashboardread == 'true'"
 
               class="submenu"
               [ngClass]="{ active: urlComplete.mainUrl === 'dashboard' }"
