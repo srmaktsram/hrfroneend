@@ -58,10 +58,6 @@ export class PricingComponent implements OnInit {
 
 
 
-  constructor(private router: Router, private cookieService: CookieService) { }
-
-
-  ngOnInit() { }
 
   constructor(
     private router: Router,

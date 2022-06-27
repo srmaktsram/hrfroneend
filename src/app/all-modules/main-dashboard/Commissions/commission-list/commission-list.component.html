@@ -15,27 +15,26 @@
       <div class="col-auto float-end ms-auto">
         <div class="view-icons">
           <a
-              routerLink="/layout/mainadmin/commission/commission"
-              class="list-view btn btn-link active"
-              ><i class="fa fa-bars"></i
-            ></a>
-            <a
-              routerLink="/layout/mainadmin/reject-commission/reject-commission"
-              class="list-view btn btn-link active"
-              ><i class="fa fa-bars"></i
-            ></a>
-            <a
-              routerLink="/layout/mainadmin/approved-commission/approved-commission"
-              class="list-view btn btn-link active"
-              ><i class="fa fa-bars"></i
-            ></a>
+            routerLink="/layout/mainadmin/commission/commission"
+            class="list-view btn btn-link active"
+            ><i class="fa fa-bars"></i
+          ></a>
+          <a
+            routerLink="/layout/mainadmin/reject-commission/reject-commission"
+            class="list-view btn btn-link active"
+            ><i class="fa fa-bars"></i
+          ></a>
+          <a
+            routerLink="/layout/mainadmin/approved-commission/approved-commission"
+            class="list-view btn btn-link active"
+            ><i class="fa fa-bars"></i
+          ></a>
         </div>
       </div>
     </div>
   </div>
   <!-- /Page Header -->
 
-  
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
@@ -59,11 +58,17 @@
           </thead>
           <tbody>
             <tr *ngFor="let client of data; let i = index">
-              
               <td>{{ client.aId }}</td>
               <td>{{ client.companyName }}</td>
               <td>{{ client.amount }}</td>
-              <td>{{ client.amount*(30/100) }}</td>
+              <td>
+                <ng-container *ngIf="client.renewStatus == 0">
+                  {{ client.amount * (30 / 100) }}<span class="text-success"> (New-30%)</span>
+                </ng-container>
+                <ng-container *ngIf="client.renewStatus == 1">
+                  {{ client.amount * (10 / 100) }}<span class="text-success"> (Renew-10%)</span>
+                </ng-container>
+              </td>
               <td>{{ client.packageName }}</td>
               <td>{{ client.createDate }}</td>
               <td>
@@ -86,7 +91,7 @@
                     Reject</a
                   >
                 </div>
-              </td> 
+              </td>
             </tr>
           </tbody>
         </table>
@@ -116,7 +121,11 @@
         <div class="modal-btn delete-action">
           <div class="row">
             <div class="col-6">
-              <a class="btn btn-primary continue-btn" (click)="getRejectStatus()">Yes</a>
+              <a
+                class="btn btn-primary continue-btn"
+                (click)="getRejectStatus()"
+                >Yes</a
+              >
             </div>
 
             <div class="col-6">
@@ -153,7 +162,11 @@
         <div class="modal-btn delete-action">
           <div class="row">
             <div class="col-6">
-              <a class="btn btn-primary continue-btn" (click)="getApproveStatus()">Yes</a>
+              <a
+                class="btn btn-primary continue-btn"
+                (click)="getApproveStatus()"
+                >Yes</a
+              >
             </div>
 
             <div class="col-6">
@@ -167,9 +180,3 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
