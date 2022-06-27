@@ -84,6 +84,7 @@ export class CheckoutComponent implements OnInit {
       .subscribe((res: any) => {
         console.log("this is the create order History>>>>", res);
         if (this.packageName === "Basic(Single-User)") {
+          this.createAdminRegister();
           this.premium(0);
         } else {
           this.createOrderId();
@@ -163,6 +164,7 @@ export class CheckoutComponent implements OnInit {
       corporateId: this.corporateId,
       packageName: this.packageName,
       month: this.month,
+      companyName: this.checkoutForm.value.companyName,
     };
 
     this.http
@@ -184,6 +186,7 @@ export class CheckoutComponent implements OnInit {
           amount: this.totalAmount,
           packageName: this.packageName,
           status: 1,
+          companyName: this.checkoutForm.value.companyName,
         }
       )
       .subscribe((res: any) => {
@@ -206,7 +209,6 @@ export class CheckoutComponent implements OnInit {
       companyAddress: this.checkoutForm.value.address,
       packageName: this.packageName,
       status: 1,
-      renewStatus: 1,
     };
 
     this.http
