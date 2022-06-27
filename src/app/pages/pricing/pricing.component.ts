@@ -58,15 +58,9 @@ export class PricingComponent implements OnInit {
 
 
 
+  constructor(private router: Router, private cookieService: CookieService) { }
 
-  constructor(
-    private router: Router,
-    private cookieService: CookieService,
-    private http: HttpClient
-  ) {}
-
-
-  ngOnInit() {}
+  ngOnInit() { }
 
   getUser(event, val) {
     this.userDetails = event
