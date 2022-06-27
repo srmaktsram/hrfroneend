@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit {
   public tl: any;
   ordersId: any;
   packageName: any;
+  getdata: any;
   _window(): any {
     return window;
   }
@@ -52,6 +53,7 @@ export class CheckoutComponent implements OnInit {
       panNo: new FormControl(""),
       gstNo: new FormControl(""),
       userCount: new FormControl(""),
+      corporateId: new FormControl(""),
     });
 
     this.totalAmount = this.route.snapshot.queryParams["totalAmount"];
@@ -215,6 +217,33 @@ export class CheckoutComponent implements OnInit {
       .post("http://localhost:8443/checkout/create/adminRegister", obj)
       .subscribe((res: any) => {
         console.log("this is the adminRegister>>>>>>>>>>>>>>>>>>>", res);
+      });
+  }
+
+  fillData(val) {
+    var corporateId = val;
+    this.http
+      .get(
+        "http://localhost:8443/checkout/orders/getAdminRegister" +
+          "/" +
+          corporateId
+      )
+      .subscribe((res: any) => {
+        console.log(",.,.,.,.,.,.<><><><><><", res);
+
+        this.getdata = res;
+        if (this.getdata) {
+          this.checkoutForm.patchValue({
+            companyName: this.getdata.companyName,
+            email: this.getdata.companyEmail,
+            mobile: this.getdata.mobile,
+            address: this.getdata.companyAddress,
+            panNo: this.getdata.companyPan,
+            gstNo: this.getdata.companyGst,
+          });
+        } else {
+          alert("Invalid Corporate Id ........");
+        }
       });
   }
 
