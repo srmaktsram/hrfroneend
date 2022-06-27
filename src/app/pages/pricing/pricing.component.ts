@@ -46,6 +46,17 @@ export class PricingComponent implements OnInit {
   public dSingleoneMonthAmount: any;
   public dMultioneMonthAmount: any;
 
+  userDetails: any = null;
+  priceDetails: any = null;
+
+  public isShow1 = true;
+  public isShow2 = true;
+  public isShow3 = true;
+  public isShow4 = true;
+  public isShow5 = true;
+
+
+
   constructor(private router: Router, private cookieService: CookieService) { }
 
 
@@ -53,55 +64,126 @@ export class PricingComponent implements OnInit {
 
 
   getUser(event, val) {
+    this.userDetails = event
+
     if (val == "ptSingle") {
+
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+        this.isShow1 = false;
+      } else {
+        this.isShow1 = true;
+      }
       this.PtSingleUser = event;
       this.ptSingleoneMonthAmount = this.PtSingleMonthCost * this.PtSingleUser;
     }
 
     if (val == "ptMulti") {
+
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+        this.isShow2 = false;
+      } else {
+        this.isShow2 = true;
+      }
       this.PtMultiUser = event;
       this.ptMultioneMonthAmount = this.PtMultiMonthCost * this.PtMultiUser;
     }
 
     if (val == "dSingle") {
+
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+        this.isShow3 = false;
+      } else {
+        this.isShow3 = true;
+      }
       this.dSingleUser = event;
       this.dSingleoneMonthAmount = this.dSingleMonthCost * this.dSingleUser;
     }
 
     if (val == "dMulti") {
+
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+        this.isShow4 = false;
+      } else {
+        this.isShow4 = true;
+      }
       this.dMultiUser = event;
       this.dMultioneMonthAmount = this.dMultiMonthCost * this.dMultiUser;
     }
 
     if (val == "epMulti") {
+
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+        this.isShow5 = false;
+      } else {
+        this.isShow5 = true;
+      }
       this.epMultiUser = event;
       this.epMultioneMonthAmount = this.epMultiMonthCost * this.epMultiUser;
     }
   }
   getPlan(val, val2) {
+    this.priceDetails = val2;
+
     if (val == "ptSingle") {
+
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+
+        this.isShow1 = false;
+      } else {
+        this.isShow1 = true;
+      }
+
       this.PtSingleUserMonth = val2;
       this.totalPtSingleMonthAmount =
         this.ptSingleoneMonthAmount * this.PtSingleUserMonth;
     }
 
     if (val == "ptMulti") {
+
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+
+        this.isShow2 = false;
+      } else {
+        this.isShow2 = true;
+      }
+
       this.PtMultiUserMonth = val2;
       this.totalPtMultiMonthAmount =
         this.ptMultioneMonthAmount * this.PtMultiUserMonth;
     }
 
     if (val == "dSingle") {
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+
+        this.isShow3 = false;
+      } else {
+        this.isShow3 = true;
+      }
+
       this.dSingleUserMonth = val2;
       this.totaldSingleMonthAmount =
         this.dSingleoneMonthAmount * this.dSingleUserMonth;
     }
     if (val == "dMulti") {
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+
+        this.isShow4 = false;
+      } else {
+        this.isShow4 = true;
+      }
+
       this.dMultiUserMonth = val2;
       this.totaldMultiMonthAmount =
         this.dMultioneMonthAmount * this.dMultiUserMonth;
     }
     if (val == "epMulti") {
+      if (this.userDetails > 0 && this.priceDetails > 0) {
+
+        this.isShow5 = false;
+      } else {
+        this.isShow5 = true;
+      }
+
       this.epMultiUserMonth = val2;
       this.totalEpMonthAmount =
         this.epMultioneMonthAmount * this.epMultiUserMonth;
@@ -110,7 +192,6 @@ export class PricingComponent implements OnInit {
   getData(val) {
     this.corporateId = sessionStorage.getItem("corporateId");
 
-    console.log(sessionStorage.getItem("currentUser"), this.corporateId)
     if (sessionStorage.getItem("currentUser") == "HrUserLogin") {
       if (val == "dSingle") {
         this.router.navigate(["/checkouts"], {

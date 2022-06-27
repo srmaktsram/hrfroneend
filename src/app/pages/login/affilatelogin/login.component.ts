@@ -15,7 +15,7 @@ export class AffiliateLoginComponent implements OnInit {
   public subscription: Subscription;
   public Toggledata = true;
   form = new FormGroup({
-    username: new FormControl("", [Validators.required]),
+    username: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required]),
   });
 
@@ -28,9 +28,9 @@ export class AffiliateLoginComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private affilateAuthenticationService: AffilateAuthenticationService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   sendTo() {
     this.router.navigate(["/login/forgot"], {
       queryParams: {

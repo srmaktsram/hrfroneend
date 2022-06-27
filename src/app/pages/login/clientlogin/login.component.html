@@ -2,9 +2,7 @@
   <div class="container">
     <!-- Account Logo -->
     <div class="account-logo">
-      <a href="javascript:"
-        ><img src="assets/img/logo2.png" alt="Dreamguy's Technologies"
-      /></a>
+      <a href="javascript:"><img src="assets/img/logo2.png" alt="Dreamguy's Technologies" /></a>
     </div>
     <!-- /Account Logo -->
 
@@ -17,16 +15,15 @@
         <form [formGroup]="form" (ngSubmit)="submit()">
           <div class="form-group">
             <label>Username Address</label>
-            <input class="form-control" type="text" formControlName="username" id="username" [ngClass]="{'is-invalid': f['username'].touched && f['username'].invalid}"/>
-            <div class="text-danger" *ngIf="CustomControler ?.status === 'username'">
-                {{ CustomControler.message }}
-            </div>
-            <div *ngIf="f['username'].touched && f['username'].invalid" class="text-danger">
-                <div *ngIf="f['username'].errors && f['username'].errors['required']">Username is required.</div>
-                <div *ngIf="f['username'].errors && f['username'].errors['username']">
-                    Please, enter valid Username address.
-                </div>
-            </div>
+            <input class="form-control" type="text" formControlName="username" id="username" />
+            <ng-container *ngIf="form.get('username').invalid && form.get('username').touched">
+              <small *ngIf="form.get('username').errors.required" style="color: red">
+                Email is required.
+              </small>
+              <small *ngIf="form.get('username').errors.email" style=" color: red;">
+                Invalid Email Address.
+              </small>
+            </ng-container>
           </div>
           <div class="form-group">
             <div class="row">
@@ -34,26 +31,28 @@
                 <label>Password</label>
               </div>
               <div class="col-auto">
-                <a class="text-muted" role="button" (click)="sendTo()" >
+                <a class="text-muted" role="button" (click)="sendTo()">
                   Forgot password?
                 </a>
               </div>
             </div>
-              <div class="position-relative">
-                <input class="form-control" [type]="Toggledata ? 'password' : 'text'" formControlName="password" id="password" [ngClass]="{'is-invalid': f['password'].touched && f['password'].invalid}"/>
-                <span [ngClass]="Toggledata == true ? 'fa toggle-password fa-eye' : 'fa toggle-password fa-eye-slash'" (click)="iconLogle()"></span>
+            <div class="position-relative">
+              <input class="form-control" [type]="Toggledata ? 'password' : 'text'" formControlName="password"
+                id="password" [ngClass]="{'is-invalid': f['password'].touched && f['password'].invalid}" />
+              <span [ngClass]="Toggledata == true ? 'fa toggle-password fa-eye' : 'fa toggle-password fa-eye-slash'"
+                (click)="iconLogle()"></span>
             </div>
             <div *ngIf="f['password'].touched && f['password'].invalid" class="text-danger">
-                <div *ngIf="f['password'].errors && f['password'].errors['required']">
+              <div *ngIf="f['password'].errors && f['password'].errors['required']">
                 Password is required.
-                </div>
+              </div>
             </div>
             <div class="text-danger" *ngIf="CustomControler ?.status === 'password'">{{ CustomControler.message }}</div>
           </div>
           <div class="form-group text-center">
             <button class="btn btn-primary account-btn" [disabled]="form.invalid" type="submit">Login</button>
           </div>
-          
+
         </form>
         <!-- /Account Form -->
       </div>

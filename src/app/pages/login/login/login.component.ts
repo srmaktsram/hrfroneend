@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   public subscription: Subscription;
   public Toggledata = true;
   form = new FormGroup({
-    email: new FormControl("", [Validators.required]),
+    email: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required]),
   });
 
@@ -25,13 +25,12 @@ export class LoginComponent implements OnInit {
   }
 
   constructor(
-    // private storage: WebStorage,
     private http: HttpClient,
     private router: Router,
     private adminAuthenticationService: AdminAuthenticationService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   sendTo() {
     this.router.navigate(["/login/forgot"], {
       queryParams: {

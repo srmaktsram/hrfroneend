@@ -15,7 +15,7 @@ export class UserLoginComponent implements OnInit {
   public subscription: Subscription;
   public Toggledata = true;
   form = new FormGroup({
-    email: new FormControl("", [Validators.required]),
+    email: new FormControl("", [Validators.required, Validators.email]),
     password: new FormControl("", [Validators.required]),
   });
 
@@ -34,9 +34,9 @@ export class UserLoginComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private http: HttpClient,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   submit() {
     let userId = this.form.value.email;
