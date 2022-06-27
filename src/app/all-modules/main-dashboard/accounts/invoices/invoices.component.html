@@ -137,19 +137,30 @@
               <td>{{ invoice.totalamount }}</td>
               <td class="text-center">
                 <div class="dropdown action-label">
+                  <ng-container *ngIf="invoice.invoiceType=='Paid'">
                   <a
                     class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                   >
-                    <i class="fa fa-dot-circle-o"></i> {{ invoice.invoiceType }}
+                    <i class="fa fa-dot-circle-o text-success"></i> {{ invoice.invoiceType }}
                   </a>
+                </ng-container>
+                  <ng-container *ngIf="invoice.invoiceType=='Refunded'">
+                  <a
+                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-dot-circle-o text-danger"></i> {{ invoice.invoiceType }}
+                  </a>
+                </ng-container>
                   <div class="dropdown-menu">
                     
                     <a
                       class="dropdown-item"
                       (click)="updateInvoiceType('Paid', invoice.id)"
-                      ><i class="fa fa-dot-circle-o text-danger"></i> Paid</a
+                      ><i class="fa fa-dot-circle-o text-success"></i> Paid</a
                     >
                     <a
                       class="dropdown-item"

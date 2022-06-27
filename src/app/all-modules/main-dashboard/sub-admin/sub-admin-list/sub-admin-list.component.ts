@@ -50,6 +50,11 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   tickets: any;
   invoices: any;
   orders: any;
+  Affiliates: any;
+  Kyc: any;
+  Withdrawals: any;
+  Commisions: any;
+  PromoCodes: any;
   searchUser: any;
   searchMobile: any;
   searchEmail: any;
@@ -86,6 +91,26 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       { id: 1, write: false },
     ];
     this.orders = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Affiliates = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Kyc = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Withdrawals = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Commisions = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.PromoCodes = [
       { id: 0, read: false },
       { id: 1, write: false },
     ];
@@ -149,6 +174,11 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.tickets = client[0]?.tickets;
     this.invoices = client[0]?.invoices;
     this.orders = client[0]?.orders;
+    this.Affiliates = client[0]?.affiliates;
+    this.Kyc = client[0]?.kyc;
+    this.Withdrawals = client[0]?.withdrawals;
+    this.Commisions = client[0]?.commisions;
+    this.PromoCodes = client[0]?.promocode;
   }
   //Reset form
   public resetForm() {
@@ -169,11 +199,19 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       tickets: this.tickets,
       invoices: this.invoices,
       orders: this.orders,
+      Affiliates: this.Affiliates,
+      Kyc: this.Kyc,
+      Withdrawals: this.Withdrawals,
+      Commisions: this.Commisions,
+      PromoCodes: this.PromoCodes,
       adminId: this.adminId,
     };
     let id = this.editId;
     this.http
-      .patch("http://localhost:8443/mainadmin/subAdmin/updateSubAdmin" + "/" + id, obj)
+      .patch(
+        "http://localhost:8443/mainadmin/subAdmin/updateSubAdmin" + "/" + id,
+        obj
+      )
       .subscribe((data) => {
         this.getSubAdmins();
       });
@@ -197,6 +235,11 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       tickets: this.tickets,
       invoices: this.invoices,
       orders: this.orders,
+      Affiliates: this.Affiliates,
+      PromoCodes: this.PromoCodes,
+      Commisions: this.Commisions,
+      Withdrawals: this.Withdrawals,
+      Kyc: this.Kyc,
     };
     this.http
       .post(
@@ -205,7 +248,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         this.getSubAdmins();
-
       });
 
     $("#add_client").modal("hide");
@@ -216,11 +258,14 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   //Delete Client
   onDelete() {
     let id = this.tempId;
-    let obj={
-      status:2
-    }
+    let obj = {
+      status: 2,
+    };
     this.http
-      .patch("http://localhost:8443/mainadmin/subAdmin/deleteSubAdmin" + "/" + id, obj)
+      .patch(
+        "http://localhost:8443/mainadmin/subAdmin/deleteSubAdmin" + "/" + id,
+        obj
+      )
       .subscribe((data) => {
         this.getSubAdmins();
       });
@@ -311,7 +356,9 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/subAdmin/updateSubAdminStatus" + "/" + id,
+        "http://localhost:8443/mainadmin/subAdmin/updateSubAdminStatus" +
+          "/" +
+          id,
         { status }
       )
       .subscribe((res) => {
@@ -439,6 +486,101 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     }
   }
 
+  checkCheckBoxvalueAffiliate(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.orders.findIndex((obj) => obj.id == val);
+        this.Affiliates[objIndex].read = true;
+      } else {
+        const objIndex = this.Affiliates.findIndex((obj) => obj.id == val);
+        this.Affiliates[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.Affiliates.findIndex((obj) => obj.id == val);
+        this.Affiliates[objIndex].write = true;
+      } else {
+        const objIndex = this.Affiliates.findIndex((obj) => obj.id == val);
+        this.Affiliates[objIndex].write = false;
+      }
+    }
+  }
+  checkCheckBoxvaluePromoCode(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.orders.findIndex((obj) => obj.id == val);
+        this.PromoCodes[objIndex].read = true;
+      } else {
+        const objIndex = this.PromoCodes.findIndex((obj) => obj.id == val);
+        this.PromoCodes[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.PromoCodes.findIndex((obj) => obj.id == val);
+        this.PromoCodes[objIndex].write = true;
+      } else {
+        const objIndex = this.PromoCodes.findIndex((obj) => obj.id == val);
+        this.PromoCodes[objIndex].write = false;
+      }
+    }
+  }
+  checkCheckBoxvalueKyc(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.Kyc.findIndex((obj) => obj.id == val);
+        this.Kyc[objIndex].read = true;
+      } else {
+        const objIndex = this.Kyc.findIndex((obj) => obj.id == val);
+        this.Kyc[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.Kyc.findIndex((obj) => obj.id == val);
+        this.Kyc[objIndex].write = true;
+      } else {
+        const objIndex = this.Kyc.findIndex((obj) => obj.id == val);
+        this.Kyc[objIndex].write = false;
+      }
+    }
+  }
+  checkCheckBoxvalueWithdrawal(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.Withdrawals.findIndex((obj) => obj.id == val);
+        this.Withdrawals[objIndex].read = true;
+      } else {
+        const objIndex = this.Withdrawals.findIndex((obj) => obj.id == val);
+        this.Withdrawals[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.Withdrawals.findIndex((obj) => obj.id == val);
+        this.Withdrawals[objIndex].write = true;
+      } else {
+        const objIndex = this.Withdrawals.findIndex((obj) => obj.id == val);
+        this.Withdrawals[objIndex].write = false;
+      }
+    }
+  }
+  checkCheckBoxvalueCommisions(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.Commisions.findIndex((obj) => obj.id == val);
+        this.Commisions[objIndex].read = true;
+      } else {
+        const objIndex = this.Commisions.findIndex((obj) => obj.id == val);
+        this.Commisions[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.Commisions.findIndex((obj) => obj.id == val);
+        this.Commisions[objIndex].write = true;
+      } else {
+        const objIndex = this.Commisions.findIndex((obj) => obj.id == val);
+        this.Commisions[objIndex].write = false;
+      }
+    }
+  }
   checkCheckBoxvalueOrders(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {

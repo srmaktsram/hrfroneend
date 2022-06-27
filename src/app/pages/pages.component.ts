@@ -6,32 +6,30 @@ import { HrUserAuthenticationService } from "../core/storage/authentication-hrus
   styleUrls: ["./pages.component.css"],
 })
 export class PagesComponent implements OnInit {
-  public isShow = true
-  public firstName: any
+  public isShow = true;
+  public firstName: any;
   public user_type: any;
-  constructor(private hrUserAuthenticationService: HrUserAuthenticationService) { }
+  constructor(
+    private hrUserAuthenticationService: HrUserAuthenticationService
+  ) {}
 
   ngOnInit() {
-
     this.firstName = sessionStorage.getItem("firstName");
     this.user_type = sessionStorage.getItem("user_type");
 
-    console.log(this.firstName, "kjhdkjwehjwj>>>>>>>>>>>>>");
+    // console.log(this.firstName, "kjhdkjwehjwj>>>>>>>>>>>>>");
 
-    this.visible()
-
+    this.visible();
   }
 
   logout() {
-    this.hrUserAuthenticationService.logout()
-    window.location.replace("")
+    this.hrUserAuthenticationService.logout();
+    window.location.replace("");
   }
 
   visible() {
     if (this.firstName) {
       this.isShow = false;
     }
-
   }
-
 }

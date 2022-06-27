@@ -12,6 +12,7 @@ export class ProductsComponent implements OnInit {
   AllProductList: any;
   public productDetails: any;
   public corporateId: any;
+  public productDetailsGroup = [];
   todayDate: Date;
   date1: any;
   date2: any;
@@ -68,23 +69,50 @@ export class ProductsComponent implements OnInit {
         "http://localhost:8443/mainadmin/myProducts" + "/" + this.corporateId
       )
       .subscribe((res: any) => {
-        this.productDetails = res[0].group;
-        console.log(
-          "<><><><><><>< this.totalRemaining><><><><><><><><><",
-          this.productDetails
-        );
+        this.productDetails = res;
+        console.log("<><><><><><>< this.totalRemaining><><><><><><><><><", res);
         this.productDetails.map((item) => {
-          let data = this.calculateExpiryDays(item.to);
+          let data = this.calculateExpiryDays(item.group[0].to);
           var obj = {
             remaininigDays: data,
-            packageName: item.packageName
-          }
+            packageName: item.packageName,
+          };
           this.totalRemaining.push(obj);
+          this.productDetailsGroup.push(item.group[0]);
         });
         console.log(
           "<><><><><><>< this.totalRemaining><><><><><><><><><",
           this.totalRemaining
         );
+      });
+  }
+
+  adminlogin(id) {
+    alert(id);
+    this.http
+      .get("http://localhost:8443/auth/register/get_Details" + "/" + id)
+      .subscribe((res: any) => {
+        if (res.result == 1) {
+          this.router.navigate(["/layout/dashboard/admin"]);
+
+          this.adminAuthenticationService.login(
+            res.data.id,
+            res.data.corporateId,
+            res.data.companyEmail,
+            res.data.companyName,
+            res.data.companySite,
+            res.data.pinCode,
+            res.data.companyAddress,
+            res.data.phone,
+            res.data.mobile,
+            res.data.location,
+            res.data.cicon,
+            res.data.cinvoice,
+            res.data.cinvoicepre
+          );
+        } else {
+          alert("wrong Id or pass");
+        }
       });
   }
 }

@@ -59,12 +59,12 @@ export class CheckoutComponent implements OnInit {
     this.corporateId = this.route.snapshot.queryParams["corporate"];
     this.packageName = this.route.snapshot.queryParams["packageName"];
     this.month = this.route.snapshot.queryParams["days"] * 30;
-    // alert(this.month);
   }
 
   getPayment() {
     let corporateId = this.corporateId;
     var obj = {
+      packageName: this.packageName,
       panNo: this.checkoutForm.value.panNo,
       gstNo: this.checkoutForm.value.gstNo,
       mobile: this.checkoutForm.value.mobile,
@@ -73,6 +73,7 @@ export class CheckoutComponent implements OnInit {
       address: this.checkoutForm.value.address,
       aId: this.cookieService.get("aid"),
       status: "0",
+      renewStatus: "0",
     };
 
     this.http
@@ -82,10 +83,10 @@ export class CheckoutComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log("this is the create order History>>>>", res);
-
-        if (res) {
-          this.createOrderId();
+        if (this.packageName === "Basic(Single-User)") {
+          this.premium(0);
         } else {
+          this.createOrderId();
         }
       });
   }
@@ -145,6 +146,7 @@ export class CheckoutComponent implements OnInit {
         console.log("this is the testPayment>>>>>", responce);
         if (responce.data === "Signature Verified") {
           /////create premium details
+          this.createAdminRegister();
           this.premium(paymentId);
         }
       });
@@ -162,12 +164,12 @@ export class CheckoutComponent implements OnInit {
       packageName: this.packageName,
       month: this.month,
     };
-    console.log(obj, "ggggggggggggggggggggggggggggggggggg")
+
     this.http
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
         console.log("this is the  PreviousDetails>>>>>>>>>>>", res);
-        this.createAdminRegister(res);
+
         this.saveOrderDetails();
       });
   }
@@ -176,8 +178,8 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post(
         "http://localhost:8443/checkout/create/Details" +
-        "/" +
-        this.corporateId,
+          "/" +
+          this.corporateId,
         {
           amount: this.totalAmount,
           packageName: this.packageName,
@@ -186,10 +188,14 @@ export class CheckoutComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log("this is the orderDetails>>>>>>>>>>", res);
+        this.router.navigate(["/products"]);
       });
   }
-  createAdminRegister(res: any) {
+  createAdminRegister() {
+    const generateId = Math.random().toString(36).slice(5);
+
     var obj = {
+      adminId: generateId,
       corporateId: this.corporateId,
       amount: this.totalAmount,
       companyPan: this.checkoutForm.value.panNo,
@@ -200,7 +206,7 @@ export class CheckoutComponent implements OnInit {
       companyAddress: this.checkoutForm.value.address,
       packageName: this.packageName,
       status: 1,
-      expiryDate: res.expiryDate,
+      renewStatus: 1,
     };
 
     this.http

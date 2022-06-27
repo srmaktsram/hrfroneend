@@ -3,7 +3,7 @@
     <div class="matDiv">
         <mat-card class="mat" style="border:2px solid #5d9cec">
             <div class="page-header orange">
-                <h4 style="color:white;">Free User(Single-User)</h4>
+                <h4 style="color:white;">Basic(Single-User)</h4>
             </div>
             <div class="text-center">
                 <p>Use Free For 90 Days</p>
@@ -20,7 +20,7 @@
             </div>
 
             <div class="button">
-                <button mat-raised-button color="accent" routerLink="/pages/checkout">Make Payment</button>
+                <button mat-raised-button color="accent"  (click)="getData('Basic(Single-User)')">Make Payment</button>
             </div>
         </mat-card>
     </div>
@@ -376,8 +376,6 @@
         </div>
     </div>
 </div>
-
-
 <div id="enter_prise" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -393,8 +391,6 @@
         </div>
     </div>
 </div>
-
-
 <div id="freeUser" class="modal custom-modal fade" role="dialog">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
