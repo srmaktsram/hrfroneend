@@ -19,6 +19,13 @@
     display:flex;
     justify-content: flex-end;
  }
+ .checkId {
+   width: 100px;
+   margin-left: 55px;
+   margin-top: 10px;
+   border-radius: 5px;
+   border: 2px solid black;
+ }
  @media(min-width:700px) and (max-width:780px){
     .headerCom{
         display: none;

@@ -52,16 +52,17 @@
                                 <div class="col-sm-4 text-center">
                                     <span id="ContentPlaceHolder1_Label2">Corporate ID:-</span>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-5"  style="display:flex;">
 
                                     <input #corpoId  type="text" 
                                         class="form-control" 
-                                        value="{{corporateId}}" maxlength="15" style="font-size: small;" />
+                                        value="{{corporateId}}" maxlength="15" style="font-size: small; width: 150px;" />
+                                        <div  >
+                                            <button  class="btn-primary checkId "  (click)="fillData(corpoId.value)">Check Id</button>
+            
+                                        </div>
                                 </div>
-                            <div >
-                                <button  class="btn-primary"  (click)="fillData(corpoId.value)">Check Id</button>
-
-                            </div>
+                          
                                
 
                             </div>
