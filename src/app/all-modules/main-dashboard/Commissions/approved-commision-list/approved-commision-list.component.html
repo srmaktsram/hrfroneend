@@ -52,7 +52,7 @@
             <tr>
               <th>aId</th>
               <th>Company Name</th>
-              <th>Amount</th>
+              <th>Commission Amount</th>
               <th>Package Name</th>
               <th>Create Date</th>
               <th>Update Date</th>
@@ -65,7 +65,14 @@
               
               <td>{{ client.aId }}</td>
               <td>{{ client.companyName }}</td>
-              <td>{{ client.amount }}</td>
+              <td>
+                <ng-container *ngIf="client.renewStatus == 0">
+                  {{ client.amount * (30 / 100) }}<span class="text-success"> (New-30%)</span>
+                </ng-container>
+                <ng-container *ngIf="client.renewStatus == 1">
+                  {{ client.amount * (10 / 100) }}<span class="text-warning"> (Renew-10%)</span>
+                </ng-container>
+              </td>
               <td>{{ client.packageName }}</td>
               <td>{{ client.createDate }}</td>
               <td>{{ client.updateDate }}</td>
