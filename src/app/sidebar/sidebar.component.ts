@@ -47,6 +47,7 @@ export class SidebarComponent implements OnInit {
     console.log(this.dashboardread, this.dashboardwrite);
 
     this.user_type = sessionStorage.getItem("user_type");
+    alert(this.user_type)
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         $(".main-wrapper").removeClass("slide-nav");
