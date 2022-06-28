@@ -67,7 +67,14 @@
               <td>{{ data.email }}</td>
               <td>{{ data.mobile }}</td>
               <td>{{ data.packageName }}</td>
-              <td>{{ data.amount*(30/100) }}<span class="text-success"> (New-30%)</span></td>
+              <td>
+                <ng-container *ngIf="data.renewStatus == 0">
+                  {{ data.amount * (30 / 100) }}<span class="text-success"> (New-30%)</span>
+                </ng-container>
+                <ng-container *ngIf="data.renewStatus == 1">
+                  {{ data.amount * (10 / 100) }}<span class="text-success"> (Renew-10%)</span>
+                </ng-container>
+              </td>
               <td>
               <ng-container *ngIf="data.status==1">
                 <span class="text-warning">Pending</span>

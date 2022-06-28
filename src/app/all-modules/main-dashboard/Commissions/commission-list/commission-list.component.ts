@@ -78,6 +78,7 @@ export class CommissionListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/commisions/getCommisions")
       .subscribe((res: any) => {
+        console.log(res,"gettt")
         this.data = res;
       });
   }
@@ -97,6 +98,7 @@ export class CommissionListComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         this.getCommisions();
         this.commissionData = res.data;
+        console.log(this.commissionData,"LLLLLLLLLLLLLLLLL")
         this.newStatus = res.data.status;
 
         if (this.newStatus == 2) {
@@ -107,6 +109,7 @@ export class CommissionListComponent implements OnInit, OnDestroy {
             status: this.commissionData.status,
             createDate: this.commissionData.createDate,
             updateDate: this.commissionData.updateDate,
+            renewStatus: this.commissionData.renewStatus,
           };
           this.http
             .post(
@@ -115,14 +118,17 @@ export class CommissionListComponent implements OnInit, OnDestroy {
             )
             .subscribe((res: any) => {
               this.newData = res.result;
-              if (res.renewStatus == 0) {
+              console.log(res)
+              if (res.data.renewStatus == "0") {
                 this.newAmount = (parseFloat(res.data.amount) * 30) / 100;
-              } else if (res.renewStatus == 1) {
+              } else if (res.data.renewStatus == "1") {
                 this.newAmount = (parseFloat(res.data.amount) * 10) / 100;
               }
               if (this.newData == 1) {
+                console.log(this.newAmount,"new")
                 let object = {
-                  current_balance: this.newAmount
+                  
+                  current_balance: (parseFloat(this.newAmount))
                 };
                 this.http
                   .patch(

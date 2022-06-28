@@ -66,7 +66,7 @@
                   {{ client.amount * (30 / 100) }}<span class="text-success"> (New-30%)</span>
                 </ng-container>
                 <ng-container *ngIf="client.renewStatus == 1">
-                  {{ client.amount * (10 / 100) }}<span class="text-success"> (Renew-10%)</span>
+                  {{ client.amount * (10 / 100) }}<span class="text-warning"> (Renew-10%)</span>
                 </ng-container>
               </td>
               <td>{{ client.packageName }}</td>
