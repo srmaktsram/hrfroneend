@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
-import { AllModulesService } from "../../all-modules.service";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient, } from "@angular/common/http";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 declare const $: any;
 @Component({
   selector: "app-holidays",
@@ -43,17 +43,17 @@ export class HolidaysComponent implements OnInit, OnDestroy {
 
 
     this.addHolidayForm = this.formBuilder.group({
-      HolidayName: ["", [Validators.required]],
+      HolidayName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       Holidaydate: ["", [Validators.required]],
-      DaysName: ["", [Validators.required]],
+      DaysName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
     });
 
     // Edit Contact Form Validation And Getting Values
 
     this.editHolidayForm = this.formBuilder.group({
-      editHolidayName: ["", [Validators.required]],
+      editHolidayName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       editHolidayDate: ["", [Validators.required]],
-      editDaysName: ["", [Validators.required]],
+      editDaysName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
     });
   }
 

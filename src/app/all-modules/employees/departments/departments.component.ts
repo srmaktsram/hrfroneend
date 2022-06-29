@@ -43,11 +43,11 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     this.LoadDepartment();
 
     this.addDepartmentForm = this.formBuilder.group({
-      DepartmentName: ["", [Validators.required]],
+      DepartmentName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
     });
 
     this.editDepartmentForm = this.formBuilder.group({
-      DepartmentName: ["", [Validators.required]],
+      DepartmentName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
     });
   }
 

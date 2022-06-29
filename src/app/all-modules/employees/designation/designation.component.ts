@@ -44,12 +44,12 @@ export class DesignationComponent implements OnInit, OnDestroy {
     this.LoadDesignation();
 
     this.addDesignationForm = this.formBuilder.group({
-      Designation: ["", [Validators.required]],
+      Designation: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       DepartmentName: ["", [Validators.required]],
     });
 
     this.editDesignationForm = this.formBuilder.group({
-      Designation: ["", [Validators.required]],
+      Designation: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       DepartmentName: ["", [Validators.required]],
     });
   }

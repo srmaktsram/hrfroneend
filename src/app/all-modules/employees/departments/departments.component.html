@@ -78,15 +78,15 @@
                 <form (ngSubmit)="addDepartment()" [formGroup]="addDepartmentForm">
                     <div class="form-group">
                         <label>Department Name <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            [class.invalid]="addDepartmentForm.get('DepartmentName').invalid && addDepartmentForm.get('DepartmentName').touched"
-                            formControlName="DepartmentName">
-                        <div
+                        <input class="form-control" type="text" formControlName="DepartmentName">
+                        <ng-container
                             *ngIf="addDepartmentForm.get('DepartmentName').invalid && addDepartmentForm.get('DepartmentName').touched">
-                            <small
-                                *ngIf="addDepartmentForm.get('DepartmentName').invalid && addDepartmentForm.get('DepartmentName').touched"
-                                class="text-danger"> *Department Name required</small>
-                        </div>
+                            <p *ngIf="addDepartmentForm.get('DepartmentName').errors.required" class="text-danger">
+                                Department Nameis Required
+                            </p>
+                            <p *ngIf="addDepartmentForm.get('DepartmentName').errors.pattern" class="text-danger">
+                                * Department Name is must be Valid Name
+                        </ng-container>
                     </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn" type="submit">Submit</button>
@@ -115,15 +115,15 @@
                 <form (ngSubmit)="editDepartment()" [formGroup]="editDepartmentForm">
                     <div class="form-group">
                         <label>Department Name <span class="text-danger">*</span></label>
-                        <input class="form-control" value="IT Management" type="text"
-                            [class.invalid]="editDepartmentForm.get('DepartmentName').invalid && editDepartmentForm.get('DepartmentName').touched"
-                            formControlName="DepartmentName">
-                        <div
+                        <input class="form-control" value="IT Management" type="text" formControlName="DepartmentName">
+                        <ng-container
                             *ngIf="editDepartmentForm.get('DepartmentName').invalid && editDepartmentForm.get('DepartmentName').touched">
-                            <small
-                                *ngIf="editDepartmentForm.get('DepartmentName').invalid && editDepartmentForm.get('DepartmentName').touched"
-                                class="text-danger"> *Department Name required</small>
-                        </div>
+                            <p *ngIf="editDepartmentForm.get('DepartmentName').errors.required" class="text-danger">
+                                Department Nameis Required
+                            </p>
+                            <p *ngIf="editDepartmentForm.get('DepartmentName').errors.pattern" class="text-danger">
+                                * Department Name is must be Valid Name
+                        </ng-container>
                     </div>
                     <div class="submit-section">
                         <button class="btn btn-primary submit-btn">Save</button>

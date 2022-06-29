@@ -75,15 +75,15 @@
                 <form (ngSubmit)="addholidays()" [formGroup]="addHolidayForm">
                     <div class="form-group">
                         <label>Holiday Name <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            [class.invalid]="addHolidayForm.get('HolidayName').invalid && addHolidayForm.get('HolidayName').touched"
-                            formControlName="HolidayName">
-                        <div
+                        <input class="form-control" type="text" formControlName="HolidayName">
+                        <ng-container
                             *ngIf="addHolidayForm.get('HolidayName').invalid && addHolidayForm.get('HolidayName').touched">
-                            <small
-                                *ngIf="addHolidayForm.get('HolidayName').invalid && addHolidayForm.get('HolidayName').touched"
-                                class="text-danger"> *Name is required</small>
-                        </div>
+                            <p *ngIf="addHolidayForm.get('HolidayName').errors.required" class="text-danger">
+                                Holiday Name is Required
+                            </p>
+                            <p *ngIf="addHolidayForm.get('HolidayName').errors.pattern" class="text-danger">
+                                * Holiday Name is must be Valid Name
+                        </ng-container>
 
                     </div>
                     <div class="form-group">
@@ -103,14 +103,15 @@
                     </div>
                     <div class="form-group">
                         <label>Day <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            [class.invalid]="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched"
-                            formControlName="DaysName">
-                        <div *ngIf="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched">
-                            <small
-                                *ngIf="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched"
-                                class="text-danger"> *Days is required</small>
-                        </div>
+                        <input class="form-control" type="text" formControlName="DaysName">
+                        <ng-container
+                            *ngIf="addHolidayForm.get('DaysName').invalid && addHolidayForm.get('DaysName').touched">
+                            <p *ngIf="addHolidayForm.get('DaysName').errors.required" class="text-danger">
+                                Days Name is Required
+                            </p>
+                            <p *ngIf="addHolidayForm.get('DaysName').errors.pattern" class="text-danger">
+                                * Days Name is must be Valid Name
+                        </ng-container>
 
                     </div>
                     <div class="submit-section">
@@ -138,15 +139,15 @@
                 <form (ngSubmit)="editHolidays()" [formGroup]="editHolidayForm">
                     <div class="form-group">
                         <label>Holiday Name <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            [class.invalid]="editHolidayForm.get('editHolidayName').invalid && editHolidayForm.get('editHolidayName').touched"
-                            formControlName="editHolidayName">
-                        <div
+                        <input class="form-control" type="text" formControlName="editHolidayName">
+                        <ng-container
                             *ngIf="editHolidayForm.get('editHolidayName').invalid && editHolidayForm.get('editHolidayName').touched">
-                            <small
-                                *ngIf="editHolidayForm.get('editHolidayName').invalid && editHolidayForm.get('editHolidayName').touched"
-                                class="text-danger"> *Name is required</small>
-                        </div>
+                            <p *ngIf="editHolidayForm.get('editHolidayName').errors.required" class="text-danger">
+                                Holiday Name is Required
+                            </p>
+                            <p *ngIf="editHolidayForm.get('editHolidayName').errors.pattern" class="text-danger">
+                                * Holiday Name is must be Valid Name
+                        </ng-container>
 
                     </div>
                     <div class="form-group">
@@ -166,15 +167,16 @@
                     </div>
                     <div class="form-group">
                         <label>Day <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            [class.invalid]="editHolidayForm.get('editDaysName').invalid && editHolidayForm.get('editDaysName').touched"
-                            formControlName="editDaysName">
-                        <div
+                        <input class="form-control" type="text" formControlName="editDaysName">
+                        <ng-container
                             *ngIf="editHolidayForm.get('editDaysName').invalid && editHolidayForm.get('editDaysName').touched">
-                            <small
-                                *ngIf="editHolidayForm.get('editDaysName').invalid && editHolidayForm.get('editDaysName').touched"
-                                class="text-danger"> *Days is required</small>
-                        </div>
+                            <p *ngIf="editHolidayForm.get('editDaysName').errors.required" class="text-danger">
+                                Days Name is Required
+                            </p>
+                            <p *ngIf="editHolidayForm.get('editDaysName').errors.pattern" class="text-danger">
+                                * Days Name is must be Valid Name
+                        </ng-container>
+
 
                     </div>
                     <div class="submit-section">
