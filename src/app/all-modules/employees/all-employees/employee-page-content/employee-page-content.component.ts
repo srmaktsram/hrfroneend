@@ -8,6 +8,7 @@ import { DataTableDirective } from "angular-datatables";
 import { id } from "src/assets/all-modules-data/id";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 declare const $: any;
 @Component({
@@ -131,32 +132,31 @@ export class EmployeePageContentComponent implements OnInit {
   }
   ngOnInit() {
     this.loadEmployee();
+
     this.addEmployeeForm = this.formBuilder.group({
-      FirstName: ["", [Validators.required]],
-      LastName: ["", [Validators.required]],
-      UserName: ["", [Validators.required]],
+      FirstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      LastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      UserName: ["", [Validators.required, Validators.pattern('^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$')]],
       Password: ["", [Validators.required]],
       ConfirmPassword: ["", [Validators.required]],
       DepartmentName: ["", [Validators.required]],
       Designation: ["", [Validators.required]],
-      Email: ["", [Validators.required]],
-      PhoneNumber: ["", [Validators.required]],
+      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      PhoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       JoinDate: ["", [Validators.required]],
       EmployeeID: ["", [Validators.required]],
     });
 
     this.editEmployeeForm = this.formBuilder.group({
-      FirstName: ["", [Validators.required]],
-      LastName: ["", [Validators.required]],
-      UserName: ["", [Validators.required]],
-      // Password: ["", [Validators.required]],
-      // ConfirmPassword: ["", [Validators.required]],
+
+      FirstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      LastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      UserName: ["", [Validators.required, Validators.pattern('^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$')]],
       DepartmentName: ["", [Validators.required]],
       Designation: ["", [Validators.required]],
-      Email: ["", [Validators.required]],
-      PhoneNumber: ["", [Validators.required]],
+      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      PhoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       JoinDate: ["", [Validators.required]],
-
       EmployeeID: ["", [Validators.required]],
     });
   }

@@ -75,15 +75,15 @@
                 <form (ngSubmit)="addDesignation()" [formGroup]="addDesignationForm">
                     <div class="form-group">
                         <label>Designation Name <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            [class.invalid]="addDesignationForm.get('Designation').invalid && addDesignationForm.get('Designation').touched"
-                            formControlName="Designation">
-                        <div
+                        <input class="form-control" type="text" formControlName="Designation">
+                        <ng-container
                             *ngIf="addDesignationForm.get('Designation').invalid && addDesignationForm.get('Designation').touched">
-                            <small
-                                *ngIf="addDesignationForm.get('Designation').invalid && addDesignationForm.get('Designation').touched"
-                                class="text-danger"> Designation is required</small>
-                        </div>
+                            <p *ngIf="addDesignationForm.get('Designation').errors.required" class="text-danger">
+                                Designation Name is Required
+                            </p>
+                            <p *ngIf="addDesignationForm.get('Designation').errors.pattern" class="text-danger">
+                                * Designation Name is must be Valid Name
+                        </ng-container>
                     </div>
                     <div class="form-group">
                         <label>Department <span class="text-danger">*</span></label>
@@ -127,22 +127,22 @@
                 <form (ngSubmit)="editDesignation()" [formGroup]="editDesignationForm">
                     <div class="form-group">
                         <label>Designation Name <span class="text-danger">*</span></label>
-                        <input class="form-control" type="text"
-                            [class.invalid]="editDesignationForm.get('Designation').invalid && editDesignationForm.get('Designation').touched"
-                            formControlName="Designation">
-                        <div
+                        <input class="form-control" type="text" formControlName="Designation">
+                        <ng-container
                             *ngIf="editDesignationForm.get('Designation').invalid && editDesignationForm.get('Designation').touched">
-                            <small
-                                *ngIf="editDesignationForm.get('Designation').invalid && editDesignationForm.get('Designation').touched"
-                                class="text-danger"> *Department Name required</small>
-                        </div>
+                            <p *ngIf="editDesignationForm.get('Designation').errors.required" class="text-danger">
+                                Designation Name is Required
+                            </p>
+                            <p *ngIf="editDesignationForm.get('Designation').errors.pattern" class="text-danger">
+                                * Designation Name is must be Valid Name
+                        </ng-container>
                     </div>
                     <div class="form-group">
                         <label>Department <span class="text-danger">*</span></label>
                         <select class="form-select form-control"
                             [class.invalid]="editDesignationForm.get('DepartmentName').invalid && editDesignationForm.get('DepartmentName').touched"
                             formControlName="DepartmentName">
-                            <option [value]="null" disabled selected>Select Country</option>
+                            <option>Select Country</option>
                             <option *ngFor="let data of dropdownData" [value]="data.departmentName">
                                 {{data.departmentName}}</option>
                         </select>
