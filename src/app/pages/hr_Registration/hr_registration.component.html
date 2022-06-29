@@ -17,7 +17,7 @@
                         <div class="row register-form">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" formControlName="firstName"
+                                    <input type="text" maxlength="20" class="form-control" formControlName="firstName"
                                         placeholder="First Name *" value="" />
                                 </div>
                                 <ng-container
@@ -26,16 +26,14 @@
                                     <p *ngIf="registerForm.get('firstName').errors.required" style="color: red">
                                         First Name is required.
                                     </p>
-                                    <p *ngIf="registerForm.get('firstName').errors.minlength" style=" color: red;">
-                                        FirstName must be grater than two alphabet.
-                                    </p>
-                                    <p *ngIf="registerForm.get('firstName').errors.whitespace " style=" color: red;">
+                                    <p *ngIf="registerForm.get('firstName').errors.pattern" style=" color: red;">
                                         First Name must be a valid name.
                                     </p>
 
+
                                 </ng-container>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" formControlName="lastName"
+                                    <input type="text" class="form-control" maxlength="20" formControlName="lastName"
                                         placeholder="Last Name *" value="" />
                                 </div>
                                 <ng-container
@@ -44,13 +42,9 @@
                                     <p *ngIf="registerForm.get('lastName').errors.required" style="color: red">
                                         Last Name is required.
                                     </p>
-                                    <p *ngIf="registerForm.get('lastName').errors.minlength " style=" color: red;">
-                                        Last Name must be grater than two alphabet.
-                                    </p>
-                                    <p *ngIf="registerForm.get('lastName').errors.whitespace " style=" color: red;">
+                                    <p *ngIf="registerForm.get('lastName').errors.pattern" style=" color: red;">
                                         Last Name must be a valid name.
                                     </p>
-
                                 </ng-container>
                                 <div class="form-group">
                                     <input type="password" class="form-control" formControlName="password"
@@ -268,7 +262,7 @@
                                             (click)="showVeryfyOtp()" /> -->
 
                                         <button class="btn btn-primary otpWidth" [disabled]="resetForm.invalid"
-                                            type="submit" (click)="showVeryfyOtp()">Send OTP</button>
+                                            type="submit" (click)="showVeryfyOtp()">VeryFy OTP</button>
                                     </div>
                                 </div>
                             </div>
