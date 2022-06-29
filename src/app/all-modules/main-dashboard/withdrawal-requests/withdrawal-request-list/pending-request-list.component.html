@@ -70,7 +70,11 @@
               <th>Mobile</th>
               <th>Create Date</th>
               <th>Bank Details</th>
-              <th>Action</th>
+              <th *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (withdrawalrequestwrite == 'true'))
+            ">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -113,7 +117,11 @@
                 </tr>
               </td>
 
-              <td>
+              <td *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (withdrawalrequestwrite == 'true'))
+            ">
                 <div class="d-inline p-2 bg-primary text-white">
                   <a
                     data-bs-toggle="modal"

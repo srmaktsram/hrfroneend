@@ -23,6 +23,7 @@ export class SidebarComponent implements OnInit {
   members = {};
   groups = {};
   user_type: any;
+  
 
   //subadmin autority
   dashboardread = sessionStorage.getItem("dashboardread");
@@ -31,20 +32,31 @@ export class SidebarComponent implements OnInit {
   freeClientswrite = sessionStorage.getItem("freeClientswrite");
   invoicesread = sessionStorage.getItem("invoicesread");
   invoiceswrite = sessionStorage.getItem("invoiceswrite");
-  ordersread = sessionStorage.getItem("ordersread");
-  orderswrite = sessionStorage.getItem("orderswrite");
+  subadminread = sessionStorage.getItem("subadminread");
+  subadminwrite = sessionStorage.getItem("subadminwrite");
   premiumClientsread = sessionStorage.getItem("premiumClientsread");
   premiumClientswrite = sessionStorage.getItem("premiumClientswrite");
   ticketsread = sessionStorage.getItem("ticketsread");
   ticketswrite = sessionStorage.getItem("ticketswrite");
   visitorClientsread = sessionStorage.getItem("visitorClientsread");
   visitorClientswrite = sessionStorage.getItem("visitorClientswrite");
+  affiliatesread = sessionStorage.getItem("affiliatesread");
+  affiliateswrite = sessionStorage.getItem("affiliateswrite");
+  commissionsread = sessionStorage.getItem("commissionsread");
+  commissionswrite = sessionStorage.getItem("commissionswrite");
+  paymentsread = sessionStorage.getItem("paymentsread");
+  paymentswrite = sessionStorage.getItem("paymentswrite");
+  kycread = sessionStorage.getItem("kycread");
+  kycwrite = sessionStorage.getItem("kycwrite");
+  withdrawalrequestread = sessionStorage.getItem("withdrawalrequestread");
+  withdrawalrequestwrite = sessionStorage.getItem("withdrawalrequestwrite");
+  promocoderead = sessionStorage.getItem("promocoderead");
+  promocodewrite = sessionStorage.getItem("promocodewrite");
   //////
   constructor(
     private router: Router,
     private allModulesService: AllModulesService
   ) {
-    console.log(this.dashboardread, this.dashboardwrite);
 
     this.user_type = sessionStorage.getItem("user_type");
     alert(this.user_type)

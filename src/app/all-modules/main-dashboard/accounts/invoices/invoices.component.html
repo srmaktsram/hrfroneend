@@ -13,16 +13,20 @@
         </ul>
       </div>
 
-
-     
       <div class="col-auto float-end ms-auto">
-        <a  (click)="csv()" class="btn add-btn  text-regular" 
-          >Invoices CSV</a
-        >
+        <a (click)="csv()" class="btn add-btn text-regular">Invoices CSV</a>
       </div>
 
-      <div class="col-auto float-end ms-auto">
-        <a routerLink="/layout/mainadmin/accounts/create-invoice" class="btn add-btn"
+      <div
+        *ngIf="
+          user_type == 'mainadmin' ||
+          (user_type === 'subadmin' && invoiceswrite == 'true')
+        "
+        class="col-auto float-end ms-auto"
+      >
+        <a
+          routerLink="/layout/mainadmin/accounts/create-invoice"
+          class="btn add-btn"
           ><i class="fa fa-plus"></i> Create Invoice</a
         >
       </div>
@@ -85,7 +89,7 @@
           (input)="searchInvoiceType($event.target.value)"
         >
           <option value="">Select</option>
-          
+
           <option value="Paid">Paid</option>
           <option value="Refunded">Refunded</option>
         </select>
@@ -118,14 +122,24 @@
               <th>Refund/Paid</th>
               <th>Amount</th>
               <th>Invoice Type</th>
-              <th class="text-end">Action</th>
+              <th
+                class="text-end"
+                *ngIf="
+                  user_type == 'mainadmin' ||
+                  (user_type === 'subadmin' && invoiceswrite == 'true')
+                "
+              >
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let invoice of invoices; let i = index">
               <td>{{ i + 1 }}</td>
               <td>
-                <a routerLink="/layout/mainadmin/accounts/invoice-view"  [queryParams]="{ id: invoice.id }"
+                <a
+                  routerLink="/layout/mainadmin/accounts/invoice-view"
+                  [queryParams]="{ id: invoice.id }"
                   >INV-{{ invoice.number }}</a
                 >
               </td>
@@ -135,28 +149,33 @@
               <td>{{ invoice.due_date | customDate }}</td>
               <td>{{ invoice.updateDate | customDate }}</td>
               <td>{{ invoice.totalamount }}</td>
-              <td class="text-center">
-                <div class="dropdown action-label">
-                  <ng-container *ngIf="invoice.invoiceType=='Paid'">
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-success"></i> {{ invoice.invoiceType }}
-                  </a>
-                </ng-container>
-                  <ng-container *ngIf="invoice.invoiceType=='Refunded'">
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-danger"></i> {{ invoice.invoiceType }}
-                  </a>
-                </ng-container>
-                  <div class="dropdown-menu">
-                    
+              <td class="text-center" >
+                <div class="dropdown action-label" >
+                  <ng-container *ngIf="invoice.invoiceType == 'Paid'">
+                    <a
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-success"></i>
+                      {{ invoice.invoiceType }}
+                    </a>
+                  </ng-container>
+                  <ng-container *ngIf="invoice.invoiceType == 'Refunded'">
+                    <a
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-danger"></i>
+                      {{ invoice.invoiceType }}
+                    </a>
+                  </ng-container>
+                  <div class="dropdown-menu" *ngIf="
+                  user_type == 'mainadmin' ||
+                  (user_type === 'subadmin' &&
+                    (invoiceswrite == 'true'))
+                ">
                     <a
                       class="dropdown-item"
                       (click)="updateInvoiceType('Paid', invoice.id)"
@@ -171,7 +190,13 @@
                   </div>
                 </div>
               </td>
-              <td class="text-end">
+              <td
+                class="text-end"
+                *ngIf="
+                  user_type == 'mainadmin' ||
+                  (user_type === 'subadmin' && invoiceswrite == 'true')
+                "
+              >
                 <div class="dropdown dropdown-action">
                   <a
                     class="action-icon dropdown-toggle"
@@ -182,7 +207,8 @@
                   <div class="dropdown-menu dropdown-menu-right">
                     <a
                       class="dropdown-item"
-                      routerLink="/layout/mainadmin/accounts/edit-invoice" [queryParams]="{ id: invoice.id }"
+                      routerLink="/layout/mainadmin/accounts/edit-invoice"
+                      [queryParams]="{ id: invoice.id }"
                       ><i class="fa fa-pencil m-r-5"></i> Edit</a
                     >
                     <a
@@ -191,8 +217,7 @@
                       [queryParams]="{ id: invoice.id }"
                       ><i class="fa fa-eye m-r-5"></i> View</a
                     >
-                    
-                   
+
                     <!-- <a class="dropdown-item"
                       ><i class="fa fa-file-pdf-o m-r-5"></i> Download</a> -->
                     <a

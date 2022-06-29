@@ -27,6 +27,8 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
   public dtTrigger: Subject<any> = new Subject();
   adminId: string;
+  user_type: string;
+  invoiceswrite: string;
 
   constructor(
     private router: Router,
@@ -35,6 +37,8 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     sessionStorage.removeItem("invoiceNo");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.invoiceswrite = sessionStorage.getItem("invoiceswrite");
     
   }
 

@@ -11,7 +11,9 @@ export class AuthGuardSubAdmin implements CanActivate {
   canActivate(): boolean {
     if (sessionStorage.getItem("currentUser") == "SubAdminLogin") {
       return true;
-    } else {
+    }
+    
+    else {
       this._router.navigate([""]);
       return false;
     }

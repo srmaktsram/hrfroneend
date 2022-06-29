@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ClientsRoutingModule } from "./packages-routing.module";
+import { ClientsRoutingModule } from "./promocodes-routing.module";
 import { DataTablesModule } from "angular-datatables";
 
-import { ClientsComponent } from "./packages.component";
-import { ClientsListComponent } from "./packages-list/packages-list.component";
+import { ClientsComponent } from "./promocodes.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
+import { ClientsListComponent } from "./promocodes-list/promocodes-list.component";
 
 @NgModule({
   declarations: [ClientsComponent, ClientsListComponent],
@@ -19,4 +19,4 @@ import { BsDatepickerModule } from "ngx-bootstrap/datepicker";
     BsDatepickerModule.forRoot(),
   ],
 })
-export class PackagesModule {}
+export class PromocodesModule {}

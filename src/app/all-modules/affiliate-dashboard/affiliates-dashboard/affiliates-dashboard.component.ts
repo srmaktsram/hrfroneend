@@ -122,6 +122,8 @@ export class AffiliateAdminDashboardComponent implements OnInit {
   }
   public getWallet() {
     let id=this.aId
+    alert(id)
+
 
     this.http
       .get(
@@ -130,6 +132,7 @@ export class AffiliateAdminDashboardComponent implements OnInit {
 
       )
       .subscribe((res: any) => {
+
         this.totalIncome = res.total_balance;
         this.totalWithdraw = res.total_withdraw;
       });

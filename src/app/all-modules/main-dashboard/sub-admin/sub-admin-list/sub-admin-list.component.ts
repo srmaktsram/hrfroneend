@@ -49,7 +49,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   visitorClients: any;
   tickets: any;
   invoices: any;
-  orders: any;
+  subadmins: any;
   Affiliates: any;
   Kyc: any;
   Withdrawals: any;
@@ -58,13 +58,18 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   searchUser: any;
   searchMobile: any;
   searchEmail: any;
-
+  payments: any;
+  user_type: string;
+  subadminwrite: string;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.subadminwrite = sessionStorage.getItem("subadminwrite");
+
 
     this.dashboard = [
       { id: 0, read: false },
@@ -90,7 +95,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       { id: 0, read: false },
       { id: 1, write: false },
     ];
-    this.orders = [
+    this.subadmins = [
       { id: 0, read: false },
       { id: 1, write: false },
     ];
@@ -114,6 +119,12 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       { id: 0, read: false },
       { id: 1, write: false },
     ];
+   
+    this.payments = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+   
   }
 
   ngOnInit() {
@@ -152,7 +163,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/mainadmin/subAdmin/getSubAdmins")
       .subscribe((res: any) => {
-        console.log(res,"kkkkkkk")
         this.data = res;
         this.srch = [...this.data];
       });
@@ -174,12 +184,13 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.visitorClients = client[0]?.visitorClients;
     this.tickets = client[0]?.tickets;
     this.invoices = client[0]?.invoices;
-    this.orders = client[0]?.orders;
+    this.subadmins = client[0]?.subadmins;
     this.Affiliates = client[0]?.affiliates;
     this.Kyc = client[0]?.kyc;
     this.Withdrawals = client[0]?.withdrawals;
     this.Commisions = client[0]?.commisions;
     this.PromoCodes = client[0]?.promocode;
+    this.payments = client[0]?.payments;
   }
   //Reset form
   public resetForm() {
@@ -199,12 +210,13 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       visitorClients: this.visitorClients,
       tickets: this.tickets,
       invoices: this.invoices,
-      orders: this.orders,
-      Affiliates: this.Affiliates,
-      Kyc: this.Kyc,
-      Withdrawals: this.Withdrawals,
-      Commisions: this.Commisions,
-      PromoCodes: this.PromoCodes,
+      subadmins: this.subadmins,
+      affiliates: this.Affiliates,
+      kyc: this.Kyc,
+      withdrawals: this.Withdrawals,
+      commisions: this.Commisions,
+      promocode: this.PromoCodes,
+      payments: this.payments,
       adminId: this.adminId,
     };
     let id = this.editId;
@@ -235,9 +247,10 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       visitorClients: this.visitorClients,
       tickets: this.tickets,
       invoices: this.invoices,
-      orders: this.orders,
+      subadmins: this.subadmins,
       Affiliates: this.Affiliates,
       PromoCodes: this.PromoCodes,
+      payments: this.payments,
       Commisions: this.Commisions,
       Withdrawals: this.Withdrawals,
       Kyc: this.Kyc,
@@ -386,6 +399,25 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       }
     }
   }
+  checkCheckBoxvaluePayment(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.payments.findIndex((obj) => obj.id == val);
+        this.payments[objIndex].read = true;
+      } else {
+        const objIndex = this.payments.findIndex((obj) => obj.id == val);
+        this.payments[objIndex].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        const objIndex = this.payments.findIndex((obj) => obj.id == val);
+        this.payments[objIndex].write = true;
+      } else {
+        const objIndex = this.payments.findIndex((obj) => obj.id == val);
+        this.payments[objIndex].write = false;
+      }
+    }
+  }
 
   checkCheckBoxvaluePremiumClients(event, val) {
     if (val == 0) {
@@ -490,7 +522,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   checkCheckBoxvalueAffiliate(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
+        const objIndex = this.Affiliates.findIndex((obj) => obj.id == val);
         this.Affiliates[objIndex].read = true;
       } else {
         const objIndex = this.Affiliates.findIndex((obj) => obj.id == val);
@@ -509,7 +541,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   checkCheckBoxvaluePromoCode(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
+        const objIndex = this.PromoCodes.findIndex((obj) => obj.id == val);
         this.PromoCodes[objIndex].read = true;
       } else {
         const objIndex = this.PromoCodes.findIndex((obj) => obj.id == val);
@@ -582,22 +614,22 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       }
     }
   }
-  checkCheckBoxvalueOrders(event, val) {
+  checkCheckBoxvalueSubadmins(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = true;
+        const objIndex = this.subadmins.findIndex((obj) => obj.id == val);
+        this.subadmins[objIndex].read = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].read = false;
+        const objIndex = this.subadmins.findIndex((obj) => obj.id == val);
+        this.subadmins[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = true;
+        const objIndex = this.subadmins.findIndex((obj) => obj.id == val);
+        this.subadmins[objIndex].write = true;
       } else {
-        const objIndex = this.orders.findIndex((obj) => obj.id == val);
-        this.orders[objIndex].write = false;
+        const objIndex = this.subadmins.findIndex((obj) => obj.id == val);
+        this.subadmins[objIndex].write = false;
       }
     }
   }

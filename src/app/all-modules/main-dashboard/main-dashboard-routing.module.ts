@@ -21,9 +21,9 @@ const routes: Routes = [
         import("./affiliate/affiliate.module").then((m)=>m.AffiliateModule)
       },
       {
-        path: "packages",
+        path: "promocodes",
         loadChildren: () =>
-          import("./packages/packages.module").then((m) => m.PackagesModule),
+          import("./packages/promocodes.module").then((m) => m.PromocodesModule),
       },
       {
         path: "subadmins",

@@ -5,16 +5,20 @@
     <div class="page-header">
         <div class="row align-items-center">
             <div class="col">
-                <h3 class="page-title">Packages</h3>
+                <h3 class="page-title">Promo Codes</h3>
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/mainadmin/admindashboard">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Packages</li>
+                    <li class="breadcrumb-item active">Promotion Codes</li>
                 </ul>
             </div>
-            <div class="col-auto float-end ms-auto">
+            <div class="col-auto float-end ms-auto" *ngIf="
+            user_type == 'mainadmin' ||
+            (user_type === 'subadmin' &&
+              (promocodewrite == 'true'))
+          ">
                 <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_client" (click)="resetForm()"><i
                         class="fa fa-plus"></i>
-                    Add Package</a>
+                    Add Promo Code</a>
                 
             </div>
         </div>
@@ -26,7 +30,7 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
                 <input type="text" class="form-control floating" #id (input)="searchID($event.target.value)">
-                <label class="focus-label">Package Name</label>
+                <label class="focus-label">Promo Code</label>
             </div>
         </div>
         <!-- <div class="col-sm-6 col-md-3">
@@ -67,7 +71,11 @@
                             <th>Modify Date</th>
                             <th>Create Date</th>
                             <th>Status</th>
-                            <th class="text-end">Action</th>
+                            <th class="text-end" *ngIf="
+                            user_type == 'mainadmin' ||
+                            (user_type === 'subadmin' &&
+                              (promocodewrite == 'true'))
+                          ">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -98,7 +106,11 @@
                                             <i class="fa fa-dot-circle-o text-danger">Inactive</i>
                                         </ng-container>
                                     </a>
-                                    <div class="dropdown-menu">
+                                    <div class="dropdown-menu" *ngIf="
+                                    user_type == 'mainadmin' ||
+                                    (user_type === 'subadmin' &&
+                                      (promocodewrite == 'true'))
+                                  ">
                                         <a class="dropdown-item" (click)="getStatus(1,package.id)"><i
                                                 class="fa fa-dot-circle-o text-success"></i> Active</a>
                                         <a class="dropdown-item" (click)="getStatus(0,package.id)"><i
@@ -107,7 +119,11 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-end">
+                            <td class="text-end" *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (promocodewrite == 'true'))
+            ">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

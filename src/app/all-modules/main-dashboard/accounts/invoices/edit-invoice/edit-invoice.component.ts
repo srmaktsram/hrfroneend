@@ -32,6 +32,8 @@ export class EditInvoiceComponent implements OnInit {
   clientsData: any;
   projects: any;
   invoiceNo: any;
+  user_type: string;
+  invoiceswrite: string;
 
   constructor(
     private router: Router,
@@ -45,6 +47,8 @@ export class EditInvoiceComponent implements OnInit {
 
     this.id = this.route.snapshot.queryParams["id"];
     this.getInvoice();
+    this.user_type = sessionStorage.getItem("user_type");
+    this.invoiceswrite = sessionStorage.getItem("invoiceswrite");
    
     // this.getInvNo();
   }

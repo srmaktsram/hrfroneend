@@ -285,7 +285,11 @@
                 </ng-container>
 
 
-                  <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-menu dropdown-menu-right" *ngIf="
+                  user_type == 'mainadmin' ||
+                  (user_type === 'subadmin' &&
+                    (ticketswrite == 'true'))
+                ">
                     <a
                       class="dropdown-item"
                       (click)="getStatus('Open', tickets.id)"

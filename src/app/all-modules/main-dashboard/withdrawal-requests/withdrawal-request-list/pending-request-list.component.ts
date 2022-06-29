@@ -49,12 +49,16 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
   newAmount: number;
   newData: any;
   id: any;
+  withdrawalrequestwrite: string;
+  user_type: string;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.withdrawalrequestwrite = sessionStorage.getItem("withdrawalrequestwrite");
   }
 
   ngOnInit() {

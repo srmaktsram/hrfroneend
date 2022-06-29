@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<div class="sidebar" id="sidebar"> 
+<div class="sidebar" id="sidebar">
   <div class="sidebar-inner slimscroll">
     <perfect-scrollbar [scrollIndicators]="false">
       <div id="sidebar-menu" class="sidebar-menu">
@@ -13,9 +13,9 @@
             </li>
 
             <li
-
-              *ngIf="dashboardwrite == 'true' || dashboardread == 'true'"
-
+              *ngIf="
+                user_type == 'mainadmin' || (user_type === 'subadmin' &&(dashboardwrite === 'true' || dashboardread === 'true'))
+              "
               class="submenu"
               [ngClass]="{ active: urlComplete.mainUrl === 'dashboard' }"
             >
@@ -47,12 +47,14 @@
             </li>
             <li
               *ngIf="
-                freeClientsread == 'true' ||
-                freeClientswrite == 'true' ||
-                premiumClientsread == 'true' ||
-                premiumClientswrite == 'true' ||
-                visitorClientsread == 'true' ||
-                visitorClientswrite == 'true'
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (freeClientsread == 'true' ||
+                    freeClientswrite == 'true' ||
+                    premiumClientsread == 'true' ||
+                    premiumClientswrite == 'true' ||
+                    visitorClientsread == 'true' ||
+                    visitorClientswrite == 'true'))
               "
               [ngClass]="{
                 active:
@@ -66,14 +68,12 @@
               >
             </li>
 
-            <li  *ngIf="
-            demoaffiliateread == 'true' ||
-            demoaffiliatewrite == 'true' ||
-            premiumaffiliateread == 'true' ||
-            premiumaffiliatewrite == 'true' ||
-            visitoraffiliateread == 'true' ||
-            visitoraffiliatewrite == 'true'
-          "
+            <li
+              *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (affiliatesread == 'true' || affiliateswrite == 'true'))
+              "
               [ngClass]="{
                 active:
                   urlComplete.subUrl === 'demoaffiliate' ||
@@ -87,17 +87,26 @@
             </li>
 
             <li
+            *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (promocoderead == 'true' || promocodewrite == 'true'))
+              "
               [ngClass]="{
                 active:
-                  urlComplete.subUrl === 'packagesgrid' ||
-                  urlComplete.subUrl === 'packageslist'
+                  urlComplete.subUrl === 'promocodeslist'
               }"
             >
-              <a routerLink="/layout/mainadmin/packages/packageslist"
+              <a routerLink="/layout/mainadmin/promocodes/promocodeslist"
                 ><i class="la la-code-fork"></i> <span>Promo Codes</span></a
               >
             </li>
             <li
+            *ngIf="
+            user_type == 'mainadmin' ||
+            (user_type === 'subadmin' &&
+              (subadminread == 'true' || subadminwrite == 'true'))
+          "
               [ngClass]="{
                 active:
                   urlComplete.subUrl === 'subadminpage' ||
@@ -110,6 +119,11 @@
             </li>
 
             <li
+            *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (ticketsread == 'true' || ticketswrite == 'true'))
+              "
               [ngClass]="{
                 active:
                   urlComplete.subUrl === 'ticketscontent' ||
@@ -121,6 +135,11 @@
               >
             </li>
             <li
+            *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (withdrawalrequestread == 'true' || withdrawalrequestwrite == 'true'))
+              "
               [ngClass]="{
                 active:
                   urlComplete.subUrl === 'withdrawalrequest' ||
@@ -133,6 +152,11 @@
               >
             </li>
             <li
+            *ngIf="
+            user_type == 'mainadmin' ||
+            (user_type === 'subadmin' &&
+              (kycread == 'true' || kycwrite == 'true'))
+          "
               [ngClass]="{
                 active:
                   urlComplete.subUrl === 'pendingkyc' ||
@@ -145,6 +169,11 @@
               >
             </li>
             <li
+            *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (commissionsread == 'true' || commissionswrite == 'true'))
+              "
               [ngClass]="{
                 active:
                   urlComplete.subUrl === 'approved-commission' ||
@@ -165,7 +194,11 @@
                   urlComplete.mainUrl === 'reports'
               }"
             >
-              <a
+              <a  *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (invoicesread == 'true' || invoiceswrite == 'true' ||paymentsread == 'true' || paymentswrite == 'true'))
+            "
                 href="javascript:"
                 [ngClass]="{
                   subdrop:
@@ -185,7 +218,13 @@
                       : 'none'
                 }"
               >
-                <li routerLink="/layout/mainadmin/accounts/invoices">
+                <li
+                *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (invoicesread == 'true' || invoiceswrite == 'true'))
+              "
+                 routerLink="/layout/mainadmin/accounts/invoices">
                   <a
                     href="javascript:"
                     [ngClass]="{
@@ -199,7 +238,14 @@
                     >Invoices</a
                   >
                 </li>
-                <li routerLink="/layout/mainadmin/accounts/payments">
+                <li
+                *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (paymentsread == 'true' || paymentswrite == 'true'))
+              "
+                
+                routerLink="/layout/mainadmin/accounts/payments">
                   <a
                     href="javascript:"
                     [ngClass]="{ active: urlComplete.subUrl === 'payments' }"
@@ -265,6 +311,8 @@
               >
             </li>
             <li
+            
+            
               [ngClass]="{
                 active: urlComplete.subUrl === 'my-wallet'
               }"
