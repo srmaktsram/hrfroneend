@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { param } from "jquery";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CookieService } from "ngx-cookie-service";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 @Component({
   selector: "app-checkout",
@@ -45,13 +45,13 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit() {
     this.checkoutForm = new FormGroup({
-      companyName: new FormControl(""),
-      email: new FormControl(""),
-      mobile: new FormControl(""),
-      address: new FormControl(""),
-      panNo: new FormControl(""),
-      gstNo: new FormControl(""),
-      userCount: new FormControl(""),
+      companyName: new FormControl("", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')],),
+      email: new FormControl("", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]),
+      mobile: new FormControl("", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
+      address: new FormControl("", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]),
+      panNo: new FormControl("", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]),
+      gstNo: new FormControl("", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]),
+      userCount: new FormControl("",),
     });
 
     this.totalAmount = this.route.snapshot.queryParams["totalAmount"];
@@ -178,8 +178,8 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post(
         "http://localhost:8443/checkout/create/Details" +
-          "/" +
-          this.corporateId,
+        "/" +
+        this.corporateId,
         {
           amount: this.totalAmount,
           packageName: this.packageName,

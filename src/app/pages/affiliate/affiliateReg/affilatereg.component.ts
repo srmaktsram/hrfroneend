@@ -1,14 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormGroup,
-  FormControl,
-  ValidatorFn,
-  AbstractControl,
-  ValidationErrors,
-} from "@angular/forms";
-import { Validators } from "@angular/forms";
+
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Router, ActivatedRoute } from "@angular/router";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-affilatereg",
@@ -35,124 +30,28 @@ export class AffilateRegComponent implements OnInit {
   public advertiseType: any;
   public pass_error_hide: any;
   otpmessage = true;
-  constructor(private http: HttpClient, private router: Router) {}
+  public registerForm: FormGroup;
+  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
 
-  registerForm = new FormGroup({
-    first_name: new FormControl("", [
-      Validators.required,
-      Validators.minLength(2),
-    ]),
-    last_name: new FormControl("", [
-      Validators.required,
-      Validators.minLength(2),
-    ]),
-    address: new FormControl("", [
-      Validators.required,
-      Validators.minLength(2),
-    ]),
-    state: new FormControl(""),
-    job_title: new FormControl(""),
+    this.registerForm = this.formBuilder.group({
+      first_name: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      last_name: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      company: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      email: ['', [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      phone: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      country: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      zip: ['', [Validators.required]],
+      address: ['', [Validators.required, Validators.minLength(2), WhiteSpaceValidator.noWhiteSpace]],
+      password: ['', [Validators.required]],
+      confirmPassword: ['', [Validators.required]],
+      job_title: ['', [Validators.required]],
 
-    company: new FormControl("", [
-      Validators.required,
-      Validators.minLength(2),
-    ]),
-    zip: new FormControl("", [Validators.required, Validators.minLength(2)]),
-    city: new FormControl("", [Validators.required, Validators.minLength(2)]),
-    country: new FormControl([Validators.required]),
-    phone: new FormControl("", [Validators.required, Validators.maxLength(12)]),
-    email: new FormControl("", [Validators.required, Validators.email]),
-    website: new FormControl(""),
-    password: new FormControl("", [
-      Validators.required,
-      Validators.minLength(6),
-    ]),
-    confirmPassword: new FormControl("", [
-      Validators.required,
-      Validators.minLength(6),
-    ]),
-    check: new FormControl("", [Validators.required]),
-  });
+    })
 
-  genrate(length) {
-    const characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    let result = " ";
-    const charactersLength = characters.length;
-    for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-    const genratePass = result.trim();
-
-    this.dataNew = genratePass;
-  }
-
-  get first_name() {
-    return this.registerForm.get("first_name");
-  }
-
-  get last_name() {
-    return this.registerForm.get("last_name");
-  }
-  get address() {
-    return this.registerForm.get("address");
-  }
-
-  get city() {
-    return this.registerForm.get("city");
-  }
-
-  get country() {
-    return this.registerForm.get("country");
-  }
-
-  get email() {
-    return this.registerForm.get("email");
-  }
-
-  get company() {
-    return this.registerForm.get("company");
-  }
-
-  get zip() {
-    return this.registerForm.get("zip");
-  }
-  get phone() {
-    return this.registerForm.get("phone");
-  }
-
-  get website() {
-    return this.registerForm.get("website");
-  }
-  get password() {
-    return this.registerForm.get("password");
-  }
-  get confirmPassword() {
-    return this.registerForm.get("confirmPassword");
-  }
-  get check() {
-    return this.registerForm.get("check");
-  }
-
-  checkPass() {
-    if (
-      this.registerForm.value.password !=
-      this.registerForm.value.confirmPassword
-    ) {
-      //console.log(this.registerForm.value.password,this.registerForm.value.confirmPassword)
-      if (
-        this.registerForm.value.password.length >= 6 &&
-        this.registerForm.value.confirmPassword.length >= 6
-      ) {
-        this.pass_error = "Password and confirm password does not match.";
-
-        this.pass_error_hide = false;
-        return false;
-      }
-    } else {
-      this.pass_error_hide = true;
-    }
   }
 
   /////////otp verify./////////////////
@@ -170,11 +69,7 @@ export class AffilateRegComponent implements OnInit {
     }
   }
 
-  //////send otp/////////////////////////////////
 
-  //  myStopFunction() {
-  //   clearTimeout(this.myTimeout);
-  // }
   myStopFunction() {
     clearTimeout(this.myTimeout);
   }
@@ -206,21 +101,18 @@ export class AffilateRegComponent implements OnInit {
           email: val,
           otp: code,
         })
-        .subscribe((res: any) => {});
+        .subscribe((res: any) => { });
     }
   }
 
   userLogin() {
-    // console.log(this.registerForm.value);
 
     if (this.registerForm.valid) {
-      // console.log(this.registerForm.value);
-
+      alert("called")
       var obj = {
         first_name: this.registerForm.value.first_name,
         last_name: this.registerForm.value.last_name,
         company: this.registerForm.value.company,
-
         email: this.registerForm.value.email,
         phone: this.registerForm.value.phone,
         country: this.registerForm.value.country,
@@ -233,6 +125,7 @@ export class AffilateRegComponent implements OnInit {
         status: "Pending",
       };
     }
+    console.log(obj, "l;dklj///////////////")
     this.http
       .post("http://localhost:8443/mainadmin/affiliate/create", obj)
       .subscribe((response: any) => {

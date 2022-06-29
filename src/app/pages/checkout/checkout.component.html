@@ -60,7 +60,7 @@
                                 </div>
 
 
-                               
+
 
                             </div>
 
@@ -120,10 +120,21 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-8 ok">
-                                    <input name="ctl00$ContentPlaceHolder1$comp_text" type="text"
-                                        id="ContentPlaceHolder1_comp_text" formControlName="companyName"
-                                        value="{{companyName}}" class="form-control" placeholder="Company Name" />
+                                    <input type="text" formControlName="companyName" value="{{companyName}}"
+                                        class="form-control" placeholder="Company Name" />
+
+                                    <ng-container
+                                        *ngIf="checkoutForm.get('companyName').invalid && checkoutForm.get('companyName').touched">
+
+                                        <p *ngIf="checkoutForm.get('companyName').errors.required" style="color:red">
+                                            company
+                                            Name is Required.</p>
+                                        <p *ngIf="checkoutForm.get('companyName').errors.pattern" style="color:red">
+                                            Company Name must be Vailid.
+                                            Name.</p>
+                                    </ng-container>
                                 </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
@@ -142,7 +153,18 @@
                                         id="ContentPlaceHolder1_add_text" class="form-control" formControlName="address"
                                         placeholder="Address..." aria-multiline="true"></textarea>
 
+                                    <ng-container
+                                        *ngIf="checkoutForm.get('address').invalid && checkoutForm.get('address').touched">
+                                        <p *ngIf="checkoutForm.get('address').errors.required" style="color:red">
+                                            Address
+                                            Name is Required.
+                                        </p>
+                                        <p *ngIf="checkoutForm.get('address').errors.whitespace ||checkoutForm.get('address').errors.minlength"
+                                            style="color:red">Address must be Vailid
+                                        </p>
+                                    </ng-container>
                                 </div>
+
                             </div>
 
 
@@ -162,6 +184,16 @@
                                     <input name="ctl00$ContentPlaceHolder1$pan_ttext" type="text"
                                         formControlName="panNo" id="ContentPlaceHolder1_pan_ttext" placeholder="PAN No."
                                         maxlength="20" class="form-control" />
+
+                                    <ng-container
+                                        *ngIf="checkoutForm.get('panNo').invalid && checkoutForm.get('panNo').touched">
+                                        <p *ngIf="checkoutForm.get('panNo').errors.required" style="color:red">
+                                            Pan No
+                                            Name is Required.</p>
+                                        <p *ngIf="checkoutForm.get('panNo').errors.whitespace ||checkoutForm.get('panNo').errors.minlength"
+                                            style="color:red">Pan No must be Vailid
+                                            Name.</p>
+                                    </ng-container>
 
                                 </div>
 
@@ -184,6 +216,17 @@
                                         id="ContentPlaceHolder1_gst_text" placeholder="GST No." maxlength="20"
                                         class="form-control" />
 
+
+                                    <ng-container
+                                        *ngIf="checkoutForm.get('gstNo').invalid && checkoutForm.get('gstNo').touched">
+                                        <p *ngIf="checkoutForm.get('gstNo').errors.required" style="color:red">
+                                            GstNo
+                                            is Required.</p>
+                                        <p *ngIf="checkoutForm.get('gstNo').errors.whitespace ||checkoutForm.get('gstNo').errors.minlength"
+                                            style="color:red">GstNo must be Vailid
+                                        </p>
+                                    </ng-container>
+
                                 </div>
 
                             </div>
@@ -204,6 +247,16 @@
                                         id="ContentPlaceHolder1_email_text" value="{{email}}" formControlName="email"
                                         placeholder="E-mail" maxlength="100" class="form-control" />
 
+                                    <ng-container
+                                        *ngIf="checkoutForm.get('email').invalid && checkoutForm.get('email').touched">
+                                        <p *ngIf="checkoutForm.get('email').errors.required" style="color:red">
+                                            email
+                                            is Required.</p>
+                                        <p *ngIf="checkoutForm.get('email').errors.whitespace ||checkoutForm.get('email').errors.email"
+                                            style="color:red">Email must be Vailid
+                                        </p>
+                                    </ng-container>
+
                                 </div>
                             </div>
                             <div class="row">
@@ -219,9 +272,20 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-8 ok">
-                                    <input name="ctl00$ContentPlaceHolder1$mo_text" type="text" value="{{mobile}}"
+                                    <input minlength="10" maxlength="10" type="text" value="{{mobile}}"
                                         id="ContentPlaceHolder1_mo_text" formControlName="mobile"
-                                        class="form-control" />
+                                        placeholder="Mobile No" class="form-control" />
+
+
+                                    <ng-container
+                                        *ngIf="checkoutForm.get('mobile').invalid && checkoutForm.get('mobile').touched">
+                                        <p *ngIf="checkoutForm.get('mobile').errors.required" style="color:red">
+                                            mobile
+                                            is Required.</p>
+                                        <p *ngIf="checkoutForm.get('mobile').errors.whitespace ||checkoutForm.get('mobile').errors.pattern"
+                                            style="color:red">Mobile must be Vailid
+                                        </p>
+                                    </ng-container>
 
                                 </div>
                             </div>
