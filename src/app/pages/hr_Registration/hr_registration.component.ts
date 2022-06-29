@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
-import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
 
@@ -43,8 +42,8 @@ export class HrregistrationComponent implements OnInit {
   ngOnInit() {
 
     this.registerForm = this.formBuilder.group({
-      firstName: ["", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]],
-      lastName: ["", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]],
+      firstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      lastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       email: ["", [Validators.required, Validators.email,]],
       phone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       gender: ["", [Validators.required]],
@@ -118,6 +117,7 @@ export class HrregistrationComponent implements OnInit {
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
     }
+
     this.http.post("http://localhost:8443/mainadmin/create/registration", obj).subscribe((res: any) => {
       window.location.replace("http://localhost:4200")
       this.hrUserAuthenticationService.login(
