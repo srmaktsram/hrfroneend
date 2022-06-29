@@ -6,6 +6,7 @@ import {
   FormControl,
   Validators,
 } from "@angular/forms";
+import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -16,7 +17,8 @@ import { ToastrService } from "ngx-toastr";
 export class BankSettingsComponent implements OnInit {
   public bankSettings: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,    private router:Router
+    ) {}
 
   ngOnInit() {
    
@@ -70,6 +72,9 @@ export class BankSettingsComponent implements OnInit {
         { obj }
       )
       .subscribe((res: any) => {
+            sessionStorage.setItem("bankDetails", JSON.stringify(res));
+            this.router.navigate(["/layout/affiliates/my-wallet/my-wallet"])
+
         this.getBankDetails();
       });
   }

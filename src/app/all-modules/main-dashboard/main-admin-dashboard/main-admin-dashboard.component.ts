@@ -54,9 +54,12 @@ export class AdminDashboardComponent implements OnInit {
   affiliateData: any;
   clientData: any;
   todayFreeData: any;
+  user_type: string;
 
   constructor(private http: HttpClient) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+
   }
 
   ngOnInit() {

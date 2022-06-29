@@ -50,12 +50,16 @@ export class CommissionListComponent implements OnInit, OnDestroy {
   newStatus: any;
   newData: any;
   newAmount: any;
+  user_type: string;
+  commissionswrite: string;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.commissionswrite = sessionStorage.getItem("commissionswrite");
   }
 
   ngOnInit() {
@@ -78,7 +82,6 @@ export class CommissionListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/commisions/getCommisions")
       .subscribe((res: any) => {
-        console.log(res,"gettt")
         this.data = res;
       });
   }
@@ -98,7 +101,6 @@ export class CommissionListComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         this.getCommisions();
         this.commissionData = res.data;
-        console.log(this.commissionData,"LLLLLLLLLLLLLLLLL")
         this.newStatus = res.data.status;
 
         if (this.newStatus == 2) {
@@ -118,14 +120,12 @@ export class CommissionListComponent implements OnInit, OnDestroy {
             )
             .subscribe((res: any) => {
               this.newData = res.result;
-              console.log(res)
               if (res.data.renewStatus == "0") {
                 this.newAmount = (parseFloat(res.data.amount) * 30) / 100;
               } else if (res.data.renewStatus == "1") {
                 this.newAmount = (parseFloat(res.data.amount) * 10) / 100;
               }
               if (this.newData == 1) {
-                console.log(this.newAmount,"new")
                 let object = {
                   
                   current_balance: (parseFloat(this.newAmount))

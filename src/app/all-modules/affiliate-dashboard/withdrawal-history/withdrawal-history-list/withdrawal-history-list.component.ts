@@ -53,6 +53,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   searchUser: any;
   searchMobile: any;
   searchEmail: any;
+  aId: string;
 
   constructor(
     private toastr: ToastrService,
@@ -60,6 +61,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.aId = sessionStorage.getItem("aId");
 
   }
   ngOnInit() {
@@ -80,7 +82,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   //Get all Clients data
   public getWithdrawalHistory() {
     this.http
-      .get("http://localhost:8443/affiliates/affiliate/getWithdrawalHistory")
+      .get("http://localhost:8443/affiliates/affiliate/getWithdrawalHistory"+"/"+this.aId)
       .subscribe((res: any) => {
         this.data = res;
         

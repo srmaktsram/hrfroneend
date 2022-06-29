@@ -57,6 +57,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   countResolved = 0;
   countOpen = 0;
   countPending = 0;
+  ticketswrite: string;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -67,6 +68,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.adminId = sessionStorage.getItem("adminId");
+    this.ticketswrite = sessionStorage.getItem("ticketswrite");
     this.loadEmployee();
 
     this.employeeid = sessionStorage.getItem("employee_login_id");

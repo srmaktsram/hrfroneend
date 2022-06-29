@@ -4,12 +4,12 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col">
-          <h3 class="page-title">Approve Affiliate</h3>
+          <h3 class="page-title">Approved Affiliate</h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item">
               <a routerLink="/layout/mainadmin/admindashboard">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Approve Affiliate</li>
+            <li class="breadcrumb-item active">Approved Affiliate</li>
           </ul>
         </div>
         <div class="col-auto float-end ms-auto">
@@ -109,7 +109,11 @@
               <th>city</th>
               <th>country</th>
               <th>Status</th>
-              <th class="text-end">Action</th>
+              <th class="text-end" *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (affiliateswrite == 'true'))
+            ">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -147,7 +151,11 @@
                       client.status
                     }}</i>
                   </a>
-                  <div class="dropdown-menu">
+                  <div class="dropdown-menu" *ngIf="
+                  user_type == 'mainadmin' ||
+                  (user_type === 'subadmin' &&
+                    (affiliateswrite == 'true'))
+                ">
                     <a
                       class="dropdown-item"
                       (click)="getStatus('Pending', client.id)"
@@ -155,8 +163,8 @@
                     >
                     <a
                       class="dropdown-item"
-                      (click)="getStatus('Approve', client.id)"
-                      ><i class="fa fa-dot-circle-o text-success "></i> Approve</a
+                      (click)="getStatus('Approved', client.id)"
+                      ><i class="fa fa-dot-circle-o text-success "></i> Approved</a
                     >
                     <a
                       class="dropdown-item"
@@ -169,7 +177,11 @@
               </td>
               
               
-              <td class="text-end">
+              <td class="text-end" *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (affiliateswrite == 'true'))
+            ">
                 <div class="dropdown dropdown-action">
                   <a
                     class="action-icon dropdown-toggle"

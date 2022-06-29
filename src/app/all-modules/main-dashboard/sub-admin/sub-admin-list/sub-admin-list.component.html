@@ -14,6 +14,11 @@
       </div>
       <div class="col-auto float-end ms-auto">
         <a
+        *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (subadminwrite == 'true'))
+            "
           class="btn add-btn"
           data-bs-toggle="modal"
           data-bs-target="#add_client"
@@ -115,7 +120,11 @@
               <th>Mobile</th>
               <th>Email</th>
               <th>Status</th>
-              <th class="text-end">Action</th>
+              <th class="text-end"  *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (subadminwrite == 'true'))
+            "> Action</th>
             </tr>
           </thead>
           <tbody>
@@ -138,7 +147,7 @@
               <td>{{ client.mobile }}</td>
               <td>{{ client.email }}</td>
               <td>
-                <div class="dropdown action-label">
+                <div class="dropdown action-label" >
                   <ng-container *ngIf="client.status=='Active'">
                   <a
                     class="btn btn-white btn-sm btn-rounded dropdown-toggle"
@@ -172,7 +181,11 @@
                     }}</i>
                   </a>
                 </ng-container>
-                  <div class="dropdown-menu">
+                  <div class="dropdown-menu" *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (subadminwrite == 'true'))
+            ">
                     <a
                       class="dropdown-item"
                       (click)="getStatus('Active', client.id)"
@@ -190,6 +203,11 @@
               <td class="text-end">
                 <div class="dropdown dropdown-action">
                   <a
+                  *ngIf="
+                  user_type == 'mainadmin' ||
+                  (user_type === 'subadmin' &&
+                    (subadminwrite == 'true'))
+                "
                     class="action-icon dropdown-toggle"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -197,6 +215,7 @@
                   >
                   <div class="dropdown-menu dropdown-menu-right">
                     <a
+                    
                       class="dropdown-item"
                       data-bs-toggle="modal"
                       data-bs-target="#edit_client"
@@ -376,6 +395,21 @@
                   </td>
                 </tr>
                 <tr>
+                  <td>Payments</td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox"
+                      (click)="checkCheckBoxvaluePayment($event, 0)"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox"
+                      (click)="checkCheckBoxvaluePayment($event, 1)"
+                    />
+                  </td>
+                </tr>
+                <tr>
                   <td>Premium Clients</td>
                   <td class="text-center">
                     <input
@@ -451,17 +485,17 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>Orders</td>
+                  <td>Sub-Admins</td>
                   <td class="text-center">
                     <input
                       type="checkbox"
-                      (click)="checkCheckBoxvalueOrders($event, 0)"
+                      (click)="checkCheckBoxvalueSubadmins($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
                       type="checkbox"
-                      (click)="checkCheckBoxvalueOrders($event, 1)"
+                      (click)="checkCheckBoxvalueSubadmins($event, 1)"
                     />
                   </td>
                 </tr>
@@ -723,6 +757,22 @@
                   </td>
                 </tr>
                 <tr>
+                  <td>Payments</td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox"
+                       [checked]="payments[0].read"
+                      (click)="checkCheckBoxvaluePayment($event, 0)"
+                    />
+                  </td>
+                  <td class="text-center">
+                    <input
+                      type="checkbox" [checked]="payments[1].write"
+                      (click)="checkCheckBoxvaluePayment($event, 1)"
+                    />
+                  </td>
+                </tr>
+                <tr>
                   <td>Premium Clients</td>
                   <td class="text-center">
                     <input
@@ -798,17 +848,17 @@
                   </td>
                 </tr>
                 <tr>
-                  <td>Orders</td>
+                  <td>Sub-Admins</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="orders[0].read"
-                      (click)="checkCheckBoxvalueOrders($event, 0)"
+                      type="checkbox" [checked]="subadmins[0].read"
+                      (click)="checkCheckBoxvalueSubadmins($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="orders[1].write"
-                      (click)="checkCheckBoxvalueOrders($event, 1)"
+                      type="checkbox" [checked]="subadmins[1].write"
+                      (click)="checkCheckBoxvalueSubadmins($event, 1)"
                     />
                   </td>
                 </tr>

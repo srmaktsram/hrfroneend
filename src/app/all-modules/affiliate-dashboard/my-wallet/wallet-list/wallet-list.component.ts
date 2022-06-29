@@ -6,6 +6,7 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import { ActivatedRoute, Router } from "@angular/router";
 
 declare const $: any;
 @Component({
@@ -26,10 +27,10 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public actualAmount: any;
   public withdrawalAmount: any;
   public newAmount: any;
-  insufficientBalance=true
-  newStatus=true
-  minApprovalAmount=true
-  pendingAlready=true
+  insufficientBalance = true;
+  newStatus = true;
+  minApprovalAmount = true;
+  pendingAlready = true;
   public affilateId: any;
   public bankdetails: any;
   public email: string;
@@ -38,7 +39,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public phone: string;
   public aId: any;
   public kycStatus: string;
-  
 
   public data = [];
   public srch = [];
@@ -64,7 +64,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router:Router
   ) {
     this.affilateId = sessionStorage.getItem("affiliateId");
     this.email = sessionStorage.getItem("email");
@@ -72,13 +73,18 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.last_name = sessionStorage.getItem("last_name");
     this.phone = sessionStorage.getItem("phone");
     this.aId = sessionStorage.getItem("aId");
-    this.bankdetails = JSON.parse(sessionStorage.getItem("bankDetails"));
+
+    if (sessionStorage.getItem("bankDetails") === "undefined") {
+      this.router.navigate(["/layout/affiliates/settings/bank-setting"])
+        } else {
+      this.bankdetails = JSON.parse(sessionStorage.getItem("bankDetails"));
+
+    }
   }
 
   ngOnInit() {
     this.getWallet();
     this.getKycDetails();
-
 
     this.dtOptions = {
       pageLength: 10,
@@ -95,10 +101,9 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/affiliates/kyc/getKyc" + "/" + this.aId)
       .subscribe((response: any) => {
-        this.kycStatus=response.kycVerified
+        this.kycStatus = response.kycVerified;
       });
   }
-
 
   //Get all Clients data
   public getWallet() {
@@ -125,44 +130,50 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   }
 
   public paymentRequest() {
-    if(this.actualAmount>this.currentBalance){
-      this.insufficientBalance=false
-     }
-    if(this.kycStatus!="3"){
-      this.newStatus=false
-    }else{
-    let obj = {
-      id: this.affilateId,
-      aId: this.aId,
-      bankDetails: this.bankdetails,
-      email: this.email,
-      fullName: this.first_name + " " + this.last_name,
-      phone: this.phone,
-      amount: this.actualAmount,
-    };
-    this.http
+    if (this.actualAmount > this.currentBalance) {
+      this.insufficientBalance = false;
+    }
+    if (this.kycStatus != "3") {
+      this.newStatus = false;
+    } else {
+      let obj = {
+        id: this.affilateId,
+        aId: this.aId,
+        bankDetails: this.bankdetails,
+        email: this.email,
+        fullName: this.first_name + " " + this.last_name,
+        phone: this.phone,
+        amount: this.actualAmount,
+      };
+      this.http
 
-      .post(
-        "http://localhost:8443/affiliates/affiliate/createPaymentRequest",
-        obj
-      )
-      .subscribe((res: any) => {
-        if(res.result==1){
-          let object={
-            pendingWithdraw:res.data.amount
+        .post(
+          "http://localhost:8443/affiliates/affiliate/createPaymentRequest",
+          obj
+        )
+        .subscribe((res: any) => {
+          if (res.result == 1) {
+            let object = {
+              pendingWithdraw: res.data.amount,
+            };
+            this.http
+              .patch(
+                "http://localhost:8443/affiliates/wallet/updateWalletRequestAmount" +
+                  "/" +
+                  this.aId,
+                object
+              )
+              .subscribe((res: any) => {
+                this.getWallet();
+              });
           }
-          this.http.patch("http://localhost:8443/affiliates/wallet/updateWalletRequestAmount"+"/"+this.aId,object).subscribe((res:any)=>{
-            this.getWallet()
-          })
-        }
-        if(res.result==3){
-          this.minApprovalAmount=false
-        }
-        if(res.result==0){
-          this.pendingAlready=false
-        }
-
-      });
+          if (res.result == 3) {
+            this.minApprovalAmount = false;
+          }
+          if (res.result == 0) {
+            this.pendingAlready = false;
+          }
+        });
     }
   }
   //reset form

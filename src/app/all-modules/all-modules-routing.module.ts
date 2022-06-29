@@ -36,8 +36,9 @@ const routes: Routes = [
           import("./main-dashboard/main-dashboard.module").then(
             (m) => m.MainDashboardModule
           ),
-        canActivate: [AuthGuardMainAdmin],
+        // canActivate: [AuthGuardMainAdmin],
       },
+     
 
       {
         path: "client",

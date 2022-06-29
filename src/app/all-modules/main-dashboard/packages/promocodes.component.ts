@@ -1,9 +1,9 @@
 import { Component, OnInit, HostListener, NgZone } from "@angular/core";
 
 @Component({
-  selector: "app-packages",
-  templateUrl: "./packages.component.html",
-  styleUrls: ["./packages.component.css"],
+  selector: "app-promocodes",
+  templateUrl: "./promocodes.component.html",
+  styleUrls: ["./promocodes.component.css"],
 })
 @HostListener("window: resize", ["$event"])
 export class ClientsComponent implements OnInit {

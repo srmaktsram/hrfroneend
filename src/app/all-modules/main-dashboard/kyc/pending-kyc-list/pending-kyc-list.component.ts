@@ -53,11 +53,18 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
   panCardPath: string;
   panPath: any;
   aadhaarCardBackPath: string;
+  user_type: string;
+  kycwrite: string;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
-  ) {}
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.kycwrite = sessionStorage.getItem("kycwrite");
+
+
+  }
 
   ngOnInit() {
     this.getPendingKyc();

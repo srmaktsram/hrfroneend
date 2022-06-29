@@ -9,9 +9,9 @@ import { HttpClient } from "@angular/common/http";
 
 declare const $: any;
 @Component({
-  selector: "app-packages-list",
-  templateUrl: "./packages-list.component.html",
-  styleUrls: ["./packages-list.component.css"],
+  selector: "app-promocodes-list",
+  templateUrl: "./promocodes-list.component.html",
+  styleUrls: ["./promocodes-list.component.css"],
 })
 export class ClientsListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
@@ -40,6 +40,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   searchCompany: any;
   editFromDate: string;
   editTillDate: string;
+  user_type: string;
+  promocodewrite: string;
 
   constructor(
     // private allModulesService: AllModulesService,
@@ -48,6 +50,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.promocodewrite = sessionStorage.getItem("promocodewrite");
   }
 
   ngOnInit() {
@@ -95,7 +99,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
         this.data = res;
         this.filtereddata = res;
         this.srch = [...this.data];
-        console.log(this.data, "???????????//");
       });
   }
 
@@ -113,7 +116,6 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   public onEditClient(id: any) {
     this.editId = id;
     let pkg = this.data.filter((item) => item.id == id);
-    console.log("edit recards kkkk", pkg);
     this.editPackageForm.patchValue({
       editname: pkg[0]?.name,
       editcode: pkg[0]?.code,
@@ -187,11 +189,9 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       validTill: editTillDate,
       status: this.addPackageForm.value.status,
     };
-    //console.log("mydata>>>>>>>>", newClient);
     this.http
       .post("http://localhost:8443/mainadmin/promocode/createPackage", obj)
       .subscribe((data) => {
-        //console.log("postApi", data);
         this.getPackages();
       });
 

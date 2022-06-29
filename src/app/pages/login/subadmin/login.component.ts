@@ -45,7 +45,6 @@ export class SubAdminLoginComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
-        console.log(res);
         if (res.result == 2) {
           this.router.navigate(["/layout/mainadmin/admindashboard"]);
 
@@ -56,15 +55,29 @@ export class SubAdminLoginComponent implements OnInit {
             res.data.freeClients[1].write,
             res.data.invoices[0].read,
             res.data.invoices[1].write,
-            res.data.orders[0].read,
-            res.data.orders[1].write,
+            res.data.subadmins[0].read,
+            res.data.subadmins[1].write,
             res.data.premiumClients[0].read,
             res.data.premiumClients[1].write,
             res.data.tickets[0].read,
             res.data.tickets[1].write,
             res.data.visitorClients[0].read,
-            res.data.visitorClients[1].write
+            res.data.visitorClients[1].write,
+            res.data.affiliates[0].read,
+            res.data.affiliates[1].write,
+            res.data.commisions[0].read,
+            res.data.commisions[1].write,
+            res.data.payments[0].read,
+            res.data.payments[1].write,
+            res.data.kyc[0].read,
+            res.data.kyc[1].write,
+            res.data.withdrawals[0].read,
+            res.data.withdrawals[1].write,
+            res.data.promocode[0].read,
+            res.data.promocode[1].write,
+            
           );
+
         } else {
           alert("wrong Id or pass");
         }

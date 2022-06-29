@@ -54,8 +54,16 @@
               <th>Mobile</th>
               <th>PAN Card No.</th>
               <th>Aadhaar Card no.</th>
-              <th>PAN Card</th>
-              <th>Aadhaar Card</th>
+              <th *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (kycwrite == 'true'))
+            ">PAN Card</th>
+              <th *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (kycwrite == 'true'))
+            ">Aadhaar Card</th>
             </tr>
           </thead>
           <tbody>
@@ -68,7 +76,11 @@
               <td>{{ item.panCardNo }}</td>
               <td>{{ item.aadhaarCardNo }}</td>
 
-              <td>
+              <td *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (kycwrite == 'true'))
+            ">
                 <ng-container *ngIf="item.panVerified == 1">
                   <div class="d-inline p-2 bg-primary text-white">
                     <a
@@ -87,7 +99,11 @@
                   <td class="text-danger">Rejected</td>
                 </ng-container>
               </td>
-              <td>
+              <td *ngIf="
+              user_type == 'mainadmin' ||
+              (user_type === 'subadmin' &&
+                (kycwrite == 'true'))
+            ">
                 <ng-container *ngIf="item.aadhaarVerified == 1">
                   <div class="d-inline p-2 bg-primary text-white">
                     <a

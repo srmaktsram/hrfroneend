@@ -45,12 +45,16 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
   public employeeId: any;
   searchCompany: any;
   statusData: any;
+  user_type: string;
+  affiliateswrite: string;
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.affiliateswrite = sessionStorage.getItem("affiliateswrite");
 
     
   }

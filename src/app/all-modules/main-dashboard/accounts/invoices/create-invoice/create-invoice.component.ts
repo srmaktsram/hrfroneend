@@ -36,6 +36,8 @@ export class CreateInvoiceComponent implements OnInit {
   invoiceNo: any;
   invErrorMsg: string;
   show = false;
+  user_type: string;
+  invoiceswrite: string;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -45,6 +47,10 @@ export class CreateInvoiceComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.invoiceNo = sessionStorage.getItem("invoiceNo");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.invoiceswrite = sessionStorage.getItem("invoiceswrite");
+
+
   }
   
   

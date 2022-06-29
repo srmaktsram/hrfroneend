@@ -10,14 +10,26 @@ export class SubAdminAuthenticationService {
     freeClientswrite: string,
     invoicesread: string,
     invoiceswrite: string,
-    ordersread: string,
-    orderswrite: string,
+    subadminread: string,
+    subadminwrite: string,
     premiumClientsread: string,
     premiumClientswrite: string,
     ticketsread: string,
     ticketswrite: string,
     visitorClientsread: string,
-    visitorClientswrite: string
+    visitorClientswrite: string,
+    affiliatesread: string,
+    affiliateswrite: string,
+    commissionsread: string,
+    commissionswrite: string,
+    paymentsread: string,
+    paymentswrite: string,
+    kycread: string,
+    kycwrite: string,
+    withdrawalrequestread: string,
+    withdrawalrequestwrite: string,
+    promocoderead: string,
+    promocodewrite: string,
   ) {
     sessionStorage.setItem("currentUser", "SubAdminLogin");
     sessionStorage.setItem("user_type", "subadmin");
@@ -27,14 +39,26 @@ export class SubAdminAuthenticationService {
     sessionStorage.setItem("freeClientswrite", freeClientswrite);
     sessionStorage.setItem("invoicesread", invoicesread);
     sessionStorage.setItem("invoiceswrite", invoiceswrite);
-    sessionStorage.setItem("ordersread", ordersread);
-    sessionStorage.setItem("orderswrite", orderswrite);
+    sessionStorage.setItem("subadminread", subadminread);
+    sessionStorage.setItem("subadminwrite", subadminwrite);
     sessionStorage.setItem("premiumClientsread", premiumClientsread);
     sessionStorage.setItem("premiumClientswrite", premiumClientswrite);
     sessionStorage.setItem("ticketsread", ticketsread);
     sessionStorage.setItem("ticketswrite", ticketswrite);
     sessionStorage.setItem("visitorClientsread", visitorClientsread);
     sessionStorage.setItem("visitorClientswrite", visitorClientswrite);
+    sessionStorage.setItem("affiliatesread", affiliatesread);
+    sessionStorage.setItem("affiliateswrite", affiliateswrite);
+    sessionStorage.setItem("commissionsread", commissionsread);
+    sessionStorage.setItem("commissionswrite", commissionswrite);
+    sessionStorage.setItem("paymentsread", paymentsread);
+    sessionStorage.setItem("paymentswrite", paymentswrite);
+    sessionStorage.setItem("kycread", kycread);
+    sessionStorage.setItem("kycwrite", kycwrite);
+    sessionStorage.setItem("withdrawalrequestread", withdrawalrequestread);
+    sessionStorage.setItem("withdrawalrequestwrite", withdrawalrequestwrite);
+    sessionStorage.setItem("promocoderead", promocoderead);
+    sessionStorage.setItem("promocodewrite", promocodewrite);
     return true;
   }
   logout() {
