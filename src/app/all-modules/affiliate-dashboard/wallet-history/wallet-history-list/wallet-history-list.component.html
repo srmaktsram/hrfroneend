@@ -43,7 +43,17 @@
             <tr *ngFor="let client of data; let i = index">
               <td>{{i+1}}</td>
               <td>{{client.aId}}</td>
-              <td>{{ client.amount }}</td>
+              <td>
+                <ng-container *ngIf="client.renewStatus === '0'">
+                  {{ client.amount * (30 / 100) }}<span class="text-success"> (New-30%)</span>
+                </ng-container>
+                <ng-container *ngIf="client.renewStatus === '1'">
+                  {{ client.amount * (10 / 100) }}<span class="text-warning"> (Renew-10%)</span>
+                </ng-container>
+                <ng-container *ngIf="client.renewStatus === ''">
+                  {{ client.amount}}<span class="text-danger"> (Withdraw)</span>
+                </ng-container>
+              </td>
               <td>{{ client.package_name }}</td>
               <td>{{ client.createDate }}</td>
               <td>{{ client.updateDate }}</td>

@@ -152,6 +152,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .get("http://localhost:8443/mainadmin/subAdmin/getSubAdmins")
       .subscribe((res: any) => {
+        console.log(res,"kkkkkkk")
         this.data = res;
         this.srch = [...this.data];
       });

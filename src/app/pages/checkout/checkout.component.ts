@@ -26,6 +26,7 @@ export class CheckoutComponent implements OnInit {
   public tl: any;
   ordersId: any;
   packageName: any;
+  getdata: any;
   _window(): any {
     return window;
   }
@@ -52,6 +53,7 @@ export class CheckoutComponent implements OnInit {
       panNo: new FormControl("", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]),
       gstNo: new FormControl("", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]),
       userCount: new FormControl("",),
+
     });
 
     this.totalAmount = this.route.snapshot.queryParams["totalAmount"];
@@ -84,6 +86,7 @@ export class CheckoutComponent implements OnInit {
       .subscribe((res: any) => {
         console.log("this is the create order History>>>>", res);
         if (this.packageName === "Basic(Single-User)") {
+          this.createAdminRegister();
           this.premium(0);
         } else {
           this.createOrderId();
@@ -163,6 +166,7 @@ export class CheckoutComponent implements OnInit {
       corporateId: this.corporateId,
       packageName: this.packageName,
       month: this.month,
+      companyName: this.checkoutForm.value.companyName,
     };
 
     this.http
@@ -184,6 +188,7 @@ export class CheckoutComponent implements OnInit {
           amount: this.totalAmount,
           packageName: this.packageName,
           status: 1,
+          companyName: this.checkoutForm.value.companyName,
         }
       )
       .subscribe((res: any) => {
@@ -206,13 +211,39 @@ export class CheckoutComponent implements OnInit {
       companyAddress: this.checkoutForm.value.address,
       packageName: this.packageName,
       status: 1,
-      renewStatus: 1,
     };
 
     this.http
       .post("http://localhost:8443/checkout/create/adminRegister", obj)
       .subscribe((res: any) => {
         console.log("this is the adminRegister>>>>>>>>>>>>>>>>>>>", res);
+      });
+  }
+
+  fillData(val) {
+    var corporateId = val;
+    this.http
+      .get(
+        "http://localhost:8443/checkout/orders/getAdminRegister" +
+          "/" +
+          corporateId
+      )
+      .subscribe((res: any) => {
+        console.log(",.,.,.,.,.,.<><><><><><", res);
+
+        this.getdata = res;
+        if (this.getdata) {
+          this.checkoutForm.patchValue({
+            companyName: this.getdata.companyName,
+            email: this.getdata.companyEmail,
+            mobile: this.getdata.mobile,
+            address: this.getdata.companyAddress,
+            panNo: this.getdata.companyPan,
+            gstNo: this.getdata.companyGst,
+          });
+        } else {
+          alert("Invalid Corporate Id ........");
+        }
       });
   }
 

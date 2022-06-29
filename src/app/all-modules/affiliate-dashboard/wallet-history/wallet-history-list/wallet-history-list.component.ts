@@ -86,6 +86,7 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/affiliates/affiliteWalletDetails/getAffiliteWalletDetails"+"/"+this.aId)
       .subscribe((res: any) => {
         this.data = res;
+        console.log(res,"hhhhhh")
         
       });
   }

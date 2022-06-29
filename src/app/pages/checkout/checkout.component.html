@@ -52,15 +52,23 @@
                                 <div class="col-sm-4 text-center">
                                     <span id="ContentPlaceHolder1_Label2">Corporate ID:-</span>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-5"  style="display:flex;">
 
-                                    <input name="ctl00$ContentPlaceHolder1$login_TextBox" type="text"
-                                        id="ContentPlaceHolder1_login_TextBox" class="form-control" readonly="readonly"
-                                        value="{{corporateId}}" maxlength="15" style="font-size: small;" />
+                                    <input #corpoId  type="text" 
+                                        class="form-control" 
+                                        value="{{corporateId}}" maxlength="15" style="font-size: small; width: 150px;" />
+                                        <div  >
+                                            <button  class="btn-primary checkId "  (click)="fillData(corpoId.value)">Check Id</button>
+            
+                                        </div>
                                 </div>
 
 
 
+
+
+                          
+                        
 
                             </div>
 
