@@ -33,6 +33,7 @@ export class LeavesEmployeeComponent implements OnInit {
 
   public employeeId = sessionStorage.getItem("employeeId");
   public employeeid = sessionStorage.getItem("employee_login_id");
+  public leaveswrite = sessionStorage.getItem("leaveswrite");
 
   allLeaveType: any;
   annualLeaves: any;

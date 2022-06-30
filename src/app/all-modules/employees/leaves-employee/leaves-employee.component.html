@@ -7,12 +7,12 @@
         <h3 class="page-title">Leaves</h3>
         <ul class="breadcrumb">
           <li class="breadcrumb-item">
-            <a routerLink="/layout/dashboard/admin">Dashboard</a>
+            <a routerLink="/layout/dashboard/employee">Dashboard</a>
           </li>
           <li class="breadcrumb-item active">Leaves</li>
         </ul>
       </div>
-      <div class="col-auto float-end ms-auto">
+      <div class="col-auto float-end ms-auto" *ngIf="user_type=='employee'&& leaveswrite=='true'">
         <a
           class="btn add-btn"
           data-bs-toggle="modal"
@@ -71,7 +71,7 @@
               <th>Reason</th>
               <th class="text-center">Status</th>
               <th>Approved by</th>
-              <th class="text-end">Actions</th>
+              <th class="text-end"  *ngIf="user_type=='employee'&& leaveswrite=='true'">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -84,7 +84,7 @@
               <td class="text-center">
                 <div class="action-label">
                   <a class="btn btn-white btn-sm btn-rounded">
-                    <i class="fa fa-dot-circle-o text-purple"></i> New
+                    <i class="fa fa-dot-circle-o text-purple"></i>{{row.status}}
                   </a>
                 </div>
               </td>
@@ -98,12 +98,12 @@
                       alt=""
                   /></a>
                   <a routerLink="/layout/employees/employeeprofile"
-                    >Richard Miles</a
+                    >Shivendra Singh Yadav(dummy)</a
                   >
                 </h2>
               </td>
               <td class="text-end">
-                <div class="dropdown dropdown-action">
+                <div class="dropdown dropdown-action"  *ngIf="user_type=='employee'&& leaveswrite=='true'">
                   <a
                     class="action-icon dropdown-toggle"
                     data-bs-toggle="dropdown"

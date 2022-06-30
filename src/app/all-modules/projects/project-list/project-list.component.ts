@@ -30,6 +30,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
   public user_type = sessionStorage.getItem("user_type");
+  projectswrite: string;
  
 
   constructor(
@@ -39,6 +40,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     private allModulesService: AllModulesService
   ) {
     this.adminId=sessionStorage.getItem("adminId");
+    this.projectswrite=sessionStorage.getItem("projectswrite");
     this.getClients();
   }
   ngOnInit() {

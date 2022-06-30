@@ -45,12 +45,16 @@ export class AttendanceEmployeeComponent implements OnInit {
   TotalOneWeakProduction: number;
   TotalOneMonthProduction: number;
   punchStatus: any;
+  user_type: string;
+  attendancewrite: string;
 
   constructor(
     private http: HttpClient
   ) {
     this.adminId = sessionStorage.getItem("adminId")
     this.employeeid = sessionStorage.getItem("employee_login_id")
+    this.user_type = sessionStorage.getItem("user_type")
+    this.attendancewrite = sessionStorage.getItem("attendancewrite")
     this.getData()
     this.createData()
 

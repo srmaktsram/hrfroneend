@@ -11,7 +11,11 @@
                     <li class="breadcrumb-item active">Timesheet</li>
                 </ul>
             </div>
-            <div class="col-auto float-end ms-auto">
+            <div class="col-auto float-end ms-auto" *ngIf="
+            user_type == 'admin' ||
+            (user_type === 'employee' &&
+              (timesheetwrite == 'true'))
+          ">
                 <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_todaywork"><i class="fa fa-plus"></i>
                     Add Today Work</a>
             </div>
@@ -32,7 +36,11 @@
                             <th class="text-center">Assigned Hours</th>
                             <th class="text-center">Hours</th>
                             <th class="d-none d-sm-table-cell">Description</th>
-                            <th class="text-end">Actions</th>
+                            <th class="text-end" *ngIf="
+                            user_type == 'admin' ||
+                            (user_type === 'employee' &&
+                              (timesheetwrite == 'true'))
+                          ">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,7 +61,11 @@
                             <td class="text-center">{{item.hrs}}</td>
                             <td class="d-none d-sm-table-cell col-md-4">{{item.description}}</td>
                             <td class="text-end">
-                                <div class="dropdown dropdown-action">
+                                <div class="dropdown dropdown-action" *ngIf="
+                                user_type == 'admin' ||
+                                (user_type === 'employee' &&
+                                  (timesheetwrite == 'true'))
+                              ">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">

@@ -11,7 +11,11 @@
                     <li class="breadcrumb-item active">Holidays</li>
                 </ul>
             </div>
-            <div class="col-auto float-end ms-auto">
+            <div class="col-auto float-end ms-auto" *ngIf="
+            user_type == 'admin' ||
+            (user_type === 'employee' &&
+              (holidayswrite == 'true'))
+          ">
                 <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_holiday"><i class="fa fa-plus"></i>
                     Add Holiday</a>
             </div>
@@ -30,7 +34,11 @@
                             <th>Title </th>
                             <th>Holiday Date</th>
                             <th>Day</th>
-                            <th class="text-end">Action</th>
+                            <th class="text-end" *ngIf="
+                            user_type == 'admin' ||
+                            (user_type === 'employee' &&
+                              (holidayswrite == 'true'))
+                          ">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +48,11 @@
                             <td>{{row.holidayDate}}</td>
                             <td>{{row.day}}</td>
                             <td class="text-end">
-                                <div class="dropdown dropdown-action">
+                                <div class="dropdown dropdown-action" *ngIf="
+                                user_type == 'admin' ||
+                                (user_type === 'employee' &&
+                                  (holidayswrite == 'true'))
+                              ">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">

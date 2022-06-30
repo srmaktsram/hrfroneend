@@ -7,7 +7,7 @@
             <div class="col-sm-12">
                 <h3 class="page-title">Attendance</h3>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/employee">Dashboard</a></li>
                     <li class="breadcrumb-item active">Attendance</li>
                 </ul>
             </div>
@@ -34,7 +34,7 @@
                                 |production}}</span>
                         </div>
                     </div>
-                    <div class="-btn-section text-center">
+                    <div class="-btn-section text-center" *ngIf="user_type=='employee' && attendancewrite=='true'">
 
                         <ng-container *ngIf="punch==0">
                             <button type="button" class="btn btn-primary punch-btn" (click)="updatePunch()">Punch

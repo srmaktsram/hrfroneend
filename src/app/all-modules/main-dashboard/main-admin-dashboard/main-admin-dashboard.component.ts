@@ -264,6 +264,7 @@ export class AdminDashboardComponent implements OnInit {
       .get("http://localhost:8443/mainadmin/allClient/getAllClients")
       .subscribe((res: any) => {
         this.clientData = res;
+        console.log(res,"clients")
       });
   }
 

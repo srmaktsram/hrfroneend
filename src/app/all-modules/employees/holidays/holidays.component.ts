@@ -28,6 +28,8 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   public addHolidayForm: FormGroup;
   public editHolidayForm: FormGroup;
   public adminId = sessionStorage.getItem("adminId");
+  public user_type = sessionStorage.getItem("user_type");
+  public holidayswrite = sessionStorage.getItem("holidayswrite");
 
   public editHolidayDate: any;
   holiday: boolean;

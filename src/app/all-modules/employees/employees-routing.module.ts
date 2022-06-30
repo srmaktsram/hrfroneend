@@ -39,7 +39,7 @@ const routes: Routes = [
       {
         path: "holidays",
         component: HolidaysComponent,
-        canActivate: [AuthGuardAdmin],
+        // canActivate: [AuthGuardAdmin],
       },
       {
         path: "adminleaves",
@@ -79,13 +79,16 @@ const routes: Routes = [
       {
         path: "timesheet",
         component: TimesheetComponent,
-        canActivate: [AuthGuardAdmin],
+        // canActivate: [AuthGuardAdmin]
+        
       },
+      
       {
         path: "overtime",
         component: OvertimeComponent,
         canActivate: [AuthGuardAdmin],
       },
+      
     ],
   },
 ];
