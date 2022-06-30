@@ -41,6 +41,8 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   clientName: any;
   clientId: any;
   progess: string;
+  projectswrite: string;
+  user_type: string;
   constructor(
    
     private toastr: ToastrService,
@@ -49,6 +51,9 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.employeeId = sessionStorage.getItem("employeeId");
+    this.projectswrite=sessionStorage.getItem("projectswrite");
+    this.user_type=sessionStorage.getItem("user_type");
+
     this.getDesignation();
   
     this.getClients();

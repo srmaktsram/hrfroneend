@@ -49,7 +49,11 @@
                   href=""
                   class="avatar-title rounded-circle border border-white"
                   data-bs-toggle="modal"
-                  data-bs-target="#assign_leader"
+                  data-bs-target="#assign_leader" *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'employee' &&
+                    (projectswrite == 'true'))
+                "
                   ><i class="fa fa-plus"></i
                 ></a>
               </div>
@@ -86,7 +90,11 @@
                   href=""
                   class="avatar-title rounded-circle border border-white"
                   data-bs-toggle="modal"
-                  data-bs-target="#assign_user"
+                  data-bs-target="#assign_user"  *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'employee' &&
+                    (projectswrite == 'true'))
+                "
                   ><i class="fa fa-plus">T</i></a
                 >
               </div>
@@ -123,12 +131,12 @@
     </div>
   </div>
 
-  <div class="kanban-board card mb-0">
-    <div class="card-body">
+  <div class="kanban-board card mb-0" >
+    <div class="card-body" >
       <div class="kanban-cont">
-        <div class="kanban-list kanban-danger">
+        <div class="kanban-list kanban-danger" >
           <div class="kanban-header">
-            <span class="status-title">Pending</span>
+            <span class="status-title" >Pending</span>
             <!-- <div class="dropdown kanban-action">
                             <a href="" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
@@ -137,26 +145,31 @@
                         </div> -->
           </div>
 
-          <div
+          <div 
             class="kanban-wrap"
             cdkDropList
             #pendingList="cdkDropList"
             [cdkDropListData]="lstTasks"
             [cdkDropListConnectedTo]="[progressList]"
-            (cdkDropListDropped)="onDrop($event)"
+            (cdkDropListDropped)="onDrop($event)" 
           >
-            <div class="card panel" *ngFor="let task of lstTasks" cdkDrag>
-              <div class="kanban-box" [cdkDropListData]="task.id">
+            <div class="card panel"  *ngFor="let task of lstTasks" cdkDrag >
+              <div class="kanban-box"  [cdkDropListData]="task.id" >
                 <div class="task-board-header">
                   <span class="status-title"
                     ><a>{{ task.taskName }}</a></span
                   >
                   <ng-container *ngIf="user_type !== 'client'">
+                  <ng-container *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'employee' &&
+                    (projectswrite == 'true'))
+                ">
                     <div class="dropdown kanban-task-action">
-                      <a href="" data-bs-toggle="dropdown">
-                        <i class="fa fa-angle-down"></i>
+                      <a href="" data-bs-toggle="dropdown" >
+                        <i class="fa fa-angle-down" ></i>
                       </a>
-                      <div class="dropdown-menu dropdown-menu-right">
+                      <div class="dropdown-menu dropdown-menu-right" >
                         <a
                           class="dropdown-item"
                           data-bs-toggle="modal"
@@ -170,8 +183,9 @@
                       </div>
                     </div>
                   </ng-container>
+                  </ng-container>
                 </div>
-                <div class="task-board-body">
+                <div class="task-board-body" >
                   <div class="kanban-info">
                     <div class="progress progress-xs">
                       <div
@@ -180,7 +194,11 @@
                         style="width: 0%"
                         aria-valuenow="20"
                         aria-valuemin="0"
-                        aria-valuemax="100"
+                        aria-valuemax="100" *ngIf="
+                        user_type == 'admin' ||
+                        (user_type === 'employee' &&
+                          (projectswrite == 'true'))
+                      "
                       ></div>
                     </div>
                     <span>0.0%</span>
@@ -194,7 +212,7 @@
                         task.taskPriority
                       }}</span>
                     </span>
-                    <span class="task-users">
+                    <span class="task-users" >
                       <img
                         src="assets/img/profiles/avatar-9.jpg"
                         class="task-avatar"
@@ -208,11 +226,17 @@
             </div>
           </div>
           <ng-container *ngIf="user_type !== 'client'">
+          <ng-container  *ngIf="
+          user_type == 'admin' ||
+          (user_type === 'employee' &&
+            (projectswrite == 'true'))
+        ">
             <div class="add-new-task">
               <a data-bs-toggle="modal" data-bs-target="#add_task_modal"
                 >Add New Task</a
               >
             </div>
+          </ng-container>
           </ng-container>
         </div>
         <div class="kanban-list kanban-info">
@@ -549,7 +573,7 @@
             #reviewList="cdkDropList"
             [cdkDropListData]="lstReview"
             [cdkDropListConnectedTo]="[completedList, InprogressList, holdList]"
-            (cdkDropListDropped)="onDrop($event)"
+            (cdkDropListDropped)="onDrop($event)" 
           >
             <div class="card panel" *ngFor="let review of lstReview" cdkDrag>
               <div class="kanban-box">

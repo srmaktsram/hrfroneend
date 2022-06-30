@@ -53,13 +53,30 @@ export class SidebarComponent implements OnInit {
   promocoderead = sessionStorage.getItem("promocoderead");
   promocodewrite = sessionStorage.getItem("promocodewrite");
   //////
+  ///////////Admin Authority////////////////
+  leavesread = sessionStorage.getItem("leavesread");
+  leaveswrite = sessionStorage.getItem("leaveswrite");
+  attendanceread = sessionStorage.getItem("attendanceread");
+  attendancewrite = sessionStorage.getItem("attendancewrite");
+  timesheetread = sessionStorage.getItem("timesheetread");
+  timesheetwrite = sessionStorage.getItem("timesheetwrite");
+  clientsread = sessionStorage.getItem("clientsread");
+  clientswrite = sessionStorage.getItem("clientswrite");
+  projectsread = sessionStorage.getItem("projectsread");
+  projectswrite = sessionStorage.getItem("projectswrite");
+  holidaysread = sessionStorage.getItem("holidaysread");
+  holidayswrite = sessionStorage.getItem("holidayswrite");
+
+
+
+  //////////
   constructor(
     private router: Router,
     private allModulesService: AllModulesService
   ) {
 
     this.user_type = sessionStorage.getItem("user_type");
-    alert(this.user_type)
+    // alert(this.user_type)
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         $(".main-wrapper").removeClass("slide-nav");

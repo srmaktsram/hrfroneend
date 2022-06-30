@@ -25,6 +25,8 @@ export class TimesheetComponent implements OnInit {
   public adminId = sessionStorage.getItem("adminId")
   public employeeid = sessionStorage.getItem("employee_login_id")
   public employeeName = sessionStorage.getItem("firstName")
+  public user_type = sessionStorage.getItem("user_type")
+  public timesheetwrite = sessionStorage.getItem("timesheetwrite")
   public rows = [];
   public srch = [];
   public statusValue;

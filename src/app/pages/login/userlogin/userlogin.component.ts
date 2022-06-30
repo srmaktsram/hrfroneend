@@ -63,8 +63,23 @@ export class UserLoginComponent implements OnInit {
             res.data.firstName,
             res.data.lastName,
             res.data.phone,
-            res.data.location
+            res.data.location,
+            res.data.Leaves[0].read,
+            res.data.Leaves[1].write,
+            res.data.attendance[0].read,
+            res.data.attendance[1].write,
+            res.data.TimingSheets[0].read,
+            res.data.TimingSheets[1].write,
+            res.data.Clients[0].read,
+            res.data.Clients[1].write,
+            res.data.Projects[0].read,
+            res.data.Projects[1].write,
+            res.data.Holidays[0].read,
+            res.data.Holidays[1].write,
           );
+          console.log(res.data.Holidays[0].read,"Holidays Read")
+          console.log(res.data.Holidays[1].write,"Holidays Write")
+
         } else {
           alert("wrong Id or pass");
         }

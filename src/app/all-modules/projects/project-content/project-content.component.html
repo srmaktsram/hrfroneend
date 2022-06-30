@@ -16,7 +16,11 @@
         <a
           class="btn add-btn"
           data-bs-toggle="modal"
-          data-bs-target="#create_project"
+          data-bs-target="#create_project" *ngIf="
+          user_type == 'admin' ||
+          (user_type === 'employee' &&
+            (projectswrite == 'true'))
+        "
           ><i class="fa fa-plus"></i> Create Project</a
         >
         <div class="view-icons">
@@ -82,7 +86,11 @@
     >
       <div class="card">
         <div class="card-body">
-          <div class="dropdown dropdown-action profile-action">
+          <div class="dropdown dropdown-action profile-action" *ngIf="
+          user_type == 'admin' ||
+          (user_type === 'employee' &&
+            (projectswrite == 'true'))
+        ">
             <a
               class="action-icon dropdown-toggle"
               data-bs-toggle="dropdown"

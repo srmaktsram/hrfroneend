@@ -19,7 +19,11 @@
             class="btn add-btn"
             data-bs-toggle="modal"
             data-bs-target="#edit_project"
-            (click)="editProject()"
+            (click)="editProject()" *ngIf="
+            user_type == 'admin' ||
+            (user_type === 'employee' &&
+              (projectswrite == 'true'))
+          "
             ><i class="fa fa-plus"></i> Edit Project</a
           >
         
@@ -182,19 +186,28 @@
                           task.taskName
                         }}</span>
                         <ng-container *ngIf="user_type !== 'client'">
+                          
 
                         <span class="task-action-btn task-btn-right">
-                          <span class="action-circle large" title="Assign">
+                          <span class="action-circle large" title="Assign" *ngIf="
+                          user_type == 'admin' ||
+                          (user_type === 'employee' &&
+                            (projectswrite == 'true'))
+                        ">
                             <i
                               class="material-icons"
                               data-bs-toggle="modal"
-                              data-bs-target="#assign_user"
+                              data-bs-target="#assign_user" 
                               >person_add</i
                             >
                           </span>
                           <span
                             class="action-circle large delete-btn"
-                            title="Delete Task"
+                            title="Delete Task" *ngIf="
+                            user_type == 'admin' ||
+                            (user_type === 'employee' &&
+                              (projectswrite == 'true'))
+                          "
                           >
                             <i
                               class="material-icons"
@@ -245,7 +258,11 @@
                           task.taskName
                         }}</span>
                         <span class="task-action-btn task-btn-right">
-                          <span class="action-circle large" title="Assign">
+                          <span class="action-circle large" title="Assign" *ngIf="
+                          user_type == 'admin' ||
+                          (user_type === 'employee' &&
+                            (projectswrite == 'true'))
+                        ">
                             <i
                               class="material-icons"
                               data-bs-toggle="modal"
@@ -255,7 +272,11 @@
                           </span>
                           <span
                             class="action-circle large delete-btn"
-                            title="Delete Task"
+                            title="Delete Task" *ngIf="
+                            user_type == 'admin' ||
+                            (user_type === 'employee' &&
+                              (projectswrite == 'true'))
+                          "
                           >
                             <i
                               class="material-icons"
@@ -315,10 +336,10 @@
               <tr>
                 <td>Priority:</td>
                 <td class="text-end">
-                  <div class="btn-group">
+                  <div class="btn-group" >
                     <li
                       class="badge badge-danger dropdown-toggle"
-                      data-bs-toggle="dropdown"
+                      data-bs-toggle="dropdown" 
                     >
                       {{ projects.priority }}
                     </li>
@@ -358,6 +379,12 @@
           <h6 class="card-title m-b-20">
             Assigned Leader
             <ng-container *ngIf="user_type !== 'client'">
+            <ng-container *ngIf="
+            user_type == 'admin' ||
+            (user_type === 'employee' &&
+              (projectswrite == 'true'))
+          ">
+
 
             <button
               type="button"
@@ -367,6 +394,7 @@
             >
               <i class="fa fa-plus"></i> Add
             </button>
+            </ng-container>
             </ng-container>
           </h6>
           <ul class="list-box">
@@ -394,6 +422,11 @@
           <h6 class="card-title m-b-20">
             Assigned users
             <ng-container *ngIf="user_type !== 'client'">
+            <ng-container *ngIf="
+            user_type == 'admin' ||
+            (user_type === 'employee' &&
+              (projectswrite == 'true'))
+          ">
 
             <button
               type="button"
@@ -403,6 +436,7 @@
             >
               <i class="fa fa-plus"></i> Add
             </button>
+            </ng-container>
             </ng-container>
           </h6>
           <ul class="list-box" *ngFor="let users of projects.teamMember">
