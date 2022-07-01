@@ -47,9 +47,11 @@
             <tr *ngFor="let manageJobs of allManageJobs; let i = index">
               <td>{{ 1 + i }}</td>
               <td>
-                <a routerLink="/layout/jobs/job-details">{{
-                  manageJobs.jobTitle
-                }}</a>
+                <a
+                  routerLink="/layout/jobs/job-details"
+                  [queryParams]="{ id: manageJobs.id }"
+                  >{{ manageJobs.jobTitle }}</a
+                >
               </td>
               <td>{{ manageJobs.department }}</td>
               <td>{{ manageJobs.startDate | customDate }}</td>
