@@ -116,6 +116,7 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
+      status:"Visitor"
     }
 
     this.http.post("http://localhost:8443/mainadmin/create/registration", obj).subscribe((res: any) => {
@@ -141,6 +142,8 @@ export class HrregistrationComponent implements OnInit {
       })
       .subscribe((res: any) => {
         if (res.result == 2) {
+          if (res.data.status !== "Blocked") {
+
           window.location.replace("http://localhost:4200")
 
           this.hrUserAuthenticationService.login(
@@ -152,7 +155,11 @@ export class HrregistrationComponent implements OnInit {
             res.data.phone,
           );
 
-        } else {
+        }
+        else {
+          alert("Account Blocked By Main Admin");
+        }
+      } else {
           alert("wrong Id or pass");
         }
       });

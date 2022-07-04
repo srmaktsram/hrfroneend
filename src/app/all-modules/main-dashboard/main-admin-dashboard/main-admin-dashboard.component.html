@@ -4,8 +4,20 @@
   <div class="page-header">
     <div class="row">
       <div class="col-sm-12">
-        <h3 class="page-title" *ngIf="user_type=='mainadmin'" class="text-primary">Welcome Main Admin </h3>
-        <h3 class="page-title" *ngIf="user_type=='subadmin'" class="text-primary">Welcome Sub Admin </h3>
+        <h3
+          class="page-title"
+          *ngIf="user_type == 'mainadmin'"
+          class="text-primary"
+        >
+          Welcome Main Admin
+        </h3>
+        <h3
+          class="page-title"
+          *ngIf="user_type == 'subadmin'"
+          class="text-primary"
+        >
+          Welcome Sub Admin
+        </h3>
         <ul class="breadcrumb">
           <li class="breadcrumb-item active">Dashboard</li>
         </ul>
@@ -16,50 +28,50 @@
 
   <div class="row">
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-            <div class="card-body">
-                <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{premiumClientsCount}}</h3>
-                    <span>Total Premium Clients</span>
-                </div>
-            </div>
+      <div class="card dash-widget">
+        <div class="card-body">
+          <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+          <div class="dash-widget-info">
+            <h3>{{ premiumClientsCount }}</h3>
+            <span>Total Premium Clients</span>
+          </div>
         </div>
+      </div>
     </div>
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-            <div class="card-body">
-                <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{freeClientsCount}}</h3>
-                    <span>Total Free Clients</span>
-                </div>
-            </div>
+      <div class="card dash-widget">
+        <div class="card-body">
+          <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+          <div class="dash-widget-info">
+            <h3>{{ freeClientsCount }}</h3>
+            <span>Total Free Clients</span>
+          </div>
         </div>
+      </div>
     </div>
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-            <div class="card-body">
-                <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{premiumTodayClientsCount}}</h3>
-                    <span>Today Premium Clients</span>
-                </div>
-            </div>
+      <div class="card dash-widget">
+        <div class="card-body">
+          <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+          <div class="dash-widget-info">
+            <h3>{{ premiumTodayClientsCount }}</h3>
+            <span>Today Premium Clients</span>
+          </div>
         </div>
+      </div>
     </div>
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-            <div class="card-body">
-                <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{freeTodayClientsCount}}</h3>
-                    <span>Today Free Clients</span>
-                </div>
-            </div>
+      <div class="card dash-widget">
+        <div class="card-body">
+          <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+          <div class="dash-widget-info">
+            <h3>{{ freeTodayClientsCount }}</h3>
+            <span>Today Free Clients</span>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
   <div class="row">
     <div class="col-md-12">
@@ -139,7 +151,9 @@
           </div>
         </div>
         <div class="card-footer">
-          <a routerLink="/layout/mainadmin/accounts/invoices">View all invoices</a>
+          <a routerLink="/layout/mainadmin/accounts/invoices"
+            >View all invoices</a
+          >
         </div>
       </div>
     </div>
@@ -184,7 +198,9 @@
           </div>
         </div>
         <div class="card-footer">
-          <a routerLink="/layout/mainadmin/accounts/payments">View all payments</a>
+          <a routerLink="/layout/mainadmin/accounts/payments"
+            >View all payments</a
+          >
         </div>
       </div>
     </div>
@@ -203,26 +219,14 @@
             <table class="table custom-table mb-0">
               <thead>
                 <tr>
-                  <th> Company Name</th>
+                  <th>Name</th>
                   <th>Email</th>
                   <th>Status</th>
-                  
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of clientData">
-                  <td>
-                    <h2 class="table-avatar">
-                      <a
-                        routerLink="/layout/employees/employeeprofile"
-                        class="avatar"
-                        ><img alt="" src="assets/img/profiles/avatar-5.jpg"
-                      /></a>
-                      <a routerLink="/layout/employees/employeeprofile"
-                        >{{ item.companyName }} <span>{{ item.role }}</span></a
-                      >
-                    </h2>
-                  </td>
+                  <td>{{ item.firstName }} {{ item.lastName }}</td>
                   <td>{{ item.email }}</td>
                   <td>
                     <div class="dropdown action-label">
@@ -231,13 +235,9 @@
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        
-                          <i class="fa fa-dot-circle-o text-success">{{
-                            item.status
-                          }}</i>
-                       
-                        
-                         
+                        <i class="fa fa-dot-circle-o text-success">{{
+                          item.status
+                        }}</i>
                       </a>
                       <!-- <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
@@ -247,14 +247,15 @@
                                             </div> -->
                     </div>
                   </td>
-                  
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
         <div class="card-footer">
-          <a routerLink="/layout/mainadmin/clients/premiumclients">View all clients</a>
+          <a routerLink="/layout/mainadmin/clients/premiumclients"
+            >View all clients</a
+          >
         </div>
       </div>
     </div>
@@ -274,12 +275,10 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Status</th>
-                 
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of affiliateData">
-                  
                   <td>{{ item.company }}</td>
                   <td>{{ item.email }}</td>
                   <td>
@@ -289,25 +288,21 @@
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        
-                          <i class="fa fa-dot-circle-o text-success">{{
-                            item.status
-                          }}</i>
-                        
-                        
-                         
+                        <i class="fa fa-dot-circle-o text-success">{{
+                          item.status
+                        }}</i>
                       </a>
-                     
                     </div>
                   </td>
-                  
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
         <div class="card-footer">
-          <a routerLink="/layout/mainadmin/affiliates/premiumaffiliate">View all affiliates</a>
+          <a routerLink="/layout/mainadmin/affiliates/premiumaffiliate"
+            >View all affiliates</a
+          >
         </div>
       </div>
     </div>

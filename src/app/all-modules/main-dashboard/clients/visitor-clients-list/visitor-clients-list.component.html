@@ -29,6 +29,11 @@
               class="list-view btn btn-link active"
               ><i class="fa fa-bars"></i
             ></a>
+            <a
+            routerLink="/layout/mainadmin/clients/blockedclients"
+            class="list-view btn btn-link active"
+            ><i class="fa fa-bars"></i
+          ></a>
           </div>
         </div>
       </div>
@@ -60,18 +65,14 @@
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
-        <div class="form-group form-focus select-focus">
-          <select
-            class="form-select floating form-control"
+        <div class="form-group form-focus">
+          <input
+            type="text"
+            class="form-control floating"
             #companyn
-            (input)="searchByCompany($event.target.value)"
-          >
-            <option value="">Select Company</option>
-            <option *ngFor="let client of data">
-              {{ client.companyName }}
-            </option>
-          </select>
-          <label class="focus-label">Company</label>
+            (input)="searchByCorporateId($event.target.value)"
+          />
+          <label class="focus-label">Enter Corporate ID</label>
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
@@ -97,36 +98,22 @@
           >
             <thead>
               <tr>
-                <th>Company Name</th>
-                <th>Company Email</th>
-                <th>Contact Person</th>
-                <th>Email</th>
-                <th>Mobile</th>
-                <th>Status</th>
-                <th class="text-end">Action</th>
+                <th>Corporate Id</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Status</th>
+              <th class="text-end">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let client of data; let i = index">
                 <td>
-                  <h2 class="table-avatar">
-                    <a
-                      routerLink="/layout/clients/clientsprofile/{{ client.id }}"
-                      class="avatar"
-                      ><img
-                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                        alt=""
-                    /></a>
-                    <a
-                      routerLink="/layout/clients/clientsprofile/{{ client.id }}"
-                      >{{ client.companyName }}</a
-                    >
-                  </h2>
+                  {{ client.corporateId }}
                 </td>
-                <td>{{ client.companyEmail }}</td>
-                <td>{{ client.name }}</td>
+                <td>{{ client.firstName }} {{ client.lastName}}</td>
                 <td>{{ client.email }}</td>
-                <td>{{ client.mobile }}</td>
+                <td>{{ client.phone }}</td>
                 <td>
                   <div class="dropdown action-label">
                     <a
@@ -175,6 +162,25 @@
                         ><i class="fa fa-pencil m-r-5"></i> Edit</a
                       >
                       
+                    </div>&nbsp;
+                    <div class="d-inline p-2 bg-primary text-white">
+                      <a
+                        data-bs-toggle="modal"
+                        data-bs-target="#login_as_user"
+                        (click)="adminlogin(client.id)"
+                      >
+                        Login as User</a
+                      >
+                    </div>
+                    &nbsp;
+                    <div class="d-inline p-2 bg-danger text-white">
+                      <a
+                        data-bs-toggle="modal"
+                        data-bs-target="#block"
+                        (click)="getBlock('Blocked', client.id)"
+                        >
+                        Block</a
+                      >
                     </div>
                   </div>
                 </td>
