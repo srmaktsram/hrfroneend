@@ -14,17 +14,23 @@ export class SettingsComponent implements OnInit {
     subUrl: "",
     childUrl: "",
   };
+  user_type: string;
   getScreenHeight() {
     this.innerHeight = window.innerHeight + "px";
   }
 
+  
+
   constructor(private ngZone: NgZone, private router: Router) {
+     this.user_type = sessionStorage.getItem("user_type");
+
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const url = event.url.split("/");
         this.urlComplete.mainUrl = url[2];
         this.urlComplete.subUrl = url[3];
         this.urlComplete.childUrl = url[4];
+
       }
     });
     window.onresize = (e) => {

@@ -5,7 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { HeaderComponent } from "src/app/header/header.component";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
@@ -29,6 +29,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
   public user_type = sessionStorage.getItem("user_type");
+  id:any
 
   public pipe = new DatePipe("en-US");
   public rows = [];
@@ -40,42 +41,49 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   Holidays = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
   Leaves = [
     { id: 0, read: false },
     { id: 1, write: false },
-   
   ];
   Clients = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
   Projects = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
-  
-  attendance
-   = [
+
+  attendance = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
- 
 
   TimingSheets = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
   adminId: string;
   current_location: any;
   employees: any;
   dataArray: any;
   lengthCount: any;
+  corporateId: any;
+  productDetails: any;
+  todayDate: Date;
+  date1: any;
+  date2: any;
+  diffDays: any;
+  totalRemaining: any;
+  productDetailsGroup: any;
+  public totalUser: string;
+  public totalEmployee: string;
+  packageName: string;
+  companyName: string;
+  maximumEmployees = true;
+
+
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient,
@@ -84,9 +92,21 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     public router: Router
   ) {
-    this.current_location = JSON.parse(
-      sessionStorage.getItem("current_location")
-    );
+    // this.current_location = JSON.parse(sessionStorage.getItem("current_location"));
+    this.corporateId = sessionStorage.getItem("corporateId");
+    this.packageName = sessionStorage.getItem("packageName");
+    this.companyName = sessionStorage.getItem("companyName");
+    console.log(this.packageName, "packageName");
+    console.log(this.corporateId, "corporateId");
+    console.log(this.companyName, "companyName");
+
+    if (sessionStorage.getItem("current_location") === "undefined") {
+      alert("current_location is undefined");
+    } else {
+      this.current_location = JSON.parse(
+        sessionStorage.getItem("current_location")
+      );
+    }
     this.adminId = sessionStorage.getItem("adminId");
     this.getDepartments();
 
@@ -96,36 +116,29 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.Holidays = [
       { id: 0, read: false },
       { id: 1, write: false },
-     
     ];
 
     this.Leaves = [
       { id: 0, read: false },
       { id: 1, write: false },
-      
     ];
     this.Clients = [
       { id: 0, read: false },
       { id: 1, write: false },
-      
     ];
     this.Projects = [
       { id: 0, read: false },
       { id: 1, write: false },
-      
     ];
-   
-    this.attendance
-     = [
+
+    this.attendance = [
       { id: 0, read: false },
       { id: 1, write: false },
-      
     ];
-   
+
     this.TimingSheets = [
       { id: 0, read: false },
       { id: 1, write: false },
-      
     ];
   }
   public getDepartments() {
@@ -144,6 +157,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.getNotifications();
+    this.getAllProduct();
     // for floating label
 
     $(".floating")
@@ -156,29 +170,88 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.loadEmployee();
     // add employee form validation
     this.addEmployeeForm = this.formBuilder.group({
-      FirstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      LastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      UserName: ["", [Validators.required, Validators.pattern('^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$')]],
+      FirstName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      LastName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      UserName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$"
+          ),
+        ],
+      ],
       Password: ["", [Validators.required]],
       ConfirmPassword: ["", [Validators.required]],
       DepartmentName: ["", [Validators.required]],
       Designation: ["", [Validators.required]],
-      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      PhoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      Email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      PhoneNumber: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       JoinDate: ["", [Validators.required]],
       EmployeeID: ["", [Validators.required]],
     });
 
     // edit form validation
     this.editEmployeeForm = this.formBuilder.group({
-
-      FirstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      LastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      UserName: ["", [Validators.required, Validators.pattern('^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$')]],
+      FirstName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      LastName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      UserName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$"
+          ),
+        ],
+      ],
       DepartmentName: ["", [Validators.required]],
       Designation: ["", [Validators.required]],
-      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      PhoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      Email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      PhoneNumber: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       JoinDate: ["", [Validators.required]],
       EmployeeID: ["", [Validators.required]],
     });
@@ -213,11 +286,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
-      .subscribe((data) => {
+      .subscribe((data:any) => {
         console.log("get Employees", data);
+        this.totalEmployee=data.length
+        console.log(this.totalEmployee,"no. of employees")
+
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
@@ -237,20 +313,40 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data: any) => {
         this.employees = data[0].notification.employee;
       });
   }
+
+  getAllProduct() {
+    let params = new HttpParams();
+    params = params.set("packageName", this.packageName);
+    params = params.set("corporateId", this.corporateId);
+    params = params.set("companyName", this.companyName);
+
+    this.http
+      .get("http://localhost:8443/mainadmin/myProductsOnly?" + params)
+      .subscribe((res: any) => {
+        this.productDetails = res;
+        console.log("Areeeeeeeeeeeeeee", res);
+        this.productDetails.map((item: any) => {
+          this.totalUser = item.totalUser;
+          console.log(this.totalUser,"users no.")
+        });
+      });
+  }
+
   // Add employee  Modal Api Call
   addEmployee() {
     if (this.addEmployeeForm.invalid) {
       this.markFormGroupTouched(this.addEmployeeForm);
       return;
     }
-
+    if(this.totalUser>this.totalEmployee){
+      
     let obj = {
       firstname: this.addEmployeeForm.value.FirstName,
       lastname: this.addEmployeeForm.value.LastName,
@@ -269,9 +365,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Leaves: this.Leaves,
       Clients: this.Clients,
       Projects: this.Projects,
-      attendance
-      : this.attendance
-      ,
+      attendance: this.attendance,
       TimingSheets: this.TimingSheets,
       adminId: this.adminId,
       location: this.current_location,
@@ -291,15 +385,19 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
           this.http
             .post(
               "http://localhost:8443/admin/allNotification/createNotification" +
-              "/" +
-              this.adminId,
+                "/" +
+                this.adminId,
               { message, author, functions, time }
             )
             .subscribe((data: any) => {
               this.headerComponent.getAllNotifications();
             });
         }
-      });
+      });}else{
+        // alert("Can not add more employees,kindly upgrade your plan")
+        this.maximumEmployees = false;
+
+      }
 
     $("#add_employee").modal("hide");
     this.addEmployeeForm.reset();
@@ -310,8 +408,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.http
         .get(
           "http://localhost:8443/admin/notifications/getAllNotification" +
-          "/" +
-          this.adminId
+            "/" +
+            this.adminId
         )
         .subscribe((data: any) => {
           this.dataArray = data[0].notifications;
@@ -354,9 +452,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       Leaves: this.Leaves,
       Clients: this.Clients,
       Projects: this.Projects,
-      attendance
-      : this.attendance
-      ,
+      attendance: this.attendance,
       TimingSheets: this.TimingSheets,
       // id: this.editId,
     };
@@ -401,9 +497,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.Leaves = toSetValues.Leaves;
     this.Clients = toSetValues.Clients;
     this.Projects = toSetValues.Projects;
-    this.attendance
-     = toSetValues.attendance
-    ;
+    this.attendance = toSetValues.attendance;
     this.TimingSheets = toSetValues.TimingSheets;
   }
 
@@ -536,7 +630,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
         this.Leaves[objIndex].write = false;
       }
-    } 
+    }
   }
 
   checkCheckBoxvalueClients(event, val) {
@@ -556,7 +650,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
         this.Clients[objIndex].write = false;
       }
-    } 
+    }
   }
 
   checkCheckBoxvalueProjects(event, val) {
@@ -576,40 +670,29 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
         this.Projects[objIndex].write = false;
       }
-    } 
+    }
   }
 
-  
-  checkCheckBoxvalueattendance
-  (event, val) {
+  checkCheckBoxvalueattendance(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
-        const objIndex = this.attendance
-        .findIndex((obj) => obj.id == val);
-        this.attendance
-        [objIndex].read = true;
+        const objIndex = this.attendance.findIndex((obj) => obj.id == val);
+        this.attendance[objIndex].read = true;
       } else {
-        const objIndex = this.attendance
-        .findIndex((obj) => obj.id == val);
-        this.attendance
-        [objIndex].read = false;
+        const objIndex = this.attendance.findIndex((obj) => obj.id == val);
+        this.attendance[objIndex].read = false;
       }
     } else if (val == 1) {
       if (event.target.checked == true) {
-        const objIndex = this.attendance
-        .findIndex((obj) => obj.id == val);
-        this.attendance
-        [objIndex].write = true;
+        const objIndex = this.attendance.findIndex((obj) => obj.id == val);
+        this.attendance[objIndex].write = true;
       } else {
-        const objIndex = this.attendance
-        .findIndex((obj) => obj.id == val);
-        this.attendance
-        [objIndex].write = false;
+        const objIndex = this.attendance.findIndex((obj) => obj.id == val);
+        this.attendance[objIndex].write = false;
       }
-    } 
+    }
   }
 
-  
   checkCheckBoxvalueTimingSheets(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -627,7 +710,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         const objIndex = this.TimingSheets.findIndex((obj) => obj.id == val);
         this.TimingSheets[objIndex].write = false;
       }
-    } 
+    }
   }
 
   getId(id) {
