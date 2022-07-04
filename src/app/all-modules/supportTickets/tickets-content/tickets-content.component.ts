@@ -18,6 +18,8 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import { type } from "jquery";
 
 declare const $: any;
 @Component({
@@ -44,6 +46,9 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
   public editCreated: any;
   public editLastDate: any;
+  public addError = true;
+  public editError = true;
+
   dataarr: any;
   lstEmployee: any;
   data: Object;
@@ -59,6 +64,10 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   countOpen = 0;
   countPending = 0;
   public multImages = [];
+  public totalSize: any;
+  public flag = 0
+  public editFlag = 0;
+  public format = 0;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -109,8 +118,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.addTicketForm = this.formBuilder.group({
       addticketSubject: ["", [Validators.required]],
       addPriorityName: ["", [Validators.required]],
-      addReplyPhone: ["", [Validators.required]],
-      addReplyEmail: ["", [Validators.required]],
+      addReplyPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      addReplyEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       addDescription: [""],
       // addUploadFiles: [""],
       createdDate: [""],
@@ -122,8 +131,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.editTicketForm = this.formBuilder.group({
       editTicketSubject: ["", [Validators.required]],
       editPriorityName: ["", [Validators.required]],
-      editReplyPhone: ["", [Validators.required]],
-      editReplyEmail: ["", [Validators.required]],
+      editReplyPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      editReplyEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       editDescription: ["", [Validators.required]],
     });
 
@@ -158,8 +167,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/mainadmin/supportTickets/getTicketsCount" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((res: any) => {
         this.newTickets = res.countNewTicket;
@@ -173,10 +182,11 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/mainadmin/supportTickets/getAdminAllTickets" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data: any) => {
+        console.log(data)
         this.allTickets = data;
         this.rows = this.allTickets;
         this.srch = [...this.rows];
@@ -193,10 +203,45 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   }
 
   selectImage(event: any) {
+    var imgSize = 0;
     if (event.target.files.length > 0) {
       this.multImages = event.target.files;
+      console.log(event.target.files, "first");
+      console.log(typeof (event.target.files), "second>>>>>>>>>")
+
+      for (let item of this.multImages) {
+        imgSize = imgSize + parseInt(item.size)
+        if (
+          item.type === "image/jpeg" ||
+          item.type === "image/png" ||
+          item.type === "image/jpg" || "application/pdf") {
+          this.format = 1;
+        }
+        else {
+          this.format = 0;
+        }
+      }
+
+      if (this.format == 1) {
+        if (imgSize < 3145728) {
+          alert("call huaa")
+          this.addError = true;
+          this.editError = true;
+        } else {
+          alert("call nhi huaa")
+          this.addError = false;
+          this.editError = false;
+        }
+      }
+
     }
+
+    this.flag = imgSize;
+    this.editFlag = imgSize;
+
+
   }
+
   // Add Ticket Modal Api Call
 
   addTickets() {
@@ -204,34 +249,39 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       this.markFormGroupTouched(this.addTicketForm);
       return;
     }
-    var fd = new FormData();
-    for (let image of this.multImages) {
-      fd.append("files", image);
-    }
-    let params = new HttpParams();
-    params = params.set("adminId", this.adminId);
-    params = params.set(
-      "ticketSubject",
-      this.addTicketForm.value.addticketSubject
-    );
-    params = params.set("priority", this.addTicketForm.value.addPriorityName);
-    params = params.set("replyPhone", this.addTicketForm.value.addReplyPhone);
-    params = params.set("replyEmail", this.addTicketForm.value.addReplyEmail);
-    params = params.set("description", this.addTicketForm.value.addDescription);
-    params = params.set("companyName", this.companyName);
 
-    this.http
-      .post(
-        "http://localhost:8443/mainadmin/supportTickets/createTickets?" +
+    if (this.flag < 3145728) {
+      var fd = new FormData();
+      for (let image of this.multImages) {
+        fd.append("files", image);
+      }
+      let params = new HttpParams();
+      params = params.set("adminId", this.adminId);
+      params = params.set(
+        "ticketSubject",
+        this.addTicketForm.value.addticketSubject
+      );
+      params = params.set("priority", this.addTicketForm.value.addPriorityName);
+      params = params.set("replyPhone", this.addTicketForm.value.addReplyPhone);
+      params = params.set("replyEmail", this.addTicketForm.value.addReplyEmail);
+      params = params.set("description", this.addTicketForm.value.addDescription);
+      params = params.set("companyName", this.companyName);
+
+      this.http
+        .post(
+          "http://localhost:8443/mainadmin/supportTickets/createTickets?" +
           params,
-        fd
-      )
-      .subscribe((data) => {
-        this.getTickets();
-        this.getTicketsCount();
+          fd
+        )
+        .subscribe((data) => {
+          console.log(data, "hvdvhjgdhjgdhj>>>>>>>>>>>>>>.")
+          this.getTickets();
+          this.getTicketsCount();
 
-      });
+        });
 
+
+    }
     $("#add_ticket").modal("hide");
     this.addTicketForm.reset();
     this.toastr.success("Tickets added", "Success");
@@ -239,38 +289,43 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.toastr.warning("Mandatory fields required", "");
   }
 
+
+
   // Edit Ticket Modal Api Call
 
   editTicket() {
-    var fd = new FormData();
-    for (let image of this.multImages) {
-      fd.append("files", image);
-    }
-    let params = new HttpParams();
-    params = params.set("editId", this.editId);
-    params = params.set(
-      "ticketSubject",
-      this.editTicketForm.value.editTicketSubject
-    );
-    params = params.set("priority", this.editTicketForm.value.editPriorityName);
-    params = params.set("replyPhone", this.editTicketForm.value.editReplyPhone);
-    params = params.set("replyEmail", this.editTicketForm.value.editReplyEmail);
-    params = params.set(
-      "description",
-      this.editTicketForm.value.editDescription
-    );
-    this.http
-      .patch(
-        "http://localhost:8443/mainadmin/supportTickets/updateSupportTickets?" +
+
+    if (this.flag < 3145728) {
+      var fd = new FormData();
+      for (let image of this.multImages) {
+        fd.append("files", image);
+      }
+      let params = new HttpParams();
+      params = params.set("editId", this.editId);
+      params = params.set(
+        "ticketSubject",
+        this.editTicketForm.value.editTicketSubject
+      );
+      params = params.set("priority", this.editTicketForm.value.editPriorityName);
+      params = params.set("replyPhone", this.editTicketForm.value.editReplyPhone);
+      params = params.set("replyEmail", this.editTicketForm.value.editReplyEmail);
+      params = params.set(
+        "description",
+        this.editTicketForm.value.editDescription
+      );
+      this.http
+        .patch(
+          "http://localhost:8443/mainadmin/supportTickets/updateSupportTickets?" +
           params,
-        fd
-      )
-      .subscribe((data) => {
-       
+          fd
+        )
+        .subscribe((data) => {
 
-        this.getTickets();
-      });
 
+          this.getTickets();
+        });
+
+    }
     $("#edit_ticket").modal("hide");
     this.editTicketForm.reset();
     this.toastr.success("Ticket updated", "Success");
@@ -300,12 +355,12 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/supportTickets/deleteTickets" +
-          "/" +
-          id,
+        "/" +
+        id,
         obj
       )
       .subscribe((data) => {
-       
+
         this.getTickets();
       });
     $("#delete_ticket").modal("hide");
@@ -332,7 +387,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       this.getTickets();
     }
   }
- 
+
   //search by status
   searchStatus(val) {
     if (val) {
@@ -393,15 +448,15 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     }
   }
 
- 
+
   getPriority(data, id) {
     const priority = data;
 
     this.http
       .patch(
         "http://localhost:8443/mainadmin/supportTickets/updateTicketPriority" +
-          "/" +
-          id,
+        "/" +
+        id,
         { priority }
       )
       .subscribe((res) => {

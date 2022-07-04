@@ -36,7 +36,7 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
   public tempId: any;
   public rows = [];
   public srch = [];
-  public adminId:any;
+  public adminId: any;
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
@@ -44,11 +44,11 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
   public editPurchaseToDateFormat;
   constructor(
     private allModuleService: AllModulesService,
-    private http:HttpClient,
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
   ) {
-    this.adminId=sessionStorage.getItem("adminId");
+    this.adminId = sessionStorage.getItem("adminId");
   }
 
   ngOnInit() {
@@ -69,7 +69,7 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
     // Add Assets Form Validation And Getting Values
 
     this.addAssets = this.formBuilder.group({
-      assetName: ["", [Validators.required]],
+      assetName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       assetId: ["", [Validators.required]],
       purchaseDate: ["", [Validators.required]],
       purchaseTo: ["", [Validators.required]],
@@ -77,18 +77,18 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
       value: ["", [Validators.required]],
       assetUser: ["", [Validators.required]],
       assetStatus: ["", [Validators.required]],
-      description:["", ],
-      manufacturer:["", ],
-      model:["", ], 
-      serialNumber:["", ], 
-      supplier:["", ], 
-      condition:["", ],
+      description: ["",],
+      manufacturer: ["",],
+      model: ["",],
+      serialNumber: ["",],
+      supplier: ["",],
+      condition: ["",],
     });
 
     // Edit Assets Form Validation And Getting Values
 
     this.editAssets = this.formBuilder.group({
-      editAssetsName: ["", [Validators.required]],
+      editAssetsName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       editPurchaseDate: ["", [Validators.required]],
       editPurchaseTo: ["", [Validators.required]],
       editWarranty: ["", [Validators.required]],
@@ -96,12 +96,12 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
       editAssetUser: ["", [Validators.required]],
       editAssetId: ["", [Validators.required]],
       editAssetStatus: ["", [Validators.required]],
-      editdescription:["", ],
-      editmanufacturer:["", ],
-      editmodel:["", ], 
-      editserialNumber:["", ], 
-      editsupplier:["", ], 
-      editcondition:["", ],
+      editdescription: ["",],
+      editmanufacturer: ["",],
+      editmodel: ["",],
+      editserialNumber: ["",],
+      editsupplier: ["",],
+      editcondition: ["",],
     });
 
     // for data table configuration
@@ -134,7 +134,7 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   //get data for data table
   getAssets() {
-    this.http.get("http://localhost:8443/admin/assets/getAdminAssets"+"/"+this.adminId).subscribe((data:any) => {
+    this.http.get("http://localhost:8443/admin/assets/getAdminAssets" + "/" + this.adminId).subscribe((data: any) => {
       // console.log("get Assets>>>>>>>>>>>>>",data)
       this.allAssets = data;
       this.rows = this.allAssets;
@@ -153,7 +153,7 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Add Assets Modal Api Call
   addAssetsSubmit() {
-    if(this.addAssets.invalid){
+    if (this.addAssets.invalid) {
       this.markFormGroupTouched(this.addAssets)
       return
     }
@@ -167,7 +167,7 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
         "dd-MM-yyyy"
       );
       let obj = {
-        adminId:this.adminId,
+        adminId: this.adminId,
         assetName: this.addAssets.value.assetName,
         assetId: this.addAssets.value.assetId,
         purchaseDate: purchaseDateFormat,
@@ -184,9 +184,9 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
         condition: this.addAssets.value.condition
       };
 
-      this.http.post("http://localhost:8443/admin/assets/createAssets",obj).subscribe((data:any) => {
-      //   console.log("post Assets>>>>>>>>>>>>>",obj)
-      // console.log("post Assets>>>>>>>>>>>>>",data)
+      this.http.post("http://localhost:8443/admin/assets/createAssets", obj).subscribe((data: any) => {
+        //   console.log("post Assets>>>>>>>>>>>>>",obj)
+        // console.log("post Assets>>>>>>>>>>>>>",data)
 
         this.getAssets();
         $("#datatable").DataTable().clear();
@@ -195,7 +195,7 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.dtTrigger.next();
       });
-    
+
       $("#add_asset").modal("hide");
       this.addAssets.reset();
       this.toastr.success("Assets is added", "Success");
@@ -231,20 +231,20 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
         serialNumber: this.editAssets.value.editserialNumber,
         supplier: this.editAssets.value.editsupplier,
         condition: this.editAssets.value.editcondition,
-       
+
       };
       alert(this.editId)
-      this.http.patch("http://localhost:8443/admin/assets/updateAssets"+"/"+this.editId,obj).subscribe((data:any) => {
-      // console.log("update Assets>>>>>>>>>>>>>",obj)
-      // console.log("update Assets>>>>>>>>>>>>>",data)
-      this.getAssets();
+      this.http.patch("http://localhost:8443/admin/assets/updateAssets" + "/" + this.editId, obj).subscribe((data: any) => {
+        // console.log("update Assets>>>>>>>>>>>>>",obj)
+        // console.log("update Assets>>>>>>>>>>>>>",data)
+        this.getAssets();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
           dtInstance.destroy();
         });
         this.dtTrigger.next();
       });
-    
+
       $("#edit_asset").modal("hide");
       this.toastr.success("Assets is edited", "Success");
     } else {
@@ -254,18 +254,18 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // for set values to editassets form
   edit(value) {
-    
+
     this.editId = value;
-   
+
     const index = this.allAssets.findIndex((item) => {
       return item.assetId === value;
-    
-    });
-   
-    let toSetValues = this.allAssets[index];
-   
 
-    
+    });
+
+    let toSetValues = this.allAssets[index];
+
+
+
     this.editAssets.patchValue({
       editAssetsName: toSetValues.assetName,
       editPurchaseDate: toSetValues.purchaseDate,
@@ -277,17 +277,17 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
       editAssetStatus: toSetValues.assetStatus,
       editdescription: toSetValues.description,
       editmanufacturer: toSetValues.manufacturer,
-      editmodel:toSetValues.model,
-      editserialNumber:toSetValues.serialNumber,
-      editsupplier:toSetValues.supplier,
-      editcondition:toSetValues.condition,
+      editmodel: toSetValues.model,
+      editserialNumber: toSetValues.serialNumber,
+      editsupplier: toSetValues.supplier,
+      editcondition: toSetValues.condition,
 
     });
   }
 
   // Delete Assets Modal Api Call
   deleteAssets() {
-    this.http.patch("http://localhost:8443/admin/assets/deleteAssets"+"/"+this.tempId,{assetStatus:2}).subscribe((data:any) => {
+    this.http.patch("http://localhost:8443/admin/assets/deleteAssets" + "/" + this.tempId, { assetStatus: 2 }).subscribe((data: any) => {
       // console.log("delete Assets>>>>>>>>>>>>>",this.tempId)
       this.getAssets();
       $("#datatable").DataTable().clear();
@@ -296,7 +296,7 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
       });
       this.dtTrigger.next();
     });
-   
+
     $("#delete_asset").modal("hide");
     this.toastr.success("Assets is deleted", "Success");
   }
@@ -359,23 +359,23 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   /////search   by fropm and to////////////
-  searchFromAndTo(startDate,endDate){
-    this.rows.splice(0,this.rows.length);
-    this.srch.map((item)=>{
+  searchFromAndTo(startDate, endDate) {
+    this.rows.splice(0, this.rows.length);
+    this.srch.map((item) => {
       // console.log(item.createDate)
-      if(startDate<=item.createDate && item.createDate<=endDate){
+      if (startDate <= item.createDate && item.createDate <= endDate) {
         this.rows.push(item);
       }
     })
   }
 
   //getting the status value
-  getStatus(data,id) {
-       
-     this.http.patch("http://localhost:8443/admin/assets/updateAssets"+"/"+id,{assetStatus:data}).subscribe((data:any) => {
-     
+  getStatus(data, id) {
+
+    this.http.patch("http://localhost:8443/admin/assets/updateAssets" + "/" + id, { assetStatus: data }).subscribe((data: any) => {
+
       this.getAssets();
-  })
+    })
   }
   //for unsubscribe datatable
   ngOnDestroy(): void {

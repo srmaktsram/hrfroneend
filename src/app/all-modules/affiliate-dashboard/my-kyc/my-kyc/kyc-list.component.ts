@@ -32,13 +32,13 @@ export class KycListComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
 
-   public aadhaarRemark:string;
-   public panRemark:string;
-   public aadhaarFrontStatus:string;
-   public aadhaarBackStatus:string;
-   public aadhaarPanStatus:string;
-   public aadhaarKycStatus:string;
-   public aadhaarKycResult4:string;
+  public aadhaarRemark: string;
+  public panRemark: string;
+  public aadhaarFrontStatus: string;
+  public aadhaarBackStatus: string;
+  public aadhaarPanStatus: string;
+  public aadhaarKycStatus: string;
+  public aadhaarKycResult4: string;
 
 
   editId: any;
@@ -70,8 +70,8 @@ export class KycListComponent implements OnInit, OnDestroy {
   errBackAadhaarSize = true;
   errorPanExtension = true;
   errPanSize = true;
-  kycResult4=true
-   public disableButton = false;
+  kycResult4 = true
+  public disableButton = false;
 
 
   id: any;
@@ -228,18 +228,18 @@ export class KycListComponent implements OnInit, OnDestroy {
     this.http
       .patch("http://localhost:8443/affiliates/kyc/updateKyc4?" + params, {})
       .subscribe((res: any) => {
-       
 
-        if(res.result==5){
-        this.kycResult4=false
+
+        if (res.result == 5) {
+          this.kycResult4 = false
         }
-        
-        
-        else{
-          this.kycResult4=true
+
+
+        else {
+          this.kycResult4 = true
           this.getKycDetails();
-         
-          
+
+
         }
       });
   }
@@ -256,16 +256,16 @@ export class KycListComponent implements OnInit, OnDestroy {
         this.panCardPath = `http://localhost:8443/${this.panCard}`;
         this.aadhaarBackCardPath = `http://localhost:8443/${this.aadhaarCardBack}`;
         this.aadhaarCardPath = `http://localhost:8443/${this.aadhaarCard}`;
-        
-        this.aadhaarFrontStatus=response.aadhaarVerified
-        this.aadhaarBackStatus=response.aadhaarBackVerified
-        this.aadhaarPanStatus=response.panVerified
-        this.aadhaarKycStatus=response.kycVerified
-       
-        if(response.kycVerified=="3"){
+
+        this.aadhaarFrontStatus = response.aadhaarVerified
+        this.aadhaarBackStatus = response.aadhaarBackVerified
+        this.aadhaarPanStatus = response.panVerified
+        this.aadhaarKycStatus = response.kycVerified
+
+        if (response.kycVerified == "3") {
           this.disableButton = true;
         }
-       
+
 
         this.addKyc.patchValue({
           aadhaarCardNo: response.aadhaarCardNo,
