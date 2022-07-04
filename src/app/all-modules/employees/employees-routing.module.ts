@@ -34,7 +34,7 @@ const routes: Routes = [
       {
         path: "employeeprofile",
         component: EmployeeProfileComponent,
-        canActivate: [AuthGuardAdmin],
+        // canActivate: [AuthGuardAdmin],
       },
       {
         path: "holidays",

@@ -66,7 +66,8 @@ export class LoginComponent implements OnInit {
             res.data.location,
             res.data.cicon,
             res.data.cinvoice,
-            res.data.cinvoicepre
+            res.data.cinvoicepre,
+            res.data.packageName,
           );
         } else {
           alert("wrong Id or pass");

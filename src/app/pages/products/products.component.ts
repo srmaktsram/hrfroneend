@@ -47,7 +47,8 @@ export class ProductsComponent implements OnInit {
           res.data.location,
           res.data.cicon,
           res.data.cinvoice,
-          res.data.cinvoicepre
+          res.data.cinvoicepre,
+          res.data.packageName,
         );
       });
   }
@@ -92,6 +93,7 @@ export class ProductsComponent implements OnInit {
     this.http
       .get("http://localhost:8443/auth/register/get_Details" + "/" + id)
       .subscribe((res: any) => {
+        console.log(res,"KKKKKKKKKKKKKKKKKK")
         if (res.result == 1) {
           this.router.navigate(["/layout/dashboard/admin"]);
 
@@ -108,7 +110,8 @@ export class ProductsComponent implements OnInit {
             res.data.location,
             res.data.cicon,
             res.data.cinvoice,
-            res.data.cinvoicepre
+            res.data.cinvoicepre,
+            res.data.packageName,
           );
         } else {
           alert("wrong Id or pass");

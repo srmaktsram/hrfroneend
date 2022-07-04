@@ -1,5 +1,9 @@
 <!-- Page Content -->
 <div class="content container-fluid">
+    <div class="row filter-row">
+        <marquee class="text-danger" [hidden]="maximumEmployees" >Can not add more employees, kindly upgrade your plan!</marquee>
+    </div>
+
 
     <!-- Page Header -->
     <div class="page-header">
@@ -9,6 +13,7 @@
                 <ul class="breadcrumb">
                     <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
                     <li class="breadcrumb-item active">Employee</li>
+
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
@@ -45,12 +50,14 @@
                     <option value="">Select Designation</option>
                     <option *ngFor="let designation of designations">{{designation.designation}}</option>
                 </select>
+
             </div>
         </div>
         <div class="col-sm-6 col-md-3">
             <a class="btn btn-success w-100" (click)="getSearchData(empn.value,design.value)"> Search </a>
         </div>
     </div>
+    
     <!-- /Search Filter -->
 
     <div class="row">
@@ -693,6 +700,7 @@
                         </table>
                     </div>
                     <div class="submit-section">
+
                         <button class="btn btn-primary submit-btn" type="submit">Submit</button>
                     </div>
                 </form>
