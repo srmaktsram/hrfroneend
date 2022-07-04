@@ -14,11 +14,10 @@
       </div>
       <div class="col-auto float-end ms-auto">
         <a
-        *ngIf="
-              user_type == 'mainadmin' ||
-              (user_type === 'subadmin' &&
-                (subadminwrite == 'true'))
-            "
+          *ngIf="
+            user_type == 'mainadmin' ||
+            (user_type === 'subadmin' && subadminwrite == 'true')
+          "
           class="btn add-btn"
           data-bs-toggle="modal"
           data-bs-target="#add_client"
@@ -96,7 +95,9 @@
     <div class="col-sm-6 col-md-3">
       <a
         class="btn btn-success w-100"
-        (click)="onSearch(clientusername.value, clientmobile.value, clientemail.value)"
+        (click)="
+          onSearch(clientusername.value, clientmobile.value, clientemail.value)
+        "
       >
         Search
       </a>
@@ -120,72 +121,66 @@
               <th>Mobile</th>
               <th>Email</th>
               <th>Status</th>
-              <th class="text-end"  *ngIf="
-              user_type == 'mainadmin' ||
-              (user_type === 'subadmin' &&
-                (subadminwrite == 'true'))
-            "> Action</th>
+              <th
+                class="text-end"
+                *ngIf="
+                  user_type == 'mainadmin' ||
+                  (user_type === 'subadmin' && subadminwrite == 'true')
+                "
+              >
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let client of data; let i = index">
               <td>
-                <h2 class="table-avatar">
-                  <a
-                    routerLink="/layout/clients/clientsprofile/{{ client.id }}"
-                    class="avatar"
-                    ><img
-                      src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                      alt=""
-                  /></a>
-                  <a
-                    routerLink="/layout/clients/clientsprofile/{{ client.id }}"
-                    >{{ client.userName }}</a
-                  >
-                </h2>
+                {{ client.userName }}
               </td>
               <td>{{ client.mobile }}</td>
               <td>{{ client.email }}</td>
               <td>
-                <div class="dropdown action-label" >
-                  <ng-container *ngIf="client.status=='Active'">
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
+                <div class="dropdown action-label">
+                  <ng-container *ngIf="client.status == 'Active'">
+                    <a
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-success">{{
+                        client.status
+                      }}</i>
+                    </a>
+                  </ng-container>
+                  <ng-container *ngIf="client.status == 'Inactive'">
+                    <a
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-danger">{{
+                        client.status
+                      }}</i>
+                    </a>
+                  </ng-container>
+                  <ng-container *ngIf="client.status == 'New'">
+                    <a
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-warning">{{
+                        client.status
+                      }}</i>
+                    </a>
+                  </ng-container>
+                  <div
+                    class="dropdown-menu"
+                    *ngIf="
+                      user_type == 'mainadmin' ||
+                      (user_type === 'subadmin' && subadminwrite == 'true')
+                    "
                   >
-                    <i class="fa fa-dot-circle-o text-success">{{
-                      client.status
-                    }}</i>
-                  </a>
-                </ng-container>
-                  <ng-container *ngIf="client.status=='Inactive'">
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-danger">{{
-                      client.status
-                    }}</i>
-                  </a>
-                </ng-container>
-                  <ng-container *ngIf="client.status=='New'">
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-warning">{{
-                      client.status
-                    }}</i>
-                  </a>
-                </ng-container>
-                  <div class="dropdown-menu" *ngIf="
-              user_type == 'mainadmin' ||
-              (user_type === 'subadmin' &&
-                (subadminwrite == 'true'))
-            ">
                     <a
                       class="dropdown-item"
                       (click)="getStatus('Active', client.id)"
@@ -203,11 +198,10 @@
               <td class="text-end">
                 <div class="dropdown dropdown-action">
                   <a
-                  *ngIf="
-                  user_type == 'mainadmin' ||
-                  (user_type === 'subadmin' &&
-                    (subadminwrite == 'true'))
-                "
+                    *ngIf="
+                      user_type == 'mainadmin' ||
+                      (user_type === 'subadmin' && subadminwrite == 'true')
+                    "
                     class="action-icon dropdown-toggle"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -215,7 +209,6 @@
                   >
                   <div class="dropdown-menu dropdown-menu-right">
                     <a
-                    
                       class="dropdown-item"
                       data-bs-toggle="modal"
                       data-bs-target="#edit_client"
@@ -302,73 +295,72 @@
                 />
               </div>
             </div>
-            
-       
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-form-label"
-                >Mobile <span class="text-danger">*</span></label
-              >
-              <input
-                class="form-control"
-                type="text"
-                [class.invalid]="
-                  addClientForm.get('addMobile').invalid &&
-                  addClientForm.get('addMobile').touched
-                "
-                formControlName="addMobile"
-              />
-              <div
-                *ngIf="
-                  addClientForm.get('addMobile').invalid &&
-                  addClientForm.get('addMobile').touched
-                "
-              >
-                <small
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-form-label"
+                  >Mobile <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  [class.invalid]="
+                    addClientForm.get('addMobile').invalid &&
+                    addClientForm.get('addMobile').touched
+                  "
+                  formControlName="addMobile"
+                />
+                <div
                   *ngIf="
                     addClientForm.get('addMobile').invalid &&
                     addClientForm.get('addMobile').touched
                   "
-                  class="text-danger"
                 >
-                  *Mobile is required</small
-                >
+                  <small
+                    *ngIf="
+                      addClientForm.get('addMobile').invalid &&
+                      addClientForm.get('addMobile').touched
+                    "
+                    class="text-danger"
+                  >
+                    *Mobile is required</small
+                  >
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-form-label"
-                >Email <span class="text-danger">*</span></label
-              >
-              <input
-                class="form-control"
-                type="text"
-                [class.invalid]="
-                  addClientForm.get('addEmail').invalid &&
-                  addClientForm.get('addEmail').touched
-                "
-                formControlName="addEmail"
-              />
-              <div
-                *ngIf="
-                  addClientForm.get('addEmail').invalid &&
-                  addClientForm.get('addEmail').touched
-                "
-              >
-                <small
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-form-label"
+                  >Email <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  [class.invalid]="
+                    addClientForm.get('addEmail').invalid &&
+                    addClientForm.get('addEmail').touched
+                  "
+                  formControlName="addEmail"
+                />
+                <div
                   *ngIf="
                     addClientForm.get('addEmail').invalid &&
                     addClientForm.get('addEmail').touched
                   "
-                  class="text-danger"
                 >
-                  *Email is required</small
-                >
+                  <small
+                    *ngIf="
+                      addClientForm.get('addEmail').invalid &&
+                      addClientForm.get('addEmail').touched
+                    "
+                    class="text-danger"
+                  >
+                    *Email is required</small
+                  >
+                </div>
               </div>
             </div>
           </div>
-</div>
           <div class="table-responsive m-t-15">
             <table class="table table-striped custom-table">
               <thead>
@@ -650,72 +642,71 @@
                 />
               </div>
             </div>
-            
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-form-label"
-                >Mobile <span class="text-danger">*</span></label
-              >
-              <input
-                class="form-control"
-                type="text"
-                [class.invalid]="
-                  editClientForm.get('editMobile').invalid &&
-                  editClientForm.get('editMobile').touched
-                "
-                formControlName="editMobile"
-              />
-              <div
-                *ngIf="
-                  editClientForm.get('editMobile').invalid &&
-                  editClientForm.get('editMobile').touched
-                "
-              >
-                <small
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-form-label"
+                  >Mobile <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  [class.invalid]="
+                    editClientForm.get('editMobile').invalid &&
+                    editClientForm.get('editMobile').touched
+                  "
+                  formControlName="editMobile"
+                />
+                <div
                   *ngIf="
                     editClientForm.get('editMobile').invalid &&
                     editClientForm.get('editMobile').touched
                   "
-                  class="text-danger"
                 >
-                  *Mobile is required</small
-                >
+                  <small
+                    *ngIf="
+                      editClientForm.get('editMobile').invalid &&
+                      editClientForm.get('editMobile').touched
+                    "
+                    class="text-danger"
+                  >
+                    *Mobile is required</small
+                  >
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="form-group">
-              <label class="col-form-label"
-                >Email <span class="text-danger">*</span></label
-              >
-              <input
-                class="form-control"
-                type="text"
-                [class.invalid]="
-                  editClientForm.get('editEmail').invalid &&
-                  editClientForm.get('editEmail').touched
-                "
-                formControlName="editEmail"
-              />
-              <div
-                *ngIf="
-                  editClientForm.get('editEmail').invalid &&
-                  editClientForm.get('editEmail').touched
-                "
-              >
-                <small
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-form-label"
+                  >Email <span class="text-danger">*</span></label
+                >
+                <input
+                  class="form-control"
+                  type="text"
+                  [class.invalid]="
+                    editClientForm.get('editEmail').invalid &&
+                    editClientForm.get('editEmail').touched
+                  "
+                  formControlName="editEmail"
+                />
+                <div
                   *ngIf="
                     editClientForm.get('editEmail').invalid &&
                     editClientForm.get('editEmail').touched
                   "
-                  class="text-danger"
                 >
-                  *Email is required</small
-                >
+                  <small
+                    *ngIf="
+                      editClientForm.get('editEmail').invalid &&
+                      editClientForm.get('editEmail').touched
+                    "
+                    class="text-danger"
+                  >
+                    *Email is required</small
+                  >
+                </div>
               </div>
             </div>
-          </div>
-
 
             <!-- <div class="col-md-6">
                             <div class="form-group">
@@ -745,13 +736,14 @@
                   <td class="text-center">
                     <input
                       type="checkbox"
-                       [checked]="dashboard[0].read"
+                      [checked]="dashboard[0].read"
                       (click)="checkCheckBoxvalueDashboard($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="dashboard[1].write"
+                      type="checkbox"
+                      [checked]="dashboard[1].write"
                       (click)="checkCheckBoxvalueDashboard($event, 1)"
                     />
                   </td>
@@ -761,13 +753,14 @@
                   <td class="text-center">
                     <input
                       type="checkbox"
-                       [checked]="payments[0].read"
+                      [checked]="payments[0].read"
                       (click)="checkCheckBoxvaluePayment($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="payments[1].write"
+                      type="checkbox"
+                      [checked]="payments[1].write"
                       (click)="checkCheckBoxvaluePayment($event, 1)"
                     />
                   </td>
@@ -776,13 +769,15 @@
                   <td>Premium Clients</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="premiumClients[0].read"
+                      type="checkbox"
+                      [checked]="premiumClients[0].read"
                       (click)="checkCheckBoxvaluePremiumClients($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox"  [checked]="premiumClients[1].write"
+                      type="checkbox"
+                      [checked]="premiumClients[1].write"
                       (click)="checkCheckBoxvaluePremiumClients($event, 1)"
                     />
                   </td>
@@ -791,13 +786,15 @@
                   <td>Free Clients</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="freeClients[0].read"
+                      type="checkbox"
+                      [checked]="freeClients[0].read"
                       (click)="checkCheckBoxvalueFreeClients($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="freeClients[1].write"
+                      type="checkbox"
+                      [checked]="freeClients[1].write"
                       (click)="checkCheckBoxvalueFreeClients($event, 1)"
                     />
                   </td>
@@ -806,13 +803,15 @@
                   <td>Visitor Clients</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="visitorClients[0].read"
+                      type="checkbox"
+                      [checked]="visitorClients[0].read"
                       (click)="checkCheckBoxvalueVisitorClients($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="visitorClients[1].write"
+                      type="checkbox"
+                      [checked]="visitorClients[1].write"
                       (click)="checkCheckBoxvalueVisitorClients($event, 1)"
                     />
                   </td>
@@ -821,13 +820,15 @@
                   <td>Tickets</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="tickets[0].read"
+                      type="checkbox"
+                      [checked]="tickets[0].read"
                       (click)="checkCheckBoxvalueTickets($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="tickets[1].write"
+                      type="checkbox"
+                      [checked]="tickets[1].write"
                       (click)="checkCheckBoxvalueTickets($event, 1)"
                     />
                   </td>
@@ -836,13 +837,15 @@
                   <td>Invoices</td>
                   <td class="text-center">
                     <input
-                      type="checkbox"[checked]="invoices[0].read"
+                      type="checkbox"
+                      [checked]="invoices[0].read"
                       (click)="checkCheckBoxvalueInvoices($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="invoices[1].write"
+                      type="checkbox"
+                      [checked]="invoices[1].write"
                       (click)="checkCheckBoxvalueInvoices($event, 1)"
                     />
                   </td>
@@ -851,13 +854,15 @@
                   <td>Sub-Admins</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="subadmins[0].read"
+                      type="checkbox"
+                      [checked]="subadmins[0].read"
                       (click)="checkCheckBoxvalueSubadmins($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="subadmins[1].write"
+                      type="checkbox"
+                      [checked]="subadmins[1].write"
                       (click)="checkCheckBoxvalueSubadmins($event, 1)"
                     />
                   </td>
@@ -866,28 +871,32 @@
                   <td>Affiliate</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="Affiliates[0].read"
+                      type="checkbox"
+                      [checked]="Affiliates[0].read"
                       (click)="checkCheckBoxvalueAffiliate($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="Affiliates[1].write"
+                      type="checkbox"
+                      [checked]="Affiliates[1].write"
                       (click)="checkCheckBoxvalueAffiliate($event, 1)"
                     />
                   </td>
-                  </tr>
+                </tr>
                 <tr>
                   <td>Promo Code</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="PromoCodes[0].read"
+                      type="checkbox"
+                      [checked]="PromoCodes[0].read"
                       (click)="checkCheckBoxvaluePromoCode($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="PromoCodes[1].write"
+                      type="checkbox"
+                      [checked]="PromoCodes[1].write"
                       (click)="checkCheckBoxvaluePromoCode($event, 1)"
                     />
                   </td>
@@ -896,13 +905,15 @@
                   <td>Kyc</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="Kyc[0].read"
+                      type="checkbox"
+                      [checked]="Kyc[0].read"
                       (click)="checkCheckBoxvalueKyc($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="Kyc[1].write"
+                      type="checkbox"
+                      [checked]="Kyc[1].write"
                       (click)="checkCheckBoxvalueKyc($event, 1)"
                     />
                   </td>
@@ -911,13 +922,15 @@
                   <td>Withdrawal Request</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="Withdrawals[0].read"
+                      type="checkbox"
+                      [checked]="Withdrawals[0].read"
                       (click)="checkCheckBoxvalueWithdrawal($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="Withdrawals[1].write"
+                      type="checkbox"
+                      [checked]="Withdrawals[1].write"
                       (click)="checkCheckBoxvalueWithdrawal($event, 1)"
                     />
                   </td>
@@ -926,13 +939,15 @@
                   <td>Affiliate Commisions</td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="Commisions[0].read"
+                      type="checkbox"
+                      [checked]="Commisions[0].read"
                       (click)="checkCheckBoxvalueCommisions($event, 0)"
                     />
                   </td>
                   <td class="text-center">
                     <input
-                      type="checkbox" [checked]="Commisions[1].write"
+                      type="checkbox"
+                      [checked]="Commisions[1].write"
                       (click)="checkCheckBoxvalueCommisions($event, 1)"
                     />
                   </td>

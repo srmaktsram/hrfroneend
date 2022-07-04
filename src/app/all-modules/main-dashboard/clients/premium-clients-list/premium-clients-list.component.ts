@@ -6,6 +6,7 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
 declare const $: any;
 @Component({
@@ -46,6 +47,7 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
   searchCompany: any;
   constructor(
     private toastr: ToastrService,
+    private hrUserAuthenticationService:HrUserAuthenticationService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
@@ -96,7 +98,32 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       });
   }
   
+  adminlogin(id) {
+    alert(id);
+    this.http
+      .get("http://localhost:8443/auth/register/loginAsUser" + "/" + id)
+      .subscribe((res: any) => {
+        if (res.result == 2) {
+          if (res.data.status !== "Blocked") {
 
+          // window.location.replace("http://localhost:4200")
+          window.open("http://localhost:4200","_blank");
+          this.hrUserAuthenticationService.login(
+            res.data.id,
+            res.data.corporateId,
+            res.data.email,
+            res.data.firstName,
+            res.data.lastName,
+            res.data.phone,
+          );
+        }
+        else {
+          alert("Account Blocked By Main Admin");
+        }} else {
+          alert("wrong Id");
+        }
+      });
+    }
   // Edit client
   public onEditClient(clientId: any) {
     this.editId = clientId;
@@ -151,6 +178,21 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
        
       });
   } 
+  getBlock(data, id) {
+    const status = data;
+    this.http
+      .patch(
+        "http://localhost:8443/mainadmin/client/blockClientStatus" +
+          "/" +
+          id,
+        { status }
+      )
+      .subscribe((res) => {
+        this.getPremiumAdmins();
+
+       
+      });
+  } 
 
   //search by name
   searchByName(val) {
@@ -159,14 +201,13 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return (
-          d.name.toLowerCase().indexOf(val) !== -1 ||
+          d.firstName.toLowerCase().indexOf(val) !== -1 ||
+          !val ||
+          d.lastName.toLowerCase().indexOf(val) !== -1 ||
           !val ||
           d.email.toLowerCase().indexOf(val) !== -1 ||
           !val ||
-          d.mobile.toLowerCase().indexOf(val) !== -1 ||
-          !val
-          ||
-          d.companyEmail.toLowerCase().indexOf(val) !== -1 ||
+          d.phone.toLowerCase().indexOf(val) !== -1 ||
           !val
         );})
       this.data.push(...temp);
@@ -175,15 +216,17 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  //search by company
-  searchByCompany(val) {
-    if (val.trim()) {
-      this.srch.splice(0, this.data.length);
+  //search by Corporate Id
+  searchByCorporateId(val) {
+    if (val) {
+      this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return d.companyName.toLowerCase().indexOf(val) !== -1 || !val;
-      });
-      this.srch.push(...temp);
+        return (
+          d.corporateId.toLowerCase().indexOf(val) !== -1 ||
+          !val
+         );})
+      this.data.push(...temp);
     } else {
       this.getPremiumAdmins();
 

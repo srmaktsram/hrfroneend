@@ -13,11 +13,11 @@ import { HrUserAuthenticationService } from "src/app/core/storage/authentication
 
 declare const $: any;
 @Component({
-  selector: "app-free-clients-list",
-  templateUrl: "./free-clients-list.component.html",
-  styleUrls: ["./free-clients-list.component.css"],
+  selector: "app-blocked-clients-list",
+  templateUrl: "./blocked-clients-list.component.html",
+  styleUrls: ["./blocked-clients-list.component.css"],
 })
-export class DemoClientsListComponent implements OnInit, OnDestroy {
+export class BlockedClientsListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -49,7 +49,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   public employeeId: any;
   searchCompany: any;
   constructor(
-    private hrUserAuthenticationService:HrUserAuthenticationService,
+    private hrUserAuthenticationService: HrUserAuthenticationService,
     private toastr: ToastrService,
     private http: HttpClient,
     private router: Router,
@@ -59,7 +59,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getDemoAdmins();
+    this.getBlockedClients();
 
     this.dtOptions = {
       // ... skipped ...
@@ -84,13 +84,13 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   }
 
   //Get all Clients data
-  public getDemoAdmins() {
+  public getBlockedClients() {
     this.http
-      .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
+      .get("http://localhost:8443/mainadmin/clients/getBlockedClients")
       .subscribe((res: any) => {
         this.data = res;
 
-        console.log(res,"freeee")
+        console.log(res, "Blocked Clients");
         this.srch = [...this.data];
       });
   }
@@ -101,28 +101,26 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
-
-          // window.location.replace("http://localhost:4200")
-          window.open("http://localhost:4200","_blank");
-          this.hrUserAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone,
-          );
-        }else {
-          alert("Account Blocked By Main Admin");
-        }} else {
+            // window.location.replace("http://localhost:4200")
+            window.open("http://localhost:4200", "_blank");
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone
+            );
+          }
+          else {
+            alert("Account Blocked By Main Admin");
+          }
+        }
+         else {
           alert("wrong Id");
         }
       });
   }
-
-
-
-
 
   // Edit client
   public onEditClient(clientId: any) {
@@ -159,8 +157,8 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((data) => {
-        console.log(data,"Edited Details for free Client")
-        this.getDemoAdmins();
+        console.log(data, "Edited Details for free Client");
+        this.getBlockedClients();
       });
 
     $("#edit_client").modal("hide");
@@ -179,21 +177,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
         { status }
       )
       .subscribe((res) => {
-        this.getDemoAdmins();
-      });
-  }
-
-  getBlock(data, id) {
-    const status = data;
-    this.http
-      .patch(
-        "http://localhost:8443/mainadmin/client/blockClientStatus" +
-          "/" +
-          id,
-        { status }
-      )
-      .subscribe((res) => {
-        this.getDemoAdmins();
+        this.getBlockedClients();
       });
   }
 
@@ -226,10 +210,11 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
           !val ||
           d.phone.toLowerCase().indexOf(val) !== -1 ||
           !val
-        );})
+        );
+      });
       this.data.push(...temp);
     } else {
-      this.getDemoAdmins();
+      this.getBlockedClients();
     }
   }
 
@@ -239,13 +224,11 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return (
-          d.corporateId.toLowerCase().indexOf(val) !== -1 ||
-          !val
-         );})
+        return d.corporateId.toLowerCase().indexOf(val) !== -1 || !val;
+      });
       this.data.push(...temp);
     } else {
-      this.getDemoAdmins();
+      this.getBlockedClients();
     }
   }
   onSearch(name, company) {

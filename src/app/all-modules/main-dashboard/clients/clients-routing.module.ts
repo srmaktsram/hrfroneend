@@ -5,6 +5,7 @@ import { DemoClientsListComponent } from "./free-clients-list/free-clients-list.
 import { VisitorClientsListComponent } from "./visitor-clients-list/visitor-clients-list.component";
 import { PremiumClientsListComponent } from "./premium-clients-list/premium-clients-list.component";
 import { ClientsProfileComponent } from "./clients-profile/clients-profile.component";
+import { BlockedClientsListComponent } from "./blocked-clients-list/blocked-clients-list.component";
 const routes: Routes = [
   {
     path: "",
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: "premiumclients",
         component: PremiumClientsListComponent,
+      },
+      {
+        path: "blockedclients",
+        component: BlockedClientsListComponent,
       },
       {
         path: "clientsprofile/:id",
