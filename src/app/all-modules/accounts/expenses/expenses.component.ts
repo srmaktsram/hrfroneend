@@ -32,7 +32,7 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   public url: any = "expenses";
   public allExpenses: any = [];
   public addExpensesForm: FormGroup;
-  public adminId=sessionStorage.getItem("adminId");
+  public adminId = sessionStorage.getItem("adminId");
   public editExpensesForm: FormGroup;
   public editId: any;
   public tempId: any;
@@ -46,10 +46,10 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   employeeid: any;
   constructor(
     private allModuleService: AllModulesService,
-    private http:HttpClient,
+    private http: HttpClient,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     $(".floating")
@@ -112,10 +112,10 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getExpenses() {
-    this.http.get("http://localhost:8443/admin/expenses/getAllExpenses"+"/"+this.adminId).subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/expenses/getAllExpenses" + "/" + this.adminId).subscribe((data) => {
 
       this.allExpenses = data;
-      console.log( this.allExpenses)
+      console.log(this.allExpenses)
       this.rows = this.allExpenses;
       this.srch = [...this.rows];
     });
@@ -131,18 +131,18 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
-  updateStatus(val,id){
-  this.http.patch("http://localhost:8443/admin/expenses/updateExpenses"+"/"+id,{status:val}).subscribe((data:any)=>{
-    console.log(data)
-    this.getExpenses();
-  })
+  updateStatus(val, id) {
+    this.http.patch("http://localhost:8443/admin/expenses/updateExpenses" + "/" + id, { status: val }).subscribe((data: any) => {
+      console.log(data)
+      this.getExpenses();
+    })
   }
 
 
   // Add Expenses Modal Api Call
 
   addExpenses() {
-    if(this.addExpensesForm.invalid){
+    if (this.addExpensesForm.invalid) {
       this.markFormGroupTouched(this.addExpensesForm)
       return
     }
@@ -154,8 +154,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
       let obj = {
-        adminId:this.adminId,
-      
+        adminId: this.adminId,
+
         item: this.addExpensesForm.value.itemName,
         purchaseFrom: this.addExpensesForm.value.purchaseFrom,
         purchaseDate: purchaseToDateFormat,
@@ -163,7 +163,7 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
         amount: this.addExpensesForm.value.amount,
         paidby: this.addExpensesForm.value.paidBy,
       };
-      this.http.post("http://localhost:8443/admin/expenses/createExpenses",obj).subscribe((data:any) => {
+      this.http.post("http://localhost:8443/admin/expenses/createExpenses", obj).subscribe((data: any) => {
         // console.log(data)
         this.getExpenses();
         $("#datatable").DataTable().clear();
@@ -172,7 +172,7 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.dtTrigger.next();
       });
-     
+
       $("#add_expense").modal("hide");
       this.addExpensesForm.reset();
       this.toastr.success("Expenses added", "Success");
@@ -188,10 +188,6 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
 
-
-
-  
-
   // Edit Expenses Modal Api Call
 
   editExpenses() {
@@ -205,7 +201,7 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
         paidby: this.editExpensesForm.value.paidBy,
         id: this.editId,
       };
-      this.http.patch("http://localhost:8443/admin/expenses/updateExpenses"+"/"+this.editId,obj).subscribe((data1) => {
+      this.http.patch("http://localhost:8443/admin/expenses/updateExpenses" + "/" + this.editId, obj).subscribe((data1) => {
         this.getExpenses();
         $("#datatable").DataTable().clear();
         this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -213,7 +209,7 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.dtTrigger.next();
       });
-      
+
       $("#edit_expense").modal("hide");
       this.toastr.success("Expenses edited", "Success");
     } else {
@@ -240,7 +236,7 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   // Delete Expenses Modal Api Call
 
   deleteTicket() {
-    this.http.patch("http://localhost:8443/admin/expenses/deleteExpenses"+"/"+this.tempId,{}).subscribe((data:any) => {
+    this.http.patch("http://localhost:8443/admin/expenses/deleteExpenses" + "/" + this.tempId, {}).subscribe((data: any) => {
       // console.log(data)
       this.getExpenses();
       $("#datatable").DataTable().clear();
@@ -249,7 +245,7 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
       });
       this.dtTrigger.next();
     });
-    
+
     $("#delete_expense").modal("hide");
     this.toastr.success("Expenses deleted", "Success");
   }

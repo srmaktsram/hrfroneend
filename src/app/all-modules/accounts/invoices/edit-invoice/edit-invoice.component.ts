@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 @Component({
   selector: "app-edit-invoice",
@@ -62,8 +63,8 @@ export class EditInvoiceComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/admin/projects/getAdminproject" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data: any) => {
         this.projects = data;
@@ -86,8 +87,8 @@ export class EditInvoiceComponent implements OnInit {
       client: ["", [Validators.required]],
       number: ["", [Validators.required]],
       project: ["", [Validators.required]],
-      email: ["", [Validators.required]],
       tax: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       client_address: ["", [Validators.required]],
       billing_address: ["", [Validators.required]],
       invoice_date: ["", [Validators.required]],

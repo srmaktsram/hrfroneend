@@ -8,6 +8,7 @@ import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { ThemeSettingsComponent } from "src/app/all-modules/settings/theme-settings/theme-settings.component";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 @Component({
   selector: "app-create-invoice",
@@ -61,8 +62,8 @@ export class CreateInvoiceComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/admin/projects/getAdminproject" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data: any) => {
         this.projects = data;
@@ -77,7 +78,7 @@ export class CreateInvoiceComponent implements OnInit {
       client: ["", [Validators.required]],
       number: [this.invoiceNo, [Validators.required]],
       project: ["", [Validators.required]],
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       tax: ["", [Validators.required]],
       client_address: ["", [Validators.required]],
       billing_address: ["", [Validators.required]],
