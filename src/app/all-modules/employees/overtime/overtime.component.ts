@@ -100,6 +100,7 @@ export class OvertimeComponent implements OnInit {
   addOvertime() {
     alert("called")
     alert(this.name)
+    alert(this.employeeid)
     if (this.addOvertimeForm.invalid) {
       this.markFormGroupTouched(this.addOvertimeForm);
       return;

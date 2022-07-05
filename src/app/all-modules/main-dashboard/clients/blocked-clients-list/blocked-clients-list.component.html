@@ -685,41 +685,41 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-form-label"
-                  >Company Name <span class="text-danger">*</span></label
+                  >First Name <span class="text-danger">*</span></label
                 >
                 <input
                   class="form-control"
                   type="text"
                   [class.invalid]="
-                    editClientForm.get('editClientCompany').invalid &&
-                    editClientForm.get('editClientCompany').touched
+                    editClientForm.get('firstName').invalid &&
+                    editClientForm.get('firstName').touched
                   "
-                  formControlName="editClientCompany"
+                  formControlName="firstName"
                 />
                 <div
                   *ngIf="
-                    editClientForm.get('editClientCompany').invalid &&
-                    editClientForm.get('editClientCompany').touched
+                    editClientForm.get('firstName').invalid &&
+                    editClientForm.get('firstName').touched
                   "
                 >
                   <small
                     *ngIf="
-                      editClientForm.get('editClientCompany').invalid &&
-                      editClientForm.get('editClientCompany').touched
+                      editClientForm.get('firstName').invalid &&
+                      editClientForm.get('firstName').touched
                     "
                     class="text-danger"
                   >
-                    *Company is required</small
+                    *First Name is required</small
                   >
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-form-label">Contact Person</label>
+                <label class="col-form-label">Last Name</label>
                 <input
                   class="form-control"
-                  formControlName="editContactPerson"
+                  formControlName="lastName"
                   type="text"
                 />
               </div>
@@ -769,38 +769,7 @@
               </div>
             </div>
 
-            <div class="col-md-6">
-              <div class="form-group">
-                <label class="col-form-label"
-                  >Company Email <span class="text-danger">*</span></label
-                >
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
-                    editClientForm.get('editCompanyEmail').invalid &&
-                    editClientForm.get('editCompanyEmail').touched
-                  "
-                  formControlName="editCompanyEmail"
-                />
-                <div
-                  *ngIf="
-                    editClientForm.get('editCompanyEmail').invalid &&
-                    editClientForm.get('editCompanyEmail').touched
-                  "
-                >
-                  <small
-                    *ngIf="
-                      editClientForm.get('editCompanyEmail').invalid &&
-                      editClientForm.get('editCompanyEmail').touched
-                    "
-                    class="text-danger"
-                  >
-                    *Company Email is required</small
-                  >
-                </div>
-              </div>
-            </div>
+            
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-form-label"
