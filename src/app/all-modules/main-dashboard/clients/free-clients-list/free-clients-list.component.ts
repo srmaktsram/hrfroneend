@@ -69,11 +69,10 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
 
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
-      editClientCompany: ["", [Validators.required]],
-      editContactPerson: ["", [Validators.required]],
+      firstName: ["", [Validators.required]],
+      lastName: ["", [Validators.required]],
       editClientEmail: ["", [Validators.required]],
       editClientPhone: ["", [Validators.required]],
-      editCompanyEmail: ["", [Validators.required]],
     });
   }
 
@@ -129,11 +128,10 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
     this.editId = clientId;
     let client = this.data.filter((client) => client.id === clientId);
     this.editClientForm.patchValue({
-      editClientCompany: client[0]?.companyName,
-      editContactPerson: client[0]?.name,
+      firstName: client[0]?.firstName,
+      lastName: client[0]?.lastName,
       editClientEmail: client[0]?.email,
-      editClientPhone: client[0]?.mobile,
-      editCompanyEmail: client[0]?.companyEmail,
+      editClientPhone: client[0]?.phone,
     });
   }
   //Reset form
@@ -144,11 +142,10 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   // Save Client
   public onSave() {
     let obj = {
-      companyName: this.editClientForm.value.editClientCompany,
-      name: this.editClientForm.value.editContactPerson,
+      firstName: this.editClientForm.value.firstName,
+      lastName: this.editClientForm.value.lastName,
       email: this.editClientForm.value.editClientEmail,
-      mobile: this.editClientForm.value.editClientPhone,
-      companyEmail: this.editClientForm.value.editCompanyEmail,
+      phone: this.editClientForm.value.editClientPhone,
     };
     let id = this.editId;
     this.http
