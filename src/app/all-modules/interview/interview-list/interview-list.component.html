@@ -23,17 +23,10 @@
             <div class="col-sm-12">
               <ul class="nav nav-tabs nav-tabs-bottom">
                 <li class="nav-item">
-                  <a
-                    class="nav-link active"
-                    data-bs-toggle="tab"
-                    href="#tab_question"
-                    >Question</a
-                  >
+                  <a class="nav-link active" data-bs-toggle="tab" href="#tab_question">Question</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="tab" href="#tab_category"
-                    >Category</a
-                  >
+                  <a class="nav-link" data-bs-toggle="tab" href="#tab_category">Category</a>
                 </li>
               </ul>
             </div>
@@ -46,12 +39,8 @@
           <div class="tab-pane show active" id="tab_question">
             <!-- Add Question Button -->
             <div class="text-end mb-4 clearfix">
-              <button
-                class="btn btn-primary add-btn"
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#add_question"
-              >
+              <button class="btn btn-primary add-btn" type="button" data-bs-toggle="modal"
+                data-bs-target="#add_question">
                 <i class="fa fa-plus"></i> Add Question
               </button>
             </div>
@@ -60,12 +49,8 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table
-                    datatable
-                    [dtOptions]="dtOptions"
-                    [dtTrigger]="dtTrigger"
-                    class="table table-striped custom-table datatable mb-0"
-                  >
+                  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                    class="table table-striped custom-table datatable mb-0">
                     <thead>
                       <tr>
                         <th>Sr.no.</th>
@@ -91,30 +76,13 @@
                         <td class="text-center">{{ item.correctanswer }}</td>
                         <td class="text-center">
                           <div class="dropdown dropdown-action">
-                            <a
-                              href="#"
-                              class="action-icon dropdown-toggle"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                              ><i class="material-icons">more_vert</i></a
-                            >
+                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                              aria-expanded="false"><i class="material-icons">more_vert</i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                              <a
-                                class="dropdown-item"
-                                href="#"
-                                data-bs-toggle="modal"
-                                data-bs-target="#edit_question"
-                                (click)="edit(item)"
-                                ><i class="fa fa-pencil m-r-5"></i> Edit</a
-                              >
-                              <a
-                                class="dropdown-item"
-                                href="#"
-                                data-bs-toggle="modal"
-                                data-bs-target="#delete_question"
-                                (click)="tempId = item.id"
-                                ><i class="fa fa-trash-o m-r-5"></i> Delete</a
-                              >
+                              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_question"
+                                (click)="edit(item)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_question"
+                                (click)="tempId = item.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                             </div>
                           </div>
                         </td>
@@ -131,12 +99,8 @@
           <div class="tab-pane" id="tab_category">
             <!-- Add category Button -->
             <div class="text-end mb-4 clearfix">
-              <button
-                class="btn btn-primary add-btn"
-                type="button"
-                data-bs-toggle="modal"
-                data-bs-target="#add_category"
-              >
+              <button class="btn btn-primary add-btn" type="button" data-bs-toggle="modal"
+                data-bs-target="#add_category">
                 <i class="fa fa-plus"></i> Add Category
               </button>
             </div>
@@ -145,12 +109,8 @@
             <div class="row">
               <div class="col-md-12">
                 <div class="table-responsive">
-                  <table
-                    datatable
-                    [dtOptions]="dtOptions"
-                    [dtTrigger]="dtTrigger"
-                    class="table table-striped custom-table datatable mb-0"
-                  >
+                  <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                    class="table table-striped custom-table datatable mb-0">
                     <thead>
                       <tr>
                         <th>Sr.no.</th>
@@ -167,30 +127,13 @@
 
                         <td class="text-center">
                           <div class="dropdown dropdown-action">
-                            <a
-                              href="#"
-                              class="action-icon dropdown-toggle"
-                              data-bs-toggle="dropdown"
-                              aria-expanded="false"
-                              ><i class="material-icons">more_vert</i></a
-                            >
+                            <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                              aria-expanded="false"><i class="material-icons">more_vert</i></a>
                             <div class="dropdown-menu dropdown-menu-right">
-                              <a
-                                class="dropdown-item"
-                                href="#"
-                                data-bs-toggle="modal"
-                                data-bs-target="#edit_category"
-                                (click)="editCat(item)"
-                                ><i class="fa fa-pencil m-r-5"></i> Edit</a
-                              >
-                              <a
-                                class="dropdown-item"
-                                href="#"
-                                data-bs-toggle="modal"
-                                data-bs-target="#delete_category"
-                                (click)="tempId = item.id"
-                                ><i class="fa fa-trash-o m-r-5"></i> Delete</a
-                              >
+                              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_category"
+                                (click)="editCat(item)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_category"
+                                (click)="tempId = item.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                             </div>
                           </div>
                         </td>
@@ -207,99 +150,62 @@
 
           <!-- Add Questions Modal -->
           <div id="add_question" class="modal custom-modal fade" role="dialog">
-            <div
-              class="modal-dialog modal-dialog-centered modal-lg"
-              role="document"
-            >
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Add Questions</h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form
-                    (ngSubmit)="addInterview()"
-                    [formGroup]="addInterviewForm"
-                  >
+                  <form (ngSubmit)="addInterview()" [formGroup]="addInterviewForm">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Add Category</label>
-                          <select
-                            class="form-select form-control"
-                            [class.invalid]="
+                          <select class="form-select form-control" [class.invalid]="
                               addInterviewForm.get('AddCat').invalid &&
                               addInterviewForm.get('AddCat').touched
-                            "
-                            formControlName="AddCat"
-                          >
+                            " formControlName="AddCat">
                             >
-                            <option
-                              *ngFor="let datanew of catData"
-                              [value]="datanew.category"
-                            >
+                            <option *ngFor="let datanew of catData" [value]="datanew.category">
                               {{ datanew.category }}
                             </option>
                           </select>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               addInterviewForm.get('AddCat').invalid &&
                               addInterviewForm.get('AddCat').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('AddCat').invalid &&
                                 addInterviewForm.get('AddCat').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Category is required</small
-                            >
+                              " class="text-danger">
+                              *Category is required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Department</label>
-                          <select
-                            class="form-select form-control"
-                            [class.invalid]="
+                          <select class="form-select form-control" [class.invalid]="
                               addInterviewForm.get('addDepart').invalid &&
                               addInterviewForm.get('addDepart').touched
-                            "
-                            formControlName="addDepart"
-                          >
+                            " formControlName="addDepart">
                             >
-                            <option
-                              *ngFor="let datanew of depData"
-                              [value]="datanew.departmentName"
-                            >
+                            <option *ngFor="let datanew of depData" [value]="datanew.departmentName">
                               {{ datanew.departmentName }}
                             </option>
                           </select>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               addInterviewForm.get('addDepart').invalid &&
                               addInterviewForm.get('addDepart').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('addDepart').invalid &&
                                 addInterviewForm.get('addDepart').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Department is required</small
-                            >
+                              " class="text-danger">
+                              *Department is required</small>
                           </div>
                         </div>
                       </div>
@@ -308,30 +214,20 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>Add Questions</label>
-                          <textarea
-                            class="form-control"
-                            [class.invalid]="
+                          <textarea class="form-control" [class.invalid]="
                               addInterviewForm.get('AddQuestion').invalid &&
                               addInterviewForm.get('AddQuestion').touched
-                            "
-                            formControlName="AddQuestion"
-                          >
+                            " formControlName="AddQuestion">
                           </textarea>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               addInterviewForm.get('AddQuestion').invalid &&
                               addInterviewForm.get('AddQuestion').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('AddQuestion').invalid &&
                                 addInterviewForm.get('AddQuestion').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Question is required</small
-                            >
+                              " class="text-danger">
+                              *Question is required</small>
                           </div>
                         </div>
                       </div>
@@ -340,120 +236,76 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Option A</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            [class.invalid]="
+                          <input class="form-control" type="text" [class.invalid]="
                               addInterviewForm.get('OptionA').invalid &&
                               addInterviewForm.get('OptionA').touched
-                            "
-                            formControlName="OptionA"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="OptionA" />
+                          <div *ngIf="
                               addInterviewForm.get('OptionA').invalid &&
                               addInterviewForm.get('OptionA').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('OptionA').invalid &&
                                 addInterviewForm.get('OptionA').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Option A required</small
-                            >
+                              " class="text-danger">
+                              *Option A required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Option B</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            [class.invalid]="
+                          <input class="form-control" type="text" [class.invalid]="
                               addInterviewForm.get('OptionB').invalid &&
                               addInterviewForm.get('OptionB').touched
-                            "
-                            formControlName="OptionB"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="OptionB" />
+                          <div *ngIf="
                               addInterviewForm.get('OptionB').invalid &&
                               addInterviewForm.get('OptionB').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('OptionB').invalid &&
                                 addInterviewForm.get('OptionB').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Option B required</small
-                            >
+                              " class="text-danger">
+                              *Option B required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Option C</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            [class.invalid]="
+                          <input class="form-control" type="text" [class.invalid]="
                               addInterviewForm.get('OptionC').invalid &&
                               addInterviewForm.get('OptionC').touched
-                            "
-                            formControlName="OptionC"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="OptionC" />
+                          <div *ngIf="
                               addInterviewForm.get('OptionC').invalid &&
                               addInterviewForm.get('OptionC').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('OptionC').invalid &&
                                 addInterviewForm.get('OptionC').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Option C required</small
-                            >
+                              " class="text-danger">
+                              *Option C required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Option D</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            [class.invalid]="
+                          <input class="form-control" type="text" [class.invalid]="
                               addInterviewForm.get('OptionD').invalid &&
                               addInterviewForm.get('OptionD').touched
-                            "
-                            formControlName="OptionD"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="OptionD" />
+                          <div *ngIf="
                               addInterviewForm.get('OptionD').invalid &&
                               addInterviewForm.get('OptionD').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('OptionD').invalid &&
                                 addInterviewForm.get('OptionD').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Option D required</small
-                            >
+                              " class="text-danger">
+                              *Option D required</small>
                           </div>
                         </div>
                       </div>
@@ -462,35 +314,25 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>Correct Answer</label>
-                          <select
-                            class="form-select form-control"
-                            [class.invalid]="
+                          <select class="form-select form-control" [class.invalid]="
                               addInterviewForm.get('Correctanswer').invalid &&
                               addInterviewForm.get('Correctanswer').touched
-                            "
-                            formControlName="Correctanswer"
-                          >
+                            " formControlName="Correctanswer">
                             <option>-</option>
                             <option>Option A</option>
                             <option>Option B</option>
                             <option>Option C</option>
                             <option>Option D</option>
                           </select>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               addInterviewForm.get('Correctanswer').invalid &&
                               addInterviewForm.get('Correctanswer').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('Correctanswer').invalid &&
                                 addInterviewForm.get('Correctanswer').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Correct Answer required</small
-                            >
+                              " class="text-danger">
+                              *Correct Answer required</small>
                           </div>
                         </div>
                       </div>
@@ -499,66 +341,46 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Code Snippets</label>
-                          <textarea
-                            class="form-control"
-                            [class.invalid]="
+                          <textarea class="form-control" [class.invalid]="
                               addInterviewForm.get('addCode').invalid &&
                               addInterviewForm.get('addCode').touched
-                            "
-                            formControlName="addCode"
-                          >
+                            " formControlName="addCode">
                           </textarea>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               addInterviewForm.get('addCode').invalid &&
                               addInterviewForm.get('addCode').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('addCode').invalid &&
                                 addInterviewForm.get('addCode').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Code Snippets required</small
-                            >
+                              " class="text-danger">
+                              *Code Snippets required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Answer Explanation</label>
-                          <textarea
-                            class="form-control"
-                            [class.invalid]="
+                          <textarea class="form-control" [class.invalid]="
                               addInterviewForm.get('addAnswerExplanation')
                                 .invalid &&
                               addInterviewForm.get('addAnswerExplanation')
                                 .touched
-                            "
-                            formControlName="addAnswerExplanation"
-                          >
+                            " formControlName="addAnswerExplanation">
                           </textarea>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               addInterviewForm.get('addAnswerExplanation')
                                 .invalid &&
                               addInterviewForm.get('addAnswerExplanation')
                                 .touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('addAnswerExplanation')
                                   .invalid &&
                                 addInterviewForm.get('addAnswerExplanation')
                                   .touched
-                              "
-                              class="text-danger"
-                            >
-                              *Answer Explanation required</small
-                            >
+                              " class="text-danger">
+                              *Answer Explanation required</small>
                           </div>
                         </div>
                       </div>
@@ -567,41 +389,33 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Add Video Link</label>
-                          <textarea
-                            class="form-control"
-                            [class.invalid]="
+                          <textarea class="form-control" [class.invalid]="
                               addInterviewForm.get('addVideoLink').invalid &&
                               addInterviewForm.get('addVideoLink').touched
-                            "
-                            formControlName="addVideoLink"
-                          >
+                            " formControlName="addVideoLink">
                           </textarea>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               addInterviewForm.get('addVideoLink').invalid &&
                               addInterviewForm.get('addVideoLink').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addInterviewForm.get('addVideoLink').invalid &&
                                 addInterviewForm.get('addVideoLink').touched
-                              "
-                              class="text-danger"
-                            >
-                              * Video Link required</small
-                            >
+                              " class="text-danger">
+                              * Video Link required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Add Image To Question</label>
-                          <input
-                            class="form-control"
-                            type="file"
-                            formControlName="addImageToQuestion"
-                          />
+                          <input class="form-control" type="file" formControlName="addImageToQuestion" />
+                          <ng-container *ngIf="
+                          addInterviewForm.get('addImageToQuestion').invalid &&
+                          addInterviewForm.get('addImageToQuestion').touched">
+                            <p class="text-danger">Image is required.</p>
+
+                          </ng-container>
                         </div>
                       </div>
                     </div>
@@ -622,48 +436,30 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Add Category</h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form
-                    (ngSubmit)="addcategory()"
-                    [formGroup]="addCategoryForm"
-                  >
+                  <form (ngSubmit)="addcategory()" [formGroup]="addCategoryForm">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>Add Category</label>
-                          <textarea
-                            class="form-control"
-                            [class.invalid]="
+                          <textarea class="form-control" [class.invalid]="
                               addCategoryForm.get('AddCat').invalid &&
                               addCategoryForm.get('AddCat').touched
-                            "
-                            formControlName="AddCat"
-                          >
+                            " formControlName="AddCat">
                           </textarea>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               addCategoryForm.get('AddCat').invalid &&
                               addCategoryForm.get('AddCat').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 addCategoryForm.get('AddCat').invalid &&
                                 addCategoryForm.get('AddCat').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Category is required</small
-                            >
+                              " class="text-danger">
+                              *Category is required</small>
                           </div>
                         </div>
                       </div>
@@ -680,55 +476,34 @@
           <!-- /Add Category Modal -->
           <!-- edit Category modal -->
           <div id="edit_category" class="modal custom-modal fade" role="dialog">
-            <div
-              class="modal-dialog modal-dialog-centered modal-lg"
-              role="document"
-            >
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Edit Category</h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form
-                    (ngSubmit)="editCategory()"
-                    [formGroup]="editCategoryForm"
-                  >
+                  <form (ngSubmit)="editCategory()" [formGroup]="editCategoryForm">
                     <div class="row">
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>Category</label>
-                          <textarea
-                            class="form-control"
-                            [class.invalid]="
+                          <textarea class="form-control" [class.invalid]="
                               editCategoryForm.get('editAddCat').invalid &&
                               editCategoryForm.get('editAddCat').touched
-                            "
-                            formControlName="editAddCat"
-                          >
+                            " formControlName="editAddCat">
                           </textarea>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               editCategoryForm.get('editAddCat').invalid &&
                               editCategoryForm.get('editAddCat').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editCategoryForm.get('editAddCat').invalid &&
                                 editCategoryForm.get('editAddCat').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Category is required</small
-                            >
+                              " class="text-danger">
+                              *Category is required</small>
                           </div>
                         </div>
                       </div>
@@ -744,11 +519,7 @@
           </div>
           <!-- /Edit Category  Modal -->
           <!-- Delete Category Modal -->
-          <div
-            class="modal custom-modal fade"
-            id="delete_category"
-            role="dialog"
-          >
+          <div class="modal custom-modal fade" id="delete_category" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-body">
@@ -759,18 +530,10 @@
                   <div class="modal-btn delete-action">
                     <div class="row">
                       <div class="col-6">
-                        <a
-                          class="btn btn-primary continue-btn"
-                          (click)="deleteCategory()"
-                          >Delete</a
-                        >
+                        <a class="btn btn-primary continue-btn" (click)="deleteCategory()">Delete</a>
                       </div>
                       <div class="col-6">
-                        <a
-                          data-bs-dismiss="modal"
-                          class="btn btn-primary cancel-btn"
-                          >Cancel</a
-                        >
+                        <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                       </div>
                     </div>
                   </div>
@@ -782,97 +545,60 @@
 
           <!-- Edit Question Modal -->
           <div id="edit_question" class="modal custom-modal fade" role="dialog">
-            <div
-              class="modal-dialog modal-dialog-centered modal-lg"
-              role="document"
-            >
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
                   <h5 class="modal-title">Edit Questions</h5>
-                  <button
-                    type="button"
-                    class="close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                  >
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form
-                    (ngSubmit)="editInterview()"
-                    [formGroup]="editInterviewForm"
-                  >
+                  <form (ngSubmit)="editInterview()" [formGroup]="editInterviewForm">
                     <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Category</label>
-                          <select
-                            class="form-select form-control"
-                            [class.invalid]="
+                          <select class="form-select form-control" [class.invalid]="
                               editInterviewForm.get('editCat').invalid &&
                               editInterviewForm.get('editCat').touched
-                            "
-                            formControlName="editCat"
-                          >
-                            <option
-                              *ngFor="let datanew of catData"
-                              [value]="datanew.category"
-                            >
+                            " formControlName="editCat">
+                            <option *ngFor="let datanew of catData" [value]="datanew.category">
                               {{ datanew.category }}
                             </option>
                           </select>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               editInterviewForm.get('editCat').invalid &&
                               editInterviewForm.get('editCat').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('editCat').invalid &&
                                 editInterviewForm.get('editCat').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Category is required</small
-                            >
+                              " class="text-danger">
+                              *Category is required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Department</label>
-                          <select
-                            class="form-select form-control"
-                            [class.invalid]="
+                          <select class="form-select form-control" [class.invalid]="
                               editInterviewForm.get('editDep').invalid &&
                               editInterviewForm.get('editDep').touched
-                            "
-                            formControlName="editDep"
-                          >
-                            <option
-                              *ngFor="let datanew of depData"
-                              [value]="datanew.departmentName"
-                            >
+                            " formControlName="editDep">
+                            <option *ngFor="let datanew of depData" [value]="datanew.departmentName">
                               {{ datanew.departmentName }}
                             </option>
                           </select>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               editInterviewForm.get('editDep').invalid &&
                               editInterviewForm.get('editDep').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('editDep').invalid &&
                                 editInterviewForm.get('editDep').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Department is required</small
-                            >
+                              " class="text-danger">
+                              *Department is required</small>
                           </div>
                         </div>
                       </div>
@@ -881,30 +607,20 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>Add Questions</label>
-                          <textarea
-                            class="form-control"
-                            [class.invalid]="
+                          <textarea class="form-control" [class.invalid]="
                               editInterviewForm.get('AddQuestion').invalid &&
                               editInterviewForm.get('AddQuestion').touched
-                            "
-                            formControlName="AddQuestion"
-                          >
+                            " formControlName="AddQuestion">
                           </textarea>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               editInterviewForm.get('AddQuestion').invalid &&
                               editInterviewForm.get('AddQuestion').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('AddQuestion').invalid &&
                                 editInterviewForm.get('AddQuestion').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Quesiton is required</small
-                            >
+                              " class="text-danger">
+                              *Quesiton is required</small>
                           </div>
                         </div>
                       </div>
@@ -913,124 +629,76 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Option A</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            value="Design facilities"
-                            [class.invalid]="
+                          <input class="form-control" type="text" value="Design facilities" [class.invalid]="
                               editInterviewForm.get('OptionA').invalid &&
                               editInterviewForm.get('OptionA').touched
-                            "
-                            formControlName="OptionA"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="OptionA" />
+                          <div *ngIf="
                               editInterviewForm.get('OptionA').invalid &&
                               editInterviewForm.get('OptionA').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('OptionA').invalid &&
                                 editInterviewForm.get('OptionA').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Option A required</small
-                            >
+                              " class="text-danger">
+                              *Option A required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Option B</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            value="language subsets"
-                            [class.invalid]="
+                          <input class="form-control" type="text" value="language subsets" [class.invalid]="
                               editInterviewForm.get('OptionB').invalid &&
                               editInterviewForm.get('OptionB').touched
-                            "
-                            formControlName="OptionB"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="OptionB" />
+                          <div *ngIf="
                               editInterviewForm.get('OptionB').invalid &&
                               editInterviewForm.get('OptionB').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('OptionB').invalid &&
                                 editInterviewForm.get('OptionB').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Option B required</small
-                            >
+                              " class="text-danger">
+                              *Option B required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Option C</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            value="Lack of portability"
-                            [class.invalid]="
+                          <input class="form-control" type="text" value="Lack of portability" [class.invalid]="
                               editInterviewForm.get('OptionC').invalid &&
                               editInterviewForm.get('OptionC').touched
-                            "
-                            formControlName="OptionC"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="OptionC" />
+                          <div *ngIf="
                               editInterviewForm.get('OptionC').invalid &&
                               editInterviewForm.get('OptionC').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('OptionC').invalid &&
                                 editInterviewForm.get('OptionC').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Option C required</small
-                            >
+                              " class="text-danger">
+                              *Option C required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Option D</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            value="Inability to perform data"
-                            [class.invalid]="
+                          <input class="form-control" type="text" value="Inability to perform data" [class.invalid]="
                               editInterviewForm.get('OptionD').invalid &&
                               editInterviewForm.get('OptionD').touched
-                            "
-                            formControlName="OptionD"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="OptionD" />
+                          <div *ngIf="
                               editInterviewForm.get('OptionD').invalid &&
                               editInterviewForm.get('OptionD').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('OptionD').invalid &&
                                 editInterviewForm.get('OptionD').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Option D required</small
-                            >
+                              " class="text-danger">
+                              *Option D required</small>
                           </div>
                         </div>
                       </div>
@@ -1039,36 +707,26 @@
                       <div class="col-md-12">
                         <div class="form-group">
                           <label>Correct Answer</label>
-                          <select
-                            class="form-select form-control"
-                            [class.invalid]="
+                          <select class="form-select form-control" [class.invalid]="
                               editInterviewForm.get('Correctanswer').invalid &&
                               editInterviewForm.get('Correctanswer').touched
-                            "
-                            formControlName="Correctanswer"
-                          >
+                            " formControlName="Correctanswer">
                             <option>-</option>
                             <option selected>Option A</option>
                             <option>Option B</option>
                             <option>Option C</option>
                             <option>Option D</option>
                           </select>
-                          <div
-                            *ngIf="
+                          <div *ngIf="
                               editInterviewForm.get('Correctanswer').invalid &&
                               editInterviewForm.get('Correctanswer').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('Correctanswer')
                                   .invalid &&
                                 editInterviewForm.get('Correctanswer').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Correct Answer required</small
-                            >
+                              " class="text-danger">
+                              *Correct Answer required</small>
                           </div>
                         </div>
                       </div>
@@ -1077,68 +735,44 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Code Snippets</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            value="Inability to perform data"
-                            [class.invalid]="
+                          <input class="form-control" type="text" value="Inability to perform data" [class.invalid]="
                               editInterviewForm.get('editCode').invalid &&
                               editInterviewForm.get('editCode').touched
-                            "
-                            formControlName="editCode"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="editCode" />
+                          <div *ngIf="
                               editInterviewForm.get('editCode').invalid &&
                               editInterviewForm.get('editCode').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('editCode').invalid &&
                                 editInterviewForm.get('editCode').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Code Snippets required</small
-                            >
+                              " class="text-danger">
+                              *Code Snippets required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Answer Explanation</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            value="Inability to perform data"
-                            [class.invalid]="
+                          <input class="form-control" type="text" value="Inability to perform data" [class.invalid]="
                               editInterviewForm.get('editAnswerExplanation')
                                 .invalid &&
                               editInterviewForm.get('editAnswerExplanation')
                                 .touched
-                            "
-                            formControlName="editAnswerExplanation"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="editAnswerExplanation" />
+                          <div *ngIf="
                               editInterviewForm.get('editAnswerExplanation')
                                 .invalid &&
                               editInterviewForm.get('editAnswerExplanation')
                                 .touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('editAnswerExplanation')
                                   .invalid &&
                                 editInterviewForm.get('editAnswerExplanation')
                                   .touched
-                              "
-                              class="text-danger"
-                            >
-                              *Answer Explanation required</small
-                            >
+                              " class="text-danger">
+                              *Answer Explanation required</small>
                           </div>
                         </div>
                       </div>
@@ -1147,43 +781,27 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Add Video Link</label>
-                          <input
-                            class="form-control"
-                            type="text"
-                            value="Inability to perform data"
-                            [class.invalid]="
+                          <input class="form-control" type="text" value="Inability to perform data" [class.invalid]="
                               editInterviewForm.get('editVideoLink').invalid &&
                               editInterviewForm.get('editVideoLink').touched
-                            "
-                            formControlName="editVideoLink"
-                          />
-                          <div
-                            *ngIf="
+                            " formControlName="editVideoLink" />
+                          <div *ngIf="
                               editInterviewForm.get('editVideoLink').invalid &&
                               editInterviewForm.get('editVideoLink').touched
-                            "
-                          >
-                            <small
-                              *ngIf="
+                            ">
+                            <small *ngIf="
                                 editInterviewForm.get('editVideoLink')
                                   .invalid &&
                                 editInterviewForm.get('editVideoLink').touched
-                              "
-                              class="text-danger"
-                            >
-                              *Add Video Link required</small
-                            >
+                              " class="text-danger">
+                              *Add Video Link required</small>
                           </div>
                         </div>
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Add Image To Question</label>
-                          <input
-                            class="form-control"
-                            type="file"
-                            formControlName="editImageToQuestion"
-                          />
+                          <input class="form-control" type="file" formControlName="editImageToQuestion" />
                         </div>
                       </div>
                     </div>
@@ -1199,11 +817,7 @@
           <!-- /Edit Question  Modal -->
 
           <!-- Delete Question Modal -->
-          <div
-            class="modal custom-modal fade"
-            id="delete_question"
-            role="dialog"
-          >
+          <div class="modal custom-modal fade" id="delete_question" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-body">
@@ -1214,18 +828,10 @@
                   <div class="modal-btn delete-action">
                     <div class="row">
                       <div class="col-6">
-                        <a
-                          class="btn btn-primary continue-btn"
-                          (click)="deleteInterview()"
-                          >Delete</a
-                        >
+                        <a class="btn btn-primary continue-btn" (click)="deleteInterview()">Delete</a>
                       </div>
                       <div class="col-6">
-                        <a
-                          data-bs-dismiss="modal"
-                          class="btn btn-primary cancel-btn"
-                          >Cancel</a
-                        >
+                        <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                       </div>
                     </div>
                   </div>

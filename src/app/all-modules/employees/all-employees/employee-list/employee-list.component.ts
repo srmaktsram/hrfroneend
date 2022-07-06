@@ -29,7 +29,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
   public user_type = sessionStorage.getItem("user_type");
-  id:any
+  id: any
 
   public pipe = new DatePipe("en-US");
   public rows = [];
@@ -286,13 +286,13 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
         console.log("get Employees", data);
-        this.totalEmployee=data.length
-        console.log(this.totalEmployee,"no. of employees")
+        this.totalEmployee = data.length
+        console.log(this.totalEmployee, "no. of employees")
 
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
@@ -313,8 +313,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data: any) => {
         this.employees = data[0].notification.employee;
@@ -334,7 +334,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         console.log("Areeeeeeeeeeeeeee", res);
         this.productDetails.map((item: any) => {
           this.totalUser = item.totalUser;
-          console.log(this.totalUser,"users no.")
+          console.log(this.totalUser, "users no.")
         });
       });
   }
@@ -345,59 +345,60 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.markFormGroupTouched(this.addEmployeeForm);
       return;
     }
-    if(this.totalUser>this.totalEmployee){
-      
-    let obj = {
-      firstname: this.addEmployeeForm.value.FirstName,
-      lastname: this.addEmployeeForm.value.LastName,
-      username: this.addEmployeeForm.value.UserName,
-      email: this.addEmployeeForm.value.Email,
-      password: this.addEmployeeForm.value.Password,
-      confirmpassword: this.addEmployeeForm.value.ConfirmPassword,
-      employeeId: this.addEmployeeForm.value.EmployeeID,
-      joindate: this.addEmployeeForm.value.JoinDate,
-      phone: this.addEmployeeForm.value.PhoneNumber,
-      department: this.addEmployeeForm.value.DepartmentName,
-      designation: this.addEmployeeForm.value.Designation,
-      // mobile: this.addEmployeeForm.value.mobile,
-      role: this.addEmployeeForm.value.role,
-      Holidays: this.Holidays,
-      Leaves: this.Leaves,
-      Clients: this.Clients,
-      Projects: this.Projects,
-      attendance: this.attendance,
-      TimingSheets: this.TimingSheets,
-      adminId: this.adminId,
-      location: this.current_location,
-    };
+    if (this.totalUser > this.totalEmployee) {
 
-    this.http
-      .post("http://localhost:8443/admin/allemployees/addemployee", obj)
-      .subscribe((data: any) => {
-        this.loadEmployee();
-        let document = data.data;
-        let author = "Admin";
-        let message = "added a new employee ";
-        let functions =
-          document.firstName + " in " + document.department + " department";
-        let time = document.createDate;
-        if (this.employees == true) {
-          this.http
-            .post(
-              "http://localhost:8443/admin/allNotification/createNotification" +
+      let obj = {
+        firstname: this.addEmployeeForm.value.FirstName,
+        lastname: this.addEmployeeForm.value.LastName,
+        username: this.addEmployeeForm.value.UserName,
+        email: this.addEmployeeForm.value.Email,
+        password: this.addEmployeeForm.value.Password,
+        confirmpassword: this.addEmployeeForm.value.ConfirmPassword,
+        employeeId: this.addEmployeeForm.value.EmployeeID,
+        joindate: this.addEmployeeForm.value.JoinDate,
+        phone: this.addEmployeeForm.value.PhoneNumber,
+        department: this.addEmployeeForm.value.DepartmentName,
+        designation: this.addEmployeeForm.value.Designation,
+        // mobile: this.addEmployeeForm.value.mobile,
+        role: this.addEmployeeForm.value.role,
+        Holidays: this.Holidays,
+        Leaves: this.Leaves,
+        Clients: this.Clients,
+        Projects: this.Projects,
+        attendance: this.attendance,
+        TimingSheets: this.TimingSheets,
+        adminId: this.adminId,
+        location: this.current_location,
+      };
+
+      this.http
+        .post("http://localhost:8443/admin/allemployees/addemployee", obj)
+        .subscribe((data: any) => {
+          this.loadEmployee();
+          let document = data.data;
+          let author = "Admin";
+          let message = "added a new employee ";
+          let functions =
+            document.firstName + " in " + document.department + " department";
+          let time = document.createDate;
+          if (this.employees == true) {
+            this.http
+              .post(
+                "http://localhost:8443/admin/allNotification/createNotification" +
                 "/" +
                 this.adminId,
-              { message, author, functions, time }
-            )
-            .subscribe((data: any) => {
-              this.headerComponent.getAllNotifications();
-            });
-        }
-      });}else{
-        // alert("Can not add more employees,kindly upgrade your plan")
-        this.maximumEmployees = false;
+                { message, author, functions, time }
+              )
+              .subscribe((data: any) => {
+                this.headerComponent.getAllNotifications();
+              });
+          }
+        });
+    } else {
+      // alert("Can not add more employees,kindly upgrade your plan")
+      this.maximumEmployees = false;
 
-      }
+    }
 
     $("#add_employee").modal("hide");
     this.addEmployeeForm.reset();
@@ -408,8 +409,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.http
         .get(
           "http://localhost:8443/admin/notifications/getAllNotification" +
-            "/" +
-            this.adminId
+          "/" +
+          this.adminId
         )
         .subscribe((data: any) => {
           this.dataArray = data[0].notifications;
