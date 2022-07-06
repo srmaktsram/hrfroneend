@@ -7,6 +7,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 @Component({
   selector: "app-company-settings",
@@ -44,18 +45,17 @@ export class CompanySettingsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.current_location);
-
     this.companySettings = this.formBuilder.group({
       companyName: ["", [Validators.required]],
-      contactPerson: ["", [Validators.required]],
+      contactPerson: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       address: ["", [Validators.required]],
       country: ["", [Validators.required]],
       city: ["", [Validators.required]],
       state: ["", [Validators.required]],
       postalCode: ["", [Validators.required]],
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       phoneNumber: ["", [Validators.required]],
-      mobileNumber: ["", [Validators.required]],
+      mobileNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       fax: [""],
       website: ["", [Validators.required]],
     });
@@ -74,13 +74,12 @@ export class CompanySettingsComponent implements OnInit {
       return;
     } else if (this.companySettings.valid) {
       let obj = this.companySettings.value;
-
       console.log("new details", obj);
       this.http
         .patch(
           "http://localhost:8443/admin/companysetting/updateCompanyDetails" +
-            "/" +
-            this.adminId,
+          "/" +
+          this.adminId,
           obj
         )
         .subscribe((res: any) => {
@@ -97,7 +96,7 @@ export class CompanySettingsComponent implements OnInit {
             JSON.stringify(res.location)
           );
         });
-      window.location.reload();
+      // window.location.reload();
       this.toastr.success("Company Details Updated Sucessfully", "Success");
     }
   }
