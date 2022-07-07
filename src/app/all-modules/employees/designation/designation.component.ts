@@ -21,6 +21,8 @@ export class DesignationComponent implements OnInit, OnDestroy {
   public tempId: any;
   public editId: any;
   public dropdownData: any;
+  public adminId = sessionStorage.getItem("adminId");
+
   public rows = [];
   public srch = [];
   public addDesignationForm: FormGroup;
@@ -56,7 +58,9 @@ export class DesignationComponent implements OnInit, OnDestroy {
 
   // Get designation list  Api Call
   LoadDesignation() {
-    this.http.get("http://localhost:8443/admin/designation/getData").subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/designation/getData"+
+    "/" +
+    this.adminId).subscribe((data) => {
       //console.log("getapi", data)
       this.lstDesignation = data;
       this.dtTrigger.next();
@@ -170,7 +174,7 @@ export class DesignationComponent implements OnInit, OnDestroy {
 
 
   getDepartmentData() {
-    this.http.get("http://localhost:8443/admin/department/getData").subscribe((data) => {
+    this.http.get("http://localhost:8443/admin/department/getAdminData"+"/"+this.adminId).subscribe((data) => {
       console.log("DropdownData", data);
 
       this.dropdownData = data
