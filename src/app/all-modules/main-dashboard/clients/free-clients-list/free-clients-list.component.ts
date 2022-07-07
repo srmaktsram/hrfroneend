@@ -49,7 +49,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   public employeeId: any;
   searchCompany: any;
   constructor(
-    private hrUserAuthenticationService:HrUserAuthenticationService,
+    private hrUserAuthenticationService: HrUserAuthenticationService,
     private toastr: ToastrService,
     private http: HttpClient,
     private router: Router,
@@ -59,6 +59,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
     this.getDemoAdmins();
 
     this.dtOptions = {
@@ -77,9 +78,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    // setTimeout(() => {
-    //   this.dtTrigger.next();
-    // }, 1000);
+
   }
 
   //Get all Clients data
@@ -88,8 +87,7 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
       .subscribe((res: any) => {
         this.data = res;
-
-        console.log(res,"freeee")
+        console.log(res, "freeee")
         this.srch = [...this.data];
       });
   }
@@ -101,19 +99,20 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
 
-          // window.location.replace("http://localhost:4200")
-          window.open("http://localhost:4200","_blank");
-          this.hrUserAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone,
-          );
-        }else {
-          alert("Account Blocked By Main Admin");
-        }} else {
+            // window.location.replace("http://localhost:4200")
+            window.open("http://localhost:4200", "_blank");
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone,
+            );
+          } else {
+            alert("Account Blocked By Main Admin");
+          }
+        } else {
           alert("wrong Id");
         }
       });
@@ -151,12 +150,12 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/freeClient/updateFreeClient" +
-          "/" +
-          id,
+        "/" +
+        id,
         obj
       )
       .subscribe((data) => {
-        console.log(data,"Edited Details for free Client")
+        console.log(data, "Edited Details for free Client")
         this.getDemoAdmins();
       });
 
@@ -171,8 +170,8 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/freeClient/updateFreeClientStatus" +
-          "/" +
-          id,
+        "/" +
+        id,
         { status }
       )
       .subscribe((res) => {
@@ -185,8 +184,8 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/client/blockClientStatus" +
-          "/" +
-          id,
+        "/" +
+        id,
         { status }
       )
       .subscribe((res) => {
@@ -223,7 +222,8 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
           !val ||
           d.phone.toLowerCase().indexOf(val) !== -1 ||
           !val
-        );})
+        );
+      })
       this.data.push(...temp);
     } else {
       this.getDemoAdmins();
@@ -239,7 +239,8 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
         return (
           d.corporateId.toLowerCase().indexOf(val) !== -1 ||
           !val
-         );})
+        );
+      })
       this.data.push(...temp);
     } else {
       this.getDemoAdmins();

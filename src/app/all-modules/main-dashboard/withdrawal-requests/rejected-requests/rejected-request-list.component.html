@@ -14,21 +14,12 @@
       </div>
       <div class="col-auto float-end ms-auto">
         <div class="view-icons">
-          <a
-            routerLink="/layout/mainadmin/withdrawalrequests/withdrawalrequest"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <a
-            routerLink="/layout/mainadmin/releasehistory/releasehistory"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <a
-            routerLink="/layout/mainadmin/rejected-requests/rejected-requests"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
+          <a routerLink="/layout/mainadmin/withdrawalrequests/withdrawalrequest" class="list-view btn btn-link active"
+            title="Withdrawal Request"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/releasehistory/releasehistory" class="list-view btn btn-link active"
+            title="Release History"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/rejected-requests/rejected-requests" class="list-view btn btn-link active"
+            title="Rejected Requests"><i class="fa fa-bars"></i></a>
         </div>
       </div>
     </div>
@@ -38,13 +29,8 @@
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
-        <table
-          datatable
-          [dtOptions]="dtOptions"
-          [dtTrigger]="dtTrigger"
-          id="datatable"
-          class="table table-striped custom-table datatable"
-        >
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
+          class="table table-striped custom-table datatable">
           <thead>
             <tr>
               <th>Sr.no</th>
@@ -57,7 +43,7 @@
               <th>Update Date</th>
               <th>Remark</th>
               <th>Bank Details</th>
-              
+
             </tr>
           </thead>
           <tbody>
@@ -72,37 +58,37 @@
               <td>{{item.updateDate}}</td>
               <td>{{item.remark}}</td>
               <td>
-                <tr>
-                  A/c Holder
-                  <p>{{ item.bankDetails.accountHolderName }}</p>
-                </tr>
-                <tr>
-                  A/c No.
-                  <p>{{ item.bankDetails.accountNumber }}</p>
-                </tr>
-                <tr>
-                  Bank Name
-                  <p>{{ item.bankDetails.bankName }}</p>
-                </tr>
-                <tr>
-                  Branch
-                  <p>{{ item.bankDetails.branchName }}</p>
-                </tr>
-                <tr>
-                  IFSC Code
-                  <p>{{ item.bankDetails.ifsc }}</p>
-                </tr>
-                <tr>
-                  e-mail
-                  <p>{{ item.bankDetails.email }}</p>
-                </tr>
-                <tr>
-                  Phone
-                  <p>{{ item.bankDetails.phone }}</p>
-                </tr>
-              </td>
+            <tr>
+              A/c Holder
+              <p>{{ item.bankDetails.accountHolderName }}</p>
+            </tr>
+            <tr>
+              A/c No.
+              <p>{{ item.bankDetails.accountNumber }}</p>
+            </tr>
+            <tr>
+              Bank Name
+              <p>{{ item.bankDetails.bankName }}</p>
+            </tr>
+            <tr>
+              Branch
+              <p>{{ item.bankDetails.branchName }}</p>
+            </tr>
+            <tr>
+              IFSC Code
+              <p>{{ item.bankDetails.ifsc }}</p>
+            </tr>
+            <tr>
+              e-mail
+              <p>{{ item.bankDetails.email }}</p>
+            </tr>
+            <tr>
+              Phone
+              <p>{{ item.bankDetails.phone }}</p>
+            </tr>
+            </td>
 
-              
+
             </tr>
           </tbody>
         </table>

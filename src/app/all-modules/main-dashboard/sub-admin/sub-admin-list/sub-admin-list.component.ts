@@ -6,6 +6,7 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 declare const $: any;
 @Component({
@@ -119,12 +120,12 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       { id: 0, read: false },
       { id: 1, write: false },
     ];
-   
+
     this.payments = [
       { id: 0, read: false },
       { id: 1, write: false },
     ];
-   
+
   }
 
   ngOnInit() {
@@ -137,18 +138,18 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
     //Add clients form
     this.addClientForm = this.formBuilder.group({
-      addUserName: ["", [Validators.required]],
+      addUserName: ["", [Validators.required, Validators.pattern("^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$")]],
       addPassword: ["", [Validators.required]],
-      addMobile: ["", [Validators.required]],
-      addEmail: ["", [Validators.required]],
+      addMobile: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      addEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
     });
 
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
-      editUserName: ["", [Validators.required]],
+      editUserName: ["", [Validators.required, Validators.pattern("^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$")]],
       editPassword: ["", [Validators.required]],
-      editMobile: ["", [Validators.required]],
-      editEmail: ["", [Validators.required]],
+      editMobile: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      editEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
     });
   }
 
@@ -371,8 +372,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/subAdmin/updateSubAdminStatus" +
-          "/" +
-          id,
+        "/" +
+        id,
         { status }
       )
       .subscribe((res) => {
