@@ -16,7 +16,7 @@ export class SubAdminLoginComponent implements OnInit {
   public subscription: Subscription;
   public Toggledata = true;
   form = new FormGroup({
-    username: new FormControl("", [Validators.required, Validators.email]),
+    username: new FormControl("", [Validators.required]),
     password: new FormControl("", [Validators.required]),
   });
 
@@ -29,9 +29,9 @@ export class SubAdminLoginComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private subAdminAuthenticationService: SubAdminAuthenticationService
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
   sendTo() {
     this.router.navigate(["/login/forgot"]);
   }
@@ -46,7 +46,7 @@ export class SubAdminLoginComponent implements OnInit {
       })
       .subscribe((res: any) => {
         if (res.result == 2) {
-          this.router.navigate(["/layout/mainadmin/admindashboard"]);
+          this.router.navigate(["/layout/mainadmin"]);
 
           this.subAdminAuthenticationService.login(
             res.data.dashboard[0].read,
@@ -74,10 +74,8 @@ export class SubAdminLoginComponent implements OnInit {
             res.data.withdrawals[0].read,
             res.data.withdrawals[1].write,
             res.data.promocode[0].read,
-            res.data.promocode[1].write,
-            
+            res.data.promocode[1].write
           );
-
         } else {
           alert("wrong Id or pass");
         }

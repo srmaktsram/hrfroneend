@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CookieService } from "ngx-cookie-service";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
-
+import { switchMap } from "rxjs/operators";
 @Component({
   selector: "app-checkout",
   templateUrl: "./checkout.component.html",
@@ -13,7 +13,8 @@ import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespac
 export class CheckoutComponent implements OnInit {
   totalAmount: any;
   dMultiUser: any;
-
+  ipAddress: any;
+  location: any;
   totalUser: any;
 
   public checkoutForm: FormGroup;
@@ -42,18 +43,40 @@ export class CheckoutComponent implements OnInit {
     private cookieService: CookieService
   ) {
     this.corporateId = sessionStorage.getItem("corporateId");
+    this.getip();
   }
 
   ngOnInit() {
     this.checkoutForm = new FormGroup({
-      companyName: new FormControl("", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')],),
-      email: new FormControl("", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]),
-      mobile: new FormControl("", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]),
-      address: new FormControl("", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]),
-      panNo: new FormControl("", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]),
-      gstNo: new FormControl("", [Validators.required, Validators.minLength(3), WhiteSpaceValidator.noWhiteSpace]),
-      userCount: new FormControl("",),
-
+      companyName: new FormControl("", [
+        Validators.required,
+        Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+      ]),
+      email: new FormControl("", [
+        Validators.required,
+        Validators.email,
+        WhiteSpaceValidator.noWhiteSpace,
+      ]),
+      mobile: new FormControl("", [
+        Validators.required,
+        Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),
+      ]),
+      address: new FormControl("", [
+        Validators.required,
+        Validators.minLength(3),
+        WhiteSpaceValidator.noWhiteSpace,
+      ]),
+      panNo: new FormControl("", [
+        Validators.required,
+        Validators.minLength(3),
+        WhiteSpaceValidator.noWhiteSpace,
+      ]),
+      gstNo: new FormControl("", [
+        Validators.required,
+        Validators.minLength(3),
+        WhiteSpaceValidator.noWhiteSpace,
+      ]),
+      userCount: new FormControl(""),
     });
 
     this.totalAmount = this.route.snapshot.queryParams["totalAmount"];
@@ -61,6 +84,22 @@ export class CheckoutComponent implements OnInit {
     this.corporateId = this.route.snapshot.queryParams["corporate"];
     this.packageName = this.route.snapshot.queryParams["packageName"];
     this.month = this.route.snapshot.queryParams["days"] * 30;
+  }
+
+  getip() {
+    this.http
+      .get("https://jsonip.com")
+      .pipe(
+        switchMap((value: any) => {
+          this.ipAddress = value.ip;
+          let url = `https://ipapi.co/${value.ip}/json/`;
+          return this.http.get(url);
+        })
+      )
+      .subscribe((data) => {
+        console.log(data);
+        this.location = data;
+      });
   }
 
   getPayment() {
@@ -182,8 +221,8 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post(
         "http://localhost:8443/checkout/create/Details" +
-        "/" +
-        this.corporateId,
+          "/" +
+          this.corporateId,
         {
           amount: this.totalAmount,
           packageName: this.packageName,
@@ -199,6 +238,7 @@ export class CheckoutComponent implements OnInit {
   createAdminRegister() {
     const generateId = Math.random().toString(36).slice(5);
 
+    console.log("location", location);
     var obj = {
       adminId: generateId,
       corporateId: this.corporateId,
@@ -211,6 +251,7 @@ export class CheckoutComponent implements OnInit {
       companyAddress: this.checkoutForm.value.address,
       packageName: this.packageName,
       status: 1,
+      location: this.location,
     };
 
     this.http
