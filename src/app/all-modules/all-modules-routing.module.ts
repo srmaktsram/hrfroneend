@@ -36,9 +36,8 @@ const routes: Routes = [
           import("./main-dashboard/main-dashboard.module").then(
             (m) => m.MainDashboardModule
           ),
-        // canActivate: [AuthGuardMainAdmin],
+        canActivate: [AuthGuardMainAdmin, AuthGuardSubAdmin],
       },
-     
 
       {
         path: "client",
@@ -85,7 +84,9 @@ const routes: Routes = [
       {
         path: "support",
         loadChildren: () =>
-          import("./supportTickets/tickets.module").then((m) => m.SupportTicketsModule),
+          import("./supportTickets/tickets.module").then(
+            (m) => m.SupportTicketsModule
+          ),
         canActivate: [AuthGuardAdmin],
       },
       {

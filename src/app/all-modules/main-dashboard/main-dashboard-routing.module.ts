@@ -8,7 +8,10 @@ const routes: Routes = [
     path: "",
     component: DashboardComponent,
     children: [
-      { path: "admindashboard", component: AdminDashboardComponent },
+      {
+        path: "admindashboard",
+        component: AdminDashboardComponent,
+      },
 
       {
         path: "clients",
@@ -16,14 +19,16 @@ const routes: Routes = [
           import("./clients/clients.module").then((m) => m.ClientAdminModule),
       },
       {
-        path:"affiliates",
-        loadChildren:()=>
-        import("./affiliate/affiliate.module").then((m)=>m.AffiliateModule)
+        path: "affiliates",
+        loadChildren: () =>
+          import("./affiliate/affiliate.module").then((m) => m.AffiliateModule),
       },
       {
         path: "promocodes",
         loadChildren: () =>
-          import("./packages/promocodes.module").then((m) => m.PromocodesModule),
+          import("./packages/promocodes.module").then(
+            (m) => m.PromocodesModule
+          ),
       },
       {
         path: "subadmins",
@@ -38,47 +43,56 @@ const routes: Routes = [
       {
         path: "withdrawalrequests",
         loadChildren: () =>
-          import("./withdrawal-requests/withdrawal-request.module").then((m) => m.WithdrawalRequestModule),
+          import("./withdrawal-requests/withdrawal-request.module").then(
+            (m) => m.WithdrawalRequestModule
+          ),
       },
       {
         path: "releasehistory",
         loadChildren: () =>
-          import("./withdrawal-requests/withdrawal-request.module").then((m) => m.WithdrawalRequestModule),
+          import("./withdrawal-requests/withdrawal-request.module").then(
+            (m) => m.WithdrawalRequestModule
+          ),
       },
       {
         path: "rejected-requests",
         loadChildren: () =>
-          import("./withdrawal-requests/withdrawal-request.module").then((m) => m.WithdrawalRequestModule),
+          import("./withdrawal-requests/withdrawal-request.module").then(
+            (m) => m.WithdrawalRequestModule
+          ),
       },
       {
         path: "pendingkyc",
-        loadChildren: () =>
-          import("./kyc/kyc.module").then((m) => m.KycModule),
+        loadChildren: () => import("./kyc/kyc.module").then((m) => m.KycModule),
       },
       {
         path: "verifykyc",
-        loadChildren: () =>
-          import("./kyc/kyc.module").then((m) => m.KycModule),
+        loadChildren: () => import("./kyc/kyc.module").then((m) => m.KycModule),
       },
       {
         path: "rejectkyc",
-        loadChildren: () =>
-          import("./kyc/kyc.module").then((m) => m.KycModule),
+        loadChildren: () => import("./kyc/kyc.module").then((m) => m.KycModule),
       },
       {
         path: "commission",
         loadChildren: () =>
-          import("./Commissions/commissions.module").then((m) => m.CommissionModule),
+          import("./Commissions/commissions.module").then(
+            (m) => m.CommissionModule
+          ),
       },
       {
         path: "reject-commission",
         loadChildren: () =>
-          import("./Commissions/commissions.module").then((m) => m.CommissionModule),
+          import("./Commissions/commissions.module").then(
+            (m) => m.CommissionModule
+          ),
       },
       {
         path: "approved-commission",
         loadChildren: () =>
-          import("./Commissions/commissions.module").then((m) => m.CommissionModule),
+          import("./Commissions/commissions.module").then(
+            (m) => m.CommissionModule
+          ),
       },
       {
         path: "accounts",
