@@ -6,6 +6,7 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 declare const $: any;
 @Component({
@@ -56,7 +57,7 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
     this.user_type = sessionStorage.getItem("user_type");
     this.affiliateswrite = sessionStorage.getItem("affiliateswrite");
 
-    
+
   }
 
   ngOnInit() {
@@ -67,14 +68,14 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
       dom: "lrtip",
     };
 
-   
+
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
       editClientCompany: ["", [Validators.required]],
-      editContactPerson: ["", [Validators.required]],
-      editClientEmail: ["", [Validators.required]],
-      editClientPhone: ["", [Validators.required]],
-      editCompanyEmail: ["", [Validators.required]],
+      editContactPerson: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      editCompanyEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
 
     });
   }
@@ -96,10 +97,10 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
         this.srch = [...this.data];
 
 
-      
+
       });
   }
-  
+
 
   // Edit client
   public onEditClient(clientId: any) {
@@ -144,19 +145,19 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
 
 
 
-  deleteAffiliate(deleteId){
+  deleteAffiliate(deleteId) {
     let id = deleteId;
     this.http
       .patch(
         "http://localhost:8443/mainadmin/affiliate/updateAffiliate" +
-          "/" +
-          id,
-        {status:"2"}
+        "/" +
+        id,
+        { status: "2" }
       )
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
         this.getPremiumAdmins();
       });
-  
+
   }
 
 
@@ -168,10 +169,10 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
         "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
         { status }
       )
-      .subscribe((res:any) => {
+      .subscribe((res: any) => {
         this.getPremiumAdmins();
-       });
-  } 
+      });
+  }
 
   //search by name
   searchByName(val) {
@@ -189,7 +190,8 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
           ||
           d.company.toLowerCase().indexOf(val) !== -1 ||
           !val
-        );})
+        );
+      })
       this.data.push(...temp);
     } else {
       this.getPremiumAdmins();
@@ -231,9 +233,9 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
   //     this.clientsData = [];
   //   }
   // }
- 
 
-  
+
+
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
