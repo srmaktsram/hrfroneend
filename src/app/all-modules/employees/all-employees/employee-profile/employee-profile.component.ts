@@ -2,13 +2,22 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+
+
 declare const $: any;
 @Component({
   selector: "app-employee-profile",
   templateUrl: "./employee-profile.component.html",
+  
   styleUrls: ["./employee-profile.component.css"],
 })
 export class EmployeeProfileComponent implements OnInit {
+
+  myControl = new FormControl('');
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
 
   public addEmployeeForm: FormGroup;
   public editProfileForm: FormGroup;
@@ -47,23 +56,50 @@ export class EmployeeProfileComponent implements OnInit {
   eduhidden=true;
   exphidden=true;
   getEmployeeForm: any;
+  departments: any;
+  designations: any;
   
-
   constructor(
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
     private http: HttpClient
   ) {
+
     this.id = sessionStorage.getItem("empid")
       this.adminId=sessionStorage.getItem("adminId")
     // console.log(this.id, "pkkkkkkkk")
     this.getId(this.id);
     // console.log(this.id, "hpppppppppppp")
     this.getProjects();
+    this.getDepartments();
+
+    this.getDesignation();
 
   }
+  public getDepartments() {
+    this.http
+    .get("http://localhost:8443/admin/department/getAdminData"+"/"+this.adminId)
+    .subscribe((data) => {
+        this.departments = data;
+      });
+  }
+  public getDesignation() {
+    this.http
+      .get("http://localhost:8443/admin/designation/getData"+
+      "/" +
+      this.adminId)
+      .subscribe((data) => {
+        this.designations = data;
+      });
+  }
+
+
+
 
   ngOnInit() {
+
+  
+   
 
     this.addEmployeeForm = this.formBuilder.group({
       salaryBasis:["",[Validators.required]],
@@ -98,10 +134,9 @@ export class EmployeeProfileComponent implements OnInit {
       phone: ["", [Validators.required]],
       department: ["", [Validators.required]],
       designation: ["", [Validators.required]],
-      reportsTo: ["", [Validators.required]],
+      myControl: [""],
 
     })
-
 
     this.editPersonalForm = this.formBuilder.group({
 
@@ -195,6 +230,19 @@ export class EmployeeProfileComponent implements OnInit {
       ]),
     })
 
+
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+
+  }
+
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   onSubmit() {
@@ -305,7 +353,7 @@ export class EmployeeProfileComponent implements OnInit {
       phone: this.profileinfo.phone,
       department: this.profileinfo.department,
       designation: this.profileinfo.designation,
-      reportsTo: this.profileinfo.reportsTo,
+      // reportsTo: this.profileinfo.reportsTo,
     });
 
 
@@ -357,7 +405,7 @@ export class EmployeeProfileComponent implements OnInit {
         phone: this.editProfileForm.value.phone,
         department: this.editProfileForm.value.department,
         designation: this.editProfileForm.value.designation,
-        reportsTo: this.editProfileForm.value.reportsTo
+        // reportsTo: this.editProfileForm.value.reportsTo
       };
 
 

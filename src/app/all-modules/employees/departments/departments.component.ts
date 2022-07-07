@@ -25,6 +25,8 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public srch = [];
   public addDepartmentForm: FormGroup;
   public editDepartmentForm: FormGroup;
+  public adminId = sessionStorage.getItem("adminId");
+
   DepartmentName: any;
 
   constructor(
@@ -63,7 +65,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   // Get department list  Api Call
   LoadDepartment() {
     this.http
-      .get("http://localhost:8443/admin/department/getData")
+      .get("http://localhost:8443/admin/department/getAdminData"+"/"+this.adminId)
       .subscribe((data) => {
         this.lstDepartment = data;
         this.dtTrigger.next();
