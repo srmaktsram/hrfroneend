@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
@@ -7,6 +6,7 @@ import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 declare const $: any;
 @Component({
@@ -31,7 +31,6 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
-
   editId: any;
   invoices: any;
   projects: any;
@@ -48,13 +47,13 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private hrUserAuthenticationService:HrUserAuthenticationService,
+    private hrUserAuthenticationService: HrUserAuthenticationService,
 
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
 
-   
+
   }
 
   ngOnInit() {
@@ -67,12 +66,12 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       dom: "lrtip",
     };
 
-    
+
     this.editClientForm = this.formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
-      editClientEmail: ["", [Validators.required]],
-      editClientPhone: ["", [Validators.required]],
+      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
+      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
+      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
 
     });
   }
@@ -88,24 +87,24 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/auth/register/loginAsUser" + "/" + id)
       .subscribe((res: any) => {
         if (res.result == 2) {
-        if (res.data.status!=="Blocked") {
-          // window.location.replace("http://localhost:4200")
-          window.open("http://localhost:4200","_blank");
-          this.hrUserAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone,
-          );
-        }else {
-          alert("Account Blocked By Main Admin");
-        }} else {
+          if (res.data.status !== "Blocked") {
+            window.open("http://localhost:4200", "_blank");
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone,
+            );
+          } else {
+            alert("Account Blocked By Main Admin");
+          }
+        } else {
           alert("wrong Id");
         }
       });
-    }
+  }
   //Get all Clients data
   public getVisitorAdmins() {
     this.http
@@ -115,11 +114,12 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
 
         this.data = res;
+        console.log("jbjhj.>>>>>>>>>>>>>>>>", this.data)
         this.srch = [...this.data];
 
-        // this.srch = res;
       });
   }
+
   // public getCompanyName() {
   //   this.http
   //     .get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId)
@@ -179,7 +179,7 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.getVisitorAdmins();
 
-       
+
       });
   }
   getBlock(data, id) {
@@ -187,14 +187,14 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/client/blockClientStatus" +
-          "/" +
-          id,
+        "/" +
+        id,
         { status }
       )
       .subscribe((res) => {
         this.getVisitorAdmins();
 
-       
+
       });
   }
   //search by name
@@ -229,7 +229,8 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
         return (
           d.corporateId.toLowerCase().indexOf(val) !== -1 ||
           !val
-         );})
+        );
+      })
       this.data.push(...temp);
     } else {
       this.getVisitorAdmins();
@@ -257,9 +258,6 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       this.clientsData = [];
     }
   }
-
-
-  
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

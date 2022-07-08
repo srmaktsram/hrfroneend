@@ -7,6 +7,7 @@ import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 declare const $: any;
 @Component({
@@ -47,13 +48,13 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
   searchCompany: any;
   constructor(
     private toastr: ToastrService,
-    private hrUserAuthenticationService:HrUserAuthenticationService,
+    private hrUserAuthenticationService: HrUserAuthenticationService,
     private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
 
-    
+
   }
 
   ngOnInit() {
@@ -64,13 +65,13 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       dom: "lrtip",
     };
 
-   
+
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
-      editClientEmail: ["", [Validators.required]],
-      editClientPhone: ["", [Validators.required]],
+      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
+      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
+      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
 
     });
   }
@@ -93,10 +94,10 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
         this.srch = [...this.data];
 
 
-      
+
       });
   }
-  
+
   adminlogin(id) {
     alert(id);
     this.http
@@ -105,24 +106,25 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
 
-          // window.location.replace("http://localhost:4200")
-          window.open("http://localhost:4200","_blank");
-          this.hrUserAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone,
-          );
-        }
-        else {
-          alert("Account Blocked By Main Admin");
-        }} else {
+            // window.location.replace("http://localhost:4200")
+            window.open("http://localhost:4200", "_blank");
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone,
+            );
+          }
+          else {
+            alert("Account Blocked By Main Admin");
+          }
+        } else {
           alert("wrong Id");
         }
       });
-    }
+  }
   // Edit client
   public onEditClient(clientId: any) {
     this.editId = clientId;
@@ -172,24 +174,24 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.getPremiumAdmins();
 
-       
+
       });
-  } 
+  }
   getBlock(data, id) {
     const status = data;
     this.http
       .patch(
         "http://localhost:8443/mainadmin/client/blockClientStatus" +
-          "/" +
-          id,
+        "/" +
+        id,
         { status }
       )
       .subscribe((res) => {
         this.getPremiumAdmins();
 
-       
+
       });
-  } 
+  }
 
   //search by name
   searchByName(val) {
@@ -206,7 +208,8 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
           !val ||
           d.phone.toLowerCase().indexOf(val) !== -1 ||
           !val
-        );})
+        );
+      })
       this.data.push(...temp);
     } else {
       this.getPremiumAdmins();
@@ -222,7 +225,8 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
         return (
           d.corporateId.toLowerCase().indexOf(val) !== -1 ||
           !val
-         );})
+        );
+      })
       this.data.push(...temp);
     } else {
       this.getPremiumAdmins();
@@ -250,9 +254,9 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       this.clientsData = [];
     }
   }
- 
 
-  
+
+
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();

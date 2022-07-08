@@ -18,11 +18,10 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Bank Name <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" 
+                            <input class="form-control" type="text"
                                 [class.invalid]="bankSettings.get('bankName').invalid && bankSettings.get('bankName').touched"
                                 formControlName="bankName">
-                            <div
-                                *ngIf="bankSettings.get('bankName').invalid && bankSettings.get('bankName').touched">
+                            <div *ngIf="bankSettings.get('bankName').invalid && bankSettings.get('bankName').touched">
                                 <small
                                     *ngIf="bankSettings.get('bankName').invalid && bankSettings.get('bankName').touched"
                                     class="text-danger"> *Bank name is required</small>
@@ -32,7 +31,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Branch Name <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" 
+                            <input class="form-control" type="text"
                                 [class.invalid]="bankSettings.get('branchName').invalid && bankSettings.get('branchName').touched"
                                 formControlName="branchName">
                             <div
@@ -46,32 +45,29 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Account Holder Name</label>
-                            <input class="form-control "  type="text"
-                                [class.invalid]="bankSettings.get('accountHolderName').invalid && bankSettings.get('accountHolderName').touched"
-                                formControlName="accountHolderName" >
-                            <div
+                            <input class="form-control " type="text" formControlName="accountHolderName">
+                            <ng-container
                                 *ngIf="bankSettings.get('accountHolderName').invalid && bankSettings.get('accountHolderName').touched">
-                                <small
-                                    *ngIf="bankSettings.get('accountHolderName').invalid && bankSettings.get('accountHolderName').touched"
+                                <small *ngIf="bankSettings.get('accountHolderName').errors.required"
                                     class="text-danger"> *Account Holder Name is required</small>
-                            </div>
+                                <small *ngIf="bankSettings.get('accountHolderName').errors.pattern" class="text-danger">
+                                    * Invalid Account Holder Name</small>
+                            </ng-container>
                         </div>
                     </div>
-              
-                
+
+
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Account No.</label>
-                            <input class="form-control"
-                                type="text"
-                                [class.invalid]="bankSettings.get('accountNumber').invalid && bankSettings.get('accountNumber').touched"
-                                formControlName="accountNumber" >
-                            <div
+                            <input class="form-control" type="text" formControlName="accountNumber" maxlength="15">
+                            <ng-container
                                 *ngIf="bankSettings.get('accountNumber').invalid && bankSettings.get('accountNumber').touched">
-                                <small
-                                    *ngIf="bankSettings.get('accountNumber').invalid && bankSettings.get('accountNumber').touched"
-                                    class="text-danger"> *Account Number is required</small>
-                            </div>
+                                <small *ngIf="bankSettings.get('accountNumber').errors.required" class="text-danger">
+                                    *Account Number is required</small>
+                                <small *ngIf="bankSettings.get('accountNumber').errors.pattern" class="text-danger">
+                                    *Invailid Account Number</small>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -79,48 +75,49 @@
                             <label>IFSC Code</label>
                             <input class="form-control"
                                 [class.invalid]="bankSettings.get('ifsc').invalid && bankSettings.get('ifsc').touched"
-                                formControlName="ifsc" >
-                                
-                            <div
-                                *ngIf="bankSettings.get('ifsc').invalid && bankSettings.get('ifsc').touched">
-                                <small
-                                    *ngIf="bankSettings.get('ifsc').invalid && bankSettings.get('ifsc').touched"
+                                formControlName="ifsc">
+
+                            <div *ngIf="bankSettings.get('ifsc').invalid && bankSettings.get('ifsc').touched">
+                                <small *ngIf="bankSettings.get('ifsc').invalid && bankSettings.get('ifsc').touched"
                                     class="text-danger"> *IFSC Code is required</small>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Account phone No</label>
-                            <input class="form-control"  type="text"
-                                [class.invalid]="bankSettings.get('phone').invalid && bankSettings.get('phone').touched"
-                                formControlName="phone" >
-                            <div *ngIf="bankSettings.get('phone').invalid && bankSettings.get('phone').touched">
-                                <small
-                                    *ngIf="bankSettings.get('phone').invalid && bankSettings.get('phone').touched"
-                                    class="text-danger"> *Phone is required</small>
-                            </div>
+                            <input class="form-control" type="text" formControlName="phone" maxlength="10"
+                                minlength="10">
+                            <ng-container
+                                *ngIf="bankSettings.get('phone').invalid && bankSettings.get('phone').touched">
+                                <small *ngIf="bankSettings.get('phone').errors.required" class="text-danger"> *Phone is
+                                    required</small>
+                                <small *ngIf="bankSettings.get('phone').errors.pattern" class="text-danger"> *Invalid
+                                    Phone
+                                    Number</small>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-sm-6 ">
                         <div class="form-group">
                             <label>Account Email</label>
-                            <input class="form-control"
-                                [class.invalid]="bankSettings.get('email').invalid && bankSettings.get('email').touched"
-                                formControlName="email">
-                                
-                            <div *ngIf="bankSettings.get('email').invalid && bankSettings.get('email').touched">
+                            <input class="form-control" formControlName="email" type="text">
+                            <ng-container
+                                *ngIf="bankSettings.get('email').invalid && bankSettings.get('email').touched">
+                                <small *ngIf="bankSettings.get('email').errors.required " class="text-danger"> *Email is
+                                    required</small>
                                 <small
-                                    *ngIf="bankSettings.get('email').invalid && bankSettings.get('email').touched"
-                                    class="text-danger"> *Email is required</small>
-                            </div>
+                                    *ngIf="bankSettings.get('email').errors.email || bankSettings.get('email').whitespace"
+                                    class="text-danger"> *Invalid Email Address</small>
+                            </ng-container>
                         </div>
                     </div>
-                  
+
                 </div>
-                
-               
-                
+
+
+
                 <div class="submit-section">
                     <button class="btn btn-primary submit-btn" (click)="updateBankDetails()">Update</button>
                 </div>
