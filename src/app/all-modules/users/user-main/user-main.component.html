@@ -1,592 +1,700 @@
 <!-- Page Wrapper -->
-            <div class="page-wrapper">
-<!-- Page Content -->
-<div class="content container-fluid">
+<div class="page-wrapper">
+    <!-- Page Content -->
+    <div class="content container-fluid">
 
-    <!-- Page Header -->
-    <div class="page-header">
-        <div class="row align-items-center">
-            <div class="col">
-                <h3 class="page-title">Users</h3>
-                <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Users</li>
-                </ul>
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Users</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a routerLink="/layout/dashboard/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Users</li>
+                    </ul>
+                </div>
+                <div class="col-auto float-end ms-auto">
+                    <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_user"><i class="fa fa-plus"></i>
+                        Add User</a>
+                </div>
             </div>
-            <div class="col-auto float-end ms-auto">
-                <a  class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_user"><i class="fa fa-plus"></i>
-                    Add User</a>
+        </div>
+        <!-- /Page Header -->
+
+        <!-- Search Filter -->
+        <div class="row filter-row">
+            <div class="col-sm-6 col-md-3">
+                <div class="form-group form-focus">
+                    <input type="text" class="form-control floating" (input)="searchName($event.target.value)"
+                        (focusout)="rerender()">
+                    <label class="focus-label">Name</label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="form-group form-focus select-focus">
+                    <select class="form-select form-control" (input)="searchStatus($event.target.value)">
+                        <option value="">Select Company</option>
+                        <option value="Global Technologies">Global Technologies</option>
+                        <option value="Delta Infotech">Delta Infotech</option>
+                    </select>
+                    <label class="focus-label">Company</label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <div class="form-group form-focus select-focus">
+                    <select class="form-select form-control" (input)="searchRole($event.target.value)">
+                        <option value="">Select Roll</option>
+                        <option value="Web Developer">Web Developer</option>
+                        <option value="Web Designer">Web Designer</option>
+                        <option value="Android Developer">Android Developer</option>
+                        <option value="Ios Developer">Ios Developer</option>
+                    </select>
+                    <label class="focus-label">Role</label>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-3">
+                <a class="btn btn-success w-100"> Search </a>
+            </div>
+        </div>
+        <!-- /Search Filter -->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                        class="table table-striped custom-table datatable" id="datatable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Company</th>
+                                <th>Created Date</th>
+                                <th>Role</th>
+                                <th class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let users of allUsers;let i = index">
+                                <td>
+                                    <h2 class="table-avatar">
+                                        <a routerLink="/layout/employees/employeeprofile" class="avatar"><img
+                                                src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" alt=""></a>
+                                        <a routerLink="/layout/employees/employeeprofile">{{users.name}}
+                                            <span>{{users.designation}}</span></a>
+                                    </h2>
+                                </td>
+                                <td>{{users.email}}</td>
+                                <td>{{users.company}}</td>
+                                <td>1 Jan 2013</td>
+                                <td>
+                                    <span class="badge bg-inverse-danger">{{users.role}}</span>
+                                </td>
+                                <td class="text-end">
+                                    <div class="dropdown dropdown-action">
+                                        <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
+                                            aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_user"
+                                                (click)="edit(users.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a class="dropdown-item" data-bs-toggle="modal"
+                                                data-bs-target="#delete_user" (click)="tempId = users.id"><i
+                                                    class="fa fa-trash-o m-r-5"></i>
+                                                Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr *ngIf="allUsers.length === 0">
+                                <td colspan="10">
+                                    <h5 style="text-align: center;">No data found</h5>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-    <!-- /Page Header -->
+    <!-- /Page Content -->
 
-    <!-- Search Filter -->
-    <div class="row filter-row">
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus">
-                <input type="text" class="form-control floating" (input)="searchName($event.target.value)" (focusout) = "rerender()">
-                <label class="focus-label">Name</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus select-focus">
-                <select class="form-select form-control" (input)="searchStatus($event.target.value)">
-                    <option value = "">Select Company</option>
-                    <option value = "Global Technologies">Global Technologies</option>
-                    <option value = "Delta Infotech">Delta Infotech</option>
-                </select>
-                <label class="focus-label">Company</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group form-focus select-focus">
-                <select class="form-select form-control" (input)="searchRole($event.target.value)">
-                    <option value = "">Select Roll</option>
-                    <option value = "Web Developer">Web Developer</option>
-                    <option value = "Web Designer">Web Designer</option>
-                    <option value = "Android Developer">Android Developer</option>
-                    <option value = "Ios Developer">Ios Developer</option>
-                </select>
-                <label class="focus-label">Role</label>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <a  class="btn btn-success w-100"> Search </a>
-        </div>
-    </div>
-    <!-- /Search Filter -->
+    <!-- Add User Modal -->
+    <div id="add_user" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" (click)="initializeArray()">Add User</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="addUsers">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>First Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="firstName" maxlength="20">
+                                    <ng-container
+                                        *ngIf="addUsers.get('firstName').invalid && addUsers.get('firstName').touched">
+                                        <p *ngIf="addUsers.get('firstName').errors.required" class="text-danger">
+                                            *First Name is required</p>
+                                        <p *ngIf="addUsers.get('firstName').errors.pattern" class="text-danger">
+                                            *First Name is must be Valid Name
+                                        </p>
+                                    </ng-container>
+                                </div>
+                            </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="table-responsive">
-                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"class="table table-striped custom-table datatable"  id = "datatable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Company</th>
-                            <th>Created Date</th>
-                            <th>Role</th>
-                            <th class="text-end">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let users of allUsers;let i = index">
-                            <td>
-                                <h2 class="table-avatar">
-                                    <a routerLink="/layout/employees/employeeprofile" class="avatar"><img src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                                            alt=""></a>
-                                    <a routerLink="/layout/employees/employeeprofile">{{users.name}} <span>{{users.designation}}</span></a>
-                                </h2>
-                            </td>
-                            <td>{{users.email}}</td>
-                            <td>{{users.company}}</td>
-                            <td>1 Jan 2013</td>
-                            <td>
-                                <span class="badge bg-inverse-danger">{{users.role}}</span>
-                            </td>
-                            <td class="text-end">
-                                <div class="dropdown dropdown-action">
-                                    <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
-                                        aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#edit_user" (click)="edit(users.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                        <a class="dropdown-item"  data-bs-toggle="modal"
-                                            data-bs-target="#delete_user" (click)="tempId = users.id"><i class="fa fa-trash-o m-r-5"></i>
-                                            Delete</a>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input class="form-control" type="text" formControlName="lastName" maxlength="20">
+                                    <ng-container
+                                        *ngIf="addUsers.get('lastName').invalid && addUsers.get('lastName').touched">
+                                        <p *ngIf="addUsers.get('lastName').errors.required" class="text-danger">
+                                            *Last Name is required</p>
+                                        <p *ngIf="addUsers.get('lastName').errors.pattern" class="text-danger">
+                                            Last Name is Invalid
+                                        </p>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Username <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="addUserName">
+                                    <ng-container
+                                        *ngIf="addUsers.get('addUserName').invalid && addUsers.get('addUserName').touched">
+                                        <p *ngIf="addUsers.get('addUserName').errors.required" class="text-danger">
+                                            *User Name is required</p>
+                                        <p *ngIf="addUsers.get('addUserName').errors.pattern" class="text-danger">
+                                            User Name is Invalid
+                                        </p>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="addEmail">
+                                    <ng-container
+                                        *ngIf="addUsers.get('addEmail').invalid && addUsers.get('addEmail').touched">
+                                        <p *ngIf="addUsers.get('addEmail').errors.required" class="text-danger">
+                                            Email is Required
+                                        </p>
+                                        <p *ngIf="addUsers.get('addEmail').errors.email || addUsers.get('addEmail').whitespace"
+                                            class="text-danger"> *Invalid Email Address</p>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input class="form-control" type="password" formControlName="password">
+                                    <ng-container
+                                        *ngIf="addUsers.get('password').invalid && addUsers.get('password').touched">
+                                        <p *ngIf="addUsers.get('password').errors.required" class="text-danger">
+                                            password is Required
+                                        </p>
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <input #confpass class="form-control" type="password"
+                                        formControlName="confirmPassword">
+                                    <ng-container
+                                        *ngIf="addUsers.get('password').value != addUsers.get('confirmPassword').value">
+                                        <p class="text-danger">
+                                            * Password and Confirm Password not Match</p>
+                                    </ng-container>
+
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Phone </label>
+                                    <input class="form-control" type="text" formControlName="phone" maxlength="10"
+                                        minlength="10">
+                                    <ng-container
+                                        *ngIf="addUsers.get('phone').invalid && addUsers.get('phone').touched">
+                                        <p *ngIf="addUsers.get('phone').errors.required" class="text-danger">
+                                            Phone Number is Required
+                                        </p>
+                                        <p *ngIf="addUsers.get('phone').errors.pattern" class="text-danger">
+                                            *Invalid Phone Number</p>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    <select class="form-select form-control"
+                                        [class.invalid]="addUsers.get('addRole').invalid && addUsers.get('addRole').touched"
+                                        formControlName="addRole">
+                                        <option>Admin</option>
+                                        <option>Client</option>
+                                        <option>Employee</option>
+                                    </select>
+                                    <div *ngIf="addUsers.get('addRole').invalid && addUsers.get('addRole').touched">
+                                        <small
+                                            *ngIf="addUsers.get('addRole').invalid && addUsers.get('addRole').touched"
+                                            class="text-danger"> *Role is required</small>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr *ngIf="allUsers.length === 0">
-                            <td colspan="10">
-                                <h5 style="text-align: center;">No data found</h5>
-                            </td>
-                           
-                        </tr>
-                    </tbody>
-                </table>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <select class="form-select form-control"
+                                        [class.invalid]="addUsers.get('addCompany').invalid && addUsers.get('addCompany').touched"
+                                        formControlName="addCompany">
+                                        <option>Global Technologies</option>
+                                        <option>Delta Infotech</option>
+                                    </select>
+                                    <div
+                                        *ngIf="addUsers.get('addCompany').invalid && addUsers.get('addCompany').touched">
+                                        <small
+                                            *ngIf="addUsers.get('addCompany').invalid && addUsers.get('addCompany').touched"
+                                            class="text-danger"> *Company is required</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Employee ID <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control floating">
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="table-responsive m-t-15">
+                            <table class="table table-striped custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Module Permission</th>
+                                        <th class="text-center">Read</th>
+                                        <th class="text-center">Write</th>
+                                        <th class="text-center">Create</th>
+                                        <th class="text-center">Delete</th>
+                                        <th class="text-center">Import</th>
+                                        <th class="text-center">Export</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Employee</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEmployee($event,0)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEmployee($event,1)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEmployee($event,2)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEmployee($event,3)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEmployee($event,4)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEmployee($event,5)">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Holidays</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkHolidays($event,0)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkHolidays($event,1)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkHolidays($event,2)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkHolidays($event,3)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkHolidays($event,4)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkHolidays($event,5)">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Leaves</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkLeaves($event,0)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkLeaves($event,1)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkLeaves($event,2)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkLeaves($event,3)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkLeaves($event,4)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkLeaves($event,5)">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Events</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEvents($event,0)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEvents($event,1)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEvents($event,2)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEvents($event,3)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEvents($event,4)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" (click)="checkEvents($event,5)">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary" (click)="addUsersSubmit()">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- /Page Content -->
+    <!-- /Add User Modal -->
 
-<!-- Add User Modal -->
-<div id="add_user" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" (click)="initializeArray()">Add User</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form (ngSubmit)="addUsersSubmit()" [formGroup]="addUsers">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>First Name <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" formControlName="firstName">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input class="form-control" type="text"  formControlName="lastName">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Username <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" [class.invalid]="addUsers.get('addUserName').invalid && addUsers.get('addUserName').touched"
-                                formControlName="addUserName">
-                                <div
-                                *ngIf="addUsers.get('addUserName').invalid && addUsers.get('addUserName').touched">
-                                <small
-                                    *ngIf="addUsers.get('addUserName').invalid && addUsers.get('addUserName').touched"
-                                    class="text-danger"> *User name is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Email <span class="text-danger">*</span></label>
-                                <input class="form-control" type="email" [class.invalid]="addUsers.get('addEmail').invalid && addUsers.get('addEmail').touched"
-                                formControlName="addEmail">
-                                <div
-                                *ngIf="addUsers.get('addEmail').invalid && addUsers.get('addEmail').touched">
-                                <small
-                                    *ngIf="addUsers.get('addEmail').invalid && addUsers.get('addEmail').touched"
-                                    class="text-danger"> *Email is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input  #pass   class="form-control" type="password" formControlName="password">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Confirm Password</label>
-                                
-                                <input #confpass class="form-control  " type="password"  formControlName="confirmPassword" (keyup)="checkpassword(pass.value, confpass.value)"  >
-                               <div [hidden]="check">
-                                   
-                                   <small class=" text-danger">* Password Not Matched....</small>
 
-                               </div>
-                                                           
-                            
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Phone </label>
-                                <input class="form-control" type="text"   formControlName="phone" > 
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Role</label>
-                                <select class="form-select form-control" [class.invalid]="addUsers.get('addRole').invalid && addUsers.get('addRole').touched"
-                                formControlName="addRole">
-                                    <option>Admin</option>
-                                    <option>Client</option>
-                                    <option>Employee</option>
-                                </select>
-                                <div
-                                *ngIf="addUsers.get('addRole').invalid && addUsers.get('addRole').touched">
-                                <small
-                                    *ngIf="addUsers.get('addRole').invalid && addUsers.get('addRole').touched"
-                                    class="text-danger"> *Role is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Company</label>
-                                <select class="form-select form-control" [class.invalid]="addUsers.get('addCompany').invalid && addUsers.get('addCompany').touched"
-                                formControlName="addCompany">
-                                    <option>Global Technologies</option>
-                                    <option>Delta Infotech</option>
-                                </select>
-                                <div
-                                *ngIf="addUsers.get('addCompany').invalid && addUsers.get('addCompany').touched">
-                                <small
-                                    *ngIf="addUsers.get('addCompany').invalid && addUsers.get('addCompany').touched"
-                                    class="text-danger"> *Company is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Employee ID <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control floating">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive m-t-15">
-                        <table class="table table-striped custom-table">
-                            <thead>
-                                <tr>
-                                    <th>Module Permission</th>
-                                    <th class="text-center">Read</th>
-                                    <th class="text-center">Write</th>
-                                    <th class="text-center">Create</th>
-                                    <th class="text-center">Delete</th>
-                                    <th class="text-center">Import</th>
-                                    <th class="text-center">Export</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Employee</td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkEmployee($event,0)"   >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkEmployee($event,1)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkEmployee($event,2)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkEmployee($event,3)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkEmployee($event,4)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkEmployee($event,5)"  >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Holidays</td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkHolidays($event,0)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkHolidays($event,1)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkHolidays($event,2)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkHolidays($event,3)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkHolidays($event,4)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" (click)="checkHolidays($event,5)"  >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Leaves</td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkLeaves($event,0)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkLeaves($event,1)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkLeaves($event,2)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkLeaves($event,3)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkLeaves($event,4)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkLeaves($event,5)"  >
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Events</td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkEvents($event,0)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkEvents($event,1)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkEvents($event,2)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkEvents($event,3)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkEvents($event,4)"  >
-                                    </td>
-                                    <td class="text-center">
-                                        <input   type="checkbox" (click)="checkEvents($event,5)"  >
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="submit-section">
-                        <button class="btn btn-primary submit-btn">Submit</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- /Add User Modal -->
 
-<!-- Edit User Modal -->
-<div id="edit_user" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit User</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form (ngSubmit)="editUsersSubmit()" [formGroup]="editUsers">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>First Name <span class="text-danger">*</span></label>
-                                <input class="form-control" formControlName="firstName" type="text">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input class="form-control" formControlName="lastName" type="text">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Username <span class="text-danger">*</span></label>
-                                <input class="form-control" type="text" [class.invalid]="editUsers.get('editUsersName').invalid && editUsers.get('editUsersName').touched"
-                                formControlName="editUsersName">
 
-                                 <div
-                                    *ngIf="editUsers.get('editUsersName').invalid && editUsers.get('editUsersName').touched">
-                                    <small
-                                        *ngIf="editUsers.get('editUsersName').invalid && editUsers.get('editUsersName').touched"
-                                        class="text-danger"> *User name is required</small>
+
+    <!-- Edit User Modal -->
+    <div id="edit_user" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit User</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form (ngSubmit)="editUsersSubmit()" [formGroup]="editUsers">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>First Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" formControlName="firstName" type="text" maxlength="20">
+                                    <ng-container
+                                        *ngIf="editUsers.get('firstName').invalid && editUsers.get('firstName').touched">
+                                        <p *ngIf="editUsers.get('firstName').errors.required" class="text-danger">
+                                            *Firstname is required</p>
+                                        <p *ngIf="editUsers.get('firstName').errors.pattern" class="text-danger">
+                                            First Name is Invalid
+                                        </p>
+                                    </ng-container>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input class="form-control" formControlName="lastName" type="text" maxlength="20">
+                                    <ng-container
+                                        *ngIf="editUsers.get('lastName').invalid && editUsers.get('lastName').touched">
+                                        <p *ngIf="editUsers.get('lastName').errors.required" class="text-danger">
+                                            *Last Name is required</p>
+                                        <p *ngIf="editUsers.get('lastName').errors.pattern" class="text-danger">
+                                            *Last Name is Invalid
+                                        </p>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Username <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="editUsersName">
+                                    <ng-container
+                                        *ngIf="editUsers.get('editUsersName').invalid && editUsers.get('editUsersName').touched">
+                                        <p *ngIf="editUsers.get('editUsersName').errors.required" class="text-danger">
+                                            *User Name is required</p>
+                                        <p *ngIf="editUsers.get('editUsersName').errors.pattern" class="text-danger">
+                                            User Name is must be Valid Name
+                                        </p>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Email <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="text" formControlName="editEmail">
+
+                                    <ng-container
+                                        *ngIf="editUsers.get('editEmail').invalid && editUsers.get('editEmail').touched">
+                                        <p *ngIf="editUsers.get('editEmail').errors.required" class="text-danger">
+                                            Email is Required
+                                        </p>
+                                        <p *ngIf="editUsers.get('editEmail').errors.email || editUsers.get('editEmail').whitespace"
+                                            class="text-danger"> *Invalid Email Address</p>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    <input class="form-control" type="password" formControlName="password">
+                                    <ng-container
+                                        *ngIf="editUsers.get('password').invalid && editUsers.get('password').touched">
+                                        <p *ngIf="editUsers.get('password').errors.required" class="text-danger">
+                                            *Password is required</p>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Confirm Password</label>
+                                    <input class="form-control" type="password" formControlName="confirmPassword">
+                                    <ng-container
+                                        *ngIf="editUsers.get('password').value != editUsers.get('confirmPassword').value">
+                                        <p class="text-danger">
+                                            * Password and Confirm Password not Match</p>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Phone </label>
+                                    <input class="form-control" type="text" formControlName="phone" maxlength="10"
+                                        minlength="10">
+                                    <ng-container
+                                        *ngIf="editUsers.get('phone').invalid && editUsers.get('phone').touched">
+                                        <p *ngIf="editUsers.get('phone').errors.required" class="text-danger">
+                                            Phone Number is Required
+                                        </p>
+                                        <p *ngIf="editUsers.get('phone').errors.pattern" class="text-danger">
+                                            *Invalid Phone Number</p>
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    <select class="form-select form-control"
+                                        [class.invalid]="editUsers.get('editRole').invalid && editUsers.get('editRole').touched"
+                                        formControlName="editRole">
+                                        <option>Admin</option>
+                                        <option>Client</option>
+                                        <option selected>Employee</option>
+                                    </select>
+                                    <div *ngIf="editUsers.get('editRole').invalid && editUsers.get('editRole').touched">
+                                        <small
+                                            *ngIf="editUsers.get('editRole').invalid && editUsers.get('editRole').touched"
+                                            class="text-danger"> *Role is required</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Company</label>
+                                    <select class="form-select form-control"
+                                        [class.invalid]="editUsers.get('editCompany').invalid && editUsers.get('editCompany').touched"
+                                        formControlName="editCompany">
+                                        <option>Global Technologies</option>
+                                        <option>Delta Infotech</option>
+                                    </select>
+                                    <div
+                                        *ngIf="editUsers.get('editCompany').invalid && editUsers.get('editCompany').touched">
+                                        <small
+                                            *ngIf="editUsers.get('editCompany').invalid && editUsers.get('editCompany').touched"
+                                            class="text-danger"> *Company is required</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Employee ID <span class="text-danger">*</span></label>
+                                    <input type="text" value="FT-0001" class="form-control floating">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Email <span class="text-danger">*</span></label>
-                                <input class="form-control" type="email" [class.invalid]="editUsers.get('editEmail').invalid && editUsers.get('editEmail').touched"
-                                formControlName="editEmail">
-
-                                <div
-                                *ngIf="editUsers.get('editEmail').invalid && editUsers.get('editEmail').touched">
-                                <small
-                                    *ngIf="editUsers.get('editEmail').invalid && editUsers.get('editEmail').touched"
-                                    class="text-danger"> *Email is required</small>
-                            </div>
-                            </div>
+                        <div class="table-responsive m-t-15">
+                            <table class="table table-striped custom-table">
+                                <thead>
+                                    <tr>
+                                        <th>Module Permission</th>
+                                        <th class="text-center">Read</th>
+                                        <th class="text-center">Write</th>
+                                        <th class="text-center">Create</th>
+                                        <th class="text-center">Delete</th>
+                                        <th class="text-center">Import</th>
+                                        <th class="text-center">Export</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Employee</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Employee[0].read"
+                                                (click)="checkEmployee($event,0)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Employee[1].write"
+                                                (click)="checkEmployee($event,1)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Employee[2].create"
+                                                (click)="checkEmployee($event,2)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Employee[3].delete"
+                                                (click)="checkEmployee($event,3)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Employee[4].import"
+                                                (click)="checkEmployee($event,4)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Employee[5].export"
+                                                (click)="checkEmployee($event,5)">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Holidays</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Holidays[0].read"
+                                                (click)="checkHolidays($event,0)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Holidays[1].write"
+                                                (click)="checkHolidays($event,1)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Holidays[2].create"
+                                                (click)="checkHolidays($event,2)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Holidays[3].delete"
+                                                (click)="checkHolidays($event,3)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Holidays[4].import"
+                                                (click)="checkHolidays($event,4)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Holidays[5].export"
+                                                (click)="checkHolidays($event,5)">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Leaves</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Leaves[0].read"
+                                                (click)="checkLeaves($event,0)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Leaves[1].write"
+                                                (click)="checkLeaves($event,1)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Leaves[2].create"
+                                                (click)="checkLeaves($event,2)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Leaves[3].delete"
+                                                (click)="checkLeaves($event,3)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Leaves[4].import"
+                                                (click)="checkLeaves($event,4)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Leaves[5].export"
+                                                (click)="checkLeaves($event,5)">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Events</td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Events[0].read"
+                                                (click)="checkEvents($event,0)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Events[1].write"
+                                                (click)="checkEvents($event,1)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Events[2].create"
+                                                (click)="checkEvents($event,2)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Events[3].delete"
+                                                (click)="checkEvents($event,3)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Events[4].import"
+                                                (click)="checkEvents($event,4)">
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="checkbox" [checked]="Events[5].export"
+                                                (click)="checkEvents($event,5)">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input class="form-control" type="password" formControlName="password">
-                            </div>
+                        <div class="submit-section">
+                            <button class="btn btn-primary submit-btn">Save</button>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Confirm Password</label>
-                                <input class="form-control" type="password" formControlName="confirmPassword">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Phone </label>
-                                <input class="form-control" value="9876543210" type="text" formControlName="phone">
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Role</label>
-                                <select class="form-select form-control" [class.invalid]="editUsers.get('editRole').invalid && editUsers.get('editRole').touched"
-                                formControlName="editRole">
-                                    <option>Admin</option>
-                                    <option>Client</option>
-                                    <option selected>Employee</option>
-                                </select>
-                                <div
-                                *ngIf="editUsers.get('editRole').invalid && editUsers.get('editRole').touched">
-                                <small
-                                    *ngIf="editUsers.get('editRole').invalid && editUsers.get('editRole').touched"
-                                    class="text-danger"> *Role is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Company</label>
-                                <select class="form-select form-control"  [class.invalid]="editUsers.get('editCompany').invalid && editUsers.get('editCompany').touched"
-                                formControlName="editCompany">
-                                    <option>Global Technologies</option>
-                                    <option>Delta Infotech</option>
-                                </select>
-                                <div
-                                *ngIf="editUsers.get('editCompany').invalid && editUsers.get('editCompany').touched">
-                                <small
-                                    *ngIf="editUsers.get('editCompany').invalid && editUsers.get('editCompany').touched"
-                                    class="text-danger"> *Company is required</small>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Employee ID <span class="text-danger">*</span></label>
-                                <input type="text" value="FT-0001" class="form-control floating">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive m-t-15">
-                        <table class="table table-striped custom-table">
-                            <thead>
-                                <tr>
-                                    <th>Module Permission</th>
-                                    <th class="text-center">Read</th>
-                                    <th class="text-center">Write</th>
-                                    <th class="text-center">Create</th>
-                                    <th class="text-center">Delete</th>
-                                    <th class="text-center">Import</th>
-                                    <th class="text-center">Export</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Employee</td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Employee[0].read"  (click)="checkEmployee($event,0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Employee[1].write"  (click)="checkEmployee($event,1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Employee[2].create" (click)="checkEmployee($event,2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Employee[3].delete" (click)="checkEmployee($event,3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Employee[4].import" (click)="checkEmployee($event,4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Employee[5].export" (click)="checkEmployee($event,5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Holidays</td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" [checked]="Holidays[0].read" (click)="checkHolidays($event,0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" [checked]="Holidays[1].write" (click)="checkHolidays($event,1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" [checked]="Holidays[2].create" (click)="checkHolidays($event,2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" [checked]="Holidays[3].delete" (click)="checkHolidays($event,3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Holidays[4].import" (click)="checkHolidays($event,4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" [checked]="Holidays[5].export" (click)="checkHolidays($event,5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Leaves</td>
-                                    <td class="text-center">
-                                        <input  type="checkbox" [checked]="Leaves[0].read" (click)="checkLeaves($event,0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Leaves[1].write"  (click)="checkLeaves($event,1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Leaves[2].create" (click)="checkLeaves($event,2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Leaves[3].delete" (click)="checkLeaves($event,3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Leaves[4].import" (click)="checkLeaves($event,4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Leaves[5].export" (click)="checkLeaves($event,5)">
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Events</td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Events[0].read" (click)="checkEvents($event,0)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Events[1].write"  (click)="checkEvents($event,1)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Events[2].create" (click)="checkEvents($event,2)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Events[3].delete" (click)="checkEvents($event,3)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Events[4].import" (click)="checkEvents($event,4)">
-                                    </td>
-                                    <td class="text-center">
-                                        <input  type="checkbox"  [checked]="Events[5].export" (click)="checkEvents($event,5)">
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="submit-section">
-                        <button class="btn btn-primary submit-btn">Save</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- /Edit User Modal -->
+    <!-- /Edit User Modal -->
 
-<!-- Delete User Modal -->
-<div class="modal custom-modal fade" id="delete_user" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="form-header">
-                    <h3>Delete User</h3>
-                    <p>Are you sure want to delete?</p>
-                </div>
-                <div class="modal-btn delete-action">
-                    <div class="row">
-                        <div class="col-6">
-                            <a  class="btn btn-primary continue-btn" (click)="deleteUsers()">Delete</a>
-                        </div>
-                        <div class="col-6">
-                            <a  data-bs-dismiss="modal"
-                                class="btn btn-primary cancel-btn">Cancel</a>
+    <!-- Delete User Modal -->
+    <div class="modal custom-modal fade" id="delete_user" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Delete User</h3>
+                        <p>Are you sure want to delete?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <div class="row">
+                            <div class="col-6">
+                                <a class="btn btn-primary continue-btn" (click)="deleteUsers()">Delete</a>
+                            </div>
+                            <div class="col-6">
+                                <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- /Delete User Modal -->
+    <!-- /Delete User Modal -->
 </div>

@@ -20,7 +20,7 @@
                             <label>Company Name <span class="text-danger">*</span></label>
                             <input class="form-control" type="text" value="Dreamguy's Technologies"
                                 [class.invalid]="companySettings.get('companyName').invalid && companySettings.get('companyName').touched"
-                                formControlName="companyName"[(ngModel)]="companyName">
+                                formControlName="companyName" [(ngModel)]="companyName">
                             <div
                                 *ngIf="companySettings.get('companyName').invalid && companySettings.get('companyName').touched">
                                 <small
@@ -33,14 +33,15 @@
                         <div class="form-group">
                             <label>Contact Person</label>
                             <input class="form-control " value="Daniel Porter" type="text"
-                                [class.invalid]="companySettings.get('contactPerson').invalid && companySettings.get('contactPerson').touched"
-                                formControlName="contactPerson" [(ngModel)]="mobile">
-                            <div
+                                formControlName="contactPerson" [(ngModel)]="mobile" maxlength="10" minlength="10">
+                            <ng-container
                                 *ngIf="companySettings.get('contactPerson').invalid && companySettings.get('contactPerson').touched">
-                                <small
-                                    *ngIf="companySettings.get('contactPerson').invalid && companySettings.get('contactPerson').touched"
-                                    class="text-danger"> *Contact person is required</small>
-                            </div>
+                                <p *ngIf="companySettings.get('contactPerson').errors.required" class="text-danger">
+                                    Phone Number is Required
+                                </p>
+                                <p *ngIf="companySettings.get('contactPerson').errors.pattern" class="text-danger">
+                                    *Invalid Phone Number</p>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
@@ -66,7 +67,7 @@
                             <input class="form-control"
                                 [class.invalid]="companySettings.get('country').invalid && companySettings.get('country').touched"
                                 formControlName="country" [(ngModel)]="current_location.country_name">
-                                <!-- <option value="USA">USA</option>
+                            <!-- <option value="USA">USA</option>
                                 <option value="United Kingdom">United Kingdom</option>
                             </select> -->
                             <div
@@ -96,7 +97,7 @@
                             <input class="form-control"
                                 [class.invalid]="companySettings.get('state').invalid && companySettings.get('state').touched"
                                 formControlName="state" [(ngModel)]="current_location.region">
-                                <!-- <option value="California">California</option>
+                            <!-- <option value="California">California</option>
                                 <option value="Alaska">Alaska</option>
                                 <option value="Alabama">Alabama</option>
                             </select> -->
@@ -126,14 +127,16 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Email</label>
-                            <input class="form-control" value="danielporter@example.com" type="email"
-                                [class.invalid]="companySettings.get('email').invalid && companySettings.get('email').touched"
+                            <input class="form-control" value="danielporter@example.com" type="text"
                                 formControlName="email" [(ngModel)]="companyEmail">
-                            <div *ngIf="companySettings.get('email').invalid && companySettings.get('email').touched">
-                                <small
-                                    *ngIf="companySettings.get('email').invalid && companySettings.get('email').touched"
-                                    class="text-danger"> *Email is required</small>
-                            </div>
+                            <ng-container
+                                *ngIf="companySettings.get('email').invalid && companySettings.get('email').touched">
+                                <p *ngIf="companySettings.get('email').errors.required" class="text-danger">
+                                    Email is Required
+                                </p>
+                                <p *ngIf="companySettings.get('email').errors.email || companySettings.get('email').whitespace"
+                                    class="text-danger"> *Invalid Email Address</p>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -155,24 +158,23 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Mobile Number</label>
-                            <input class="form-control" value="818-635-5579" type="text"
-                                [class.invalid]="companySettings.get('mobileNumber').invalid && companySettings.get('mobileNumber').touched"
-                                formControlName="mobileNumber" [(ngModel)]="mobile">
-                            <div
+                            <input class="form-control" value="818-635-5579" type="text" formControlName="mobileNumber"
+                                [(ngModel)]="mobile" maxlength="10" minlength="10">
+                            <ng-container
                                 *ngIf="companySettings.get('mobileNumber').invalid && companySettings.get('mobileNumber').touched">
-                                <small
-                                    *ngIf="companySettings.get('mobileNumber').invalid && companySettings.get('mobileNumber').touched"
-                                    class="text-danger"> *Mobile number is required</small>
-                            </div>
+                                <p *ngIf="companySettings.get('mobileNumber').errors.required" class="text-danger">
+                                    Mobile Number is Required
+                                </p>
+                                <p *ngIf="companySettings.get('mobileNumber').errors.pattern" class="text-danger">
+                                    *Invalid Mobile Number</p>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Fax</label>
-                            <input class="form-control"  [(ngModel)]="fax" type="text"
-                                
-                                formControlName="fax">
-                          
+                            <input class="form-control" [(ngModel)]="fax" type="text" formControlName="fax">
+
                         </div>
                     </div>
                 </div>

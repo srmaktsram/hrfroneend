@@ -6,15 +6,18 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import { id } from "src/assets/all-modules-data/id";
+import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
+import { Router } from "@angular/router";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
 declare const $: any;
 @Component({
-  selector: "app-premium-clients-list",
-  templateUrl: "./premium-clients-list.component.html",
-  styleUrls: ["./premium-clients-list.component.css"],
+  selector: "app-blocked-clients-list",
+  templateUrl: "./blocked-clients-list.component.html",
+  styleUrls: ["./blocked-clients-list.component.css"],
 })
-export class PremiumClientsListComponent implements OnInit, OnDestroy {
+export class BlockedClientsListComponent implements OnInit, OnDestroy {
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -46,57 +49,50 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
   public employeeId: any;
   searchCompany: any;
   constructor(
+    private hrUserAuthenticationService: HrUserAuthenticationService,
     private toastr: ToastrService,
-    private hrUserAuthenticationService:HrUserAuthenticationService,
     private http: HttpClient,
+    private router: Router,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
-
-    
   }
 
   ngOnInit() {
-    this.getPremiumAdmins();
+    this.getBlockedClients();
 
     this.dtOptions = {
+      // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
 
-   
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
       firstName: ["", [Validators.required]],
       lastName: ["", [Validators.required]],
       editClientEmail: ["", [Validators.required]],
       editClientPhone: ["", [Validators.required]],
-
     });
   }
 
-
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.dtTrigger.next();
-    }, 1000);
+    // setTimeout(() => {
+    //   this.dtTrigger.next();
+    // }, 1000);
   }
 
-  public getPremiumAdmins() {
+  //Get all Clients data
+  public getBlockedClients() {
     this.http
-      .get(
-        "http://localhost:8443/mainadmin/premiumClient/getPremiumClients"
-      )
+      .get("http://localhost:8443/mainadmin/clients/getBlockedClients")
       .subscribe((res: any) => {
-
         this.data = res;
+
+        console.log(res, "Blocked Clients");
         this.srch = [...this.data];
-
-
-      
       });
   }
-  
   adminlogin(id) {
     alert(id);
     this.http
@@ -104,25 +100,27 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
-
-          // window.location.replace("http://localhost:4200")
-          window.open("http://localhost:4200","_blank");
-          this.hrUserAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone,
-          );
+            // window.location.replace("http://localhost:4200")
+            window.open("http://localhost:4200", "_blank");
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone
+            );
+          }
+          else {
+            alert("Account Blocked By Main Admin");
+          }
         }
-        else {
-          alert("Account Blocked By Main Admin");
-        }} else {
+         else {
           alert("wrong Id");
         }
       });
-    }
+  }
+
   // Edit client
   public onEditClient(clientId: any) {
     this.editId = clientId;
@@ -132,8 +130,6 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       lastName: client[0]?.lastName,
       editClientEmail: client[0]?.email,
       editClientPhone: client[0]?.phone,
-
-
     });
   }
   //Reset form
@@ -148,13 +144,18 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       lastName: this.editClientForm.value.lastName,
       email: this.editClientForm.value.editClientEmail,
       phone: this.editClientForm.value.editClientPhone,
-
     };
     let id = this.editId;
     this.http
-      .patch("http://localhost:8443/mainadmin/premiumClient/updatePremiumClient" + "/" + id, obj)
+      .patch(
+        "http://localhost:8443/mainadmin/freeClient/updateFreeClient" +
+          "/" +
+          id,
+        obj
+      )
       .subscribe((data) => {
-        this.getPremiumAdmins();
+        console.log(data, "Edited Details for free Client");
+        this.getBlockedClients();
       });
 
     $("#edit_client").modal("hide");
@@ -162,34 +163,34 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
     this.toastr.success("Client updated sucessfully...!", "Success");
   }
 
+  //////////////
   getStatus(data, id) {
     const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/premiumClient/updatepremiumClientStatus" + "/" + id,
-        { status }
-      )
-      .subscribe((res) => {
-        this.getPremiumAdmins();
-
-       
-      });
-  } 
-  getBlock(data, id) {
-    const status = data;
-    this.http
-      .patch(
-        "http://localhost:8443/mainadmin/client/blockClientStatus" +
+        "http://localhost:8443/mainadmin/freeClient/updateFreeClientStatus" +
           "/" +
           id,
         { status }
       )
       .subscribe((res) => {
-        this.getPremiumAdmins();
-
-       
+        this.getBlockedClients();
       });
-  } 
+  }
+
+  //search by name
+  // searchID(val) {
+  //   if (val) {
+  //     this.data.splice(0, this.data.length);
+  //     let temp = this.srch.filter(function (d) {
+  //       val = val.toLowerCase();
+  //       return d.clientId.toLowerCase().indexOf(val) !== -1 || !val;
+  //     });
+  //     this.data.push(...temp);
+  //   } else {
+  //     // this.getClients();
+  //   }
+  // }
 
   //search by name
   searchByName(val) {
@@ -206,10 +207,11 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
           !val ||
           d.phone.toLowerCase().indexOf(val) !== -1 ||
           !val
-        );})
+        );
+      });
       this.data.push(...temp);
     } else {
-      this.getPremiumAdmins();
+      this.getBlockedClients();
     }
   }
 
@@ -219,14 +221,11 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return (
-          d.corporateId.toLowerCase().indexOf(val) !== -1 ||
-          !val
-         );})
+        return d.corporateId.toLowerCase().indexOf(val) !== -1 || !val;
+      });
       this.data.push(...temp);
     } else {
-      this.getPremiumAdmins();
-
+      this.getBlockedClients();
     }
   }
   onSearch(name, company) {
@@ -250,9 +249,6 @@ export class PremiumClientsListComponent implements OnInit, OnDestroy {
       this.clientsData = [];
     }
   }
- 
-
-  
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();

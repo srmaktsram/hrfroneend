@@ -6,6 +6,7 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 declare const $: any;
 @Component({
@@ -46,21 +47,21 @@ export class TrainersComponent implements OnInit, OnDestroy {
     };
 
     this.addTrainerForm = this.formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
+      firstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      lastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       RoleName: ["", [Validators.required]],
-      Email: ["", [Validators.required]],
-      phoneNumber: ["", [Validators.required]],
+      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      phoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       Description: ["", [Validators.required]],
       StatusName: ["", [Validators.required]],
     });
 
     this.editTrainerForm = this.formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
+      firstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      lastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       RoleName: ["", [Validators.required]],
-      Email: ["", [Validators.required]],
-      phoneNumber: ["", [Validators.required]],
+      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      phoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       Description: ["", [Validators.required]],
       StatusName: ["", [Validators.required]],
     });
@@ -69,9 +70,7 @@ export class TrainersComponent implements OnInit, OnDestroy {
   // Get  trainer Api Call
   loadtrainer() {
     this.http.get("http://localhost:8443/admin/training/trainers/getData" + "/" + this.adminId).subscribe((data: any) => {
-      //console.log("getApi", data)
       this.lstTrainer = data;
-      // this.dtTrigger.next();
       this.rows = this.lstTrainer;
       this.srch = [...this.rows];
     });

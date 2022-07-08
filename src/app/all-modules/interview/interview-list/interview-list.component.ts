@@ -71,7 +71,7 @@ export class InterviewListComponent implements OnInit, OnDestroy {
       addCode: ["", [Validators.required]],
       addAnswerExplanation: ["", [Validators.required]],
       addVideoLink: ["", [Validators.required]],
-      addImageToQuestion: [""],
+      addImageToQuestion: ["", Validators.required],
     });
     this.editInterviewForm = this.formBuilder.group({
       AddQuestion: ["", [Validators.required]],
@@ -85,9 +85,8 @@ export class InterviewListComponent implements OnInit, OnDestroy {
       editCode: ["", [Validators.required]],
       editAnswerExplanation: ["", [Validators.required]],
       editVideoLink: ["", [Validators.required]],
-      editImageToQuestion: [""],
+      editImageToQuestion: ["", Validators.required],
     });
-
     //////////////////////////add category form
     this.addCategoryForm = this.formBuilder.group({
       AddCat: ["", [Validators.required]],
@@ -103,14 +102,14 @@ export class InterviewListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/interviewQuestions/getInterviewQuestions" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data) => {
         this.lstInterview = data;
-        // this.dtTrigger.next();
         this.rows = this.lstInterview;
         this.srch = [...this.rows];
+        console.log(this.lstInterview, "jkhjgjhg''''''''''''''''''")
       });
   }
 
@@ -170,8 +169,8 @@ export class InterviewListComponent implements OnInit, OnDestroy {
       this.http
         .patch(
           "http://localhost:8443/admin/interviewQuestions/updateInterviewQuestions" +
-            "/" +
-            id,
+          "/" +
+          id,
           obj
         )
         .subscribe((data1) => {
@@ -201,7 +200,7 @@ export class InterviewListComponent implements OnInit, OnDestroy {
       editCode: toSetValues.codeSnippets,
       editAnswerExplanation: toSetValues.answerExplanation,
       editVideoLink: toSetValues.answerExplanation,
-      // editImageToQuestion: toSetValues.addImageToQuestion,
+      editImageToQuestion: toSetValues.addImageToQuestion,
     });
   }
 
@@ -214,8 +213,8 @@ export class InterviewListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/admin/interviewQuestions/deleteInterviewQuestions" +
-          "/" +
-          id,
+        "/" +
+        id,
         obj
       )
       .subscribe((data) => {
@@ -228,8 +227,8 @@ export class InterviewListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/interviewQuestionCategory/getInterviewQuestionCategory" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data) => {
         this.catData = data;
@@ -266,8 +265,8 @@ export class InterviewListComponent implements OnInit, OnDestroy {
       this.http
         .patch(
           "http://localhost:8443/admin/interviewQuestionCategory/updateInterviewQuestionCategory" +
-            "/" +
-            id,
+          "/" +
+          id,
           obj
         )
         .subscribe((data1) => {
@@ -297,8 +296,8 @@ export class InterviewListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/admin/interviewQuestionCategory/deleteInterviewQuestionCategory" +
-          "/" +
-          id,
+        "/" +
+        id,
         obj
       )
       .subscribe((data) => {

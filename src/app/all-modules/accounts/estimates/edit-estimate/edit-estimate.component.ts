@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 @Component({
   selector: "app-edit-estimate",
@@ -13,7 +14,7 @@ import { HttpClient } from "@angular/common/http";
 })
 export class EditEstimateComponent implements OnInit {
   public id;
-  public allEstimates=[];
+  public allEstimates = [];
   public editEstimateForm: FormGroup;
   public total;
   public pipe = new DatePipe("en-US");
@@ -29,28 +30,24 @@ export class EditEstimateComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http:HttpClient,
+    private http: HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
-    //getting edit id of selected estimate list
-    // this.id = this.route.snapshot.queryParams["id"];
-    // console.log("ngOnInit pe Id",this.id)
 
-    //editestimate form value
     this.editEstimateForm = this.formBuilder.group({
       client: ["", [Validators.required]],
-      project: [""],
-      email: [""],
-      tax: [""],
-      client_address: [""],
-      billing_address: [""],
-      estimate_date: [""],
-      expiry_date: [""],
-      other_information: [""],
+      project: ["", Validators.required],
+      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      tax: ["", Validators.required],
+      client_address: ["", Validators.required],
+      billing_address: ["", Validators.required],
+      estimate_date: ["", Validators.required],
+      expiry_date: ["", Validators.required],
+      other_information: ["", Validators.required],
       status: [],
       totalamount: "",
       discount: [""],
@@ -66,11 +63,11 @@ export class EditEstimateComponent implements OnInit {
 
   // get method for estimate
   getEstimate() {
-    let id=this.id
-    console.log("this is get method ",id)
-    this.http.get("http://localhost:8443/admin/estimates/getEstimate"+"/"+this.id).subscribe((res:any) => {
+    let id = this.id
+    console.log("this is get method ", id)
+    this.http.get("http://localhost:8443/admin/estimates/getEstimate" + "/" + this.id).subscribe((res: any) => {
       this.allEstimates = (res);
-  
+
       //passing edit id
 
       this.edit(id);
@@ -176,7 +173,7 @@ export class EditEstimateComponent implements OnInit {
         ],
       };
 
-      this.http.patch("http://localhost:8443/admin/estimates/updateEstimates"+"/"+this.id,obj).subscribe((res) => {
+      this.http.patch("http://localhost:8443/admin/estimates/updateEstimates" + "/" + this.id, obj).subscribe((res) => {
         this.toastr.success("", "Edited successfully!");
         this.router.navigate(["/accounts/estimates"]);
       });
@@ -196,7 +193,7 @@ export class EditEstimateComponent implements OnInit {
     //   return item.id === value;
     // });
     // console.log("edit function ke andarr",index)
-    let toSetValues:any = this.allEstimates;
+    let toSetValues: any = this.allEstimates;
     // console.log("to setValue in edit function",toSetValues)
     this.editEstimateForm.patchValue({
       client: toSetValues.client,
@@ -212,7 +209,7 @@ export class EditEstimateComponent implements OnInit {
       totalamount: toSetValues.amount,
       discount: toSetValues.discount,
       grandTotal: toSetValues.grandTotal,
-      items:toSetValues.items
+      items: toSetValues.items
       // [
       //   {
       //     item: toSetValues.items[0].item,

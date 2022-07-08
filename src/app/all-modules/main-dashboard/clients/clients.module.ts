@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { VisitorClientsListComponent } from "./visitor-clients-list/visitor-clients-list.component";
 import { DemoClientsListComponent } from "./free-clients-list/free-clients-list.component";
 import { PremiumClientsListComponent } from "./premium-clients-list/premium-clients-list.component";
+import { BlockedClientsListComponent } from "./blocked-clients-list/blocked-clients-list.component";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PremiumClientsListComponent } from "./premium-clients-list/premium-clie
     VisitorClientsListComponent,
     DemoClientsListComponent,
     PremiumClientsListComponent,
+    BlockedClientsListComponent
   ],
   imports: [
     CommonModule,

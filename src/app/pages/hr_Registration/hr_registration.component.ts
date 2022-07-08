@@ -132,7 +132,9 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
+
     };
+
 
     this.http
       .post("http://localhost:8443/mainadmin/create/registration", obj)
@@ -159,7 +161,11 @@ export class HrregistrationComponent implements OnInit {
       })
       .subscribe((res: any) => {
         if (res.result == 2) {
-          window.location.replace("https://srmak.org");
+
+          if (res.data.status !== "Blocked") {
+
+          window.location.replace("http://localhost:4200")
+
 
           this.hrUserAuthenticationService.login(
             res.data.id,
@@ -169,7 +175,14 @@ export class HrregistrationComponent implements OnInit {
             res.data.lastName,
             res.data.phone
           );
-        } else {
+
+
+        }
+        else {
+          alert("Account Blocked By Main Admin");
+        }
+      } else {
+
           alert("wrong Id or pass");
         }
       });

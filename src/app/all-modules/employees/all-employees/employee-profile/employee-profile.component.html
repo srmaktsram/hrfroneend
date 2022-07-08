@@ -25,6 +25,9 @@
                                 <a><img alt="" src="assets/img/profiles/avatar-2.jpg"></a>
                             </div>
                         </div>
+                     
+                       
+                 
                         <div class="profile-basic">
                             <div class="row">
                                 <div class="col-md-5">
@@ -780,9 +783,8 @@
                                     [class.invalid]="editProfileForm.get('department').invalid && editProfileForm.get('department').touched"
                                     formControlName="department">
                                     <option>Select Department</option>
-                                    <option>Web Development</option>
-                                    <option>IT Management</option>
-                                    <option>Marketing</option>
+                                    <option *ngFor="let department of departments">{{department.departmentName}}
+                                    </option>
                                 </select>
                             </div>
 
@@ -795,13 +797,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Designation <span class="text-danger">*</span></label>
-                                <select class="form-select form-control"
+                                <select class="form-select form-control" 
                                     [class.invalid]="editProfileForm.get('designation').invalid && editProfileForm.get('designation').touched"
                                     formControlName="designation">
                                     <option>Select Designation</option>
-                                    <option>Web Designer</option>
-                                    <option>Web Developer</option>
-                                    <option>Android Developer</option>
+
+                                    <option *ngFor="let designation of designations">{{designation.designation}}
+                                    </option>
                                 </select>
                             </div>
 
@@ -811,30 +813,31 @@
                                     class="text-danger">* Designation is required </small>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Reports To <span class="text-danger">*</span></label>
-                                <select class="form-select form-control"
-                                    [class.invalid]="editProfileForm.get('reportsTo').invalid && editProfileForm.get('reportsTo').touched"
-                                    formControlName="reportsTo">
-                                    <option>-</option>
-                                    <option>Wilmer Deluna</option>
-                                    <option>Lesley Grauer</option>
-                                    <option>Jeffery Lalor</option>
-                                </select>
-                            </div>
 
-                            <div>
-                                <small
-                                    *ngIf="editProfileForm.get('reportsTo').invalid && editProfileForm.get('reportsTo').touched"
-                                    class="text-danger">* Report To is required </small>
-                            </div>
+                        <div   class="col-md-6" >
+                            <mat-form-field>
+                              <mat-label>Number</mat-label>
+                              <input type="text"
+                                     placeholder="Pick one"
+                                     aria-label="Number"
+                                     matInput
+                                     [formControl]="myControl"
+                                     [matAutocomplete]="auto">
+                              <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                                  {{option}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
                         </div>
+                      
                     </div>
-                    <div class="submit-section">
+                    <!-- <div class="submit-section">
                         <button class="btn btn-primary submit-btn">Submit</button>
-                    </div>
+                    </div> -->
                 </form>
+
+                       
             </div>
         </div>
     </div>
@@ -1594,3 +1597,21 @@
     </div>
 </div>
 <!-- /Experience Modal -->
+
+
+<div class="example-form">
+    <mat-form-field class="example-full-width" appearance="fill">
+      <mat-label>Number</mat-label>
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="Number"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+</div>

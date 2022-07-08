@@ -7,6 +7,7 @@ import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 declare const $: any;
 @Component({
@@ -72,10 +73,10 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
       editClientCompany: ["", [Validators.required]],
-      editContactPerson: ["", [Validators.required]],
-      editClientEmail: ["", [Validators.required]],
-      editClientPhone: ["", [Validators.required]],
-      editCompanyEmail: ["", [Validators.required]],
+      editContactPerson: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      editCompanyEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
     });
   }
 
@@ -149,7 +150,7 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
   }
 
   //////////////
-  getStatus(data, id,aId) {
+  getStatus(data, id, aId) {
     const status = data;
     this.http
       .patch(
@@ -162,7 +163,7 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
         this.statusData = res.status;
         if (this.statusData == "Approved") {
           let obj = {
-            id,aId
+            id, aId
           };
           this.http
 

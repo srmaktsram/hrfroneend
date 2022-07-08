@@ -9,11 +9,12 @@ import {
 export class AuthGuardSubAdmin implements CanActivate {
   constructor(private _router: Router) {}
   canActivate(): boolean {
-    if (sessionStorage.getItem("currentUser") == "SubAdminLogin") {
+    if (
+      sessionStorage.getItem("currentUser") == "SubAdminLogin" ||
+      sessionStorage.getItem("currentUser") == "MainAdminLogin"
+    ) {
       return true;
-    }
-    
-    else {
+    } else {
       this._router.navigate([""]);
       return false;
     }

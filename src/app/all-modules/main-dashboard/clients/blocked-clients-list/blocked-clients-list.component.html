@@ -120,10 +120,6 @@
                   <div class="d-inline p-2 bg-primary text-white">
                     <a data-bs-toggle="modal" data-bs-target="#login_as_user" (click)="adminlogin(client.id)">
                       Login as User</a>
-                  </div>&nbsp;
-                  <div class="d-inline p-2 bg-danger text-white">
-                    <a data-bs-toggle="modal" data-bs-target="#block" (click)="getBlock('Blocked', client.id)">
-                      Block</a>
                   </div>
                 </div>
               </td>
@@ -640,7 +636,7 @@
                       editClientForm.get('firstName').invalid &&
                       editClientForm.get('firstName').touched
                     " class="text-danger">
-                    *First name is required</small>
+                    *First Name is required</small>
                 </div>
               </div>
             </div>
@@ -712,21 +708,21 @@
                   class="form-control"
                   type="text"
                   [class.invalid]="
-                    editClientForm.get('firstName').invalid &&
-                    editClientForm.get('firstName').touched
+                    editClientForm.get('editClientCompany').invalid &&
+                    editClientForm.get('editClientCompany').touched
                   "
-                  formControlName="firstName"
+                  formControlName="editClientCompany"
                 />
                 <div
                   *ngIf="
-                    editClientForm.get('firstName').invalid &&
-                    editClientForm.get('firstName').touched
+                    editClientForm.get('editClientCompany').invalid &&
+                    editClientForm.get('editClientCompany').touched
                   "
                 >
                   <small
                     *ngIf="
-                      editClientForm.get('firstName').invalid &&
-                      editClientForm.get('firstName').touched
+                      editClientForm.get('editClientCompany').invalid &&
+                      editClientForm.get('editClientCompany').touched
                     "
                     class="text-danger"
                   >

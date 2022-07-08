@@ -27,12 +27,14 @@ import { BreakTime, OverTime, ProductionPipe } from 'src/assets/pipes/employeeat
 import { MatchDate } from 'src/assets/pipes/checkDate';
 // import { NotificationService } from 'src/app/services/notification.service';
 import { HeaderComponent } from 'src/app/header/header.component';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [MatchDate, EmployeesComponent, AllEmployeesComponent, EmployeePageContentComponent, EmployeeListComponent, EmployeeProfileComponent, HolidaysComponent, LeavesAdminComponent, LeavesEmployeeComponent, LeaveSettingsComponent, AttendanceAdminComponent, AttendanceEmployeeComponent, DepartmentsComponent, DesignationComponent, TimesheetComponent, OvertimeComponent, ProductionPipe, BreakTime, OverTime],
   imports: [
     CommonModule,
     FormsModule,
+    MatAutocompleteModule,
     SharingModule,
     ReactiveFormsModule,
     PickListModule,

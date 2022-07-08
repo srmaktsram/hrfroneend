@@ -110,29 +110,29 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text"
-                                        [class.invalid]="addTrainerForm.get('firstName').invalid && addTrainerForm.get('firstName').touched"
-                                        formControlName="firstName">
-                                    <div
+                                    <input class="form-control" type="text" formControlName="firstName" maxlength="20">
+                                    <ng-container
                                         *ngIf="addTrainerForm.get('firstName').invalid && addTrainerForm.get('firstName').touched">
-                                        <small
-                                            *ngIf="addTrainerForm.get('firstName').invalid && addTrainerForm.get('firstName').touched"
-                                            class="text-danger"> *First Name is required</small>
-                                    </div>
+                                        <p *ngIf="addTrainerForm.get('firstName').errors.required" class="text-danger">
+                                            *First Name is required</p>
+                                        <p *ngIf="addTrainerForm.get('firstName').errors.pattern" class="text-danger">
+                                            First Name is Invalid
+                                        </p>
+                                    </ng-container>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Last Name</label>
-                                    <input class="form-control" type="text"
-                                        [class.invalid]="addTrainerForm.get('lastName').invalid && addTrainerForm.get('lastName').touched"
-                                        formControlName="lastName">
-                                    <div
+                                    <input class="form-control" type="text" formControlName="lastName" maxlength="20">
+                                    <ng-container
                                         *ngIf="addTrainerForm.get('lastName').invalid && addTrainerForm.get('lastName').touched">
-                                        <small
-                                            *ngIf="addTrainerForm.get('lastName').invalid && addTrainerForm.get('lastName').touched"
-                                            class="text-danger"> *Last Name is required</small>
-                                    </div>
+                                        <p *ngIf="addTrainerForm.get('lastName').errors.required" class="text-danger">
+                                            *Last Name is required</p>
+                                        <p *ngIf="addTrainerForm.get('lastName').errors.pattern" class="text-danger">
+                                            Last Name is Invalid .
+                                        </p>
+                                    </ng-container>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -152,29 +152,31 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="email"
-                                        [class.invalid]="addTrainerForm.get('Email').invalid && addTrainerForm.get('Email').touched"
-                                        formControlName="Email">
-                                    <div
+                                    <input class="form-control" type="text" formControlName="Email">
+                                    <ng-container
                                         *ngIf="addTrainerForm.get('Email').invalid && addTrainerForm.get('Email').touched">
-                                        <small
-                                            *ngIf="addTrainerForm.get('Email').invalid && addTrainerForm.get('Email').touched"
-                                            class="text-danger"> *Email is required</small>
-                                    </div>
+                                        <p *ngIf="addTrainerForm.get('Email').errors.required" class="text-danger">
+                                            Email is Required
+                                        </p>
+                                        <p *ngIf="addTrainerForm.get('Email').errors.email || addTrainerForm.get('Email').whitespace"
+                                            class="text-danger"> *Invalid Email Address</p>
+                                    </ng-container>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Phone </label>
-                                    <input class="form-control" type="text"
-                                        [class.invalid]="addTrainerForm.get('phoneNumber').invalid && addTrainerForm.get('phoneNumber').touched"
-                                        formControlName="phoneNumber">
-                                    <div
+                                    <input class="form-control" type="text" formControlName="phoneNumber"
+                                        maxlength="10">
+                                    <ng-container
                                         *ngIf="addTrainerForm.get('phoneNumber').invalid && addTrainerForm.get('phoneNumber').touched">
-                                        <small
-                                            *ngIf="addTrainerForm.get('phoneNumber').invalid && addTrainerForm.get('phoneNumber').touched"
-                                            class="text-danger"> *Phone is required</small>
-                                    </div>
+                                        <p *ngIf="addTrainerForm.get('phoneNumber').errors.required"
+                                            class="text-danger">
+                                            Phone Number is Required
+                                        </p>
+                                        <p *ngIf="addTrainerForm.get('phoneNumber').errors.pattern" class="text-danger">
+                                            *Invalid Phone Number</p>
+                                    </ng-container>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -235,29 +237,29 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="text"
-                                        [class.invalid]="editTrainerForm.get('firstName').invalid && editTrainerForm.get('firstName').touched"
-                                        formControlName="firstName">
-                                    <div
+                                    <input class="form-control" type="text" formControlName="firstName" maxlength="20">
+                                    <ng-container
                                         *ngIf="editTrainerForm.get('firstName').invalid && editTrainerForm.get('firstName').touched">
-                                        <small
-                                            *ngIf="editTrainerForm.get('firstName').invalid && editTrainerForm.get('firstName').touched"
-                                            class="text-danger"> *First Name is required</small>
-                                    </div>
+                                        <p *ngIf="editTrainerForm.get('firstName').errors.required" class="text-danger">
+                                            *First Name is required</p>
+                                        <p *ngIf="editTrainerForm.get('firstName').errors.pattern" class="text-danger">
+                                            First Name is must be Valid Name
+                                        </p>
+                                    </ng-container>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Last Name</label>
-                                    <input class="form-control" type="text"
-                                        [class.invalid]="editTrainerForm.get('lastName').invalid && editTrainerForm.get('lastName').touched"
-                                        formControlName="lastName">
-                                    <div
+                                    <input class="form-control" type="text" formControlName="lastName" maxlength="20">
+                                    <ng-container
                                         *ngIf="editTrainerForm.get('lastName').invalid && editTrainerForm.get('lastName').touched">
-                                        <small
-                                            *ngIf="editTrainerForm.get('lastName').invalid && editTrainerForm.get('lastName').touched"
-                                            class="text-danger"> *Last Name is required</small>
-                                    </div>
+                                        <p *ngIf="editTrainerForm.get('lastName').errors.required" class="text-danger">
+                                            *Last Name is required</p>
+                                        <p *ngIf="editTrainerForm.get('lastName').errors.pattern" class="text-danger">
+                                            Last Name is must be Valid Name
+                                        </p>
+                                    </ng-container>
                                 </div>
                             </div>
                             <div class="col-sm-6">
@@ -277,29 +279,33 @@
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="email"
-                                        [class.invalid]="editTrainerForm.get('Email').invalid && editTrainerForm.get('Email').touched"
-                                        formControlName="Email">
-                                    <div
+                                    <input class="form-control" type="text" formControlName="Email">
+                                    <ng-container
                                         *ngIf="editTrainerForm.get('Email').invalid && editTrainerForm.get('Email').touched">
-                                        <small
-                                            *ngIf="editTrainerForm.get('Email').invalid && editTrainerForm.get('Email').touched"
-                                            class="text-danger"> *Email is required</small>
-                                    </div>
+                                        <p *ngIf="editTrainerForm.get('Email').errors.required" class="text-danger">
+                                            Email is Required
+                                        </p>
+                                        <p *ngIf="editTrainerForm.get('Email').errors.email || editTrainerForm.get('Email').whitespace"
+                                            class="text-danger"> *Invalid Email Address</p>
+                                    </ng-container>
+
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="col-form-label">Phone </label>
-                                    <input class="form-control" type="text"
-                                        [class.invalid]="editTrainerForm.get('phoneNumber').invalid && editTrainerForm.get('phoneNumber').touched"
-                                        formControlName="phoneNumber">
-                                    <div
+                                    <input class="form-control" type="text" formControlName="phoneNumber" maxlength="10"
+                                        minlength="10">
+                                    <ng-container
                                         *ngIf="editTrainerForm.get('phoneNumber').invalid && editTrainerForm.get('phoneNumber').touched">
-                                        <small
-                                            *ngIf="editTrainerForm.get('phoneNumber').invalid && editTrainerForm.get('phoneNumber').touched"
-                                            class="text-danger"> *Phone is required</small>
-                                    </div>
+                                        <p *ngIf="editTrainerForm.get('phoneNumber').errors.required"
+                                            class="text-danger">
+                                            Phone Number is Required
+                                        </p>
+                                        <p *ngIf="editTrainerForm.get('phoneNumber').errors.pattern"
+                                            class="text-danger">
+                                            *Invalid Phone Number</p>
+                                    </ng-container>
                                 </div>
                             </div>
                             <div class="col-sm-6">

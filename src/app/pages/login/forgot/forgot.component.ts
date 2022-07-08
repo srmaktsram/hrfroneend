@@ -45,15 +45,16 @@ export class ForgotComponent implements OnInit {
   sendOtp(val) {
     if (this.loginType === "admin") {
       this.http
-        .patch("http://localhost:8443/auth/register/sendOtpInEmail", {
-          email: val,
-        })
+        .patch("http://localhost:8443/auth/register/sendOtpInEmail",
+          {
+            email: val,
+          })
         .subscribe((res: any) => {
           this.newOtp = res.OTP;
+          console.log(this.newOtp, "jhgjhghgjh>>>>>>>>>>>>>>>>>>")
           this.sendOtpDisable = false;
           if (this.newOtp) {
             let otp = this.newOtp;
-
             var now = new Date();
             var time = now.getTime();
             var expiryTime = time + 30000;

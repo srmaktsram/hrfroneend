@@ -7,6 +7,7 @@ import { AllModulesService } from "src/app/all-modules/all-modules.service";
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 @Component({
   selector: "app-create-estimates",
@@ -29,11 +30,11 @@ export class CreateEstimatesComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http:HttpClient,
+    private http: HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit() {
     //get id value of estimation list
@@ -43,7 +44,7 @@ export class CreateEstimatesComponent implements OnInit {
     this.addEstimateForm = this.formBuilder.group({
       client: ["", [Validators.required]],
       project: ["", [Validators.required]],
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       tax: ["", [Validators.required]],
       client_address: ["", [Validators.required]],
       billing_address: ["", [Validators.required]],
@@ -128,7 +129,7 @@ export class CreateEstimatesComponent implements OnInit {
   //post method function for estimate form
 
   savesend() {
-    if(this.addEstimateForm.invalid){
+    if (this.addEstimateForm.invalid) {
       this.markFormGroupTouched(this.addEstimateForm)
       return
     }
@@ -144,11 +145,11 @@ export class CreateEstimatesComponent implements OnInit {
         "dd-MM-yyyy"
       );
       let getItems = this.addEstimateForm.get("items").value;
-    
+
       console.log(getItems)
       let amount = this.addEstimateForm.value.totalamount.toString();
       let obj = {
-        adminId:sessionStorage.getItem("adminId"),
+        adminId: sessionStorage.getItem("adminId"),
         estimateNumber: "EST-0001",
         client: this.addEstimateForm.value.client,
         project: this.addEstimateForm.value.project,
@@ -159,14 +160,14 @@ export class CreateEstimatesComponent implements OnInit {
         expiryDate: expiryToDateFormat,
         billingAddress: this.addEstimateForm.value.billing_address,
         otherInformation: this.addEstimateForm.value.other_information,
-        grandTotal:this.addEstimateForm.value.grandTotal,
+        grandTotal: this.addEstimateForm.value.grandTotal,
         status: "Declined",
         totalAmount: this.addEstimateForm.value.amount,
         discount: this.addEstimateForm.value.discount,
-        
-        items:getItems
+
+        items: getItems
       };
-      this.http.post("http://localhost:8443/admin/estimates/createEstimate",obj).subscribe((res) => {
+      this.http.post("http://localhost:8443/admin/estimates/createEstimate", obj).subscribe((res) => {
         console.log(res);
         this.toastr.success("", "Added successfully!");
         this.router.navigate(["/layout/accounts/estimates"]);

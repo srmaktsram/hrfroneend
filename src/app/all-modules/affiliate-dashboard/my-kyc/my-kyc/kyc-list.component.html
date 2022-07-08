@@ -21,35 +21,23 @@
       <div class="col-sm-6">
         <div class="form-group">
           <label>Aadhaar Card No. <span class="text-danger">*</span></label>
-          <input
-            class="form-control"
-            style="width: 1200px"
-            type="text"
-            [class.invalid]="
+          <input class="form-control" style="width: 1200px" type="text" [class.invalid]="
               addKyc.get('aadhaarCardNo').invalid &&
               addKyc.get('aadhaarCardNo').touched
-            "
-            formControlName="aadhaarCardNo"
-          />
+            " formControlName="aadhaarCardNo" />
           <ng-container *ngIf="aadhaarRemark != ''">
             <p class="text-danger" [hidden]>{{ aadhaarRemark }}</p>
           </ng-container>
 
-          <div
-            *ngIf="
+          <div *ngIf="
               addKyc.get('aadhaarCardNo').invalid &&
               addKyc.get('aadhaarCardNo').touched
-            "
-          >
-            <small
-              *ngIf="
+            ">
+            <small *ngIf="
                 addKyc.get('aadhaarCardNo').invalid &&
                 addKyc.get('aadhaarCardNo').touched
-              "
-              class="text-danger"
-            >
-              *Aadhaar Card No. is required</small
-            >
+              " class="text-danger">
+              *Aadhaar Card No. is required</small>
           </div>
         </div>
       </div>
@@ -67,6 +55,7 @@
         <ng-container *ngIf="aadhaarFrontStatus == '3'">
           <td class="text-danger">Rejected</td>
         </ng-container>
+
         <input
           class="form-control"
           style="width: 600px"
@@ -82,6 +71,7 @@
           width="80px"
           style="position: relative; left: 700px; top: -35px"
         />
+
         <p class="text-danger" [hidden]="errorAadhaarExtension">
           Only .jpeg, .png, .jpg formats are allowed
         </p>
@@ -103,21 +93,10 @@
         <ng-container *ngIf="aadhaarBackStatus == '3'">
           <td class="text-danger">Rejected</td>
         </ng-container>
-        <input
-          class="form-control"
-          style="width: 600px"
-          type="file"
-          [hidden]="disableButton"
-          formControlName="aadhaarCardBack"
-          (change)="selectAadhaarBack($event)"
-        />
-        <img
-          src="{{ aadhaarBackCardPath }}"
-          alt="noIMG"
-          height="80 px"
-          width="80px"
-          style="position: relative; left: 700px; top: -35px"
-        />
+        <input class="form-control" style="width: 600px" type="file" [hidden]="disableButton"
+          formControlName="aadhaarCardBack" (change)="selectAadhaarBack($event)" />
+        <img src="{{ aadhaarBackCardPath }}" alt="noIMG" height="80 px" width="80px"
+          style="position: relative; left: 700px; top: -35px" />
         <p class="text-danger" [hidden]="errorBackAdhaarExtension">
           Only .jpeg, .png, .jpg formats are allowed
         </p>
@@ -128,32 +107,20 @@
       <div class="col-sm-6">
         <div class="form-group">
           <label>PAN Card No.</label>
-          <input
-            class="form-control"
-            style="width: 1200px"
-            type="text"
-            [class.invalid]="
+          <input class="form-control" style="width: 1200px" type="text" [class.invalid]="
               addKyc.get('panCardNo').invalid && addKyc.get('panCardNo').touched
-            "
-            formControlName="panCardNo"
-          />
+            " formControlName="panCardNo" />
           <ng-container *ngIf="panRemark != ''">
             <p class="text-danger" [hidden]>{{ panRemark }}</p>
           </ng-container>
-          <div
-            *ngIf="
+          <div *ngIf="
               addKyc.get('panCardNo').invalid && addKyc.get('panCardNo').touched
-            "
-          >
-            <small
-              *ngIf="
+            ">
+            <small *ngIf="
                 addKyc.get('panCardNo').invalid &&
                 addKyc.get('panCardNo').touched
-              "
-              class="text-danger"
-            >
-              *PAN Card No. is required</small
-            >
+              " class="text-danger">
+              *PAN Card No. is required</small>
           </div>
         </div>
       </div>
@@ -171,21 +138,10 @@
         <ng-container *ngIf="aadhaarPanStatus == '3'">
           <td class="text-danger">Rejected</td>
         </ng-container>
-        <input
-          class="form-control"
-          style="width: 600px"
-          type="file"
-          [hidden]="disableButton"
-          formControlName="panCard"
-          (change)="selectPan($event)"
-        />
-        <img
-          src="{{ panCardPath }}"
-          alt="noIMG"
-          height="80 px"
-          width="80px"
-          style="position: relative; left: 700px; top: -35px"
-        />
+        <input class="form-control" style="width: 600px" type="file" [hidden]="disableButton" formControlName="panCard"
+          (change)="selectPan($event)" />
+        <img src="{{ panCardPath }}" alt="noIMG" height="80 px" width="80px"
+          style="position: relative; left: 700px; top: -35px" />
 
         <p class="text-danger" [hidden]="errorPanExtension">
           Only .jpeg, .png, .jpg formats are allowed
@@ -214,11 +170,7 @@
         another account ?
       </p>
 
-      <button
-        [hidden]="disableButton"
-        class="btn btn-primary submit-btn"
-        (click)="updateKyc()"
-      >
+      <button [hidden]="disableButton" class="btn btn-primary submit-btn" (click)="updateKyc()">
         Submit KYC
       </button>
     </div>

@@ -7,6 +7,9 @@ import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
+import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
+import { Router } from "@angular/router";
+import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
 declare const $: any;
 @Component({
@@ -46,14 +49,17 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   public employeeId: any;
   searchCompany: any;
   constructor(
+    private hrUserAuthenticationService: HrUserAuthenticationService,
     private toastr: ToastrService,
     private http: HttpClient,
+    private router: Router,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
   }
 
   ngOnInit() {
+
     this.getDemoAdmins();
 
     this.dtOptions = {
@@ -64,18 +70,15 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
 
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
-      editClientCompany: ["", [Validators.required]],
-      editContactPerson: ["", [Validators.required]],
+      firstName: ["", [Validators.required]],
+      lastName: ["", [Validators.required]],
       editClientEmail: ["", [Validators.required]],
       editClientPhone: ["", [Validators.required]],
-      editCompanyEmail: ["", [Validators.required]],
     });
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.dtTrigger.next();
-    }, 1000);
+
   }
 
   //Get all Clients data
@@ -84,20 +87,50 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
       .subscribe((res: any) => {
         this.data = res;
+        console.log(res, "freeee")
         this.srch = [...this.data];
       });
   }
+  adminlogin(id) {
+    alert(id);
+    this.http
+      .get("http://localhost:8443/auth/register/loginAsUser" + "/" + id)
+      .subscribe((res: any) => {
+        if (res.result == 2) {
+          if (res.data.status !== "Blocked") {
+
+            // window.location.replace("http://localhost:4200")
+            window.open("http://localhost:4200", "_blank");
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone,
+            );
+          } else {
+            alert("Account Blocked By Main Admin");
+          }
+        } else {
+          alert("wrong Id");
+        }
+      });
+  }
+
+
+
+
 
   // Edit client
   public onEditClient(clientId: any) {
     this.editId = clientId;
     let client = this.data.filter((client) => client.id === clientId);
     this.editClientForm.patchValue({
-      editClientCompany: client[0]?.companyName,
-      editContactPerson: client[0]?.name,
+      firstName: client[0]?.firstName,
+      lastName: client[0]?.lastName,
       editClientEmail: client[0]?.email,
-      editClientPhone: client[0]?.mobile,
-      editCompanyEmail: client[0]?.companyEmail,
+      editClientPhone: client[0]?.phone,
     });
   }
   //Reset form
@@ -108,21 +141,21 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   // Save Client
   public onSave() {
     let obj = {
-      companyName: this.editClientForm.value.editClientCompany,
-      name: this.editClientForm.value.editContactPerson,
+      firstName: this.editClientForm.value.firstName,
+      lastName: this.editClientForm.value.lastName,
       email: this.editClientForm.value.editClientEmail,
-      mobile: this.editClientForm.value.editClientPhone,
-      companyEmail: this.editClientForm.value.editCompanyEmail,
+      phone: this.editClientForm.value.editClientPhone,
     };
     let id = this.editId;
     this.http
       .patch(
         "http://localhost:8443/mainadmin/freeClient/updateFreeClient" +
-          "/" +
-          id,
+        "/" +
+        id,
         obj
       )
       .subscribe((data) => {
+        console.log(data, "Edited Details for free Client")
         this.getDemoAdmins();
       });
 
@@ -137,8 +170,22 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/freeClient/updateFreeClientStatus" +
-          "/" +
-          id,
+        "/" +
+        id,
+        { status }
+      )
+      .subscribe((res) => {
+        this.getDemoAdmins();
+      });
+  }
+
+  getBlock(data, id) {
+    const status = data;
+    this.http
+      .patch(
+        "http://localhost:8443/mainadmin/client/blockClientStatus" +
+        "/" +
+        id,
         { status }
       )
       .subscribe((res) => {
@@ -163,35 +210,38 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   //search by name
   searchByName(val) {
     if (val) {
-      this.srch.splice(0, this.data.length);
+      this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
         return (
-          d.name.toLowerCase().indexOf(val) !== -1 ||
+          d.firstName.toLowerCase().indexOf(val) !== -1 ||
+          !val ||
+          d.lastName.toLowerCase().indexOf(val) !== -1 ||
           !val ||
           d.email.toLowerCase().indexOf(val) !== -1 ||
           !val ||
-          d.mobile.toLowerCase().indexOf(val) !== -1 ||
-          !val ||
-          d.companyEmail.toLowerCase().indexOf(val) !== -1 ||
+          d.phone.toLowerCase().indexOf(val) !== -1 ||
           !val
         );
-      });
+      })
       this.data.push(...temp);
     } else {
       this.getDemoAdmins();
     }
   }
 
-  //search by company
-  searchByCompany(val) {
-    if (val.trim()) {
-      this.srch.splice(0, this.data.length);
+  //search by Corporate Id
+  searchByCorporateId(val) {
+    if (val) {
+      this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return d.companyName.toLowerCase().indexOf(val) !== -1 || !val;
-      });
-      this.srch.push(...temp);
+        return (
+          d.corporateId.toLowerCase().indexOf(val) !== -1 ||
+          !val
+        );
+      })
+      this.data.push(...temp);
     } else {
       this.getDemoAdmins();
     }

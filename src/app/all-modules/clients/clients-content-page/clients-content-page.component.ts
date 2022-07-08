@@ -6,6 +6,7 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 declare const $: any;
 @Component({
@@ -110,30 +111,29 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
 
     //Add clients form
     this.addClientForm = this.formBuilder.group({
-      clientName: ["", [Validators.required]],
-      clientLastName: ["", [Validators.required]],
-      clientPhone: ["", [Validators.required]],
-      clientEmail: ["", [Validators.required]],
+      clientName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      clientLastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      clientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      clientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       clientPassword: ["", [Validators.required]],
-      confirmPassword: ["", [Validators.required]],
-      clientCompany: ["", [Validators.required]],
-      clientUsername: ["", [Validators.required]],
+      clientConfirmPassword: ["", [Validators.required]],
+      clientCompany: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      clientUsername: ["", [Validators.required, Validators.pattern('^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$')]],
       clientId: ["", [Validators.required]],
       birthday: ["", [Validators.required]],
       address: ["", [Validators.required]],
       gender: ["", [Validators.required]],
-      
+
     });
 
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
-      editClientName: ["", [Validators.required]],
-      editClientLastName: ["", [Validators.required]],
-      editClientPhone: ["", [Validators.required]],
-      editClientEmail: ["", [Validators.required]],
-      // editclientPassword: ["", [Validators.required]],
-      editClientUsername: ["", [Validators.required]],
-      editClientCompany: ["", [Validators.required]],
+      editClientName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      editClientLastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      editClientUsername: ["", [Validators.required, Validators.pattern('^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$')]],
+      editClientCompany: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
       editClientRole: ["", [Validators.required]],
       editClientId: ["", [Validators.required]],
       birthday: ["", [Validators.required]],
@@ -245,14 +245,14 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
       projects: this.projects,
       timingSheets: this.timingSheets,
       adminId: this.adminId,
-      birthday:this.addClientForm.value.birthday,
-      address:this.addClientForm.value.address,
-      gender:this.addClientForm.value.gender,
+      birthday: this.addClientForm.value.birthday,
+      address: this.addClientForm.value.address,
+      gender: this.addClientForm.value.gender,
     };
     //console.log("my data", newClient);
     this.http
       .post("http://localhost:8443/admin/clients/createClient", newClient)
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
         console.log(data, "<<<<<<<<<<<<postApi>>>>>>>>>>>>>>>>");
         this.getClients();
       });
