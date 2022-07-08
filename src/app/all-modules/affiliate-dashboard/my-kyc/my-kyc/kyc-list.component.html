@@ -55,10 +55,23 @@
         <ng-container *ngIf="aadhaarFrontStatus == '3'">
           <td class="text-danger">Rejected</td>
         </ng-container>
-        <input class="form-control" style="width: 600px" [hidden]="disableButton" type="file"
-          formControlName="aadhaarCard" (change)="selectAadhaar($event)" />
-        <img src="{{ aadhaarCardPath }}" alt="noIMG" height="80 px" width="80px"
-          style="position: relative; left: 700px; top: -35px" />
+
+        <input
+          class="form-control"
+          style="width: 600px"
+          [hidden]="disableButton"
+          type="file"
+          formControlName="aadhaarCard"
+          (change)="selectAadhaar($event)"
+        />
+        <img
+          src="{{ aadhaarCardPath }}"
+          alt="noIMG"
+          height="80 px"
+          width="80px"
+          style="position: relative; left: 700px; top: -35px"
+        />
+
         <p class="text-danger" [hidden]="errorAadhaarExtension">
           Only .jpeg, .png, .jpg formats are allowed
         </p>

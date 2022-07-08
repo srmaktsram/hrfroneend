@@ -28,6 +28,52 @@
     </div>
     <!-- /Page Header -->
 
+    <!-- Search Filter -->
+    <div class="row filter-row">
+      <div class="col-sm-6 col-md-3">
+        <div class="form-group form-focus">
+          <input
+            type="text"
+            class="form-control floating"
+            (input)="searchByCandidate($event.target.value)"
+          />
+          <label class="focus-label">Candidate Name</label>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="form-group form-focus">
+          <input
+            type="text"
+            class="form-control floating"
+            (input)="searchByMobile($event.target.value)"
+          />
+          <label class="focus-label">Mobile No.</label>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <div class="form-group form-focus select-focus">
+          <select
+            class="form-select floating form-control"
+            (input)="searchStatus($event.target.value)"
+          >
+            <option selected>Select Status</option>
+            <option value="New">New</option>
+            <option value="First Round">First Round</option>
+            <option value="Second Round">Second Round</option>
+            <option value="Final Round">Final Round</option>
+            <option value="Qualified">Qualified</option>
+            <option value="Disqualified">Disqualified</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+          <label class="focus-label">Select Status</label>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-3">
+        <a class="btn btn-success w-100"> Search </a>
+      </div>
+    </div>
+    <!-- Search Filter -->
+
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
@@ -45,6 +91,7 @@
 
                 <th>Mobile Number</th>
                 <th>Address</th>
+                <th>Status</th>
                 <th>Gender</th>
                 <th>Create Date</th>
                 <th class="text-center">Action</th>
@@ -66,6 +113,53 @@
                 <td>{{ item.email }}</td>
                 <td>{{ item.mobile }}</td>
                 <td>{{ item.address }}</td>
+
+                <td class="text-center">
+                  <div class="dropdown action-label">
+                    <a
+                      class="btn btn-white btn-sm btn-rounded"
+                      aria-expanded="false"
+                    >
+                      <i
+                        class="fa fa-dot-circle-o text-info"
+                        *ngIf="item.status == 'New'"
+                        >{{ item.status }}</i
+                      >
+
+                      <i
+                        class="fa fa-dot-circle-o text-sm"
+                        *ngIf="item.status == 'First Round'"
+                        >{{ item.status }}</i
+                      >
+                      <i
+                        class="fa fa-dot-circle-o text-muted"
+                        *ngIf="item.status == 'Second Round'"
+                        >{{ item.status }}</i
+                      >
+                      <i
+                        class="fa fa-dot-circle-o text-warning"
+                        *ngIf="item.status == 'Final Round'"
+                        >{{ item.status }}</i
+                      >
+                      <i
+                        class="fa fa-dot-circle-o text-success"
+                        *ngIf="item.status == 'Qualified'"
+                        >{{ item.status }}</i
+                      >
+                      <i
+                        class="fa fa-dot-circle-o text-danger"
+                        *ngIf="item.status == 'Disqualified'"
+                        >{{ item.status }}</i
+                      >
+                      <i
+                        class="fa fa-dot-circle-o text-danger"
+                        *ngIf="item.status == 'Rejected'"
+                        >{{ item.status }}</i
+                      >
+                    </a>
+                  </div>
+                </td>
+
                 <td>{{ item.gender }}</td>
                 <td>{{ item.createDate }}</td>
                 <td class="text-center">
@@ -145,6 +239,24 @@
                   />
                 </div>
               </div>
+              <!-- //////////////////////////////// -->
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <select
+                    class="form-select form-control"
+                    formControlName="jobTitle"
+                  >
+                    <option selected>Select Job Title</option>
+                    <option *ngFor="let item of allJobs">
+                      {{ item.jobTitle }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- /////////////////////////////// -->
+
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Gender</label>
@@ -273,6 +385,20 @@
                   />
                 </div>
               </div>
+
+              <div class="col-sm-6">
+                <div class="form-group">
+                  <select
+                    class="form-select form-control"
+                    formControlName="jobTitle"
+                  >
+                    <option>Select Job Title</option>
+                    <option *ngFor="let item of allJobs">
+                      {{ item.jobTitle }}
+                    </option>
+                  </select>
+                </div>
+              </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Gender </label>
@@ -317,6 +443,11 @@
                       class="form-control datetimepicker"
                       type="text"
                       bsDatepicker
+                      type="text"
+                      [bsConfig]="{
+                        dateInputFormat: 'DD-MM-YYYY',
+                        returnFocusToInput: true
+                      }"
                       formControlName="createDate"
                     />
                   </div>
