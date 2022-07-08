@@ -19,12 +19,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
-        <table
-          datatable
-          [dtOptions]="dtOptions"
-          [dtTrigger]="dtTrigger"
-          class="table table-striped custom-table mb-0 datatable"
-        >
+        <table class="table table-striped custom-table mb-0 datatable">
           <thead>
             <tr>
               <th>#</th>
@@ -34,7 +29,6 @@
               <th>Apply Date</th>
               <th class="text-center">Status</th>
               <th>Resume</th>
-              <th class="text-end">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -61,23 +55,19 @@
                   >
                     <i
                       class="fa fa-dot-circle-o text-info"
-                      *ngIf="appliedCandidates.status == '0'"
+                      *ngIf="appliedCandidates.status == 'New'"
                       >New</i
                     >
-                    <i
-                      class="fa fa-dot-circle-o text-success"
-                      *ngIf="appliedCandidates.status == '5'"
-                      >Hired</i
-                    >
+
                     <i
                       class="fa fa-dot-circle-o text-danger"
-                      *ngIf="appliedCandidates.status == '2'"
+                      *ngIf="appliedCandidates.status == 'Rejected'"
                       >Rejected</i
                     >
                     <i
                       class="fa fa-dot-circle-o text-warning"
-                      *ngIf="appliedCandidates.status == '3'"
-                      >Interviewed</i
+                      *ngIf="appliedCandidates.status == 'First Round'"
+                      >First Round</i
                     >
                   </a>
                   <div class="dropdown-menu dropdown-menu-right">
@@ -86,11 +76,7 @@
                       (click)="selectStatus('New', appliedCandidates.id)"
                       ><i class="fa fa-dot-circle-o text-info"></i> New</a
                     >
-                    <a
-                      class="dropdown-item"
-                      (click)="selectStatus('Hired', appliedCandidates.id)"
-                      ><i class="fa fa-dot-circle-o text-success"></i> Hired</a
-                    >
+
                     <a
                       class="dropdown-item"
                       (click)="selectStatus('Rejected', appliedCandidates.id)"
@@ -100,20 +86,22 @@
                     <a
                       class="dropdown-item"
                       (click)="
-                        selectStatus('Interviewed', appliedCandidates.id)
+                        selectStatus('First Round', appliedCandidates.id)
                       "
-                      ><i class="fa fa-dot-circle-o text-warning"></i>
-                      Interviewed</a
+                      ><i class="fa fa-dot-circle-o text-warning"></i> First
+                      Round</a
                     >
                   </div>
                 </div>
               </td>
               <td>
-                <a class="btn btn-sm btn-primary"
+                <a
+                  class="btn btn-sm btn-primary"
+                  href="http://localhost:8443/{{ appliedCandidates.resume }}"
                   ><i class="fa fa-download"></i> Download</a
                 >
               </td>
-              <td class="text-end">
+              <!-- <td class="text-end">
                 <div class="dropdown dropdown-action">
                   <a
                     class="action-icon dropdown-toggle"
@@ -134,7 +122,7 @@
                     >
                   </div>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -178,7 +166,6 @@
                 class="form-control datetimepicker"
                 type="text"
                 bsDatepicker
-                type="text"
                 [bsConfig]="{
                   dateInputFormat: 'DD-MM-YYYY',
                   returnFocusToInput: true
@@ -199,7 +186,7 @@
             <button
               class="btn btn-primary submit-btn"
               type="submit"
-              (click)="scheduleupdate(tempId)"
+              (click)="scheduleupdate()"
             >
               Submit
             </button>

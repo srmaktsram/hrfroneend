@@ -25,6 +25,7 @@ export class JobApplicantsComponent implements OnInit, OnDestroy {
   public url: any = "appliedCandidates";
   public allAppliedCandidates: any = [];
   public scheduleForm: FormGroup;
+  public tempId: any;
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
@@ -49,46 +50,39 @@ export class JobApplicantsComponent implements OnInit, OnDestroy {
 
   getAppliedCandidates() {
     this.http
-      .get("http://localhost:8443/admin/job/jobRegister/getJobRegister")
+      .get("http://localhost:8443/admin/job/jobRegister/getAppliedCandidate")
       .subscribe((data: any) => {
         this.allAppliedCandidates = data;
-        console.log("thi si shte .......", this.allAppliedCandidates);
+        console.log(
+          "this is Applied Condidate>>> .......",
+          this.allAppliedCandidates
+        );
         this.dtTrigger.next();
       });
   }
 
   selectStatus(val, id) {
-    var statusValue;
-    if (val === "New") {
-      statusValue = "0";
-    } else if (val === "Hired") {
-      statusValue = "5";
-    } else if (val === "Rejected") {
-      statusValue = "2";
-    } else if (val === "Interviewed") {
-      statusValue = "3";
-    }
-
     this.http
       .patch(
         "http://localhost:8443/admin/job/jobRegister/updateJobRegister" +
           "/" +
           id,
-        { status: statusValue }
+        { status: val }
       )
       .subscribe((res: any) => {
-        window.location.reload();
+        this.getAppliedCandidates();
         console.log(res, "this is the update status");
       });
+    $("schedule").modal("hide");
   }
 
-  scheduleupdate(id) {
-    var jobId = id;
+  scheduleupdate() {
+    var jobId = this.tempId;
     var obj = {
       interviewTime: this.scheduleForm.value.interviewTime,
       interviewDate: this.scheduleForm.value.interviewDate,
       interviewer: this.scheduleForm.value.interviewer,
-      status: "3",
+      status: "Interviewed",
     };
     this.http
       .patch(
@@ -101,11 +95,13 @@ export class JobApplicantsComponent implements OnInit, OnDestroy {
         if (res) {
           this.sendEmail(res.id);
         }
-        window.location.reload();
+        this.getAppliedCandidates();
+        $("schedule").modal("hide");
+
         console.log(res, "this is the schedule interview");
       });
   }
-
+  ////////////////////////////send email /////////////////////////////////
   sendEmail(id) {
     this.http
       .patch(
@@ -113,9 +109,10 @@ export class JobApplicantsComponent implements OnInit, OnDestroy {
         {}
       )
       .subscribe((res: any) => {
-        window.location.reload();
+        this.getAppliedCandidates();
         console.log(res, "this is the schedule interview");
       });
+    $("schedule").modal("hide");
   }
 
   // for unsubscribe datatable

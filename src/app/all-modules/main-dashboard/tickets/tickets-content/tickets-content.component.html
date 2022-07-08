@@ -25,7 +25,6 @@
               <div>
                 <span class="d-block">New Tickets</span>
               </div>
-              
             </div>
             <h3 class="mb-3">{{ newTickets }}</h3>
             <div class="progress mb-2" style="height: 5px">
@@ -47,7 +46,6 @@
               <div>
                 <span class="d-block">Solved Tickets</span>
               </div>
-              
             </div>
             <h3 class="mb-3">{{ countResolved }}</h3>
             <div class="progress mb-2" style="height: 5px">
@@ -69,7 +67,6 @@
               <div>
                 <span class="d-block">Open Tickets</span>
               </div>
-             
             </div>
             <h3 class="mb-3">{{ countOpen }}</h3>
             <div class="progress mb-2" style="height: 5px">
@@ -91,7 +88,6 @@
               <div>
                 <span class="d-block">Pending Tickets</span>
               </div>
-              
             </div>
             <h3 class="mb-3">{{ countPending }}</h3>
             <div class="progress mb-2" style="height: 5px">
@@ -149,19 +145,14 @@
         <label class="focus-label">Priority</label>
       </div>
     </div>
-    
+
     <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-      <button
-        [disabled]="disableButton"
-        class="btn btn-success w-100"
-        (click)="getSearchData(from.value, to.value)"
-      >
+      <button [disabled]="disableButton" class="btn btn-success w-100">
         Search
       </button>
     </div>
   </div>
   <!-- /Search Filter -->
-
 
   <div class="row">
     <div class="col-md-12">
@@ -194,102 +185,97 @@
               <td>{{ tickets.replyPhone }}</td>
               <td>{{ tickets.replyEmail }}</td>
               <td class="text-center">
-                
-                  <ng-container *ngIf="tickets.priority == 'High'">
-                    <span class="text-danger">{{ tickets.priority }}</span>
-                  </ng-container>
-               
-                  <ng-container *ngIf="tickets.priority == 'Medium'">
-                    <span class="text-warning">{{ tickets.priority }}</span>
-                  </ng-container>
-                  <ng-container *ngIf="tickets.priority == 'Low'">
-                    <span class="text-success">{{ tickets.priority }}</span>
-                  </ng-container>
-                
-                  
-               
+                <ng-container *ngIf="tickets.priority == 'High'">
+                  <span class="text-danger">{{ tickets.priority }}</span>
+                </ng-container>
+
+                <ng-container *ngIf="tickets.priority == 'Medium'">
+                  <span class="text-warning">{{ tickets.priority }}</span>
+                </ng-container>
+                <ng-container *ngIf="tickets.priority == 'Low'">
+                  <span class="text-success">{{ tickets.priority }}</span>
+                </ng-container>
               </td>
-              <td class="text-center"> 
+              <td class="text-center">
                 <div class="dropdown action-label">
-
-
                   <ng-container *ngIf="tickets.status == 'Reopened'">
                     <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-info"></i>
-                    {{ tickets.status }}
-                  </a>
-                </ng-container>
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-info"></i>
+                      {{ tickets.status }}
+                    </a>
+                  </ng-container>
                   <ng-container *ngIf="tickets.status == 'Open'">
                     <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-info"></i>
-                    {{ tickets.status }}
-                  </a>
-                </ng-container>
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-info"></i>
+                      {{ tickets.status }}
+                    </a>
+                  </ng-container>
                   <ng-container *ngIf="tickets.status == 'Cancelled'">
                     <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-danger"></i>
-                    {{ tickets.status }}
-                  </a>
-                </ng-container>
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-danger"></i>
+                      {{ tickets.status }}
+                    </a>
+                  </ng-container>
                   <ng-container *ngIf="tickets.status == 'OnHold'">
                     <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-danger"></i>
-                    {{ tickets.status }}
-                  </a>
-                </ng-container>
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-danger"></i>
+                      {{ tickets.status }}
+                    </a>
+                  </ng-container>
                   <ng-container *ngIf="tickets.status == 'Closed'">
                     <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-success"></i>
-                    {{ tickets.status }}
-                  </a>
-                </ng-container>
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-success"></i>
+                      {{ tickets.status }}
+                    </a>
+                  </ng-container>
                   <ng-container *ngIf="tickets.status == 'InProgress'">
                     <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-dot-circle-o text-success"></i>
-                    {{ tickets.status }}
-                  </a>
-                </ng-container>
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-success"></i>
+                      {{ tickets.status }}
+                    </a>
+                  </ng-container>
                   <ng-container *ngIf="tickets.status == 'New'">
                     <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-dot-circle-o text-warning"></i>
+                      {{ tickets.status }}
+                    </a>
+                  </ng-container>
+
+                  <div
+                    class="dropdown-menu dropdown-menu-right"
+                    *ngIf="
+                      user_type == 'mainadmin' ||
+                      (user_type === 'subadmin' && ticketswrite == 'true')
+                    "
                   >
-                    <i class="fa fa-dot-circle-o text-warning"></i>
-                    {{ tickets.status }}
-                  </a>
-                </ng-container>
-
-
-                  <div class="dropdown-menu dropdown-menu-right" *ngIf="
-                  user_type == 'mainadmin' ||
-                  (user_type === 'subadmin' &&
-                    (ticketswrite == 'true'))
-                ">
                     <a
                       class="dropdown-item"
                       (click)="getStatus('Open', tickets.id)"
