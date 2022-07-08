@@ -33,8 +33,7 @@
               <div>
                 <span class="d-block">New Tickets</span>
               </div>
-              <div>
-              </div>
+              <div></div>
             </div>
             <h3 class="mb-3">{{ newTickets }}</h3>
             <div class="progress mb-2" style="height: 5px">
@@ -56,8 +55,7 @@
               <div>
                 <span class="d-block">Solved Tickets</span>
               </div>
-              <div>
-              </div>
+              <div></div>
             </div>
             <h3 class="mb-3">{{ countResolved }}</h3>
             <div class="progress mb-2" style="height: 5px">
@@ -79,8 +77,7 @@
               <div>
                 <span class="d-block">Open Tickets</span>
               </div>
-              <div>
-              </div>
+              <div></div>
             </div>
             <h3 class="mb-3">{{ countOpen }}</h3>
             <div class="progress mb-2" style="height: 5px">
@@ -102,8 +99,7 @@
               <div>
                 <span class="d-block">Pending Tickets</span>
               </div>
-              <div>
-              </div>
+              <div></div>
             </div>
             <h3 class="mb-3">{{ countPending }}</h3>
             <div class="progress mb-2" style="height: 5px">
@@ -162,13 +158,9 @@
         <label class="focus-label">Priority</label>
       </div>
     </div>
-    
+
     <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
-      <button
-        [disabled]="disableButton"
-        class="btn btn-success w-100"
-        (click)="getSearchData(from.value, to.value)"
-      >
+      <button [disabled]="disableButton" class="btn btn-success w-100">
         Search
       </button>
     </div>
@@ -206,34 +198,31 @@
               <td>
                 <div class="dropdown action-label">
                   <ng-container *ngIf="tickets.priority == 'High'">
-                   
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    ><i class="fa fa-dot-circle-o text-danger"></i>
-                    {{ tickets.priority }}
-                  </a>
+                    <a
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      ><i class="fa fa-dot-circle-o text-danger"></i>
+                      {{ tickets.priority }}
+                    </a>
                   </ng-container>
                   <ng-container *ngIf="tickets.priority == 'Medium'">
-                   
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    ><i class="fa fa-dot-circle-o text-warning"></i>
-                    {{ tickets.priority }}
-                  </a>
+                    <a
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      ><i class="fa fa-dot-circle-o text-warning"></i>
+                      {{ tickets.priority }}
+                    </a>
                   </ng-container>
                   <ng-container *ngIf="tickets.priority == 'Low'">
-                   
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    ><i class="fa fa-dot-circle-o text-success"></i>
-                    {{ tickets.priority }}
-                  </a>
+                    <a
+                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      ><i class="fa fa-dot-circle-o text-success"></i>
+                      {{ tickets.priority }}
+                    </a>
                   </ng-container>
                   <div class="dropdown-menu dropdown-menu-right">
                     <a
@@ -255,8 +244,6 @@
                 </div>
               </td>
               <td class="text-center">
-                
-
                 <ng-container *ngIf="tickets.status == 'OnHold'">
                   <span class="text-danger">{{ tickets.status }}</span>
                 </ng-container>
@@ -275,8 +262,6 @@
                 <ng-container *ngIf="tickets.status == 'Reopened'">
                   <span class="text-info">{{ tickets.status }}</span>
                 </ng-container>
-
-
               </td>
               <td class="text-end">
                 <div class="dropdown dropdown-action">
@@ -636,7 +621,6 @@
               </div>
             </div>
           </div>
-
 
           <div class="row">
             <div class="col-sm-12">

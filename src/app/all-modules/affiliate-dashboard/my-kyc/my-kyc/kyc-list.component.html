@@ -55,23 +55,22 @@
       </div>
       <div class="form-group">
         <label>Aadhaar Front Photo</label>
-        <ng-container *ngIf="aadhaarFrontStatus == 0">
+        <ng-container *ngIf="aadhaarFrontStatus == '0'">
           <td class="text-info">Not Uploaded</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarFrontStatus == 1">
+        <ng-container *ngIf="aadhaarFrontStatus == '1'">
           <td class="text-warning">Pending for Approval</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarFrontStatus == 2">
+        <ng-container *ngIf="aadhaarFrontStatus == '2'">
           <td class="text-success">Approved</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarFrontStatus == 3">
+        <ng-container *ngIf="aadhaarFrontStatus == '3'">
           <td class="text-danger">Rejected</td>
         </ng-container>
         <input
           class="form-control"
           style="width: 600px"
           [hidden]="disableButton"
-
           type="file"
           formControlName="aadhaarCard"
           (change)="selectAadhaar($event)"
@@ -92,16 +91,16 @@
       </div>
       <div class="form-group">
         <label>Aadhaar Back Photo</label>
-        <ng-container *ngIf="aadhaarBackStatus == 0">
+        <ng-container *ngIf="aadhaarBackStatus == '0'">
           <td class="text-info">Not Uploaded</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarBackStatus == 1">
+        <ng-container *ngIf="aadhaarBackStatus == '1'">
           <td class="text-warning">Pending for Approval</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarBackStatus == 2">
+        <ng-container *ngIf="aadhaarBackStatus == '2'">
           <td class="text-success">Approved</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarBackStatus == 3">
+        <ng-container *ngIf="aadhaarBackStatus == '3'">
           <td class="text-danger">Rejected</td>
         </ng-container>
         <input
@@ -160,16 +159,16 @@
       </div>
       <div class="form-group">
         <label>PAN Card Photo</label>
-        <ng-container *ngIf="aadhaarPanStatus == 0">
+        <ng-container *ngIf="aadhaarPanStatus == '0'">
           <td class="text-info">Not Uploaded</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarPanStatus == 1">
+        <ng-container *ngIf="aadhaarPanStatus == '1'">
           <td class="text-warning">Pending for Approval</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarPanStatus == 2">
+        <ng-container *ngIf="aadhaarPanStatus == '2'">
           <td class="text-success">Approved</td>
         </ng-container>
-        <ng-container *ngIf="aadhaarPanStatus == 3">
+        <ng-container *ngIf="aadhaarPanStatus == '3'">
           <td class="text-danger">Rejected</td>
         </ng-container>
         <input
@@ -198,16 +197,16 @@
     </div>
 
     <div class="submit-section">
-      <ng-container *ngIf="aadhaarKycStatus == 0">
+      <ng-container *ngIf="aadhaarKycStatus == '0'">
         <p text-align:center class="text-info">Final Submit is not done!</p>
       </ng-container>
-      <ng-container *ngIf="aadhaarKycStatus == 1">
+      <ng-container *ngIf="aadhaarKycStatus == '1'">
         <p text-align:center class="text-warning">Pending for Approval</p>
       </ng-container>
-      <ng-container *ngIf="aadhaarKycStatus == 2">
+      <ng-container *ngIf="aadhaarKycStatus == '2'">
         <p text-align:center class="text-warning">Pending for Approval</p>
       </ng-container>
-      <ng-container *ngIf="aadhaarKycStatus == 3">
+      <ng-container *ngIf="aadhaarKycStatus == '3'">
         <p text-align:center class="text-success">KYC Completed</p>
       </ng-container>
       <p class="text-danger" [hidden]="kycResult4">
