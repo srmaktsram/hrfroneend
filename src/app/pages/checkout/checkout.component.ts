@@ -63,7 +63,6 @@ export class CheckoutComponent implements OnInit {
       ]),
       address: new FormControl("", [
         Validators.required,
-        Validators.minLength(3),
         WhiteSpaceValidator.noWhiteSpace,
       ]),
       panNo: new FormControl("", [
@@ -221,8 +220,8 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post(
         "http://localhost:8443/checkout/create/Details" +
-          "/" +
-          this.corporateId,
+        "/" +
+        this.corporateId,
         {
           amount: this.totalAmount,
           packageName: this.packageName,
@@ -266,8 +265,8 @@ export class CheckoutComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/checkout/orders/getAdminRegister" +
-          "/" +
-          corporateId
+        "/" +
+        corporateId
       )
       .subscribe((res: any) => {
         console.log(",.,.,.,.,.,.<><><><><><", res);

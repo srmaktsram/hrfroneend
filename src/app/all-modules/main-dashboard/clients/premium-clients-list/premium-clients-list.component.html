@@ -145,63 +145,54 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
         <form [formGroup]="editClientForm">
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
-                <input class="form-control" type="text" [class.invalid]="
-                        editClientForm.get('firstName').invalid &&
-                        editClientForm.get('firstName').touched
-                      " formControlName="firstName" />
-                <div *ngIf="
-                        editClientForm.get('firstName').invalid &&
-                        editClientForm.get('firstName').touched
-                      ">
-                  <small *ngIf="
-                          editClientForm.get('firstName').invalid &&
-                          editClientForm.get('firstName').touched
-                        " class="text-danger">
-                    *First Name is required</small>
-                </div>
+                <input class="form-control" type="text" formControlName="firstName" />
+                <ng-container
+                  *ngIf="editClientForm.get('firstName').invalid && editClientForm.get('firstName').touched">
+                  <p *ngIf="editClientForm.get('firstName').errors.required" class="text-danger">
+                    First Name is Required
+                  </p>
+                  <p *ngIf="editClientForm.get('firstName').errors.pattern" class="text-danger">
+                    * First Name is must be Valid Name
+                </ng-container>
+
+
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-form-label">Last Name</label>
                 <input class="form-control" formControlName="lastName" type="text" />
+                <ng-container *ngIf="editClientForm.get('lastName').invalid && editClientForm.get('lastName').touched">
+                  <p *ngIf="editClientForm.get('lastName').errors.required" class="text-danger">
+                    Last Name is Required
+                  </p>
+                  <p *ngIf="editClientForm.get('lastName').errors.pattern" class="text-danger">
+                    * Last Name is must be Valid Name
+                </ng-container>
               </div>
             </div>
-            <!-- <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-form-label"
-                    >Username <span class="text-danger">*</span></label
-                  >
-                  <input
-                    class="form-control"
-                    formControlName="editClientUsername"
-                    type="text"
-                  />
-                </div>
-              </div> -->
+
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-form-label">Email <span class="text-danger">*</span></label>
-                <input class="form-control" type="text" [class.invalid]="
-                      editClientForm.get('editClientEmail').invalid &&
-                      editClientForm.get('editClientEmail').touched
-                    " formControlName="editClientEmail" />
-                <div *ngIf="
-                      editClientForm.get('editClientEmail').invalid &&
-                      editClientForm.get('editClientEmail').touched
-                    ">
-                  <small *ngIf="
-                        editClientForm.get('editClientEmail').invalid &&
-                        editClientForm.get('editClientEmail').touched
-                      " class="text-danger">
-                    *Email is required</small>
-                </div>
+                <input class="form-control" type="text" formControlName="editClientEmail" />
+                <ng-container
+                  *ngIf="editClientForm.get('editClientEmail').invalid && editClientForm.get('editClientEmail').touched">
+                  <p *ngIf="editClientForm.get('editClientEmail').errors.required" class="text-danger">
+                    Email is Required
+                  </p>
+                  <p *ngIf="editClientForm.get('editClientEmail').errors.email || editClientForm.get('editClientEmail').whitespace "
+                    class="text-danger">
+                    *Invalid Email Address</p>
+                </ng-container>
+
               </div>
             </div>
 
@@ -210,54 +201,19 @@
               <div class="form-group">
                 <label class="col-form-label">Phone <span class="text-danger">*</span>
                 </label>
-                <input class="form-control" type="text" [class.invalid]="
-                      editClientForm.get('editClientPhone').invalid &&
-                      editClientForm.get('editClientPhone').touched
-                    " formControlName="editClientPhone" />
-                <div *ngIf="
-                      editClientForm.get('editClientPhone').invalid &&
-                      editClientForm.get('editClientPhone').touched
-                    ">
-                  <small *ngIf="
-                        editClientForm.get('editClientPhone').invalid &&
-                        editClientForm.get('editClientPhone').touched
-                      " class="text-danger">
-                    *Phone is required</small>
-                </div>
+                <input class="form-control" type="text" formControlName="editClientPhone" />
+                <ng-container
+                  *ngIf="editClientForm.get('editClientPhone').invalid && editClientForm.get('editClientPhone').touched">
+                  <p *ngIf="editClientForm.get('editClientPhone').errors.required" class="text-danger">
+                    Phone Number is Required
+                  </p>
+                  <p *ngIf="editClientForm.get('editClientPhone').errors.pattern" class="text-danger">
+                    *Invalid Phone Number</p>
+                </ng-container>
+
               </div>
             </div>
-            <!-- <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-form-label"
-                    >Company Name <span class="text-danger">*</span></label
-                  >
-                  <input
-                    class="form-control"
-                    type="text"
-                    [class.invalid]="
-                      editClientForm.get('editClientCompany').invalid &&
-                      editClientForm.get('editClientCompany').touched
-                    "
-                    formControlName="editClientCompany"
-                  />
-                  <div
-                    *ngIf="
-                      editClientForm.get('editClientCompany').invalid &&
-                      editClientForm.get('editClientCompany').touched
-                    "
-                  >
-                    <small
-                      *ngIf="
-                        editClientForm.get('editClientCompany').invalid &&
-                        editClientForm.get('editClientCompany').touched
-                      "
-                      class="text-danger"
-                    >
-                      *Company is required</small
-                    >
-                  </div>
-                </div>
-              </div> -->
+
           </div>
 
           <div class="submit-section">
@@ -271,6 +227,8 @@
   </div>
 </div>
 <!-- /Edit Client Modal -->
+
+
 
 <!-- Delete Client Modal -->
 <div class="modal custom-modal fade" id="delete_client" role="dialog">

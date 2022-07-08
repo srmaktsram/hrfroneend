@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
-
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
@@ -10,6 +9,7 @@ import { id } from "src/assets/all-modules-data/id";
 import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
 import { Router } from "@angular/router";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 declare const $: any;
 @Component({
@@ -70,10 +70,10 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
 
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
-      editClientEmail: ["", [Validators.required]],
-      editClientPhone: ["", [Validators.required]],
+      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
+      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
+      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
     });
   }
 

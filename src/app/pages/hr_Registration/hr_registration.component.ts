@@ -1,18 +1,22 @@
 import { HttpClient } from "@angular/common/http";
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, Injectable, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
+import { HeaderComponent } from "src/app/components/header/header.component";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
-
+@Injectable({
+  providedIn: "root",
+})
 @Component({
   selector: "app-hr_registration",
   templateUrl: "./hr_registration.component.html",
   styleUrls: ["./hr_registration.component.css"],
 
 })
+
 export class HrregistrationComponent implements OnInit {
 
   public horizontalPosition: MatSnackBarHorizontalPosition = 'center';
@@ -34,7 +38,7 @@ export class HrregistrationComponent implements OnInit {
   isvalidconfirmpassword: boolean;
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router,
     private hrUserAuthenticationService: HrUserAuthenticationService, private route: ActivatedRoute,
-    private _snackBar: MatSnackBar, private cookieService: CookieService,
+    private _snackBar: MatSnackBar, private cookieService: CookieService
   ) {
 
   }
@@ -74,7 +78,9 @@ export class HrregistrationComponent implements OnInit {
       password: ["", Validators.required],
       confirmPassword: ["", Validators.required],
     })
-    this.showPage()
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
   }
 
   showPage() {
@@ -86,6 +92,7 @@ export class HrregistrationComponent implements OnInit {
       this.showLogin = true;
       this.showRegister = false;
     }
+    return true;
   }
 
   showData() {
@@ -106,6 +113,7 @@ export class HrregistrationComponent implements OnInit {
     }
   }
 
+
   saveData() {
     let obj = {
       firstName: this.registerForm.value.firstName,
@@ -116,7 +124,7 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
-      status:"Visitor"
+      status: "Visitor"
     }
 
     this.http.post("http://localhost:8443/mainadmin/create/registration", obj).subscribe((res: any) => {
@@ -144,22 +152,22 @@ export class HrregistrationComponent implements OnInit {
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
 
-          window.location.replace("http://localhost:4200")
+            window.location.replace("http://localhost:4200")
 
-          this.hrUserAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone,
-          );
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone,
+            );
 
-        }
-        else {
-          alert("Account Blocked By Main Admin");
-        }
-      } else {
+          }
+          else {
+            alert("Account Blocked By Main Admin");
+          }
+        } else {
           alert("wrong Id or pass");
         }
       });

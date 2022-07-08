@@ -8,6 +8,7 @@ import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { ThemeSettingsComponent } from "src/app/all-modules/settings/theme-settings/theme-settings.component";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 @Component({
   selector: "app-create-invoice",
@@ -52,8 +53,8 @@ export class CreateInvoiceComponent implements OnInit {
 
 
   }
-  
-  
+
+
 
   ngOnInit() {
     //get id value of invoice list
@@ -62,7 +63,7 @@ export class CreateInvoiceComponent implements OnInit {
     this.addInvoiceForm = this.formBuilder.group({
       client: ["", [Validators.required]],
       number: [this.invoiceNo, [Validators.required]],
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       tax: ["", [Validators.required]],
       client_address: ["", [Validators.required]],
       billing_address: ["", [Validators.required]],
@@ -161,9 +162,11 @@ export class CreateInvoiceComponent implements OnInit {
 
   savesend() {
     if (this.addInvoiceForm.invalid) {
+      alert("invailid")
       this.markFormGroupTouched(this.addInvoiceForm);
       return;
     } else {
+      alert("vailid")
       let invoiceDateFormat = this.pipe.transform(
         this.addInvoiceForm.value.invoice_date,
         "dd-MM-yyyy"
@@ -207,7 +210,7 @@ export class CreateInvoiceComponent implements OnInit {
             this.router.navigate(["/layout/mainadmin/accounts/invoices"]);
 
 
-            
+
           }
         });
     }
