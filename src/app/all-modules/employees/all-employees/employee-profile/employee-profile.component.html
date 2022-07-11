@@ -23,79 +23,24 @@
           <div class="profile-view">
             <div class="profile-img-wrap">
               <div class="profile-img">
-                <a><img alt="" src="{{ profileImagePath }}" /></a>
+                <a><img alt="" src="{{profileImagePath}}" /></a>
               </div>
             </div>
 
-
-    <div class="card mb-0">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="profile-view">
-                        <div class="profile-img-wrap">
-                            <div class="profile-img">
-                                <a><img alt="" src="assets/img/profiles/avatar-2.jpg"></a>
-                            </div>
-                        </div>
-
-
-
-                        <div class="profile-basic">
-                            <div class="row">
-                                <div class="col-md-5">
-                                    <div class="profile-info-left">
-                                        <h3 class="user-name m-t-0 mb-0">{{profileEmp?.firstName}}</h3>
-                                        <h6 class="text-muted">{{profileEmp?.designation}}</h6>
-                                        <small class="text-muted">{{profileEmp?.department}}</small>
-                                        <div class="staff-id">{{profileEmp?.employeeId}}</div>
-                                        <div class="small doj text-muted">{{profileEmp?.joinDate}}</div>
-                                        <div class="staff-msg"><a class="btn btn-custom"
-                                                routerLink="/layout/apps/chat">Send
-                                                Message</a></div>
-                                    </div>
-                                </div>
-                                <div class="col-md-7">
-                                    <ul class="personal-info">
-                                        <li>
-                                            <div class="title">Phone:</div>
-                                            <div class="text"><a>{{profileinfo?.phone}}</a></div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Email:</div>
-                                            <div class="text"><a href="">{{profileEmp?.email}}</a></div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Birthday:</div>
-                                            <div class="text">{{profileinfo?.birthDate}}</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Address:</div>
-                                            <div class="text">{{profileinfo?.address}}</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Gender:</div>
-                                            <div class="text">{{profileinfo?.gender}}</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Reports to:</div>
-                                            <div class="text">
-                                                <div class="avatar-box">
-                                                    <div class="avatar avatar-xs">
-                                                        <img src="assets/img/profiles/avatar-16.jpg" alt="">
-                                                    </div>
-                                                </div>
-                                                <a routerLink="/layout/employees/employeeprofile">
-                                                    {{profileinfo?.reportsTo}}
-                                                </a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="pro-edit"><a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon"
-                                (click)="edit()"><i class="fa fa-pencil"></i></a></div>
+            <div class="profile-basic">
+              <div class="row">
+                <div class="col-md-5">
+                  <div class="profile-info-left">
+                    <h3 class="user-name m-t-0 mb-0">
+                      {{ profileEmp?.firstName }}
+                    </h3>
+                    <h6 class="text-muted">{{ profileEmp?.designation }}</h6>
+                    <small class="text-muted">{{
+                      profileEmp?.department
+                    }}</small>
+                    <div class="staff-id">{{ profileEmp?.employeeId }}</div>
+                    <div class="small doj text-muted">
+                      {{ profileEmp?.joinDate }}
                     </div>
                     <div class="staff-msg">
                       <a class="btn btn-custom" routerLink="/layout/apps/chat"
@@ -482,7 +427,6 @@
                       <div class="before-circle"></div>
                     </div>
                     <!-- <div class="experience-content">
-
                                             <div class="timeline-content">
                                                 <a href="#/" class="name">Web Designer at Ron-tech</a>
                                                 <span class="time">Jan 2013 - Present (5 years 2 months)</span>
@@ -913,12 +857,16 @@
           <div class="row">
             <div class="col-md-12">
               <div class="profile-img-wrap edit-img">
-                <img class="inline-block" src="{{ profileImagePath }}" alt="No IMAGE">
-
+                <img
+                  class="inline-block"
+                  src="{{profileImagePath}}"
+                  alt="user"
+                />
                 <div class="fileupload btn">
                   <span class="btn-text">Edit</span>
                   <input
                     class="upload"
+                    style="width: 600px"
                     type="file"
                     formControlName="profileImage"
                     (change)="selectProfilePhoto($event)"
@@ -1099,7 +1047,28 @@
                   class="form-control"
                   value="631-889-3206"
                   formControlName="phone"
+                  maxlength="10"
+                  minlength="10"
                 />
+                <ng-container
+                  *ngIf="
+                    editProfileForm.get('phone').invalid &&
+                    editProfileForm.get('phone').touched
+                  "
+                >
+                  <small
+                    *ngIf="editProfileForm.get('phone').errors.required"
+                    class="text-danger"
+                  >
+                    Phone Number is Required.
+                  </small>
+                  <small
+                    *ngIf="editProfileForm.get('phone').errors.pattern"
+                    class="text-danger"
+                  >
+                    Invalid Phone Number.
+                  </small>
+                </ng-container>
               </div>
             </div>
             <div class="col-md-6">
@@ -1161,29 +1130,38 @@
                 </small>
               </div>
             </div>
-
             <div class="col-md-6">
-              <mat-form-field>
-                <mat-label>Reports to</mat-label>
-                <input
-                  type="text"
-                  placeholder="Pick one employee"
-                  aria-label="Number"
-                  matInput
-                  [formControl]="myControl"
-                  [matAutocomplete]="auto"
-                />
-                <mat-autocomplete #auto="matAutocomplete">
-                  <mat-option
-                    *ngFor="let option of filteredOptions | async"
-                    [value]="option"
+                <div class="form-group">
+                  <label>Reports To <span class="text-danger">*</span></label>
+                  <select
+                    class="form-select form-control"
+                    [class.invalid]="
+                      editProfileForm.get('designation').invalid &&
+                      editProfileForm.get('designation').touched
+                    "
+                    formControlName="designation"
                   >
-                    {{ option }}
-                  </mat-option>
-                </mat-autocomplete>
-              </mat-form-field>
-=
-            </div>
+                    <option>Select Designation</option>
+  
+                    <option *ngFor="let designation of designations">
+                      {{ designation.designation }}
+                    </option>
+                  </select>
+                </div>
+  
+                <div>
+                  <small
+                    *ngIf="
+                      editProfileForm.get('designation').invalid &&
+                      editProfileForm.get('designation').touched
+                    "
+                    class="text-danger"
+                    >* Designation is required
+                  </small>
+                </div>
+              </div>
+              
+            
           </div>
           <div class="submit-section">
             <button class="btn btn-primary submit-btn">Submit</button>
@@ -1664,56 +1642,6 @@
               </div>
             </div>
 
-            <div class="modal-body">
-                <form [formGroup]="editFamilyForm" (ngSubmit)="editFamilyInfo()">
-                    <div class="form-scroll" formArrayName="items">
-                        <!-- <ng-container [formGroupName]="i"> -->
-                        <div class="card" *ngFor="let item of editFamilyForm.get('items')['controls']; let i=index"
-                            [formGroupName]="i">
-                            <div class="card-body">
-
-                                <h3 class="card-title">Family Member <a class="delete-icon"><i class="fa fa-trash-o"
-                                            (click)="removeItems(i)"></i></a></h3>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Name <span class="text-danger">*</span></label>
-                                            <input #name class="form-control" type="text" formControlName="name">
-
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Relationship <span class="text-danger">*</span></label>
-                                            <input #relationship class="form-control" type="text"
-                                                formControlName="relationship">
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Date of birth <span class="text-danger">*</span></label>
-                                            <input #dateOfBirth class="form-control datetimepicker" type="text"
-                                                bsDatepicker type="text"
-                                                [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                formControlName="dateOfBirth">
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Phone <span class="text-danger">*</span></label>
-                                            <input #phone class="form-control" type="text" formControlName="phone"
-                                                (keyup)="checkfamily(name.value,relationship.value,dateOfBirth.value,phone.value)">
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
             <!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
             <!-- <div class="card">
                             <div class="card-body">
@@ -1764,7 +1692,6 @@
           </div>
         </form>
       </div>
-
     </div>
   </div>
 </div>
@@ -1996,7 +1923,6 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
           <div class="submit-section">
@@ -2145,77 +2071,6 @@
               </div>
             </div>
 
-            <div class="modal-body">
-                <form [formGroup]="editEducationForm" (ngSubmit)="editEducationinfo()">
-                    <div class="form-scroll" formArrayName="items1">
-                        <div class="card" *ngFor="let item1 of editEducationForm.get('items1')['controls']; let i=index"
-                            [formGroupName]="i">
-                            <div class="card-body">
-                                <h3 class="card-title">Education Informations <a class="delete-icon"
-                                        (click)=" removeItemsEducation(i)"><i class="fa fa-trash-o"></i></a></h3>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus focused">
-                                            <input #val1 type="text" value="Oxford University"
-                                                class="form-control floating" formControlName="institution">
-                                            <label class="focus-label">Institution</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus focused">
-                                            <input #val2 type="text" value="Computer Science"
-                                                class="form-control floating" formControlName="subject"> <label
-                                                class="focus-label">Subject</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus focused">
-                                            <div class="cal-icon">
-                                                <input #val3 class="form-control datetimepicker" type="text"
-                                                    bsDatepicker type="text"
-                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    value="01/05/2006" formControlName="startingDate">
-                                            </div>
-                                            <label class="focus-label">Starting Date</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus focused">
-                                            <div class="cal-icon">
-                                                <input #val4 class="form-control datetimepicker" type="text"
-                                                    bsDatepicker type="text"
-                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    value="31/05/2006" formControlName="completeDate">
-                                            </div>
-                                            <label class="focus-label">Complete Date</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus focused">
-                                            <input #val5 type="text" value="BE Computer Science"
-                                                class="form-control floating" formControlName="degree">
-                                            <label class="focus-label">Degree</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group form-focus focused">
-                                            <input #val6 type="text" value="Grade A" class="form-control floating"
-                                                (change)="eduShow(val1.value,val2.value,val3.value,val4.value,val5.value,val6.value)"
-                                                formControlName="grade">
-                                            <label class="focus-label">Grade</label>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
             <!-- <div class="card">
                             <div class="card-body">
                                 <h3 class="card-title">Education Informations <a class="delete-icon"><i
@@ -2281,7 +2136,6 @@
           </div>
         </form>
       </div>
-
     </div>
   </div>
 </div>
@@ -2406,71 +2260,6 @@
               </div>
             </div>
 
-            <div class="modal-body">
-                <form [formGroup]="editExpForm" (ngSubmit)="editExpInfo()">
-                    <div class="form-scroll" formArrayName="itemsExp">
-                        <div class="card" *ngFor="let item of editExpForm.get('itemsExp')['controls']; let i=index"
-                            [formGroupName]="i">
-                            <div class="card-body">
-                                <h3 class="card-title">Experience Informations <a (click)="removeItemsExp(i)"
-                                        class="delete-icon"><i class="fa fa-trash-o"></i></a></h3>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <input #val1 type="text" class="form-control floating"
-                                                formControlName="companyName"> <label class="focus-label">Company
-                                                Name</label>
-
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <input #val2 type="text" class="form-control floating"
-                                                formControlName="location">
-
-                                            <label class="focus-label">Location</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <input #val3 type="text" class="form-control floating"
-                                                formControlName="jobPosition">
-                                            <label class="focus-label">Job Position</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <div class="cal-icon">
-                                                <input #val4 type="text" bsDatepicker type="text"
-                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    class="form-control floating datetimepicker"
-                                                    formControlName="periodFrom">
-                                            </div>
-                                            <label class="focus-label">Period From</label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group ">
-                                            <div class="cal-icon">
-                                                <input #val5 type="text" bsDatepicker type="text"
-                                                    (ngModelChange)="expShow(val1.value,val2.value,val3.value,val4.value,val5.value)"
-                                                    [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                                    class="form-control floating datetimepicker"
-                                                    formControlName="periodTo">
-                                            </div>
-                                            <label class="focus-label">Period To</label>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
             <!-- <div class="card">
                             <div class="card-body">
                                 <h3 class="card-title">Experience Informations <a class="delete-icon"><i
@@ -2529,31 +2318,7 @@
           </div>
         </form>
       </div>
-
     </div>
   </div>
 </div>
 <!-- /Experience Modal -->
-
-<div class="example-form">
-  <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Number</mat-label>
-    <input
-      type="text"
-      placeholder="Pick one"
-      aria-label="Number"
-      matInput
-      [formControl]="myControl"
-      [matAutocomplete]="auto"
-    />
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option
-        *ngFor="let option of filteredOptions | async"
-        [value]="option"
-      >
-        {{ option }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</div>
-
