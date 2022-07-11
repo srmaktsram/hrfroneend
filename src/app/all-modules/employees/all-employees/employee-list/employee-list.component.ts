@@ -143,16 +143,16 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   public getDepartments() {
     this.http
-    .get("http://localhost:8443/admin/department/getAdminData"+"/"+this.adminId)
-    .subscribe((data) => {
+      .get("http://localhost:8443/admin/department/getAdminData" + "/" + this.adminId)
+      .subscribe((data) => {
         this.departments = data;
       });
   }
   public getDesignation() {
     this.http
-      .get("http://localhost:8443/admin/designation/getData"+
-      "/" +
-      this.adminId)
+      .get("http://localhost:8443/admin/designation/getData" +
+        "/" +
+        this.adminId)
       .subscribe((data) => {
         this.designations = data;
       });
