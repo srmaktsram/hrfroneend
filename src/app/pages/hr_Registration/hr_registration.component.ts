@@ -11,7 +11,6 @@ import { CookieService } from "ngx-cookie-service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
-
 @Component({
   selector: "app-hr_registration",
   templateUrl: "./hr_registration.component.html",
@@ -141,15 +140,13 @@ export class HrregistrationComponent implements OnInit {
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
 
-
-
     };
-
 
     this.http
       .post("http://localhost:8443/mainadmin/create/registration", obj)
       .subscribe((res: any) => {
-        window.location.replace("https://srmak.org");
+        window.location.replace("http://localhost:4200");
+
         this.hrUserAuthenticationService.login(
           res.id,
           res.corporateId,
@@ -170,29 +167,25 @@ export class HrregistrationComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
+        console.log(res);
         if (res.result == 2) {
 
           if (res.data.status !== "Blocked") {
 
+            window.location.replace("http://localhost:4200");
 
-          window.location.replace("http://localhost:4200")
-
-
-          this.hrUserAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone
-          );
-
-
-        }
-        else {
-          alert("Account Blocked By Main Admin");
-        }
-      } else {
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone
+            );
+          } else {
+            alert("Account Blocked By Main Admin");
+          }
+        } else {
 
           alert("wrong Id or pass");
         }

@@ -4,14 +4,15 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
+import { RoleAdminAuthenticationService } from "src/app/core/storage/authentication-roleadmin.service";
 import { AuthenticationService } from "src/app/core/storage/authentication.service";
 
 @Component({
-  selector: "app-login",
+  selector: "app-rolesubadmin",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
-export class LoginComponent implements OnInit {
+export class RoleSubAdminComponent implements OnInit {
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -27,7 +28,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private adminAuthenticationService: AdminAuthenticationService
+    private roleAdminAuthenticationService: RoleAdminAuthenticationService
   ) {}
 
   ngOnInit() {}
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
     let password = this.form.value.password;
 
     this.http
-      .post("http://localhost:8443/auth/register/login", {
+      .post("http://localhost:8443/auth/rolelogin/roleadmin", {
         email,
         password,
       })
@@ -53,7 +54,8 @@ export class LoginComponent implements OnInit {
         if (res.result == 2) {
           this.router.navigate(["/layout/dashboard/admin"]);
 
-          this.adminAuthenticationService.login(
+          this.roleAdminAuthenticationService.login(
+            "rolesubadmin",
             res.data.id,
             res.data.corporateId,
             res.data.companyEmail,
