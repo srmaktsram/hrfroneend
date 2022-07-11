@@ -427,7 +427,7 @@
                     urlComplete.mainUrl === 'dashboard' ? 'block' : 'none'
                 }"
               >
-                <ng-container *ngIf="user_type == 'admin'">
+                <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
                   <li routerLink="/layout/dashboard/admin">
                     <a
                       [ngClass]="{ active: urlComplete.subUrl === 'admin' }"
@@ -656,7 +656,7 @@
                       : 'none'
                 }"
               >
-                <ng-container *ngIf="user_type == 'admin'">
+                <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
                   <li routerLink="/layout/employees/employeelist">
                     <a
                       href="javascript:"
@@ -671,7 +671,7 @@
                 </ng-container>
                 <ng-container
                   *ngIf="
-                    user_type == 'admin' ||
+                    user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist' ||
                     (user_type === 'employee' &&
                       (holidaysread === 'true' || holidayswrite === 'true'))
                   "
@@ -684,7 +684,7 @@
                     >
                   </li>
                 </ng-container>
-                <ng-container *ngIf="user_type == 'admin'">
+                <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
                   <li routerLink="/layout/employees/adminleaves">
                     <a
                       href="javascript:"
@@ -714,7 +714,7 @@
                     >
                   </li>
                 </ng-container>
-                <ng-container *ngIf="user_type == 'admin'">
+                <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
                   <li routerLink="/layout/employees/leavesettings">
                     <a
                       href="javascript:"
@@ -725,7 +725,7 @@
                     >
                   </li>
                 </ng-container>
-                <ng-container *ngIf="user_type == 'admin'">
+                <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
                   <li routerLink="/layout/employees/attendanceadmin">
                     <a
                       href="javascript:"
@@ -752,7 +752,7 @@
                     >
                   </li>
                 </ng-container>
-                <ng-container *ngIf="user_type == 'admin'">
+                <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
                   <li routerLink="/layout/employees/departments">
                     <a
                       href="javascript:"
@@ -763,7 +763,7 @@
                     >
                   </li>
                 </ng-container>
-                <ng-container *ngIf="user_type == 'admin'">
+                <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
                   <li routerLink="/layout/employees/designation">
                     <a
                       href="javascript:"
@@ -788,7 +788,7 @@
                     >
                   </li>
                 </ng-container>
-                <ng-container *ngIf="user_type == 'admin'">
+                <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
                   <li routerLink="/layout/scheduling/shift-scheduling">
                     <a
                       href="javascript:"
@@ -801,7 +801,7 @@
                     >
                   </li>
                 </ng-container>
-                <ng-container *ngIf="user_type == 'admin'">
+                <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
                   <li routerLink="/layout/employees/overtime">
                     <a
                       href="javascript:"
@@ -812,7 +812,7 @@
                 </ng-container>
               </ul>
             </li>
-            <ng-container *ngIf="user_type == 'admin'">
+            <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
               <li
                 [ngClass]="{
                   active:
@@ -827,7 +827,7 @@
             </ng-container>
             <li
               *ngIf="
-                user_type == 'admin' ||
+                user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist' ||
                 (user_type === 'employee' &&
                   (clientsread === 'true' || clientswrite === 'true'))
               "
@@ -843,7 +843,7 @@
             </li>
             <li
               *ngIf="
-                user_type == 'admin' ||
+                user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist' ||
                 (user_type === 'employee' &&
                   (projectsread === 'true' || projectswrite === 'true'))
               "
@@ -874,7 +874,7 @@
                 ><i class="la la-ticket"></i> <span>Tickets</span></a
               >
             </li>
-            <ng-container *ngIf="user_type == 'admin'">
+            <ng-container *ngIf="user_type == 'admin'||user_type=='roleadmin'||user_type=='rolesubadmin'||user_type=='rolefinance'||user_type=='rolehr'||user_type=='rolemanager'||user_type=='rolereceptionist'">
               <li class="menu-title">
                 <span>HR</span>
               </li>

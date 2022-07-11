@@ -9,6 +9,12 @@ import { AdminLoginComponent } from "./adminlogin/login.component";
 import { ClientLoginComponent } from "./clientlogin/login.component";
 import { AffiliateLoginComponent } from "./affilatelogin/login.component";
 import { SubAdminLoginComponent } from "./subadmin/login.component";
+import { RoleSubAdminComponent } from "./rolesubadmin/login.component";
+import { RoleManagerComponent } from "./rolemanager/login.component";
+import { RoleFinanceComponent } from "./rolefinance/login.component";
+import { RoleAdminComponent } from "./roleadmin/login.component";
+import { RoleHrComponent } from "./rolehr/login.component";
+import { RoleReceptionistComponent } from "./rolereceptionist/login.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "adminlogin", pathMatch: "full" },
@@ -18,6 +24,12 @@ const routes: Routes = [
   { path: "mainadminlogin", component: AdminLoginComponent },
   { path: "subadminlogin", component: SubAdminLoginComponent },
   { path: "adminlogin", component: LoginComponent },
+  { path: "rolesubadmin", component: RoleSubAdminComponent },
+  { path: "rolemanager", component: RoleManagerComponent },
+  { path: "rolefinance", component: RoleFinanceComponent },
+  { path: "roleadmin", component: RoleAdminComponent },
+  { path: "rolereceptionist", component: RoleReceptionistComponent },
+  { path: "rolehr", component: RoleHrComponent },
   { path: "forgot", component: ForgotComponent },
   { path: "otp", component: OtpComponent },
   { path: "lockscreen", component: LockscreenComponent },
@@ -27,4 +39,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class LoginRoutingModule { }
+export class LoginRoutingModule {}

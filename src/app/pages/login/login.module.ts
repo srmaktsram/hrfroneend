@@ -13,6 +13,12 @@ import { AdminLoginComponent } from "./adminlogin/login.component";
 import { AffiliateLoginComponent } from "./affilatelogin/login.component";
 import { ClientLoginComponent } from "./clientlogin/login.component";
 import { SubAdminLoginComponent } from "./subadmin/login.component";
+import { RoleAdminComponent } from "./roleadmin/login.component";
+import { RoleFinanceComponent } from "./rolefinance/login.component";
+import { RoleHrComponent } from "./rolehr/login.component";
+import { RoleManagerComponent } from "./rolemanager/login.component";
+import { RoleSubAdminComponent } from "./rolesubadmin/login.component";
+import { RoleReceptionistComponent } from "./rolereceptionist/login.component";
 export const routes = [
   { path: "", component: LoginComponent, pathMatch: "full" },
   { path: "forgot", component: ForgotComponent, pathMatch: "" },
@@ -20,6 +26,7 @@ export const routes = [
 @NgModule({
   declarations: [
     LoginComponent,
+    RoleReceptionistComponent,
     ClientLoginComponent,
     AffiliateLoginComponent,
     SubAdminLoginComponent,
@@ -28,6 +35,11 @@ export const routes = [
     ForgotComponent,
     OtpComponent,
     LockscreenComponent,
+    RoleAdminComponent,
+    RoleFinanceComponent,
+    RoleHrComponent,
+    RoleManagerComponent,
+    RoleSubAdminComponent,
   ],
   imports: [
     CommonModule,
@@ -36,4 +48,4 @@ export const routes = [
     SharingModule,
   ],
 })
-export class LoginModule { }
+export class LoginModule {}
