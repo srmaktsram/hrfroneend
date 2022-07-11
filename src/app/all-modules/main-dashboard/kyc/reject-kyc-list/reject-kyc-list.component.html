@@ -12,40 +12,27 @@
           <li class="breadcrumb-item active">Rejected Kyc</li>
         </ul>
       </div>
+
       <div class="col-auto float-end ms-auto">
         <div class="view-icons">
-          <a
-              routerLink="/layout/mainadmin/pendingkyc/pendingkyc"
-              class="list-view btn btn-link active"
-              ><i class="fa fa-bars"></i
-            ></a>
-            <a
-              routerLink="/layout/mainadmin/verifykyc/verifykyc"
-              class="list-view btn btn-link active"
-              ><i class="fa fa-bars"></i
-            ></a>
-            <a
-              routerLink="/layout/mainadmin/rejectkyc/rejectkyc"
-              class="list-view btn btn-link active"
-              ><i class="fa fa-bars"></i
-            ></a>
+          <a routerLink="/layout/mainadmin/pendingkyc/pendingkyc" class="list-view btn btn-link active"><i
+              class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/verifykyc/verifykyc" class="list-view btn btn-link active"><i
+              class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/rejectkyc/rejectkyc" class="list-view btn btn-link active"><i
+              class="fa fa-bars"></i></a>
         </div>
       </div>
     </div>
   </div>
   <!-- /Page Header -->
 
-  
+
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
-        <table
-          datatable
-          [dtOptions]="dtOptions"
-          [dtTrigger]="dtTrigger"
-          id="datatable"
-          class="table table-striped custom-table datatable"
-        >
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
+          class="table table-striped custom-table datatable">
           <thead>
             <tr>
               <th>Sr.no.</th>
@@ -70,20 +57,20 @@
               <td>{{ item.aadhaarCardNo }}</td>
               <td>
                 <ng-container *ngIf="item.panVerified==3">
-                  <td class="text-danger">Rejected</td>
-                </ng-container>
-                <ng-container *ngIf="item.panVerified==2">
-                  <td class="text-success">Approved</td>
-                </ng-container>
-                </td>
+              <td class="text-danger">Rejected</td>
+              </ng-container>
+              <ng-container *ngIf="item.panVerified==2">
+                <td class="text-success">Approved</td>
+              </ng-container>
+              </td>
               <td>
                 <ng-container *ngIf="item.aadhaarVerified==3">
-                  <td class="text-danger">Rejected</td>
-                </ng-container>
-                <ng-container *ngIf="item.aadhaarVerified==2">
-                  <td class="text-success">Approved</td>
-                </ng-container>
-                </td>
+              <td class="text-danger">Rejected</td>
+              </ng-container>
+              <ng-container *ngIf="item.aadhaarVerified==2">
+                <td class="text-success">Approved</td>
+              </ng-container>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -92,4 +79,3 @@
   </div>
 </div>
 <!-- /Page Content -->
-

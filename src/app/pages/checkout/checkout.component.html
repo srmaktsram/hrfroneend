@@ -52,23 +52,23 @@
                                 <div class="col-sm-4 text-center">
                                     <span id="ContentPlaceHolder1_Label2">Corporate ID:-</span>
                                 </div>
-                                <div class="col-sm-5"  style="display:flex;">
+                                <div class="col-sm-5" style="display:flex;">
 
-                                    <input #corpoId  type="text" 
-                                        class="form-control" 
-                                        value="{{corporateId}}" maxlength="15" style="font-size: small; width: 150px;" />
-                                        <div  >
-                                            <button  class="btn-primary checkId "  (click)="fillData(corpoId.value)">Check Id</button>
-            
-                                        </div>
+                                    <input #corpoId type="text" class="form-control" value="{{corporateId}}"
+                                        maxlength="15" style="font-size: small; width: 150px;" />
+                                    <div>
+                                        <button class="btn-primary checkId " (click)="fillData(corpoId.value)">Check
+                                            Id</button>
+
+                                    </div>
                                 </div>
 
 
 
 
 
-                          
-                        
+
+
 
                             </div>
 
@@ -156,25 +156,25 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-sm-8 ok">
                                     <textarea name="ctl00$ContentPlaceHolder1$add_text"
                                         id="ContentPlaceHolder1_add_text" class="form-control" formControlName="address"
-                                        placeholder="Address..." aria-multiline="true"></textarea>
-
+                                        placeholder="Address..." aria-multiline="true" minlength="2"></textarea>
                                     <ng-container
                                         *ngIf="checkoutForm.get('address').invalid && checkoutForm.get('address').touched">
                                         <p *ngIf="checkoutForm.get('address').errors.required" style="color:red">
-                                            Address
-                                            Name is Required.
-                                        </p>
-                                        <p *ngIf="checkoutForm.get('address').errors.whitespace ||checkoutForm.get('address').errors.minlength"
-                                            style="color:red">Address must be Vailid
+                                            Address is Required.
+                                            <ng-container *ngIf="checkoutForm.get('address').whitespace">
+                                                <p style="color:red">
+                                                    Address must be Valid
+                                                </p>
+                                            </ng-container>
                                         </p>
                                     </ng-container>
                                 </div>
 
                             </div>
-
 
                             <div class="row">
                                 <div class="col-sm-4">

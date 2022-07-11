@@ -14,26 +14,14 @@
       </div>
       <div class="col-auto float-end ms-auto">
         <div class="view-icons">
-          <a
-            routerLink="/layout/mainadmin/clients/freeClients"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <a
-            routerLink="/layout/mainadmin/clients/visitorclients"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <a
-            routerLink="/layout/mainadmin/clients/premiumclients"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <a
-          routerLink="/layout/mainadmin/clients/blockedclients"
-          class="list-view btn btn-link active"
-          ><i class="fa fa-bars"></i
-        ></a>
+          <a routerLink="/layout/mainadmin/clients/freeClients" class="list-view btn btn-link active"
+            title="Free Clients"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/clients/visitorclients" class="list-view btn btn-link active"
+            title="Visitor Clients"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/clients/premiumclients" class="list-view btn btn-link active"
+            title="Premium Clients"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/clients/blockedclients" class="list-view btn btn-link active"
+            title="Blocked Clients"><i class="fa fa-bars"></i></a>
         </div>
       </div>
     </div>
@@ -55,31 +43,18 @@
     </div> -->
     <div class="col-sm-6 col-md-3">
       <div class="form-group form-focus">
-        <input
-          type="text"
-          class="form-control floating"
-          #clientn
-          (input)="searchByName($event.target.value)"
-        />
+        <input type="text" class="form-control floating" #clientn (input)="searchByName($event.target.value)" />
         <label class="focus-label">Search by user details</label>
       </div>
     </div>
     <div class="col-sm-6 col-md-3">
       <div class="form-group form-focus">
-        <input
-          type="text"
-          class="form-control floating"
-          #companyn
-          (input)="searchByCorporateId($event.target.value)"
-        />
+        <input type="text" class="form-control floating" #companyn (input)="searchByCorporateId($event.target.value)" />
         <label class="focus-label">Enter Corporate ID</label>
       </div>
     </div>
     <div class="col-sm-6 col-md-3">
-      <a
-        class="btn btn-success w-100"
-        (click)="onSearch(clientn.value, companyn.value)"
-      >
+      <a class="btn btn-success w-100" (click)="onSearch(clientn.value, companyn.value)">
         Search
       </a>
     </div>
@@ -89,13 +64,8 @@
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
-        <table
-          datatable
-          [dtOptions]="dtOptions"
-          [dtTrigger]="dtTrigger"
-          id="datatable"
-          class="table table-striped custom-table datatable"
-        >
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
+          class="table table-striped custom-table datatable">
           <thead>
             <!-- <th>Company Name</th>
             <th>Company Email</th>
@@ -122,60 +92,34 @@
               <td>{{ client.phone }}</td>
               <td>
                 <div class="dropdown action-label">
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
+                  <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     <i class="fa fa-dot-circle-o text-success">{{
                       client.status
-                    }}</i>
+                      }}</i>
                   </a>
                   <div class="dropdown-menu">
-                    <a
-                      class="dropdown-item"
-                      (click)="getStatus('Free', client.id)"
-                      ><i class="fa fa-dot-circle-o text-success"></i> Free</a
-                    >
-                    <a
-                      class="dropdown-item"
-                      (click)="getStatus('Visitor', client.id)"
-                      ><i class="fa fa-dot-circle-o text-danger"></i> Visitor</a
-                    >
-                    <a
-                      class="dropdown-item"
-                      (click)="getStatus('Premium', client.id)"
-                      ><i class="fa fa-dot-circle-o text-success"></i>
-                      Premium</a
-                    >
+                    <a class="dropdown-item" (click)="getStatus('Free', client.id)"><i
+                        class="fa fa-dot-circle-o text-success"></i> Free</a>
+                    <a class="dropdown-item" (click)="getStatus('Visitor', client.id)"><i
+                        class="fa fa-dot-circle-o text-danger"></i> Visitor</a>
+                    <a class="dropdown-item" (click)="getStatus('Premium', client.id)"><i
+                        class="fa fa-dot-circle-o text-success"></i>
+                      Premium</a>
                   </div>
                 </div>
               </td>
               <td class="text-end">
                 <div class="dropdown dropdown-action">
-                  <a
-                    class="action-icon dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    ><i class="material-icons">more_vert</i></a
-                  >
+                  <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
+                      class="material-icons">more_vert</i></a>
                   <div class="dropdown-menu dropdown-menu-right">
-                    <a
-                      class="dropdown-item"
-                      data-bs-toggle="modal"
-                      data-bs-target="#edit_client"
-                      (click)="onEditClient(client.id)"
-                      ><i class="fa fa-pencil m-r-5"></i> Edit</a
-                    >
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_client"
+                      (click)="onEditClient(client.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                   </div>&nbsp;
                   <div class="d-inline p-2 bg-primary text-white">
-                    <a
-                      data-bs-toggle="modal"
-                      data-bs-target="#login_as_user"
-                      (click)="adminlogin(client.id)"
-                    >
-                      Login as User</a
-                    >
+                    <a data-bs-toggle="modal" data-bs-target="#login_as_user" (click)="adminlogin(client.id)">
+                      Login as User</a>
                   </div>
                 </div>
               </td>
@@ -670,12 +614,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Edit Client</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -684,44 +623,27 @@
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-form-label"
-                  >First Name <span class="text-danger">*</span></label
-                >
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
+                <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" [class.invalid]="
                     editClientForm.get('firstName').invalid &&
                     editClientForm.get('firstName').touched
-                  "
-                  formControlName="firstName"
-                />
-                <div
-                  *ngIf="
+                  " formControlName="firstName" />
+                <div *ngIf="
                     editClientForm.get('firstName').invalid &&
                     editClientForm.get('firstName').touched
-                  "
-                >
-                  <small
-                    *ngIf="
+                  ">
+                  <small *ngIf="
                       editClientForm.get('firstName').invalid &&
                       editClientForm.get('firstName').touched
-                    "
-                    class="text-danger"
-                  >
-                    *First Name is required</small
-                  >
+                    " class="text-danger">
+                    *First Name is required</small>
                 </div>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-form-label">Last Name</label>
-                <input
-                  class="form-control"
-                  formControlName="lastName"
-                  type="text"
-                />
+                <input class="form-control" formControlName="lastName" type="text" />
               </div>
             </div>
             <!-- <div class="col-md-6">
@@ -738,67 +660,42 @@
             </div> -->
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-form-label"
-                  >Email <span class="text-danger">*</span></label
-                >
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
+                <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" [class.invalid]="
                     editClientForm.get('editClientEmail').invalid &&
                     editClientForm.get('editClientEmail').touched
-                  "
-                  formControlName="editClientEmail"
-                />
-                <div
-                  *ngIf="
+                  " formControlName="editClientEmail" />
+                <div *ngIf="
                     editClientForm.get('editClientEmail').invalid &&
                     editClientForm.get('editClientEmail').touched
-                  "
-                >
-                  <small
-                    *ngIf="
+                  ">
+                  <small *ngIf="
                       editClientForm.get('editClientEmail').invalid &&
                       editClientForm.get('editClientEmail').touched
-                    "
-                    class="text-danger"
-                  >
-                    *Email is required</small
-                  >
+                    " class="text-danger">
+                    *Email is required</small>
                 </div>
               </div>
             </div>
 
-            
+
             <div class="col-md-6">
               <div class="form-group">
-                <label class="col-form-label"
-                  >Phone <span class="text-danger">*</span>
+                <label class="col-form-label">Phone <span class="text-danger">*</span>
                 </label>
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
+                <input class="form-control" type="text" [class.invalid]="
                     editClientForm.get('editClientPhone').invalid &&
                     editClientForm.get('editClientPhone').touched
-                  "
-                  formControlName="editClientPhone"
-                />
-                <div
-                  *ngIf="
+                  " formControlName="editClientPhone" />
+                <div *ngIf="
                     editClientForm.get('editClientPhone').invalid &&
                     editClientForm.get('editClientPhone').touched
-                  "
-                >
-                  <small
-                    *ngIf="
+                  ">
+                  <small *ngIf="
                       editClientForm.get('editClientPhone').invalid &&
                       editClientForm.get('editClientPhone').touched
-                    "
-                    class="text-danger"
-                  >
-                    *Phone is required</small
-                  >
+                    " class="text-danger">
+                    *Phone is required</small>
                 </div>
               </div>
             </div>
@@ -863,9 +760,7 @@
               <a class="btn btn-primary continue-btn">Delete</a>
             </div>
             <div class="col-6">
-              <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn"
-                >Cancel</a
-              >
+              <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
             </div>
           </div>
         </div>
@@ -874,4 +769,3 @@
   </div>
 </div>
 <!-- /Delete Client Modal -->
-

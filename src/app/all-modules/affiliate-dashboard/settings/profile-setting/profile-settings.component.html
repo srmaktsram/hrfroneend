@@ -18,37 +18,35 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>First Name <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" 
-                                [class.invalid]="profileSettings.get('firstName').invalid && profileSettings.get('firstName').touched"
-                                formControlName="firstName">
-                            <div
+                            <input class="form-control" type="text" formControlName="firstName" maxlength="20">
+                            <ng-container
                                 *ngIf="profileSettings.get('firstName').invalid && profileSettings.get('firstName').touched">
-                                <small
-                                    *ngIf="profileSettings.get('firstName').invalid && profileSettings.get('firstName').touched"
-                                    class="text-danger"> *Name is required</small>
-                            </div>
+                                <small *ngIf="profileSettings.get('firstName').errors.required" class="text-danger">
+                                    *First Name is required</small>
+                                <small *ngIf="profileSettings.get('firstName').errors.pattern" class="text-danger">
+                                    * Invalid First Name</small>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Last Name <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text" 
-                                [class.invalid]="profileSettings.get('lastName').invalid && profileSettings.get('lastName').touched"
-                                formControlName="lastName">
-                            <div
+                            <input class="form-control" type="text" formControlName="lastName" maxlength="20">
+                            <ng-container
                                 *ngIf="profileSettings.get('lastName').invalid && profileSettings.get('lastName').touched">
-                                <small
-                                    *ngIf="profileSettings.get('lastName').invalid && profileSettings.get('lastName').touched"
-                                    class="text-danger"> *Last name is required</small>
-                            </div>
+                                <small *ngIf="profileSettings.get('lastName').errors.required" class="text-danger">
+                                    *Last Name is required</small>
+                                <small *ngIf="profileSettings.get('lastName').errors.pattern" class="text-danger">
+                                    * Invalid Last Name</small>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Address</label>
-                            <input class="form-control "  type="text"
+                            <input class="form-control " type="text"
                                 [class.invalid]="profileSettings.get('address').invalid && profileSettings.get('address').touched"
-                                formControlName="address" >
+                                formControlName="address">
                             <div
                                 *ngIf="profileSettings.get('address').invalid && profileSettings.get('address').touched">
                                 <small
@@ -57,58 +55,58 @@
                             </div>
                         </div>
                     </div>
-              
-                
+
+
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Country</label>
-                            <input class="form-control"
-                                type="text"
-                                [class.invalid]="profileSettings.get('country').invalid && profileSettings.get('country').touched"
-                                formControlName="country" >
-                            <div
+                            <input class="form-control" type="text" formControlName="country" maxlength="30">
+                            <ng-container
                                 *ngIf="profileSettings.get('country').invalid && profileSettings.get('country').touched">
-                                <small
-                                    *ngIf="profileSettings.get('country').invalid && profileSettings.get('country').touched"
-                                    class="text-danger"> *Country is required</small>
-                            </div>
+                                <small *ngIf="profileSettings.get('country').errors.required" class="text-danger">
+                                    *country is required</small>
+                                <small *ngIf="profileSettings.get('country').errors.pattern" class="text-danger">
+                                    * Invalid country Name</small>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>State</label>
-                            <input class="form-control"
-                                [class.invalid]="profileSettings.get('state').invalid && profileSettings.get('state').touched"
-                                formControlName="state" >
-                                
-                            <div
+                            <input class="form-control" formControlName="state" maxlength="30">
+
+                            <ng-container
                                 *ngIf="profileSettings.get('state').invalid && profileSettings.get('state').touched">
-                                <small
-                                    *ngIf="profileSettings.get('state').invalid && profileSettings.get('state').touched"
-                                    class="text-danger"> *State is required</small>
-                            </div>
+                                <small *ngIf="profileSettings.get('state').errors.required" class="text-danger">
+                                    *State is required</small>
+                                <small *ngIf="profileSettings.get('state').errors.pattern" class="text-danger">
+                                    * Invalid State Name</small>
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>City</label>
-                            <input class="form-control"  type="text"
-                                [class.invalid]="profileSettings.get('city').invalid && profileSettings.get('city').touched"
-                                formControlName="city" >
-                            <div *ngIf="profileSettings.get('city').invalid && profileSettings.get('city').touched">
-                                <small
-                                    *ngIf="profileSettings.get('city').invalid && profileSettings.get('city').touched"
-                                    class="text-danger"> *city is required</small>
-                            </div>
+                            <input class="form-control" type="text" formControlName="city" maxlength="30">
+
+                            <ng-container
+                                *ngIf="profileSettings.get('city').invalid && profileSettings.get('city').touched">
+                                <small *ngIf="profileSettings.get('city').errors.required" class="text-danger">
+                                    *City is required</small>
+                                <small *ngIf="profileSettings.get('city').errors.pattern" class="text-danger">
+                                    * Invalid City Name</small>
+                            </ng-container>
+
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Pin Code</label>
-                            <input class="form-control"  type="text"
+                            <input class="form-control" type="text"
                                 [class.invalid]="profileSettings.get('city').invalid && profileSettings.get('city').touched"
-                                formControlName="pinCode" >
-                            <div *ngIf="profileSettings.get('pinCode').invalid && profileSettings.get('pinCode').touched">
+                                formControlName="pinCode">
+                            <div
+                                *ngIf="profileSettings.get('pinCode').invalid && profileSettings.get('pinCode').touched">
                                 <small
                                     *ngIf="profileSettings.get('pinCode').invalid && profileSettings.get('pinCode').touched"
                                     class="text-danger"> *Pin Code is required</small>
@@ -118,36 +116,40 @@
                     <div class="col-sm-6 ">
                         <div class="form-group">
                             <label>Email</label>
-                            <input class="form-control"
-                                [class.invalid]="profileSettings.get('email').invalid && profileSettings.get('email').touched"
-                                formControlName="email">
-                                
-                            <div *ngIf="profileSettings.get('email').invalid && profileSettings.get('email').touched">
+                            <input class="form-control" formControlName="email">
+                            <ng-container
+                                *ngIf="profileSettings.get('email').invalid && profileSettings.get('email').touched">
+                                <small *ngIf="profileSettings.get('email').errors.required " class="text-danger"> *Email
+                                    is
+                                    required</small>
                                 <small
-                                    *ngIf="profileSettings.get('email').invalid && profileSettings.get('email').touched"
-                                    class="text-danger"> *Email is required</small>
-                            </div>
+                                    *ngIf="profileSettings.get('email').errors.email || profileSettings.get('email').whitespace"
+                                    class="text-danger"> *Invalid Email Address</small>
+                            </ng-container>
+
                         </div>
                     </div>
                     <div class="col-sm-6 ">
                         <div class="form-group">
                             <label>Phone</label>
-                            <input class="form-control"
-                                [class.invalid]="profileSettings.get('phone').invalid && profileSettings.get('phone').touched"
-                                formControlName="phone">
-                                
-                            <div *ngIf="profileSettings.get('phone').invalid && profileSettings.get('phone').touched">
-                                <small
-                                    *ngIf="profileSettings.get('phone').invalid && profileSettings.get('phone').touched"
-                                    class="text-danger"> *Phone is required</small>
-                            </div>
+                            <input class="form-control" formControlName="phone" maxlength="10" minlength="10">
+                            <ng-container
+                                *ngIf="profileSettings.get('phone').invalid && profileSettings.get('phone').touched">
+                                <small *ngIf="profileSettings.get('phone').errors.required" class="text-danger"> *Phone
+                                    is
+                                    required</small>
+                                <small *ngIf="profileSettings.get('phone').errors.pattern" class="text-danger"> *Invalid
+                                    Phone
+                                    Number</small>
+                            </ng-container>
+
                         </div>
                     </div>
-                  
+
                 </div>
-                
-               
-                
+
+
+
                 <div class="submit-section">
                     <button class="btn btn-primary submit-btn" (click)="updateProfileDetails()">Update</button>
                 </div>

@@ -1,43 +1,34 @@
 <!-- Page Content -->
 <div class="content container-fluid">
-    <!-- Page Header -->
-    <div class="page-header">
-      <div class="row align-items-center">
-        <div class="col">
-          <h3 class="page-title">Rejected Affiliate</h3>
-          <ul class="breadcrumb">
-            <li class="breadcrumb-item">
-              <a routerLink="/layout/mainadmin/admindashboard">Dashboard</a>
-            </li>
-            <li class="breadcrumb-item active">Rejected Affiliate</li>
-          </ul>
-        </div>
-        <div class="col-auto float-end ms-auto">
-          <div class="view-icons">
-            <a
-              routerLink="/layout/mainadmin/affiliates/demoaffiliate"
-              class="list-view btn btn-link active"
-              ><i class="fa fa-bars"></i
-            ></a>
-            <a
-              routerLink="/layout/mainadmin/affiliates/visitoraffiliate"
-              class="list-view btn btn-link active"
-              ><i class="fa fa-bars"></i
-            ></a>
-            <a
-              routerLink="/layout/mainadmin/affiliates/premiumaffiliate"
-              class="list-view btn btn-link active"
-              ><i class="fa fa-bars"></i
-            ></a>
-          </div>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">Rejected Affiliate</h3>
+        <ul class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a routerLink="/layout/mainadmin/admindashboard">Dashboard</a>
+          </li>
+          <li class="breadcrumb-item active">Rejected Affiliate</li>
+        </ul>
+      </div>
+      <div class="col-auto float-end ms-auto">
+        <div class="view-icons">
+          <a routerLink="/layout/mainadmin/affiliates/demoaffiliate" class="list-view btn btn-link active"
+            title="Pending Affiliate"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/affiliates/visitoraffiliate" class="list-view btn btn-link active"
+            title="Rejected Affiliate"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/affiliates/premiumaffiliate" class="list-view btn btn-link active"
+            title="Approved Affiliate"><i class="fa fa-bars"></i></a>
         </div>
       </div>
     </div>
-    <!-- /Page Header -->
-  
-    <!-- Search Filter -->
-    <div class="row filter-row">
-      <!-- <div class="col-sm-6 col-md-3">
+  </div>
+  <!-- /Page Header -->
+
+  <!-- Search Filter -->
+  <div class="row filter-row">
+    <!-- <div class="col-sm-6 col-md-3">
         <div class="form-group form-focus">
           <input
             type="text"
@@ -48,55 +39,38 @@
           <label class="focus-label">Client ID</label>
         </div>
       </div> -->
-      <div class="col-sm-6 col-md-3">
-        <div class="form-group form-focus">
-          <input
-            type="text"
-            class="form-control floating"
-            #clientn
-            (input)="searchByName($event.target.value)"
-          />
-          <label class="focus-label">Search by user details</label>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <div class="form-group form-focus select-focus">
-          <select
-            class="form-select floating form-control"
-            #companyn
-            
-          >
-            <option value="">Select Company</option>
-            <option *ngFor="let client of data">
-              {{ client.companyName }}
-            </option>
-          </select>
-          <label class="focus-label">Company</label>
-        </div>
-      </div>
-      <div class="col-sm-6 col-md-3">
-        <a
-          class="btn btn-success w-100"
-         
-        >
-          Search
-        </a>
+    <div class="col-sm-6 col-md-3">
+      <div class="form-group form-focus">
+        <input type="text" class="form-control floating" #clientn (input)="searchByName($event.target.value)" />
+        <label class="focus-label">Search by user details</label>
       </div>
     </div>
-    <!-- Search Filter -->
-  
-    <div class="row">
-      <div class="col-md-12">
-        <div class="table-responsive">
-          <table
-            datatable
-            [dtOptions]="dtOptions"
-            [dtTrigger]="dtTrigger"
-            id="datatable"
-            class="table table-striped custom-table datatable"
-          >
+    <div class="col-sm-6 col-md-3">
+      <div class="form-group form-focus select-focus">
+        <select class="form-select floating form-control" #companyn>
+          <option value="">Select Company</option>
+          <option *ngFor="let client of data">
+            {{ client.companyName }}
+          </option>
+        </select>
+        <label class="focus-label">Company</label>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-3">
+      <a class="btn btn-success w-100">
+        Search
+      </a>
+    </div>
+  </div>
+  <!-- Search Filter -->
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="table-responsive">
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
+          class="table table-striped custom-table datatable">
           <thead>
-            
+
 
 
             <tr>
@@ -105,7 +79,7 @@
               <th> Email</th>
               <th>job_title</th>
               <th>Mobile</th>
-             
+
               <th>state</th>
               <th>city</th>
               <th>country</th>
@@ -121,17 +95,10 @@
             <tr *ngFor="let client of data; let i = index">
               <td>
                 <h2 class="table-avatar">
-                  <a
-                    routerLink="/layout/affiliates/affiliateprofile/{{ client.id }}"
-                    class="avatar"
-                    ><img
-                      src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
-                      alt=""
-                  /></a>
-                  <a
-                    routerLink="/layout/affiliates/affiliateprofile/{{ client.id }}"
-                    >{{ client.first_name }} {{ client.last_name }}</a
-                  >
+                  <a routerLink="/layout/affiliates/affiliateprofile/{{ client.id }}" class="avatar"><img
+                      src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" alt="" /></a>
+                  <a routerLink="/layout/affiliates/affiliateprofile/{{ client.id }}">{{ client.first_name }} {{
+                    client.last_name }}</a>
                 </h2>
               </td>
               <td>{{ client.company }}</td>
@@ -143,143 +110,105 @@
               <td>{{ client.country }}</td>
               <td>
                 <div class="dropdown action-label">
-                  <a
-                    class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
+                  <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
                     <i class="fa fa-dot-circle-o text-danger">{{
                       client.status
-                    }}</i>
+                      }}</i>
                   </a>
                   <div class="dropdown-menu" *ngIf="
                   user_type == 'mainadmin' ||
                   (user_type === 'subadmin' &&
                     (affiliateswrite == 'true'))
                 ">
-                    <a
-                      class="dropdown-item"
-                      (click)="getStatus('Pending', client.id)"
-                      ><i class="fa fa-dot-circle-o text-center"></i> Pending</a
-                    >
-                    <a
-                      class="dropdown-item"
-                      (click)="getStatus('Approved', client.id)"
-                      ><i class="fa fa-dot-circle-o text-success "></i> Approved</a
-                    >
-                    <a
-                      class="dropdown-item"
-                      (click)="getStatus('Rejected', client.id)"
-                      ><i class="fa fa-dot-circle-o  text-danger"></i>
-                      Rejected</a
-                    >
+                    <a class="dropdown-item" (click)="getStatus('Pending', client.id)"><i
+                        class="fa fa-dot-circle-o text-center"></i> Pending</a>
+                    <a class="dropdown-item" (click)="getStatus('Approved', client.id)"><i
+                        class="fa fa-dot-circle-o text-success "></i> Approved</a>
+                    <a class="dropdown-item" (click)="getStatus('Rejected', client.id)"><i
+                        class="fa fa-dot-circle-o  text-danger"></i>
+                      Rejected</a>
                   </div>
                 </div>
               </td>
-              
-              
+
+
               <td class="text-end" *ngIf="
               user_type == 'mainadmin' ||
               (user_type === 'subadmin' &&
                 (affiliateswrite == 'true'))
             ">
                 <div class="dropdown dropdown-action">
-                  <a
-                    class="action-icon dropdown-toggle"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    ><i class="material-icons">more_vert</i></a
-                  >
+                  <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
+                      class="material-icons">more_vert</i></a>
                   <div class="dropdown-menu dropdown-menu-right">
-                    <a
-                      class="dropdown-item"
-                      data-bs-toggle="modal"
-                      data-bs-target="#edit_client"
-                      (click)="onEditClient(client.id)"
-                      ><i class="fa fa-pencil m-r-5"></i> edit</a
-                    >
-                    <a
-                    class="dropdown-item"
-                    
-                    (click)="deleteAffiliate(client.id)"
-                    ><i class="fa fa-pencil m-r-5"></i> Delete</a
-                  >
-                    
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_client"
+                      (click)="onEditClient(client.id)"><i class="fa fa-pencil m-r-5"></i> edit</a>
+                    <a class="dropdown-item" (click)="deleteAffiliate(client.id)"><i class="fa fa-pencil m-r-5"></i>
+                      Delete</a>
+
                   </div>
                 </div>
               </td>
             </tr>
           </tbody>
-          </table>
-        </div>
+        </table>
       </div>
     </div>
   </div>
-  <!-- /Page Content -->
-  
-  
-  
-  <!-- Edit Client Modal -->
-  <div id="edit_client" class="modal custom-modal fade" role="dialog">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Edit Client</h5>
-          <button
-            type="button"
-            class="close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="editClientForm">
-            <div class="row">
-              <div class="col-md-6">
-                  <div class="form-group">
-                    <label class="col-form-label"
-                      >Company <span class="text-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      type="text"
-                      [class.invalid]="
+</div>
+<!-- /Page Content -->
+
+
+
+<!-- Edit Client Modal -->
+<div id="edit_client" class="modal custom-modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Client</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editClientForm">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-form-label">Company <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" [class.invalid]="
                         editClientForm.get('editClientCompany').invalid &&
                         editClientForm.get('editClientCompany').touched
-                      "
-                      formControlName="editClientCompany"
-                    />
-                    <div
-                      *ngIf="
+                      " formControlName="editClientCompany" />
+                <div *ngIf="
                         editClientForm.get('editClientCompany').invalid &&
                         editClientForm.get('editClientCompany').touched
-                      "
-                    >
-                      <small
-                        *ngIf="
+                      ">
+                  <small *ngIf="
                           editClientForm.get('editClientCompany').invalid &&
                           editClientForm.get('editClientCompany').touched
-                        "
-                        class="text-danger"
-                      >
-                        *Company is required</small
-                      >
-                    </div>
-                  </div>
-                </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-form-label">Contact Person</label>
-                  <input
-                    class="form-control"
-                    formControlName="editContactPerson"
-                    type="text"
-                  />
+                        " class="text-danger">
+                    *Company is required</small>
                 </div>
               </div>
-              <!-- <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-form-label">Contact Person</label>
+                <input class="form-control" formControlName="editContactPerson" type="text" minlength="10"
+                  maxlength="10" />
+                <ng-container
+                  *ngIf="editClientForm.get('editContactPerson').invalid && editClientForm.get('editContactPerson').touched">
+                  <p *ngIf="editClientForm.get('editContactPerson').errors.required" class="text-danger">
+                    Phone Number is Required
+                  </p>
+                  <p *ngIf="editClientForm.get('editContactPerson').errors.pattern" class="text-danger">
+                    *Invalid Phone Number</p>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-form-label"
                     >Username <span class="text-danger">*</span></label
@@ -291,104 +220,53 @@
                   />
                 </div>
               </div> -->
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-form-label"
-                    >Email <span class="text-danger">*</span></label
-                  >
-                  <input
-                    class="form-control"
-                    type="text"
-                    [class.invalid]="
-                      editClientForm.get('editClientEmail').invalid &&
-                      editClientForm.get('editClientEmail').touched
-                    "
-                    formControlName="editClientEmail"
-                  />
-                  <div
-                    *ngIf="
-                      editClientForm.get('editClientEmail').invalid &&
-                      editClientForm.get('editClientEmail').touched
-                    "
-                  >
-                    <small
-                      *ngIf="
-                        editClientForm.get('editClientEmail').invalid &&
-                        editClientForm.get('editClientEmail').touched
-                      "
-                      class="text-danger"
-                    >
-                      *Email is required</small
-                    >
-                  </div>
-                </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" formControlName="editClientEmail" />
+                <ng-container
+                  *ngIf="editClientForm.get('editClientEmail').invalid && editClientForm.get('editClientEmail').touched">
+                  <p *ngIf="editClientForm.get('editClientEmail').errors.required" class="text-danger">
+                    Email is Required
+                  </p>
+                  <p *ngIf="editClientForm.get('editClientEmail').errors.email || editClientForm.get('editClientEmail').whitespace"
+                    class="text-danger"> *Invalid Email Address</p>
+                </ng-container>
               </div>
-             
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-form-label"
-                    >Company Email <span class="text-danger">*</span></label
-                  >
-                  <input
-                    class="form-control"
-                    type="text"
-                    [class.invalid]="
-                      editClientForm.get('editCompanyEmail').invalid &&
-                      editClientForm.get('editCompanyEmail').touched
-                    "
-                    formControlName="editCompanyEmail"
-                  />
-                  <div
-                    *ngIf="
-                      editClientForm.get('editCompanyEmail').invalid &&
-                      editClientForm.get('editCompanyEmail').touched
-                    "
-                  >
-                    <small
-                      *ngIf="
-                        editClientForm.get('editCompanyEmail').invalid &&
-                        editClientForm.get('editCompanyEmail').touched
-                      "
-                      class="text-danger"
-                    >
-                      *Company Email is required</small
-                    >
-                  </div>
-                </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-form-label">Company Email <span class="text-danger">*</span></label>
+                <input class="form-control" type="text" formControlName="editCompanyEmail" />
+                <ng-container
+                  *ngIf="editClientForm.get('editCompanyEmail').invalid && editClientForm.get('editCompanyEmail').touched">
+                  <p *ngIf="editClientForm.get('editCompanyEmail').errors.required" class="text-danger">
+                    Company Email is Required
+                  </p>
+                  <p *ngIf="editClientForm.get('editCompanyEmail').errors.email || editClientForm.get('editCompanyEmail').whitespace"
+                    class="text-danger"> *Invalid Company Email Address</p>
+                </ng-container>
               </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label class="col-form-label"
-                    >Phone <span class="text-danger">*</span>
-                  </label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    [class.invalid]="
-                      editClientForm.get('editClientPhone').invalid &&
-                      editClientForm.get('editClientPhone').touched
-                    "
-                    formControlName="editClientPhone"
-                  />
-                  <div
-                    *ngIf="
-                      editClientForm.get('editClientPhone').invalid &&
-                      editClientForm.get('editClientPhone').touched
-                    "
-                  >
-                    <small
-                      *ngIf="
-                        editClientForm.get('editClientPhone').invalid &&
-                        editClientForm.get('editClientPhone').touched
-                      "
-                      class="text-danger"
-                    >
-                      *Phone is required</small
-                    >
-                  </div>
-                </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="col-form-label">Phone <span class="text-danger">*</span>
+                </label>
+                <input class="form-control" type="text" formControlName="editClientPhone" maxlength="10"
+                  minlength="10" />
+                <ng-container
+                  *ngIf="editClientForm.get('editClientPhone').invalid && editClientForm.get('editClientPhone').touched">
+                  <p *ngIf="editClientForm.get('editClientPhone').errors.required" class="text-danger">
+                    Phone Number is Required
+                  </p>
+                  <p *ngIf="editClientForm.get('editClientPhone').errors.pattern" class="text-danger">
+                    *Invalid Phone Number</p>
+                </ng-container>
+
               </div>
-              <!-- <div class="col-md-6">
+            </div>
+            <!-- <div class="col-md-6">
                 <div class="form-group">
                   <label class="col-form-label"
                     >Company Name <span class="text-danger">*</span></label
@@ -420,19 +298,16 @@
                   </div>
                 </div>
               </div> -->
-            </div>
-  
-            <div class="submit-section">
-              <button class="btn btn-primary submit-btn" (click)="onSave()">
-                Save
-              </button>
-            </div>
-          </form>
-        </div>
+          </div>
+
+          <div class="submit-section">
+            <button class="btn btn-primary submit-btn" (click)="onSave()">
+              Save
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  <!-- /Edit Client Modal -->
-  
-  
-  
+</div>
+<!-- /Edit Client Modal -->
