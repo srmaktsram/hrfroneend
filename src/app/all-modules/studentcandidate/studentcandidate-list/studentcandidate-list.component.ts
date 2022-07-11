@@ -20,6 +20,7 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
   public url: any = "candidate";
   public tempId: any;
+  public allJobs = [];
   public editId: any;
   public addCandidateForm: FormGroup;
   public editCandidateForm: FormGroup;
@@ -33,7 +34,9 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient
-  ) {}
+  ) {
+    this.jobFunction();
+  }
 
   ngOnInit() {
     // Floating Label
@@ -66,6 +69,7 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
       firstName: ["", [Validators.required]],
       lastName: ["", [Validators.required]],
       resume: ["", [Validators.required]],
+      jobTitle: ["", [Validators.required]],
     });
     this.editCandidateForm = this.formBuilder.group({
       email: ["", [Validators.required]],
@@ -76,12 +80,24 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
       firstName: ["", [Validators.required]],
       lastName: ["", [Validators.required]],
       resume: ["", [Validators.required]],
+      jobTitle: ["", [Validators.required]],
     });
   }
+
+  /////////////////////////////call function for jobTitel/////////////
+  jobFunction() {
+    this.http
+      .get("http://localhost:8443/admin/manage_job/getAllJobsDetails")
+      .subscribe((res: any) => {
+        console.log("get all jobs >>>>>>>", res);
+        this.allJobs = res;
+      });
+  }
+
   // Get department list  Api Call
   LoadCandidate() {
     this.http
-      .get("http://localhost:8443/admin/job/jobRegister/getJobRegister")
+      .get("http://localhost:8443/admin/job/jobRegister/getAllCandidate")
       .subscribe((data: any) => {
         this.lstCandidate = data;
 
@@ -89,6 +105,35 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
         this.srch = [...this.rows];
       });
   }
+  //search by name
+  searchByCandidate(val) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      val = val.toLowerCase();
+      return d.firstName.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    this.rows.push(...temp);
+  }
+  //search by mobile
+  searchByMobile(val) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      return d.mobile.indexOf(val) !== -1 || !val;
+    });
+    this.rows.push(...temp);
+  }
+
+  ////////////search Status   ////////////////////////////////////////////
+  searchStatus(val) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      return d.status.indexOf(val) !== -1 || !val;
+    });
+    this.rows.push(...temp);
+    console.log("this.allJobs>>>>>>>>>>>>", this.rows);
+  }
+
+  /////////////////////////////////////////////////
   selectImage(event: any) {
     if (event.target.files.length > 0) {
       this.multFile = event.target.files;
@@ -108,7 +153,8 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     params = params.set("mobile", this.addCandidateForm.value.mobile);
     params = params.set("address", this.addCandidateForm.value.address);
     params = params.set("gender", this.addCandidateForm.value.gender);
-
+    params = params.set("jobTitle", this.addCandidateForm.value.jobTitle);
+    console.log("this is the params...>>>>>", params);
     this.http
       .post(
         "http://localhost:8443/admin/job/jobRegister/createJobRegister?" +
@@ -141,6 +187,8 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     params = params.set("address", this.editCandidateForm.value.address);
     params = params.set("gender", this.editCandidateForm.value.gender);
     params = params.set("status", "1");
+    params = params.set("jobTitle", this.editCandidateForm.value.jobTitle);
+
     console.log("this is the paramas>>>>>>", params);
     this.http
       .patch(
@@ -176,12 +224,13 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
       resume: toSetValues.resume,
       firstName: toSetValues.firstName,
       lastName: toSetValues.lastName,
+      jobTitle: toSetValues.jobTitle,
     });
   }
 
   deleteCandidate() {
     var obj = {
-      status: "2",
+      status: "Rejected",
     };
     this.http
       .patch(

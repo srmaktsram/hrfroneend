@@ -15,50 +15,50 @@
 
   <div class="row">
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-            <div class="card-body">
-                <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{premiumClientsCount}}</h3>
-                    <span>Total Premium Clients</span>
-                </div>
-            </div>
+      <div class="card dash-widget">
+        <div class="card-body">
+          <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+          <div class="dash-widget-info">
+            <h3>{{ premiumClientsCount }}</h3>
+            <span>Total Premium Clients</span>
+          </div>
         </div>
+      </div>
     </div>
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-            <div class="card-body">
-                <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{freeClientsCount}}</h3>
-                    <span>Total Free Clients</span>
-                </div>
-            </div>
+      <div class="card dash-widget">
+        <div class="card-body">
+          <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+          <div class="dash-widget-info">
+            <h3>{{ freeClientsCount }}</h3>
+            <span>Total Free Clients</span>
+          </div>
         </div>
+      </div>
     </div>
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-            <div class="card-body">
-                <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{premiumTodayClientsCount}}</h3>
-                    <span>Today Premium Clients</span>
-                </div>
-            </div>
+      <div class="card dash-widget">
+        <div class="card-body">
+          <span class="dash-widget-icon"><i class="fa fa-diamond"></i></span>
+          <div class="dash-widget-info">
+            <h3>{{ premiumTodayClientsCount }}</h3>
+            <span>Today Premium Clients</span>
+          </div>
         </div>
+      </div>
     </div>
     <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
-        <div class="card dash-widget">
-            <div class="card-body">
-                <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
-                <div class="dash-widget-info">
-                    <h3>{{freeTodayClientsCount}}</h3>
-                    <span>Today Free Clients</span>
-                </div>
-            </div>
+      <div class="card dash-widget">
+        <div class="card-body">
+          <span class="dash-widget-icon"><i class="fa fa-user"></i></span>
+          <div class="dash-widget-info">
+            <h3>{{ freeTodayClientsCount }}</h3>
+            <span>Today Free Clients</span>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 
   <div class="row">
     <div class="col-md-12">
@@ -67,12 +67,7 @@
           <div class="card">
             <div class="card-body">
               <h3 class="card-title">Total Revenue</h3>
-              <div
-                mk-morris-js
-                [options]="chartOptions"
-                [data]="chartData"
-                type="Bar"
-              ></div>
+              <div mk-morris-js type="Bar"></div>
             </div>
           </div>
         </div>
@@ -80,12 +75,7 @@
           <div class="card">
             <div class="card-body">
               <h3 class="card-title">Sales Overview</h3>
-              <div
-                mk-morris-js
-                [options]="lineOption"
-                [data]="lineData"
-                type="Line"
-              ></div>
+              <div mk-morris-js type="Line"></div>
             </div>
           </div>
         </div>
@@ -138,7 +128,9 @@
           </div>
         </div>
         <div class="card-footer">
-          <a routerLink="/layout/mainadmin/accounts/invoices">View all invoices</a>
+          <a routerLink="/layout/mainadmin/accounts/invoices"
+            >View all invoices</a
+          >
         </div>
       </div>
     </div>
@@ -183,7 +175,9 @@
           </div>
         </div>
         <div class="card-footer">
-          <a routerLink="/layout/mainadmin/accounts/payments">View all payments</a>
+          <a routerLink="/layout/mainadmin/accounts/payments"
+            >View all payments</a
+          >
         </div>
       </div>
     </div>
@@ -202,10 +196,9 @@
             <table class="table custom-table mb-0">
               <thead>
                 <tr>
-                  <th> Company Name</th>
+                  <th>Company Name</th>
                   <th>Email</th>
                   <th>Status</th>
-                  
                 </tr>
               </thead>
               <tbody>
@@ -230,13 +223,9 @@
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        
-                          <i class="fa fa-dot-circle-o text-success">{{
-                            item.status
-                          }}</i>
-                       
-                        
-                         
+                        <i class="fa fa-dot-circle-o text-success">{{
+                          item.status
+                        }}</i>
                       </a>
                       <!-- <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
@@ -246,14 +235,15 @@
                                             </div> -->
                     </div>
                   </td>
-                  
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
         <div class="card-footer">
-          <a routerLink="/layout/mainadmin/clients/premiumclients">View all clients</a>
+          <a routerLink="/layout/mainadmin/clients/premiumclients"
+            >View all clients</a
+          >
         </div>
       </div>
     </div>
@@ -273,7 +263,6 @@
                   <th>Name</th>
                   <th>Email</th>
                   <th>Status</th>
-                 
                 </tr>
               </thead>
               <tbody>
@@ -298,13 +287,9 @@
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                        
-                          <i class="fa fa-dot-circle-o text-success">{{
-                            item.status
-                          }}</i>
-                        
-                        
-                         
+                        <i class="fa fa-dot-circle-o text-success">{{
+                          item.status
+                        }}</i>
                       </a>
                       <!-- <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item"><i class="fa fa-dot-circle-o text-success"></i>
@@ -314,14 +299,15 @@
                                             </div> -->
                     </div>
                   </td>
-                  
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
         <div class="card-footer">
-          <a routerLink="/layout/mainadmin/affiliates/premiumaffiliate">View all affiliates</a>
+          <a routerLink="/layout/mainadmin/affiliates/premiumaffiliate"
+            >View all affiliates</a
+          >
         </div>
       </div>
     </div>

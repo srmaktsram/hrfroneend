@@ -28,9 +28,9 @@ export class LoginComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private adminAuthenticationService: AdminAuthenticationService
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
   sendTo() {
     this.router.navigate(["/login/forgot"], {
       queryParams: {
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
             res.data.cicon,
             res.data.cinvoice,
             res.data.cinvoicepre,
-            res.data.packageName,
+            res.data.packageName
           );
         } else {
           alert("wrong Id or pass");

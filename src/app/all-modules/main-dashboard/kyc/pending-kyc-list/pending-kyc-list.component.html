@@ -14,21 +14,12 @@
       </div>
       <div class="col-auto float-end ms-auto">
         <div class="view-icons">
-          <a
-            routerLink="/layout/mainadmin/pendingkyc/pendingkyc"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <a
-            routerLink="/layout/mainadmin/verifykyc/verifykyc"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <a
-            routerLink="/layout/mainadmin/rejectkyc/rejectkyc"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
+          <a routerLink="/layout/mainadmin/pendingkyc/pendingkyc" class="list-view btn btn-link active"
+            title="Pending Kyc"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/verifykyc/verifykyc" class="list-view btn btn-link active"
+            title="Verify Kyc"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/rejectkyc/rejectkyc" class="list-view btn btn-link active"
+            title="Rejected Kyc"><i class="fa fa-bars"></i></a>
         </div>
       </div>
     </div>
@@ -38,13 +29,8 @@
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
-        <table
-          datatable
-          [dtOptions]="dtOptions"
-          [dtTrigger]="dtTrigger"
-          id="datatable"
-          class="table table-striped custom-table datatable"
-        >
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
+          class="table table-striped custom-table datatable">
           <thead>
             <tr>
               <th>Sr.no.</th>
@@ -83,21 +69,17 @@
             ">
                 <ng-container *ngIf="item.panVerified == 1">
                   <div class="d-inline p-2 bg-primary text-white">
-                    <a
-                      data-bs-toggle="modal"
-                      data-bs-target="#viewPanButton"
-                      (click)="setCuurentDetailsPan(item.id, item.panCard)"
-                    >
-                      View PAN</a
-                    >
+                    <a data-bs-toggle="modal" data-bs-target="#viewPanButton"
+                      (click)="setCuurentDetailsPan(item.id, item.panCard)">
+                      View PAN</a>
                   </div>
                 </ng-container>
                 <ng-container *ngIf="item.panVerified == 2">
-                  <td class="text-success">Approved</td>
-                </ng-container>
-                <ng-container *ngIf="item.panVerified == 3">
-                  <td class="text-danger">Rejected</td>
-                </ng-container>
+              <td class="text-success">Approved</td>
+              </ng-container>
+              <ng-container *ngIf="item.panVerified == 3">
+                <td class="text-danger">Rejected</td>
+              </ng-container>
               </td>
               <td *ngIf="
               user_type == 'mainadmin' ||
@@ -106,28 +88,23 @@
             ">
                 <ng-container *ngIf="item.aadhaarVerified == 1">
                   <div class="d-inline p-2 bg-primary text-white">
-                    <a
-                      data-bs-toggle="modal"
-                      data-bs-target="#viewAadhaarButton"
-                      (click)="
+                    <a data-bs-toggle="modal" data-bs-target="#viewAadhaarButton" (click)="
                         setCuurentDetailsAadhar(
                           item.id,
                           item.aadhaarCard,
                           item.aadhaarCardBack
                         )
-                      "
-                    >
-                      View Aadhaar</a
-                    >
+                      ">
+                      View Aadhaar</a>
                   </div>
                 </ng-container>
                 <ng-container *ngIf="item.aadhaarVerified == 2">
-                  <td class="text-success">Approved</td>
-                </ng-container>
-                
-                <ng-container *ngIf="item.aadhaarVerified == 3">
-                  <td class="text-danger">Rejected</td>
-                </ng-container>
+              <td class="text-success">Approved</td>
+              </ng-container>
+
+              <ng-container *ngIf="item.aadhaarVerified == 3">
+                <td class="text-danger">Rejected</td>
+              </ng-container>
               </td>
             </tr>
           </tbody>
@@ -146,38 +123,25 @@
       <div class="modal-body">
         <div class="form-header">
           <h3>PAN Card View</h3>
-          <button
-            type="button"
-            class="close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            data-bs-target="#viewPanButton"
-          >
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
+            data-bs-target="#viewPanButton">
             <span aria-hidden="true">&times;</span>
           </button>
           <p>View PAN Photo mode</p>
-          <img src="{{ panCardPath }}" alt="noImg" height="450 px"
-          width="450px" />
+          <img src="{{ panCardPath }}" alt="noImg" height="450 px" width="450px" />
         </div>
 
         <div class="modal-btn delete-action">
           <div class="row">
             <div class="col-6">
-              <a class="btn btn-primary continue-btn" (click)="getPanApprove()"
-                >Approve</a
-              >
+              <a class="btn btn-primary continue-btn" (click)="getPanApprove()">Approve</a>
             </div>
 
             <div class="col-6">
               <tr *ngFor="let item of pendingData; let i = index">
-                <a
-                  class="btn btn-primary continue-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#add_reject"
-                  (click)="id = item.id"
-                >
-                  Reject</a
-                >
+                <a class="btn btn-primary continue-btn" data-bs-toggle="modal" data-bs-target="#add_reject"
+                  (click)="id = item.id">
+                  Reject</a>
               </tr>
             </div>
           </div>
@@ -196,48 +160,28 @@
       <div class="modal-body">
         <div class="form-header">
           <h3>Aadhaar Card View</h3>
-          <button
-            type="button"
-            class="close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            data-bs-target="#viewAadhaarButton"
-          >
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
+            data-bs-target="#viewAadhaarButton">
             <span aria-hidden="true">&times;</span>
           </button>
           <p>View Aadhaar front photo</p>
-          <img
-            src="{{ aadhaarCardPath }}"
-            alt="noImage"
-            height="450 px"
-            width="450px"
-          />
+          <img src="{{ aadhaarCardPath }}" alt="noImage" height="450 px" width="450px" />
           <p>View Aadhaar back photo</p>
 
-          <img src="{{ aadhaarCardBackPath }}" alt="noImg" height="450 px"
-          width="450px" />
+          <img src="{{ aadhaarCardBackPath }}" alt="noImg" height="450 px" width="450px" />
         </div>
 
         <div class="modal-btn delete-action">
           <div class="row">
             <div class="col-6">
-              <a
-                class="btn btn-primary continue-btn"
-                (click)="getAadhaarApprove()"
-                >Approve</a
-              >
+              <a class="btn btn-primary continue-btn" (click)="getAadhaarApprove()">Approve</a>
             </div>
 
             <div class="col-6">
               <tr *ngFor="let item of pendingData; let i = index">
-                <a
-                  class="btn btn-primary continue-btn"
-                  data-bs-toggle="modal"
-                  data-bs-target="#add_reject_aadhaar"
-                  (click)="id = item.id"
-                >
-                  Reject</a
-                >
+                <a class="btn btn-primary continue-btn" data-bs-toggle="modal" data-bs-target="#add_reject_aadhaar"
+                  (click)="id = item.id">
+                  Reject</a>
               </tr>
             </div>
           </div>
@@ -255,13 +199,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Add Remark</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-          data-bs-target="#add_reject"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#add_reject">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -269,30 +207,19 @@
         <form (ngSubmit)="getPanReject()" [formGroup]="addRejectForm">
           <div class="form-group">
             <label>Remark <span class="text-danger">*</span></label>
-            <textarea
-              class="form-control"
-              type="text-area"
-              [class.invalid]="
+            <textarea class="form-control" type="text-area" [class.invalid]="
                 addRejectForm.get('addRemark').invalid &&
                 addRejectForm.get('addRemark').touched
-              "
-              formControlName="addRemark"
-            ></textarea>
-            <div
-              *ngIf="
+              " formControlName="addRemark"></textarea>
+            <div *ngIf="
                 addRejectForm.get('addRemark').invalid &&
                 addRejectForm.get('addRemark').touched
-              "
-            >
-              <small
-                *ngIf="
+              ">
+              <small *ngIf="
                   addRejectForm.get('addRemark').invalid &&
                   addRejectForm.get('addRemark').touched
-                "
-                class="text-danger"
-              >
-                *Remark is required</small
-              >
+                " class="text-danger">
+                *Remark is required</small>
             </div>
           </div>
           <div class="submit-section">
@@ -314,13 +241,8 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Add-Remark</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-          data-bs-target="#add_reject_aadhaar"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"
+          data-bs-target="#add_reject_aadhaar">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -328,30 +250,19 @@
         <form (ngSubmit)="getAadhaarReject()" [formGroup]="addRejectForm">
           <div class="form-group">
             <label>Remark <span class="text-danger">*</span></label>
-            <textarea
-              class="form-control"
-              type="text-area"
-              [class.invalid]="
+            <textarea class="form-control" type="text-area" [class.invalid]="
                 addRejectForm.get('addRemark').invalid &&
                 addRejectForm.get('addRemark').touched
-              "
-              formControlName="addRemark"
-            ></textarea>
-            <div
-              *ngIf="
+              " formControlName="addRemark"></textarea>
+            <div *ngIf="
                 addRejectForm.get('addRemark').invalid &&
                 addRejectForm.get('addRemark').touched
-              "
-            >
-              <small
-                *ngIf="
+              ">
+              <small *ngIf="
                   addRejectForm.get('addRemark').invalid &&
                   addRejectForm.get('addRemark').touched
-                "
-                class="text-danger"
-              >
-                *Remark is required</small
-              >
+                " class="text-danger">
+                *Remark is required</small>
             </div>
           </div>
           <div class="submit-section">

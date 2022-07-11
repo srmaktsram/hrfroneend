@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
 @Component({
   selector: "app-edit-invoice",
@@ -49,11 +50,11 @@ export class EditInvoiceComponent implements OnInit {
     this.getInvoice();
     this.user_type = sessionStorage.getItem("user_type");
     this.invoiceswrite = sessionStorage.getItem("invoiceswrite");
-   
+
     // this.getInvNo();
   }
- 
-  
+
+
   // getInvNo() {
   //   let id = this.id;
 
@@ -70,7 +71,7 @@ export class EditInvoiceComponent implements OnInit {
     this.editInvoiceForm = this.formBuilder.group({
       client: ["", [Validators.required]],
       number: ["", [Validators.required]],
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       tax: ["", [Validators.required]],
       client_address: ["", [Validators.required]],
       billing_address: ["", [Validators.required]],

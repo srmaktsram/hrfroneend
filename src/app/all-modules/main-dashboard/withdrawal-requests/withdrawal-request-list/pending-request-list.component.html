@@ -14,21 +14,12 @@
       </div>
       <div class="col-auto float-end ms-auto">
         <div class="view-icons">
-          <a
-            routerLink="/layout/mainadmin/withdrawalrequests/withdrawalrequest"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <a
-            routerLink="/layout/mainadmin/releasehistory/releasehistory"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
-          <a
-            routerLink="/layout/mainadmin/rejected-requests/rejected-requests"
-            class="list-view btn btn-link active"
-            ><i class="fa fa-bars"></i
-          ></a>
+          <a routerLink="/layout/mainadmin/withdrawalrequests/withdrawalrequest" class="list-view btn btn-link active"
+            title="withdrawal requests"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/releasehistory/releasehistory" class="list-view btn btn-link active"
+            title="Release History"><i class="fa fa-bars"></i></a>
+          <a routerLink="/layout/mainadmin/rejected-requests/rejected-requests" class="list-view btn btn-link active"
+            title="Rejected requests"><i class="fa fa-bars"></i></a>
         </div>
       </div>
     </div>
@@ -38,12 +29,7 @@
   <div class="row filter-row">
     <div class="col-sm-6 col-md-3">
       <div class="form-group form-focus">
-        <input
-          type="text"
-          class="form-control floating"
-          #clientusername
-          (input)="search($event.target.value)"
-        />
+        <input type="text" class="form-control floating" #clientusername (input)="search($event.target.value)" />
         <label class="focus-label">Enter details</label>
       </div>
     </div>
@@ -53,13 +39,8 @@
   <div class="row">
     <div class="col-md-12">
       <div class="table-responsive">
-        <table
-          datatable
-          [dtOptions]="dtOptions"
-          [dtTrigger]="dtTrigger"
-          id="datatable"
-          class="table table-striped custom-table datatable"
-        >
+        <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
+          class="table table-striped custom-table datatable">
           <thead>
             <tr>
               <th>Sr.no</th>
@@ -87,61 +68,52 @@
               <td>{{ item.phone }}</td>
               <td>{{ item.createDate }}</td>
               <td>
-                <tr>
-                  A/c Holder
-                  <p>{{ item.bankDetails.accountHolderName }}</p>
-                </tr>
-                <tr>
-                  A/c No.
-                  <p>{{ item.bankDetails.accountNumber }}</p>
-                </tr>
-                <tr>
-                  Bank Name
-                  <p>{{ item.bankDetails.bankName }}</p>
-                </tr>
-                <tr>
-                  Branch
-                  <p>{{ item.bankDetails.branchName }}</p>
-                </tr>
-                <tr>
-                  IFSC Code
-                  <p>{{ item.bankDetails.ifsc }}</p>
-                </tr>
-                <tr>
-                  e-mail
-                  <p>{{ item.bankDetails.email }}</p>
-                </tr>
-                <tr>
-                  Phone
-                  <p>{{ item.bankDetails.phone }}</p>
-                </tr>
-              </td>
+            <tr>
+              A/c Holder
+              <p>{{ item.bankDetails.accountHolderName }}</p>
+            </tr>
+            <tr>
+              A/c No.
+              <p>{{ item.bankDetails.accountNumber }}</p>
+            </tr>
+            <tr>
+              Bank Name
+              <p>{{ item.bankDetails.bankName }}</p>
+            </tr>
+            <tr>
+              Branch
+              <p>{{ item.bankDetails.branchName }}</p>
+            </tr>
+            <tr>
+              IFSC Code
+              <p>{{ item.bankDetails.ifsc }}</p>
+            </tr>
+            <tr>
+              e-mail
+              <p>{{ item.bankDetails.email }}</p>
+            </tr>
+            <tr>
+              Phone
+              <p>{{ item.bankDetails.phone }}</p>
+            </tr>
+            </td>
 
-              <td *ngIf="
+            <td *ngIf="
               user_type == 'mainadmin' ||
               (user_type === 'subadmin' &&
                 (withdrawalrequestwrite == 'true'))
             ">
-                <div class="d-inline p-2 bg-primary text-white">
-                  <a
-                    data-bs-toggle="modal"
-                    data-bs-target="#delete_pay"
-                    (click)="id = item.id; actualAmount = item.amount"
-                  >
-                    Pay</a
-                  >
-                </div>
-                &nbsp;
-                <div class="d-inline p-2 bg-danger text-white">
-                  <a
-                    data-bs-toggle="modal"
-                    data-bs-target="#add_holiday"
-                    (click)="id = item.id"
-                  >
-                    Reject</a
-                  >
-                </div>
-              </td>
+              <div class="d-inline p-2 bg-primary text-white">
+                <a data-bs-toggle="modal" data-bs-target="#delete_pay"
+                  (click)="id = item.id; actualAmount = item.amount">
+                  Pay</a>
+              </div>
+              &nbsp;
+              <div class="d-inline p-2 bg-danger text-white">
+                <a data-bs-toggle="modal" data-bs-target="#add_holiday" (click)="id = item.id">
+                  Reject</a>
+              </div>
+            </td>
             </tr>
           </tbody>
         </table>
@@ -156,13 +128,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Add Remark</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-          data-bs-target="#add_holiday"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#add_holiday">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -170,30 +136,19 @@
         <form (ngSubmit)="getReject()" [formGroup]="addRejectForm">
           <div class="form-group">
             <label>Remark <span class="text-danger">*</span></label>
-            <textarea
-              class="form-control"
-              type="text-area"
-              [class.invalid]="
+            <textarea class="form-control" type="text-area" [class.invalid]="
                 addRejectForm.get('addRemark').invalid &&
                 addRejectForm.get('addRemark').touched
-              "
-              formControlName="addRemark"
-            ></textarea>
-            <div
-              *ngIf="
+              " formControlName="addRemark"></textarea>
+            <div *ngIf="
                 addRejectForm.get('addRemark').invalid &&
                 addRejectForm.get('addRemark').touched
-              "
-            >
-              <small
-                *ngIf="
+              ">
+              <small *ngIf="
                   addRejectForm.get('addRemark').invalid &&
                   addRejectForm.get('addRemark').touched
-                "
-                class="text-danger"
-              >
-                *Remark is required</small
-              >
+                " class="text-danger">
+                *Remark is required</small>
             </div>
           </div>
           <div class="submit-section">
@@ -214,13 +169,7 @@
       <div class="modal-body">
         <div class="form-header">
           <h3>Add Pay</h3>
-          <button
-            type="button"
-            class="close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            data-bs-target="#delete_pay"
-          >
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" data-bs-target="#delete_pay">
             <span aria-hidden="true">&times;</span>
           </button>
           <p>Are you sure to add as Pay?</p>
@@ -233,9 +182,7 @@
             </div>
 
             <div class="col-6">
-              <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn"
-                >No</a
-              >
+              <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">No</a>
             </div>
           </div>
         </div>
