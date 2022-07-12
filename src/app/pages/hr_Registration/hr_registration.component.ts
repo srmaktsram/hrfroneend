@@ -16,7 +16,6 @@ import { HrUserAuthenticationService } from "src/app/core/storage/authentication
   templateUrl: "./hr_registration.component.html",
   styleUrls: ["./hr_registration.component.css"],
 })
-
 export class HrregistrationComponent implements OnInit {
   public horizontalPosition: MatSnackBarHorizontalPosition = "center";
   public verticalPosition: MatSnackBarVerticalPosition = "bottom";
@@ -90,10 +89,8 @@ export class HrregistrationComponent implements OnInit {
     this.changePassForm = this.formBuilder.group({
       password: ["", Validators.required],
       confirmPassword: ["", Validators.required],
-
     });
     this.showPage();
-
   }
 
   showPage() {
@@ -127,7 +124,6 @@ export class HrregistrationComponent implements OnInit {
       }
     }
   }
-
 
   saveData() {
     let obj = {
@@ -169,7 +165,6 @@ export class HrregistrationComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res);
         if (res.result == 2) {
-
           if (res.data.status !== "Blocked") {
 
             window.location.replace("http://localhost:4200");
