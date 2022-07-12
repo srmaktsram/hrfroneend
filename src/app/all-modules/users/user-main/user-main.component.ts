@@ -33,6 +33,13 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
   public addUsers: FormGroup;
   public check: any;
   public editUsers: FormGroup;
+  public showManager = true;
+  public showSubadmin = true;
+  public showAdmin = true;
+  public showFinance = true;
+  public showHr = true;
+  public showReceptionist = true;
+
   public Holidays = [
     { id: 0, read: false },
     { id: 1, write: false },
@@ -49,6 +56,93 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
     { id: 0, read: false },
     { id: 1, write: false },
   ];
+  public Reports = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public Accounting = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public Sales = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public Policies = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public Assets = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public supportTickets = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public users = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public clients = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public Jobs = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public Training = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public Performance = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public Payroll = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public attendanceReport = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+
+  ///////All of these falls under jobs/////
+  public userDasboard = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public jobDashboard = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public shortlistedCandidates = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public manageResumes = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public CandidatesList = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public scheduleTiming = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public appliedCandidates = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  public manageJobs = [
+    { id: 0, read: false },
+    { id: 1, write: false },
+  ];
+  ////////
 
   public editId: any;
   public tempId: any;
@@ -78,6 +172,58 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
       { id: 1, write: false },
     ];
     this.Events = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Reports = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Accounting = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Sales = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Policies = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Assets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.supportTickets = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.users = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.clients = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Jobs = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Training = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Performance = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.Payroll = [
+      { id: 0, read: false },
+      { id: 1, write: false },
+    ];
+    this.attendanceReport = [
       { id: 0, read: false },
       { id: 1, write: false },
     ];
@@ -251,6 +397,19 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
         employee: this.Employee,
         leaves: this.Leaves,
         events: this.Events,
+        Reports: this.Reports,
+        Accounting: this.Accounting,
+        Sales: this.Sales,
+        Policies: this.Policies,
+        Assets: this.Assets,
+        supportTickets: this.supportTickets,
+        users: this.users,
+        clients: this.clients,
+        Jobs: this.Jobs,
+        Training: this.Training,
+        Performance: this.Performance,
+        Payroll: this.Payroll,
+        attendanceReport: this.attendanceReport,
       };
       console.log("this is the obj>>>>>>>>", obj);
 
@@ -291,6 +450,19 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
         employee: this.Employee,
         leaves: this.Leaves,
         event: this.Events,
+        Reports: this.Reports,
+        Accounting: this.Accounting,
+        Sales: this.Sales,
+        Policies: this.Policies,
+        Assets: this.Assets,
+        supportTickets: this.supportTickets,
+        users: this.users,
+        clients: this.clients,
+        Jobs: this.Jobs,
+        Training: this.Training,
+        Performance: this.Performance,
+        Payroll: this.Payroll,
+        attendanceReport: this.attendanceReport,
       };
       this.http
         .patch(
@@ -317,8 +489,8 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
       return item.id === value;
     });
     let toSetValues = this.allUsers[index];
-    console.log("ToSetValue>>>>>>>>>>>>>>>", toSetValues.role);
-    this.editUsers.setValue({
+    console.log("ToSetValue of Role", toSetValues.role);
+    this.editUsers.patchValue({
       editUsersName: toSetValues.name,
       editEmail: toSetValues.email,
       editRole: toSetValues.role,
@@ -335,6 +507,32 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.Leaves = toSetValues.leaves;
 
     this.Events = toSetValues.events;
+
+    this.Reports = toSetValues.Reports;
+
+    this.Accounting = toSetValues.Accounting;
+
+    this.Sales = toSetValues.Sales;
+
+    this.Policies = toSetValues.Policies;
+
+    this.Assets = toSetValues.Assets;
+
+    this.supportTickets = toSetValues.supportTickets;
+
+    this.users = toSetValues.users;
+
+    this.clients = toSetValues.clients;
+
+    this.Jobs = toSetValues.Jobs;
+
+    this.Training = toSetValues.Training;
+
+    this.Performance = toSetValues.Performance;
+
+    this.Payroll = toSetValues.Payroll;
+
+    this.attendanceReport = toSetValues.attendanceReport;
   }
 
   // Delete Provident Modal Api Call
@@ -368,13 +566,12 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.rows.push(...temp);
   }
-
-  //search by name
-  searchStatus(val) {
+  // search by Email
+  searchEmail(val) {
     this.rows.splice(0, this.rows.length);
     let temp = this.srch.filter(function (d) {
       val = val.toLowerCase();
-      return d.company.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.email.toLowerCase().indexOf(val) !== -1 || !val;
     });
     this.rows.push(...temp);
   }
@@ -383,7 +580,7 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
   searchRole(val) {
     this.rows.splice(0, this.rows.length);
     this.srch.map((item) => {
-      if (item.designation === val) {
+      if (item.role === val) {
         this.rows.push(item);
       }
     });
@@ -453,9 +650,257 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
+  checkReports(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.Reports[0].read = true;
+      } else {
+        this.Reports[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.Reports[1].write = true;
+      } else {
+        this.Reports[1].write = false;
+      }
+    }
+  }
+  checkAccounting(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.Accounting[0].read = true;
+      } else {
+        this.Accounting[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.Accounting[1].write = true;
+      } else {
+        this.Accounting[1].write = false;
+      }
+    }
+  }
+  checkSales(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.Sales[0].read = true;
+      } else {
+        this.Sales[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.Sales[1].write = true;
+      } else {
+        this.Sales[1].write = false;
+      }
+    }
+  }
+  checkPolicies(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.Policies[0].read = true;
+      } else {
+        this.Policies[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.Policies[1].write = true;
+      } else {
+        this.Policies[1].write = false;
+      }
+    }
+  }
+  checkAssets(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.Assets[0].read = true;
+      } else {
+        this.Assets[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.Assets[1].write = true;
+      } else {
+        this.Assets[1].write = false;
+      }
+    }
+  }
+  checkSupportTickets(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.supportTickets[0].read = true;
+      } else {
+        this.supportTickets[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.supportTickets[1].write = true;
+      } else {
+        this.supportTickets[1].write = false;
+      }
+    }
+  }
+  checkUsers(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.users[0].read = true;
+      } else {
+        this.users[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.users[1].write = true;
+      } else {
+        this.users[1].write = false;
+      }
+    }
+  }
+  checkClients(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.clients[0].read = true;
+      } else {
+        this.clients[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.clients[1].write = true;
+      } else {
+        this.clients[1].write = false;
+      }
+    }
+  }
+  checkJobs(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.Jobs[0].read = true;
+      } else {
+        this.Jobs[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.Jobs[1].write = true;
+      } else {
+        this.Jobs[1].write = false;
+      }
+    }
+  }
+  checkTraining(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.Training[0].read = true;
+      } else {
+        this.Training[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.Training[1].write = true;
+      } else {
+        this.Training[1].write = false;
+      }
+    }
+  }
+  checkPerformance(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.Performance[0].read = true;
+      } else {
+        this.Performance[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.Performance[1].write = true;
+      } else {
+        this.Performance[1].write = false;
+      }
+    }
+  }
+  checkPayrolls(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.Payroll[0].read = true;
+      } else {
+        this.Payroll[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.Payroll[1].write = true;
+      } else {
+        this.Payroll[1].write = false;
+      }
+    }
+  }
+  checkAttendanceReports(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        this.attendanceReport[0].read = true;
+      } else {
+        this.attendanceReport[0].read = false;
+      }
+    } else if (val == 1) {
+      if (event.target.checked == true) {
+        this.attendanceReport[1].write = true;
+      } else {
+        this.attendanceReport[1].write = false;
+      }
+    }
+  }
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+  showCheckBoxCondition(val) {
+    alert(val);
+    if (val == "Manager") {
+      this.showManager = false;
+      this.showSubadmin = true;
+      this.showAdmin = true;
+      this.showFinance = true;
+      this.showHr = true;
+      this.showReceptionist = true;
+    }
+
+    if (val == "SubAdmin") {
+      this.showSubadmin = false;
+      this.showManager = true;
+      this.showAdmin = true;
+      this.showFinance = true;
+      this.showHr = true;
+      this.showReceptionist = true;
+    }
+    if (val == "Admin") {
+      this.showAdmin = false;
+      this.showManager = true;
+      this.showSubadmin = true;
+      this.showFinance = true;
+      this.showHr = true;
+      this.showReceptionist = true;
+    }
+    if (val == "Finance") {
+      this.showFinance = false;
+      this.showManager = true;
+      this.showSubadmin = true;
+      this.showAdmin = true;
+      this.showHr = true;
+      this.showReceptionist = true;
+    }
+    if (val == "HR") {
+      this.showHr = false;
+      this.showManager = true;
+      this.showSubadmin = true;
+      this.showAdmin = true;
+      this.showFinance = true;
+      this.showReceptionist = true;
+    }
+    if (val == "Receptionist") {
+      this.showReceptionist = false;
+      this.showManager = true;
+      this.showSubadmin = true;
+      this.showAdmin = true;
+      this.showFinance = true;
+      this.showHr = true;
+    }
   }
 }
