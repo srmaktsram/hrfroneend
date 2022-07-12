@@ -7,11 +7,11 @@ import { AdminAuthenticationService } from "src/app/core/storage/authentication-
 import { AuthenticationService } from "src/app/core/storage/authentication.service";
 
 @Component({
-  selector: "app-login",
+  selector: "app-rolefinance",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.css"],
 })
-export class LoginComponent implements OnInit {
+export class RoleFinanceComponent implements OnInit {
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;

@@ -135,12 +135,14 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
+
     };
 
     this.http
       .post("http://localhost:8443/mainadmin/create/registration", obj)
       .subscribe((res: any) => {
         window.location.replace("http://localhost:4200");
+
         this.hrUserAuthenticationService.login(
           res.id,
           res.corporateId,
@@ -161,8 +163,10 @@ export class HrregistrationComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
+        console.log(res);
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
+
             window.location.replace("http://localhost:4200");
 
             this.hrUserAuthenticationService.login(
@@ -177,6 +181,7 @@ export class HrregistrationComponent implements OnInit {
             alert("Account Blocked By Main Admin");
           }
         } else {
+
           alert("wrong Id or pass");
         }
       });
