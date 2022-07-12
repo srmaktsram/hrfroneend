@@ -11,13 +11,11 @@ import { CookieService } from "ngx-cookie-service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 
-
 @Component({
   selector: "app-hr_registration",
   templateUrl: "./hr_registration.component.html",
   styleUrls: ["./hr_registration.component.css"],
 })
-
 export class HrregistrationComponent implements OnInit {
   public horizontalPosition: MatSnackBarHorizontalPosition = "center";
   public verticalPosition: MatSnackBarVerticalPosition = "bottom";
@@ -91,10 +89,8 @@ export class HrregistrationComponent implements OnInit {
     this.changePassForm = this.formBuilder.group({
       password: ["", Validators.required],
       confirmPassword: ["", Validators.required],
-
     });
     this.showPage();
-
   }
 
   showPage() {
@@ -129,7 +125,6 @@ export class HrregistrationComponent implements OnInit {
     }
   }
 
-
   saveData() {
     let obj = {
       firstName: this.registerForm.value.firstName,
@@ -140,16 +135,12 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
-
-
-
     };
-
 
     this.http
       .post("http://localhost:8443/mainadmin/create/registration", obj)
       .subscribe((res: any) => {
-        window.location.replace("https://srmak.org");
+        window.location.replace("http://localhost:4200");
         this.hrUserAuthenticationService.login(
           res.id,
           res.corporateId,
@@ -171,29 +162,21 @@ export class HrregistrationComponent implements OnInit {
       })
       .subscribe((res: any) => {
         if (res.result == 2) {
-
           if (res.data.status !== "Blocked") {
+            window.location.replace("http://localhost:4200");
 
-
-          window.location.replace("http://localhost:4200")
-
-
-          this.hrUserAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone
-          );
-
-
-        }
-        else {
-          alert("Account Blocked By Main Admin");
-        }
-      } else {
-
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone
+            );
+          } else {
+            alert("Account Blocked By Main Admin");
+          }
+        } else {
           alert("wrong Id or pass");
         }
       });

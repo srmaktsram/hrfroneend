@@ -24,7 +24,9 @@ export class CheckoutComponent implements OnInit {
   public email: any;
   public mobile: any;
   public companyName: any;
+  public adminId: any;
   public tl: any;
+  public checkId: any;
   ordersId: any;
   packageName: any;
   getdata: any;
@@ -57,6 +59,11 @@ export class CheckoutComponent implements OnInit {
         Validators.email,
         WhiteSpaceValidator.noWhiteSpace,
       ]),
+      adminId: new FormControl("", [
+        Validators.required,
+        Validators.maxLength(6),
+        WhiteSpaceValidator.noWhiteSpace,
+      ]),
       mobile: new FormControl("", [
         Validators.required,
         Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$"),
@@ -83,6 +90,9 @@ export class CheckoutComponent implements OnInit {
     this.corporateId = this.route.snapshot.queryParams["corporate"];
     this.packageName = this.route.snapshot.queryParams["packageName"];
     this.month = this.route.snapshot.queryParams["days"] * 30;
+    this.adminId = this.route.snapshot.queryParams["adminId"];
+
+    console.log("this sio the adminId>>>>", this.adminId);
   }
 
   getip() {
@@ -103,6 +113,7 @@ export class CheckoutComponent implements OnInit {
 
   getPayment() {
     let corporateId = this.corporateId;
+
     var obj = {
       packageName: this.packageName,
       panNo: this.checkoutForm.value.panNo,
@@ -122,7 +133,7 @@ export class CheckoutComponent implements OnInit {
         obj
       )
       .subscribe((res: any) => {
-        console.log("this is the create order History>>>>", res);
+        console.log("this is the create order History   111>>>>", res);
         if (this.packageName === "Basic(Single-User)") {
           this.createAdminRegister();
           this.premium(0);
@@ -198,6 +209,7 @@ export class CheckoutComponent implements OnInit {
 
   premium(paymentId) {
     let obj = {
+      adminId: this.adminId,
       paymentId: paymentId,
       amount: this.totalAmount,
       totalUser: this.totalUser,
@@ -206,11 +218,11 @@ export class CheckoutComponent implements OnInit {
       month: this.month,
       companyName: this.checkoutForm.value.companyName,
     };
-
+    console.log("this si OBJ packageDetails>>>>>>>>>>", obj);
     this.http
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
-        console.log("this is the  PreviousDetails>>>>>>>>>>>", res);
+        console.log("this is the  PreviousDetails>>>>>>333>>>>>", res);
 
         this.saveOrderDetails();
       });
@@ -220,8 +232,8 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post(
         "http://localhost:8443/checkout/create/Details" +
-        "/" +
-        this.corporateId,
+          "/" +
+          this.corporateId,
         {
           amount: this.totalAmount,
           packageName: this.packageName,
@@ -230,48 +242,69 @@ export class CheckoutComponent implements OnInit {
         }
       )
       .subscribe((res: any) => {
-        console.log("this is the orderDetails>>>>>>>>>>", res);
+        console.log("this is the orderDetails>>>>444>>>>>>", res);
         this.router.navigate(["/products"]);
       });
   }
   createAdminRegister() {
-    const generateId = Math.random().toString(36).slice(5);
+    if (this.adminId) {
+      let obj = {
+        adminId: this.adminId,
+        corporateId: this.corporateId,
+        amount: this.totalAmount,
+        companyPan: this.checkoutForm.value.panNo,
+        companyGst: this.checkoutForm.value.gstNo,
+        mobile: this.checkoutForm.value.mobile,
+        companyEmail: this.checkoutForm.value.email,
+        companyName: this.checkoutForm.value.companyName,
+        companyAddress: this.checkoutForm.value.address,
+        packageName: this.packageName,
+        status: 1,
+        location: this.location,
+      };
 
-    console.log("location", location);
-    var obj = {
-      adminId: generateId,
-      corporateId: this.corporateId,
-      amount: this.totalAmount,
-      companyPan: this.checkoutForm.value.panNo,
-      companyGst: this.checkoutForm.value.gstNo,
-      mobile: this.checkoutForm.value.mobile,
-      companyEmail: this.checkoutForm.value.email,
-      companyName: this.checkoutForm.value.companyName,
-      companyAddress: this.checkoutForm.value.address,
-      packageName: this.packageName,
-      status: 1,
-      location: this.location,
-    };
+      this.http
+        .post("http://localhost:8443/checkout/create/adminRegister", obj)
+        .subscribe((res: any) => {
+          console.log("this is the adminRegister>>>>>>>222>>>>>>>>>>>>", res);
+        });
+    } else {
+      const generateId = Math.random().toString(36).slice(7);
+      this.adminId = generateId;
 
-    this.http
-      .post("http://localhost:8443/checkout/create/adminRegister", obj)
-      .subscribe((res: any) => {
-        console.log("this is the adminRegister>>>>>>>>>>>>>>>>>>>", res);
-      });
+      let obj = {
+        adminId: this.adminId,
+        corporateId: this.corporateId,
+        amount: this.totalAmount,
+        companyPan: this.checkoutForm.value.panNo,
+        companyGst: this.checkoutForm.value.gstNo,
+        mobile: this.checkoutForm.value.mobile,
+        companyEmail: this.checkoutForm.value.email,
+        companyName: this.checkoutForm.value.companyName,
+        companyAddress: this.checkoutForm.value.address,
+        packageName: this.packageName,
+        status: 1,
+        location: this.location,
+      };
+
+      this.http
+        .post("http://localhost:8443/checkout/create/adminRegister", obj)
+        .subscribe((res: any) => {
+          console.log("this is the adminRegister>>>>>>>222>>>>>>>>>>>>", res);
+        });
+    }
   }
 
   fillData(val) {
-    var corporateId = val;
+    var adminId = val;
+
     this.http
       .get(
-        "http://localhost:8443/checkout/orders/getAdminRegister" +
-        "/" +
-        corporateId
+        "http://localhost:8443/checkout/orders/getAdminRegister" + "/" + adminId
       )
       .subscribe((res: any) => {
-        console.log(",.,.,.,.,.,.<><><><><><", res);
-
         this.getdata = res;
+        console.log(",.,.,.,.,.,.<><><><><><", this.getdata);
         if (this.getdata) {
           this.checkoutForm.patchValue({
             companyName: this.getdata.companyName,
@@ -282,7 +315,7 @@ export class CheckoutComponent implements OnInit {
             gstNo: this.getdata.companyGst,
           });
         } else {
-          alert("Invalid Corporate Id ........");
+          alert("Invalid Admin Id ........");
         }
       });
   }

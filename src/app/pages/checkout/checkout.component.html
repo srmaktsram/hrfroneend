@@ -1,343 +1,505 @@
 <div class="row">
-    <div class="col-sm-12">
-        <div class="card">
-            <div class="card-header bg-primary text-center text-white"
-                style="font-size: large; font-weight: 600; background-color: #337ab7">
-                <span id="ContentPlaceHolder1_asd_lbl">Welcome To Employee Management System </span>
-            </div>
-        </div>
+  <div class="col-sm-12">
+    <div class="card">
+      <div
+        class="card-header bg-primary text-center text-white"
+        style="font-size: large; font-weight: 600; background-color: #337ab7"
+      >
+        <span id="ContentPlaceHolder1_asd_lbl"
+          >Welcome To Employee Management System
+        </span>
+      </div>
     </div>
+  </div>
 </div>
 <br />
 <div class="row itemTopDiv">
-    <div class=" col-sm-2"></div>
-    <div class="col-sm-8 itemDiv">
-        <div class="card border-danger">
-            <div class="card-header bg-danger text-white " style="font-size: medium; font-weight: 600">
-                <span id="ContentPlaceHolder1_Label1">User Account Information</span>
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8 itemDiv">
+    <div class="card border-danger">
+      <div
+        class="card-header bg-danger text-white"
+        style="font-size: medium; font-weight: 600"
+      >
+        <span id="ContentPlaceHolder1_Label1">User Account Information</span>
+      </div>
+      <form [formGroup]="checkoutForm">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="row">
+                <div class="col-sm-4">
+                  <span id="ContentPlaceHolder1_lb1">Employee Up To :-</span>
+                </div>
+                <div class="col-sm-4 float-left">
+                  <input
+                    type="text"
+                    value="{{ totalUser }}"
+                    readonly="readonly"
+                    class="form-control"
+                  />
+                </div>
+                <div class="col-sm-4">
+                  <span
+                    id="ContentPlaceHolder1_user_login_type_lbl"
+                    style="font-size: 14px"
+                    >{{ packageName }}</span
+                  >
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-4">
+                  <span id="ContentPlaceHolder1_Label20"
+                    >Payable Amount :-</span
+                  >
+                </div>
+                <div class="col-sm-8 text-left" style="font-size: large">
+                  <input
+                    id="totaldSingleMonthAmount"
+                    name="totaldSingleMonthAmount"
+                    type="text"
+                    value="{{ totalAmount }}"
+                    readonly="readonly"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-4 text-center">
+                  <span id="ContentPlaceHolder1_Label2">Admin ID:-</span>
+                </div>
+                <div class="col-sm-5" style="display: flex">
+                  <input
+                    #adminid
+                    type="text"
+                    class="form-control"
+                    maxlength="15"
+                    value="{{ adminId }}"
+                    style="font-size: small; width: 150px"
+                  />
+                  <div>
+                    <button
+                      class="btn-primary checkId"
+                      (click)="fillData(adminid.value)"
+                    >
+                      Search Id
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-12"></div>
+              </div>
+
+              <br />
+              <div class="row">
+                <div class="col-sm-5">
+                  <span id="ContentPlaceHolder1_Label4"
+                    >Login Created On :-</span
+                  >
+                </div>
+                <div
+                  class="col-sm-7 text-left"
+                  style="font-size: large; color: green"
+                >
+                  <span
+                    id="ContentPlaceHolder1_start_date_lbl"
+                    style="font-size: Medium"
+                  ></span>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-5">
+                  <span id="ContentPlaceHolder1_Label6">Expired On :-</span>
+                </div>
+                <div
+                  class="col-sm-7 text-left"
+                  style="font-size: large; color: red"
+                >
+                  <span
+                    id="ContentPlaceHolder1_exp_date_lbl"
+                    style="font-size: Medium"
+                  ></span>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-5">
+                  <span id="ContentPlaceHolder1_Label5"
+                    >After Renew Exp. On :-</span
+                  >
+                </div>
+                <div class="col-sm-7" style="font-size: large; color: red">
+                  <span
+                    id="ContentPlaceHolder1_renew_date_lbl"
+                    style="font-size: Medium"
+                  ></span>
+                </div>
+              </div>
             </div>
-            <form [formGroup]="checkoutForm">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <span id="ContentPlaceHolder1_lb1">Employee Up To
-                                        :-</span>
-                                </div>
-                                <div class=" col-sm-4 float-left">
 
-                                    <input type="text" value="{{totalUser}}" readonly="readonly" class="form-control" />
-                                </div>
-                                <div class="col-sm-4">
-                                    <span id="ContentPlaceHolder1_user_login_type_lbl"
-                                        style="font-size:14px;">{{packageName}}</span>
-
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <span id="ContentPlaceHolder1_Label20">Payable Amount
-                                        :-</span>
-                                </div>
-                                <div class="col-sm-8 text-left" style="font-size: large">
-                                    <input id="totaldSingleMonthAmount" name="totaldSingleMonthAmount" type="text"
-                                        value="{{totalAmount}}" readonly="readonly" class="form-control" />
-                                </div>
-
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-4 text-center">
-                                    <span id="ContentPlaceHolder1_Label2">Corporate ID:-</span>
-                                </div>
-                                <div class="col-sm-5" style="display:flex;">
-
-                                    <input #corpoId type="text" class="form-control" value="{{corporateId}}"
-                                        maxlength="15" style="font-size: small; width: 150px;" />
-                                    <div>
-                                        <button class="btn-primary checkId " (click)="fillData(corpoId.value)">Check
-                                            Id</button>
-
-                                    </div>
-                                </div>
-
-
-
-
-
-
-
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-12">
-
-                                </div>
-                            </div>
-
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <span id="ContentPlaceHolder1_Label4">Login Created On
-                                        :-</span>
-                                </div>
-                                <div class="col-sm-7 text-left" style="font-size: large; color: green">
-                                    <span id="ContentPlaceHolder1_start_date_lbl" style="font-size:Medium;"></span>
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <span id="ContentPlaceHolder1_Label6">Expired On :-</span>
-                                </div>
-                                <div class="col-sm-7 text-left" style="font-size: large; color: red">
-                                    <span id="ContentPlaceHolder1_exp_date_lbl" style="font-size:Medium;"></span>
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <span id="ContentPlaceHolder1_Label5">After Renew Exp. On
-                                        :-</span>
-                                </div>
-                                <div class="col-sm-7 " style="font-size: large; color: red">
-                                    <span id="ContentPlaceHolder1_renew_date_lbl" style="font-size:Medium;"></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-6 marginTop">
-                            <div class="text-center">
-                                <span id="ContentPlaceHolder1_Label7" style="font-weight: bold;">Billing Details /
-                                    Invoice Details</span>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-sm ">
-                                            <div class="float-lg-right float-sm-left labelop">
-                                                <span id="ContentPlaceHolder1_name_lbl">Company Name :-</span>
-                                                <span id="ContentPlaceHolder1_Label12"
-                                                    style="color:Red;font-size:Large;">*</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 ok">
-                                    <input type="text" formControlName="companyName" value="{{companyName}}"
-                                        class="form-control" placeholder="Company Name" />
-
-                                    <ng-container
-                                        *ngIf="checkoutForm.get('companyName').invalid && checkoutForm.get('companyName').touched">
-
-                                        <p *ngIf="checkoutForm.get('companyName').errors.required" style="color:red">
-                                            company
-                                            Name is Required.</p>
-                                        <p *ngIf="checkoutForm.get('companyName').errors.pattern" style="color:red">
-                                            Company Name must be Vailid.
-                                            Name.</p>
-                                    </ng-container>
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left labelop">
-                                                <span id="ContentPlaceHolder1_Label3">Address :-</span>
-                                                <span id="ContentPlaceHolder1_Label13"
-                                                    style="color:Red;font-size:Large;">*</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-8 ok">
-                                    <textarea name="ctl00$ContentPlaceHolder1$add_text"
-                                        id="ContentPlaceHolder1_add_text" class="form-control" formControlName="address"
-                                        placeholder="Address..." aria-multiline="true" minlength="2"></textarea>
-                                    <ng-container
-                                        *ngIf="checkoutForm.get('address').invalid && checkoutForm.get('address').touched">
-                                        <p *ngIf="checkoutForm.get('address').errors.required" style="color:red">
-                                            Address is Required.
-                                            <ng-container *ngIf="checkoutForm.get('address').whitespace">
-                                                <p style="color:red">
-                                                    Address must be Valid
-                                                </p>
-                                            </ng-container>
-                                        </p>
-                                    </ng-container>
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left labelop">
-                                                <span id="ContentPlaceHolder1_Label8">PAN No :-</span>
-                                                <span id="ContentPlaceHolder1_Label17"
-                                                    style="color:Red;font-size:Large;">*</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 ok">
-                                    <input name="ctl00$ContentPlaceHolder1$pan_ttext" type="text"
-                                        formControlName="panNo" id="ContentPlaceHolder1_pan_ttext" placeholder="PAN No."
-                                        maxlength="20" class="form-control" />
-
-                                    <ng-container
-                                        *ngIf="checkoutForm.get('panNo').invalid && checkoutForm.get('panNo').touched">
-                                        <p *ngIf="checkoutForm.get('panNo').errors.required" style="color:red">
-                                            Pan No
-                                            Name is Required.</p>
-                                        <p *ngIf="checkoutForm.get('panNo').errors.whitespace ||checkoutForm.get('panNo').errors.minlength"
-                                            style="color:red">Pan No must be Vailid
-                                            Name.</p>
-                                    </ng-container>
-
-                                </div>
-
-                            </div>
-                            <div class="row">
-
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left labelop">
-                                                <span id="ContentPlaceHolder1_Label9">GST No :-</span>
-                                                <span id="ContentPlaceHolder1_Label18"
-                                                    style="color:Red;font-size:Large;">*</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 ok">
-                                    <input name="ctl00$ContentPlaceHolder1$gst_text" type="text" formControlName="gstNo"
-                                        id="ContentPlaceHolder1_gst_text" placeholder="GST No." maxlength="20"
-                                        class="form-control" />
-
-
-                                    <ng-container
-                                        *ngIf="checkoutForm.get('gstNo').invalid && checkoutForm.get('gstNo').touched">
-                                        <p *ngIf="checkoutForm.get('gstNo').errors.required" style="color:red">
-                                            GstNo
-                                            is Required.</p>
-                                        <p *ngIf="checkoutForm.get('gstNo').errors.whitespace ||checkoutForm.get('gstNo').errors.minlength"
-                                            style="color:red">GstNo must be Vailid
-                                        </p>
-                                    </ng-container>
-
-                                </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left labelop">
-                                                <span id="ContentPlaceHolder1_Label10">E-Mail :-</span>
-                                                <span id="ContentPlaceHolder1_Label23"
-                                                    style="color:Red;font-size:Large;">*</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 ok">
-                                    <input name="ctl00$ContentPlaceHolder1$email_text" type="text"
-                                        id="ContentPlaceHolder1_email_text" value="{{email}}" formControlName="email"
-                                        placeholder="E-mail" maxlength="100" class="form-control" />
-
-                                    <ng-container
-                                        *ngIf="checkoutForm.get('email').invalid && checkoutForm.get('email').touched">
-                                        <p *ngIf="checkoutForm.get('email').errors.required" style="color:red">
-                                            email
-                                            is Required.</p>
-                                        <p *ngIf="checkoutForm.get('email').errors.whitespace ||checkoutForm.get('email').errors.email"
-                                            style="color:red">Email must be Vailid
-                                        </p>
-                                    </ng-container>
-
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left labelop">
-                                                <span id="ContentPlaceHolder1_Label11">Mobile No:-</span>
-                                                <span id="ContentPlaceHolder1_Label19"
-                                                    style="color:Red;font-size:Large;">*</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 ok">
-                                    <input minlength="10" maxlength="10" type="text" value="{{mobile}}"
-                                        id="ContentPlaceHolder1_mo_text" formControlName="mobile"
-                                        placeholder="Mobile No" class="form-control" />
-
-
-                                    <ng-container
-                                        *ngIf="checkoutForm.get('mobile').invalid && checkoutForm.get('mobile').touched">
-                                        <p *ngIf="checkoutForm.get('mobile').errors.required" style="color:red">
-                                            mobile
-                                            is Required.</p>
-                                        <p *ngIf="checkoutForm.get('mobile').errors.whitespace ||checkoutForm.get('mobile').errors.pattern"
-                                            style="color:red">Mobile must be Vailid
-                                        </p>
-                                    </ng-container>
-
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <div class="float-lg-right float-sm-left">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-8">
-                                </div>
-                            </div>
-                        </div>
+            <div class="col-sm-6 marginTop">
+              <div class="text-center">
+                <span id="ContentPlaceHolder1_Label7" style="font-weight: bold"
+                  >Billing Details / Invoice Details</span
+                >
+              </div>
+              <br />
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="float-lg-right float-sm-left labelop">
+                        <span id="ContentPlaceHolder1_name_lbl"
+                          >Company Name :-</span
+                        >
+                        <span
+                          id="ContentPlaceHolder1_Label12"
+                          style="color: Red; font-size: Large"
+                          >*</span
+                        >
+                      </div>
                     </div>
+                  </div>
                 </div>
+                <div class="col-sm-8 ok">
+                  <input
+                    type="text"
+                    formControlName="companyName"
+                    value="{{ companyName }}"
+                    class="form-control"
+                    placeholder="Company Name"
+                  />
 
-            </form>
-
-            <br />
-            <div class="row text-center m-3">
-                <div class="col-sm m-2">
-                    <input type="submit" name="ctl00$ContentPlaceHolder1$go_back_btn" value="Go Back"
-                        id="ContentPlaceHolder1_go_back_btn" class="btn-danger btn goBack" routerLink="/pricings" />
+                  <ng-container
+                    *ngIf="
+                      checkoutForm.get('companyName').invalid &&
+                      checkoutForm.get('companyName').touched
+                    "
+                  >
+                    <p
+                      *ngIf="checkoutForm.get('companyName').errors.required"
+                      style="color: red"
+                    >
+                      company Name is Required.
+                    </p>
+                    <p
+                      *ngIf="checkoutForm.get('companyName').errors.pattern"
+                      style="color: red"
+                    >
+                      Company Name must be Vailid. Name.
+                    </p>
+                  </ng-container>
                 </div>
-
-                <div class="col-sm">
-                    <div [hidden]="showPromo">
-                        <mat-form-field class="example-form-field" appearance="fill">
-                            <mat-label> Enter Promo Code</mat-label>
-                            <input matInput type="text" value=" " (keyup)="getOffer($event.target.value)">
-                        </mat-form-field>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="float-lg-right float-sm-left labelop">
+                        <span id="ContentPlaceHolder1_Label3">Address :-</span>
+                        <span
+                          id="ContentPlaceHolder1_Label13"
+                          style="color: Red; font-size: Large"
+                          >*</span
+                        >
+                      </div>
                     </div>
-                    <a class="promoCode" (click)="usePromo()">Have a Promo Code</a>
+                  </div>
                 </div>
-                <div class="col-sm m-2">
-                    <button class="btn-success " style="background-color:#83B111;border-color:#83B111;"
-                        (click)="getPayment()">Make Payment</button>
+
+                <div class="col-sm-8 ok">
+                  <textarea
+                    name="ctl00$ContentPlaceHolder1$add_text"
+                    id="ContentPlaceHolder1_add_text"
+                    class="form-control"
+                    formControlName="address"
+                    placeholder="Address..."
+                    aria-multiline="true"
+                    minlength="2"
+                  ></textarea>
+                  <ng-container
+                    *ngIf="
+                      checkoutForm.get('address').invalid &&
+                      checkoutForm.get('address').touched
+                    "
+                  >
+                    <p
+                      *ngIf="checkoutForm.get('address').errors.required"
+                      style="color: red"
+                    >
+                      Address is Required.
+                      <ng-container
+                        *ngIf="checkoutForm.get('address').whitespace"
+                      >
+                        <p style="color: red">Address must be Valid</p>
+                      </ng-container>
+                    </p>
+                  </ng-container>
                 </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="float-lg-right float-sm-left labelop">
+                        <span id="ContentPlaceHolder1_Label8">PAN No :-</span>
+                        <span
+                          id="ContentPlaceHolder1_Label17"
+                          style="color: Red; font-size: Large"
+                          >*</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8 ok">
+                  <input
+                    name="ctl00$ContentPlaceHolder1$pan_ttext"
+                    type="text"
+                    formControlName="panNo"
+                    id="ContentPlaceHolder1_pan_ttext"
+                    placeholder="PAN No."
+                    maxlength="20"
+                    class="form-control"
+                  />
+
+                  <ng-container
+                    *ngIf="
+                      checkoutForm.get('panNo').invalid &&
+                      checkoutForm.get('panNo').touched
+                    "
+                  >
+                    <p
+                      *ngIf="checkoutForm.get('panNo').errors.required"
+                      style="color: red"
+                    >
+                      Pan No Name is Required.
+                    </p>
+                    <p
+                      *ngIf="
+                        checkoutForm.get('panNo').errors.whitespace ||
+                        checkoutForm.get('panNo').errors.minlength
+                      "
+                      style="color: red"
+                    >
+                      Pan No must be Vailid Name.
+                    </p>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="float-lg-right float-sm-left labelop">
+                        <span id="ContentPlaceHolder1_Label9">GST No :-</span>
+                        <span
+                          id="ContentPlaceHolder1_Label18"
+                          style="color: Red; font-size: Large"
+                          >*</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8 ok">
+                  <input
+                    name="ctl00$ContentPlaceHolder1$gst_text"
+                    type="text"
+                    formControlName="gstNo"
+                    id="ContentPlaceHolder1_gst_text"
+                    placeholder="GST No."
+                    maxlength="20"
+                    class="form-control"
+                  />
+
+                  <ng-container
+                    *ngIf="
+                      checkoutForm.get('gstNo').invalid &&
+                      checkoutForm.get('gstNo').touched
+                    "
+                  >
+                    <p
+                      *ngIf="checkoutForm.get('gstNo').errors.required"
+                      style="color: red"
+                    >
+                      GstNo is Required.
+                    </p>
+                    <p
+                      *ngIf="
+                        checkoutForm.get('gstNo').errors.whitespace ||
+                        checkoutForm.get('gstNo').errors.minlength
+                      "
+                      style="color: red"
+                    >
+                      GstNo must be Vailid
+                    </p>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="float-lg-right float-sm-left labelop">
+                        <span id="ContentPlaceHolder1_Label10">E-Mail :-</span>
+                        <span
+                          id="ContentPlaceHolder1_Label23"
+                          style="color: Red; font-size: Large"
+                          >*</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8 ok">
+                  <input
+                    name="ctl00$ContentPlaceHolder1$email_text"
+                    type="text"
+                    id="ContentPlaceHolder1_email_text"
+                    value="{{ email }}"
+                    formControlName="email"
+                    placeholder="E-mail"
+                    maxlength="100"
+                    class="form-control"
+                  />
+
+                  <ng-container
+                    *ngIf="
+                      checkoutForm.get('email').invalid &&
+                      checkoutForm.get('email').touched
+                    "
+                  >
+                    <p
+                      *ngIf="checkoutForm.get('email').errors.required"
+                      style="color: red"
+                    >
+                      email is Required.
+                    </p>
+                    <p
+                      *ngIf="
+                        checkoutForm.get('email').errors.whitespace ||
+                        checkoutForm.get('email').errors.email
+                      "
+                      style="color: red"
+                    >
+                      Email must be Vailid
+                    </p>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="float-lg-right float-sm-left labelop">
+                        <span id="ContentPlaceHolder1_Label11"
+                          >Mobile No:-</span
+                        >
+                        <span
+                          id="ContentPlaceHolder1_Label19"
+                          style="color: Red; font-size: Large"
+                          >*</span
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8 ok">
+                  <input
+                    minlength="10"
+                    maxlength="10"
+                    type="text"
+                    value="{{ mobile }}"
+                    id="ContentPlaceHolder1_mo_text"
+                    formControlName="mobile"
+                    placeholder="Mobile No"
+                    class="form-control"
+                  />
+
+                  <ng-container
+                    *ngIf="
+                      checkoutForm.get('mobile').invalid &&
+                      checkoutForm.get('mobile').touched
+                    "
+                  >
+                    <p
+                      *ngIf="checkoutForm.get('mobile').errors.required"
+                      style="color: red"
+                    >
+                      mobile is Required.
+                    </p>
+                    <p
+                      *ngIf="
+                        checkoutForm.get('mobile').errors.whitespace ||
+                        checkoutForm.get('mobile').errors.pattern
+                      "
+                      style="color: red"
+                    >
+                      Mobile must be Vailid
+                    </p>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="row">
+                    <div class="col-sm">
+                      <div class="float-lg-right float-sm-left"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8"></div>
+              </div>
             </div>
+          </div>
         </div>
+      </form>
+
+      <br />
+      <div class="row text-center m-3">
+        <div class="col-sm m-2">
+          <input
+            type="submit"
+            name="ctl00$ContentPlaceHolder1$go_back_btn"
+            value="Go Back"
+            id="ContentPlaceHolder1_go_back_btn"
+            class="btn-danger btn goBack"
+            routerLink="/pricings"
+          />
+        </div>
+
+        <div class="col-sm">
+          <div [hidden]="showPromo">
+            <mat-form-field class="example-form-field" appearance="fill">
+              <mat-label> Enter Promo Code</mat-label>
+              <input
+                matInput
+                type="text"
+                value=" "
+                (keyup)="getOffer($event.target.value)"
+              />
+            </mat-form-field>
+          </div>
+          <a class="promoCode" (click)="usePromo()">Have a Promo Code</a>
+        </div>
+        <div class="col-sm m-2">
+          <button
+            class="btn-success"
+            style="background-color: #83b111; border-color: #83b111"
+            (click)="getPayment()"
+          >
+            Make Payment
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="col-sm-2"></div>
+  </div>
+  <div class="col-sm-2"></div>
 </div>
