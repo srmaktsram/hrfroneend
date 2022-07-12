@@ -83,7 +83,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   companyName: string;
   maximumEmployees = true;
   profileImage: any;
-  profileImagePath: string;
+  profileImagePath=[];
   allEmpData: any;
 
   constructor(
@@ -297,18 +297,27 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       )
       .subscribe((data: any) => {
         this.totalEmployee = data.length;
-        this.allEmpData = data;
+       
 
-        // this.allEmpData.map((item: any) => {
+       
+
+
+        
+
+        this.lstEmployee = data;
+        console.log(this.lstEmployee)
+        // this.lstEmployee.map((item) => {
         //   this.profileImage = item.profileImage;
+           
+        //   this.profileImagePath.push(this.profileImage) 
+
+
         //   console.log(item,"Mapped Item")
+
         //   console.log(this.profileImage, "This Console");
         // });
 
 
-        // this.profileImagePath = `http://localhost:8443/${this.profileImage}`;
-
-        this.lstEmployee = data;
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
       });
