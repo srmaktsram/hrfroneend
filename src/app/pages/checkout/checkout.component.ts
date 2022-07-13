@@ -144,6 +144,7 @@ export class CheckoutComponent implements OnInit {
   }
   createOrderId() {
     let amount = this.totalAmount;
+    alert(amount);
     this.http
       .post("http://localhost:8443/checkout/create/OrderId", { amount: amount })
       .subscribe((res: any) => {
@@ -322,8 +323,19 @@ export class CheckoutComponent implements OnInit {
 
   getOffer(event) {
     let code = event;
-    this.http.get("url").subscribe((data: any) => {
-      // console.log(data, "dataComesFromApi");
-    });
+    console.log("code>>>>>>>>>>>>>>>>>>>", code);
+    this.http
+      .get(
+        "http://localhost:8443/mainadmin/promocode/getPromoOffer" + "/" + code
+      )
+      .subscribe((data: any) => {
+        if (data) {
+          var amount = this.totalAmount * (data.codeValue / 100);
+          this.totalAmount = this.totalAmount - amount;
+        } else {
+          this.totalAmount = this.route.snapshot.queryParams["totalAmount"];
+        }
+        console.log(data, "dataComesFromApi");
+      });
   }
 }
