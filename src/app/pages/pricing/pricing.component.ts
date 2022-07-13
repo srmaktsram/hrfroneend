@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 
 declare const $: any;
@@ -46,7 +46,6 @@ export class PricingComponent implements OnInit {
   public dSingleoneMonthAmount: any;
   public dMultioneMonthAmount: any;
 
-
   userDetails: any = null;
   priceDetails: any = null;
 
@@ -55,18 +54,22 @@ export class PricingComponent implements OnInit {
   public isShow3 = true;
   public isShow4 = true;
   public isShow5 = true;
+  checkId: any;
 
+  constructor(
+    private router: Router,
+    private cookieService: CookieService,
+    private route: ActivatedRoute
+  ) {}
 
-
-  constructor(private router: Router, private cookieService: CookieService) { }
-
-  ngOnInit() { }
+  ngOnInit() {
+    this.checkId = this.route.snapshot.queryParams["adminId"];
+  }
 
   getUser(event, val) {
-    this.userDetails = event
+    this.userDetails = event;
 
     if (val == "ptSingle") {
-
       if (this.userDetails > 0 && this.priceDetails > 0) {
         this.isShow1 = false;
       } else {
@@ -77,7 +80,6 @@ export class PricingComponent implements OnInit {
     }
 
     if (val == "ptMulti") {
-
       if (this.userDetails > 0 && this.priceDetails > 0) {
         this.isShow2 = false;
       } else {
@@ -88,7 +90,6 @@ export class PricingComponent implements OnInit {
     }
 
     if (val == "dSingle") {
-
       if (this.userDetails > 0 && this.priceDetails > 0) {
         this.isShow3 = false;
       } else {
@@ -99,7 +100,6 @@ export class PricingComponent implements OnInit {
     }
 
     if (val == "dMulti") {
-
       if (this.userDetails > 0 && this.priceDetails > 0) {
         this.isShow4 = false;
       } else {
@@ -110,7 +110,6 @@ export class PricingComponent implements OnInit {
     }
 
     if (val == "epMulti") {
-
       if (this.userDetails > 0 && this.priceDetails > 0) {
         this.isShow5 = false;
       } else {
@@ -124,9 +123,7 @@ export class PricingComponent implements OnInit {
     this.priceDetails = val2;
 
     if (val == "ptSingle") {
-
       if (this.userDetails > 0 && this.priceDetails > 0) {
-
         this.isShow1 = false;
       } else {
         this.isShow1 = true;
@@ -138,9 +135,7 @@ export class PricingComponent implements OnInit {
     }
 
     if (val == "ptMulti") {
-
       if (this.userDetails > 0 && this.priceDetails > 0) {
-
         this.isShow2 = false;
       } else {
         this.isShow2 = true;
@@ -153,7 +148,6 @@ export class PricingComponent implements OnInit {
 
     if (val == "dSingle") {
       if (this.userDetails > 0 && this.priceDetails > 0) {
-
         this.isShow3 = false;
       } else {
         this.isShow3 = true;
@@ -165,7 +159,6 @@ export class PricingComponent implements OnInit {
     }
     if (val == "dMulti") {
       if (this.userDetails > 0 && this.priceDetails > 0) {
-
         this.isShow4 = false;
       } else {
         this.isShow4 = true;
@@ -177,7 +170,6 @@ export class PricingComponent implements OnInit {
     }
     if (val == "epMulti") {
       if (this.userDetails > 0 && this.priceDetails > 0) {
-
         this.isShow5 = false;
       } else {
         this.isShow5 = true;
@@ -197,6 +189,7 @@ export class PricingComponent implements OnInit {
           queryParams: {
             totalAmount: 0,
             totalUser: 10,
+            adminId: this.checkId,
             corporate: this.corporateId,
             packageName: "Basic(Single-User)",
             days: 0,
@@ -209,6 +202,7 @@ export class PricingComponent implements OnInit {
           queryParams: {
             totalAmount: this.totaldSingleMonthAmount,
             totalUser: this.dSingleUser,
+            adminId: this.checkId,
             corporate: this.corporateId,
             packageName: "Diamond(Single-User)",
             days: this.dSingleUserMonth,
@@ -221,6 +215,7 @@ export class PricingComponent implements OnInit {
           queryParams: {
             totalAmount: this.totaldMultiMonthAmount,
             totalUser: this.dMultiUser,
+            adminId: this.checkId,
             corporate: this.corporateId,
             packageName: "Diamond(Multi-User)",
             days: this.dMultiUserMonth,
@@ -233,6 +228,7 @@ export class PricingComponent implements OnInit {
           queryParams: {
             totalAmount: this.totalEpMonthAmount,
             totalUser: this.epMultiUser,
+            adminId: this.checkId,
             corporate: this.corporateId,
             packageName: "Enterprise(Multi-User)",
             days: this.epMultiUserMonth,
@@ -245,6 +241,7 @@ export class PricingComponent implements OnInit {
           queryParams: {
             totalAmount: this.totalPtSingleMonthAmount,
             totalUser: this.PtSingleUser,
+            adminId: this.checkId,
             corporate: this.corporateId,
             packageName: "Platinum(Single-User)",
             days: this.PtSingleUserMonth,
@@ -257,6 +254,7 @@ export class PricingComponent implements OnInit {
           queryParams: {
             totalAmount: this.totalPtMultiMonthAmount,
             totalUser: this.PtMultiUser,
+            adminId: this.checkId,
             corporate: this.corporateId,
             packageName: "Platinum(Multi-User)",
             days: this.PtMultiUserMonth,

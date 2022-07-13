@@ -80,7 +80,7 @@
                                         <a routerLink="/layout/employees/employeeprofile" class="avatar"><img
                                                 src="assets/img/profiles/avatar-{{ i + 1 }}.jpg" alt=""></a>
                                         <a routerLink="/layout/employees/employeeprofile">{{users.name}}
-                                            <span>{{users.designation}}</span></a>
+                                            </a>
                                     </h2>
                                 </td>
                                 <td>{{users.email}}</td>
@@ -240,8 +240,12 @@
                                         [class.invalid]="addUsers.get('addRole').invalid && addUsers.get('addRole').touched"
                                         formControlName="addRole">
                                         <option>Admin</option>
-                                        <option>Client</option>
-                                        <option>Employee</option>
+                                        <option>SubAdmin</option>
+                                        <option>Manager</option>
+                                        <option>Finance</option>
+                                        <option>Hr</option>
+                                        <option>Receptionist</option>
+                                        
                                     </select>
                                     <div *ngIf="addUsers.get('addRole').invalid && addUsers.get('addRole').touched">
                                         <small
@@ -250,29 +254,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Company</label>
-                                    <select class="form-select form-control"
-                                        [class.invalid]="addUsers.get('addCompany').invalid && addUsers.get('addCompany').touched"
-                                        formControlName="addCompany">
-                                        <option>Global Technologies</option>
-                                        <option>Delta Infotech</option>
-                                    </select>
-                                    <div
-                                        *ngIf="addUsers.get('addCompany').invalid && addUsers.get('addCompany').touched">
-                                        <small
-                                            *ngIf="addUsers.get('addCompany').invalid && addUsers.get('addCompany').touched"
-                                            class="text-danger"> *Company is required</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Employee ID <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control floating">
-                                </div>
-                            </div> -->
+                           
                         </div>
                         <div class="table-responsive m-t-15">
                             <table class="table table-striped custom-table">
@@ -281,10 +263,7 @@
                                         <th>Module Permission</th>
                                         <th class="text-center">Read</th>
                                         <th class="text-center">Write</th>
-                                        <th class="text-center">Create</th>
-                                        <th class="text-center">Delete</th>
-                                        <th class="text-center">Import</th>
-                                        <th class="text-center">Export</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -296,18 +275,8 @@
                                         <td class="text-center">
                                             <input type="checkbox" (click)="checkEmployee($event,1)">
                                         </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkEmployee($event,2)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkEmployee($event,3)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkEmployee($event,4)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkEmployee($event,5)">
-                                        </td>
+                                        
+                                   
                                     </tr>
                                     <tr>
                                         <td>Holidays</td>
@@ -317,18 +286,7 @@
                                         <td class="text-center">
                                             <input type="checkbox" (click)="checkHolidays($event,1)">
                                         </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkHolidays($event,2)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkHolidays($event,3)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkHolidays($event,4)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkHolidays($event,5)">
-                                        </td>
+                                        
                                     </tr>
                                     <tr>
                                         <td>Leaves</td>
@@ -338,18 +296,7 @@
                                         <td class="text-center">
                                             <input type="checkbox" (click)="checkLeaves($event,1)">
                                         </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkLeaves($event,2)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkLeaves($event,3)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkLeaves($event,4)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkLeaves($event,5)">
-                                        </td>
+                                        
                                     </tr>
                                     <tr>
                                         <td>Events</td>
@@ -359,18 +306,7 @@
                                         <td class="text-center">
                                             <input type="checkbox" (click)="checkEvents($event,1)">
                                         </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkEvents($event,2)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkEvents($event,3)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkEvents($event,4)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" (click)="checkEvents($event,5)">
-                                        </td>
+                                       
                                     </tr>
                                 </tbody>
                             </table>
@@ -460,28 +396,7 @@
                                     </ng-container>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input class="form-control" type="password" formControlName="password">
-                                    <ng-container
-                                        *ngIf="editUsers.get('password').invalid && editUsers.get('password').touched">
-                                        <p *ngIf="editUsers.get('password').errors.required" class="text-danger">
-                                            *Password is required</p>
-                                    </ng-container>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Confirm Password</label>
-                                    <input class="form-control" type="password" formControlName="confirmPassword">
-                                    <ng-container
-                                        *ngIf="editUsers.get('password').value != editUsers.get('confirmPassword').value">
-                                        <p class="text-danger">
-                                            * Password and Confirm Password not Match</p>
-                                    </ng-container>
-                                </div>
-                            </div>
+                           
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Phone </label>
@@ -504,8 +419,11 @@
                                         [class.invalid]="editUsers.get('editRole').invalid && editUsers.get('editRole').touched"
                                         formControlName="editRole">
                                         <option>Admin</option>
-                                        <option>Client</option>
-                                        <option selected>Employee</option>
+                                        <option>SubAdmin</option>
+                                        <option>Manager</option>
+                                        <option>Finance</option>
+                                        <option>Hr</option>
+                                        <option>Receptionist</option>
                                     </select>
                                     <div *ngIf="editUsers.get('editRole').invalid && editUsers.get('editRole').touched">
                                         <small
@@ -514,27 +432,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Company</label>
-                                    <select class="form-select form-control"
-                                        [class.invalid]="editUsers.get('editCompany').invalid && editUsers.get('editCompany').touched"
-                                        formControlName="editCompany">
-                                        <option>Global Technologies</option>
-                                        <option>Delta Infotech</option>
-                                    </select>
-                                    <div
-                                        *ngIf="editUsers.get('editCompany').invalid && editUsers.get('editCompany').touched">
-                                        <small
-                                            *ngIf="editUsers.get('editCompany').invalid && editUsers.get('editCompany').touched"
-                                            class="text-danger"> *Company is required</small>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Employee ID <span class="text-danger">*</span></label>
-                                    <input type="text" value="FT-0001" class="form-control floating">
+                                    <input type="text" class="form-control floating">
                                 </div>
                             </div>
                         </div>
@@ -545,10 +447,7 @@
                                         <th>Module Permission</th>
                                         <th class="text-center">Read</th>
                                         <th class="text-center">Write</th>
-                                        <th class="text-center">Create</th>
-                                        <th class="text-center">Delete</th>
-                                        <th class="text-center">Import</th>
-                                        <th class="text-center">Export</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -562,22 +461,7 @@
                                             <input type="checkbox" [checked]="Employee[1].write"
                                                 (click)="checkEmployee($event,1)">
                                         </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Employee[2].create"
-                                                (click)="checkEmployee($event,2)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Employee[3].delete"
-                                                (click)="checkEmployee($event,3)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Employee[4].import"
-                                                (click)="checkEmployee($event,4)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Employee[5].export"
-                                                (click)="checkEmployee($event,5)">
-                                        </td>
+                                       
                                     </tr>
                                     <tr>
                                         <td>Holidays</td>
@@ -589,22 +473,7 @@
                                             <input type="checkbox" [checked]="Holidays[1].write"
                                                 (click)="checkHolidays($event,1)">
                                         </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Holidays[2].create"
-                                                (click)="checkHolidays($event,2)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Holidays[3].delete"
-                                                (click)="checkHolidays($event,3)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Holidays[4].import"
-                                                (click)="checkHolidays($event,4)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Holidays[5].export"
-                                                (click)="checkHolidays($event,5)">
-                                        </td>
+                                        
                                     </tr>
                                     <tr>
                                         <td>Leaves</td>
@@ -616,22 +485,7 @@
                                             <input type="checkbox" [checked]="Leaves[1].write"
                                                 (click)="checkLeaves($event,1)">
                                         </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Leaves[2].create"
-                                                (click)="checkLeaves($event,2)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Leaves[3].delete"
-                                                (click)="checkLeaves($event,3)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Leaves[4].import"
-                                                (click)="checkLeaves($event,4)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Leaves[5].export"
-                                                (click)="checkLeaves($event,5)">
-                                        </td>
+                                       
                                     </tr>
                                     <tr>
                                         <td>Events</td>
@@ -643,22 +497,7 @@
                                             <input type="checkbox" [checked]="Events[1].write"
                                                 (click)="checkEvents($event,1)">
                                         </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Events[2].create"
-                                                (click)="checkEvents($event,2)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Events[3].delete"
-                                                (click)="checkEvents($event,3)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Events[4].import"
-                                                (click)="checkEvents($event,4)">
-                                        </td>
-                                        <td class="text-center">
-                                            <input type="checkbox" [checked]="Events[5].export"
-                                                (click)="checkEvents($event,5)">
-                                        </td>
+                                       
                                     </tr>
                                 </tbody>
                             </table>

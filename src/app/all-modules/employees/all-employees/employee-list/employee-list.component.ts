@@ -29,7 +29,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
   public user_type = sessionStorage.getItem("user_type");
-  id: any
+  id: any;
 
   public pipe = new DatePipe("en-US");
   public rows = [];
@@ -82,7 +82,9 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   packageName: string;
   companyName: string;
   maximumEmployees = true;
-
+  profileImage: any;
+  profileImagePath: string;
+  allEmpData: any;
 
   constructor(
     private srvModuleService: AllModulesService,
@@ -143,6 +145,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   public getDepartments() {
     this.http
+
       .get("http://localhost:8443/admin/department/getAdminData" + "/" + this.adminId)
       .subscribe((data) => {
         this.departments = data;
@@ -150,6 +153,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
   public getDesignation() {
     this.http
+
       .get("http://localhost:8443/admin/designation/getData" +
         "/" +
         this.adminId)
@@ -288,13 +292,21 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data: any) => {
-        console.log("get Employees", data);
-        this.totalEmployee = data.length
-        console.log(this.totalEmployee, "no. of employees")
+        this.totalEmployee = data.length;
+        this.allEmpData = data;
+
+        // this.allEmpData.map((item: any) => {
+        //   this.profileImage = item.profileImage;
+        //   console.log(item,"Mapped Item")
+        //   console.log(this.profileImage, "This Console");
+        // });
+
+
+        // this.profileImagePath = `http://localhost:8443/${this.profileImage}`;
 
         this.lstEmployee = data;
         this.rows = this.lstEmployee;
@@ -315,8 +327,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data: any) => {
         this.employees = data[0].notification.employee;
@@ -336,7 +348,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         console.log("Areeeeeeeeeeeeeee", res);
         this.productDetails.map((item: any) => {
           this.totalUser = item.totalUser;
-          console.log(this.totalUser, "users no.")
+          console.log(this.totalUser, "users no.");
         });
       });
   }
@@ -348,7 +360,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.totalUser > this.totalEmployee) {
-
       let obj = {
         firstname: this.addEmployeeForm.value.FirstName,
         lastname: this.addEmployeeForm.value.LastName,
@@ -387,8 +398,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
             this.http
               .post(
                 "http://localhost:8443/admin/allNotification/createNotification" +
-                "/" +
-                this.adminId,
+                  "/" +
+                  this.adminId,
                 { message, author, functions, time }
               )
               .subscribe((data: any) => {
@@ -399,7 +410,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     } else {
       // alert("Can not add more employees,kindly upgrade your plan")
       this.maximumEmployees = false;
-
     }
 
     $("#add_employee").modal("hide");
@@ -411,8 +421,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.http
         .get(
           "http://localhost:8443/admin/notifications/getAllNotification" +
-          "/" +
-          this.adminId
+            "/" +
+            this.adminId
         )
         .subscribe((data: any) => {
           this.dataArray = data[0].notifications;

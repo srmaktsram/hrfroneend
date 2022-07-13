@@ -12,13 +12,11 @@ import { HeaderComponent } from "src/app/components/header/header.component";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 import { ShowregisterloginService } from "src/app/services/showregisterlogin.service";
 
-
 @Component({
   selector: "app-hr_registration",
   templateUrl: "./hr_registration.component.html",
   styleUrls: ["./hr_registration.component.css"],
 })
-
 export class HrregistrationComponent implements OnInit {
 
   public horizontalPosition: MatSnackBarHorizontalPosition = "center";
@@ -107,8 +105,11 @@ export class HrregistrationComponent implements OnInit {
     this.changePassForm = this.formBuilder.group({
       password: ["", Validators.required],
       confirmPassword: ["", Validators.required],
-
     });
+
+
+
+    this.showPage();
 
   }
   ///////////////////////////////////////////////////////////////////////////////////////
@@ -167,11 +168,11 @@ export class HrregistrationComponent implements OnInit {
 
     };
 
-
     this.http
       .post("http://localhost:8443/mainadmin/create/registration", obj)
       .subscribe((res: any) => {
-        window.location.replace("https://srmak.org");
+        window.location.replace("http://localhost:4200");
+
         this.hrUserAuthenticationService.login(
           res.id,
           res.corporateId,
@@ -192,12 +193,13 @@ export class HrregistrationComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
+        console.log(res);
         if (res.result == 2) {
-
           if (res.data.status !== "Blocked") {
 
 
             window.location.replace("http://localhost:4200")
+
 
 
             this.hrUserAuthenticationService.login(
@@ -211,7 +213,7 @@ export class HrregistrationComponent implements OnInit {
 
 
           }
-          else {
+ else {
             alert("Account Blocked By Main Admin");
           }
         } else {

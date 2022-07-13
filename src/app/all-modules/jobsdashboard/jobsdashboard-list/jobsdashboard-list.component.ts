@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
 
 @Component({
-  selector: 'app-jobsdashboard-list',
-  templateUrl: './jobsdashboard-list.component.html',
-  styleUrls: ['./jobsdashboard-list.component.css']
+  selector: "app-jobsdashboard-list",
+  templateUrl: "./jobsdashboard-list.component.html",
+  styleUrls: ["./jobsdashboard-list.component.css"],
 })
 export class JobsdashboardListComponent implements OnInit {
-public chartData;
+  public chartData;
   public chartOptions;
+  public totalApplication: any;
   public lineData;
   public lineOption;
   public barColors = {
@@ -17,12 +19,20 @@ public chartData;
   public lineColors = {
     a: "#373651",
     b: "#E65A26",
-    c: "#a1a1a1"
+    c: "#a1a1a1",
   };
-  constructor() { }
+  public allAppliedCandidates = [];
+  lstFees: any;
+  rows: any;
+  srch: any[];
+  constructor(private http: HttpClient) {
+    this.getFullData();
+    this.getAppliedCandidates();
+    this.getShortListedDetails();
+  }
 
   ngOnInit() {
-  		this.chartOptions = {
+    this.chartOptions = {
       xkey: "y",
       ykeys: ["a", "b"],
       labels: ["Series A", "Series B"],
@@ -41,19 +51,48 @@ public chartData;
 
     this.lineOption = {
       xkey: "y",
-      ykeys: ["a", "b","c"],
+      ykeys: ["a", "b", "c"],
       labels: ["UI Developer", "Android", "Web Designing"],
       resize: true,
       lineColors: [this.lineColors.a, this.lineColors.b, this.lineColors.c],
     };
 
     this.lineData = [
-      { y: "2006", a: 20, b: 2, c:1 },
-      { y: "2007", a: 10, b: 2, c:3 },
-      { y: "2008", a: 5, b: 3, c:6 },
-      { y: "2009", a: 5, b: 4, c:8 },
-      { y: "2010", a: 20, b: 1, c:10 },
+      { y: "2006", a: 20, b: 2, c: 1 },
+      { y: "2007", a: 10, b: 2, c: 3 },
+      { y: "2008", a: 5, b: 3, c: 6 },
+      { y: "2009", a: 5, b: 4, c: 8 },
+      { y: "2010", a: 20, b: 1, c: 10 },
     ];
   }
-
+  //////////////////////////////
+  getAppliedCandidates() {
+    this.http
+      .get("http://localhost:8443/admin/job/jobRegister/getAppliedCandidate")
+      .subscribe((data: any) => {
+        this.totalApplication = data.length;
+      });
+  }
+  //////////////////////////////
+  getShortListedDetails() {
+    this.http
+      .get("http://localhost:8443/admin/job/jobRegister/getQualifiedCandidate")
+      .subscribe((data: any) => {
+        this.lstFees = data;
+        this.rows = this.lstFees;
+        this.srch = [...this.rows];
+      });
+  }
+  /////////////////////////////////////////////
+  getFullData() {
+    this.http
+      .get("http://localhost:8443/admin/jobs/getAllJobsData")
+      .subscribe((data: any) => {
+        this.allAppliedCandidates = data;
+        console.log(
+          "this is Applied Condidate>>> .......",
+          this.allAppliedCandidates
+        );
+      });
+  }
 }
