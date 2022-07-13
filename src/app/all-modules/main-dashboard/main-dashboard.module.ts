@@ -5,9 +5,10 @@ import { DashboardRoutingModule } from "./main-dashboard-routing.module";
 import { DashboardComponent } from "./main-dashboard.component";
 import { AdminDashboardComponent } from "./main-admin-dashboard/main-admin-dashboard.component";
 import { MorrisJsModule } from "angular-morris-js";
+import { SrmakPannelComponent } from "./srmak-pannel/srmak-pannel.component";
 
 @NgModule({
-  declarations: [DashboardComponent, AdminDashboardComponent],
+  declarations: [DashboardComponent, AdminDashboardComponent, SrmakPannelComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -15,4 +16,4 @@ import { MorrisJsModule } from "angular-morris-js";
     DataTablesModule,
   ],
 })
-export class MainDashboardModule {}
+export class MainDashboardModule { }

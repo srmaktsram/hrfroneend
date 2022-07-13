@@ -27,9 +27,9 @@ export class AdminLoginComponent implements OnInit {
     private http: HttpClient,
     private router: Router,
     private adminAuthenticationService: MainAdminAuthenticationService
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
   sendTo() {
     this.router.navigate(["/login/forgot"]);
   }
@@ -46,7 +46,6 @@ export class AdminLoginComponent implements OnInit {
         console.log(res);
         if (res.result == 2) {
           this.router.navigate(["/layout/mainadmin"]);
-
           this.adminAuthenticationService.login();
         } else {
           alert("wrong Id or pass");

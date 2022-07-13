@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
   leaves: boolean;
   lstHolidays: any;
   holiday: boolean;
+
   constructor(
     private headerService: HeaderService,
     private router: Router,
@@ -100,8 +101,8 @@ export class HeaderComponent implements OnInit {
       this.http
         .get(
           "http://localhost:8443/admin/notifications/getAllNotification" +
-            "/" +
-            this.adminId
+          "/" +
+          this.adminId
         )
         .subscribe((data: any) => {
           this.dataArray = data[0].notifications;
@@ -191,11 +192,11 @@ export class HeaderComponent implements OnInit {
     this.http
       .patch(
         "http://localhost:8443/admin/notification/deleteAllNotifications" +
-          "/" +
-          this.adminId,
+        "/" +
+        this.adminId,
         obj
       )
-      .subscribe((data: any) => {});
+      .subscribe((data: any) => { });
   }
   onSubmit() {
     this.router.navigate(["/pages/search"]);

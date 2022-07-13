@@ -2,12 +2,17 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { DashboardComponent } from "./main-dashboard.component";
 import { AdminDashboardComponent } from "./main-admin-dashboard/main-admin-dashboard.component";
+import { SrmakPannelComponent } from "./srmak-pannel/srmak-pannel.component";
 
 const routes: Routes = [
   {
     path: "",
     component: DashboardComponent,
     children: [
+      {
+        path: "",
+        component: SrmakPannelComponent,
+      },
       {
         path: "admindashboard",
         component: AdminDashboardComponent,
@@ -107,4 +112,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DashboardRoutingModule {}
+export class DashboardRoutingModule { }
