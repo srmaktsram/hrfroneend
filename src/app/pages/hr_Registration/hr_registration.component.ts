@@ -109,30 +109,9 @@ export class HrregistrationComponent implements OnInit {
 
 
 
-    this.showPage();
 
   }
-  ///////////////////////////////////////////////////////////////////////////////////////
 
-  // showPage(val) {
-  //   this.val = val;
-  //   alert("showPage")
-  //   alert(val)
-  //   if (this.val == 'signIn') {
-  //     alert("if")
-  //     this.showLogin = false;
-  //     this.showRegister = true;
-  //   } else if (this.val == 'signUp') {
-  //     alert("else")
-  //     this.showLogin = true;
-  //     this.showRegister = false;
-  //   }
-  //   console.log("login", this.showLogin, "register", this.showRegister)
-  // }
-
-
-
-  ///////////////////////////////////////////////////////////////////////////////////
 
   showData() {
     let temp: any;
@@ -213,7 +192,7 @@ export class HrregistrationComponent implements OnInit {
 
 
           }
- else {
+          else {
             alert("Account Blocked By Main Admin");
           }
         } else {
