@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
+import { ShowregisterloginService } from "src/app/services/showregisterlogin.service";
 
 
 @Component({
@@ -19,22 +20,24 @@ import { HrUserAuthenticationService } from "src/app/core/storage/authentication
 })
 
 export class HrregistrationComponent implements OnInit {
+
   public horizontalPosition: MatSnackBarHorizontalPosition = "center";
   public verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public registerForm: FormGroup;
   public resetForm: FormGroup;
   public changePassForm: FormGroup;
-  public signIn: any;
-  public signUp: any;
   public showEmail = false;
+  public signIn: any;
   public veryfyOtp = true;
   public addloginForm: FormGroup;
   public showRegister = false;
   public showLogin = true;
   public showForgot = true;
   public changePass = true;
+
   public otp: any;
   public messOtp: any;
+  val: any
   isvalidconfirmpassword: boolean;
 
   constructor(
@@ -44,10 +47,26 @@ export class HrregistrationComponent implements OnInit {
     private hrUserAuthenticationService: HrUserAuthenticationService,
     private route: ActivatedRoute,
     private _snackBar: MatSnackBar,
-    private cookieService: CookieService
-  ) {}
+    private cookieService: CookieService,
+    private hr_registrationS: ShowregisterloginService
+  ) {
+  }
 
   ngOnInit() {
+
+    this.hr_registrationS.hr_registrationSubject.subscribe(data => {
+      console.log(data, "serviceData");
+      if (data == 'signIn') {
+        this.showLogin = false;
+        this.showRegister = true;
+      } else if (data == 'signUp') {
+        this.showLogin = true;
+        this.showRegister = false;
+      }
+
+    })
+    // console.log("login NGONINIT", this.showLogin, "registerNGONINIT", this.showRegister)
+
     this.registerForm = this.formBuilder.group({
       firstName: [
         "",
@@ -79,9 +98,6 @@ export class HrregistrationComponent implements OnInit {
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]],
     });
-    this.route.queryParams.subscribe((params) => {
-      this.signIn = params.signIn;
-    });
 
     this.resetForm = this.formBuilder.group({
       verifiedEmail: ["", [Validators.required, Validators.email]],
@@ -93,20 +109,29 @@ export class HrregistrationComponent implements OnInit {
       confirmPassword: ["", Validators.required],
 
     });
-    this.showPage();
 
   }
+  ///////////////////////////////////////////////////////////////////////////////////////
 
-  showPage() {
-    if (this.signIn == "signIn") {
-      this.showLogin = false;
-      this.showRegister = true;
-    } else if (this.signIn == "signUp") {
-      this.showLogin = true;
-      this.showRegister = false;
-    }
-    return true;
-  }
+  // showPage(val) {
+  //   this.val = val;
+  //   alert("showPage")
+  //   alert(val)
+  //   if (this.val == 'signIn') {
+  //     alert("if")
+  //     this.showLogin = false;
+  //     this.showRegister = true;
+  //   } else if (this.val == 'signUp') {
+  //     alert("else")
+  //     this.showLogin = true;
+  //     this.showRegister = false;
+  //   }
+  //   console.log("login", this.showLogin, "register", this.showRegister)
+  // }
+
+
+
+  ///////////////////////////////////////////////////////////////////////////////////
 
   showData() {
     let temp: any;
@@ -129,7 +154,6 @@ export class HrregistrationComponent implements OnInit {
     }
   }
 
-
   saveData() {
     let obj = {
       firstName: this.registerForm.value.firstName,
@@ -140,8 +164,6 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
-
-
 
     };
 
@@ -175,24 +197,24 @@ export class HrregistrationComponent implements OnInit {
           if (res.data.status !== "Blocked") {
 
 
-          window.location.replace("http://localhost:4200")
+            window.location.replace("http://localhost:4200")
 
 
-          this.hrUserAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone
-          );
+            this.hrUserAuthenticationService.login(
+              res.data.id,
+              res.data.corporateId,
+              res.data.email,
+              res.data.firstName,
+              res.data.lastName,
+              res.data.phone
+            );
 
 
-        }
-        else {
-          alert("Account Blocked By Main Admin");
-        }
-      } else {
+          }
+          else {
+            alert("Account Blocked By Main Admin");
+          }
+        } else {
 
           alert("wrong Id or pass");
         }
@@ -257,7 +279,7 @@ export class HrregistrationComponent implements OnInit {
               email,
               password,
             })
-            .subscribe((res: any) => {});
+            .subscribe((res: any) => { });
         }
       }
     }

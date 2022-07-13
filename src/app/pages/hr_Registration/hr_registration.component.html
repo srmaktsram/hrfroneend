@@ -131,7 +131,7 @@
                                 <small
                                     *ngIf="registerForm.get('securityAns').invalid && registerForm.get('securityAns').touched"
                                     class="text-danger"> *SecurityAns is required</small>
-                                <input type="submit" class="btnRegister" [disabled]="registerForm.invalid"
+                                <input type="submit" [disabled]="registerForm.invalid" class="btnRegister"
                                     value="Register" />
                             </div>
                         </div>
@@ -148,7 +148,6 @@
 
 
 <!-----------------HR--USER--LOGIN--SECTION---------------->
-
 
 
 <div [hidden]="showLogin" class="container register">

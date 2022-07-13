@@ -29,15 +29,13 @@
                 <div class="tri"></div>
                 <p class="profile">Have An account? Login in now.</p>
                 <div class="childDiv">
-                    <p class="profile1" routerLink="/hr_registration" [queryParams]="{signIn: 'signIn'}"
-                        (click)="showPage()">Login An
+                    <p class="profile1" (click)="showPage('login')">Login An
                         Account</p>
                 </div>
                 <div class="manageDiv">
                     <div style="border-bottom:2px solid rgb(242, 234, 234)">
                         <p class="manageCustomer">New to Srmak? Create an account to get started today.</p>
-                        <p class="createAn" routerLink="/hr_registration" [queryParams]="{signIn:'signUp'}"
-                            (click)="showPage()">Create An
+                        <p class="createAn" (click)="showPage('register')">Create An
                             Account</p>
                     </div>
                     <p [hidden]="isShow" class="manage" routerLink="/profiles">Manage Account</p>

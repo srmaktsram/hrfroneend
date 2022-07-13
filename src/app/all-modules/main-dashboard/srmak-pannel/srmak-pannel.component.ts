@@ -2,12 +2,13 @@ import { Component, OnInit, HostListener, NgZone, ViewChild, ElementRef } from "
 import { Router, Event, NavigationEnd } from "@angular/router";
 
 @Component({
-  selector: "app-main-dashboard",
-  templateUrl: "./main-dashboard.component.html",
-  styleUrls: ["./main-dashboard.component.css"],
+  selector: "app-srmak-pannel",
+  templateUrl: "./srmak-pannel.component.html",
+  styleUrls: ["./srmak-pannel.component.css"],
 })
 @HostListener("window: resize", ["$event"])
-export class DashboardComponent implements OnInit {
+export class SrmakPannelComponent implements OnInit {
+  public user_type: any;
 
   @ViewChild('hrHand', { static: false }) hrHand: ElementRef;
   @ViewChild('minHand', { static: false }) minHand: ElementRef;
@@ -15,34 +16,19 @@ export class DashboardComponent implements OnInit {
 
   public innerHeight: any;
 
-  getScreenHeight() {
-    this.innerHeight = window.innerHeight + "px";
-  }
-
   constructor(private ngZone: NgZone, private router: Router) {
-    window.onresize = (e) => {
-      this.ngZone.run(() => {
-        this.innerHeight = window.innerHeight + "px";
-      });
-    };
-    this.getScreenHeight();
   }
 
   ngOnInit() {
 
-
+    this.user_type = sessionStorage.getItem("user_type");
     setInterval(() => {
       const date = new Date();
       this.updateClock(date);
     }, 1000)
+
+    // this.router.navigateByUrl("/layout/dashboard/admin");
   }
-
-
-  onResize(event) {
-    this.innerHeight = event.target.innerHeight + "px";
-  }
-
-
 
 
   updateClock(date) {
@@ -56,5 +42,4 @@ export class DashboardComponent implements OnInit {
       + (date.getHours() * 30 + date.getMinutes() * 0.5) + 'deg)'
 
   }
-
 }

@@ -20,6 +20,7 @@ import {
   POSITION,
   PB_DIRECTION,
 } from "ngx-ui-loader";
+import { ShowregisterloginService } from "./services/showregisterlogin.service";
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: "red",
@@ -36,7 +37,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AppComponent,
     PagesComponent,
     HeaderComponent,
-
     FooterComponent,
   ],
   imports: [
@@ -56,7 +56,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
       preventDuplicates: true,
     }),
   ],
-  providers: [CookieService],
+  providers: [CookieService, ShowregisterloginService],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
