@@ -281,7 +281,11 @@
       </ng-container>
       <ng-container *ngIf="user_type == 'subadmin'">
         <div class="dropdown-menu">
-          <a class="dropdown-item" routerLink="/layout/affiliates/settings/bank-setting">Settings</a>
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="user_type == 'mainadmin'">
+        <div class="dropdown-menu">
           <a class="dropdown-item" (click)="Logout()">Logout</a>
         </div>
       </ng-container>

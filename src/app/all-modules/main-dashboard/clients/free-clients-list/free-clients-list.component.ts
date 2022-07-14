@@ -1,13 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
-import { id } from "src/assets/all-modules-data/id";
-import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
-import { Router } from "@angular/router";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
@@ -48,49 +46,72 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
   searchName: any;
   public employeeId: any;
   searchCompany: any;
+  clientsDetails: any;
   constructor(
-    private hrUserAuthenticationService: HrUserAuthenticationService,
     private toastr: ToastrService,
+    private hrUserAuthenticationService: HrUserAuthenticationService,
     private http: HttpClient,
-    private router: Router,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
   }
 
   ngOnInit() {
-
-    this.getDemoAdmins();
+    this.getPremiumAdmins();
 
     this.dtOptions = {
-      // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
 
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
-      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
-      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
-      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      firstName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      lastName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      editClientEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      editClientPhone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
     });
   }
 
-  ngAfterViewInit(): void {
+  // ngAfterViewInit(): void {
+  //   // setTimeout(() => {
+  //   //   this.dtTrigger.next();
+  //   // }, 1000);
+  // }
 
-  }
-
-  //Get all Clients data
-  public getDemoAdmins() {
+  public getPremiumAdmins() {
+    // alert("ahsdghfg");
     this.http
       .get("http://localhost:8443/mainadmin/freeClient/getFreeClients")
       .subscribe((res: any) => {
         this.data = res;
-        console.log(res, "freeee")
+        console.log("jhasdjghfjhgsdf", this.data);
         this.srch = [...this.data];
       });
   }
+
   adminlogin(id) {
     alert(id);
     this.http
@@ -98,17 +119,17 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
-
             // window.location.replace("http://localhost:4200")
-            window.open("http://localhost:4200", "_blank");
+
             this.hrUserAuthenticationService.login(
               res.data.id,
               res.data.corporateId,
               res.data.email,
               res.data.firstName,
               res.data.lastName,
-              res.data.phone,
+              res.data.phone
             );
+            window.open("http://localhost:4200", "_blank");
           } else {
             alert("Account Blocked By Main Admin");
           }
@@ -117,11 +138,6 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
         }
       });
   }
-
-
-
-
-
   // Edit client
   public onEditClient(clientId: any) {
     this.editId = clientId;
@@ -150,13 +166,12 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/freeClient/updateFreeClient" +
-        "/" +
-        id,
+          "/" +
+          id,
         obj
       )
       .subscribe((data) => {
-        console.log(data, "Edited Details for free Client")
-        this.getDemoAdmins();
+        this.getPremiumAdmins();
       });
 
     $("#edit_client").modal("hide");
@@ -164,48 +179,30 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
     this.toastr.success("Client updated sucessfully...!", "Success");
   }
 
-  //////////////
   getStatus(data, id) {
     const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/freeClient/updateFreeClientStatus" +
-        "/" +
-        id,
+        "http://localhost:8443/mainadmin/freeClient/updatefreeClientStatus" +
+          "/" +
+          id,
         { status }
       )
       .subscribe((res) => {
-        this.getDemoAdmins();
+        this.getPremiumAdmins();
       });
   }
-
   getBlock(data, id) {
     const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/client/blockClientStatus" +
-        "/" +
-        id,
+        "http://localhost:8443/mainadmin/client/blockClientStatus" + "/" + id,
         { status }
       )
       .subscribe((res) => {
-        this.getDemoAdmins();
+        this.getPremiumAdmins();
       });
   }
-
-  //search by name
-  // searchID(val) {
-  //   if (val) {
-  //     this.data.splice(0, this.data.length);
-  //     let temp = this.srch.filter(function (d) {
-  //       val = val.toLowerCase();
-  //       return d.clientId.toLowerCase().indexOf(val) !== -1 || !val;
-  //     });
-  //     this.data.push(...temp);
-  //   } else {
-  //     // this.getClients();
-  //   }
-  // }
 
   //search by name
   searchByName(val) {
@@ -223,10 +220,10 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
           d.phone.toLowerCase().indexOf(val) !== -1 ||
           !val
         );
-      })
+      });
       this.data.push(...temp);
     } else {
-      this.getDemoAdmins();
+      this.getPremiumAdmins();
     }
   }
 
@@ -236,14 +233,11 @@ export class DemoClientsListComponent implements OnInit, OnDestroy {
       this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return (
-          d.corporateId.toLowerCase().indexOf(val) !== -1 ||
-          !val
-        );
-      })
+        return d.corporateId.toLowerCase().indexOf(val) !== -1 || !val;
+      });
       this.data.push(...temp);
     } else {
-      this.getDemoAdmins();
+      this.getPremiumAdmins();
     }
   }
   onSearch(name, company) {

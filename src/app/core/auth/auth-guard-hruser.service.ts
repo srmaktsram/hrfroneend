@@ -9,7 +9,7 @@ import {
 export class AuthGuardHrUser implements CanActivate {
   constructor(private _router: Router) {}
   canActivate(): boolean {
-    if (sessionStorage.getItem("currentHrUserLgn") == "HrUserLogin") {
+    if (sessionStorage.getItem("currentUserLogin") == "HrUserLogin") {
       return true;
     } else {
       this._router.navigate([""]);

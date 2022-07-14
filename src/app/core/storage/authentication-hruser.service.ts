@@ -11,20 +11,21 @@ export class HrUserAuthenticationService {
     lastName: string,
     phone: string
   ) {
-    sessionStorage.setItem("currentUser", "HrUserLogin");
-    sessionStorage.setItem("user_type", "hrUser");
+    sessionStorage.setItem("currentUserLogin", "HrUserLogin");
+    sessionStorage.setItem("type_user", "hrUser");
     sessionStorage.setItem("corporateId", corporateId);
     sessionStorage.setItem("hrUserId", id);
     sessionStorage.setItem("email", email);
     sessionStorage.setItem("firstName", firstName);
     sessionStorage.setItem("phone", phone);
     sessionStorage.setItem("lastName", lastName);
+
     return true;
   }
   logout() {
-    sessionStorage.removeItem("currentUser");
+    sessionStorage.removeItem("currentUserLogin");
     sessionStorage.removeItem("corporateId");
-    sessionStorage.removeItem("user_type");
+    sessionStorage.removeItem("type_user");
     sessionStorage.removeItem("hrUserId");
     sessionStorage.removeItem("email");
     sessionStorage.removeItem("phone");
@@ -32,6 +33,6 @@ export class HrUserAuthenticationService {
     sessionStorage.removeItem("lastName");
   }
   public get loggedIn(): boolean {
-    return sessionStorage.getItem("currentUser") !== null;
+    return sessionStorage.getItem("currentUserLogin") !== null;
   }
 }
