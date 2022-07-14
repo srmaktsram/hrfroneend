@@ -23,9 +23,11 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.corporateId = sessionStorage.getItem("corporateId")
     this.registerForm = this.formBuilder.group({
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
-      phone: ["", [Validators.required]],
+      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+      ]],
+      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+      ]],
+      phone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       gender: ["", [Validators.required]],
       address: [""],
       zipCode: [""],
@@ -34,11 +36,10 @@ export class ProfileComponent implements OnInit {
 
     this.getDetails();
     this.changePassForm = this.formBuilder.group({
-      password: [""],
-      newPassword: [""],
-      confirmPassword: [""],
+      password: ["", Validators.required],
+      newPassword: ["", Validators.required],
+      confirmPassword: ["", Validators.required],
     })
-
   }
 
   getDetails() {
@@ -46,7 +47,6 @@ export class ProfileComponent implements OnInit {
       this.details = res.data;
       console.log(this.details, "getApi>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<")
       this.email = this.details[0].email;
-
       this.edit()
     })
 
@@ -81,20 +81,6 @@ export class ProfileComponent implements OnInit {
     });
 
   }
-
-  // changePassword() {
-  //   alert("hi")
-  //   if (this.changePassForm.valid) {
-  //     alert("hi2")
-  //     if (this.changePassForm.value.newPassword != this.changePassForm.value.confirmPassword) {
-  //       this.isvalidconfirmpassword = true;
-  //     } else {
-  //       this.isvalidconfirmpassword = false;
-  //       this.updatePassword();
-  //     }
-  //   }
-  // }
-
 
   updatePassword() {
     let obj = {

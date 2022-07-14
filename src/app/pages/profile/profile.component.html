@@ -22,26 +22,36 @@
                         <div class="form-group">
                             <label> First Name<span class="text-danger">*</span></label>
                             <input class="form-control" type="text" value="Dreamguy's Technologies"
-                                [class.invalid]="registerForm.get('firstName').invalid && registerForm.get('firstName').touched"
                                 formControlName="firstName">
-                            <div *ngIf="registerForm.get('firstName').invalid && registerForm.get('firstName').touched">
-                                <small
-                                    *ngIf="registerForm.get('firstName').invalid && registerForm.get('firstName').touched"
-                                    class="text-danger"> *First Name is required</small>
-                            </div>
+                            <ng-container
+                                *ngIf="registerForm.get('firstName').invalid && registerForm.get('firstName').touched">
+
+                                <p *ngIf="registerForm.get('firstName').errors.required" style="color: red">
+                                    First Name is required.
+                                </p>
+                                <p *ngIf="registerForm.get('firstName').errors.pattern" style=" color: red;">
+                                    First Name must be a valid name.
+                                </p>
+
+
+                            </ng-container>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label> Last Name<span class="text-danger">*</span></label>
                             <input class="form-control" type="text" value="Dreamguy's Technologies"
-                                [class.invalid]="registerForm.get('lastName').invalid && registerForm.get('lastName').touched"
                                 formControlName="lastName">
-                            <div *ngIf="registerForm.get('lastName').invalid && registerForm.get('lastName').touched">
-                                <small
-                                    *ngIf="registerForm.get('lastName').invalid && registerForm.get('lastName').touched"
-                                    class="text-danger"> *Last Name is required</small>
-                            </div>
+                            <ng-container
+                                *ngIf="registerForm.get('lastName').invalid && registerForm.get('lastName').touched">
+
+                                <p *ngIf="registerForm.get('lastName').errors.required" style="color: red">
+                                    Last Name is required.
+                                </p>
+                                <p *ngIf="registerForm.get('lastName').errors.pattern" style=" color: red;">
+                                    Last Name must be a valid name.
+                                </p>
+                            </ng-container>
                         </div>
                     </div>
                 </div>
@@ -57,13 +67,18 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label> Phone <span class="text-danger">*</span></label>
-                            <input class="form-control" type="text"
-                                [class.invalid]="registerForm.get('phone').invalid && registerForm.get('phone').touched"
-                                formControlName="phone">
-                            <div *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched">
-                                <small *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched"
-                                    class="text-danger"> *Phone is required</small>
-                            </div>
+                            <input class="form-control" type="text" formControlName="phone">
+                            <ng-container
+                                *ngIf="registerForm.get('phone').invalid && registerForm.get('phone').touched">
+
+                                <small *ngIf="registerForm.get('phone').errors.required" style="color: red">
+                                    Phone is required.
+                                </small>
+                                <small *ngIf="registerForm.get('phone').errors.pattern " style=" color: red;">
+                                    *Please enter a valid mobile number.
+                                </small>
+                            </ng-container>
+
                         </div>
                     </div>
                 </div>
@@ -108,12 +123,25 @@
                         <div class="form-group">
                             <label> Old Password<span class="text-danger">*</span></label>
                             <input class="form-control" type="text" formControlName="password">
+                            <div
+                                *ngIf="changePassForm.get('password').invalid && changePassForm.get('password').touched">
+                                <small
+                                    *ngIf="changePassForm.get('password').invalid && changePassForm.get('password').touched"
+                                    class="text-danger"> *old Password is required</small>
+                            </div>
+
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label> New Password<span class="text-danger">*</span></label>
                             <input class="form-control" type="text" formControlName="newPassword">
+                            <div
+                                *ngIf="changePassForm.get('newPassword').invalid && changePassForm.get('newPassword').touched">
+                                <small
+                                    *ngIf="changePassForm.get('newPassword').invalid && changePassForm.get('newPassword').touched"
+                                    class="text-danger"> *newPassword is required</small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -125,6 +153,9 @@
                         <div class="form-group">
                             <label> Confirm Password<span class="text-danger">*</span></label>
                             <input class="form-control" type="text" formControlName="confirmPassword">
+                            <small class="text-danger"
+                                *ngIf="changePassForm.get('newPassword').value != changePassForm.get('confirmPassword').value">
+                                *New Password and Confirm Password not match</small>
                         </div>
                     </div>
                 </div>
