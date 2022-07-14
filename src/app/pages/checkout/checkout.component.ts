@@ -225,6 +225,29 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
+        if (res.packageName === "Basic(Single-User)") {
+          this.http
+            .patch(
+              "http://localhost:8443/mainadmin/hr_user/updateHr_user" +
+                "/" +
+                this.corporateId,
+              { status: "Free" }
+            )
+            .subscribe((data: any) => {
+              console.log("this is the HRUSER UPDATE>>>>>>>", data);
+            });
+        } else {
+          this.http
+            .patch(
+              "http://localhost:8443/mainadmin/hr_user/updateHr_user" +
+                "/" +
+                this.corporateId,
+              { status: "Premium" }
+            )
+            .subscribe((data: any) => {
+              console.log("this is the HRUSER UPDATE>>>>>>>", data);
+            });
+        }
         console.log("this is the  PreviousDetails>>>>>>333>>>>>", res);
 
         this.saveOrderDetails();

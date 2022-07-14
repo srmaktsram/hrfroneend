@@ -18,7 +18,6 @@ import { ShowregisterloginService } from "src/app/services/showregisterlogin.ser
   styleUrls: ["./hr_registration.component.css"],
 })
 export class HrregistrationComponent implements OnInit {
-
   public horizontalPosition: MatSnackBarHorizontalPosition = "center";
   public verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public registerForm: FormGroup;
@@ -35,7 +34,7 @@ export class HrregistrationComponent implements OnInit {
 
   public otp: any;
   public messOtp: any;
-  val: any
+  val: any;
   isvalidconfirmpassword: boolean;
 
   constructor(
@@ -47,22 +46,19 @@ export class HrregistrationComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private cookieService: CookieService,
     private hr_registrationS: ShowregisterloginService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-
-    this.hr_registrationS.hr_registrationSubject.subscribe(data => {
+    this.hr_registrationS.hr_registrationSubject.subscribe((data) => {
       console.log(data, "serviceData");
-      if (data == 'signIn') {
+      if (data == "signIn") {
         this.showLogin = false;
         this.showRegister = true;
-      } else if (data == 'signUp') {
+      } else if (data == "signUp") {
         this.showLogin = true;
         this.showRegister = false;
       }
-
-    })
+    });
     // console.log("login NGONINIT", this.showLogin, "registerNGONINIT", this.showRegister)
 
     this.registerForm = this.formBuilder.group({
@@ -106,12 +102,7 @@ export class HrregistrationComponent implements OnInit {
       password: ["", Validators.required],
       confirmPassword: ["", Validators.required],
     });
-
-
-
-
   }
-
 
   showData() {
     let temp: any;
@@ -144,12 +135,13 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
-
+      status: "Visitor",
     };
 
     this.http
       .post("http://localhost:8443/mainadmin/create/registration", obj)
       .subscribe((res: any) => {
+        console.log("hr User>>>>>>>>>>", res);
         window.location.replace("http://localhost:4200");
 
         this.hrUserAuthenticationService.login(
@@ -175,11 +167,7 @@ export class HrregistrationComponent implements OnInit {
         console.log(res);
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
-
-
-            window.location.replace("http://localhost:4200")
-
-
+            window.location.replace("http://localhost:4200");
 
             this.hrUserAuthenticationService.login(
               res.data.id,
@@ -189,14 +177,10 @@ export class HrregistrationComponent implements OnInit {
               res.data.lastName,
               res.data.phone
             );
-
-
-          }
-          else {
+          } else {
             alert("Account Blocked By Main Admin");
           }
         } else {
-
           alert("wrong Id or pass");
         }
       });
@@ -260,7 +244,7 @@ export class HrregistrationComponent implements OnInit {
               email,
               password,
             })
-            .subscribe((res: any) => { });
+            .subscribe((res: any) => {});
         }
       }
     }
