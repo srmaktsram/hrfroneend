@@ -51,6 +51,7 @@ export class UserLoginComponent implements OnInit {
       })
       .subscribe((res: any) => {
         console.log(res);
+        
         if (res.result == 2) {
           // location.replace("http://localhost:51245/layout/dashboard/employee");
 

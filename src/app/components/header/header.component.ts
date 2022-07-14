@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.firstName = sessionStorage.getItem("firstName");
     this.user_type = sessionStorage.getItem("user_type");
-    console.log(this.firstName, "kjhdkjwehjwj>>>>>>>>>>>>>");
+    console.log(this.firstName, "console firstName from header component");
     this.visible()
     // this.hrregistrationComponent.showPage()
   }

@@ -3,9 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
-import { RoleAdminAuthenticationService } from "src/app/core/storage/authentication-roleadmin.service";
-import { AuthenticationService } from "src/app/core/storage/authentication.service";
+import { RoleSubAdminAuthenticationService } from "src/app/core/storage/authentication-rolesubadmin.service";
 
 @Component({
   selector: "app-rolesubadmin",
@@ -28,7 +26,7 @@ export class RoleSubAdminComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private roleAdminAuthenticationService: RoleAdminAuthenticationService
+    private roleAdminAuthenticationService: RoleSubAdminAuthenticationService
   ) {}
 
   ngOnInit() {}
@@ -69,7 +67,7 @@ export class RoleSubAdminComponent implements OnInit {
             res.data.cicon,
             res.data.cinvoice,
             res.data.cinvoicepre,
-            res.data.packageName
+            res.data.packageName,
           );
         } else {
           alert("wrong Id or pass");
