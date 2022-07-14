@@ -58,7 +58,7 @@
         <div class="col-md-4 col-sm-6 col-12 col-lg-4 col-xl-3" *ngFor="let emp of lstEmployee;let i = index">
             <div class="profile-widget">
                 <div class="profile-img">
-                    <a (click)="getId(emp.id)" class="avatar"><img src="assets/img/profiles/avatar-{{i+ 1}}.jpg"
+                    <a (click)="getId(emp.id)" class="avatar"><img src="http://localhost:8443\{{emp.profileImage}}"
                             alt=""></a>
                 </div>
                 <div class="dropdown profile-action">
@@ -282,7 +282,7 @@
                                     <th>Module Permission</th>
                                     <th class="text-center">Read</th>
                                     <th class="text-center">Write</th>
-                                   
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -294,7 +294,7 @@
                                     <td class="text-center">
                                         <input type="checkbox" (click)="checkCheckBoxvalueHolidays($event, 1)">
                                     </td>
-                                   
+
                                 </tr>
                                 <tr>
                                     <td>Leaves</td>
@@ -304,7 +304,7 @@
                                     <td class="text-center">
                                         <input type="checkbox" (click)="checkCheckBoxvalueLeaves($event, 1)">
                                     </td>
-                                   
+
                                 </tr>
                                 <tr>
                                     <td>Clients</td>
@@ -314,7 +314,7 @@
                                     <td class="text-center">
                                         <input type="checkbox" (click)="checkCheckBoxvalueClients($event, 1)">
                                     </td>
-                                   
+
                                 </tr>
                                 <tr>
                                     <td>Projects</td>
@@ -324,9 +324,9 @@
                                     <td class="text-center">
                                         <input type="checkbox" (click)="checkCheckBoxvalueProjects($event, 1)">
                                     </td>
-                                    
+
                                 </tr>
-                                
+
                                 <tr>
                                     <td>Attendance</td>
                                     <td class="text-center">
@@ -335,9 +335,9 @@
                                     <td class="text-center">
                                         <input type="checkbox" (click)="checkCheckBoxvalueattendance($event, 1)">
                                     </td>
-                                    
+
                                 </tr>
-                                
+
                                 <tr>
                                     <td>TimingSheets</td>
                                     <td class="text-center">
@@ -346,7 +346,7 @@
                                     <td class="text-center">
                                         <input type="checkbox" (click)="checkCheckBoxvalueTimingSheets($event, 1)">
                                     </td>
-                                   
+
                                 </tr>
 
                             </tbody>
@@ -572,7 +572,7 @@
                                     <th>Module Permission</th>
                                     <th class="text-center">Read</th>
                                     <th class="text-center">Write</th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -586,7 +586,7 @@
                                         <input type="checkbox" [checked]="Holidays[1].write"
                                             (click)="checkCheckBoxvalueHolidays($event, 1)">
                                     </td>
-                                   
+
                                 </tr>
                                 <tr>
                                     <td>Leaves</td>
@@ -598,8 +598,8 @@
                                         <input type="checkbox" [checked]="Leaves[1].write"
                                             (click)="checkCheckBoxvalueLeaves($event, 1)">
                                     </td>
-                                   
-                                    
+
+
                                 </tr>
                                 <tr>
                                     <td>Clients</td>
@@ -611,7 +611,7 @@
                                         <input type="checkbox" [checked]="Clients[1].write"
                                             (click)="checkCheckBoxvalueClients($event, 1)">
                                     </td>
-                                   
+
                                 </tr>
                                 <tr>
                                     <td>Projects</td>
@@ -623,9 +623,9 @@
                                         <input type="checkbox" [checked]="Projects[1].write"
                                             (click)="checkCheckBoxvalueProjects($event, 1)">
                                     </td>
-                                    
+
                                 </tr>
-                                
+
                                 <tr>
                                     <td>Attendance</td>
                                     <td class="text-center">
@@ -636,9 +636,9 @@
                                         <input type="checkbox" [checked]="attendance[1].write"
                                             (click)="checkCheckBoxvalueattendance($event, 1)">
                                     </td>
-                                    
+
                                 </tr>
-                                
+
                                 <tr>
                                     <td>TimingSheets</td>
                                     <td class="text-center">
@@ -649,7 +649,7 @@
                                         <input type="checkbox" [checked]="TimingSheets[1].write"
                                             (click)="checkCheckBoxvalueTimingSheets($event, 1)">
                                     </td>
-                                    
+
                                 </tr>
 
                             </tbody>
