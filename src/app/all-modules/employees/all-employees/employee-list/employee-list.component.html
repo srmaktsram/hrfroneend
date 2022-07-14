@@ -81,8 +81,8 @@
                         <tr *ngFor="let row of lstEmployee;let i = index">
                             <td>
                                 <h2 class="table-avatar">
-                                    <a (click)="getId(row.id)" class="avatar"><img alt=""
-                                            src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
+                                    <a (click)="getId(row.id)" class="avatar"><img alt="No Image"
+                                            src="http://localhost:8443\{{row.profileImage}}"></a>
                                     <a (click)="getId(row.id)">{{row.firstName}}
                                         <span>{{row.designation}} </span></a>
                                 </h2>

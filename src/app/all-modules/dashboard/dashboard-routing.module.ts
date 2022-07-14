@@ -14,12 +14,12 @@ const routes: Routes = [
       {
         path: "employee",
         component: EmployeeDashboardComponent,
-        canActivate: [AuthGuardEmployee],
+        // canActivate: [AuthGuardEmployee],
       },
       {
         path: "admin",
         component: AdminDashboardComponent,
-        canActivate: [AuthGuardAdmin],
+        // canActivate: [AuthGuardAdmin],
       },
     ],
   },

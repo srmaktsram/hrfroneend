@@ -59,7 +59,7 @@
                     id="totaldSingleMonthAmount"
                     name="totaldSingleMonthAmount"
                     type="text"
-                    value="{{ totalAmount }}"
+                    value="{{ payAmount }}"
                     readonly="readonly"
                     class="form-control"
                   />
@@ -477,14 +477,33 @@
 
         <div class="col-sm">
           <div [hidden]="showPromo">
-            <mat-form-field class="example-form-field" appearance="fill">
+            <mat-form-field class="example-form-field d-flex" appearance="fill">
               <mat-label> Enter Promo Code</mat-label>
-              <input
-                matInput
-                type="text"
-               
-                (keyup)="getOffer($event.target.value)"
-              />
+
+              <div class="d-flex">
+                <input #promo matInput type="text" [hidden]="applied" />
+                <div>
+                  <button
+                    *ngIf="applied === false"
+                    class="btn-warning m-2"
+                    (click)="getOffer(promo.value)"
+                  >
+                    Apply
+                  </button>
+                  <div>
+                    <button *ngIf="applied === true" class="btn-success m-3">
+                      Applied Success
+                    </button>
+                    <a
+                      *ngIf="applied === true"
+                      class="text-info"
+                      (click)="applied = false; payAmount = totalAmount"
+                      >Change Promo Code</a
+                    >
+                  </div>
+                </div>
+              </div>
+
             </mat-form-field>
           </div>
           <a class="promoCode" (click)="usePromo()">Have a Promo Code</a>

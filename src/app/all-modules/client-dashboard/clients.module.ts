@@ -9,9 +9,10 @@ import { ClientsComponent } from "./clients.component";
 import { ClientsProfileComponent } from "./clients-profile/clients-profile.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ClientDashboardComponent } from "./client-dashboard/client-dashboard.component";
+import { SrmakPannelComponent } from "./srmak-pannel/srmak-pannel.component";
 
 @NgModule({
-  declarations: [ClientsComponent, ClientsProfileComponent,ClientDashboardComponent],
+  declarations: [ClientsComponent, ClientsProfileComponent, ClientDashboardComponent, SrmakPannelComponent],
   imports: [
     CommonModule,
     ClientsRoutingModule,
@@ -20,4 +21,4 @@ import { ClientDashboardComponent } from "./client-dashboard/client-dashboard.co
     ReactiveFormsModule,
   ],
 })
-export class ClientsDashboardModule {}
+export class ClientsDashboardModule { }

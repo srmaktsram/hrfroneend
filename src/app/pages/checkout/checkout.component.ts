@@ -26,11 +26,13 @@ export class CheckoutComponent implements OnInit {
   public mobile: any;
   public companyName: any;
   public adminId: any;
+  public payAmount: any;
   public tl: any;
   public checkId: any;
   ordersId: any;
   packageName: any;
   getdata: any;
+  applied: boolean = false;
   _window(): any {
     return window;
   }
@@ -93,7 +95,7 @@ export class CheckoutComponent implements OnInit {
     this.packageName = this.route.snapshot.queryParams["packageName"];
     this.month = this.route.snapshot.queryParams["days"] * 30;
     this.adminId = this.route.snapshot.queryParams["adminId"];
-
+    this.payAmount = this.totalAmount;
     console.log("this sio the adminId>>>>", this.adminId);
   }
 
@@ -146,7 +148,9 @@ export class CheckoutComponent implements OnInit {
       });
   }
   createOrderId() {
+
     let amount = this.totalAmount;
+
     this.http
       .post("http://localhost:8443/checkout/create/OrderId", { amount: amount })
       .subscribe((res: any) => {
@@ -214,7 +218,7 @@ export class CheckoutComponent implements OnInit {
     let obj = {
       adminId: this.adminId,
       paymentId: paymentId,
-      amount: this.totalAmount,
+      amount: this.payAmount,
       totalUser: this.totalUser,
       corporateId: this.corporateId,
       packageName: this.packageName,
@@ -238,7 +242,7 @@ export class CheckoutComponent implements OnInit {
           "/" +
           this.corporateId,
         {
-          amount: this.totalAmount,
+          amount: this.payAmount,
           packageName: this.packageName,
           status: 1,
           companyName: this.checkoutForm.value.companyName,
@@ -246,8 +250,34 @@ export class CheckoutComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log("this is the orderDetails>>>>444>>>>>>", res);
-        this.ngxService.stop();
+        if (res.packageName === "Basic(Single-User)") {
+          alert(res.packageName);
+          this.http
+            .patch(
+              "http://localhost:8443/mainadmin/hr_user/updateHr_user" +
+                "/" +
+                this.corporateId,
+              { status: "Free" }
+            )
+            .subscribe((data: any) => {
+              console.log("this is the HRUSER UPDATE>>>>>>>", data);
+            });
+        } else {
+          alert(res.packageName);
+          this.http
+            .patch(
+              "http://localhost:8443/mainadmin/hr_user/updateHr_user" +
+                "/" +
+                this.corporateId,
+              { status: "Premium" }
+            )
+            .subscribe((data: any) => {
+              console.log("this is the HRUSER UPDATE>>>>>>>", data);
+            });
+        }
+     this.ngxService.stop();
         window.location.replace("http://localhost:4200/products");
+
       });
   }
   createAdminRegister() {
@@ -255,7 +285,7 @@ export class CheckoutComponent implements OnInit {
       let obj = {
         adminId: this.adminId,
         corporateId: this.corporateId,
-        amount: this.totalAmount,
+        amount: this.payAmount,
         companyPan: this.checkoutForm.value.panNo,
         companyGst: this.checkoutForm.value.gstNo,
         mobile: this.checkoutForm.value.mobile,
@@ -279,7 +309,7 @@ export class CheckoutComponent implements OnInit {
       let obj = {
         adminId: this.adminId,
         corporateId: this.corporateId,
-        amount: this.totalAmount,
+        amount: this.payAmount,
         companyPan: this.checkoutForm.value.panNo,
         companyGst: this.checkoutForm.value.gstNo,
         mobile: this.checkoutForm.value.mobile,
@@ -334,9 +364,10 @@ export class CheckoutComponent implements OnInit {
       .subscribe((data: any) => {
         if (data) {
           var amount = this.totalAmount * (data.codeValue / 100);
-          this.totalAmount = this.totalAmount - amount;
+          this.payAmount = this.totalAmount - amount;
+          this.applied = true;
         } else {
-          this.totalAmount = this.route.snapshot.queryParams["totalAmount"];
+          this.payAmount = this.totalAmount;
         }
         console.log(data, "dataComesFromApi");
       });

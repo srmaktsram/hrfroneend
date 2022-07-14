@@ -3,9 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
-import { RoleAdminAuthenticationService } from "src/app/core/storage/authentication-roleadmin.service";
-import { AuthenticationService } from "src/app/core/storage/authentication.service";
+import { RoleReceptionistAuthenticationService } from "src/app/core/storage/authentication-rolereceptionist.service";
 
 @Component({
   selector: "app-rolesubadmin",
@@ -28,7 +26,7 @@ export class RoleReceptionistComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private roleAdminAuthenticationService: RoleAdminAuthenticationService
+    private roleAdminAuthenticationService: RoleReceptionistAuthenticationService
   ) {}
 
   ngOnInit() {}

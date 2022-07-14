@@ -135,11 +135,13 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
+
     };
 
     this.http
       .post("http://localhost:8443/mainadmin/create/registration", obj)
       .subscribe((res: any) => {
+        console.log("hr User>>>>>>>>>>", res);
         window.location.replace("http://localhost:4200");
 
         this.hrUserAuthenticationService.login(

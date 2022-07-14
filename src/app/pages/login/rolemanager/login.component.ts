@@ -3,9 +3,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
-import { RoleAdminAuthenticationService } from "src/app/core/storage/authentication-roleadmin.service";
-import { AuthenticationService } from "src/app/core/storage/authentication.service";
+import { RoleManagerAuthenticationService } from "src/app/core/storage/authentication-rolemanager.service";
 
 @Component({
   selector: "app-rolemanager",
@@ -28,7 +26,7 @@ export class RoleManagerComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private roleAdminAuthenticationService: RoleAdminAuthenticationService
+    private roleAdminAuthenticationService: RoleManagerAuthenticationService
   ) {}
 
   ngOnInit() {}
@@ -45,7 +43,7 @@ export class RoleManagerComponent implements OnInit {
     let password = this.form.value.password;
 
     this.http
-      .post("http://localhost:8443/auth/register/login", {
+      .post("http://localhost:8443/auth/rolelogin/roleadmin", {
         email,
         password,
       })
@@ -55,7 +53,7 @@ export class RoleManagerComponent implements OnInit {
           this.router.navigate(["/layout/dashboard/admin"]);
 
           this.roleAdminAuthenticationService.login(
-            "rolefinance",
+            "rolemanager",
             res.data.id,
             res.data.corporateId,
             res.data.companyEmail,
