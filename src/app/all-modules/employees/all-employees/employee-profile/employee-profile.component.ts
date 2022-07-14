@@ -270,6 +270,7 @@ export class EmployeeProfileComponent implements OnInit {
       .patch("http://localhost:8443/employee/employeeProfile/updateProfilePhoto?" + params, fd)
       .subscribe((res: any) => {
         console.log(res,"kkkkk")
+        this.getId(this.id)
        
       });
   }

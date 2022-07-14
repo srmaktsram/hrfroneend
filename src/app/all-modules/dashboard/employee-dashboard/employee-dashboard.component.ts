@@ -77,6 +77,7 @@ export class EmployeeDashboardComponent implements OnInit {
     this.http
       .get("http://localhost:8443/admin/holidays/getHoliday")
       .subscribe((res: any) => {
+        console.log(res,"lllllllllllllllllll")
         this.lstHolidays = res.weekData;
         this.lstHoliday = res.upcomingData;
       });

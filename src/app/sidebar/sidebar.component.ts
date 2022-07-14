@@ -66,10 +66,76 @@ export class SidebarComponent implements OnInit {
   projectswrite = sessionStorage.getItem("projectswrite");
   holidaysread = sessionStorage.getItem("holidaysread");
   holidayswrite = sessionStorage.getItem("holidayswrite");
-
-
-
   //////////
+
+  ///////////////
+  dashboardRead = sessionStorage.getItem("dashboardRead");
+  dashboardWrite = sessionStorage.getItem("dashboardWrite");
+  appsread = sessionStorage.getItem("appsread");
+  appswrite = sessionStorage.getItem("appswrite");
+  employeeread = sessionStorage.getItem("employeeread");
+  employeewrite = sessionStorage.getItem("employeewrite");
+  supportTicketsRead = sessionStorage.getItem("supportTicketsRead");
+  supportTicketsWrite = sessionStorage.getItem("supportTicketsWrite");
+  clientsRead = sessionStorage.getItem("clientsRead");
+  clientsWrite = sessionStorage.getItem("clientsWrite");
+  projectsRead = sessionStorage.getItem("projectsRead");
+  projectsWrite = sessionStorage.getItem("projectsWrite");
+  leadsread = sessionStorage.getItem("leadsread");
+  leadswrite = sessionStorage.getItem("leadswrite");
+  ticketsRead = sessionStorage.getItem("ticketsRead");
+  ticketsWrite = sessionStorage.getItem("ticketsWrite");
+  salesread = sessionStorage.getItem("salesread");
+  saleswrite = sessionStorage.getItem("saleswrite");
+  accountingread = sessionStorage.getItem("accountingread");
+  accountingwrite = sessionStorage.getItem("accountingwrite");
+
+  payrollRead = sessionStorage.getItem("payrollRead");
+  payrollWrite = sessionStorage.getItem("payrollWrite");
+
+  policiesRead = sessionStorage.getItem("policiesRead");
+  policiesWrite = sessionStorage.getItem("policiesWrite");
+
+  reportsRead = sessionStorage.getItem("reportsRead");
+  reportsWrite = sessionStorage.getItem("reportsWrite");
+
+  performanceRead = sessionStorage.getItem("performanceRead");
+  performanceWrite = sessionStorage.getItem("performanceWrite");
+
+  goalsRead = sessionStorage.getItem("goalsRead");
+  goalsWrite = sessionStorage.getItem("goalsWrite");
+
+  trainingsRead = sessionStorage.getItem("trainingsRead");
+  trainingsWrite = sessionStorage.getItem("trainingsWrite");
+
+  promotionRead = sessionStorage.getItem("promotionRead");
+  promotionWrite = sessionStorage.getItem("promotionWrite");
+
+  resignationRead = sessionStorage.getItem("resignationRead");
+  resignationWrite = sessionStorage.getItem("resignationWrite");
+
+  terminationRead = sessionStorage.getItem("terminationRead");
+  terminationWrite = sessionStorage.getItem("terminationWrite");
+  
+  assetsRead = sessionStorage.getItem("assetsRead");
+  assetsWrite = sessionStorage.getItem("assetsWrite");
+
+  jobsRead = sessionStorage.getItem("jobsRead");
+  jobsWrite = sessionStorage.getItem("jobsWrite");
+
+  konowledgeBaseread = sessionStorage.getItem("konowledgeBaseread");
+  konwledgeBaseWrite = sessionStorage.getItem("konwledgeBaseWrite");
+
+  activitiesRead = sessionStorage.getItem("activitiesRead");
+  activitiesWrite = sessionStorage.getItem("activitiesWrite");
+
+  usersRead = sessionStorage.getItem("usersRead");
+  usersWrite = sessionStorage.getItem("usersWrite");
+
+  settingsRead = sessionStorage.getItem("settingsRead");
+  settingsWrite = sessionStorage.getItem("settingsWrite");
+ 
+
   constructor(
     private router: Router,
     private allModulesService: AllModulesService

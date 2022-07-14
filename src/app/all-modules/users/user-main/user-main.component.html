@@ -36,7 +36,7 @@
             (input)="searchName($event.target.value)"
             (focusout)="rerender()"
           />
-          <label class="focus-label">Name</label>
+          <label class="focus-label">First/Last Name</label>
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
@@ -47,7 +47,7 @@
             (input)="searchEmail($event.target.value)"
             (focusout)="rerender()"
           />
-          <label class="focus-label">Email</label>
+          <label class="focus-label">Email/Username</label>
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
@@ -85,16 +85,20 @@
           >
             <thead>
               <tr>
-                <th>Name</th>
+                <th>Sr.no.</th>
+                <th>Fullname</th>
+                <th>Username</th>
                 <th>Email</th>
-                <th>Company</th>
-                <th>Created Date</th>
+                <th>Mobile</th>
+                <th>Create Date</th>
                 <th>Role</th>
                 <th class="text-end">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let users of allUsers; let i = index">
+                <td>{{ i + 1 }}</td>
+
                 <td>
                   <h2 class="table-avatar">
                     <a
@@ -105,15 +109,16 @@
                         alt=""
                     /></a>
                     <a routerLink="/layout/employees/employeeprofile"
-                      >{{ users.name }}
+                      >{{ users.firstName }} {{ users.lastName }}
                     </a>
                   </h2>
                 </td>
+                <td>{{ users.name }}</td>
                 <td>{{ users.email }}</td>
-                <td>{{ users.company }}</td>
+                <td>{{ users.phone }}</td>
                 <td>{{ users.createDate }}</td>
                 <td>
-                  <span class="badge bg-inverse-danger">{{ users.role }}</span>
+                  <span class="badge bg-inverse-success">{{ users.role }}</span>
                 </td>
                 <td class="text-end">
                   <div class="dropdown dropdown-action">
@@ -382,7 +387,8 @@
                       addUsers.get('addRole').invalid &&
                       addUsers.get('addRole').touched
                     "
-                    formControlName="addRole"(input)="showCheckBoxCondition($event.target.value)"
+                    formControlName="addRole"
+                    (input)="showCheckBoxCondition($event.target.value)"
                   >
                     <option value="Admin">Admin</option>
                     <option value="SubAdmin">SubAdmin</option>
@@ -410,7 +416,7 @@
                 </div>
               </div>
             </div>
-            <div   [hidden]="showManager" class="table-responsive m-t-15">
+            <div [hidden]="showManager" class="table-responsive m-t-15">
               <table class="table table-striped custom-table">
                 <thead>
                   <tr>
@@ -423,16 +429,10 @@
                   <tr>
                     <td>User Roles</td>
                     <td class="text-center">
-                      <input
-                        type="checkbox"
-                        (click)="checkUsers($event, 0)"
-                      />
+                      <input type="checkbox" (click)="checkUsers($event, 0)" />
                     </td>
                     <td class="text-center">
-                      <input
-                        type="checkbox"
-                        (click)="checkUsers($event, 1)"
-                      />
+                      <input type="checkbox" (click)="checkUsers($event, 1)" />
                     </td>
                   </tr>
                   <tr>
@@ -453,19 +453,31 @@
                   <tr>
                     <td>Support Tickets</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 0)" />
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 1)" />
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td>Clients</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkClients($event, 0)" />
+                      <input
+                        type="checkbox"
+                        (click)="checkClients($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkClients($event, 1)" />
+                      <input
+                        type="checkbox"
+                        (click)="checkClients($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
@@ -480,331 +492,1039 @@
                 </tbody>
               </table>
             </div>
-            <div   [hidden]="showSubadmin" class="table-responsive m-t-15">
-                <table class="table table-striped custom-table">
-                  <thead>
-                    <tr>
-                      <th>Module Permission</th>
-                      <th class="text-center">Read</th>
-                      <th class="text-center">Write</th>
-                    </tr>
-                  </thead>
-                  <tbody>
+            <div [hidden]="showSubadmin" class="table-responsive m-t-15">
+              <table class="table table-striped custom-table">
+                <thead>
+                  <tr>
+                    <th>Module Permission</th>
+                    <th class="text-center">Read</th>
+                    <th class="text-center">Write</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dashboard</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkDashboard($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkDashboard($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Apps</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkApps($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkApps($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Employees</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkEmployee($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkEmployee($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Support Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Clients</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkClients($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkClients($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Projects</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkProjects($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkProjects($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Leads</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkLeads($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkLeads($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Sales</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSales($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSales($event, 1)" />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Accounting</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAccounting($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAccounting($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Payrolls</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPayrolls($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPayrolls($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Policies</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Reports</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkReports($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkReports($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPerformance($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPerformance($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Goals</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkGoals($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkGoals($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Training</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTraining($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTraining($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Promotions</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPromotions($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPromotions($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Resignation</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkResignation($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkResignation($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Termination</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTermination($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTermination($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Assets</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkAssets($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkAssets($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Jobs</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkJobs($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkJobs($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>KnowledgeBase</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkKnowledgeBase($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkKnowledgeBase($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Activities</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkActivities($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkActivities($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>User Roles</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkUsers($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkUsers($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Settings</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSettings($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSettings($event, 1)" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div [hidden]="showAdmin" class="table-responsive m-t-15">
+              <table class="table table-striped custom-table">
+                <thead>
+                  <tr>
+                    <th>Module Permission</th>
+                    <th class="text-center">Read</th>
+                    <th class="text-center">Write</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dashboard</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkDashboard($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkDashboard($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Apps</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkApps($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkApps($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Employees</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkEmployee($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkEmployee($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Support Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Clients</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkClients($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkClients($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Projects</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkProjects($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkProjects($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Leads</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkLeads($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkLeads($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Sales</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSales($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSales($event, 1)" />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Accounting</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAccounting($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAccounting($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Payrolls</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPayrolls($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPayrolls($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Policies</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Reports</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkReports($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkReports($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPerformance($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPerformance($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Goals</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkGoals($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkGoals($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
                     
-                    <tr>
-                      <td>Holidays</td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkHolidays($event, 0)"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkHolidays($event, 1)"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Leaves</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkLeaves($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkLeaves($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Events</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkEvents($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkEvents($event, 1)" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div   [hidden]="showAdmin" class="table-responsive m-t-15">
-                <table class="table table-striped custom-table">
-                  <thead>
-                    <tr>
-                      <th>Module Permission</th>
-                      <th class="text-center">Read</th>
-                      <th class="text-center">Write</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Employee</td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkEmployee($event, 0)"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkEmployee($event, 1)"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Holidays</td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkHolidays($event, 0)"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkHolidays($event, 1)"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Leaves</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkLeaves($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkLeaves($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Events</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkEvents($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkEvents($event, 1)" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              
-              <div   [hidden]="showFinance" class="table-responsive m-t-15">
-                <table class="table table-striped custom-table">
-                  <thead>
-                    <tr>
-                      <th>Module Permission</th>
-                      <th class="text-center">Read</th>
-                      <th class="text-center">Write</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Reports</td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkReports($event, 0)"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkReports($event, 1)"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Accounting</td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkAccounting($event, 0)"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkAccounting($event, 1)"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Sales</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkSales($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkSales($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Policies</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPolicies($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPolicies($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Assets</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkAssets($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkAssets($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Support Tickets</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkSupportTickets($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkSupportTickets($event, 1)" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                    <td>Training</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTraining($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTraining($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Promotions</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPromotions($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPromotions($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Resignation</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkResignation($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkResignation($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Termination</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTermination($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTermination($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Assets</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkAssets($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkAssets($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Jobs</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkJobs($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkJobs($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>KnowledgeBase</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkKnowledgeBase($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkKnowledgeBase($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Activities</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkActivities($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkActivities($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>User Roles</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkUsers($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkUsers($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Settings</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSettings($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSettings($event, 1)" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-              <div   [hidden]="showHr" class="table-responsive m-t-15">
-                <table class="table table-striped custom-table">
-                  <thead>
-                    <tr>
-                      <th>Module Permission</th>
-                      <th class="text-center">Read</th>
-                      <th class="text-center">Write</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Jobs</td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkJobs($event, 0)"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkJobs($event, 1)"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Policies</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPolicies($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPolicies($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Support Tickets</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkSupportTickets($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkSupportTickets($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Training</td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkTraining($event, 0)"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkTraining($event, 1)"
-                        />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Performance</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPerformance($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPerformance($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Payrolls</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPayrolls($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPayrolls($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Attendance Reports</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkAttendanceReports($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkAttendanceReports($event, 1)" />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <div   [hidden]="showReceptionist" class="table-responsive m-t-15">
-                <table class="table table-striped custom-table">
-                  <thead>
-                    <tr>
-                      <th>Module Permission</th>
-                      <th class="text-center">Read</th>
-                      <th class="text-center">Write</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Support Tickets</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkSupportTickets($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkSupportTickets($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Policies</td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPolicies($event, 0)" />
-                      </td>
-                      <td class="text-center">
-                        <input type="checkbox" (click)="checkPolicies($event, 1)" />
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Jobs</td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkJobs($event, 0)"
-                        />
-                      </td>
-                      <td class="text-center">
-                        <input
-                          type="checkbox"
-                          (click)="checkJobs($event, 1)"
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div [hidden]="showFinance" class="table-responsive m-t-15">
+              <table class="table table-striped custom-table">
+                <thead>
+                  <tr>
+                    <th>Module Permission</th>
+                    <th class="text-center">Read</th>
+                    <th class="text-center">Write</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Reports</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkReports($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkReports($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Accounting</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAccounting($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAccounting($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Sales</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSales($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkSales($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Policies</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Assets</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkAssets($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkAssets($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Support Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
-              
+            <div [hidden]="showHr" class="table-responsive m-t-15">
+              <table class="table table-striped custom-table">
+                <thead>
+                  <tr>
+                    <th>Module Permission</th>
+                    <th class="text-center">Read</th>
+                    <th class="text-center">Write</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Jobs</td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkJobs($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" (click)="checkJobs($event, 1)" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Policies</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Support Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Training</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTraining($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkTraining($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPerformance($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPerformance($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Payrolls</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPayrolls($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPayrolls($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Attendance Reports</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAttendanceReports($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAttendanceReports($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div [hidden]="showReceptionist" class="table-responsive m-t-15">
+              <table class="table table-striped custom-table">
+                <thead>
+                  <tr>
+                    <th>Module Permission</th>
+                    <th class="text-center">Read</th>
+                    <th class="text-center">Write</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Support Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Policies</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkPolicies($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>User Dasboard</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkUserDashboard($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkUserDashboard($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Job Dasboard</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkJobDashboard($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkJobDashboard($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Shortlisted Candidates</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkShortlistedCandidates($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkShortlistedCandidates($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Candidates List</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkCandidatesList($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkCandidatesList($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Schedule Timing</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkScheduleTiming($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkScheduleTiming($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Applied Candidates</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAppliedCandidates($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        (click)="checkAppliedCandidates($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
 
             <div class="submit-section">
               <button class="btn btn-primary" (click)="addUsersSubmit()">
@@ -999,7 +1719,9 @@
                       editUsers.get('editRole').invalid &&
                       editUsers.get('editRole').touched
                     "
-                    formControlName="editRole"(input)="showCheckBoxCondition($event.target.value)">
+                    formControlName="editRole"
+                    (input)="showCheckBoxCondition($event.target.value)"
+                  >
                     <option value="Admin">Admin</option>
                     <option value="SubAdmin">SubAdmin</option>
                     <option value="Manager">Manager</option>
@@ -1025,15 +1747,872 @@
                   </div>
                 </div>
               </div>
-
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label>Employee ID <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control floating" />
-                </div>
-              </div>
             </div>
-            <div   [hidden]="showHr" class="table-responsive m-t-15">
+
+            <div [hidden]="showAdmin" class="table-responsive m-t-15">
+              <table class="table table-striped custom-table">
+                <thead>
+                  <tr>
+                    <th>Module Permission</th>
+                    <th class="text-center">Read</th>
+                    <th class="text-center">Write</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dashboard</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="dashboard[0].read"
+                        (click)="checkDashboard($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="dashboard[1].write"
+                        (click)="checkDashboard($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Apps</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="apps[0].read"
+                        (click)="checkApps($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="apps[1].write"
+                        (click)="checkApps($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Employees</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Employee[0].read"
+                        (click)="checkEmployee($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Employee[1].write"
+                        (click)="checkEmployee($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Support Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[0].read"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[1].write"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Clients</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="clients[0].read"
+                        (click)="checkClients($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="clients[1].write"
+                        (click)="checkClients($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Projects</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Projects[0].read"
+                        (click)="checkProjects($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Projects[1].write"
+                        (click)="checkProjects($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Leads</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Leads[0].read"
+                        (click)="checkLeads($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Leads[1].write"
+                        (click)="checkLeads($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Tickets[0].read"
+                        (click)="checkTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Tickets[1].write"
+                        (click)="checkTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Sales</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Sales[0].read"
+                        (click)="checkSales($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Sales[1].write"
+                        (click)="checkSales($event, 1)"
+                      />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Accounting</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Accounting[0].read"
+                        (click)="checkAccounting($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Accounting[1].write"
+                        (click)="checkAccounting($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Payrolls</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Payroll[0].read"
+                        (click)="checkPayrolls($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Payroll[1].write"
+                        (click)="checkPayrolls($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Policies</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[0].read"
+                        (click)="checkPolicies($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[1].write"
+                        (click)="checkPolicies($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Reports</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Reports[0].read"
+                        (click)="checkReports($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Reports[1].write"
+                        (click)="checkReports($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Performance[0].read"
+                        (click)="checkPerformance($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Performance[1].write"
+                        (click)="checkPerformance($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Goals</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Goals[0].read"
+                        (click)="checkGoals($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Goals[1].write"
+                        (click)="checkGoals($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Training</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Training[0].read"
+                        (click)="checkTraining($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Training[1].write"
+                        (click)="checkTraining($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Promotions</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Promotions[0].read"
+                        (click)="checkPromotions($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Promotions[1].write"
+                        (click)="checkPromotions($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Resignation</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Resignation[0].read"
+                        (click)="checkResignation($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Resignation[1].write"
+                        (click)="checkResignation($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Termination</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Termination[0].read"
+                        (click)="checkTermination($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Termination[1].write"
+                        (click)="checkTermination($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Assets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Assets[0].read"
+                        (click)="checkAssets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Assets[1].write"
+                        (click)="checkAssets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Jobs</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Jobs[0].read"
+                        (click)="checkJobs($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Jobs[1].write"
+                        (click)="checkJobs($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>KnowledgeBase</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="KnowledgeBase[0].read"
+                        (click)="checkKnowledgeBase($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="KnowledgeBase[1].write"
+                        (click)="checkKnowledgeBase($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Activities</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Activities[0].read"
+                        (click)="checkActivities($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Activities[1].write"
+                        (click)="checkActivities($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>User Roles</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="users[0].read"
+                        (click)="checkUsers($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="users[1].write"
+                        (click)="checkUsers($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Settings</td>
+                    <td class="text-center">
+                      <input type="checkbox" [checked]="Settings[0].read" (click)="checkSettings($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" [checked]="Settings[1].write" (click)="checkSettings($event, 1)" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div [hidden]="showSubadmin" class="table-responsive m-t-15">
+              <table class="table table-striped custom-table">
+                <thead>
+                  <tr>
+                    <th>Module Permission</th>
+                    <th class="text-center">Read</th>
+                    <th class="text-center">Write</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Dashboard</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="dashboard[0].read"
+                        (click)="checkDashboard($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="dashboard[1].write"
+                        (click)="checkDashboard($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Apps</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="apps[0].read"
+                        (click)="checkApps($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="apps[1].write"
+                        (click)="checkApps($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Employees</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Employee[0].read"
+                        (click)="checkEmployee($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Employee[1].write"
+                        (click)="checkEmployee($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Support Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[0].read"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[1].write"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Clients</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="clients[0].read"
+                        (click)="checkClients($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="clients[1].write"
+                        (click)="checkClients($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Projects</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Projects[0].read"
+                        (click)="checkProjects($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Projects[1].write"
+                        (click)="checkProjects($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Leads</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Leads[0].read"
+                        (click)="checkLeads($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Leads[1].write"
+                        (click)="checkLeads($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Tickets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Tickets[0].read"
+                        (click)="checkTickets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Tickets[1].write"
+                        (click)="checkTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Sales</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Sales[0].read"
+                        (click)="checkSales($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Sales[1].write"
+                        (click)="checkSales($event, 1)"
+                      />
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>Accounting</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Accounting[0].read"
+                        (click)="checkAccounting($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Accounting[1].write"
+                        (click)="checkAccounting($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Payrolls</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Payroll[0].read"
+                        (click)="checkPayrolls($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Payroll[1].write"
+                        (click)="checkPayrolls($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Policies</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[0].read"
+                        (click)="checkPolicies($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[1].write"
+                        (click)="checkPolicies($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Reports</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Reports[0].read"
+                        (click)="checkReports($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Reports[1].write"
+                        (click)="checkReports($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Performance</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Performance[0].read"
+                        (click)="checkPerformance($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Performance[1].write"
+                        (click)="checkPerformance($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Goals</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Goals[0].read"
+                        (click)="checkGoals($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Goals[1].write"
+                        (click)="checkGoals($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Training</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Training[0].read"
+                        (click)="checkTraining($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Training[1].write"
+                        (click)="checkTraining($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Promotions</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Promotions[0].read"
+                        (click)="checkPromotions($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Promotions[1].write"
+                        (click)="checkPromotions($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Resignation</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Resignation[0].read"
+                        (click)="checkResignation($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Resignation[1].write"
+                        (click)="checkResignation($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Termination</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Termination[0].read"
+                        (click)="checkTermination($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Termination[1].write"
+                        (click)="checkTermination($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Assets</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Assets[0].read"
+                        (click)="checkAssets($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Assets[1].write"
+                        (click)="checkAssets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Jobs</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Jobs[0].read"
+                        (click)="checkJobs($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Jobs[1].write"
+                        (click)="checkJobs($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>KnowledgeBase</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="KnowledgeBase[0].read"
+                        (click)="checkKnowledgeBase($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="KnowledgeBase[1].write"
+                        (click)="checkKnowledgeBase($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Activities</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Activities[0].read"
+                        (click)="checkActivities($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Activities[1].write"
+                        (click)="checkActivities($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>User Roles</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="users[0].read"
+                        (click)="checkUsers($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="users[1].write"
+                        (click)="checkUsers($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Settings</td>
+                    <td class="text-center">
+                      <input type="checkbox" [checked]="Settings[0].read" (click)="checkSettings($event, 0)" />
+                    </td>
+                    <td class="text-center">
+                      <input type="checkbox" [checked]="Settings[1].write" (click)="checkSettings($event, 1)" />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div [hidden]="showHr" class="table-responsive m-t-15">
               <table class="table table-striped custom-table">
                 <thead>
                   <tr>
@@ -1048,12 +2627,14 @@
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Jobs[0].read"
                         (click)="checkJobs($event, 0)"
                       />
                     </td>
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Jobs[1].write"
                         (click)="checkJobs($event, 1)"
                       />
                     </td>
@@ -1061,19 +2642,35 @@
                   <tr>
                     <td>Support Tickets</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[0].read"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[1].write"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td>Policies</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkPolicies($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[0].read"
+                        (click)="checkPolicies($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkPolicies($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[1].write"
+                        (click)="checkPolicies($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
@@ -1081,12 +2678,14 @@
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Training[0].read"
                         (click)="checkTraining($event, 0)"
                       />
                     </td>
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Training[1].write"
                         (click)="checkTraining($event, 1)"
                       />
                     </td>
@@ -1094,35 +2693,59 @@
                   <tr>
                     <td>Performance</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkPerformance($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Performance[0].read"
+                        (click)="checkPerformance($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkPerformance($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Performance[1].write"
+                        (click)="checkPerformance($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td>Payrolls</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkPayrolls($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Payroll[0].read"
+                        (click)="checkPayrolls($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkPayrolls($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Payroll[1].write"
+                        (click)="checkPayrolls($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td>Attendance Reports</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkAttendanceReports($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="attendanceReport[0].read"
+                        (click)="checkAttendanceReports($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkAttendanceReports($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="attendanceReport[1].write"
+                        (click)="checkAttendanceReports($event, 1)"
+                      />
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-             
-            <div   [hidden]="showManager" class="table-responsive m-t-15">
+
+            <div [hidden]="showManager" class="table-responsive m-t-15">
               <table class="table table-striped custom-table">
                 <thead>
                   <tr>
@@ -1137,12 +2760,14 @@
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="users[0].read"
                         (click)="checkUsers($event, 0)"
                       />
                     </td>
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="users[1].write"
                         (click)="checkUsers($event, 1)"
                       />
                     </td>
@@ -1152,12 +2777,14 @@
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Policies[0].read"
                         (click)="checkPolicies($event, 0)"
                       />
                     </td>
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Policies[1].write"
                         (click)="checkPolicies($event, 1)"
                       />
                     </td>
@@ -1165,34 +2792,58 @@
                   <tr>
                     <td>Support Tickets</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[0].read"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[1].write"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td>Clients</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkClients($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="clients[0].read"
+                        (click)="checkClients($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkClients($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="clients[1].write"
+                        (click)="checkClients($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td>Assets</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkAssets($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Assets[0].read"
+                        (click)="checkAssets($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkAssets($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Assets[1].write"
+                        (click)="checkAssets($event, 1)"
+                      />
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div   [hidden]="showFinance" class="table-responsive m-t-15">
+            <div [hidden]="showFinance" class="table-responsive m-t-15">
               <table class="table table-striped custom-table">
                 <thead>
                   <tr>
@@ -1207,12 +2858,14 @@
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Reports[0].read"
                         (click)="checkReports($event, 0)"
                       />
                     </td>
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Reports[1].write"
                         (click)="checkReports($event, 1)"
                       />
                     </td>
@@ -1222,12 +2875,14 @@
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Accounting[0].read"
                         (click)="checkAccounting($event, 0)"
                       />
                     </td>
                     <td class="text-center">
                       <input
                         type="checkbox"
+                        [checked]="Accounting[1].write"
                         (click)="checkAccounting($event, 1)"
                       />
                     </td>
@@ -1235,43 +2890,75 @@
                   <tr>
                     <td>Sales</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSales($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Sales[0].read"
+                        (click)="checkSales($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSales($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Sales[1].write"
+                        (click)="checkSales($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td>Policies</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkPolicies($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[0].read"
+                        (click)="checkPolicies($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkPolicies($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[1].write"
+                        (click)="checkPolicies($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td>Assets</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkAssets($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Assets[0].read"
+                        (click)="checkAssets($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkAssets($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="Assets[1].write"
+                        (click)="checkAssets($event, 1)"
+                      />
                     </td>
                   </tr>
                   <tr>
                     <td>Support Tickets</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 0)" />
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[0].read"
+                        (click)="checkSupportTickets($event, 0)"
+                      />
                     </td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 1)" />
+                      <input
+                        type="checkbox"
+                        [checked]="supportTickets[1].write"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-            <div   [hidden]="showReceptionist" class="table-responsive m-t-15">
+            <div [hidden]="showReceptionist" class="table-responsive m-t-15">
               <table class="table table-striped custom-table">
                 <thead>
                   <tr>
@@ -1284,33 +2971,136 @@
                   <tr>
                     <td>Support Tickets</td>
                     <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 0)" />
-                    </td>
-                    <td class="text-center">
-                      <input type="checkbox" (click)="checkSupportTickets($event, 1)" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Policies</td>
-                    <td class="text-center">
-                      <input type="checkbox" (click)="checkPolicies($event, 0)" />
-                    </td>
-                    <td class="text-center">
-                      <input type="checkbox" (click)="checkPolicies($event, 1)" />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Jobs</td>
-                    <td class="text-center">
                       <input
                         type="checkbox"
-                        (click)="checkJobs($event, 0)"
+                        [checked]="supportTickets[0].read"
+                        (click)="checkSupportTickets($event, 0)"
                       />
                     </td>
                     <td class="text-center">
                       <input
                         type="checkbox"
-                        (click)="checkJobs($event, 1)"
+                        [checked]="supportTickets[1].write"
+                        (click)="checkSupportTickets($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Policies</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[0].read"
+                        (click)="checkPolicies($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="Policies[1].write"
+                        (click)="checkPolicies($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>User Dasboard</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="userDasboard[0].read"
+                        (click)="checkUserDashboard($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="userDasboard[1].write"
+                        (click)="checkUserDashboard($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Job Dasboard</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="jobDashboard[0].read"
+                        (click)="checkJobDashboard($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="jobDashboard[1].write"
+                        (click)="checkJobDashboard($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Shortlisted Candidates</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="shortlistedCandidates[0].read"
+                        (click)="checkShortlistedCandidates($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="shortlistedCandidates[1].write"
+                        (click)="checkShortlistedCandidates($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Candidates List</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="CandidatesList[0].read"
+                        (click)="checkCandidatesList($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="CandidatesList[1].write"
+                        (click)="checkCandidatesList($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Schedule Timing</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="scheduleTiming[0].read"
+                        (click)="checkScheduleTiming($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="scheduleTiming[1].write"
+                        (click)="checkScheduleTiming($event, 1)"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Applied Candidates</td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="appliedCandidates[0].read"
+                        (click)="checkAppliedCandidates($event, 0)"
+                      />
+                    </td>
+                    <td class="text-center">
+                      <input
+                        type="checkbox"
+                        [checked]="appliedCandidates[1].write"
+                        (click)="checkAppliedCandidates($event, 1)"
                       />
                     </td>
                   </tr>
