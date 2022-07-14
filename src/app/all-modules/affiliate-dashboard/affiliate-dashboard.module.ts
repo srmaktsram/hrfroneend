@@ -5,9 +5,10 @@ import { DashboardRoutingModule } from "./affiliate-dashboard.routing.module";
 import { DashboardComponent } from "./affiliate-dashboard.component";
 import { AffiliateAdminDashboardComponent } from "./affiliates-dashboard/affiliates-dashboard.component";
 import { MorrisJsModule } from "angular-morris-js";
+import { SrmakPannelComponent } from "./srmak-pannel/srmak-pannel.component";
 
 @NgModule({
-  declarations: [DashboardComponent, AffiliateAdminDashboardComponent],
+  declarations: [DashboardComponent, AffiliateAdminDashboardComponent, SrmakPannelComponent],
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -15,4 +16,4 @@ import { MorrisJsModule } from "angular-morris-js";
     DataTablesModule,
   ],
 })
-export class AffiliateModule {}
+export class AffiliateModule { }
