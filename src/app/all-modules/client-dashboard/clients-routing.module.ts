@@ -5,11 +5,16 @@ import { ClientsComponent } from "./clients.component";
 // import { ClientsListComponent } from "./clients-list/clients-list.component";
 import { ClientsProfileComponent } from "./clients-profile/clients-profile.component";
 import { ClientDashboardComponent } from "./client-dashboard/client-dashboard.component";
+import { SrmakPannelComponent } from "./srmak-pannel/srmak-pannel.component";
 const routes: Routes = [
   {
     path: "",
     component: ClientsComponent,
     children: [
+      {
+        path: "",
+        component: SrmakPannelComponent,
+      },
       {
         path: "client-dashboard",
         component: ClientDashboardComponent,
@@ -25,7 +30,7 @@ const routes: Routes = [
             (m) => m.SettingsModule
           ),
       },
-      
+
     ],
   },
 ];
@@ -34,4 +39,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ClientsRoutingModule {}
+export class ClientsRoutingModule { }

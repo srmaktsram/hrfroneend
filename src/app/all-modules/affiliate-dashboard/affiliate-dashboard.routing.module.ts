@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { AffiliateAdminDashboardComponent } from "./affiliates-dashboard/affiliates-dashboard.component";
 import { DashboardComponent } from "./affiliate-dashboard.component";
+import { SrmakPannelComponent } from "./srmak-pannel/srmak-pannel.component";
 // import { AdminDashboardComponent } from "./affiliate-admin-dashboard/admin-dashboard.component";
 
 const routes: Routes = [
@@ -9,6 +10,10 @@ const routes: Routes = [
     path: "",
     component: DashboardComponent,
     children: [
+      {
+        path: "",
+        component: SrmakPannelComponent,
+      },
       {
         path: "affiliatedashboard",
         component: AffiliateAdminDashboardComponent,
@@ -61,7 +66,7 @@ const routes: Routes = [
         loadChildren: () =>
           import("./wallet-history/wallet-history.module").then((m) => m.walletHistoryModule),
       }
-     
+
     ]
   }
 ];
@@ -70,4 +75,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class DashboardRoutingModule {}
+export class DashboardRoutingModule { }
