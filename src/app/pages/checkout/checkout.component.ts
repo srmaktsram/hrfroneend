@@ -5,6 +5,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { CookieService } from "ngx-cookie-service";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 import { switchMap } from "rxjs/operators";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 @Component({
   selector: "app-checkout",
   templateUrl: "./checkout.component.html",
@@ -44,7 +45,8 @@ export class CheckoutComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private http: HttpClient,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private ngxService: NgxUiLoaderService
   ) {
     this.corporateId = sessionStorage.getItem("corporateId");
     this.getip();
@@ -114,6 +116,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   getPayment() {
+    this.ngxService.start();
     let corporateId = this.corporateId;
 
     var obj = {
@@ -145,8 +148,9 @@ export class CheckoutComponent implements OnInit {
       });
   }
   createOrderId() {
-    let amount = this.payAmount;
-    alert(amount);
+
+    let amount = this.totalAmount;
+
     this.http
       .post("http://localhost:8443/checkout/create/OrderId", { amount: amount })
       .subscribe((res: any) => {
@@ -271,7 +275,9 @@ export class CheckoutComponent implements OnInit {
               console.log("this is the HRUSER UPDATE>>>>>>>", data);
             });
         }
-        this.router.navigate(["/products"]);
+     this.ngxService.stop();
+        window.location.replace("http://localhost:4200/products");
+
       });
   }
   createAdminRegister() {

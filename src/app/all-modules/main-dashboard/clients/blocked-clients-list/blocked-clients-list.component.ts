@@ -76,11 +76,11 @@ export class BlockedClientsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit(): void {
-    // setTimeout(() => {
-    //   this.dtTrigger.next();
-    // }, 1000);
-  }
+  // ngAfterViewInit(): void {
+  //   // setTimeout(() => {
+  //   //   this.dtTrigger.next();
+  //   // }, 1000);
+  // }
 
   //Get all Clients data
   public getBlockedClients() {
@@ -110,12 +110,10 @@ export class BlockedClientsListComponent implements OnInit, OnDestroy {
               res.data.lastName,
               res.data.phone
             );
-          }
-          else {
+          } else {
             alert("Account Blocked By Main Admin");
           }
-        }
-         else {
+        } else {
           alert("wrong Id");
         }
       });

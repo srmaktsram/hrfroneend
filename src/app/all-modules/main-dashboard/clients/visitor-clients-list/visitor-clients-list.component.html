@@ -15,7 +15,7 @@
       <div class="col-auto float-end ms-auto">
         <div class="view-icons">
           <a routerLink="/layout/mainadmin/clients/freeClients" class="list-view btn btn-link active"
-            title="Free clients"><i class="fa fa-bars"></i></a>
+            title="Free Clients"><i class="fa fa-bars"></i></a>
           <a routerLink="/layout/mainadmin/clients/visitorclients" class="list-view btn btn-link active"
             title="Visitor Clients"><i class="fa fa-bars"></i></a>
           <a routerLink="/layout/mainadmin/clients/premiumclients" class="list-view btn btn-link active"
@@ -116,6 +116,7 @@
                     <a data-bs-toggle="modal" data-bs-target="#login_as_user" (click)="adminlogin(client.id)">
                       Login as User</a>
                   </div>
+
                   &nbsp;
                   <div class="d-inline p-2 bg-danger text-white">
                     <a data-bs-toggle="modal" data-bs-target="#block" (click)="getBlock('Blocked', client.id)">
@@ -145,7 +146,6 @@
         </button>
       </div>
 
-
       <div class="modal-body">
         <form [formGroup]="editClientForm">
           <div class="row">
@@ -153,7 +153,6 @@
               <div class="form-group">
                 <label class="col-form-label">First Name <span class="text-danger">*</span></label>
                 <input class="form-control" type="text" formControlName="firstName" />
-
                 <ng-container
                   *ngIf="editClientForm.get('firstName').invalid && editClientForm.get('firstName').touched">
                   <p *ngIf="editClientForm.get('firstName').errors.required" class="text-danger">
@@ -162,9 +161,10 @@
                   <p *ngIf="editClientForm.get('firstName').errors.pattern" class="text-danger">
                     * First Name is must be Valid Name
                 </ng-container>
+
+
               </div>
             </div>
-
             <div class="col-md-6">
               <div class="form-group">
                 <label class="col-form-label">Last Name</label>
@@ -192,8 +192,10 @@
                     class="text-danger">
                     *Invalid Email Address</p>
                 </ng-container>
+
               </div>
             </div>
+
 
             <div class="col-md-6">
               <div class="form-group">
@@ -225,6 +227,8 @@
   </div>
 </div>
 <!-- /Edit Client Modal -->
+
+
 
 <!-- Delete Client Modal -->
 <div class="modal custom-modal fade" id="delete_client" role="dialog">

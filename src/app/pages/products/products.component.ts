@@ -94,6 +94,7 @@ export class ProductsComponent implements OnInit {
 
     this.router.navigate(["/pricings"], {
       queryParams: { adminId: id },
+      skipLocationChange: true,
     });
   }
 

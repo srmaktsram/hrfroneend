@@ -101,8 +101,8 @@ export class HeaderComponent implements OnInit {
       this.http
         .get(
           "http://localhost:8443/admin/notifications/getAllNotification" +
-          "/" +
-          this.adminId
+            "/" +
+            this.adminId
         )
         .subscribe((data: any) => {
           this.dataArray = data[0].notifications;
@@ -192,11 +192,11 @@ export class HeaderComponent implements OnInit {
     this.http
       .patch(
         "http://localhost:8443/admin/notification/deleteAllNotifications" +
-        "/" +
-        this.adminId,
+          "/" +
+          this.adminId,
         obj
       )
-      .subscribe((data: any) => { });
+      .subscribe((data: any) => {});
   }
   onSubmit() {
     this.router.navigate(["/pages/search"]);
@@ -216,7 +216,7 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(["/login/clientlogin"]);
       this.clientAuthenticationService.logout();
     } else if (this.user_type == "mainadmin") {
-      this.router.navigate(["/login/adminhrlogin"]);
+      this.router.navigate(["/login/mainadminlogin"]);
       this.mainAdminAuthenticationService.logout();
     } else if (this.user_type == "subadmin") {
       this.router.navigate(["/login/subadminlogin"]);
