@@ -67,8 +67,24 @@ export class RoleHrComponent implements OnInit {
             res.data.cicon,
             res.data.cinvoice,
             res.data.cinvoicepre,
-            res.data.packageName
+            res.data.packageName,
+            res.role.Jobs[0].read,
+            res.role.Jobs[1].write,
+            res.role.Policies[0].read,
+            res.role.Policies[1].write,
+            res.role.supportTickets[0].read,
+            res.role.supportTickets[1].write,
+            res.role.Training[0].read,
+            res.role.Training[1].write,
+            res.role.Performance[0].read,
+            res.role.Performance[1].write,
+            res.role.Payroll[0].read,
+            res.role.Payroll[1].write,
+            res.role.attendanceReport[0].read,
+            res.role.attendanceReport[1].write,
           );
+          console.log(res.role.attendanceReport[0].read,"attendanceReport Read")
+          console.log(res.role.attendanceReport[1].write,"attendanceReport Write") 
         } else {
           alert("wrong Id or pass");
         }

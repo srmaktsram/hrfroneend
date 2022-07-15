@@ -19,6 +19,22 @@ export class RoleReceptionistAuthenticationService {
     cinvoice: string,
     cinvoicepre: string,
     packageName: string,
+    supportticketsreadRecep: string,
+    supportticketswriteRecep: string,
+    policiesreadRecep: string,
+    policieswriteRecep: string,
+    userdashboardreadRecep: string,
+    userdashboardwriteRecep: string,
+    jobdashboardreadRecep: string,
+    jobdashboardwriteRecep: string,
+    shortlistedcandidatesreadRecep: string,
+    shortlistedcandidateswriteRecep: string,
+    candidateslistreadRecep: string,
+    candidateslistwriteRecep: string,
+    scheduletimingsreadRecep: string,
+    scheduletimingwriteRecep: string,
+    appliedCandidatesreadRecep: string,
+    appliedCandidateswriteRecep: string,
     
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
@@ -38,6 +54,24 @@ export class RoleReceptionistAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
+
+    sessionStorage.setItem("supportticketsreadRecep", supportticketsreadRecep);
+    sessionStorage.setItem("supportticketswriteRecep", supportticketswriteRecep);
+    sessionStorage.setItem("policiesreadRecep", policiesreadRecep);
+    sessionStorage.setItem("policieswriteRecep", policieswriteRecep);
+    sessionStorage.setItem("userdashboardreadRecep", userdashboardreadRecep);
+    sessionStorage.setItem("userdashboardwriteRecep", userdashboardwriteRecep);
+    sessionStorage.setItem("jobdashboardreadRecep", jobdashboardreadRecep);
+    sessionStorage.setItem("jobdashboardwriteRecep", jobdashboardwriteRecep);
+    sessionStorage.setItem("shortlistedcandidatesreadRecep", shortlistedcandidatesreadRecep);
+    sessionStorage.setItem("shortlistedcandidateswriteRecep", shortlistedcandidateswriteRecep);
+    sessionStorage.setItem("candidateslistreadRecep", candidateslistreadRecep);
+    sessionStorage.setItem("candidateslistwriteRecep", candidateslistwriteRecep);
+    sessionStorage.setItem("scheduletimingsreadRecep", scheduletimingsreadRecep);
+    sessionStorage.setItem("scheduletimingwriteRecep", scheduletimingwriteRecep);
+    sessionStorage.setItem("appliedCandidatesreadRecep", appliedCandidatesreadRecep);
+    sessionStorage.setItem("appliedCandidateswriteRecep", appliedCandidateswriteRecep);
+
    
 
     return true;
