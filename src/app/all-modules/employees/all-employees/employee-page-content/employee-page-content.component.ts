@@ -9,6 +9,11 @@ import { id } from "src/assets/all-modules-data/id";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -17,6 +22,9 @@ declare const $: any;
   styleUrls: ["./employee-page-content.component.css"],
 })
 export class EmployeePageContentComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public lstEmployee: any;
   public url: any = "employeelist";
   public tempId: any;
@@ -34,35 +42,28 @@ export class EmployeePageContentComponent implements OnInit {
   Holidays = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
   Leaves = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
   Clients = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
   Projects = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
- 
+
   attendance = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
- 
 
   TimingSheets = [
     { id: 0, read: false },
     { id: 1, write: false },
-    
   ];
   DateJoin: string;
   adminId: string;
@@ -72,6 +73,7 @@ export class EmployeePageContentComponent implements OnInit {
     private srvModuleService: AllModulesService,
     private http: HttpClient,
     private toastr: ToastrService,
+    private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     public router: Router
   ) {
@@ -86,46 +88,110 @@ export class EmployeePageContentComponent implements OnInit {
   }
   public getDepartments() {
     this.http
-    .get("http://localhost:8443/admin/department/getAdminData"+"/"+this.adminId)
-    .subscribe((data) => {
+      .get(
+        "http://localhost:8443/admin/department/getAdminData" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data) => {
         this.departments = data;
       });
   }
   public getDesignation() {
     this.http
-      .get("http://localhost:8443/admin/designation/getData"+
-      "/" +
-      this.adminId)
+      .get(
+        "http://localhost:8443/admin/designation/getData" + "/" + this.adminId
+      )
       .subscribe((data) => {
         this.designations = data;
       });
   }
+
   ngOnInit() {
     this.loadEmployee();
 
     this.addEmployeeForm = this.formBuilder.group({
-      FirstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      LastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      UserName: ["", [Validators.required, Validators.pattern('^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$')]],
+      FirstName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      LastName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      UserName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$"
+          ),
+        ],
+      ],
       Password: ["", [Validators.required]],
       ConfirmPassword: ["", [Validators.required]],
       DepartmentName: ["", [Validators.required]],
       Designation: ["", [Validators.required]],
-      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      PhoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      Email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      PhoneNumber: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       JoinDate: ["", [Validators.required]],
       EmployeeID: ["", [Validators.required]],
     });
 
     this.editEmployeeForm = this.formBuilder.group({
-
-      FirstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      LastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      UserName: ["", [Validators.required, Validators.pattern('^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$')]],
+      FirstName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      LastName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      UserName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern(
+            "^(?=.{3,15}$)(?!.*[._-]{2})[a-z][a-z0-9._-]*[a-z0-9]$"
+          ),
+        ],
+      ],
       DepartmentName: ["", [Validators.required]],
       Designation: ["", [Validators.required]],
-      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      PhoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      Email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      PhoneNumber: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       JoinDate: ["", [Validators.required]],
       EmployeeID: ["", [Validators.required]],
     });
@@ -133,12 +199,11 @@ export class EmployeePageContentComponent implements OnInit {
 
   // Get Employee  Api Call
   loadEmployee() {
-
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data) => {
         console.log("Get Employee page", data);
@@ -189,8 +254,7 @@ export class EmployeePageContentComponent implements OnInit {
       Projects: this.Projects,
       attendance: this.attendance,
       TimingSheets: this.TimingSheets,
-      location: this.current_location
-
+      location: this.current_location,
     };
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
@@ -206,7 +270,14 @@ export class EmployeePageContentComponent implements OnInit {
 
     $("#add_employee").modal("hide");
     this.addEmployeeForm.reset();
-    this.toastr.success("Employeee added sucessfully...!", "Success");
+
+    this._snackBar.open("Employeee added  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // to know the date picker changes
@@ -245,11 +316,16 @@ export class EmployeePageContentComponent implements OnInit {
       .patch("http://localhost:8443/admin/allemployees/update" + "/" + id, obj)
       .subscribe((data) => {
         this.loadEmployee();
-
       });
 
     $("#edit_employee").modal("hide");
-    this.toastr.success("Employeee Updated sucessfully...!", "Success");
+    this._snackBar.open("Employeee Updated  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // To Get The employee Edit Id And Set Values To Edit Modal Form
@@ -303,7 +379,14 @@ export class EmployeePageContentComponent implements OnInit {
       });
 
     $("#delete_employee").modal("hide");
-    this.toastr.success("Employee deleted sucessfully..!", "Success");
+
+    this._snackBar.open("Employeee deleted  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //search by Id
@@ -392,7 +475,7 @@ export class EmployeePageContentComponent implements OnInit {
         const objIndex = this.Holidays.findIndex((obj) => obj.id == val);
         this.Holidays[objIndex].write = false;
       }
-    } 
+    }
   }
 
   checkCheckBoxvalueLeaves(event, val) {
@@ -412,7 +495,7 @@ export class EmployeePageContentComponent implements OnInit {
         const objIndex = this.Leaves.findIndex((obj) => obj.id == val);
         this.Leaves[objIndex].write = false;
       }
-    } 
+    }
   }
 
   checkCheckBoxvalueClients(event, val) {
@@ -432,7 +515,7 @@ export class EmployeePageContentComponent implements OnInit {
         const objIndex = this.Clients.findIndex((obj) => obj.id == val);
         this.Clients[objIndex].write = false;
       }
-    } 
+    }
   }
 
   checkCheckBoxvalueProjects(event, val) {
@@ -452,10 +535,9 @@ export class EmployeePageContentComponent implements OnInit {
         const objIndex = this.Projects.findIndex((obj) => obj.id == val);
         this.Projects[objIndex].write = false;
       }
-    } 
+    }
   }
 
-  
   checkCheckBoxvalueattendance(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -473,10 +555,9 @@ export class EmployeePageContentComponent implements OnInit {
         const objIndex = this.attendance.findIndex((obj) => obj.id == val);
         this.attendance[objIndex].write = false;
       }
-    } 
+    }
   }
 
-  
   checkCheckBoxvalueTimingSheets(event, val) {
     if (val == 0) {
       if (event.target.checked == true) {
@@ -506,5 +587,4 @@ export class EmployeePageContentComponent implements OnInit {
 
   //   this.dtTrigger.unsubscribe();
   // }
-
 }

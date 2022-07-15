@@ -67,8 +67,40 @@ export class RoleReceptionistComponent implements OnInit {
             res.data.cicon,
             res.data.cinvoice,
             res.data.cinvoicepre,
-            res.data.packageName
+            res.data.packageName,
+            res.role.supportTickets[0].read,
+            res.role.supportTickets[1].write,
+            res.role.Policies[0].read,
+            res.role.Policies[1].write,
+            res.role.userDasboard[0].read,
+            res.role.userDasboard[1].write,
+            res.role.jobDashboard[0].read,
+            res.role.jobDashboard[1].write,
+            res.role.shortlistedCandidates[0].read,
+            res.role.shortlistedCandidates[1].write,
+            res.role.CandidatesList[0].read,
+            res.role.CandidatesList[1].write,
+            res.role.scheduleTiming[0].read,
+            res.role.scheduleTiming[1].write,
+            res.role.appliedCandidates[0].read,
+            res.role.appliedCandidates[1].write,
           );
+          console.log(res.role.supportTickets[0].read,"supportTickets Read")
+          console.log(res.role.supportTickets[1].write,"supportTickets Write") 
+          console.log(res.role.Policies[0].read,"Policies Read")
+          console.log(res.role.Policies[1].write,"Policies Write") 
+          console.log(res.role.userDasboard[0].read,"userDasboard Read")
+          console.log(res.role.userDasboard[1].write,"userDasboard Write") 
+          console.log(res.role.jobDashboard[0].read,"jobDashboard Read")
+          console.log(res.role.jobDashboard[1].write,"jobDashboard Write") 
+          console.log(res.role.shortlistedCandidates[0].read,"shortlistedCandidates Read")
+          console.log(res.role.shortlistedCandidates[1].write,"shortlistedCandidates Write") 
+          console.log(res.role.CandidatesList[0].read,"CandidatesList Read")
+          console.log(res.role.CandidatesList[1].write,"CandidatesList Write") 
+          console.log(res.role.scheduleTiming[0].read,"scheduleTiming Read")
+          console.log(res.role.scheduleTiming[1].write,"scheduleTiming Write") 
+          console.log(res.role.appliedCandidates[0].read,"appliedCandidates Read")
+          console.log(res.role.appliedCandidates[1].write,"appliedCandidates Write") 
         } else {
           alert("wrong Id or pass");
         }

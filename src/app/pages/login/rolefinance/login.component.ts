@@ -68,7 +68,19 @@ export class RoleFinanceComponent implements OnInit {
             res.data.cicon,
             res.data.cinvoice,
             res.data.cinvoicepre,
-            res.data.packageName
+            res.data.packageName,
+            res.role.Reports[0].read,
+            res.role.Reports[1].write,
+            res.role.Accounting[0].read,
+            res.role.Accounting[1].write,
+            res.role.Sales[0].read,
+            res.role.Sales[1].write,
+            res.role.Policies[0].read,
+            res.role.Policies[1].write,
+            res.role.Assets[0].read,
+            res.role.Assets[1].write,
+            res.role.supportTickets[0].read,
+            res.role.supportTickets[1].write,
           );
         } else {
           alert("wrong Id or pass");

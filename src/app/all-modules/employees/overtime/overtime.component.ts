@@ -7,6 +7,11 @@ import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 
 @Component({
@@ -15,6 +20,8 @@ declare const $: any;
   styleUrls: ["./overtime.component.css"],
 })
 export class OvertimeComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   lstOvertime: any[];
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -29,7 +36,7 @@ export class OvertimeComponent implements OnInit {
   url: any = "overtime";
   public tempId: any;
   public editId: any;
-  public id: any
+  public id: any;
   public addOvertimeForm: FormGroup;
   public editOvertimeForm: FormGroup;
 
@@ -41,13 +48,12 @@ export class OvertimeComponent implements OnInit {
     private toastr: ToastrService,
     private http: HttpClient,
     private router: Router,
+    private _snackBar: MatSnackBar
   ) {
-    this.getEmployeeData()
-
+    this.getEmployeeData();
   }
 
   ngOnInit() {
-
     // for data table configuration
     this.dtOptions = {
       // ... skipped ...
@@ -57,7 +63,6 @@ export class OvertimeComponent implements OnInit {
 
     this.LoadOvertime();
     this.addOvertimeForm = this.formBuilder.group({
-
       OtDate: ["", [Validators.required]],
       OtHrs: ["", [Validators.required]],
       Description: ["", [Validators.required]],
@@ -73,14 +78,20 @@ export class OvertimeComponent implements OnInit {
 
   // Get overtime list  Api Call
   LoadOvertime() {
-    this.http.get("http://localhost:8443/admin/overtime/getAllOvertime" + "/" + this.adminId).subscribe((res: any) => {
-      console.log("getApiokkkk", res)
-      this.lstOvertime = res;
-      console.log(this.lstOvertime, "kkpkpkpkp")
-      // this.dtTrigger.next();
-      this.rows = this.lstOvertime;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/overtime/getAllOvertime" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((res: any) => {
+        console.log("getApiokkkk", res);
+        this.lstOvertime = res;
+        console.log(this.lstOvertime, "kkpkpkpkp");
+        // this.dtTrigger.next();
+        this.rows = this.lstOvertime;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -93,20 +104,20 @@ export class OvertimeComponent implements OnInit {
   }
 
   getIdFirstName(id, name) {
-    this.employeeid = id
-    this.name = name
+    this.employeeid = id;
+    this.name = name;
   }
   // Add overtime  Modal Api Call
   addOvertime() {
-    alert("called")
-    alert(this.name)
-    alert(this.employeeid)
+    alert("called");
+    alert(this.name);
+    alert(this.employeeid);
     if (this.addOvertimeForm.invalid) {
       this.markFormGroupTouched(this.addOvertimeForm);
       return;
     }
     if (this.addOvertimeForm.valid) {
-      alert("calledrftyguhiop-")
+      alert("calledrftyguhiop-");
       let Datetime = this.pipe.transform(
         this.addOvertimeForm.value.OtDate,
         "dd-MM-yyyy"
@@ -134,16 +145,22 @@ export class OvertimeComponent implements OnInit {
           });
         });
 
-
       $("#add_overtime").modal("hide");
       this.addOvertimeForm.reset();
-      this.toastr.success("Overtime added sucessfully...!", "Success");
+      // this.toastr.success("Overtime added sucessfully...!", "Success");
+      this._snackBar.open("Overtime added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
   editOvertime() {
     if (this.editOvertimeForm.valid) {
-      this.id = this.editId
+      this.id = this.editId;
       let Datetime = this.pipe.transform(
         this.editOvertimeForm.value.OtDate,
         "dd-MM-yyyy"
@@ -154,15 +171,27 @@ export class OvertimeComponent implements OnInit {
         otHrs: this.editOvertimeForm.value.OtHrs,
         description: this.editOvertimeForm.value.Description,
       };
-      this.http.patch("http://localhost:8443/admin/overtime/updateOvertime" + "/" + this.id, obj).subscribe((res) => {
-        console.log("updateApi", res);
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-          this.LoadOvertime();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/overtime/updateOvertime" + "/" + this.id,
+          obj
+        )
+        .subscribe((res) => {
+          console.log("updateApi", res);
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+            this.LoadOvertime();
+          });
         });
-      });
       $("#edit_overtime").modal("hide");
-      this.toastr.success("Overtime Updated sucessfully...!", "Success");
+      // this.toastr.success("Overtime Updated sucessfully...!", "Success");
+      this._snackBar.open("Overtime Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -184,20 +213,32 @@ export class OvertimeComponent implements OnInit {
   // Delete Overtime Modal Api Call
 
   deleteOvetime() {
-    this.id = this.tempId
+    this.id = this.tempId;
     let obj = {
-      status: 2
+      status: 2,
     };
 
-    this.http.patch("http://localhost:8443/admin/overtime/deleteOvertime" + "/" + this.id, obj).subscribe((res: any) => {
-      console.log("deleteApi", res)
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    this.http
+      .patch(
+        "http://localhost:8443/admin/overtime/deleteOvertime" + "/" + this.id,
+        obj
+      )
+      .subscribe((res: any) => {
+        console.log("deleteApi", res);
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.LoadOvertime();
+        $("#delete_overtime").modal("hide");
+        // this.toastr.success("Overtime deleted sucessfully..!", "Success");
+        this._snackBar.open("Overtime deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
-      this.LoadOvertime();
-      $("#delete_overtime").modal("hide");
-      this.toastr.success("Overtime deleted sucessfully..!", "Success");
-    });
   }
 
   // getting the status value
@@ -213,8 +254,8 @@ export class OvertimeComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data: any) => {
         console.log("getDropdownData", data);
@@ -229,12 +270,16 @@ export class OvertimeComponent implements OnInit {
   }
 
   updateStatus(val, id) {
-    this.http.patch("http://localhost:8443/admin/overtime/updateOvertime" + "/" + id, { status: val }).subscribe((res) => {
-      console.log("updateApi", res);
-      // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      //   dtInstance.destroy();
-      this.LoadOvertime();
-      // });
-    });
+    this.http
+      .patch("http://localhost:8443/admin/overtime/updateOvertime" + "/" + id, {
+        status: val,
+      })
+      .subscribe((res) => {
+        console.log("updateApi", res);
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   dtInstance.destroy();
+        this.LoadOvertime();
+        // });
+      });
   }
 }

@@ -6,6 +6,11 @@ import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-timesheet",
@@ -13,6 +18,9 @@ declare const $: any;
   styleUrls: ["./timesheet.component.css"],
 })
 export class TimesheetComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   lstTimesheet: any[];
 
   @ViewChild(DataTableDirective, { static: false })
@@ -22,11 +30,11 @@ export class TimesheetComponent implements OnInit {
   public id: any;
   public tempId: any;
   public editId: any;
-  public adminId = sessionStorage.getItem("adminId")
-  public employeeid = sessionStorage.getItem("employee_login_id")
-  public employeeName = sessionStorage.getItem("firstName")
-  public user_type = sessionStorage.getItem("user_type")
-  public timesheetwrite = sessionStorage.getItem("timesheetwrite")
+  public adminId = sessionStorage.getItem("adminId");
+  public employeeid = sessionStorage.getItem("employee_login_id");
+  public employeeName = sessionStorage.getItem("firstName");
+  public user_type = sessionStorage.getItem("user_type");
+  public timesheetwrite = sessionStorage.getItem("timesheetwrite");
   public rows = [];
   public srch = [];
   public statusValue;
@@ -40,8 +48,9 @@ export class TimesheetComponent implements OnInit {
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     // for data table configuration
@@ -80,13 +89,21 @@ export class TimesheetComponent implements OnInit {
 
   // Get Timesheet list  Api Call
   LoadTimewsheet() {
-    this.http.get("http://localhost:8443/admin/timesheet/show" + "/" + this.adminId + "/" + this.employeeid).subscribe((res: any) => {
-      console.log("getApi", res)
-      this.lstTimesheet = res.data;
-      console.log(this.lstTimesheet)
-      this.rows = this.lstTimesheet;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/timesheet/show" +
+          "/" +
+          this.adminId +
+          "/" +
+          this.employeeid
+      )
+      .subscribe((res: any) => {
+        console.log("getApi", res);
+        this.lstTimesheet = res.data;
+        console.log(this.lstTimesheet);
+        this.rows = this.lstTimesheet;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -98,13 +115,12 @@ export class TimesheetComponent implements OnInit {
     });
   }
 
-
   // Add Department  Modal Api Call
 
   addTimesheet() {
     if (this.addTimesheetForm.invalid) {
-      this.markFormGroupTouched(this.addTimesheetForm)
-      return
+      this.markFormGroupTouched(this.addTimesheetForm);
+      return;
     }
     if (this.addTimesheetForm.valid) {
       let Datetime = this.pipe.transform(
@@ -136,25 +152,39 @@ export class TimesheetComponent implements OnInit {
       };
       // this.srvModuleService.add(obj, this.url).subscribe((data) => {
 
+      this.http
+        .post("http://localhost:8443/admin/timesheet/create", obj)
+        .subscribe((res) => {
+          console.log("postApi", res);
+          console.log("kjdkjfskjdhgdgjkdf", obj);
 
-
-      this.http.post("http://localhost:8443/admin/timesheet/create", obj).subscribe((res) => {
-        console.log("postApi", res)
-        console.log("kjdkjfskjdhgdgjkdf", obj)
-
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-          this.LoadTimewsheet();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+            this.LoadTimewsheet();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
 
       $("#add_todaywork").modal("hide");
       this.addTimesheetForm.reset();
-      this.toastr.success("Timesheet added sucessfully...!", "Success");
+      // this.toastr.success("Timesheet added sucessfully...!", "Success");
+      this._snackBar.open("Overtime deleted sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
       this.toastr.warning("Mandatory fields required", "");
+      this._snackBar.open("Overtime deleted sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -167,9 +197,8 @@ export class TimesheetComponent implements OnInit {
     this.editDeadline = this.pipe.transform(data, "dd-MM-yyyy");
   }
   editTimesheet() {
-
     if (this.editTimesheetForm.valid) {
-      this.id = this.editId
+      this.id = this.editId;
       let obj = {
         employee: " ",
         project: this.editTimesheetForm.value.Project,
@@ -181,20 +210,39 @@ export class TimesheetComponent implements OnInit {
         hrs: this.editTimesheetForm.value.Hrs,
         description: this.editTimesheetForm.value.Description,
       };
-      this.http.patch("http://localhost:8443/admin/timesheet/update" + "/" + this.id, obj).subscribe((res) => {
-        console.log("updateApi", res);
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-          this.LoadTimewsheet();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/timesheet/update" + "/" + this.id,
+          obj
+        )
+        .subscribe((res) => {
+          console.log("updateApi", res);
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+            this.LoadTimewsheet();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
 
       $("#edit_todaywork").modal("hide");
-      this.toastr.success("Timesheet Updated sucessfully...!", "Success");
+      // this.toastr.success("Timesheet Updated sucessfully...!", "Success");
+      this._snackBar.open("Overtime deleted sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
       this.toastr.warning("Mandatory fields required", "");
+      this._snackBar.open("Overtime deleted sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -219,24 +267,32 @@ export class TimesheetComponent implements OnInit {
   // Delete timedsheet Modal Api Call
 
   deleteTimesheet() {
-
-    let id = this.tempId
+    let id = this.tempId;
     let obj = {
-      status: 2
+      status: 2,
     };
 
-    this.http.patch("http://localhost:8443/admin/timesheet/delete" + "/" + id, obj).subscribe((res) => {
-      console.log("deleteApi", res)
-      $("#datatable").DataTable().clear();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
-        this.LoadTimewsheet();
-      });
-      this.dtTrigger.next();
+    this.http
+      .patch("http://localhost:8443/admin/timesheet/delete" + "/" + id, obj)
+      .subscribe((res) => {
+        console.log("deleteApi", res);
+        $("#datatable").DataTable().clear();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+          this.LoadTimewsheet();
+        });
+        this.dtTrigger.next();
 
-      $("#delete_timesheet").modal("hide");
-      this.toastr.success("Timesheet deleted sucessfully..!", "Success");
-    });
+        $("#delete_timesheet").modal("hide");
+        // this.toastr.success("Timesheet deleted sucessfully..!", "Success");
+        this._snackBar.open("Timesheet deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      });
   }
 
   //getting the status value

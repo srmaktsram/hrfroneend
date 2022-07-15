@@ -67,7 +67,17 @@ export class RoleManagerComponent implements OnInit {
             res.data.cicon,
             res.data.cinvoice,
             res.data.cinvoicepre,
-            res.data.packageName
+            res.data.packageName,
+            res.role.users[0].read,
+            res.role.users[1].write,
+            res.role.Policies[0].read,
+            res.role.Policies[1].write,
+            res.role.supportTickets[0].read,
+            res.role.supportTickets[1].write,
+            res.role.clients[0].read,
+            res.role.clients[1].write,
+            res.role.Assets[0].read,
+            res.role.Assets[1].write,
           );
         } else {
           alert("wrong Id or pass");

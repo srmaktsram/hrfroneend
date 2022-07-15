@@ -76,6 +76,10 @@ Version      : 3.6
 
 /* /////////////////////////////////////////// */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.notif-success{
+	background:#2196F3;
+	color:white;
+}
 @font-face {
 	font-family: 'Material Icons';
 	font-style: normal;

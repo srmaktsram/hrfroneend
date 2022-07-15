@@ -9,6 +9,11 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { HeaderComponent } from "src/app/header/header.component";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -17,6 +22,8 @@ declare const $: any;
   styleUrls: ["./employee-list.component.css"],
 })
 export class EmployeeListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -83,7 +90,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   companyName: string;
   maximumEmployees = true;
   profileImage: any;
-  profileImagePath=[];
+  profileImagePath = [];
   allEmpData: any;
 
   constructor(
@@ -92,7 +99,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     private headerComponent: HeaderComponent,
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
-    public router: Router
+    public router: Router,
+    private _snackBar: MatSnackBar
   ) {
     // this.current_location = JSON.parse(sessionStorage.getItem("current_location"));
     this.corporateId = sessionStorage.getItem("corporateId");
@@ -146,7 +154,11 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public getDepartments() {
     this.http
 
-      .get("http://localhost:8443/admin/department/getAdminData" + "/" + this.adminId)
+      .get(
+        "http://localhost:8443/admin/department/getAdminData" +
+          "/" +
+          this.adminId
+      )
       .subscribe((data) => {
         this.departments = data;
       });
@@ -154,9 +166,9 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   public getDesignation() {
     this.http
 
-      .get("http://localhost:8443/admin/designation/getData" +
-        "/" +
-        this.adminId)
+      .get(
+        "http://localhost:8443/admin/designation/getData" + "/" + this.adminId
+      )
       .subscribe((data) => {
         this.designations = data;
       });
@@ -297,26 +309,18 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       )
       .subscribe((data: any) => {
         this.totalEmployee = data.length;
-       
-
-       
-
-
-        
 
         this.lstEmployee = data;
-        console.log(this.lstEmployee)
+        console.log(this.lstEmployee);
         // this.lstEmployee.map((item) => {
         //   this.profileImage = item.profileImage;
-           
-        //   this.profileImagePath.push(this.profileImage) 
 
+        //   this.profileImagePath.push(this.profileImage)
 
         //   console.log(item,"Mapped Item")
 
         //   console.log(this.profileImage, "This Console");
         // });
-
 
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
@@ -423,7 +427,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
     $("#add_employee").modal("hide");
     this.addEmployeeForm.reset();
-    this.toastr.success("Employeee added sucessfully...!", "Success");
+
+    this._snackBar.open("Employeee added  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   getAllNotifications() {
     if (this.user_type == "admin") {
@@ -491,7 +502,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       });
 
     $("#edit_employee").modal("hide");
-    this.toastr.success("Employeee Updated sucessfully...!", "Success");
+
+    this._snackBar.open("Employeee Updated  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // To Get The employee Edit Id And Set Values To Edit Modal Form
@@ -542,7 +560,14 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       });
 
     $("#delete_employee").modal("hide");
-    this.toastr.success("Employee deleted sucessfully..!", "Success");
+
+    this._snackBar.open("Employeee deleted  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //search by Id
