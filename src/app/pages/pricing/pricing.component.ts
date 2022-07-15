@@ -182,6 +182,7 @@ export class PricingComponent implements OnInit {
   }
   getData(val) {
     this.corporateId = sessionStorage.getItem("corporateId");
+
     if (sessionStorage.getItem("currentUserLogin") == "HrUserLogin") {
       if (val == "Basic(Single-User)") {
         this.router.navigate(["/checkouts"], {
