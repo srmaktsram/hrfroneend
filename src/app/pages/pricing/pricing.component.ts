@@ -60,7 +60,7 @@ export class PricingComponent implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.checkId = this.route.snapshot.queryParams["adminId"];

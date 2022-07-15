@@ -172,17 +172,19 @@ export class EmployeeProfileComponent implements OnInit {
       bankAccountNo: ["", [Validators.required]],
       ifscCode: ["", [Validators.required]],
       panNo: ["", [Validators.required]],
-    });
+
+    })
+
 
     this.editEmergencyForm = this.formBuilder.group({
-      name1: ["", [Validators.required]],
-      name2: ["", [Validators.required]],
+      name1: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
+      name2: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
       relationship1: ["", [Validators.required]],
       relationship2: ["", [Validators.required]],
-      phone1: ["", [Validators.required]],
-      phone2: ["", [Validators.required]],
-      phone3: ["", [Validators.required]],
-      phone4: ["", [Validators.required]],
+      phone1: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      phone2: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      phone3: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      phone4: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
     });
 
     this.editFamilyForm = this.formBuilder.group({
@@ -566,6 +568,7 @@ export class EmployeeProfileComponent implements OnInit {
     });
   }
   ////////////////////////////////////////////////////////////////////////////////
+
   editEmergencyInfo() {
     if (this.editEmergencyForm.valid) {
       let obj = {

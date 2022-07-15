@@ -63,7 +63,7 @@
                     </li>
                     <li>
                       <div class="title">Birthday:</div>
-                      <div class="text">{{ profileinfo?.birthDate }}</div>
+                      <div class="text">{{ profileinfo?.birthDate |customDate}}</div>
                     </li>
                     <li>
                       <div class="title">Address:</div>
@@ -134,7 +134,7 @@
                 </li>
                 <li>
                   <div class="title">Passport Exp Date.</div>
-                  <div class="text">{{ personalinfo?.passportExpiryDate }}</div>
+                  <div class="text">{{ personalinfo?.passportExpiryDate |customDate }}</div>
                 </li>
                 <li>
                   <div class="title">Tel</div>
@@ -1101,12 +1101,12 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>PAN NO</label>
-                <div class="cal-icon">
-                  <input class="form-control" type="text" formControlName="panNo" [class.invalid]="
+
+                <input class="form-control" type="text" formControlName="panNo" [class.invalid]="
                       editBankForm.get('panNo').invalid &&
                       editBankForm.get('panNo').touched
                     " />
-                </div>
+
                 <div>
                   <small *ngIf="
                       editBankForm.get('panNo').invalid &&
@@ -1141,7 +1141,6 @@
       <div class="modal-body">
         <form [formGroup]="editFamilyForm" (ngSubmit)="editFamilyInfo()">
           <div class="form-scroll" formArrayName="items">
-            <!-- <ng-container [formGroupName]="i"> -->
             <div class="card" *ngFor="
                 let item of editFamilyForm.get('items')['controls'];
                 let i = index
@@ -1263,65 +1262,59 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" formControlName="name1" [class.invalid]="
-                        editEmergencyForm.get('name1').invalid &&
-                        editEmergencyForm.get('name1').touched
-                      " />
+                    <input type="text" class="form-control" formControlName="name1" />
+
+                    <ng-container
+                      *ngIf="editEmergencyForm.get('name1').invalid && editEmergencyForm.get('name1').touched">
+                      <p *ngIf="editEmergencyForm.get('name1').errors.required" class="text-danger">
+                        *Name is required</p>
+                      <p *ngIf="editEmergencyForm.get('name1').errors.pattern" class="text-danger">
+                        Name is must be Valid Name
+                      </p>
+                    </ng-container>
                   </div>
-                  <div>
-                    <small *ngIf="
-                        editEmergencyForm.get('name1').invalid &&
-                        editEmergencyForm.get('name1').touched
-                      " class="text-danger">* Name1 is required
-                    </small>
-                  </div>
+
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Relationship <span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" formControlName="relationship1" [class.invalid]="
-                        editEmergencyForm.get('relationship1').invalid &&
-                        editEmergencyForm.get('relationship1').touched
-                      " />
+                    <input class="form-control" type="text" formControlName="relationship1">
+                    <ng-container
+                      *ngIf="editEmergencyForm.get('relationship1').invalid && editEmergencyForm.get('relationship1').touched">
+                      <p *ngIf="editEmergencyForm.get('relationship1').errors.required" class="text-danger">
+                        relationship is Required
+                      </p>
+                    </ng-container>
                   </div>
-                  <div>
-                    <small *ngIf="
-                        editEmergencyForm.get('relationship1').invalid &&
-                        editEmergencyForm.get('relationship1').touched
-                      " class="text-danger">* Relationship1 is required
-                    </small>
-                  </div>
+
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone <span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" formControlName="phone1" [class.invalid]="
-                        editEmergencyForm.get('phone1').invalid &&
-                        editEmergencyForm.get('phone1').touched
-                      " />
-                  </div>
-                  <div>
-                    <small *ngIf="
-                        editEmergencyForm.get('phone1').invalid &&
-                        editEmergencyForm.get('phone1').touched
-                      " class="text-danger">* Phone1 is required
-                    </small>
+                    <input class="form-control" type="text" formControlName="phone1" />
+                    <ng-container
+                      *ngIf="editEmergencyForm.get('phone1').invalid && editEmergencyForm.get('phone1').touched">
+                      <p *ngIf="editEmergencyForm.get('phone1').errors.required" class="text-danger">
+                        Phone Number is Required
+                      </p>
+                      <p *ngIf="editEmergencyForm.get('phone1').errors.pattern" class="text-danger">
+                        *Invalid Phone Number</p>
+                    </ng-container>
                   </div>
                 </div>
+
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone 2</label>
-                    <input class="form-control" type="text" formControlName="phone2" [class.invalid]="
-                        editEmergencyForm.get('phone2').invalid &&
-                        editEmergencyForm.get('phone2').touched
-                      " />
-                  </div>
-                  <div>
-                    <small *ngIf="
-                        editEmergencyForm.get('phone2').invalid &&
-                        editEmergencyForm.get('phone2').touched
-                      " class="text-danger">* Phone2 is required
-                    </small>
+                    <input class="form-control" type="text" formControlName="phone2" />
+                    <ng-container
+                      *ngIf="editEmergencyForm.get('phone2').invalid && editEmergencyForm.get('phone2').touched">
+                      <p *ngIf="editEmergencyForm.get('phone2').errors.required" class="text-danger">
+                        Phone Number is Required
+                      </p>
+                      <p *ngIf="editEmergencyForm.get('phone2').errors.pattern" class="text-danger">
+                        *Invalid Phone Number</p>
+                    </ng-container>
                   </div>
                 </div>
               </div>
@@ -1335,72 +1328,66 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Name <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" formControlName="name2" [class.invalid]="
-                        editEmergencyForm.get('name2').invalid &&
-                        editEmergencyForm.get('name2').touched
-                      " />
+                    <input type="text" class="form-control" formControlName="name2" />
+                    <ng-container
+                      *ngIf="editEmergencyForm.get('name2').invalid && editEmergencyForm.get('name2').touched">
+                      <p *ngIf="editEmergencyForm.get('name2').errors.required" class="text-danger">
+                        *Name is required</p>
+                      <p *ngIf="editEmergencyForm.get('name2').errors.pattern" class="text-danger">
+                        Name is must be Valid Name
+                      </p>
+                    </ng-container>
                   </div>
-                  <div>
-                    <small *ngIf="
-                        editEmergencyForm.get('name2').invalid &&
-                        editEmergencyForm.get('name2').touched
-                      " class="text-danger">* Name2 is required
-                    </small>
-                  </div>
+
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Relationship <span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" formControlName="relationship2" [class.invalid]="
-                        editEmergencyForm.get('relationship2').invalid &&
-                        editEmergencyForm.get('relationship2').touched
-                      " />
-                  </div>
-                  <div>
-                    <small *ngIf="
-                        editEmergencyForm.get('relationship2').invalid &&
-                        editEmergencyForm.get('relationship2').touched
-                      " class="text-danger">* Relationship2 is required
-                    </small>
+                    <input class="form-control" type="text" formControlName="relationship2" />
+                    <ng-container
+                      *ngIf="editEmergencyForm.get('relationship2').invalid && editEmergencyForm.get('relationship2').touched">
+                      <p *ngIf="editEmergencyForm.get('relationship2').errors.required" class="text-danger">
+                        Relationship is Required
+                      </p>
+                    </ng-container>
                   </div>
                 </div>
+
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone <span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" formControlName="phone3" [class.invalid]="
-                        editEmergencyForm.get('phone3').invalid &&
-                        editEmergencyForm.get('phone3').touched
-                      " />
+                    <input class="form-control" type="text" formControlName="phone3" />
+                    <ng-container
+                      *ngIf="editEmergencyForm.get('phone3').invalid && editEmergencyForm.get('phone3').touched">
+                      <p *ngIf="editEmergencyForm.get('phone3').errors.required" class="text-danger">
+                        Phone Number is Required
+                      </p>
+                      <p *ngIf="editEmergencyForm.get('phone3').errors.pattern" class="text-danger">
+                        *Invalid Phone Number</p>
+                    </ng-container>
                   </div>
-                  <div>
-                    <small *ngIf="
-                        editEmergencyForm.get('phone3').invalid &&
-                        editEmergencyForm.get('phone3').touched
-                      " class="text-danger">* Phone3 is required
-                    </small>
-                  </div>
+
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone 2</label>
-                    <input class="form-control" type="text" formControlName="phone4" [class.invalid]="
-                        editEmergencyForm.get('phone4').invalid &&
-                        editEmergencyForm.get('phone4').touched
-                      " />
+                    <input class="form-control" type="text" formControlName="phone4" />
+                    <ng-container
+                      *ngIf="editEmergencyForm.get('phone4').invalid && editEmergencyForm.get('phone4').touched">
+                      <p *ngIf="editEmergencyForm.get('phone4').errors.required" class="text-danger">
+                        Phone Number is Required
+                      </p>
+                      <p *ngIf="editEmergencyForm.get('phone4').errors.pattern" class="text-danger">
+                        *Invalid Phone Number</p>
+                    </ng-container>
                   </div>
-                  <div>
-                    <small *ngIf="
-                        editEmergencyForm.get('phone4').invalid &&
-                        editEmergencyForm.get('phone4').touched
-                      " class="text-danger">* Phone4 is required
-                    </small>
-                  </div>
+
                 </div>
               </div>
             </div>
           </div>
           <div class="submit-section">
-            <button class="btn btn-primary submit-btn">Submit</button>
+            <button class="btn btn-primary submit-btn" [disabled]="editEmergencyForm.invalid">Submit</button>
           </div>
         </form>
       </div>
