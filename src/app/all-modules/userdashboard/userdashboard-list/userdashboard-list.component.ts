@@ -19,7 +19,12 @@ export class UserdashboardListComponent implements OnInit {
     b: "#E65A26",
     c: "#a1a1a1",
   };
-  constructor() {}
+  user_type: string;
+  userdashboardwriteRecep: string;
+  constructor() {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.userdashboardwriteRecep = sessionStorage.getItem("userdashboardwriteRecep");
+  }
 
   ngOnInit() {
     this.chartOptions = {
