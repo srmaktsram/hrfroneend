@@ -60,7 +60,7 @@ export class PricingComponent implements OnInit {
     private router: Router,
     private cookieService: CookieService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.checkId = this.route.snapshot.queryParams["adminId"];
@@ -182,8 +182,7 @@ export class PricingComponent implements OnInit {
   }
   getData(val) {
     this.corporateId = sessionStorage.getItem("corporateId");
-
-    if (sessionStorage.getItem("currentUser") == "HrUserLogin") {
+    if (sessionStorage.getItem("currentUserLogin") == "HrUserLogin") {
       if (val == "Basic(Single-User)") {
         this.router.navigate(["/checkouts"], {
           queryParams: {
