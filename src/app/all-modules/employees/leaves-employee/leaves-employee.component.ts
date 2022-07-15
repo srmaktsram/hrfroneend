@@ -6,6 +6,11 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-leaves-employee",
@@ -13,6 +18,8 @@ declare const $: any;
   styleUrls: ["./leaves-employee.component.css"],
 })
 export class LeavesEmployeeComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   lstLeave: any;
   url: any = "employeeleaves";
   public tempId: any;
@@ -52,7 +59,8 @@ export class LeavesEmployeeComponent implements OnInit {
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {}
   getLeaveType() {
     let nullData = 0;
@@ -206,28 +214,40 @@ export class LeavesEmployeeComponent implements OnInit {
           let author = document.employeeName;
           let functions = document.leaveType;
           let time = document.createDate;
-            if (this.leaves == true) {
-
-              this.http
-                .post(
-                  "http://localhost:8443/admin/allNotification/createNotification" +
-                    "/" +
-                    this.adminId,
-                  { message, author, functions, time }
-                )
-                .subscribe((data: any) => {
-                  this.loadLeaves();
-                });
-            }
-          
+          if (this.leaves == true) {
+            this.http
+              .post(
+                "http://localhost:8443/admin/allNotification/createNotification" +
+                  "/" +
+                  this.adminId,
+                { message, author, functions, time }
+              )
+              .subscribe((data: any) => {
+                this.loadLeaves();
+              });
+          }
         });
 
       // this.loadLeaves();
       $("#add_leave").modal("hide");
       this.addLeaveEmployeeForm.reset();
-      this.toastr.success("Leaves added sucessfully...!", "Success");
+      // this.toastr.success("Leaves added sucessfully...!", "Success");
+      this._snackBar.open("Leaves added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
-      this.toastr.warning("Mandatory fields required", "");
+      // this.toastr.warning("Mandatory fields required", "");
+      this._snackBar.open("Mandatory fields required !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -262,9 +282,23 @@ export class LeavesEmployeeComponent implements OnInit {
         });
 
       $("#edit_leave").modal("hide");
-      this.toastr.success("Leaves Updated sucessfully...!", "Success");
+      // this.toastr.success("Leaves Updated sucessfully...!", "Success");
+      this._snackBar.open("Leaves Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
-      this.toastr.warning("Mandatory fields required", "");
+      // this.toastr.warning("Mandatory fields required", "");
+      this._snackBar.open("Mandatory fields required !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -283,7 +317,14 @@ export class LeavesEmployeeComponent implements OnInit {
       .subscribe((data) => {
         this.loadLeaves();
         $("#delete_approve").modal("hide");
-        this.toastr.success("Leaves deleted sucessfully..!", "Success");
+        // this.toastr.success("Leaves deleted sucessfully..!", "Success");
+        this._snackBar.open("Leaves deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
 

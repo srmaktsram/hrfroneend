@@ -7,6 +7,11 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-leaves-admin",
@@ -14,6 +19,8 @@ declare const $: any;
   styleUrls: ["./leaves-admin.component.css"],
 })
 export class LeavesAdminComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -39,7 +46,8 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private http: HttpClient,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
   }
@@ -56,8 +64,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
 
     this.loadLeaves();
 
-
-    this.getAllEmployeeData()
+    this.getAllEmployeeData();
 
     this.addLeaveadminForm = this.formBuilder.group({
       LeaveType: ["", [Validators.required]],
@@ -143,7 +150,6 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         "dd-MM-yyyy"
       );
       let obj = {
-
         // designation: "web developer",
         leaveType: this.addLeaveadminForm.value.LeaveType,
         from: fromDate,
@@ -153,23 +159,38 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         reason: this.addLeaveadminForm.value.LeaveReason,
         status: "Approved",
       };
-      console.log("obj", obj)
-      this.http.post("http://localhost:8443/admin/leaves/createLeave", obj).subscribe((res) => {
-        console.log("postApi", res)
-        this.loadLeaves();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-
+      console.log("obj", obj);
+      this.http
+        .post("http://localhost:8443/admin/leaves/createLeave", obj)
+        .subscribe((res) => {
+          console.log("postApi", res);
+          this.loadLeaves();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
 
       $("#add_leave").modal("hide");
       this.addLeaveadminForm.reset();
-      this.toastr.success("Leaves added sucessfully...!", "Success");
+      // this.toastr.success("Leaves added sucessfully...!", "Success");
+      this._snackBar.open("Leaves added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
-      this.toastr.warning("Mandatory fields required", "");
+      // this.toastr.warning("Mandatory fields required", "");
+      this._snackBar.open("Mandatory fields required !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -184,7 +205,7 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
 
   // Edit leaves Modal Api Call
   editLeaves() {
-    this.id = this.editId
+    this.id = this.editId;
     if (this.editLeaveadminForm.valid) {
       let obj = {
         // employeeName: "Mike Litorus",
@@ -196,43 +217,62 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
         remainleaves: this.editLeaveadminForm.value.RemainLeaves,
         reason: this.editLeaveadminForm.value.LeaveReason,
         // status: "Approved",
-
       };
-      this.http.patch("http://localhost:8443/admin/leaves/updateAdminLeave" + "/" + this.id, obj).subscribe((res) => {
-        console.log("updateApi", res)
-        this.loadLeaves();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
-
+      this.http
+        .patch(
+          "http://localhost:8443/admin/leaves/updateAdminLeave" + "/" + this.id,
+          obj
+        )
+        .subscribe((res) => {
+          console.log("updateApi", res);
+          this.loadLeaves();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
 
       $("#edit_leave").modal("hide");
-      this.toastr.success("Leaves Updated sucessfully...!", "Success");
+      // this.toastr.success("Leaves Updated sucessfully...!", "Success");
+      this._snackBar.open("Leaves Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
       this.toastr.warning("Mandatory fields required", "");
     }
   }
   // Delete leaves Modal Api Call
   deleteleaves() {
-    let id = this.tempId
+    let id = this.tempId;
     let obj = {
-      status: 2
+      status: 2,
     };
-    this.http.patch("http://localhost:8443/admin/leaves/deleteLeave" + "/" + id, obj).subscribe((data) => {
-      console.log("deleteApi", data)
-      this.loadLeaves();
-      $("#datatable").DataTable().clear();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    this.http
+      .patch("http://localhost:8443/admin/leaves/deleteLeave" + "/" + id, obj)
+      .subscribe((data) => {
+        console.log("deleteApi", data);
+        this.loadLeaves();
+        $("#datatable").DataTable().clear();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.dtTrigger.next();
       });
-      this.dtTrigger.next();
-    });
 
     $("#delete_approve").modal("hide");
-    this.toastr.success("Leaves deleted sucessfully..!", "Success");
+    // this.toastr.success("Leaves deleted sucessfully..!", "Success");
+    this._snackBar.open("Leaves deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // To Get The leaves Edit Id And Set Values To Edit Modal Form
@@ -315,18 +355,16 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
       .trigger("blur");
   }
 
-
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
   }
 
   getAllEmployeeData() {
-
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data) => {
         console.log("getAllEmployee", data);
@@ -337,19 +375,22 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   }
 
   getId(id) {
-    console.log("bbbbbbb", id)
+    console.log("bbbbbbb", id);
     sessionStorage.setItem("empid", id);
     this.router.navigate(["/layout/employees/employeeprofile"]);
   }
 
   updateStatus(val, id) {
-    this.http.patch("http://localhost:8443/admin/leaves/updateAdminLeave" + "/" + id, { status: val }).subscribe((data: any) => {
-      console.log(data, "updateStatus")
-      // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      //   dtInstance.destroy();
-      this.loadLeaves();
-      // });
-    })
+    this.http
+      .patch("http://localhost:8443/admin/leaves/updateAdminLeave" + "/" + id, {
+        status: val,
+      })
+      .subscribe((data: any) => {
+        console.log(data, "updateStatus");
+        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        //   dtInstance.destroy();
+        this.loadLeaves();
+        // });
+      });
   }
-
 }

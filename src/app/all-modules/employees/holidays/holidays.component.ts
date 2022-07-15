@@ -4,8 +4,13 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
-import { HttpClient, } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-holidays",
@@ -13,6 +18,8 @@ declare const $: any;
   styleUrls: ["./holidays.component.css"],
 })
 export class HolidaysComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -36,26 +43,50 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private http: HttpClient
-  ) { }
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.loadholidays();
     this.getNotifications();
 
-
     this.addHolidayForm = this.formBuilder.group({
-      HolidayName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      HolidayName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       Holidaydate: ["", [Validators.required]],
-      DaysName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      DaysName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
     });
 
     // Edit Contact Form Validation And Getting Values
 
     this.editHolidayForm = this.formBuilder.group({
-      editHolidayName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      editHolidayName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       editHolidayDate: ["", [Validators.required]],
-      editDaysName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      editDaysName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
     });
   }
 
@@ -63,21 +94,21 @@ export class HolidaysComponent implements OnInit, OnDestroy {
   // public data: any;
 
   loadholidays() {
-
-    this.http.get("http://localhost:8443/admin/holidays/getHolidays").subscribe((res: any) => {
-
-      this.lstHolidays = res.data;
-      this.rows = this.lstHolidays;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get("http://localhost:8443/admin/holidays/getHolidays")
+      .subscribe((res: any) => {
+        this.lstHolidays = res.data;
+        this.rows = this.lstHolidays;
+        this.srch = [...this.rows];
+      });
   }
   ////
   getNotifications() {
     this.http
       .get(
         "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data: any) => {
         this.holiday = data[0].notification.holidays;
@@ -88,8 +119,8 @@ export class HolidaysComponent implements OnInit, OnDestroy {
 
   addholidays() {
     if (this.addHolidayForm.invalid) {
-      this.markFormGroupTouched(this.addHolidayForm)
-      return
+      this.markFormGroupTouched(this.addHolidayForm);
+      return;
     }
     if (this.addHolidayForm.valid) {
       let holiday = this.pipe.transform(
@@ -97,32 +128,47 @@ export class HolidaysComponent implements OnInit, OnDestroy {
         "dd-MM-yyyy"
       );
 
-      let adminId = sessionStorage.getItem("adminId")
+      let adminId = sessionStorage.getItem("adminId");
       let obj = {
         title: this.addHolidayForm.value.HolidayName,
         holidayDate: holiday,
         day: this.addHolidayForm.value.DaysName,
         adminId: this.adminId,
-
       };
 
-      this.http.post("http://localhost:8443/admin/holidays/createHolidays", obj).subscribe((res: any) => {
-        this.loadholidays();
-        let document = res.data
-        let author = "Admin"
-        let message = "added holiday of "
-        let functions = document.title
-        let time = document.createDate
-        if (this.holiday == true) {
-          this.http.post("http://localhost:8443/admin/allNotification/createNotification" + "/" + this.adminId, { message, author, functions, time }).subscribe((data: any) => {
-            this.loadholidays();
-          });
-        }
-      })
+      this.http
+        .post("http://localhost:8443/admin/holidays/createHolidays", obj)
+        .subscribe((res: any) => {
+          this.loadholidays();
+          let document = res.data;
+          let author = "Admin";
+          let message = "added holiday of ";
+          let functions = document.title;
+          let time = document.createDate;
+          if (this.holiday == true) {
+            this.http
+              .post(
+                "http://localhost:8443/admin/allNotification/createNotification" +
+                  "/" +
+                  this.adminId,
+                { message, author, functions, time }
+              )
+              .subscribe((data: any) => {
+                this.loadholidays();
+              });
+          }
+        });
 
       $("#add_holiday").modal("hide");
       this.addHolidayForm.reset();
-      this.toastr.success("Holidays added", "Success");
+      // this.toastr.success("Holidays added", "Success");
+      this._snackBar.open("Holidays added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -141,29 +187,53 @@ export class HolidaysComponent implements OnInit, OnDestroy {
         day: this.editHolidayForm.value.editDaysName,
       };
       // this.srvModuleService.update(obj, this.url).subscribe((data1) => {
-      this.http.patch("http://localhost:8443/admin/holidays/updateHolidays" + "/" + this.id, obj).subscribe((res) => {
-        this.loadholidays();
-      });
+      this.http
+        .patch(
+          "http://localhost:8443/admin/holidays/updateHolidays" + "/" + this.id,
+          obj
+        )
+        .subscribe((res) => {
+          this.loadholidays();
+        });
 
       $("#edit_holiday").modal("hide");
-      this.toastr.success("Holidays Updated succesfully", "Success");
+      // this.toastr.success("Holidays Updated succesfully", "Success");
+      this._snackBar.open("Holidays Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
   // Delete holidays Modal Api Call
 
   deleteHolidays() {
-    let id = this.tempId
+    let id = this.tempId;
     let obj = {
-      status: 2
+      status: 2,
     };
 
-    this.http.patch("http://localhost:8443/admin/holidays/deleteHoliday" + "/" + id, obj).subscribe((res) => {
-      this.loadholidays();
-    });
+    this.http
+      .patch(
+        "http://localhost:8443/admin/holidays/deleteHoliday" + "/" + id,
+        obj
+      )
+      .subscribe((res) => {
+        this.loadholidays();
+      });
 
     $("#delete_holiday").modal("hide");
-    this.toastr.success("Holidays Deleted", "Success");
+    // this.toastr.success("Holidays Deleted", "Success");
+    this._snackBar.open("Holidays deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // To Get The holidays Edit Id And Set Values To Edit Modal Form
