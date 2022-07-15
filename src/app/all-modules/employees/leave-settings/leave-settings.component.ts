@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { ToastrService } from "ngx-toastr";
 import { PrimeNGConfig } from "primeng/api";
 import { AllModulesService } from "../../all-modules.service";
@@ -11,6 +16,8 @@ declare const $: any;
   styleUrls: ["./leave-settings.component.css"],
 })
 export class LeaveSettingsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public sourceProducts: any;
   public targetProducts: any;
   public url1: any = "pickListNames";
@@ -24,7 +31,8 @@ export class LeaveSettingsComponent implements OnInit {
     private primengConfig: PrimeNGConfig,
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -148,13 +156,12 @@ export class LeaveSettingsComponent implements OnInit {
     });
   }
 
-
   // Add Custom Modal Api Call
 
   addCustom() {
-    if(this.addCustomPolicyForm.invalid){
-      this.markFormGroupTouched(this.addCustomPolicyForm)
-      return
+    if (this.addCustomPolicyForm.invalid) {
+      this.markFormGroupTouched(this.addCustomPolicyForm);
+      return;
     }
     if (this.addCustomPolicyForm.valid) {
       let obj = {
@@ -165,7 +172,14 @@ export class LeaveSettingsComponent implements OnInit {
       this.getCustomPolicy();
       $("#add_custom_policy").modal("hide");
       this.addCustomPolicyForm.reset();
-      this.toastr.success("Custom Policy is added", "Success");
+      // this.toastr.success("Custom Policy is added", "Success");
+      this._snackBar.open("Custom Policy  added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -180,7 +194,14 @@ export class LeaveSettingsComponent implements OnInit {
     this.allModuleService.update(obj, this.url).subscribe((data1) => {});
     this.getCustomPolicy();
     $("#edit_custom_policy").modal("hide");
-    this.toastr.success("Custom Policy is edited", "Success");
+    // this.toastr.success("Custom Policy is edited", "Success");
+    this._snackBar.open("Custom Policy updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   edit(value) {
@@ -201,7 +222,14 @@ export class LeaveSettingsComponent implements OnInit {
     this.allModuleService.delete(this.tempId, this.url).subscribe((data) => {
       this.getCustomPolicy();
       $("#delete_custom_policy").modal("hide");
-      this.toastr.success("Custom Policy is deleted", "Success");
+      // this.toastr.success("Custom Policy is deleted", "Success");
+      this._snackBar.open("Custom Policy deleted sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     });
   }
 }

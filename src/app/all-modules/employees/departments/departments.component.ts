@@ -6,6 +6,11 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { query } from "@angular/animations";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-departments",
@@ -13,6 +18,8 @@ declare const $: any;
   styleUrls: ["./departments.component.css"],
 })
 export class DepartmentsComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -33,8 +40,9 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  ) { }
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.dtOptions = {
@@ -45,11 +53,23 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     this.LoadDepartment();
 
     this.addDepartmentForm = this.formBuilder.group({
-      DepartmentName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      DepartmentName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
     });
 
     this.editDepartmentForm = this.formBuilder.group({
-      DepartmentName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      DepartmentName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
     });
   }
 
@@ -65,7 +85,11 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   // Get department list  Api Call
   LoadDepartment() {
     this.http
-      .get("http://localhost:8443/admin/department/getAdminData"+"/"+this.adminId)
+      .get(
+        "http://localhost:8443/admin/department/getAdminData" +
+          "/" +
+          this.adminId
+      )
       .subscribe((data) => {
         this.lstDepartment = data;
         this.dtTrigger.next();
@@ -82,17 +106,16 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       this.markFormGroupTouched(this.addDepartmentForm);
       return;
     }
-    let adminId = sessionStorage.getItem("adminId")
+    let adminId = sessionStorage.getItem("adminId");
     if (this.addDepartmentForm.valid) {
       let obj = {
         departmentName: this.addDepartmentForm.value.DepartmentName,
-        adminId: adminId
+        adminId: adminId,
       };
 
       this.http
         .post("http://localhost:8443/admin/department/create", obj)
         .subscribe((res: any) => {
-
           this.LoadDepartment();
         });
       this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -102,6 +125,13 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
       $("#add_department").modal("hide");
       //this.addDepartmentForm.reset();
       // this.toastr.success("Department added sucessfully...!", "Success");
+      this._snackBar.open("Department added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -127,7 +157,14 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
         });
 
       $("#edit_department").modal("hide");
-      this.toastr.success("Department Updated sucessfully...!", "Success");
+      // this.toastr.success("Department Updated sucessfully...!", "Success");
+      this._snackBar.open("Department Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -163,7 +200,14 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
         });
 
         $("#delete_department").modal("hide");
-        this.toastr.success("Department deleted sucessfully..!", "Success");
+        // this.toastr.success("Department deleted sucessfully..!", "Success");
+        this._snackBar.open("Department deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
   ngOnDestroy(): void {

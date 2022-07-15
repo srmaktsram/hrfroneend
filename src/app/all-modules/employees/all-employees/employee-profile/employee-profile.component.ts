@@ -7,10 +7,14 @@ import {
   FormGroup,
   Validators,
 } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { ToastrService } from "ngx-toastr";
 import { Observable } from "rxjs";
 import { map, startWith } from "rxjs/operators";
-
 
 declare const $: any;
 @Component({
@@ -20,6 +24,8 @@ declare const $: any;
   styleUrls: ["./employee-profile.component.css"],
 })
 export class EmployeeProfileComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   myControl = new FormControl("");
   options: string[] = ["One", "Two", "Three"];
   filteredOptions: Observable<string[]>;
@@ -36,7 +42,7 @@ export class EmployeeProfileComponent implements OnInit {
   id: string;
   data: any;
 
-  public profileEmp: any
+  public profileEmp: any;
   public adminId: any;
   public name: any;
   designation: any;
@@ -58,7 +64,7 @@ export class EmployeeProfileComponent implements OnInit {
   public projectLeader = [];
   public projectTeam = [];
 
-  public projects = []
+  public projects = [];
   itemsArray: FormGroup;
   eduhidden = true;
   exphidden = true;
@@ -68,16 +74,20 @@ export class EmployeeProfileComponent implements OnInit {
   profileImg: any;
   profileImagePath: string;
   profileImage: any;
+
   lstEmployee: any;
   public reportsTo: any;
+
   constructor(
     private toastr: ToastrService,
     private formBuilder: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
+
     this.id = sessionStorage.getItem("empid")
     this.adminId = sessionStorage.getItem("adminId")
-    // console.log(this.id, "pkkkkkkkk")
+
     this.getId(this.id);
     // console.log(this.id, "hpppppppppppp")
     this.getProjects();
@@ -88,7 +98,11 @@ export class EmployeeProfileComponent implements OnInit {
   public getDepartments() {
     this.http
 
-      .get("http://localhost:8443/admin/department/getAdminData" + "/" + this.adminId)
+      .get(
+        "http://localhost:8443/admin/department/getAdminData" +
+          "/" +
+          this.adminId
+      )
       .subscribe((data) => {
         this.departments = data;
       });
@@ -96,9 +110,9 @@ export class EmployeeProfileComponent implements OnInit {
   public getDesignation() {
     this.http
 
-      .get("http://localhost:8443/admin/designation/getData" +
-        "/" +
-        this.adminId)
+      .get(
+        "http://localhost:8443/admin/designation/getData" + "/" + this.adminId
+      )
       .subscribe((data) => {
         this.designations = data;
       });
@@ -107,7 +121,9 @@ export class EmployeeProfileComponent implements OnInit {
   ngOnInit() {
 
 
+
     this.loadEmployee()
+
 
     this.addEmployeeForm = this.formBuilder.group({
       salaryBasis: ["", [Validators.required]],
@@ -135,7 +151,10 @@ export class EmployeeProfileComponent implements OnInit {
       state: ["", [Validators.required]],
       country: ["", [Validators.required]],
       pinCode: ["", [Validators.required]],
-      phone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      phone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       department: ["", [Validators.required]],
       designation: ["", [Validators.required]],
       myControl: [""],
@@ -159,8 +178,8 @@ export class EmployeeProfileComponent implements OnInit {
       ifscCode: ["", [Validators.required]],
       panNo: ["", [Validators.required]],
 
+    });
 
-    })
 
     this.editEmergencyForm = this.formBuilder.group({
       name1: ["", [Validators.required]],
@@ -193,8 +212,7 @@ export class EmployeeProfileComponent implements OnInit {
           completeDate: ["", [Validators.required]],
           degree: ["", [Validators.required]],
           grade: ["", [Validators.required]],
-
-        })
+        }),
       ]),
     });
 
@@ -206,9 +224,7 @@ export class EmployeeProfileComponent implements OnInit {
           jobPosition: ["", [Validators.required]],
           periodFrom: ["", [Validators.required]],
           periodTo: ["", [Validators.required]],
-
-
-        })
+        }),
       ]),
     });
 
@@ -260,16 +276,28 @@ export class EmployeeProfileComponent implements OnInit {
     let params = new HttpParams();
     params = params.set("id", this.id);
     this.http
-      .patch("http://localhost:8443/employee/employeeProfile/updateProfilePhoto?" + params, fd)
+      .patch(
+        "http://localhost:8443/employee/employeeProfile/updateProfilePhoto?" +
+          params,
+        fd
+      )
       .subscribe((res: any) => {
+
         console.log(res, "kkkkk")
         this.getId(this.id)
 
+
       });
+    this._snackBar.open("Profile Photo uploaded  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   onSubmit() {
-
     // console.log("this is the bank&Statutory>>>>>>>>>>>",this.addEmployeeForm)
     var obj = {
       salaryBasis: this.addEmployeeForm.value.salaryBasis,
@@ -286,15 +314,27 @@ export class EmployeeProfileComponent implements OnInit {
       employeeEsiRate: this.addEmployeeForm.value.employeeEsiRate,
       esiAdditionalRate: this.addEmployeeForm.value.esiAdditionalRate,
       esiTotalRate: this.addEmployeeForm.value.esiTotalRate,
+    };
+    console.log("this is the obj.....>>>", obj);
 
-    }
-    console.log("this is the obj.....>>>", obj)
+    this.http
+      .patch(
+        "http://localhost:8443/employee/profile/addBankStatutory" +
+          "/" +
+          this.id,
+        obj
+      )
+      .subscribe((res: any) => {
+        // console.log("this is the salary.....>>>",res)
+      });
 
-    this.http.patch("http://localhost:8443/employee/profile/addBankStatutory" + "/" + this.id, obj).subscribe((res: any) => {
-      // console.log("this is the salary.....>>>",res)
-    })
+    this._snackBar.open("Bank & statutory added  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
 
-    this.toastr.success("Bank & statutory added", "Success");
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   getId(id) {
@@ -302,8 +342,9 @@ export class EmployeeProfileComponent implements OnInit {
       .get("http://localhost:8443/admin/allemployees/getEmployee" + "/" + id)
       .subscribe((res: any) => {
         this.data = res;
-        console.log(this.data, "hhhhhhhhhhhhhhhhhttttttttt")
-        this.profileImage = res.data.profileImage
+
+        this.profileImage = res.data.profileImage;
+
         console.log("kkk", this.profileImage);
 
         this.profileImagePath = `http://localhost:8443/${this.profileImage}`;
@@ -321,7 +362,6 @@ export class EmployeeProfileComponent implements OnInit {
         this.getEmployeeForm = this.data.data.BasicSalaryInformation;
         this.edit();
       });
-
   }
   ngOnDestroy(): void {
     sessionStorage.removeItem("empid");
@@ -330,8 +370,6 @@ export class EmployeeProfileComponent implements OnInit {
 
   edit() {
     this.addEmployeeForm.patchValue({
-
-
       salaryBasis: this.getEmployeeForm.salaryBasis,
       salaryAmount: this.getEmployeeForm.salaryAmount,
       paymentType: this.getEmployeeForm.paymentType,
@@ -345,24 +383,17 @@ export class EmployeeProfileComponent implements OnInit {
       employeeEsiRate: this.getEmployeeForm.employeeEsiRate,
       esiAdditionalRate: this.getEmployeeForm.esiAdditionalRate,
       esiTotalRate: this.getEmployeeForm.esiTotalRate,
-
-
-    })
-
-
+    });
 
     //   this.editFamilyForm.patchValue({
 
     //   })
-
 
     //   this.editEducationForm.patchValue({
 
-
     //   this.editFamilyForm.patchValue({
 
     //   })
-
 
     // this.editExpForm.patchValue({
     //   companyName:this.expinfo.companyName,
@@ -453,6 +484,14 @@ export class EmployeeProfileComponent implements OnInit {
           this.getId(this.id);
         });
 
+      this._snackBar.open("Profile Informations added sucessfully...!", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
+
     } else {
     }
   }
@@ -481,6 +520,13 @@ export class EmployeeProfileComponent implements OnInit {
           $("#personal_info_modal").modal("hide");
           this.getId(this.id);
         });
+      this._snackBar.open("Personal Informations added  sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
     }
   }
@@ -501,7 +547,6 @@ export class EmployeeProfileComponent implements OnInit {
 
   addItems() {
     this.itemsList.push(this.newItem());
-
   }
   removeItems(i) {
     this.itemsList.removeAt(i);
@@ -524,7 +569,13 @@ export class EmployeeProfileComponent implements OnInit {
         $("#family_info_modal").modal("hide");
         this.getId(this.id);
       });
+    this._snackBar.open("Family Informations added  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
 
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   ////////////////////////////////////////////////////////////////////////////////
   editEmergencyInfo() {
@@ -551,8 +602,14 @@ export class EmployeeProfileComponent implements OnInit {
           $("#emergency_contact_modal").modal("hide");
           this.getId(this.id);
         });
-    } else {
+      this._snackBar.open("Emergency Contact added  sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
 
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
+    } else {
     }
   }
 
@@ -599,10 +656,16 @@ export class EmployeeProfileComponent implements OnInit {
           $("#bank_info_modal").modal("hide");
           this.getId(this.id);
         });
+      this._snackBar.open("Bank Details added  sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
     }
   }
-
 
   ///////////////////validation ///////////////////////////
 
@@ -642,7 +705,6 @@ export class EmployeeProfileComponent implements OnInit {
       this.exphidden = false;
     }
   }
-
 
   ////////////////////////////////////////Education///////////////////////////////////////////////////////////////////////
 
@@ -685,7 +747,13 @@ export class EmployeeProfileComponent implements OnInit {
         $("#education_info").modal("hide");
         this.getId(this.id);
       });
+    this._snackBar.open("Education Informations added  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
 
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   ///////////////////////Experiance/////////////////////////////////////////////////////////////////////////////
@@ -728,7 +796,14 @@ export class EmployeeProfileComponent implements OnInit {
         $("#experience_info").modal("hide");
         this.getId(this.id);
       });
-  }
+    this._snackBar.open("Experience Informations added sucessfully ! ", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
 
   /////////////////////////////////get all employee data/////////////////////////////////
 
@@ -748,5 +823,6 @@ export class EmployeeProfileComponent implements OnInit {
 
   getFirstName(item) {
     this.reportsTo = item
+
   }
 }
