@@ -19,6 +19,20 @@ export class RoleHrAuthenticationService {
     cinvoice: string,
     cinvoicepre: string,
     packageName: string,
+    jobsreadHr: string,
+    jobswriteHr: string,
+    policiesreadHr: string,
+    policieswriteHr: string,
+    supportticketsreadHr: string,
+    supportticketswriteHr: string,
+    trainingreadHr: string,
+    trainingwriteHr: string,
+    performancereadHr: string,
+    performancewriteHr: string,
+    payrollsreadHr: string,
+    payrollswriteHr: string,
+    attendancereadHr: string,
+    attendancewriteHr: string,
     
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
@@ -38,6 +52,22 @@ export class RoleHrAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
+
+    sessionStorage.setItem("jobsreadHr", jobsreadHr);
+    sessionStorage.setItem("jobswriteHr", jobswriteHr);
+    sessionStorage.setItem("policiesreadHr", policiesreadHr);
+    sessionStorage.setItem("policieswriteHr", policieswriteHr);
+    sessionStorage.setItem("supportticketsreadHr", supportticketsreadHr);
+    sessionStorage.setItem("supportticketswriteHr", supportticketswriteHr);
+    sessionStorage.setItem("trainingreadHr", trainingreadHr);
+    sessionStorage.setItem("trainingwriteHr", trainingwriteHr);
+    sessionStorage.setItem("performancereadHr", performancereadHr);
+    sessionStorage.setItem("performancewriteHr", performancewriteHr);
+    sessionStorage.setItem("payrollsreadHr", payrollsreadHr);
+    sessionStorage.setItem("payrollswriteHr", payrollswriteHr);
+    sessionStorage.setItem("attendancereadHr", attendancereadHr);
+    sessionStorage.setItem("attendancewriteHr", attendancewriteHr);
+
     
 
     return true;

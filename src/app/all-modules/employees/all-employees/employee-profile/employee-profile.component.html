@@ -37,15 +37,13 @@
                     <h6 class="text-muted">{{ profileEmp?.designation }}</h6>
                     <small class="text-muted">{{
                       profileEmp?.department
-                    }}</small>
+                      }}</small>
                     <div class="staff-id">{{ profileEmp?.employeeId }}</div>
                     <div class="small doj text-muted">
                       {{ profileEmp?.joinDate }}
                     </div>
                     <div class="staff-msg">
-                      <a class="btn btn-custom" routerLink="/layout/apps/chat"
-                        >Send Message</a
-                      >
+                      <a class="btn btn-custom" routerLink="/layout/apps/chat">Send Message</a>
                     </div>
                   </div>
                 </div>
@@ -78,14 +76,7 @@
                     <li>
                       <div class="title">Reports to:</div>
                       <div class="text">
-                        <div class="avatar-box">
-                          <div class="avatar avatar-xs">
-                            <img
-                              src="assets/img/profiles/avatar-16.jpg"
-                              alt=""
-                            />
-                          </div>
-                        </div>
+
                         <a routerLink="/layout/employees/employeeprofile">
                           {{ profileinfo?.reportsTo }}
                         </a>
@@ -96,13 +87,8 @@
               </div>
             </div>
             <div class="pro-edit">
-              <a
-                data-bs-target="#profile_info"
-                data-bs-toggle="modal"
-                class="edit-icon"
-                (click)="edit()"
-                ><i class="fa fa-pencil"></i
-              ></a>
+              <a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon" (click)="edit()"><i
+                  class="fa fa-pencil"></i></a>
             </div>
           </div>
         </div>
@@ -115,20 +101,14 @@
       <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
         <ul class="nav nav-tabs nav-tabs-bottom">
           <li class="nav-item">
-            <a href="#emp_profile" data-bs-toggle="tab" class="nav-link active"
-              >Profile</a
-            >
+            <a href="#emp_profile" data-bs-toggle="tab" class="nav-link active">Profile</a>
           </li>
           <li class="nav-item">
-            <a href="#emp_projects" data-bs-toggle="tab" class="nav-link"
-              >Projects</a
-            >
+            <a href="#emp_projects" data-bs-toggle="tab" class="nav-link">Projects</a>
           </li>
           <li class="nav-item">
-            <a href="#bank_statutory" data-bs-toggle="tab" class="nav-link"
-              >Bank & Statutory
-              <small class="text-danger">(Admin Only)</small></a
-            >
+            <a href="#bank_statutory" data-bs-toggle="tab" class="nav-link">Bank & Statutory
+              <small class="text-danger">(Admin Only)</small></a>
           </li>
         </ul>
       </div>
@@ -144,13 +124,8 @@
             <div class="card-body">
               <h3 class="card-title">
                 Personal Informations
-                <a
-                  class="edit-icon"
-                  data-bs-toggle="modal"
-                  data-bs-target="#personal_info_modal"
-                  (click)="edit()"
-                  ><i class="fa fa-pencil"></i
-                ></a>
+                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#personal_info_modal" (click)="edit()"><i
+                    class="fa fa-pencil"></i></a>
               </h3>
               <ul class="personal-info">
                 <li>
@@ -196,13 +171,8 @@
             <div class="card-body">
               <h3 class="card-title">
                 Emergency Contact
-                <a
-                  class="edit-icon"
-                  data-bs-toggle="modal"
-                  data-bs-target="#emergency_contact_modal"
-                  (click)="edit()"
-                  ><i class="fa fa-pencil"></i
-                ></a>
+                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"
+                  (click)="edit()"><i class="fa fa-pencil"></i></a>
               </h3>
               <h5 class="section-title">Primary</h5>
               <ul class="personal-info">
@@ -218,7 +188,7 @@
                   <div class="title">Phone</div>
                   <div class="text">
                     {{ emergencycontect?.phone1 }},
-                    {{ emergencycontect?.phone1 }}
+                    {{ emergencycontect?.phone2 }}
                   </div>
                 </li>
               </ul>
@@ -251,13 +221,8 @@
             <div class="card-body">
               <h3 class="card-title">
                 Bank information
-                <a
-                  class="edit-icon"
-                  data-bs-toggle="modal"
-                  data-bs-target="#bank_info_modal"
-                  (click)="edit()"
-                  ><i class="fa fa-pencil"></i
-                ></a>
+                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#bank_info_modal" (click)="edit()"><i
+                    class="fa fa-pencil"></i></a>
               </h3>
               <ul class="personal-info">
                 <li>
@@ -285,13 +250,8 @@
             <div class="card-body">
               <h3 class="card-title">
                 Family Informations
-                <a
-                  class="edit-icon"
-                  data-bs-toggle="modal"
-                  data-bs-target="#family_info_modal"
-                  (click)="edit()"
-                  ><i class="fa fa-pencil" (click)="addItems()"></i
-                ></a>
+                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal" (click)="edit()"><i
+                    class="fa fa-pencil" (click)="addItems()"></i></a>
               </h3>
               <div class="table-responsive">
                 <table class="table table-nowrap">
@@ -313,19 +273,11 @@
                       <td>{{ family.phone }}</td>
                       <td class="text-end">
                         <div class="dropdown dropdown-action">
-                          <a
-                            aria-expanded="false"
-                            data-bs-toggle="dropdown"
-                            class="action-icon dropdown-toggle"
-                            ><i class="material-icons">more_vert</i></a
-                          >
+                          <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle"><i
+                              class="material-icons">more_vert</i></a>
                           <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item"
-                              ><i class="fa fa-pencil m-r-5"></i> Edit</a
-                            >
-                            <a class="dropdown-item"
-                              ><i class="fa fa-trash-o m-r-5"></i> Delete</a
-                            >
+                            <a class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                            <a class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                           </div>
                         </div>
                       </td>
@@ -343,32 +295,22 @@
             <div class="card-body">
               <h3 class="card-title">
                 Education Informations
-                <a
-                  class="edit-icon"
-                  data-bs-toggle="modal"
-                  data-bs-target="#education_info"
-                  ><i class="fa fa-pencil"></i
-                ></a>
+                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#education_info"><i
+                    class="fa fa-pencil"></i></a>
               </h3>
               <div class="experience-box">
-                <ul
-                  class="experience-list"
-                  *ngFor="let education of educationinfo"
-                >
+                <ul class="experience-list" *ngFor="let education of educationinfo">
                   <li>
                     <div class="experience-user">
                       <div class="before-circle"></div>
                     </div>
                     <div class="experience-content">
                       <div class="timeline-content">
-                        <a href="#/" class="name"
-                          >{{ education.institution }}
+                        <a href="#/" class="name">{{ education.institution }}
                         </a>
                         <div>{{ education.degree }}</div>
-                        <span class="time"
-                          >{{ education.startingDate }} -
-                          {{ education.completeDate }}</span
-                        >
+                        <span class="time">{{ education.startingDate }} -
+                          {{ education.completeDate }}</span>
                       </div>
                     </div>
                   </li>
@@ -396,12 +338,8 @@
             <div class="card-body">
               <h3 class="card-title">
                 Experience
-                <a
-                  class="edit-icon"
-                  data-bs-toggle="modal"
-                  data-bs-target="#experience_info"
-                  ><i class="fa fa-pencil"></i
-                ></a>
+                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info"><i
+                    class="fa fa-pencil"></i></a>
               </h3>
               <div class="experience-box">
                 <ul class="experience-list" *ngFor="let expuser of expinfo">
@@ -411,14 +349,10 @@
                     </div>
                     <div class="experience-content">
                       <div class="timeline-content">
-                        <a class="name"
-                          >{{ expuser.jobPosition }} at
-                          {{ expuser.companyName }}</a
-                        >
-                        <span class="time"
-                          >{{ expuser.periodFrom }} <br />
-                          {{ expuser.periodTo }}</span
-                        >
+                        <a class="name">{{ expuser.jobPosition }} at
+                          {{ expuser.companyName }}</a>
+                        <span class="time">{{ expuser.periodFrom }} <br />
+                          {{ expuser.periodTo }}</span>
                       </div>
                     </div>
                   </li>
@@ -457,26 +391,16 @@
     <!-- Projects Tab -->
     <div class="tab-pane fade" id="emp_projects">
       <div class="row">
-        <div
-          *ngFor="let project of projects"
-          class="col-lg-4 col-sm-6 col-md-4 col-xl-3"
-        >
+        <div *ngFor="let project of projects" class="col-lg-4 col-sm-6 col-md-4 col-xl-3">
           <div class="card">
             <div class="card-body">
               <div class="dropdown profile-action">
-                <a
-                  aria-expanded="false"
-                  data-bs-toggle="dropdown"
-                  class="action-icon dropdown-toggle"
-                ></a>
+                <a aria-expanded="false" data-bs-toggle="dropdown" class="action-icon dropdown-toggle"></a>
               </div>
               <h4 class="project-title">
-                <a
-                  routerLink="/layout/projects/projectview/{{
+                <a routerLink="/layout/projects/projectview/{{
                     project.projectId
-                  }}"
-                  >{{ project.name }}</a
-                >
+                  }}">{{ project.name }}</a>
               </h4>
               <small class="block text-ellipsis m-b-15">
                 <span class="text-xs">{{ project.lstTasks.length }}</span>
@@ -493,27 +417,19 @@
               </div>
               <div class="project-members m-b-15">
                 <div>Project Leader :</div>
-                <ul
-                  class="team-members"
-                  *ngFor="let leader of project.projectLeader"
-                >
+                <ul class="team-members" *ngFor="let leader of project.projectLeader">
                   <li>
-                    <a data-bs-toggle="tooltip" title="{{ leader.name }}"
-                      ><img alt="" src="assets/img/profiles/avatar-19.jpg"
-                    /></a>
+                    <a data-bs-toggle="tooltip" title="{{ leader.name }}"><img alt=""
+                        src="assets/img/profiles/avatar-19.jpg" /></a>
                   </li>
                 </ul>
               </div>
               <div class="project-members m-b-15">
                 <div>Team :</div>
-                <ul
-                  class="team-members"
-                  *ngFor="let leader of project.teamMember"
-                >
+                <ul class="team-members" *ngFor="let leader of project.teamMember">
                   <li>
-                    <a data-bs-toggle="tooltip" title="{{ leader.name }}"
-                      ><img alt="" src="assets/img/profiles/avatar-2.jpg"
-                    /></a>
+                    <a data-bs-toggle="tooltip" title="{{ leader.name }}"><img alt=""
+                        src="assets/img/profiles/avatar-2.jpg" /></a>
                   </li>
                 </ul>
               </div>
@@ -521,21 +437,20 @@
                 Progress
                 <span class="text-success float-end">
                   {{
-                    (project.lstCompleted.length /
-                      (project.lstTasks.length +
-                        project.lstProgress.length +
-                        project.lstHold.length +
-                        project.lstInprogress.length +
-                        project.lstReview.length +
-                        project.lstCompleted.length)) *
-                      100 | number: "2.1-2"
+                  (project.lstCompleted.length /
+                  (project.lstTasks.length +
+                  project.lstProgress.length +
+                  project.lstHold.length +
+                  project.lstInprogress.length +
+                  project.lstReview.length +
+                  project.lstCompleted.length)) *
+                  100 | number: "2.1-2"
                   }}
                   %
                 </span>
               </p>
               <div class="progress progress-xs mb-0">
-                <div
-                  [style.width.%]="
+                <div [style.width.%]="
                     (project.lstCompleted.length /
                       (project.lstTasks.length +
                         project.lstProgress.length +
@@ -544,13 +459,8 @@
                         project.lstReview.length +
                         project.lstCompleted.length)) *
                     100
-                  "
-                  title=""
-                  data-bs-toggle="tooltip"
-                  role="progressbar"
-                  class="progress-bar bg-success"
-                  data-original-title="40%"
-                ></div>
+                  " title="" data-bs-toggle="tooltip" role="progressbar" class="progress-bar bg-success"
+                  data-original-title="40%"></div>
               </div>
             </div>
           </div>
@@ -569,13 +479,8 @@
             <div class="row">
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Salary basis <span class="text-danger">*</span></label
-                  >
-                  <select
-                    class="form-select form-control"
-                    formControlName="salaryBasis"
-                  >
+                  <label class="col-form-label">Salary basis <span class="text-danger">*</span></label>
+                  <select class="form-select form-control" formControlName="salaryBasis">
                     <option>Select salary basis type</option>
                     <option>Hourly</option>
                     <option>Daily</option>
@@ -586,29 +491,19 @@
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Salary amount
-                    <small class="text-muted">per month</small></label
-                  >
+                  <label class="col-form-label">Salary amount
+                    <small class="text-muted">per month</small></label>
                   <div class="input-group">
                     <span class="input-group-text">$</span>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="Type your salary amount"
-                      formControlName="salaryAmount"
-                      value="0.00"
-                    />
+                    <input type="text" class="form-control" placeholder="Type your salary amount"
+                      formControlName="salaryAmount" value="0.00" />
                   </div>
                 </div>
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
                   <label class="col-form-label">Payment type</label>
-                  <select
-                    class="form-select form-control"
-                    formControlName="paymentType"
-                  >
+                  <select class="form-select form-control" formControlName="paymentType">
                     <option>Select payment type</option>
                     <option>Bank transfer</option>
                     <option>Check</option>
@@ -623,10 +518,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label class="col-form-label">PF contribution</label>
-                  <select
-                    class="form-select form-control"
-                    formControlName="pfContribution"
-                  >
+                  <select class="form-select form-control" formControlName="pfContribution">
                     <option>Select PF contribution</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -635,13 +527,8 @@
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >PF No. <span class="text-danger">*</span></label
-                  >
-                  <select
-                    class="form-select form-control"
-                    formControlName="pfNo"
-                  >
+                  <label class="col-form-label">PF No. <span class="text-danger">*</span></label>
+                  <select class="form-select form-control" formControlName="pfNo">
                     <option>Select PF contribution</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -653,10 +540,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label class="col-form-label">Employee PF rate</label>
-                  <select
-                    class="form-select form-control"
-                    formControlName="employeePfRate"
-                  >
+                  <select class="form-select form-control" formControlName="employeePfRate">
                     <option>Select PF contribution</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -665,13 +549,8 @@
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Additional rate <span class="text-danger">*</span></label
-                  >
-                  <select
-                    class="form-select form-control"
-                    formControlName="additionalRate"
-                  >
+                  <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
+                  <select class="form-select form-control" formControlName="additionalRate">
                     <option>Select additional rate</option>
                     <option>0%</option>
                     <option>1%</option>
@@ -690,54 +569,11 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label class="col-form-label">Total rate</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="N/A"
-                    value="11%"
-                    formControlName="totalRate"
-                  />
+                  <input type="text" class="form-control" placeholder="N/A" value="11%" formControlName="totalRate" />
                 </div>
               </div>
             </div>
-            <!-- <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label class="col-form-label">Employee PF rate</label>
-                                    <select class="form-select form-control" formControlName="pfEmployeePfRate">
-                                        <option>Select PF contribution</option>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label class="col-form-label">Additional rate <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-select form-control"  formControlName="pfAdditionRate">
-                                        <option>Select additional rate</option>
-                                        <option>0%</option>
-                                        <option>1%</option>
-                                        <option>2%</option>
-                                        <option>3%</option>
-                                        <option>4%</option>
-                                        <option>5%</option>
-                                        <option>6%</option>
-                                        <option>7%</option>
-                                        <option>8%</option>
-                                        <option>9%</option>
-                                        <option>10%</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label class="col-form-label">Total rate</label>
-                                    <input type="text" class="form-control" placeholder="N/A" value="11%"  formControlName="pfTotalRate">
-                                </div>
-                            </div>
-                        </div> -->
+
 
             <hr />
             <h3 class="card-title">ESI Information</h3>
@@ -745,10 +581,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label class="col-form-label">ESI contribution</label>
-                  <select
-                    class="form-select form-control"
-                    formControlName="esiContribution"
-                  >
+                  <select class="form-select form-control" formControlName="esiContribution">
                     <option>Select ESI contribution</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -757,13 +590,8 @@
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >ESI No. <span class="text-danger">*</span></label
-                  >
-                  <select
-                    class="form-select form-control"
-                    formControlName="esiNo"
-                  >
+                  <label class="col-form-label">ESI No. <span class="text-danger">*</span></label>
+                  <select class="form-select form-control" formControlName="esiNo">
                     <option>Select ESI contribution</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -775,10 +603,7 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label class="col-form-label">Employee ESI rate</label>
-                  <select
-                    class="form-select form-control"
-                    formControlName="employeeEsiRate"
-                  >
+                  <select class="form-select form-control" formControlName="employeeEsiRate">
                     <option>Select ESI contribution</option>
                     <option>Yes</option>
                     <option>No</option>
@@ -787,13 +612,8 @@
               </div>
               <div class="col-sm-4">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Additional rate <span class="text-danger">*</span></label
-                  >
-                  <select
-                    class="form-select form-control"
-                    formControlName="esiAdditionalRate"
-                  >
+                  <label class="col-form-label">Additional rate <span class="text-danger">*</span></label>
+                  <select class="form-select form-control" formControlName="esiAdditionalRate">
                     <option>Select additional rate</option>
                     <option>0%</option>
                     <option>1%</option>
@@ -812,13 +632,8 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label class="col-form-label">Total rate</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="N/A"
-                    value="11%"
-                    formControlName="esiTotalRate"
-                  />
+                  <input type="text" class="form-control" placeholder="N/A" value="11%"
+                    formControlName="esiTotalRate" />
                 </div>
               </div>
             </div>
@@ -843,12 +658,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Profile Information</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -857,20 +667,11 @@
           <div class="row">
             <div class="col-md-12">
               <div class="profile-img-wrap edit-img">
-                <img
-                  class="inline-block"
-                  src="{{profileImagePath}}"
-                  alt="No Image"
-                />
+                <img class="inline-block" src="{{profileImagePath}}" alt="No Image" />
                 <div class="fileupload btn">
                   <span class="btn-text">Edit</span>
-                  <input
-                    class="upload"
-                    style="width: 600px"
-                    type="file"
-                    formControlName="profileImage"
-                    (change)="selectProfilePhoto($event)"
-                  />
+                  <input class="upload" style="width: 600px" type="file" formControlName="profileImage"
+                    (change)="selectProfilePhoto($event)" />
                 </div>
               </div>
               <div class="row">
@@ -878,31 +679,19 @@
                   <div class="form-group">
                     <label>Birth Date</label>
                     <div class="cal-icon">
-                      <input
-                        class="form-control datetimepicker"
-                        type="text"
-                        bsDatepicker
-                        type="text"
-                        [bsConfig]="{
+                      <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{
                           dateInputFormat: 'DD-MM-YYYY',
                           returnFocusToInput: true
-                        }"
-                        value="05/06/1985"
-                        [class.invalid]="
+                        }" value="05/06/1985" [class.invalid]="
                           editProfileForm.get('birthDate').invalid &&
                           editProfileForm.get('birthDate').touched
-                        "
-                        formControlName="birthDate"
-                      />
+                        " formControlName="birthDate" />
                     </div>
                     <div>
-                      <small
-                        *ngIf="
+                      <small *ngIf="
                           editProfileForm.get('birthDate').invalid &&
                           editProfileForm.get('birthDate').touched
-                        "
-                        class="text-danger"
-                        >* Birth Date is required
+                        " class="text-danger">* Birth Date is required
                       </small>
                     </div>
                   </div>
@@ -910,26 +699,19 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Gender</label>
-                    <select
-                      class="form-select form-control"
-                      [class.invalid]="
+                    <select class="form-select form-control" [class.invalid]="
                         editProfileForm.get('gender').invalid &&
                         editProfileForm.get('gender').touched
-                      "
-                      formControlName="gender"
-                    >
+                      " formControlName="gender">
                       <option value="male selected">Male</option>
                       <option value="female">Female</option>
                     </select>
                   </div>
                   <div>
-                    <small
-                      *ngIf="
+                    <small *ngIf="
                         editProfileForm.get('gender').invalid &&
                         editProfileForm.get('gender').touched
-                      "
-                      class="text-danger"
-                      >* Gender is required
+                      " class="text-danger">* Gender is required
                     </small>
                   </div>
                 </div>
@@ -940,132 +722,82 @@
             <div class="col-md-12">
               <div class="form-group">
                 <label>Address</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="4487 Snowbird Lane"
-                  [class.invalid]="
+                <input type="text" class="form-control" value="4487 Snowbird Lane" [class.invalid]="
                     editProfileForm.get('address').invalid &&
                     editProfileForm.get('address').touched
-                  "
-                  formControlName="address"
-                />
+                  " formControlName="address" />
               </div>
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editProfileForm.get('address').invalid &&
                     editProfileForm.get('address').touched
-                  "
-                  class="text-danger"
-                  >* Address is required
+                  " class="text-danger">* Address is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>State</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="New York"
-                  [class.invalid]="
+                <input type="text" class="form-control" value="New York" [class.invalid]="
                     editProfileForm.get('state').invalid &&
                     editProfileForm.get('state').touched
-                  "
-                  formControlName="state"
-                />
+                  " formControlName="state" />
               </div>
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editProfileForm.get('state').invalid &&
                     editProfileForm.get('state').touched
-                  "
-                  class="text-danger"
-                  >* State is required
+                  " class="text-danger">* State is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Country</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="United States"
-                  [class.invalid]="
+                <input type="text" class="form-control" value="United States" [class.invalid]="
                     editProfileForm.get('country').invalid &&
                     editProfileForm.get('country').touched
-                  "
-                  formControlName="country"
-                />
+                  " formControlName="country" />
               </div>
 
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editProfileForm.get('country').invalid &&
                     editProfileForm.get('country').touched
-                  "
-                  class="text-danger"
-                  >* Country is required
+                  " class="text-danger">* Country is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Pin Code</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="10523"
-                  [class.invalid]="
+                <input type="text" class="form-control" value="10523" [class.invalid]="
                     editProfileForm.get('pinCode').invalid &&
                     editProfileForm.get('pinCode').touched
-                  "
-                  formControlName="pinCode"
-                />
+                  " formControlName="pinCode" />
               </div>
 
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editProfileForm.get('pinCode').invalid &&
                     editProfileForm.get('pinCode').touched
-                  "
-                  class="text-danger"
-                  >* Pin Code is required
+                  " class="text-danger">* Pin Code is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Phone Number</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  value="631-889-3206"
-                  formControlName="phone"
-                  maxlength="10"
-                  minlength="10"
-                />
-                <ng-container
-                  *ngIf="
+                <input type="text" class="form-control" value="631-889-3206" formControlName="phone" maxlength="10"
+                  minlength="10" />
+                <ng-container *ngIf="
                     editProfileForm.get('phone').invalid &&
                     editProfileForm.get('phone').touched
-                  "
-                >
-                  <small
-                    *ngIf="editProfileForm.get('phone').errors.required"
-                    class="text-danger"
-                  >
+                  ">
+                  <small *ngIf="editProfileForm.get('phone').errors.required" class="text-danger">
                     Phone Number is Required.
                   </small>
-                  <small
-                    *ngIf="editProfileForm.get('phone').errors.pattern"
-                    class="text-danger"
-                  >
+                  <small *ngIf="editProfileForm.get('phone').errors.pattern" class="text-danger">
                     Invalid Phone Number.
                   </small>
                 </ng-container>
@@ -1074,14 +806,10 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Department <span class="text-danger">*</span></label>
-                <select
-                  class="form-select form-control"
-                  [class.invalid]="
+                <select class="form-select form-control" [class.invalid]="
                     editProfileForm.get('department').invalid &&
                     editProfileForm.get('department').touched
-                  "
-                  formControlName="department"
-                >
+                  " formControlName="department">
                   <option>Select Department</option>
                   <option *ngFor="let department of departments">
                     {{ department.departmentName }}
@@ -1090,27 +818,20 @@
               </div>
 
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editProfileForm.get('department').invalid &&
                     editProfileForm.get('department').touched
-                  "
-                  class="text-danger"
-                  >* Department is required
+                  " class="text-danger">* Department is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Designation <span class="text-danger">*</span></label>
-                <select
-                  class="form-select form-control"
-                  [class.invalid]="
+                <select class="form-select form-control" [class.invalid]="
                     editProfileForm.get('designation').invalid &&
                     editProfileForm.get('designation').touched
-                  "
-                  formControlName="designation"
-                >
+                  " formControlName="designation">
                   <option>Select Designation</option>
 
                   <option *ngFor="let designation of designations">
@@ -1118,50 +839,25 @@
                   </option>
                 </select>
               </div>
-
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editProfileForm.get('designation').invalid &&
                     editProfileForm.get('designation').touched
-                  "
-                  class="text-danger"
-                  >* Designation is required
+                  " class="text-danger">* Designation is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
-                <div class="form-group">
-                  <label>Reports To <span class="text-danger">*</span></label>
-                  <select
-                    class="form-select form-control"
-                    [class.invalid]="
-                      editProfileForm.get('designation').invalid &&
-                      editProfileForm.get('designation').touched
-                    "
-                    formControlName="designation"
-                  >
-                    <option>Select Designation</option>
-  
-                    <option *ngFor="let designation of designations">
-                      {{ designation.designation }}
-                    </option>
-                  </select>
-                </div>
-  
-                <div>
-                  <small
-                    *ngIf="
-                      editProfileForm.get('designation').invalid &&
-                      editProfileForm.get('designation').touched
-                    "
-                    class="text-danger"
-                    >* Designation is required
-                  </small>
-                </div>
+              <div class="form-group">
+                <label>Reports To <span class="text-danger">*</span></label>
               </div>
-              
-            
+              <!-- <input list="brow" class="form-control" value="{{reportsTo}}" (input)="getFirstName($event.target.value)"> -->
+              <input list="brow" class="form-control" formControlName="reportsTo"
+                (input)="getFirstName($event.target.value)">
+              <datalist #data id="brow">
+                <option selected *ngFor="let item of lstEmployee" value="{{item.firstName}}">{{item.firstName}}</option>
+              </datalist>
+            </div>
           </div>
           <div class="submit-section">
             <button class="btn btn-primary submit-btn">Submit</button>
@@ -1179,12 +875,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Personal Information</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1194,25 +885,16 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Passport No</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="passportNo"
-                  [class.invalid]="
+                <input type="text" class="form-control" formControlName="passportNo" [class.invalid]="
                     editPersonalForm.get('passportNo').invalid &&
                     editPersonalForm.get('passportNo').touched
-                  "
-                />
+                  " />
               </div>
-
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editPersonalForm.get('passportNo').invalid &&
                     editPersonalForm.get('passportNo').touched
-                  "
-                  class="text-danger"
-                  >* Passport No is required
+                  " class="text-danger">* Passport No is required
                 </small>
               </div>
             </div>
@@ -1220,31 +902,20 @@
               <div class="form-group">
                 <label>Passport Expiry Date</label>
                 <div class="cal-icon">
-                  <input
-                    class="form-control datetimepicker"
-                    type="text"
-                    bsDatepicker
-                    type="text"
-                    [bsConfig]="{
+                  <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{
                       dateInputFormat: 'DD-MM-YYYY',
                       returnFocusToInput: true
-                    }"
-                    formControlName="passportExpiryDate"
-                    [class.invalid]="
+                    }" formControlName="passportExpiryDate" [class.invalid]="
                       editPersonalForm.get('passportExpiryDate').invalid &&
                       editPersonalForm.get('passportExpiryDate').touched
-                    "
-                  />
+                    " />
                 </div>
 
                 <div>
-                  <small
-                    *ngIf="
+                  <small *ngIf="
                       editPersonalForm.get('passportExpiryDate').invalid &&
                       editPersonalForm.get('passportExpiryDate').touched
-                    "
-                    class="text-danger"
-                    >* Passport Expiry Date is required
+                    " class="text-danger">* Passport Expiry Date is required
                   </small>
                 </div>
               </div>
@@ -1252,49 +923,33 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Tel</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="tel"
-                  [class.invalid]="
+                <input class="form-control" type="text" formControlName="tel" [class.invalid]="
                     editPersonalForm.get('tel').invalid &&
                     editPersonalForm.get('tel').touched
-                  "
-                />
+                  " />
               </div>
 
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editPersonalForm.get('tel').invalid &&
                     editPersonalForm.get('tel').touched
-                  "
-                  class="text-danger"
-                  >* Tel is required
+                  " class="text-danger">* Tel is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Nationality <span class="text-danger">*</span></label>
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="nationality"
-                  [class.invalid]="
+                <input class="form-control" type="text" formControlName="nationality" [class.invalid]="
                     editPersonalForm.get('nationality').invalid &&
                     editPersonalForm.get('nationality').touched
-                  "
-                />
+                  " />
               </div>
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editPersonalForm.get('nationality').invalid &&
                     editPersonalForm.get('nationality').touched
-                  "
-                  class="text-danger"
-                  >* Nationality is required
+                  " class="text-danger">* Nationality is required
                 </small>
               </div>
             </div>
@@ -1302,24 +957,16 @@
               <div class="form-group">
                 <label>Religion</label>
                 <div class="cal-icon">
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="religion"
-                    [class.invalid]="
+                  <input class="form-control" type="text" formControlName="religion" [class.invalid]="
                       editPersonalForm.get('religion').invalid &&
                       editPersonalForm.get('religion').touched
-                    "
-                  />
+                    " />
                 </div>
                 <div>
-                  <small
-                    *ngIf="
+                  <small *ngIf="
                       editPersonalForm.get('religion').invalid &&
                       editPersonalForm.get('religion').touched
-                    "
-                    class="text-danger"
-                    >* Religion is required
+                    " class="text-danger">* Religion is required
                   </small>
                 </div>
               </div>
@@ -1327,75 +974,52 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Marital status <span class="text-danger">*</span></label>
-                <select
-                  class="form-select form-control"
-                  formControlName="maritalStatus"
-                  [class.invalid]="
+                <select class="form-select form-control" formControlName="maritalStatus" [class.invalid]="
                     editPersonalForm.get('maritalStatus').invalid &&
                     editPersonalForm.get('maritalStatus').touched
-                  "
-                >
+                  ">
                   <option>-</option>
                   <option>Single</option>
                   <option>Married</option>
                 </select>
               </div>
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editPersonalForm.get('maritalStatus').invalid &&
                     editPersonalForm.get('maritalStatus').touched
-                  "
-                  class="text-danger"
-                  >* MaritalStatus is required
+                  " class="text-danger">* MaritalStatus is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>Employment of spouse</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="employmentOfSpouse"
-                  [class.invalid]="
+                <input class="form-control" type="text" formControlName="employmentOfSpouse" [class.invalid]="
                     editPersonalForm.get('employmentOfSpouse').invalid &&
                     editPersonalForm.get('employmentOfSpouse').touched
-                  "
-                />
+                  " />
               </div>
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editPersonalForm.get('employmentOfSpouse').invalid &&
                     editPersonalForm.get('employmentOfSpouse').touched
-                  "
-                  class="text-danger"
-                  >* EmploymentOfSpouse is required
+                  " class="text-danger">* EmploymentOfSpouse is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>No. of children </label>
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="numberOfChildren"
-                  [class.invalid]="
+                <input class="form-control" type="text" formControlName="numberOfChildren" [class.invalid]="
                     editPersonalForm.get('numberOfChildren').invalid &&
                     editPersonalForm.get('numberOfChildren').touched
-                  "
-                />
+                  " />
               </div>
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editPersonalForm.get('numberOfChildren').invalid &&
                     editPersonalForm.get('numberOfChildren').touched
-                  "
-                  class="text-danger"
-                  >* Number Of Children is required
+                  " class="text-danger">* Number Of Children is required
                 </small>
               </div>
             </div>
@@ -1416,12 +1040,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Bank Information</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1431,25 +1050,17 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Bank Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="bankName"
-                  [class.invalid]="
+                <input type="text" class="form-control" formControlName="bankName" [class.invalid]="
                     editBankForm.get('bankName').invalid &&
                     editBankForm.get('bankName').touched
-                  "
-                />
+                  " />
               </div>
 
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editBankForm.get('bankName').invalid &&
                     editBankForm.get('bankName').touched
-                  "
-                  class="text-danger"
-                  >* Bank Name is required
+                  " class="text-danger">* Bank Name is required
                 </small>
               </div>
             </div>
@@ -1457,49 +1068,33 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Bank Account NO:</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="bankAccountNo"
-                  [class.invalid]="
+                <input class="form-control" type="text" formControlName="bankAccountNo" [class.invalid]="
                     editBankForm.get('bankAccountNo').invalid &&
                     editBankForm.get('bankAccountNo').touched
-                  "
-                />
+                  " />
               </div>
 
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editBankForm.get('bankAccountNo').invalid &&
                     editBankForm.get('bankAccountNo').touched
-                  "
-                  class="text-danger"
-                  >* Bank Account no is is required
+                  " class="text-danger">* Bank Account no is is required
                 </small>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label>IFSC Code:<span class="text-danger">*</span></label>
-                <input
-                  class="form-control"
-                  type="text"
-                  formControlName="ifscCode"
-                  [class.invalid]="
+                <input class="form-control" type="text" formControlName="ifscCode" [class.invalid]="
                     editBankForm.get('ifscCode').invalid &&
                     editBankForm.get('ifscCode').touched
-                  "
-                />
+                  " />
               </div>
               <div>
-                <small
-                  *ngIf="
+                <small *ngIf="
                     editBankForm.get('ifscCode').invalid &&
                     editBankForm.get('ifscCode').touched
-                  "
-                  class="text-danger"
-                  >* IFSC Code is required
+                  " class="text-danger">* IFSC Code is required
                 </small>
               </div>
             </div>
@@ -1507,24 +1102,16 @@
               <div class="form-group">
                 <label>PAN NO</label>
                 <div class="cal-icon">
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="panNo"
-                    [class.invalid]="
+                  <input class="form-control" type="text" formControlName="panNo" [class.invalid]="
                       editBankForm.get('panNo').invalid &&
                       editBankForm.get('panNo').touched
-                    "
-                  />
+                    " />
                 </div>
                 <div>
-                  <small
-                    *ngIf="
+                  <small *ngIf="
                       editBankForm.get('panNo').invalid &&
                       editBankForm.get('panNo').touched
-                    "
-                    class="text-danger"
-                    >* PAN No is required
+                    " class="text-danger">* PAN No is required
                   </small>
                 </div>
               </div>
@@ -1547,12 +1134,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Family Informations</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1560,82 +1142,49 @@
         <form [formGroup]="editFamilyForm" (ngSubmit)="editFamilyInfo()">
           <div class="form-scroll" formArrayName="items">
             <!-- <ng-container [formGroupName]="i"> -->
-            <div
-              class="card"
-              *ngFor="
+            <div class="card" *ngFor="
                 let item of editFamilyForm.get('items')['controls'];
                 let i = index
-              "
-              [formGroupName]="i"
-            >
+              " [formGroupName]="i">
               <div class="card-body">
                 <h3 class="card-title">
                   Family Member
-                  <a class="delete-icon"
-                    ><i class="fa fa-trash-o" (click)="removeItems(i)"></i
-                  ></a>
+                  <a class="delete-icon"><i class="fa fa-trash-o" (click)="removeItems(i)"></i></a>
                 </h3>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Name <span class="text-danger">*</span></label>
-                      <input
-                        #name
-                        class="form-control"
-                        type="text"
-                        formControlName="name"
-                      />
+                      <input #name class="form-control" type="text" formControlName="name" />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label
-                        >Relationship <span class="text-danger">*</span></label
-                      >
-                      <input
-                        #relationship
-                        class="form-control"
-                        type="text"
-                        formControlName="relationship"
-                      />
+                      <label>Relationship <span class="text-danger">*</span></label>
+                      <input #relationship class="form-control" type="text" formControlName="relationship" />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label
-                        >Date of birth <span class="text-danger">*</span></label
-                      >
-                      <input
-                        #dateOfBirth
-                        class="form-control datetimepicker"
-                        type="text"
-                        bsDatepicker
-                        type="text"
+                      <label>Date of birth <span class="text-danger">*</span></label>
+                      <input #dateOfBirth class="form-control datetimepicker" type="text" bsDatepicker type="text"
                         [bsConfig]="{
                           dateInputFormat: 'DD-MM-YYYY',
                           returnFocusToInput: true
-                        }"
-                        formControlName="dateOfBirth"
-                      />
+                        }" formControlName="dateOfBirth" />
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label>Phone <span class="text-danger">*</span></label>
-                      <input
-                        #phone
-                        class="form-control"
-                        type="text"
-                        formControlName="phone"
-                        (keyup)="
+                      <input #phone class="form-control" type="text" formControlName="phone" (keyup)="
                           checkfamily(
                             name.value,
                             relationship.value,
                             dateOfBirth.value,
                             phone.value
                           )
-                        "
-                      />
+                        " />
                     </div>
                   </div>
                 </div>
@@ -1683,9 +1232,7 @@
             <!-- //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
           </div>
           <div class="add-more">
-            <a [hidden]="show" (click)="addItems()"
-              ><i class="fa fa-plus-circle"></i> Add More</a
-            >
+            <a [hidden]="show" (click)="addItems()"><i class="fa fa-plus-circle"></i> Add More</a>
           </div>
           <div class="submit-section">
             <button class="btn btn-primary submit-btn">Submit</button>
@@ -1703,12 +1250,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Personal Information</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -1721,98 +1263,64 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Name <span class="text-danger">*</span></label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="name1"
-                      [class.invalid]="
+                    <input type="text" class="form-control" formControlName="name1" [class.invalid]="
                         editEmergencyForm.get('name1').invalid &&
                         editEmergencyForm.get('name1').touched
-                      "
-                    />
+                      " />
                   </div>
                   <div>
-                    <small
-                      *ngIf="
+                    <small *ngIf="
                         editEmergencyForm.get('name1').invalid &&
                         editEmergencyForm.get('name1').touched
-                      "
-                      class="text-danger"
-                      >* Name1 is required
+                      " class="text-danger">* Name1 is required
                     </small>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label
-                      >Relationship <span class="text-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      type="text"
-                      formControlName="relationship1"
-                      [class.invalid]="
+                    <label>Relationship <span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" formControlName="relationship1" [class.invalid]="
                         editEmergencyForm.get('relationship1').invalid &&
                         editEmergencyForm.get('relationship1').touched
-                      "
-                    />
+                      " />
                   </div>
                   <div>
-                    <small
-                      *ngIf="
+                    <small *ngIf="
                         editEmergencyForm.get('relationship1').invalid &&
                         editEmergencyForm.get('relationship1').touched
-                      "
-                      class="text-danger"
-                      >* Relationship1 is required
+                      " class="text-danger">* Relationship1 is required
                     </small>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone <span class="text-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      type="text"
-                      formControlName="phone1"
-                      [class.invalid]="
+                    <input class="form-control" type="text" formControlName="phone1" [class.invalid]="
                         editEmergencyForm.get('phone1').invalid &&
                         editEmergencyForm.get('phone1').touched
-                      "
-                    />
+                      " />
                   </div>
                   <div>
-                    <small
-                      *ngIf="
+                    <small *ngIf="
                         editEmergencyForm.get('phone1').invalid &&
                         editEmergencyForm.get('phone1').touched
-                      "
-                      class="text-danger"
-                      >* Phone1 is required
+                      " class="text-danger">* Phone1 is required
                     </small>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone 2</label>
-                    <input
-                      class="form-control"
-                      type="text"
-                      formControlName="phone2"
-                      [class.invalid]="
+                    <input class="form-control" type="text" formControlName="phone2" [class.invalid]="
                         editEmergencyForm.get('phone2').invalid &&
                         editEmergencyForm.get('phone2').touched
-                      "
-                    />
+                      " />
                   </div>
                   <div>
-                    <small
-                      *ngIf="
+                    <small *ngIf="
                         editEmergencyForm.get('phone2').invalid &&
                         editEmergencyForm.get('phone2').touched
-                      "
-                      class="text-danger"
-                      >* Phone2 is required
+                      " class="text-danger">* Phone2 is required
                     </small>
                   </div>
                 </div>
@@ -1827,98 +1335,64 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Name <span class="text-danger">*</span></label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="name2"
-                      [class.invalid]="
+                    <input type="text" class="form-control" formControlName="name2" [class.invalid]="
                         editEmergencyForm.get('name2').invalid &&
                         editEmergencyForm.get('name2').touched
-                      "
-                    />
+                      " />
                   </div>
                   <div>
-                    <small
-                      *ngIf="
+                    <small *ngIf="
                         editEmergencyForm.get('name2').invalid &&
                         editEmergencyForm.get('name2').touched
-                      "
-                      class="text-danger"
-                      >* Name2 is required
+                      " class="text-danger">* Name2 is required
                     </small>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label
-                      >Relationship <span class="text-danger">*</span></label
-                    >
-                    <input
-                      class="form-control"
-                      type="text"
-                      formControlName="relationship2"
-                      [class.invalid]="
+                    <label>Relationship <span class="text-danger">*</span></label>
+                    <input class="form-control" type="text" formControlName="relationship2" [class.invalid]="
                         editEmergencyForm.get('relationship2').invalid &&
                         editEmergencyForm.get('relationship2').touched
-                      "
-                    />
+                      " />
                   </div>
                   <div>
-                    <small
-                      *ngIf="
+                    <small *ngIf="
                         editEmergencyForm.get('relationship2').invalid &&
                         editEmergencyForm.get('relationship2').touched
-                      "
-                      class="text-danger"
-                      >* Relationship2 is required
+                      " class="text-danger">* Relationship2 is required
                     </small>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone <span class="text-danger">*</span></label>
-                    <input
-                      class="form-control"
-                      type="text"
-                      formControlName="phone3"
-                      [class.invalid]="
+                    <input class="form-control" type="text" formControlName="phone3" [class.invalid]="
                         editEmergencyForm.get('phone3').invalid &&
                         editEmergencyForm.get('phone3').touched
-                      "
-                    />
+                      " />
                   </div>
                   <div>
-                    <small
-                      *ngIf="
+                    <small *ngIf="
                         editEmergencyForm.get('phone3').invalid &&
                         editEmergencyForm.get('phone3').touched
-                      "
-                      class="text-danger"
-                      >* Phone3 is required
+                      " class="text-danger">* Phone3 is required
                     </small>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone 2</label>
-                    <input
-                      class="form-control"
-                      type="text"
-                      formControlName="phone4"
-                      [class.invalid]="
+                    <input class="form-control" type="text" formControlName="phone4" [class.invalid]="
                         editEmergencyForm.get('phone4').invalid &&
                         editEmergencyForm.get('phone4').touched
-                      "
-                    />
+                      " />
                   </div>
                   <div>
-                    <small
-                      *ngIf="
+                    <small *ngIf="
                         editEmergencyForm.get('phone4').invalid &&
                         editEmergencyForm.get('phone4').touched
-                      "
-                      class="text-danger"
-                      >* Phone4 is required
+                      " class="text-danger">* Phone4 is required
                     </small>
                   </div>
                 </div>
@@ -1941,74 +1415,45 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Education Informations</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <form [formGroup]="editEducationForm" (ngSubmit)="editEducationinfo()">
           <div class="form-scroll" formArrayName="items1">
-            <div
-              class="card"
-              *ngFor="
+            <div class="card" *ngFor="
                 let item1 of editEducationForm.get('items1')['controls'];
                 let i = index
-              "
-              [formGroupName]="i"
-            >
+              " [formGroupName]="i">
               <div class="card-body">
                 <h3 class="card-title">
                   Education Informations
-                  <a class="delete-icon" (click)="removeItemsEducation(i)"
-                    ><i class="fa fa-trash-o"></i
-                  ></a>
+                  <a class="delete-icon" (click)="removeItemsEducation(i)"><i class="fa fa-trash-o"></i></a>
                 </h3>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group form-focus focused">
-                      <input
-                        #val1
-                        type="text"
-                        value="Oxford University"
-                        class="form-control floating"
-                        formControlName="institution"
-                      />
+                      <input #val1 type="text" value="Oxford University" class="form-control floating"
+                        formControlName="institution" />
                       <label class="focus-label">Institution</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus focused">
-                      <input
-                        #val2
-                        type="text"
-                        value="Computer Science"
-                        class="form-control floating"
-                        formControlName="subject"
-                      />
+                      <input #val2 type="text" value="Computer Science" class="form-control floating"
+                        formControlName="subject" />
                       <label class="focus-label">Subject</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus focused">
                       <div class="cal-icon">
-                        <input
-                          #val3
-                          class="form-control datetimepicker"
-                          type="text"
-                          bsDatepicker
-                          type="text"
+                        <input #val3 class="form-control datetimepicker" type="text" bsDatepicker type="text"
                           [bsConfig]="{
                             dateInputFormat: 'DD-MM-YYYY',
                             returnFocusToInput: true
-                          }"
-                          value="01/05/2006"
-                          formControlName="startingDate"
-                        />
+                          }" value="01/05/2006" formControlName="startingDate" />
                       </div>
                       <label class="focus-label">Starting Date</label>
                     </div>
@@ -2016,43 +1461,25 @@
                   <div class="col-md-6">
                     <div class="form-group form-focus focused">
                       <div class="cal-icon">
-                        <input
-                          #val4
-                          class="form-control datetimepicker"
-                          type="text"
-                          bsDatepicker
-                          type="text"
+                        <input #val4 class="form-control datetimepicker" type="text" bsDatepicker type="text"
                           [bsConfig]="{
                             dateInputFormat: 'DD-MM-YYYY',
                             returnFocusToInput: true
-                          }"
-                          value="31/05/2006"
-                          formControlName="completeDate"
-                        />
+                          }" value="31/05/2006" formControlName="completeDate" />
                       </div>
                       <label class="focus-label">Complete Date</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus focused">
-                      <input
-                        #val5
-                        type="text"
-                        value="BE Computer Science"
-                        class="form-control floating"
-                        formControlName="degree"
-                      />
+                      <input #val5 type="text" value="BE Computer Science" class="form-control floating"
+                        formControlName="degree" />
                       <label class="focus-label">Degree</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group form-focus focused">
-                      <input
-                        #val6
-                        type="text"
-                        value="Grade A"
-                        class="form-control floating"
-                        (change)="
+                      <input #val6 type="text" value="Grade A" class="form-control floating" (change)="
                           eduShow(
                             val1.value,
                             val2.value,
@@ -2061,9 +1488,7 @@
                             val5.value,
                             val6.value
                           )
-                        "
-                        formControlName="grade"
-                      />
+                        " formControlName="grade" />
                       <label class="focus-label">Grade</label>
                     </div>
                   </div>
@@ -2127,9 +1552,7 @@
                         </div> -->
           </div>
           <div class="add-more">
-            <a [hidden]="eduhidden" (click)="addItemsEducation()"
-              ><i class="fa fa-plus-circle"></i> Add More</a
-            >
+            <a [hidden]="eduhidden" (click)="addItemsEducation()"><i class="fa fa-plus-circle"></i> Add More</a>
           </div>
           <div class="submit-section">
             <button class="btn btn-primary submit-btn">Submit</button>
@@ -2147,83 +1570,49 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Experience Informations</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <form [formGroup]="editExpForm" (ngSubmit)="editExpInfo()">
           <div class="form-scroll" formArrayName="itemsExp">
-            <div
-              class="card"
-              *ngFor="
+            <div class="card" *ngFor="
                 let item of editExpForm.get('itemsExp')['controls'];
                 let i = index
-              "
-              [formGroupName]="i"
-            >
+              " [formGroupName]="i">
               <div class="card-body">
                 <h3 class="card-title">
                   Experience Informations
-                  <a (click)="removeItemsExp(i)" class="delete-icon"
-                    ><i class="fa fa-trash-o"></i
-                  ></a>
+                  <a (click)="removeItemsExp(i)" class="delete-icon"><i class="fa fa-trash-o"></i></a>
                 </h3>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input
-                        #val1
-                        type="text"
-                        class="form-control floating"
-                        formControlName="companyName"
-                      />
+                      <input #val1 type="text" class="form-control floating" formControlName="companyName" />
                       <label class="focus-label">Company Name</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input
-                        #val2
-                        type="text"
-                        class="form-control floating"
-                        formControlName="location"
-                      />
+                      <input #val2 type="text" class="form-control floating" formControlName="location" />
 
                       <label class="focus-label">Location</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input
-                        #val3
-                        type="text"
-                        class="form-control floating"
-                        formControlName="jobPosition"
-                      />
+                      <input #val3 type="text" class="form-control floating" formControlName="jobPosition" />
                       <label class="focus-label">Job Position</label>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <div class="cal-icon">
-                        <input
-                          #val4
-                          type="text"
-                          bsDatepicker
-                          type="text"
-                          [bsConfig]="{
+                        <input #val4 type="text" bsDatepicker type="text" [bsConfig]="{
                             dateInputFormat: 'DD-MM-YYYY',
                             returnFocusToInput: true
-                          }"
-                          class="form-control floating datetimepicker"
-                          formControlName="periodFrom"
-                        />
+                          }" class="form-control floating datetimepicker" formControlName="periodFrom" />
                       </div>
                       <label class="focus-label">Period From</label>
                     </div>
@@ -2231,12 +1620,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <div class="cal-icon">
-                        <input
-                          #val5
-                          type="text"
-                          bsDatepicker
-                          type="text"
-                          (ngModelChange)="
+                        <input #val5 type="text" bsDatepicker type="text" (ngModelChange)="
                             expShow(
                               val1.value,
                               val2.value,
@@ -2244,14 +1628,10 @@
                               val4.value,
                               val5.value
                             )
-                          "
-                          [bsConfig]="{
+                          " [bsConfig]="{
                             dateInputFormat: 'DD-MM-YYYY',
                             returnFocusToInput: true
-                          }"
-                          class="form-control floating datetimepicker"
-                          formControlName="periodTo"
-                        />
+                          }" class="form-control floating datetimepicker" formControlName="periodTo" />
                       </div>
                       <label class="focus-label">Period To</label>
                     </div>
@@ -2309,9 +1689,7 @@
                         </div> -->
           </div>
           <div class="add-more">
-            <a [hidden]="exphidden" (click)="addItemsExp()"
-              ><i class="fa fa-plus-circle"></i> Add More</a
-            >
+            <a [hidden]="exphidden" (click)="addItemsExp()"><i class="fa fa-plus-circle"></i> Add More</a>
           </div>
           <div class="submit-section">
             <button class="btn btn-primary submit-btn">Submit</button>
@@ -2321,4 +1699,3 @@
     </div>
   </div>
 </div>
-

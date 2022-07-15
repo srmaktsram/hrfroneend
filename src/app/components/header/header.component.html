@@ -13,13 +13,13 @@
         </div>
 
         <div ngbDropdown class="d-inline-block">
-            <ng-container *ngIf="user_type!='hrUser'">
+            <ng-container *ngIf="type_user!='hrUser'">
                 <div>
                     <button type="button" class="btn btn-outline-success" id="dropdown1" ngbDropdownToggle>Sign
                         In</button>
                 </div>
             </ng-container>
-            <ng-container *ngIf="user_type=='hrUser'">
+            <ng-container *ngIf="type_user=='hrUser'">
                 <div class="d-flex">
                     <mat-icon class="accountCircle">account_circle </mat-icon>
                     <p class="setName" id="dropdown1" ngbDropdownToggle>{{firstName}}</p>
@@ -39,8 +39,8 @@
                             Account</p>
                     </div>
                     <p [hidden]="isShow" class="manage" routerLink="/profiles">Manage Account</p>
-                    <p [hidden]="isShow" class="manage" routerLink="/products">My Product</p>
-                    <p [hidden]="isShow" class="manage" (click)="logout()">Sign Out </p>
+                    <p [hidden]="isShow" class="manage"  routerLink="/products">My Product</p>
+                    <p [hidden]="isShow" class="manage"  (click)="logout()">Sign Out </p>
                 </div>
             </div>
         </div>

@@ -123,8 +123,8 @@ export class RoleAdminComponent implements OnInit {
             res.role.Settings[1].write,
           );
 
-          // console.log(res.role.Accounting[0].read,"Accounting Read")
-          // console.log(res.role.Accounting[1].write,"Accounting Write")
+          // console.log(res.role.Policies[0].read,"Policies Read")
+          // console.log(res.role.Policies[1].write,"Policies Write")
 
         } else {
           alert("wrong Id or pass");

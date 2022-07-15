@@ -89,6 +89,7 @@ export class RoleAdminAuthenticationService {
     sessionStorage.setItem("current_location", JSON.stringify(location));
     sessionStorage.setItem("dashboardRead", dashboardRead);
     sessionStorage.setItem("dashboardWrite", dashboardWrite);
+    
     sessionStorage.setItem("appsread", appsread);
     sessionStorage.setItem("appswrite", appswrite);
     sessionStorage.setItem("employeeread", employeeread);
@@ -109,7 +110,6 @@ export class RoleAdminAuthenticationService {
     sessionStorage.setItem("accountingwrite", accountingwrite);
     sessionStorage.setItem("payrollRead", payrollRead);
     sessionStorage.setItem("payrollWrite", payrollWrite);
-
     sessionStorage.setItem("policiesRead", policiesRead);
     sessionStorage.setItem("policiesWrite", policiesWrite);
     sessionStorage.setItem("reportsRead", reportsRead);

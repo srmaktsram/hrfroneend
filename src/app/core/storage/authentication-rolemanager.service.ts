@@ -19,6 +19,17 @@ export class RoleManagerAuthenticationService {
     cinvoice: string,
     cinvoicepre: string,
     packageName: string,
+    usersReadMan: string,
+    usersWriteMan: string,
+    policiesReadMan: string,
+    policiesWriteMan: string,
+    supportTicketsReadMan: string,
+    supportTicketsWriteMan: string,
+    clientsReadMan: string,
+    clientsWriteMan: string,
+    assetsReadMan: string,
+    assetsWriteMan: string,
+    
    
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
@@ -38,6 +49,17 @@ export class RoleManagerAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
+
+    sessionStorage.setItem("usersReadMan",usersReadMan)
+    sessionStorage.setItem("usersWriteMan",usersWriteMan)
+    sessionStorage.setItem("policiesReadMan",policiesReadMan)
+    sessionStorage.setItem("policiesWriteMan",policiesWriteMan)
+    sessionStorage.setItem("supportTicketsReadMan",supportTicketsReadMan)
+    sessionStorage.setItem("supportTicketsWriteMan",supportTicketsWriteMan)
+    sessionStorage.setItem("clientsReadMan",clientsReadMan)
+    sessionStorage.setItem("clientsWriteMan",clientsWriteMan)
+    sessionStorage.setItem("assetsReadMan",assetsReadMan)
+    sessionStorage.setItem("assetsWriteMan",assetsWriteMan)
     
     return true;
   }

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
@@ -31,6 +32,7 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
+
   editId: any;
   invoices: any;
   projects: any;
@@ -44,43 +46,72 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   searchName: any;
   public employeeId: any;
   searchCompany: any;
+  clientsDetails: any;
   constructor(
     private toastr: ToastrService,
-    private http: HttpClient,
     private hrUserAuthenticationService: HrUserAuthenticationService,
-
+    private http: HttpClient,
     private formBuilder: FormBuilder
   ) {
     this.adminId = sessionStorage.getItem("adminId");
-
-
   }
 
   ngOnInit() {
-    // this.getCompanyName()
-    this.getVisitorAdmins();
+    this.getPremiumAdmins();
 
     this.dtOptions = {
-      // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
 
-
+    //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
-      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
-      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
-      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-
+      firstName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      lastName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      editClientEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      editClientPhone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
     });
   }
 
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.dtTrigger.next();
-    }, 1000);
+  // ngAfterViewInit(): void {
+  //   // setTimeout(() => {
+  //   //   this.dtTrigger.next();
+  //   // }, 1000);
+  // }
+
+  public getPremiumAdmins() {
+    // alert("ahsdghfg");
+    this.http
+      .get("http://localhost:8443/mainadmin/visitorClient/getVisitorClients")
+      .subscribe((res: any) => {
+        this.data = res;
+        console.log("jhasdjghfjhgsdf", this.data);
+        this.srch = [...this.data];
+      });
   }
+
   adminlogin(id) {
     alert(id);
     this.http
@@ -88,15 +119,17 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
-            window.open("http://localhost:4200", "_blank");
+            // window.location.replace("http://localhost:4200")
+
             this.hrUserAuthenticationService.login(
               res.data.id,
               res.data.corporateId,
               res.data.email,
               res.data.firstName,
               res.data.lastName,
-              res.data.phone,
+              res.data.phone
             );
+            window.open("http://localhost:4200", "_blank");
           } else {
             alert("Account Blocked By Main Admin");
           }
@@ -105,32 +138,6 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
         }
       });
   }
-  //Get all Clients data
-  public getVisitorAdmins() {
-    this.http
-      .get(
-        "http://localhost:8443/mainadmin/visitorClient/getVisitorClients"
-      )
-      .subscribe((res: any) => {
-
-        this.data = res;
-        console.log("jbjhj.>>>>>>>>>>>>>>>>", this.data)
-        this.srch = [...this.data];
-
-      });
-  }
-
-  // public getCompanyName() {
-  //   this.http
-  //     .get("http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId)
-  //     .subscribe((data) => {
-  //       this.data = data;
-
-  //       this.clientsData = this.data.data;
-  //       this.companys = this.clientsData;
-  //     });
-  // }
-
   // Edit client
   public onEditClient(clientId: any) {
     this.editId = clientId;
@@ -140,7 +147,6 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       lastName: client[0]?.lastName,
       editClientEmail: client[0]?.email,
       editClientPhone: client[0]?.phone,
-
     });
   }
   //Reset form
@@ -155,13 +161,17 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       lastName: this.editClientForm.value.lastName,
       email: this.editClientForm.value.editClientEmail,
       phone: this.editClientForm.value.editClientPhone,
-
     };
     let id = this.editId;
     this.http
-      .patch("http://localhost:8443/mainadmin/visitorClient/updateVisitorClient" + "/" + id, obj)
+      .patch(
+        "http://localhost:8443/mainadmin/visitorClient/updateVisitorClient" +
+          "/" +
+          id,
+        obj
+      )
       .subscribe((data) => {
-        this.getVisitorAdmins();
+        this.getPremiumAdmins();
       });
 
     $("#edit_client").modal("hide");
@@ -173,30 +183,27 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
     const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/visitorClient/updateVisitorClientStatus" + "/" + id,
+        "http://localhost:8443/mainadmin/visitorClient/updatevisitorClientStatus" +
+          "/" +
+          id,
         { status }
       )
       .subscribe((res) => {
-        this.getVisitorAdmins();
-
-
+        this.getPremiumAdmins();
       });
   }
   getBlock(data, id) {
     const status = data;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/client/blockClientStatus" +
-        "/" +
-        id,
+        "http://localhost:8443/mainadmin/client/blockClientStatus" + "/" + id,
         { status }
       )
       .subscribe((res) => {
-        this.getVisitorAdmins();
-
-
+        this.getPremiumAdmins();
       });
   }
+
   //search by name
   searchByName(val) {
     if (val) {
@@ -216,7 +223,7 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       });
       this.data.push(...temp);
     } else {
-      this.getVisitorAdmins();
+      this.getPremiumAdmins();
     }
   }
 
@@ -226,15 +233,11 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       this.data.splice(0, this.data.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-        return (
-          d.corporateId.toLowerCase().indexOf(val) !== -1 ||
-          !val
-        );
-      })
+        return d.corporateId.toLowerCase().indexOf(val) !== -1 || !val;
+      });
       this.data.push(...temp);
     } else {
-      this.getVisitorAdmins();
-
+      this.getPremiumAdmins();
     }
   }
   onSearch(name, company) {
@@ -260,7 +263,6 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
 }

@@ -135,7 +135,7 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
-      status: "Visitor",
+
     };
 
     this.http
