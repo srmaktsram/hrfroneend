@@ -128,11 +128,11 @@
 										<table class="table table-nowrap custom-table mb-0">
 											<thead>
 												<tr>
-													<th>#</th>
+													<th>Sr.no</th>
 													<th>Job Title</th>
 													<th>Department</th>
 													<th class="text-center">Job Type</th>
-													<th class="text-center">Actions</th>
+													<th class="text-center" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && userdashboardwriteRecep === 'true')">Actions</th>
 												</tr>
 											</thead>
 											<tbody>

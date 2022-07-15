@@ -68,6 +68,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   public flag = 0
   public editFlag = 0;
   public format = 0;
+  supportticketswriteRecep: string;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -77,8 +78,10 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     private toastr: ToastrService
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.supportticketswriteRecep = sessionStorage.getItem("supportticketswriteRecep");
     this.adminId = sessionStorage.getItem("adminId");
     this.companyName = sessionStorage.getItem("companyName");
+
 
     // this.loadEmployee();
 

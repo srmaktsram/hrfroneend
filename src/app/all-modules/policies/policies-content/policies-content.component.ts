@@ -29,6 +29,8 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   public editId: any;
   public tempId: any;
   public adminId: any;
+  user_type: string;
+  policieswriteRecep: string;
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
@@ -36,6 +38,8 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
     private toastr: ToastrService
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.policieswriteRecep = sessionStorage.getItem("policieswriteRecep");
   }
 
   ngOnInit() {
