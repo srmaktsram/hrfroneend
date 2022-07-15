@@ -84,9 +84,8 @@ export class EmployeeProfileComponent implements OnInit {
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
-
-    this.id = sessionStorage.getItem("empid")
-    this.adminId = sessionStorage.getItem("adminId")
+    this.id = sessionStorage.getItem("empid");
+    this.adminId = sessionStorage.getItem("adminId");
 
     this.getId(this.id);
     // console.log(this.id, "hpppppppppppp")
@@ -119,11 +118,7 @@ export class EmployeeProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
-
-    this.loadEmployee()
-
+    this.loadEmployee();
 
     this.addEmployeeForm = this.formBuilder.group({
       salaryBasis: ["", [Validators.required]],
@@ -177,9 +172,7 @@ export class EmployeeProfileComponent implements OnInit {
       bankAccountNo: ["", [Validators.required]],
       ifscCode: ["", [Validators.required]],
       panNo: ["", [Validators.required]],
-
     });
-
 
     this.editEmergencyForm = this.formBuilder.group({
       name1: ["", [Validators.required]],
@@ -282,11 +275,8 @@ export class EmployeeProfileComponent implements OnInit {
         fd
       )
       .subscribe((res: any) => {
-
-        console.log(res, "kkkkk")
-        this.getId(this.id)
-
-
+        console.log(res, "kkkkk");
+        this.getId(this.id);
       });
     this._snackBar.open("Profile Photo uploaded  sucessfully !", "", {
       duration: 2000,
@@ -351,7 +341,7 @@ export class EmployeeProfileComponent implements OnInit {
 
         this.profileEmp = this.data.data;
 
-        console.log(this.profileEmp, "////////////////////>>>>>>>>>>>>>>>")
+        console.log(this.profileEmp, "////////////////////>>>>>>>>>>>>>>>");
         this.profileinfo = this.profileEmp.ProfileInformation;
         this.personalinfo = this.profileEmp.personalInformation;
         this.emergencycontect = this.profileEmp.emergencyContact[0];
@@ -437,7 +427,6 @@ export class EmployeeProfileComponent implements OnInit {
       numberOfChildren: this.personalinfo.numberOfChildren,
     });
 
-
     this.editEmergencyForm.patchValue({
       name1: this.emergencycontect.name1,
       name2: this.emergencycontect.name2,
@@ -468,18 +457,18 @@ export class EmployeeProfileComponent implements OnInit {
         phone: this.editProfileForm.value.phone,
         department: this.editProfileForm.value.department,
         designation: this.editProfileForm.value.designation,
-        reportsTo: this.reportsTo
+        reportsTo: this.reportsTo,
       };
 
       this.http
         .patch(
           "http://localhost:8443/employee/profile/profileInformation" +
-          "/" +
-          this.id,
+            "/" +
+            this.id,
           obj
         )
         .subscribe((res) => {
-          console.log("resProfile>>>>>>>>>>>>>>>>>>>>>>.", res)
+          console.log("resProfile>>>>>>>>>>>>>>>>>>>>>>.", res);
           $("#profile_info").modal("hide");
           this.getId(this.id);
         });
@@ -491,7 +480,6 @@ export class EmployeeProfileComponent implements OnInit {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
       });
-
     } else {
     }
   }
@@ -512,8 +500,8 @@ export class EmployeeProfileComponent implements OnInit {
       this.http
         .patch(
           "http://localhost:8443/employee/profile/personalInformations" +
-          "/" +
-          this.id,
+            "/" +
+            this.id,
           obj
         )
         .subscribe((res) => {
@@ -560,8 +548,8 @@ export class EmployeeProfileComponent implements OnInit {
     this.http
       .patch(
         "http://localhost:8443/employee/profile/addFamilyInformations" +
-        "/" +
-        this.id,
+          "/" +
+          this.id,
         dataArray
       )
       .subscribe((res: any) => {
@@ -594,8 +582,8 @@ export class EmployeeProfileComponent implements OnInit {
       this.http
         .patch(
           "http://localhost:8443/employee/profile/emergencyContact" +
-          "/" +
-          this.id,
+            "/" +
+            this.id,
           obj
         )
         .subscribe((res: any) => {
@@ -618,8 +606,8 @@ export class EmployeeProfileComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/admin/projects/getAdminproject" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((res: any) => {
         this.employeeProjects = res;
@@ -738,8 +726,8 @@ export class EmployeeProfileComponent implements OnInit {
     this.http
       .patch(
         "http://localhost:8443/employee/profile/addEducationInformations" +
-        "/" +
-        this.id,
+          "/" +
+          this.id,
         dataArray
       )
       .subscribe((res: any) => {
@@ -787,8 +775,8 @@ export class EmployeeProfileComponent implements OnInit {
     this.http
       .patch(
         "http://localhost:8443/employee/profile/addExperienceInformations" +
-        "/" +
-        this.id,
+          "/" +
+          this.id,
         dataArray
       )
       .subscribe((res: any) => {
@@ -800,29 +788,26 @@ export class EmployeeProfileComponent implements OnInit {
       duration: 2000,
       panelClass: "notif-success",
 
-
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
     });
-
+  }
   /////////////////////////////////get all employee data/////////////////////////////////
 
   loadEmployee() {
-
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data: any) => {
         this.lstEmployee = data;
-        console.log(this.lstEmployee, "Employee Data")
-      })
+        console.log(this.lstEmployee, "Employee Data");
+      });
   }
 
-  getFirstName(item) {
-    this.reportsTo = item
-
+  getFirstName(val) {
+    this.reportsTo = val;
   }
 }
