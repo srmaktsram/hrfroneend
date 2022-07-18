@@ -485,7 +485,7 @@
 
             <li
               *ngIf="
-                user_type == 'admin' ||
+                (user_type == 'admin'&& roleDetails.chat[0].access=='true' )||
                 user_type == 'employee' ||
                 (user_type === 'roleadmin' &&
                   (appsread === 'true' || appswrite === 'true'))||
@@ -970,7 +970,7 @@
             >
               <li
                 *ngIf="
-                  user_type == 'admin' ||
+                  (user_type == 'admin'&&roleDetails.supportTicket[0].access=='true') ||
                   (user_type === 'roleadmin' &&
                     (supportTicketsRead === 'true' ||
                       supportTicketsWrite === 'true'))||
@@ -1098,7 +1098,7 @@
 
               <li
               *ngIf="
-            user_type == 'admin' ||
+            (user_type == 'admin'&&roleDetails.sales[0].access=='true') ||
             (user_type === 'roleadmin' &&
               (salesread === 'true' ||
               saleswrite === 'true'))||
@@ -1197,7 +1197,7 @@
               </li>
               <li
               *ngIf="
-              user_type == 'admin' ||
+              (user_type == 'admin'&&roleDetails.accounting[0].access=='true') ||
               (user_type === 'roleadmin' &&
                 (accountingread === 'true' ||
                 accountingwrite === 'true'))||
@@ -1280,7 +1280,7 @@
 
               <li
               *ngIf="
-            user_type == 'admin' ||
+            (user_type == 'admin'&&roleDetails.payrole[0].access=='true') ||
             (user_type === 'roleadmin' &&
               (payrollRead === 'true' ||
               payrollWrite === 'true'))||
@@ -1370,7 +1370,7 @@
               </li>
               <li
               *ngIf="
-            user_type == 'admin' ||
+           user_type == 'admin' ||
             (user_type === 'roleadmin' &&
               (reportsRead === 'true' ||
               reportsWrite === 'true'))||
@@ -1608,7 +1608,7 @@
               </li>
               <li
               *ngIf="
-              user_type == 'admin' ||
+             (user_type == 'admin'&&roleDetails.performance[0].access=='true') ||
               (user_type === 'roleadmin' &&
                 (performanceRead === 'true' ||
                 performanceWrite === 'true'))||
@@ -1669,7 +1669,7 @@
               </li>
               <li
               *ngIf="
-              user_type == 'admin' ||
+              (user_type == 'admin'&&roleDetails.goals[0].access=='true') ||
               (user_type === 'roleadmin' &&
                 (goalsRead === 'true' ||
                 goalsWrite === 'true'))||
@@ -1712,7 +1712,7 @@
               </li>
               <li
               *ngIf="
-              user_type == 'admin' ||
+              (user_type == 'admin'&&roleDetails.training[0].access=='true') ||
               (user_type === 'roleadmin' &&
                 (trainingsRead === 'true' ||
                 trainingsWrite === 'true'))||
@@ -1824,7 +1824,7 @@
               </li>
               <li
               *ngIf="
-              user_type == 'admin' ||
+              (user_type == 'admin'&&roleDetails.assests[0].access=='true') ||
               (user_type === 'roleadmin' &&
                 (assetsRead === 'true' ||
                 assetsRead === 'true'))||
@@ -1845,7 +1845,7 @@
               </li>
               <li
               *ngIf="
-              user_type == 'admin' ||
+              (user_type == 'admin'&&roleDetails.job[0].access=='true') ||
               (user_type === 'roleadmin' &&
                 (jobsRead === 'true' ||
                 jobsWrite === 'true'))||
@@ -1971,7 +1971,7 @@
 
                   <li
                   *ngIf="
-                  user_type == 'admin' ||
+                  user_type == 'admin'||
                   (user_type === 'rolereceptionist' &&
                     (jobdashboardreadRecep === 'true' ||
                     jobdashboardwriteRecep === 'true'))||
@@ -2195,7 +2195,7 @@
               </li>
               <li
               *ngIf="
-              user_type == 'admin' ||
+              (user_type == 'admin'&&roleDetails.role[0].access=='true') ||
               (user_type === 'roleadmin' &&
                 (usersRead === 'true' ||
                 usersWrite === 'true'))||
