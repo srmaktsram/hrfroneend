@@ -60,42 +60,56 @@ export class UserLoginComponent implements OnInit {
       })
       .subscribe((res: any) => {
         console.log(res);
+        console.log("employee Details>>>>>>>>>>>>>", res.data.adminId);
+        this.http
+          .get(
+            "http://localhost:8443/admin/allEmployee/getPackageDetail" +
+              "/" +
+              res.data.adminId
+          )
+          .subscribe((response: any) => {
+            if (res.result == 2) {
+              // location.replace("http://localhost:51245/layout/dashboard/employee");
+              this.router.navigate(["/layout/dashboard/employee"]);
 
-        if (res.result == 2) {
-          // location.replace("http://localhost:51245/layout/dashboard/employee");
+              this.authenticationService.login(
+                res.data.adminId,
+                res.data.id,
+                res.data.username,
+                res.data.employeeId,
+                res.data.email,
+                res.data.firstName,
+                res.data.lastName,
+                res.data.phone,
+                res.data.location,
+                res.data.Leaves[0].read,
+                res.data.Leaves[1].write,
+                res.data.attendance[0].read,
+                res.data.attendance[1].write,
+                res.data.TimingSheets[0].read,
+                res.data.TimingSheets[1].write,
+                res.data.Clients[0].read,
+                res.data.Clients[1].write,
+                res.data.Projects[0].read,
+                res.data.Projects[1].write,
+                res.data.Holidays[0].read,
+                res.data.Holidays[1].write,
+                response
+              );
+            } else {
+              this._snackBar.open(
+                " No matching accounts have been found !",
+                "",
+                {
+                  duration: 2000,
+                  panelClass: "notif-success",
 
-          this.authenticationService.login(
-            res.data.adminId,
-            res.data.id,
-            res.data.username,
-            res.data.employeeId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone,
-            res.data.location,
-            res.data.Leaves[0].read,
-            res.data.Leaves[1].write,
-            res.data.attendance[0].read,
-            res.data.attendance[1].write,
-            res.data.TimingSheets[0].read,
-            res.data.TimingSheets[1].write,
-            res.data.Clients[0].read,
-            res.data.Clients[1].write,
-            res.data.Projects[0].read,
-            res.data.Projects[1].write,
-            res.data.Holidays[0].read,
-            res.data.Holidays[1].write
-          );
-        } else {
-          this._snackBar.open(" No matching accounts have been found !", "", {
-            duration: 2000,
-            panelClass: "notif-success",
-
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
+                  horizontalPosition: this.horizontalPosition,
+                  verticalPosition: this.verticalPosition,
+                }
+              );
+            }
           });
-        }
       });
   }
 

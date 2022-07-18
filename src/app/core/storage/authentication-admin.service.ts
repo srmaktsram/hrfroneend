@@ -18,7 +18,7 @@ export class AdminAuthenticationService {
     cinvoice: string,
     cinvoicepre: string,
     packageName: string,
-    roleDetails
+    roleDetails: any
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", "admin");
