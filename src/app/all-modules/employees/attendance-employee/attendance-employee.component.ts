@@ -55,6 +55,7 @@ export class AttendanceEmployeeComponent implements OnInit {
     this.employeeid = sessionStorage.getItem("employee_login_id")
     this.user_type = sessionStorage.getItem("user_type")
     this.attendancewrite = sessionStorage.getItem("attendancewrite")
+    alert(this.attendancewrite)
     this.getData()
     this.createData()
 
@@ -72,8 +73,9 @@ export class AttendanceEmployeeComponent implements OnInit {
     let employeeName = sessionStorage.getItem("firstName")
     this.http.post("http://localhost:8443/employee/attendance/create", { adminId, employeeid, employeeName }).subscribe((data) => {
       this.data = data
-      console.log("postApipppppppppp", this.data)
+      console.log("postApipppppppppp>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.data)
       this.punch = this.data.punchStatus
+      alert(this.punch)
       sessionStorage.setItem("id", this.data.id)
     })
   }

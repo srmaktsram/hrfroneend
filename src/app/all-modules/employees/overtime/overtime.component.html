@@ -72,21 +72,17 @@
                             <td>
                                 <h2 class="table-avatar blue-link">
                                     <a routerLink="/layout/employees/employeeprofile" (click)="getId(item.employeeid)"
-                                        class="avatar"><img alt="" src="assets/img/profiles/avatar-{{i+ 1}}.jpg"></a>
+                                        class="avatar"><img alt=""
+                                            src="http://localhost:8443\{{item.profileImage}}"></a>
                                     <a routerLink="/layout/employees/employeeprofile"
                                         (click)="getId(item.employeeid)">{{item.name}}</a>
                                 </h2>
                             </td>
-                            <td>{{item.otDate }}</td>
+                            <td>{{item.otDate|customDate }}</td>
                             <td class="text-center">{{item.otHrs}}</td>
                             <td>{{item.otType}}</td>
                             <td>{{item.description}}</td>
                             <td class="text-center">
-                                <!-- <div class="action-label">
-                                    <a class="btn btn-white btn-sm btn-rounded">
-                                        <i class="fa fa-dot-circle-o text-purple"></i>{{item.status || statusValue}}
-                                    </a>
-                                </div> -->
 
 
                                 <div class="dropdown action-label">
@@ -118,11 +114,6 @@
                                             Declined</a>
                                     </div>
                                 </div>
-
-
-
-
-
 
                             </td>
                             <td>
@@ -198,7 +189,8 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
                             <div *ngFor="let item of lstEmployee">
-                                <a class="dropdown-item" (click)="getIdFirstName(item.id,item.firstName)"><i
+                                <a class="dropdown-item"
+                                    (click)="getIdFirstName(item.id,item.firstName,item.profileImage)"><i
                                         class="fa fa-dot-circle-o text-danger"></i> {{item.firstName}}</a>
                             </div>
 
@@ -285,19 +277,13 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Overtime Date <span class="text-danger">*</span></label>
+                        <label>Overtime Date <span class="text-danger">*</span></label>ot
                         <div class="cal-icon">
                             <input class="form-control datetimepicker" type="text" bsDatepicker type="text"
                                 [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                [class.invalid]="editOvertimeForm.get('OtDate').invalid && editOvertimeForm.get('OtDate').touched"
                                 formControlName="OtDate">
-                            <div
-                                *ngIf="editOvertimeForm.get('OtDate').invalid && editOvertimeForm.get('OtDate').touched">
-                                <small
-                                    *ngIf="editOvertimeForm.get('OtDate').invalid && editOvertimeForm.get('OtDate').touched"
-                                    class="text-danger"> *Description is required</small>
-                            </div>
                         </div>
+
                     </div>
                     <div class="form-group">
                         <label>Overtime Hours <span class="text-danger">*</span></label>

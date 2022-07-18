@@ -156,8 +156,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
       .get(
         "http://localhost:8443/admin/department/getAdminData" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data) => {
         this.departments = data;
@@ -304,23 +304,15 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/allemployees/getallEmployee" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data: any) => {
         this.totalEmployee = data.length;
 
         this.lstEmployee = data;
-        console.log(this.lstEmployee);
-        // this.lstEmployee.map((item) => {
-        //   this.profileImage = item.profileImage;
+        console.log(this.lstEmployee, "....................................");
 
-        //   this.profileImagePath.push(this.profileImage)
-
-        //   console.log(item,"Mapped Item")
-
-        //   console.log(this.profileImage, "This Console");
-        // });
 
         this.rows = this.lstEmployee;
         this.srch = [...this.rows];
@@ -340,8 +332,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/notificationSetting/getNotificationSetting" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data: any) => {
         this.employees = data[0].notification.employee;
@@ -411,8 +403,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
             this.http
               .post(
                 "http://localhost:8443/admin/allNotification/createNotification" +
-                  "/" +
-                  this.adminId,
+                "/" +
+                this.adminId,
                 { message, author, functions, time }
               )
               .subscribe((data: any) => {
@@ -441,8 +433,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.http
         .get(
           "http://localhost:8443/admin/notifications/getAllNotification" +
-            "/" +
-            this.adminId
+          "/" +
+          this.adminId
         )
         .subscribe((data: any) => {
           this.dataArray = data[0].notifications;
