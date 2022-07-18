@@ -30,29 +30,6 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.getAllProduct();
   }
-  login(id) {
-    this.http
-      .get("http://localhost:8443/auth/login" + "/" + id)
-      .subscribe((res: any) => {
-        this.router.navigate(["/layout/dashboard/admin"]);
-        this.adminAuthenticationService.login(
-          res.data.id,
-          res.data.companyEmail,
-          res.data.companyName,
-          res.data.companySite,
-          res.data.id,
-          res.data.pinCode,
-          res.data.companyAddress,
-          res.data.phone,
-          res.data.mobile,
-          res.data.location,
-          res.data.cicon,
-          res.data.cinvoice,
-          res.data.cinvoicepre,
-          res.data.packageName
-        );
-      });
-  }
 
   calculateExpiryDays(expairyDate) {
     this.todayDate = new Date();
@@ -72,7 +49,6 @@ export class ProductsComponent implements OnInit {
       )
       .subscribe((res: any) => {
         this.productDetails = res;
-        console.log("<><><><><><>< this.totalRemaining><><><><><><><><><", res);
         this.productDetails.map((item) => {
           let data = this.calculateExpiryDays(item.group[0].to);
           var obj = {
@@ -82,10 +58,6 @@ export class ProductsComponent implements OnInit {
           this.totalRemaining.push(obj);
           this.productDetailsGroup.push(item.group[0]);
         });
-        console.log(
-          "<><><><><><>< this.totalRemaining><><><><><><><><><",
-          this.totalRemaining
-        );
       });
   }
 
@@ -99,33 +71,43 @@ export class ProductsComponent implements OnInit {
   }
 
   adminlogin(id) {
-    alert(id);
     this.http
       .get("http://localhost:8443/auth/register/get_Details" + "/" + id)
       .subscribe((res: any) => {
-        console.log(res, "KKKKKKKKKKKKKKKKKK");
-        if (res.result == 1) {
-          this.router.navigate(["/layout/dashboard/admin"]);
+        console.log(res, "logincredential");
+        this.http
+          .get(
+            "http://localhost:8443/mainadmin/packageAuth/getPackageAuthDetails" +
+              "/" +
+              res.data.packageName
+          )
+          .subscribe((response: any) => {
+            console.log("getPackage Auth", response);
 
-          this.adminAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.companyEmail,
-            res.data.companyName,
-            res.data.companySite,
-            res.data.pinCode,
-            res.data.companyAddress,
-            res.data.phone,
-            res.data.mobile,
-            res.data.location,
-            res.data.cicon,
-            res.data.cinvoice,
-            res.data.cinvoicepre,
-            res.data.packageName
-          );
-        } else {
-          alert("wrong Id or pass");
-        }
+            if (res.result == 1) {
+              this.router.navigate(["/layout/dashboard/admin"]);
+              console.log("packageName", res.data.packageName);
+              this.adminAuthenticationService.login(
+                res.data.id,
+                res.data.corporateId,
+                res.data.companyEmail,
+                res.data.companyName,
+                res.data.companySite,
+                res.data.pinCode,
+                res.data.companyAddress,
+                res.data.phone,
+                res.data.mobile,
+                res.data.location,
+                res.data.cicon,
+                res.data.cinvoice,
+                res.data.cinvoicepre,
+                res.data.packageName,
+                response
+              );
+            } else {
+              alert("wrong Id or pass");
+            }
+          });
       });
   }
 }
