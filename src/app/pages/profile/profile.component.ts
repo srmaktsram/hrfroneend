@@ -8,7 +8,6 @@ import { HrUserAuthenticationService } from "src/app/core/storage/authentication
   templateUrl: "./profile.component.html",
   styleUrls: ["./profile.component.css"],
 })
-
 export class ProfileComponent implements OnInit {
   public registerForm: FormGroup;
   public changePassForm: FormGroup;
@@ -17,39 +16,58 @@ export class ProfileComponent implements OnInit {
   public email: any;
   public editId: any;
   public details: any;
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router,
-    private hrUserAuthenticationService: HrUserAuthenticationService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private router: Router,
+    private hrUserAuthenticationService: HrUserAuthenticationService
+  ) {}
 
   ngOnInit() {
-    this.corporateId = sessionStorage.getItem("corporateId")
+    this.corporateId = sessionStorage.getItem("corporateId");
     this.registerForm = this.formBuilder.group({
-      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
-      ]],
-      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
-      ]],
-      phone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      firstName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      lastName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      phone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       gender: ["", [Validators.required]],
       address: [""],
       zipCode: [""],
-
-    })
+    });
 
     this.getDetails();
     this.changePassForm = this.formBuilder.group({
       password: ["", Validators.required],
       newPassword: ["", Validators.required],
       confirmPassword: ["", Validators.required],
-    })
+    });
   }
 
   getDetails() {
-    this.http.get("http://localhost:8443/mainadmin/getDetails" + "/" + this.corporateId).subscribe((res: any) => {
-      this.details = res.data;
-      console.log(this.details, "getApi>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<")
-      this.email = this.details[0].email;
-      this.edit()
-    })
+    this.http
+      .get(
+        "http://localhost:8443/mainadmin/getDetails" + "/" + this.corporateId
+      )
+      .subscribe((res: any) => {
+        this.details = res.data;
 
+        this.email = this.details[0].email;
+        this.edit();
+      });
   }
 
   updateData() {
@@ -61,13 +79,19 @@ export class ProfileComponent implements OnInit {
         gender: this.registerForm.value.gender,
         zipCode: this.registerForm.value.zipCode,
         address: this.registerForm.value.address,
-      }
+      };
 
-      this.http.patch("http://localhost:8443/mainadmin/updateDetails" + "/" + this.corporateId, obj).subscribe((res: any) => {
-        console.log(res, "res>>>>>>>>KKKKKKKKKKKK")
-        this.router.navigate(["/pages/pricing"]);
-        sessionStorage.setItem('firstName', res.data.firstName)
-      })
+      this.http
+        .patch(
+          "http://localhost:8443/mainadmin/updateDetails" +
+            "/" +
+            this.corporateId,
+          obj
+        )
+        .subscribe((res: any) => {
+          this.router.navigate(["/pages/pricing"]);
+          sessionStorage.setItem("firstName", res.data.firstName);
+        });
     }
   }
   edit() {
@@ -79,7 +103,6 @@ export class ProfileComponent implements OnInit {
       zipCode: this.details[0].zipCode,
       address: this.details[0].address,
     });
-
   }
 
   updatePassword() {
@@ -87,11 +110,10 @@ export class ProfileComponent implements OnInit {
       password: this.changePassForm.value.password,
       newPassword: this.changePassForm.value.newPassword,
       email: this.email,
-    }
-    console.log(obj)
-    this.http.patch("http://localhost:8443/mainadmin/change/Password", obj).subscribe((res: any) => {
-      console.log(res, "jhgdjfghghfghffgnf/////////////////////")
-    })
-
+    };
+    console.log(obj);
+    this.http
+      .patch("http://localhost:8443/mainadmin/change/Password", obj)
+      .subscribe((res: any) => {});
   }
 }

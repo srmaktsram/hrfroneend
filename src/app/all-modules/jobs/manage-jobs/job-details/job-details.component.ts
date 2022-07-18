@@ -1,14 +1,21 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { ActivatedRoute } from "@angular/router";
-
+declare const $: any;
 @Component({
   selector: "app-job-details",
   templateUrl: "./job-details.component.html",
   styleUrls: ["./job-details.component.css"],
 })
 export class JobDetailsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   jobId: any;
   jobDetails: any;
   public editForm: FormGroup;
@@ -16,7 +23,8 @@ export class JobDetailsComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.jobId = this.route.snapshot.queryParams["id"];
   }
@@ -96,6 +104,13 @@ export class JobDetailsComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res, "this is the job update Data");
       });
-    window.location.reload();
+    $("#edit_job").modal("hide");
+    this._snackBar.open("Job Details Updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 }

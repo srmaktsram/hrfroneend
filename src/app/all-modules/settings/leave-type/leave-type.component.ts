@@ -10,6 +10,11 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -18,6 +23,9 @@ declare const $: any;
   styleUrls: ["./leave-type.component.css"],
 })
 export class LeaveTypeComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -35,7 +43,8 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {
@@ -113,7 +122,14 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
         });
       $("#add_leavetype").modal("hide");
       this.addLeaveType.reset();
-      this.toastr.success("Leave type is added", "Success");
+
+      this._snackBar.open("Leave Type added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -126,24 +142,22 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
     //   leaveDays: this.editLeaveType.value.editLeaveDays,
     // };
     let obj = {};
-      if (this.editLeaveType.value.editLeave != "Others") {
-        obj = {
-          leaveType: this.editLeaveType.value.editLeave,
-          leaveDays: this.editLeaveType.value.editLeaveDays,
-        };
-      } else if (this.editLeaveType.value.editOther == null) {
-
-        obj = {
-          leaveType: this.editLeaveType.value.editLeave,
-          leaveDays: this.editLeaveType.value.editLeaveDays,
-        };
-      } else {
-
-        obj = {
-          leaveType: this.editLeaveType.value.editOther,
-          leaveDays: this.editLeaveType.value.editLeaveDays,
-        };
-      }
+    if (this.editLeaveType.value.editLeave != "Others") {
+      obj = {
+        leaveType: this.editLeaveType.value.editLeave,
+        leaveDays: this.editLeaveType.value.editLeaveDays,
+      };
+    } else if (this.editLeaveType.value.editOther == null) {
+      obj = {
+        leaveType: this.editLeaveType.value.editLeave,
+        leaveDays: this.editLeaveType.value.editLeaveDays,
+      };
+    } else {
+      obj = {
+        leaveType: this.editLeaveType.value.editOther,
+        leaveDays: this.editLeaveType.value.editLeaveDays,
+      };
+    }
 
     this.http
       .patch(
@@ -154,7 +168,13 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
         this.getLeaveType();
       });
     $("#edit_leavetype").modal("hide");
-    this.toastr.success("Leave type is edited", "Success");
+    this._snackBar.open("Leave Type updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   edit(value) {
@@ -184,7 +204,13 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.getLeaveType();
         $("#delete_leavetype").modal("hide");
-        this.toastr.success("Leave type is deleted", "Success");
+        this._snackBar.open("Leave Type deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
   //getting the status value

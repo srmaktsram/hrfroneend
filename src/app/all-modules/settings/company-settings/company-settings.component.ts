@@ -6,6 +6,11 @@ import {
   FormControl,
   Validators,
 } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { ToastrService } from "ngx-toastr";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 
@@ -15,6 +20,8 @@ import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespac
   styleUrls: ["./company-settings.component.css"],
 })
 export class CompanySettingsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public companySettings: FormGroup;
   current_location: any;
   companyEmail: string;
@@ -28,7 +35,8 @@ export class CompanySettingsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.current_location = JSON.parse(
       sessionStorage.getItem("current_location")
@@ -47,15 +55,28 @@ export class CompanySettingsComponent implements OnInit {
     console.log(this.current_location);
     this.companySettings = this.formBuilder.group({
       companyName: ["", [Validators.required]],
-      contactPerson: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      contactPerson: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       address: ["", [Validators.required]],
       country: ["", [Validators.required]],
       city: ["", [Validators.required]],
       state: ["", [Validators.required]],
       postalCode: ["", [Validators.required]],
-      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
       phoneNumber: ["", [Validators.required]],
-      mobileNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      mobileNumber: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       fax: [""],
       website: ["", [Validators.required]],
     });
@@ -78,12 +99,11 @@ export class CompanySettingsComponent implements OnInit {
       this.http
         .patch(
           "http://localhost:8443/admin/companysetting/updateCompanyDetails" +
-          "/" +
-          this.adminId,
+            "/" +
+            this.adminId,
           obj
         )
         .subscribe((res: any) => {
-          console.log("---->>>>>>>>>>>>>>>>>>>", res);
           sessionStorage.setItem("companyEmail", res.companyEmail);
           sessionStorage.setItem("companyName", res.companyName);
           sessionStorage.setItem("phone", res.phone);
@@ -97,7 +117,13 @@ export class CompanySettingsComponent implements OnInit {
           );
         });
       // window.location.reload();
-      this.toastr.success("Company Details Updated Sucessfully", "Success");
+      this._snackBar.open("Company Details updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 }

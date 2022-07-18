@@ -503,7 +503,6 @@
                   </div>
                 </div>
               </div>
-
             </mat-form-field>
           </div>
           <a class="promoCode" (click)="usePromo()">Have a Promo Code</a>
@@ -522,3 +521,25 @@
   </div>
   <div class="col-sm-2"></div>
 </div>
+
+<!-- 
+
+
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+  private _snackBar: MatSnackBar
+
+
+this._snackBar.open("Client updated sucessfully !", "", {
+  duration: 2000,
+  panelClass: "notif-success",
+
+  horizontalPosition: this.horizontalPosition,
+  verticalPosition: this.verticalPosition,
+});
+
+
+
+
+
+ -->

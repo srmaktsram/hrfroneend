@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { RoleHrAuthenticationService } from "src/app/core/storage/authentication-rolehr.service";
@@ -11,6 +16,8 @@ import { RoleHrAuthenticationService } from "src/app/core/storage/authentication
   styleUrls: ["./login.component.css"],
 })
 export class RoleHrComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -26,6 +33,7 @@ export class RoleHrComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private _snackBar: MatSnackBar,
     private roleAdminAuthenticationService: RoleHrAuthenticationService
   ) {}
 
@@ -81,12 +89,24 @@ export class RoleHrComponent implements OnInit {
             res.role.Payroll[0].read,
             res.role.Payroll[1].write,
             res.role.attendanceReport[0].read,
-            res.role.attendanceReport[1].write,
+            res.role.attendanceReport[1].write
           );
-          console.log(res.role.attendanceReport[0].read,"attendanceReport Read")
-          console.log(res.role.attendanceReport[1].write,"attendanceReport Write") 
+          console.log(
+            res.role.attendanceReport[0].read,
+            "attendanceReport Read"
+          );
+          console.log(
+            res.role.attendanceReport[1].write,
+            "attendanceReport Write"
+          );
         } else {
-          alert("wrong Id or pass");
+          this._snackBar.open(" No matching accounts have been found !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         }
 
         // location.replace("http://localhost:4200/layout/dashboard/admin");

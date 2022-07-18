@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
@@ -13,6 +18,9 @@ import { AuthenticationService } from "src/app/core/storage/authentication.servi
   styleUrls: ["./login.component.css"],
 })
 export class RoleAdminComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -28,7 +36,8 @@ export class RoleAdminComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private roleAdminAuthenticationService: RoleAdminAuthenticationService
+    private roleAdminAuthenticationService: RoleAdminAuthenticationService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {}
@@ -120,14 +129,19 @@ export class RoleAdminComponent implements OnInit {
             res.role.users[0].read,
             res.role.users[1].write,
             res.role.Settings[0].read,
-            res.role.Settings[1].write,
+            res.role.Settings[1].write
           );
 
           // console.log(res.role.Policies[0].read,"Policies Read")
           // console.log(res.role.Policies[1].write,"Policies Write")
-
         } else {
-          alert("wrong Id or pass");
+          this._snackBar.open(" No matching accounts have been found !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         }
 
         // location.replace("http://localhost:4200/layout/dashboard/admin");

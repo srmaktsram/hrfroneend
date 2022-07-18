@@ -11,6 +11,11 @@ import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -19,6 +24,8 @@ declare const $: any;
   styleUrls: ["./manage-jobs.component.css"],
 })
 export class ManageJobsComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -42,7 +49,8 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
@@ -62,7 +70,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getManageJobs();
-    this.getNotifications()
+    this.getNotifications();
 
     // Add Provident Form Validation And Getting Values
 
@@ -162,31 +170,34 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
       };
       this.http
         .post("http://localhost:8443/admin/manageJobs/createManageJobs", obj)
-        .subscribe((data:any) => {
+        .subscribe((data: any) => {
           this.getManageJobs();
           let document = data.data;
           let author = "Admin ";
-          let message = 'added a job for ';
-          let functions = document.jobTitle+' post';
+          let message = "added a job for ";
+          let functions = document.jobTitle + " post";
           let time = document.createDate;
-            if (this.jobs == true) {
-
-              this.http
-                .post(
-                  "http://localhost:8443/admin/allNotification/createNotification" +
-                    "/" +
-                    this.adminId,
-                  { message, author, functions, time }
-                )
-                .subscribe((data: any) => {
-                });
-            }
-          
+          if (this.jobs == true) {
+            this.http
+              .post(
+                "http://localhost:8443/admin/allNotification/createNotification" +
+                  "/" +
+                  this.adminId,
+                { message, author, functions, time }
+              )
+              .subscribe((data: any) => {});
+          }
         });
 
       $("#add_job").modal("hide");
       this.addManageJobs.reset();
-      this.toastr.success("Job is added", "Success");
+      this._snackBar.open("Job added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
   // to know the date picker changes
@@ -227,7 +238,14 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
           this.getManageJobs();
         });
       $("#edit_job").modal("hide");
-      this.toastr.success("Job is edited", "Success");
+
+      this._snackBar.open("Job Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -270,7 +288,14 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
         this.getManageJobs();
         this.getManageJobs();
         $("#delete_job").modal("hide");
-        this.toastr.success("Job is deleted", "Success");
+
+        this._snackBar.open("Job deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
 
@@ -301,7 +326,7 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
           id,
         { jobType }
       )
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         this.getManageJobs();
       });
   }

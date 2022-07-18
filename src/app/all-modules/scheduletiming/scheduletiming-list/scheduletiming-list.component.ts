@@ -1,5 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { AllModulesService } from "../../all-modules.service";
@@ -12,6 +17,9 @@ declare const $: any;
   styleUrls: ["./scheduletiming-list.component.css"],
 })
 export class ScheduletimingListComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   @ViewChild(DataTableDirective, { static: true })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -28,7 +36,8 @@ export class ScheduletimingListComponent implements OnInit {
 
   constructor(
     private srvModuleService: AllModulesService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
@@ -112,6 +121,13 @@ export class ScheduletimingListComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res, "this is the schedule interview");
       });
+    this._snackBar.open("Mail send sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //////////////////////Send Email in Interviewer Male///////////
@@ -130,6 +146,13 @@ export class ScheduletimingListComponent implements OnInit {
       .subscribe((res: any) => {
         console.log(res, "this is the schedule interview");
       });
+    this._snackBar.open("Mail send sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // destroy data table when leaving

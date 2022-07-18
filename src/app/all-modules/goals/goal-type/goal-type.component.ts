@@ -6,6 +6,11 @@ import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -14,6 +19,8 @@ declare const $: any;
   styleUrls: ["./goal-type.component.css"],
 })
 export class GoalTypeComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   lstGoaltype: any;
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -34,7 +41,8 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.LoadGoaltype();
   }
@@ -105,7 +113,13 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
         });
       $("#add_type").modal("hide");
       this.addGoalTypeForm.reset();
-      this.toastr.success("Goal type added sucessfully...!", "Success");
+      this._snackBar.open("Goal type added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -130,7 +144,13 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
         });
 
       $("#edit_type").modal("hide");
-      this.toastr.success("Goal type Updated sucessfully...!", "Success");
+      this._snackBar.open("Goal type Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -165,7 +185,13 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
         });
         this.LoadGoaltype();
         $("#delete_type").modal("hide");
-        this.toastr.success("Goal type deleted sucessfully..!", "Success");
+        this._snackBar.open("Goal type deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
   updateGoalTypeStatus(data, id) {
@@ -183,5 +209,12 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+    this._snackBar.open("GoalType Status Updated  sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 }

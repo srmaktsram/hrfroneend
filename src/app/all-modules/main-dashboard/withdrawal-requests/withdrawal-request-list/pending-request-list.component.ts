@@ -6,6 +6,11 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -14,6 +19,8 @@ declare const $: any;
   styleUrls: ["./pending-request-list.component.css"],
 })
 export class WithdrwalRequestComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -54,11 +61,14 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
-    this.withdrawalrequestwrite = sessionStorage.getItem("withdrawalrequestwrite");
+    this.withdrawalrequestwrite = sessionStorage.getItem(
+      "withdrawalrequestwrite"
+    );
   }
 
   ngOnInit() {
@@ -86,7 +96,6 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         this.data = res;
         this.srch = [...this.data];
-       
       });
   }
 
@@ -95,7 +104,7 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
     let obj = {
       status: "1",
       withdrawAmount: this.newAmount,
-      approveRemark:"Completed"
+      approveRemark: "Completed",
     };
     this.http
       .patch(
@@ -104,41 +113,48 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
           this.id,
         obj
       )
-      .subscribe((res:any) => {
+      .subscribe((res: any) => {
         this.getPaymentRequest();
-        if(res.result==1){
-          let object={
-            withdraw:res.data.amount
-          }
-          this.http.patch("http://localhost:8443/affiliates/wallet/updateWalletPaidAmount"+"/"+res.data.aId,object).subscribe((res:any)=>{
-          })
+        if (res.result == 1) {
+          let object = {
+            withdraw: res.data.amount,
+          };
+          this.http
+            .patch(
+              "http://localhost:8443/affiliates/wallet/updateWalletPaidAmount" +
+                "/" +
+                res.data.aId,
+              object
+            )
+            .subscribe((res: any) => {});
         }
         ////
         if (res.result == 1) {
-            
           let obj = {
-            aId:res.data.aId,
-            amount:res.data.amount,
-            package_name:"Type:- Withdrawal",
-            status:res.data.status,
-            createDate:res.data.createDate,
-            updateDate:res.data.updateDate,
-
+            aId: res.data.aId,
+            amount: res.data.amount,
+            package_name: "Type:- Withdrawal",
+            status: res.data.status,
+            createDate: res.data.createDate,
+            updateDate: res.data.updateDate,
           };
           this.http
             .post(
               "http://localhost:8443/affiliates/affiliteWalletDetails/createAffiliteWalletDetails",
               obj
             )
-            .subscribe((res: any) => {
-              
-              
-            });
+            .subscribe((res: any) => {});
         }
-
       });
     $("#delete_pay").modal("hide");
-    this.toastr.success("Pay Added", "Success");
+
+    this._snackBar.open("Pay Added sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   getReject() {
@@ -153,18 +169,31 @@ export class WithdrwalRequestComponent implements OnInit, OnDestroy {
           this.id,
         obj
       )
-      .subscribe((res:any) => {
-        if(res.result==1){
-          let object={
-            reject:res.data.amount
-          }
-          this.http.patch("http://localhost:8443/affiliates/wallet/updateWalletRejectAmount"+"/"+res.data.aId,object).subscribe((res:any)=>{
-          })
+      .subscribe((res: any) => {
+        if (res.result == 1) {
+          let object = {
+            reject: res.data.amount,
+          };
+          this.http
+            .patch(
+              "http://localhost:8443/affiliates/wallet/updateWalletRejectAmount" +
+                "/" +
+                res.data.aId,
+              object
+            )
+            .subscribe((res: any) => {});
         }
         this.getPaymentRequest();
       });
     $("#add_holiday").modal("hide");
-    this.toastr.success("Reject request Added", "Success");
+
+    this._snackBar.open("Reject request Added sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //search by name
