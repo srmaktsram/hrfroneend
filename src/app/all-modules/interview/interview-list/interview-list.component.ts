@@ -34,12 +34,16 @@ export class InterviewListComponent implements OnInit, OnDestroy {
   public catData: Object;
   addCategoryForm: FormGroup;
   editCategoryForm: FormGroup;
+  user_type: string;
+  jobswriteHr: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
     this.LoadDepartment();
     this.LoadCategory();
   }

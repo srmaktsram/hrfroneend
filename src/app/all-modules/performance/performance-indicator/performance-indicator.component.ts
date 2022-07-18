@@ -32,6 +32,8 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public adminId: any;
+  user_type: string;
+  performancewriteHr: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -39,6 +41,8 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
     private http: HttpClient,
   ) {
     this.adminId = sessionStorage.getItem("adminId")
+    this.user_type = sessionStorage.getItem("user_type");
+    this.performancewriteHr = sessionStorage.getItem("performancewriteHr");
   }
 
   ngOnInit() {

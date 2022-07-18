@@ -6,13 +6,13 @@
     <div class="page-header">
       <div class="row align-items-center">
         <div class="col-12">
-          <h3 class="page-title">Shortlist Candidates</h3>
+          <h3 class="page-title">Shortlisted Candidates</h3>
           <ul class="breadcrumb">
             <li class="breadcrumb-item">
               <a routerLink="/layout/dashboard/admin">Dashboard</a>
             </li>
             <li class="breadcrumb-item">Jobs</li>
-            <li class="breadcrumb-item active">Shortlist Candidates</li>
+            <li class="breadcrumb-item active">Shortlisted Candidates</li>
           </ul>
         </div>
       </div>
@@ -105,8 +105,8 @@
 
   <!-- model -->
 
-  <div class="modal custom-modal fade" id="send_email" role="dialog" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && shortlistedcandidateswriteRecep === 'true')">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal custom-modal fade" id="send_email" role="dialog" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && shortlistedcandidateswriteRecep === 'true')||(user_type === 'rolehr' && jobswriteHr === 'true')">
+    <div class="modal-dialog modal-dialog-centered" role="document">  
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Joining</h5>

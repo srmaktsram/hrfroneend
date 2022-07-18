@@ -42,6 +42,8 @@ export class PayrollItemsComponent implements OnInit {
   public tempOverId: any;
   public tempDeductId: any;
   tempId: any;
+  user_type: string;
+  payrollswriteHr: string;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -50,7 +52,10 @@ export class PayrollItemsComponent implements OnInit {
     private router: Router,
 
     private http: HttpClient
-  ) { }
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.payrollswriteHr = sessionStorage.getItem("payrollswriteHr");
+   }
 
   ngOnInit() {
     //get add payroll

@@ -28,12 +28,15 @@ export class JobApplicantsComponent implements OnInit, OnDestroy {
   public tempId: any;
   user_type: string;
   appliedCandidateswriteRecep: string;
+  jobswriteHr: string;
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
     private fb: FormBuilder
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+
     this.appliedCandidateswriteRecep = sessionStorage.getItem("appliedCandidateswriteRecep");
   }
 

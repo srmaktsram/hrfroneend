@@ -33,13 +33,18 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   public editTrainerForm: FormGroup;
   public start;
   public end;
+  user_type: string;
+  trainingwriteHr: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
     private router: Router,
-  ) { }
+  ) { 
+    this.user_type = sessionStorage.getItem("user_type");
+    this.trainingwriteHr = sessionStorage.getItem("trainingwriteHr");
+  }
 
   ngOnInit() {
     this.loadtrainerlist();

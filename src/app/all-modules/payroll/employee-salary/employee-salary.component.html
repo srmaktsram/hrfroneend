@@ -14,6 +14,7 @@
       </div>
       <div class="col-auto float-end ms-auto">
         <a
+        *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')"
           class="btn add-btn"
           data-bs-toggle="modal"
           data-bs-target="#add_salary"
@@ -134,7 +135,7 @@
               <th>Salary</th>
               <th>Payslip</th>
 
-              <th class="text-end">Action</th>
+              <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -199,7 +200,7 @@
                 >
               </td>
               <td class="text-end">
-                <div class="dropdown dropdown-action">
+                <div class="dropdown dropdown-action" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">
                   <a
                     class="action-icon dropdown-toggle"
                     data-bs-toggle="dropdown"

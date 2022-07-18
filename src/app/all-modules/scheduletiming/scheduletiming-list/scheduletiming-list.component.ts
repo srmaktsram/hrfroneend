@@ -23,6 +23,7 @@ export class ScheduletimingListComponent implements OnInit {
   public currentStatus: any;
   user_type: string;
   scheduletimingwriteRecep: string;
+  jobswriteHr: string;
   // public url: any = "scheduletiming";
 
   constructor(
@@ -30,6 +31,8 @@ export class ScheduletimingListComponent implements OnInit {
     private http: HttpClient
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+
     this.scheduletimingwriteRecep = sessionStorage.getItem("scheduletimingwriteRecep");
     this.selectInterviewer();
   }

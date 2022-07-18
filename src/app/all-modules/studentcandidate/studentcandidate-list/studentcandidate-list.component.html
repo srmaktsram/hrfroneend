@@ -16,7 +16,7 @@
         </div>
         <div class="col-auto float-end ms-auto">
           <a
-          *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true')"
+          *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true') ||(user_type === 'rolehr' && jobswriteHr === 'true')"
             href="#"
             data-bs-toggle="modal"
             data-bs-target="#add_employee"
@@ -95,7 +95,7 @@
                 <th>Status</th>
                 <th>Gender</th>
                 <th>Create Date</th>
-                <th class="text-center" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true')">Action</th>
+                <th class="text-center" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true') ||(user_type === 'rolehr' && jobswriteHr === 'true')">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -163,8 +163,8 @@
 
                 <td>{{ item.gender }}</td>
                 <td>{{ item.createDate }}</td>
-                <td class="text-center">
-                  <div class="dropdown dropdown-action" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true')">
+                <td class="text-center" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true') ||(user_type === 'rolehr' && jobswriteHr === 'true')">
+                  <div class="dropdown dropdown-action">
                     <a
                       href="#"
                       class="action-icon dropdown-toggle"
