@@ -4,6 +4,11 @@ import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Router, ActivatedRoute } from "@angular/router";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-affilatereg",
@@ -11,6 +16,9 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
   styleUrls: ["./affilatereg.component.scss"],
 })
 export class AffilateRegComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public ipAddress: any;
   public sendOtpBtn = true;
   public reSendOtpBtn = false;
@@ -31,27 +39,64 @@ export class AffilateRegComponent implements OnInit {
   public pass_error_hide: any;
   otpmessage = true;
   public registerForm: FormGroup;
-  constructor(private http: HttpClient, private router: Router, private formBuilder: FormBuilder) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
-
     this.registerForm = this.formBuilder.group({
-      first_name: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      last_name: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      company: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      email: ['', [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      phone: ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      country: ['', [Validators.required]],
-      state: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      zip: ['', [Validators.required]],
-      address: ['', [Validators.required, Validators.minLength(2), WhiteSpaceValidator.noWhiteSpace]],
-      password: ['', [Validators.required]],
-      confirmPassword: ['', [Validators.required]],
-      job_title: ['', [Validators.required]],
-
-    })
-
+      first_name: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      last_name: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      company: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      phone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
+      country: ["", [Validators.required]],
+      state: ["", [Validators.required]],
+      city: ["", [Validators.required]],
+      zip: ["", [Validators.required]],
+      address: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(2),
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      password: ["", [Validators.required]],
+      confirmPassword: ["", [Validators.required]],
+      job_title: ["", [Validators.required]],
+    });
   }
 
   /////////otp verify./////////////////
@@ -68,7 +113,6 @@ export class AffilateRegComponent implements OnInit {
       this.saveBtn = true;
     }
   }
-
 
   myStopFunction() {
     clearTimeout(this.myTimeout);
@@ -88,27 +132,29 @@ export class AffilateRegComponent implements OnInit {
 
       this.otpCode = Math.floor(1000 + Math.random() * 9000);
 
-      console.log(
-        "this is set timer",
-        this.setTimer,
-        " the OTP>>>>> ",
-        this.otpCode
-      );
-
       let code = this.otpCode;
       this.http
         .post("http://localhost:8443/mainadmin/affiliate/sendOTP", {
           email: val,
           otp: code,
         })
-        .subscribe((res: any) => { });
+        .subscribe((res: any) => {
+          if (res) {
+            this._snackBar.open("Mail Send sucessfully !", "", {
+              duration: 2000,
+              panelClass: "notif-success",
+
+              horizontalPosition: this.horizontalPosition,
+              verticalPosition: this.verticalPosition,
+            });
+          }
+        });
     }
   }
 
   userLogin() {
-
     if (this.registerForm.valid) {
-      alert("called")
+      alert("called");
       var obj = {
         first_name: this.registerForm.value.first_name,
         last_name: this.registerForm.value.last_name,
@@ -125,11 +171,19 @@ export class AffilateRegComponent implements OnInit {
         status: "Pending",
       };
     }
-    console.log(obj, "l;dklj///////////////")
+    console.log(obj, "l;dklj///////////////");
     this.http
       .post("http://localhost:8443/mainadmin/affiliate/create", obj)
       .subscribe((response: any) => {
-        console.log(response);
+        if (response) {
+          this._snackBar.open("Login sucessfully !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        }
         this.resetForm();
       });
   }

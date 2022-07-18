@@ -10,6 +10,11 @@ import { id } from "src/assets/all-modules-data/id";
 import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
 import { Router } from "@angular/router";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -18,6 +23,8 @@ declare const $: any;
   styleUrls: ["./blocked-clients-list.component.css"],
 })
 export class BlockedClientsListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -53,7 +60,8 @@ export class BlockedClientsListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private http: HttpClient,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
   }
@@ -158,7 +166,14 @@ export class BlockedClientsListComponent implements OnInit, OnDestroy {
 
     $("#edit_client").modal("hide");
     this.editClientForm.reset();
-    this.toastr.success("Client updated sucessfully...!", "Success");
+
+    this._snackBar.open("Client updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //////////////

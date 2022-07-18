@@ -6,6 +6,11 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { HttpClient, HttpParams } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-studentcandidate-list",
@@ -13,6 +18,9 @@ declare const $: any;
   styleUrls: ["./studentcandidate-list.component.css"],
 })
 export class StudentcandidateListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -33,7 +41,8 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.jobFunction();
   }
@@ -168,7 +177,13 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
 
     $("#add_employee").modal("hide");
     this.addCandidateForm.reset();
-    this.toastr.success("Add candidate added sucessfully...!", "Success");
+    this._snackBar.open("Candidate added sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   editCandidate() {
@@ -202,7 +217,14 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
       });
 
     $("#edit_job").modal("hide");
-    this.toastr.success("Edit job Updated sucessfully...!", "Success");
+
+    this._snackBar.open("Job updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // To Get The department Edit Id And Set Values To Edit Modal Form
@@ -244,7 +266,14 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
       });
 
     $("#delete_job").modal("hide");
-    this.toastr.success("candidate deleted sucessfully..!", "Success");
+
+    this._snackBar.open("Candidate deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   ngOnDestroy(): void {

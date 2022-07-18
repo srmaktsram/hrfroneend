@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
@@ -12,6 +17,8 @@ import { AuthenticationService } from "src/app/core/storage/authentication.servi
   styleUrls: ["./login.component.css"],
 })
 export class LoginComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -27,7 +34,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private adminAuthenticationService: AdminAuthenticationService
+    private adminAuthenticationService: AdminAuthenticationService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit() {}
@@ -70,7 +78,13 @@ export class LoginComponent implements OnInit {
             res.data.packageName
           );
         } else {
-          alert("wrong Id or pass");
+          this._snackBar.open(" No matching accounts have been found !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         }
 
         // location.replace("http://localhost:4200/layout/dashboard/admin");

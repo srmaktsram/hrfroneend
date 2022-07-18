@@ -8,6 +8,11 @@ import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
 import { Router } from "@angular/router";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -16,6 +21,9 @@ declare const $: any;
   styleUrls: ["./training-list.component.css"],
 })
 export class TrainingListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   lstTraininglist: any[];
   url: any = "traininglist";
   @ViewChild(DataTableDirective, { static: false })
@@ -23,7 +31,7 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
   public tempId: any;
   public editId: any;
-  public adminId = sessionStorage.getItem("adminId")
+  public adminId = sessionStorage.getItem("adminId");
   public rows = [];
   public srch = [];
   public statusValue;
@@ -39,7 +47,8 @@ export class TrainingListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private http: HttpClient,
     private router: Router,
-  ) { }
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.loadtrainerlist();
@@ -79,12 +88,18 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   }
   // Get  trainer Api Call
   loadtrainerlist() {
-    this.http.get("http://localhost:8443/admin/training/traininglist/getData" + "/" + this.adminId).subscribe((data: any) => {
-      //console.log(data, "getApi")
-      this.lstTraininglist = data;
-      this.rows = this.lstTraininglist;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/training/traininglist/getData" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        //console.log(data, "getApi")
+        this.lstTraininglist = data;
+        this.rows = this.lstTraininglist;
+        this.srch = [...this.rows];
+      });
   }
   private markFormGroupTouched(formGroup: FormGroup) {
     (<any>Object).values(formGroup.controls).forEach((control) => {
@@ -98,8 +113,8 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   // Add  goal type  Modal Api Call
   addTrainingType() {
     if (this.addTrainerForm.invalid) {
-      this.markFormGroupTouched(this.addTrainerForm)
-      return
+      this.markFormGroupTouched(this.addTrainerForm);
+      return;
     }
     if (this.addTrainerForm.valid) {
       let StartDatetime = this.pipe.transform(
@@ -120,21 +135,30 @@ export class TrainingListComponent implements OnInit, OnDestroy {
         costName: this.addTrainerForm.value.costName,
         description: this.addTrainerForm.value.Description,
         status: this.addTrainerForm.value.StatusName,
-        adminId: this.adminId
+        adminId: this.adminId,
       };
-      this.http.post("http://localhost:8443/admin/training/traininglist/create", obj).subscribe((data: any) => {
-        //console.log("postApi", data)
-        this.loadtrainerlist();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/training/traininglist/create", obj)
+        .subscribe((data: any) => {
+          //console.log("postApi", data)
+          this.loadtrainerlist();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
 
       $("#add_training").modal("hide");
       this.addTrainerForm.reset();
-      this.toastr.success("Training added sucessfully...!", "Success");
+
+      this._snackBar.open("Training added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -148,7 +172,7 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   }
   editTrainingType() {
     if (this.editTrainerForm.valid) {
-      let id = this.editId
+      let id = this.editId;
       let obj = {
         trainingType: this.editTrainerForm.value.Type,
         trainer: this.editTrainerForm.value.TranierName,
@@ -158,20 +182,30 @@ export class TrainingListComponent implements OnInit, OnDestroy {
         costName: this.editTrainerForm.value.costName,
         description: this.editTrainerForm.value.Description,
         status: this.editTrainerForm.value.StatusName,
-
       };
-      this.http.patch("http://localhost:8443/admin/training/traininglist/update" + "/" + id, obj).subscribe((data: any) => {
-        //console.log("updateApi", data)
-        this.loadtrainerlist();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/training/traininglist/update" + "/" + id,
+          obj
+        )
+        .subscribe((data: any) => {
+          //console.log("updateApi", data)
+          this.loadtrainerlist();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
 
       $("#edit_training").modal("hide");
-      this.toastr.success("Training Updated sucessfully...!", "Success");
+      this._snackBar.open("Training Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -197,19 +231,32 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   deleteTraining() {
     let obj = {
       status: 2,
-    }
-    this.http.patch("http://localhost:8443/admin/training/traininglist/delete" + "/" + this.tempId, obj).subscribe((data) => {
-      //console.log("deleteApi", data)
-      this.loadtrainerlist();
-      $("#datatable").DataTable().clear();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/training/traininglist/delete" +
+          "/" +
+          this.tempId,
+        obj
+      )
+      .subscribe((data) => {
+        //console.log("deleteApi", data)
+        this.loadtrainerlist();
+        $("#datatable").DataTable().clear();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.dtTrigger.next();
       });
-      this.dtTrigger.next();
-    });
 
     $("#delete_training").modal("hide");
-    this.toastr.success("Training  deleted sucessfully..!", "Success");
+    this._snackBar.open("Training deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //getting the status value
@@ -221,10 +268,14 @@ export class TrainingListComponent implements OnInit, OnDestroy {
     this.dtTrigger.unsubscribe();
   }
   updateStatus(val, id) {
-    this.http.patch("http://localhost:8443/admin/training/traininglist/update" + "/" + id, { status: val }).subscribe((data: any) => {
-      //console.log("updateStatus", data);
-      this.loadtrainerlist();
-    })
+    this.http
+      .patch(
+        "http://localhost:8443/admin/training/traininglist/update" + "/" + id,
+        { status: val }
+      )
+      .subscribe((data: any) => {
+        //console.log("updateStatus", data);
+        this.loadtrainerlist();
+      });
   }
-
 }

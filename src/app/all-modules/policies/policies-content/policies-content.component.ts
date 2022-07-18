@@ -10,6 +10,11 @@ import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -18,6 +23,8 @@ declare const $: any;
   styleUrls: ["./policies-content.component.css"],
 })
 export class PoliciesContentComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -33,7 +40,8 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
     private allModuleService: AllModulesService,
     private http: HttpClient,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
   }
@@ -114,7 +122,14 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
       // this.getPolicies();
       $("#add_policy").modal("hide");
       this.addPolicies.reset();
-      this.toastr.success("Policy is added", "Success");
+
+      this._snackBar.open("Policy Added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -141,7 +156,14 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
       });
     this.getPolicies();
     $("#edit_policy").modal("hide");
-    this.toastr.success("Policy is edited", "Success");
+
+    this._snackBar.open("Policy updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   edit(value) {
@@ -172,7 +194,14 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
         console.log("DELETE API", data);
         this.getPolicies();
         $("#delete_policy").modal("hide");
-        this.toastr.success("Policy is deleted", "Success");
+
+        this._snackBar.open("Policy deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
 

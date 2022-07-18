@@ -6,6 +6,11 @@ import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -14,6 +19,8 @@ declare const $: any;
   styleUrls: ["./goal-list.component.css"],
 })
 export class GoalListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   lstGoal: any;
 
   @ViewChild(DataTableDirective, { static: false })
@@ -36,7 +43,8 @@ export class GoalListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.LoadGoaltype();
   }
@@ -142,7 +150,13 @@ export class GoalListComponent implements OnInit, OnDestroy {
 
       $("#add_goal").modal("hide");
       this.addGoalForm.reset();
-      this.toastr.success("Goal added sucessfully...!", "Success");
+      this._snackBar.open("Goal added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -180,7 +194,13 @@ export class GoalListComponent implements OnInit, OnDestroy {
         });
 
       $("#edit_goal").modal("hide");
-      this.toastr.success("Goal Updated sucessfully...!", "Success");
+      this._snackBar.open("Goal Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -218,7 +238,13 @@ export class GoalListComponent implements OnInit, OnDestroy {
         });
         this.LoadGoal();
         $("#delete_goal").modal("hide");
-        this.toastr.success("Goal deleted sucessfully..!", "Success");
+        this._snackBar.open("Goal deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
   //getting the status value

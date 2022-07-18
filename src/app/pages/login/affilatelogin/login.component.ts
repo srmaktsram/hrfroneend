@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AffilateAuthenticationService } from "src/app/core/storage/authentication-affiliate.service";
@@ -11,6 +16,9 @@ import { AffilateAuthenticationService } from "src/app/core/storage/authenticati
   styleUrls: ["./login.component.css"],
 })
 export class AffiliateLoginComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -27,10 +35,11 @@ export class AffiliateLoginComponent implements OnInit {
     // private storage: WebStorage,
     private http: HttpClient,
     private router: Router,
-    private affilateAuthenticationService: AffilateAuthenticationService
-  ) { }
+    private affilateAuthenticationService: AffilateAuthenticationService,
+    private _snackBar: MatSnackBar
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
   sendTo() {
     this.router.navigate(["/login/forgot"], {
       queryParams: {
@@ -64,7 +73,13 @@ export class AffiliateLoginComponent implements OnInit {
             affiliate.aId
           );
         } else {
-          alert("wrong Id or pass");
+          this._snackBar.open(" No matching accounts have been found !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         }
 
         // location.replace("http://localhost:4200/layout/dashboard/admin");

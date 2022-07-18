@@ -7,6 +7,11 @@ import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -15,6 +20,8 @@ declare const $: any;
   styleUrls: ["./approved-affiliate-list.component.css"],
 })
 export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -51,13 +58,12 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
     this.affiliateswrite = sessionStorage.getItem("affiliateswrite");
-
-
   }
 
   ngOnInit() {
@@ -68,18 +74,35 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
       dom: "lrtip",
     };
 
-
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
       editClientCompany: ["", [Validators.required]],
-      editContactPerson: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      editCompanyEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-
+      editContactPerson: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
+      editClientEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      editClientPhone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
+      editCompanyEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
     });
   }
-
 
   ngAfterViewInit(): void {
     setTimeout(() => {
@@ -89,18 +112,12 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
 
   public getPremiumAdmins() {
     this.http
-      .get(
-        "http://localhost:8443/mainadmin/affiliate/getApproveAffiliate"
-      )
+      .get("http://localhost:8443/mainadmin/affiliate/getApproveAffiliate")
       .subscribe((res: any) => {
         this.data = res;
         this.srch = [...this.data];
-
-
-
       });
   }
-
 
   // Edit client
   public onEditClient(clientId: any) {
@@ -112,8 +129,6 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
       editClientEmail: client[0]?.email,
       editClientPhone: client[0]?.phone,
       editCompanyEmail: client[0]?.last_name,
-
-
     });
   }
   //Reset form
@@ -129,38 +144,39 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
       email: this.editClientForm.value.editClientEmail,
       phone: this.editClientForm.value.editClientPhone,
       last_name: this.editClientForm.value.editCompanyEmail,
-
     };
     let id = this.editId;
     this.http
-      .patch("http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id, obj)
+      .patch(
+        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
+        obj
+      )
       .subscribe((data) => {
         this.getPremiumAdmins();
       });
 
     $("#edit_client").modal("hide");
     this.editClientForm.reset();
-    this.toastr.success("Client updated sucessfully...!", "Success");
+    this._snackBar.open("Client updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
-
-
 
   deleteAffiliate(deleteId) {
     let id = deleteId;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" +
-        "/" +
-        id,
+        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
         { status: "2" }
       )
       .subscribe((data: any) => {
         this.getPremiumAdmins();
       });
-
   }
-
-
 
   getStatus(data, id) {
     const status = data;
@@ -186,12 +202,11 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
           d.email.toLowerCase().indexOf(val) !== -1 ||
           !val ||
           d.phone.toLowerCase().indexOf(val) !== -1 ||
-          !val
-          ||
+          !val ||
           d.company.toLowerCase().indexOf(val) !== -1 ||
           !val
         );
-      })
+      });
       this.data.push(...temp);
     } else {
       this.getPremiumAdmins();
@@ -233,9 +248,6 @@ export class PremiumAffiliateListComponent implements OnInit, OnDestroy {
   //     this.clientsData = [];
   //   }
   // }
-
-
-
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();

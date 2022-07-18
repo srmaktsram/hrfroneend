@@ -4,66 +4,79 @@ import { AllModulesService } from "../../all-modules.service";
 import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 
 @Component({
-  selector: 'app-savedjobs-list',
-  templateUrl: './savedjobs-list.component.html',
-  styleUrls: ['./savedjobs-list.component.css']
+  selector: "app-savedjobs-list",
+  templateUrl: "./savedjobs-list.component.html",
+  styleUrls: ["./savedjobs-list.component.css"],
 })
-export class SavedjobsListComponent implements OnInit, OnDestroy   {
-	@ViewChild(DataTableDirective, { static: false })
+export class SavedjobsListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
+  @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
   public dtTrigger: Subject<any> = new Subject();
   // public lstUseralljobs: any[];
-	public url: any = "savedjobs";
-	public tempId: any;
-    public editId: any;
-    public lstSavedjobs;
+  public url: any = "savedjobs";
+  public tempId: any;
+  public editId: any;
+  public lstSavedjobs;
 
-    public rows = [];
+  public rows = [];
   public srch = [];
 
   constructor(
-  	private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
-  	) { }
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
-  	this.dtOptions = {
+    this.dtOptions = {
       // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
     };
-  	this.LoadSavedjobs();
+    this.LoadSavedjobs();
   }
 
-   // Get department list  Api Call
+  // Get department list  Api Call
   LoadSavedjobs() {
     this.srvModuleService.get(this.url).subscribe((data) => {
       this.lstSavedjobs = data;
       this.dtTrigger.next();
-       this.rows = this.lstSavedjobs;
+      this.rows = this.lstSavedjobs;
       this.srch = [...this.rows];
-     
-      });
-  }
-
- deleteSavedjobs() {
-    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
-    	  this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
-      });
-      
-      this.LoadSavedjobs();
-      $("#delete_savedjobslist").modal("hide");
-      this.toastr.success("Saved-jobs deleted sucessfully..!", "Success");
     });
   }
 
-  
+  deleteSavedjobs() {
+    this.srvModuleService.delete(this.tempId, this.url).subscribe((data) => {
+      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+        dtInstance.destroy();
+      });
+
+      this.LoadSavedjobs();
+      $("#delete_savedjobslist").modal("hide");
+      this._snackBar.open("Saved-jobs deleted sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
+    });
+  }
+
   //search by Department
   searchDepartment(val) {
     this.rows.splice(0, this.rows.length);
@@ -97,6 +110,4 @@ export class SavedjobsListComponent implements OnInit, OnDestroy   {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
-
-
 }

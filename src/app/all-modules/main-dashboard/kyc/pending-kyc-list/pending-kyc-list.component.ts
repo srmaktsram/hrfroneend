@@ -6,6 +6,11 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -14,6 +19,8 @@ declare const $: any;
   styleUrls: ["./pending-kyc-list.component.css"],
 })
 export class PendingKycListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -58,12 +65,11 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.kycwrite = sessionStorage.getItem("kycwrite");
-
-
   }
 
   ngOnInit() {
@@ -115,7 +121,13 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
         this.getPendingKyc();
       });
     $("#viewPanButton").modal("hide");
-    this.toastr.success("Approved Added", "Success");
+    this._snackBar.open("Approved Added sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   getPanReject() {
     let obj = {
@@ -128,11 +140,16 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((res: any) => {
-
         this.getPendingKyc();
       });
     $("#add_reject").modal("hide");
-    this.toastr.success("Reject request Added", "Success");
+    this._snackBar.open("Reject request Added sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   /////////////////////////////////
@@ -153,7 +170,13 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
         this.getPendingKyc();
       });
     $("#viewAadhaarButton").modal("hide");
-    this.toastr.success("Approved Added", "Success");
+    this._snackBar.open("Approved Added sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   getAadhaarReject() {
     let obj = {
@@ -169,11 +192,16 @@ export class PendingKycListComponent implements OnInit, OnDestroy {
         obj
       )
       .subscribe((res: any) => {
-
         this.getPendingKyc();
       });
     $("#add_reject_aadhaar").modal("hide");
-    this.toastr.success("Reject request Added", "Success");
+    this._snackBar.open("Reject request Added sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   ngOnDestroy(): void {
