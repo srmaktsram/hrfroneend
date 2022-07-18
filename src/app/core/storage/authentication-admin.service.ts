@@ -24,7 +24,6 @@ export class AdminAuthenticationService {
     sessionStorage.setItem("user_type", "admin");
     sessionStorage.setItem("corporateId", corporateId);
     sessionStorage.setItem("packageName", packageName);
-    sessionStorage.setItem("packageName", packageName);
     sessionStorage.setItem("adminId", id);
     sessionStorage.setItem("companyEmail", companyEmail);
     sessionStorage.setItem("companyName", companyName);

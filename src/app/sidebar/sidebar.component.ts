@@ -237,13 +237,16 @@ export class SidebarComponent implements OnInit {
   appliedCandidateswriteRecep = sessionStorage.getItem(
     "appliedCandidateswriteRecep"
   );
+  ////package permission Basic(single-user)
+  public packageName = sessionStorage.getItem("packageName");
+  public roleDetails = JSON.parse(sessionStorage.getItem("role_details"));
 
   constructor(
     private router: Router,
     private allModulesService: AllModulesService
   ) {
     this.user_type = sessionStorage.getItem("user_type");
-
+    console.log("roleDetails", this.roleDetails);
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         $(".main-wrapper").removeClass("slide-nav");
