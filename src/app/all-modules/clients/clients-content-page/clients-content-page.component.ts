@@ -46,6 +46,7 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
   editId: any;
   user_type: string;
   clientswrite: string;
+  clientsWriteMan: string;
   constructor(
     private allModulesService: AllModulesService,
     private http: HttpClient,
@@ -54,6 +55,8 @@ export class ClientsContentPageComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem('adminId')
     this.user_type = sessionStorage.getItem("user_type");
+    this.clientsWriteMan = sessionStorage.getItem("clientsWriteMan");
+
     this.clientswrite = sessionStorage.getItem("clientswrite");
     // this.getCompanyName();
     this.invoices = [

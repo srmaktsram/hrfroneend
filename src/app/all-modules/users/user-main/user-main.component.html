@@ -16,6 +16,7 @@
         </div>
         <div class="col-auto float-end ms-auto">
           <a
+          *ngIf="user_type === 'admin' ||(user_type === 'rolemanager' && usersWriteMan === 'true')"
             class="btn add-btn"
             data-bs-toggle="modal"
             data-bs-target="#add_user"
@@ -92,7 +93,7 @@
                 <th>Mobile</th>
                 <th>Create Date</th>
                 <th>Role</th>
-                <th class="text-end">Action</th>
+                <th class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'rolemanager' && usersWriteMan === 'true')">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -120,7 +121,7 @@
                 <td>
                   <span class="badge bg-inverse-success">{{ users.role }}</span>
                 </td>
-                <td class="text-end">
+                <td class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'rolemanager' && usersWriteMan === 'true')">
                   <div class="dropdown dropdown-action">
                     <a
                       class="action-icon dropdown-toggle"

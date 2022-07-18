@@ -120,6 +120,21 @@
                 ><i class="la la-users"></i> <span>Sub Admin</span></a
               >
             </li>
+            <li
+              *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (subadminread == 'true' || subadminwrite == 'true'))
+              "
+              [ngClass]="{
+                active:
+                  urlComplete.subUrl === 'packageauthlist'
+              }"
+            >
+              <a routerLink="/layout/mainadmin/packages/packageauthlist"
+                ><i class="la la-users"></i> <span>Packages</span></a
+              >
+            </li>
 
             <li
               *ngIf="
@@ -1929,7 +1944,10 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (userdashboardreadRecep === 'true' ||
-                    userdashboardwriteRecep === 'true'))
+                    userdashboardwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))
                 "
                   
                   routerLink="/layout/userdashboard/user-dashboard">
@@ -1956,7 +1974,10 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (jobdashboardreadRecep === 'true' ||
-                    jobdashboardwriteRecep === 'true'))
+                    jobdashboardwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))
                 "
                   routerLink="/layout/jobsdashboard/jobs-dashboard">
                     <a
@@ -2004,7 +2025,10 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (shortlistedcandidatesreadRecep === 'true' ||
-                    shortlistedcandidateswriteRecep === 'true'))
+                    shortlistedcandidateswriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))
                 "
                   routerLink="/layout/candidate/shortlist-candidates">
                     <a
@@ -2064,7 +2088,10 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (candidateslistreadRecep === 'true' ||
-                    candidateslistwriteRecep === 'true'))
+                    candidateslistwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))
                 "
                   routerLink="/layout/studentcandidate/candidates">
                     <a
@@ -2081,7 +2108,10 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (scheduletimingsreadRecep === 'true' ||
-                    scheduletimingwriteRecep === 'true'))
+                    scheduletimingwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))
                 "
                   routerLink="/layout/scheduletiming/schedule-timing">
                     <a
@@ -2112,7 +2142,10 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (appliedCandidatesreadRecep === 'true' ||
-                    appliedCandidateswriteRecep === 'true'))
+                    appliedCandidateswriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))
                 "
                   routerLink="/layout/jobs/job-applicants">
                     <a

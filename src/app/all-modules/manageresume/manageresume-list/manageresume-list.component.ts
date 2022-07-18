@@ -34,13 +34,21 @@ export class ManageresumeListComponent implements OnInit, OnDestroy {
   public srch = [];
   public editPurchaseDateFormat;
   public editPurchaseToDateFormat;
+  user_type: string;
+  jobswriteHr: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
+
     private toastr: ToastrService,
     private _snackBar: MatSnackBar
-  ) {}
+
+  	) {
+      this.user_type = sessionStorage.getItem("user_type");
+      this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+     }
+
 
   ngOnInit() {
     // Floating Label

@@ -17,9 +17,13 @@ export class SalaryViewComponent implements OnInit {
   editId: any;
   value: string;
   public total1: number;
+  user_type: string;
+  payrollswriteHr: string;
 
   constructor(private http: HttpClient) {
     this.id = sessionStorage.getItem("slipId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.payrollswriteHr = sessionStorage.getItem("payrollswriteHr");
   }
 
   ngOnInit() {

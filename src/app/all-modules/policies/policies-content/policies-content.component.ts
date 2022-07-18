@@ -36,6 +36,11 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   public editId: any;
   public tempId: any;
   public adminId: any;
+  user_type: string;
+  policieswriteRecep: string;
+  policieswriteHr: string;
+  policiesWritefin: string;
+  policiesWriteMan: string;
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
@@ -44,6 +49,12 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.policiesWriteMan = sessionStorage.getItem("policiesWriteMan");
+    this.policiesWritefin = sessionStorage.getItem("policiesWritefin");
+
+    this.policieswriteRecep = sessionStorage.getItem("policieswriteRecep");
+    this.policieswriteHr = sessionStorage.getItem("policieswriteHr");
   }
 
   ngOnInit() {

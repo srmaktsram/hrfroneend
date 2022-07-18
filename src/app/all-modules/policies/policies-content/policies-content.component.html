@@ -12,7 +12,8 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a  class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_policy"><i class="fa fa-plus"></i>
+                <a 
+                *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && policieswriteRecep === 'true') || (user_type === 'rolehr' && policieswriteHr === 'true') || (user_type === 'rolefinance' && policiesWritefin === 'true')|| (user_type === 'rolemanager' && policiesWriteMan === 'true')" class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_policy"><i class="fa fa-plus"></i>
                     Add Policy</a>
             </div>
         </div>
@@ -30,7 +31,7 @@
                             <th>Department </th>
                             <th>Description </th>
                             <th>Created </th>
-                            <th class="text-end">Action</th>
+                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && policieswriteRecep === 'true') || (user_type === 'rolehr' && policieswriteHr === 'true') || (user_type === 'rolefinance' && policiesWritefin === 'true')|| (user_type === 'rolemanager' && policiesWriteMan === 'true')">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +41,7 @@
                             <td>{{policies.department}}</td>
                             <td>{{policies.description}}</td>
                             <td>{{policies.createdDate}}</td>
-                            <td class="text-end">
+                            <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && policieswriteRecep === 'true') || (user_type === 'rolehr' && policieswriteHr === 'true') || (user_type === 'rolefinance' && policiesWritefin === 'true')|| (user_type === 'rolemanager' && policiesWriteMan === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

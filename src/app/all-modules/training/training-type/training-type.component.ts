@@ -37,6 +37,8 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
   public id: any;
   public addTrainingTypeForm: FormGroup;
   public editTrainingTypeForm: FormGroup;
+  user_type: string;
+  trainingwriteHr: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -45,6 +47,8 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.trainingwriteHr = sessionStorage.getItem("trainingwriteHr");
   }
 
   ngOnInit() {

@@ -39,29 +39,6 @@ export class ProductsComponent implements OnInit {
   ngOnInit() {
     this.getAllProduct();
   }
-  login(id) {
-    this.http
-      .get("http://localhost:8443/auth/login" + "/" + id)
-      .subscribe((res: any) => {
-        this.router.navigate(["/layout/dashboard/admin"]);
-        this.adminAuthenticationService.login(
-          res.data.id,
-          res.data.companyEmail,
-          res.data.companyName,
-          res.data.companySite,
-          res.data.id,
-          res.data.pinCode,
-          res.data.companyAddress,
-          res.data.phone,
-          res.data.mobile,
-          res.data.location,
-          res.data.cicon,
-          res.data.cinvoice,
-          res.data.cinvoicepre,
-          res.data.packageName
-        );
-      });
-  }
 
   calculateExpiryDays(expairyDate) {
     this.todayDate = new Date();
@@ -104,10 +81,10 @@ export class ProductsComponent implements OnInit {
   }
 
   adminlogin(id) {
-    alert(id);
     this.http
       .get("http://localhost:8443/auth/register/get_Details" + "/" + id)
       .subscribe((res: any) => {
+
         if (res.result == 1) {
           this.router.navigate(["/layout/dashboard/admin"]);
 
@@ -136,6 +113,7 @@ export class ProductsComponent implements OnInit {
             verticalPosition: this.verticalPosition,
           });
         }
+
       });
   }
 }

@@ -43,6 +43,8 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
   dataarr: any;
   srch: any[];
   jobs: boolean;
+  user_type: string;
+  jobswriteHr: string;
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
@@ -50,7 +52,12 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
     this.LoadDepartment();
+    
+
+
   }
   LoadDepartment() {
     this.http

@@ -33,12 +33,23 @@ export class JobApplicantsComponent implements OnInit, OnDestroy {
   public allAppliedCandidates: any = [];
   public scheduleForm: FormGroup;
   public tempId: any;
+  user_type: string;
+  appliedCandidateswriteRecep: string;
+  jobswriteHr: string;
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
+
     private fb: FormBuilder,
     private _snackBar: MatSnackBar
-  ) {}
+
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+
+    this.appliedCandidateswriteRecep = sessionStorage.getItem("appliedCandidateswriteRecep");
+  }
+
 
   ngOnInit() {
     this.scheduleForm = this.fb.group({

@@ -47,8 +47,9 @@
               <td>{{ appliedCandidates.mobile }}</td>
               <td>{{ appliedCandidates.createDate }}</td>
               <td class="text-center">
-                <div class="dropdown action-label">
+                <div class="dropdown action-label" >
                   <a
+                  
                     class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -70,7 +71,7 @@
                       >First Round</i
                     >
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && appliedCandidateswriteRecep === 'true') || (user_type === 'rolehr' && jobswriteHr === 'true')">
                     <a
                       class="dropdown-item"
                       (click)="selectStatus('New', appliedCandidates.id)"
@@ -94,8 +95,9 @@
                   </div>
                 </div>
               </td>
-              <td>
+              <td >
                 <a
+                
                   class="btn btn-sm btn-primary"
                   href="http://localhost:8443/{{ appliedCandidates.resume }}"
                   ><i class="fa fa-download"></i> Download</a

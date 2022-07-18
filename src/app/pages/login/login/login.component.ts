@@ -58,8 +58,15 @@ export class LoginComponent implements OnInit {
       })
       .subscribe((res: any) => {
         console.log(res);
-        if (res.result == 2) {
-          this.router.navigate(["/layout/dashboard/admin"]);
+        this.http
+          .get(
+            "http://localhost:8443/mainadmin/packageAuth/getPackageAuthDetails" +
+              "/" +
+              res.data.packageName
+          )
+          .subscribe((response: any) => {
+            if (res.result == 2) {
+              this.router.navigate(["/layout/dashboard/admin"]);
 
           this.adminAuthenticationService.login(
             res.data.id,
@@ -87,7 +94,8 @@ export class LoginComponent implements OnInit {
           });
         }
 
-        // location.replace("http://localhost:4200/layout/dashboard/admin");
+            // location.replace("http://localhost:4200/layout/dashboard/admin");
+          });
       });
   }
 

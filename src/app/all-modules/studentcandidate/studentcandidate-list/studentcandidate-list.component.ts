@@ -6,11 +6,15 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { HttpClient, HttpParams } from "@angular/common/http";
+
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from "@angular/material/snack-bar";
+
+import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+
 declare const $: any;
 @Component({
   selector: "app-studentcandidate-list",
@@ -37,6 +41,9 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
   public rows = [];
   public srch = [];
   multFile: any;
+  candidateslistwriteRecep: string;
+  user_type: string;
+  jobswriteHr: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -44,6 +51,9 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+    this.candidateslistwriteRecep = sessionStorage.getItem("candidateslistwriteRecep");
     this.jobFunction();
   }
 
@@ -68,26 +78,25 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
       dom: "lrtip",
     };
     this.LoadCandidate();
-
     this.addCandidateForm = this.formBuilder.group({
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       CreateDate: ["", [Validators.required]],
-      mobile: ["", [Validators.required]],
+      mobile: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       address: ["", [Validators.required]],
       gender: ["", [Validators.required]],
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
+      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
+      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
       resume: ["", [Validators.required]],
       jobTitle: ["", [Validators.required]],
     });
     this.editCandidateForm = this.formBuilder.group({
-      email: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
       createDate: ["", [Validators.required]],
-      mobile: ["", [Validators.required]],
+      mobile: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
       address: ["", [Validators.required]],
       gender: ["", [Validators.required]],
-      firstName: ["", [Validators.required]],
-      lastName: ["", [Validators.required]],
+      firstName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
+      lastName: ["", [Validators.required, Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*")]],
       resume: ["", [Validators.required]],
       jobTitle: ["", [Validators.required]],
     });
@@ -167,7 +176,7 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     this.http
       .post(
         "http://localhost:8443/admin/job/jobRegister/createJobRegister?" +
-          params,
+        params,
         fd
       )
       .subscribe((data: any) => {
@@ -208,7 +217,7 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/admin/job/jobRegister/updateJobDetails?" +
-          params,
+        params,
         fd
       )
       .subscribe((data: any) => {
@@ -257,8 +266,8 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/admin/job/jobRegister/updateJobRegister" +
-          "/" +
-          this.tempId,
+        "/" +
+        this.tempId,
         obj
       )
       .subscribe((data: any) => {

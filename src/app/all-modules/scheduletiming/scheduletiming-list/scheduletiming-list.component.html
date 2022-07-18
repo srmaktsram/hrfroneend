@@ -107,7 +107,7 @@
                         >{{ fees.status }}</i
                       >
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && scheduletimingwriteRecep === 'true')|| (user_type === 'rolehr' && jobswriteHr === 'true')">
                       <a
                         class="dropdown-item"
                         (click)="selectStatus('Qualified', fees.id)"
@@ -144,8 +144,8 @@
                   >
                 </td>
                 <td class="text-center">
-                  <div class="action-label">
-                    <a
+                  <div class="action-label" >
+                    <a 
                       class="btn btn-primary btn-sm"
                       data-bs-toggle="modal"
                       data-bs-target="#edit_job"
@@ -167,10 +167,10 @@
   <!-- /Page Content -->
 
   <!-- Edit Job Modal -->
-  <div id="edit_job" class="modal custom-modal fade" role="dialog">
+  <div id="edit_job" class="modal custom-modal fade" role="dialog" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && scheduletimingwriteRecep === 'true')|| (user_type === 'rolehr' && jobswriteHr === 'true')">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header" >
           <h5 class="modal-title">Schedule Time</h5>
           <button
             type="button"

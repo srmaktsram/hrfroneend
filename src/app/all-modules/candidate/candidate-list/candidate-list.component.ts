@@ -22,12 +22,20 @@ export class CandidateListComponent implements OnInit {
   public srch = [];
   public url: any = "candidatelist";
   public joiningForm: FormGroup;
+  user_type: string;
+  shortlistedcandidateswriteRecep: string;
+  jobswriteHr: string;
 
   constructor(
     private srvModuleService: AllModulesService,
     private fb: FormBuilder,
     private http: HttpClient
-  ) {}
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+
+    this.shortlistedcandidateswriteRecep = sessionStorage.getItem("shortlistedcandidateswriteRecep");
+  }
 
   ngOnInit() {
     this.loadFees();

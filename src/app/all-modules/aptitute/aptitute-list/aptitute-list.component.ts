@@ -15,8 +15,13 @@ export class AptituteListComponent implements OnInit {
   public dtTrigger: Subject<any> = new Subject();
   public lstFees: any[];
   public url: any = "aptituteresult";
+  user_type: string;
+  jobswriteHr: string;
 
-  constructor(private srvModuleService: AllModulesService) { }
+  constructor(private srvModuleService: AllModulesService) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+   }
 
   ngOnInit() {
   	     this.loadFees();

@@ -41,6 +41,8 @@ export class InterviewListComponent implements OnInit, OnDestroy {
   public catData: Object;
   addCategoryForm: FormGroup;
   editCategoryForm: FormGroup;
+  user_type: string;
+  jobswriteHr: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -48,6 +50,8 @@ export class InterviewListComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
     this.LoadDepartment();
     this.LoadCategory();
   }

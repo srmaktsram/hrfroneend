@@ -38,14 +38,22 @@ export class TrainersComponent implements OnInit, OnDestroy {
   public adminId = sessionStorage.getItem("adminId");
   public addTrainerForm: FormGroup;
   public editTrainerForm: FormGroup;
+  user_type: string;
+  trainingwriteHr: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
     private router: Router,
+
     private _snackBar: MatSnackBar
-  ) {}
+ 
+  ) { 
+    this.user_type = sessionStorage.getItem("user_type");
+    this.trainingwriteHr = sessionStorage.getItem("trainingwriteHr");
+  }
+
 
   ngOnInit() {
     this.loadtrainer();

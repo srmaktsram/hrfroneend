@@ -21,6 +21,8 @@ export class CategoryListComponent implements OnInit {
   public editedvalue;
   adminId: string;
   data1: any;
+  user_type: string;
+  accountingwriteFin: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -29,6 +31,8 @@ export class CategoryListComponent implements OnInit {
     private http: HttpClient
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.accountingwriteFin = sessionStorage.getItem("accountingwriteFin");
   }
 
   ngOnInit() {
