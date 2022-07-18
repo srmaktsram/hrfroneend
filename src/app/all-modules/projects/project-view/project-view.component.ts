@@ -6,6 +6,11 @@ import { map, mergeMap } from "rxjs/operators";
 
 import { DatePipe } from "@angular/common";
 import { HttpClient, HttpParams } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-project-view",
@@ -13,20 +18,23 @@ declare const $: any;
   styleUrls: ["./project-view.component.css"],
 })
 export class ProjectViewComponent implements OnInit {
-  public lstTasks =[];
-  public lstProgress =[];
-  public lstCompleted =[];
-  public lstInprogress =[];
-  public lstHold =[];
-  public lstReview =[];
-  public multImages=[];
-  public leader=[];
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
+  public lstTasks = [];
+  public lstProgress = [];
+  public lstCompleted = [];
+  public lstInprogress = [];
+  public lstHold = [];
+  public lstReview = [];
+  public multImages = [];
+  public leader = [];
   public completeTask;
   public openTask;
   public pipe = new DatePipe("en-US");
   public addProjectForm: FormGroup;
   public editProjectForm: FormGroup;
-  public progess:any;
+  public progess: any;
   public projects: any;
   public projectId: any;
   public project: any;
@@ -37,7 +45,7 @@ export class ProjectViewComponent implements OnInit {
   public completedTask: any;
   public projectImage = [];
   public projectFile = [];
-  public pendingTas=[];
+  public pendingTas = [];
   public file: string;
   public tasks = [];
   public pendingTask = [];
@@ -46,24 +54,27 @@ export class ProjectViewComponent implements OnInit {
   public addusers = [];
   public userdata = [];
   public userArr = [];
-  public teamLeader:any;
+  public teamLeader: any;
   public user_type = sessionStorage.getItem("user_type");
 
   path: string;
   client: any;
   projectswrite: string;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
+  ) {
     this.adminId = sessionStorage.getItem("adminId");
-    this.projectswrite=sessionStorage.getItem("projectswrite");
+    this.projectswrite = sessionStorage.getItem("projectswrite");
 
     this.getClients();
   }
 
   ngOnInit() {
     this.getInfo();
-
-    
 
     //Edit Projects Form
     this.editProjectForm = this.formBuilder.group({
@@ -74,22 +85,20 @@ export class ProjectViewComponent implements OnInit {
       editProjectPriority: [""],
       editaddTeamMembers: [""],
       editProjectId: [""],
-      projectLeader:[""],
+      projectLeader: [""],
       rate: [""],
-      client:[""],
-     
+      client: [""],
     });
 
     this.allTasks();
     this.getusers();
-    
   }
   getInfo() {
     this.route.params
       .pipe(
         map((id) => {
           this.projectId = id.id;
-          console.log("this is the ROUTE.PARAMS>>>>>>>>>>>",this.projectId)
+          console.log("this is the ROUTE.PARAMS>>>>>>>>>>>", this.projectId);
         }),
         mergeMap(() =>
           this.http.get(
@@ -102,18 +111,17 @@ export class ProjectViewComponent implements OnInit {
       .subscribe((data: any) => {
         this.projects = data;
 
-        console.log("this is the main<><><>>>>>>>>>>>>>>>>>",this.projects)
+        console.log("this is the main<><><>>>>>>>>>>>>>>>>>", this.projects);
 
         this.projectTitle = this.projects.name;
         this.projectImage = this.projects.images;
-  
+
         this.projectFile = this.projects.files;
 
         this.projectStart = this.projects.startDate;
         this.projectEnd = this.projects.endDate;
 
         this.loadTask();
-        
       });
   }
   allTasks() {
@@ -126,58 +134,56 @@ export class ProjectViewComponent implements OnInit {
           this.projectId
       )
       .subscribe((data: any) => {
-        this.tasks = data.lstTasks
+        this.tasks = data.lstTasks;
         // this.pendingTas=data.lstCompleted;
         this.completedTask = data.lstCompleted;
       });
   }
 
-
   loadTask() {
-   
-    this.http.get("http://localhost:8443/admin/projects/getTaskproject"+"/"+this.adminId+"/"+this.projectId).subscribe((data:any) => {
- 
-      this.lstTasks = data.lstTasks;
-      
-      this. lstProgress=data.lstProgress;
-     this. lstCompleted=data.lstCompleted;
-     this. lstInprogress=data.lstInprogress;
-     this. lstHold=data.lstHold;
-     this. lstReview=data.lstReview;
-     this.completeTask=this.lstCompleted.length;
-     this.openTask=this.lstTasks.length;
-      
-      let totalLength=(this.lstTasks.length+ this.lstProgress.length+ this.lstHold.length+this.lstInprogress.length+this.lstReview.length+this.lstCompleted.length)
-      let completeLength=this.lstCompleted.length;
-      this.progess=((completeLength/totalLength)*100).toFixed(1)+"%";
-       
-     console.log("<><><><<",this.progess)
-     
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/projects/getTaskproject" +
+          "/" +
+          this.adminId +
+          "/" +
+          this.projectId
+      )
+      .subscribe((data: any) => {
+        this.lstTasks = data.lstTasks;
+
+        this.lstProgress = data.lstProgress;
+        this.lstCompleted = data.lstCompleted;
+        this.lstInprogress = data.lstInprogress;
+        this.lstHold = data.lstHold;
+        this.lstReview = data.lstReview;
+        this.completeTask = this.lstCompleted.length;
+        this.openTask = this.lstTasks.length;
+
+        let totalLength =
+          this.lstTasks.length +
+          this.lstProgress.length +
+          this.lstHold.length +
+          this.lstInprogress.length +
+          this.lstReview.length +
+          this.lstCompleted.length;
+        let completeLength = this.lstCompleted.length;
+        this.progess = ((completeLength / totalLength) * 100).toFixed(1) + "%";
+
+        console.log("<><><><<", this.progess);
+      });
   }
 
+  download() {}
 
-  download(){
-    
+  selectImage(event: any) {
+    if (event.target.files.length > 0) {
+      this.multImages = event.target.files;
+    }
   }
-
-
-  
- selectImage(event:any){
-   if(event.target.files.length > 0){
-     
-  this.multImages = event.target.files;
-   
-   
-   }
- }
-
-
-
 
   //Edit project
   editProject() {
-    
     let toSetValues = this.projects;
     this.editProjectForm.patchValue({
       editProjectName: toSetValues.name,
@@ -187,16 +193,20 @@ export class ProjectViewComponent implements OnInit {
       editProjectPriority: toSetValues.priority,
       editaddTeamMembers: toSetValues.teamMember,
       editProjectId: toSetValues.projectId,
-      rate:  toSetValues.rate,
+      rate: toSetValues.rate,
       client: toSetValues.client,
-      file:toSetValues.file,
-      projectLeader:toSetValues.projectLeader
+      file: toSetValues.file,
+      projectLeader: toSetValues.projectLeader,
     });
   }
 
   //Save Project
   public saveProject() {
-    console.log("this is the pipe<><><><<><><><><", this.editProjectForm.value.editProjectStartDate,this.editProjectForm.value.editProjectEndDate,)
+    console.log(
+      "this is the pipe<><><><<><><><><",
+      this.editProjectForm.value.editProjectStartDate,
+      this.editProjectForm.value.editProjectEndDate
+    );
     let StartDate = this.pipe.transform(
       this.editProjectForm.value.editProjectEndDate,
       "dd-MM-yyyy"
@@ -206,68 +216,88 @@ export class ProjectViewComponent implements OnInit {
       "dd-MM-yyyy"
     );
 
-    var fd=new FormData();
-    for(let image of this.multImages){
-    fd.append("files", image,)
+    var fd = new FormData();
+    for (let image of this.multImages) {
+      fd.append("files", image);
     }
-  let params=new HttpParams();
-    params=params.set("tempId",this.projectId)
-    params=params.set( "name", this.editProjectForm.value.editProjectName,);
-    params=params.set( "description", this.editProjectForm.value.editProjectDescription,);
-    params=params.set( "endDate", EndDate,);
-    params=params.set( "startDate", StartDate,);
-    params=params.set("priority", this.editProjectForm.value.editProjectPriority,);
-    params=params.set( "teamMember", this.editProjectForm.value.editaddTeamMembers,);
-    params=params.set("projectId", this.editProjectForm.value.editProjectPriority,);
-    params=params.set("rate",this.editProjectForm.value.rate,);
-    params=params.set("client", this.editProjectForm.value.client,);
-   
-   
+    let params = new HttpParams();
+    params = params.set("tempId", this.projectId);
+    params = params.set("name", this.editProjectForm.value.editProjectName);
+    params = params.set(
+      "description",
+      this.editProjectForm.value.editProjectDescription
+    );
+    params = params.set("endDate", EndDate);
+    params = params.set("startDate", StartDate);
+    params = params.set(
+      "priority",
+      this.editProjectForm.value.editProjectPriority
+    );
+    params = params.set(
+      "teamMember",
+      this.editProjectForm.value.editaddTeamMembers
+    );
+    params = params.set(
+      "projectId",
+      this.editProjectForm.value.editProjectPriority
+    );
+    params = params.set("rate", this.editProjectForm.value.rate);
+    params = params.set("client", this.editProjectForm.value.client);
 
     this.http
       .patch(
-        "http://localhost:8443/admin/projects/updateProjectFiles?" +params,fd
+        "http://localhost:8443/admin/projects/updateProjectFiles?" + params,
+        fd
       )
       .subscribe((res: any) => {
         this.allTasks();
         this.getInfo();
         this.editProjectForm.reset();
         $("#edit_project").modal("hide");
+        this._snackBar.open("Project Files updated sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
-  
-  getClients(){
-    this.http.get("http://localhost:8443/admin/clients/getDataClient"+"/"+this.adminId).subscribe((data:any)=>{
-    this.client=data
-    })
+
+  getClients() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/clients/getDataClient" + "/" + this.adminId
+      )
+      .subscribe((data: any) => {
+        this.client = data;
+      });
   }
-
-
 
   getusers() {
     this.http
       .get(
-        "http://localhost:8443/admin/allemployees/getallEmployee" + "/" + this.adminId
+        "http://localhost:8443/admin/allemployees/getallEmployee" +
+          "/" +
+          this.adminId
       )
       .subscribe((data: any[]) => {
-       
         this.userdata = data;
-         console.log("this is the EMPLOYEE>>>>>>>>",  this.userdata )
+        console.log("this is the EMPLOYEE>>>>>>>>", this.userdata);
         this.users = [...this.userdata];
       });
   }
 
-  addUsers(val1, val2,id) {
+  addUsers(val1, val2, id) {
     let val = val1 + " " + val2;
 
     var obj = {
-      name:val,
-      id:id
+      name: val,
+      id: id,
     };
-    
 
     this.userArr.push(obj);
-    console.log("this is the Leader name and id>>>>>",this.userArr)
+    console.log("this is the Leader name and id>>>>>", this.userArr);
   }
 
   addAllTeam() {
@@ -283,19 +313,25 @@ export class ProjectViewComponent implements OnInit {
         this.userArr = [];
         this.getInfo();
         $("#assign_user").modal("hide");
+        this._snackBar.open("Project Team updated sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
 
-  addLeader(val1, val2,id) {
-    
+  addLeader(val1, val2, id) {
     let val = val1 + " " + val2;
     this.teamLeader = {
-      name:val,
-      id:id
+      name: val,
+      id: id,
     };
-    
-    this.leader.push( this.teamLeader)
-    console.log("this is leader", this.leader)
+
+    this.leader.push(this.teamLeader);
+    console.log("this is leader", this.leader);
   }
 
   addTeamLeader() {
@@ -310,9 +346,15 @@ export class ProjectViewComponent implements OnInit {
       .subscribe((data: any) => {
         this.teamLeader = "";
         $("#assign_leader").modal("hide");
+        this._snackBar.open("Project Team Leader added sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
         this.getInfo();
       });
-
   }
 
   filterUser(val) {
@@ -344,5 +386,12 @@ export class ProjectViewComponent implements OnInit {
       .subscribe((data: any) => {
         this.allTasks();
       });
+    this._snackBar.open("Task deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 }

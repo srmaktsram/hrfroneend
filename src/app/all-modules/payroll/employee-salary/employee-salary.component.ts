@@ -19,6 +19,11 @@ import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
 import { Router } from "@angular/router";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 
@@ -30,6 +35,8 @@ declare const $: any;
 export class EmployeeSalaryComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -77,7 +84,7 @@ export class EmployeeSalaryComponent
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
-
+    private _snackBar: MatSnackBar,
     private http: HttpClient
   ) {
     this.user_type = sessionStorage.getItem("user_type");
@@ -274,9 +281,22 @@ export class EmployeeSalaryComponent
 
       $("#add_salary").modal("hide");
       this.addSalary.reset();
-      this.toastr.success("Salary is added", "Success");
+      this._snackBar.open("Salary added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
       this.toastr.warning("Mandatory fields required", "");
+      this._snackBar.open("Client updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -297,8 +317,14 @@ export class EmployeeSalaryComponent
         this.getSalary();
       });
     $("#delete_salary").modal("hide");
-    this.toastr.success("Salary is deleted", "Success");
-    this.toastr.success("Tickets deleted", "Success");
+
+    this._snackBar.open("Salary And Tickets deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // changes in add form feilds
@@ -570,7 +596,13 @@ export class EmployeeSalaryComponent
       });
     this.getSalary();
     $("#edit_salary").modal("hide");
-    this.toastr.success("Salary is edited", "Success");
+    this._snackBar.open("Salary updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   edit(value) {

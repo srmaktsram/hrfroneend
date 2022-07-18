@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AuthenticationService } from "src/app/core/storage/authentication.service";
@@ -11,6 +16,9 @@ import { AuthenticationService } from "src/app/core/storage/authentication.servi
   styleUrls: ["./userlogin.component.css"],
 })
 export class UserLoginComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -33,10 +41,11 @@ export class UserLoginComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private http: HttpClient,
-    private router: Router
-  ) { }
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   submit() {
     let userId = this.form.value.email;
@@ -51,7 +60,7 @@ export class UserLoginComponent implements OnInit {
       })
       .subscribe((res: any) => {
         console.log(res);
-        
+
         if (res.result == 2) {
           // location.replace("http://localhost:51245/layout/dashboard/employee");
 
@@ -76,13 +85,16 @@ export class UserLoginComponent implements OnInit {
             res.data.Projects[0].read,
             res.data.Projects[1].write,
             res.data.Holidays[0].read,
-            res.data.Holidays[1].write,
+            res.data.Holidays[1].write
           );
-          console.log(res.data.Holidays[0].read,"Holidays Read")
-          console.log(res.data.Holidays[1].write,"Holidays Write")
-
         } else {
-          alert("wrong Id or pass");
+          this._snackBar.open(" No matching accounts have been found !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         }
       });
   }

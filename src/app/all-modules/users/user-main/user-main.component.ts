@@ -17,6 +17,11 @@ import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -25,6 +30,9 @@ declare const $: any;
   styleUrls: ["./user-main.component.css"],
 })
 export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -138,7 +146,7 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
     { id: 0, read: false },
     { id: 1, write: false },
   ];
- 
+
   ////////
   public dashboard = [
     { id: 0, read: false },
@@ -185,20 +193,24 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
     { id: 1, write: false },
   ];
 
-
   public editId: any;
   public tempId: any;
   public adminId: any;
   public rows = [];
   public srch = [];
   public dtTrigger: Subject<any> = new Subject();
+  usersWriteMan: string;
+  user_type: string;
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.usersWriteMan = sessionStorage.getItem("usersWriteMan");
   }
   public initializeArray() {
     this.Holidays = [
@@ -555,10 +567,23 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
       $("#add_user").modal("hide");
       this.addUsers.reset();
 
-      this.toastr.success("Users is added", "Success");
+      this._snackBar.open("Users added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
       this.markFormGroupTouched(this.addUsers);
-      this.toastr.warning("Mandatory fields required", "");
+
+      this._snackBar.open("Mandatory fields required !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
       return;
     }
   }
@@ -623,9 +648,21 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
 
       $("#edit_user").modal("hide");
       this.addUsers.reset();
-      this.toastr.success("Users is edited", "Success");
+      this._snackBar.open("Users updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
-      this.toastr.warning("Mandatory fields required", "");
+      this._snackBar.open("Mandatory fields required !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -646,8 +683,8 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
 
       phone: toSetValues.phone,
     });
-    
-    this.showCheckBoxCondition(toSetValues.role)
+
+    this.showCheckBoxCondition(toSetValues.role);
     this.Holidays = toSetValues.holidays;
 
     this.Employee = toSetValues.employee;
@@ -667,7 +704,6 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.Assets = toSetValues.Assets;
 
     this.supportTickets = toSetValues.supportTickets;
-
 
     this.users = toSetValues.users;
 
@@ -738,7 +774,13 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
       });
 
     $("#delete_user").modal("hide");
-    this.toastr.success("Users is deleted", "Success");
+    this._snackBar.open("Users deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //search by name
@@ -746,8 +788,12 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.rows.splice(0, this.rows.length);
     let temp = this.srch.filter(function (d) {
       val = val.toLowerCase();
-      return d.firstName.toLowerCase().indexOf(val) !== -1 || !val ||
-      d.lastName.toLowerCase().indexOf(val) !== -1 || !val
+      return (
+        d.firstName.toLowerCase().indexOf(val) !== -1 ||
+        !val ||
+        d.lastName.toLowerCase().indexOf(val) !== -1 ||
+        !val
+      );
     });
     this.rows.push(...temp);
   }
@@ -756,8 +802,12 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
     this.rows.splice(0, this.rows.length);
     let temp = this.srch.filter(function (d) {
       val = val.toLowerCase();
-      return d.email.toLowerCase().indexOf(val) !== -1 || !val ||
-      d.name.toLowerCase().indexOf(val) !== -1 || !val
+      return (
+        d.email.toLowerCase().indexOf(val) !== -1 ||
+        !val ||
+        d.name.toLowerCase().indexOf(val) !== -1 ||
+        !val
+      );
     });
     this.rows.push(...temp);
   }

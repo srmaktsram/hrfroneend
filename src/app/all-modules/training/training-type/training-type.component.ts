@@ -6,6 +6,11 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { A11yModule } from "@angular/cdk/a11y";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -14,6 +19,9 @@ declare const $: any;
   styleUrls: ["./training-type.component.css"],
 })
 export class TrainingTypeComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   lstTrainingType: any[];
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -35,7 +43,8 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
@@ -64,13 +73,19 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
 
   // Get  goal type  Api Call
   loadTrainingType() {
-    this.http.get("http://localhost:8443/admin/training/trainingtype/getData" + "/" + this.adminId).subscribe((data: any) => {
-      //console.log("getApi", data)
-      this.lstTrainingType = data;
-      // this.dtTrigger.next();
-      this.rows = this.lstTrainingType;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/training/trainingtype/getData" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        //console.log("getApi", data)
+        this.lstTrainingType = data;
+        // this.dtTrigger.next();
+        this.rows = this.lstTrainingType;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -82,12 +97,11 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
     });
   }
 
-
   // Add  goal type  Modal Api Call
   addTrainingType() {
     if (this.addTrainingTypeForm.invalid) {
-      this.markFormGroupTouched(this.addTrainingTypeForm)
-      return
+      this.markFormGroupTouched(this.addTrainingTypeForm);
+      return;
     }
     if (this.addTrainingTypeForm.valid) {
       let obj = {
@@ -95,40 +109,61 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
         goalType: this.addTrainingTypeForm.value.GoalType,
         description: this.addTrainingTypeForm.value.Description,
         status: this.addTrainingTypeForm.value.Status,
-
       };
-      this.http.post("http://localhost:8443/admin/training/trainingtype/create", obj).subscribe((data: any) => {
-        //console.log("postApi", data)
-        this.loadTrainingType();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/training/trainingtype/create", obj)
+        .subscribe((data: any) => {
+          //console.log("postApi", data)
+          this.loadTrainingType();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
 
       $("#add_type").modal("hide");
       this.addTrainingTypeForm.reset();
-      this.toastr.success("Training type added sucessfully...!", "Success");
+
+      this._snackBar.open("Training type added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
   editTrainingType() {
     if (this.editTrainingTypeForm.valid) {
-      this.id = this.editId
+      this.id = this.editId;
       let obj = {
         goalType: this.editTrainingTypeForm.value.GoalType,
         description: this.editTrainingTypeForm.value.Description,
         status: this.editTrainingTypeForm.value.Status,
       };
-      this.http.patch("http://localhost:8443/admin/training/trainingtype/update" + "/" + this.id, obj).subscribe((data: any) => {
-        //console.log("updateApi", data)
-        this.loadTrainingType();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/training/trainingtype/update" +
+            "/" +
+            this.id,
+          obj
+        )
+        .subscribe((data: any) => {
+          //console.log("updateApi", data)
+          this.loadTrainingType();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
 
       $("#edit_type").modal("hide");
-      this.toastr.success("Training type Updated sucessfully...!", "Success");
+      this._snackBar.open("Training type Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -148,18 +183,31 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
 
   deleteTrainingType() {
     let obj = {
-      status: 2
-    }
-    this.http.patch("http://localhost:8443/admin/training/trainingtype/delete" + "/" + this.tempId, obj).subscribe((data: any) => {
-      //console.log("deleteApi", data)
-      this.loadTrainingType();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
-      });
+      status: 2,
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/training/trainingtype/delete" +
+          "/" +
+          this.tempId,
+        obj
+      )
+      .subscribe((data: any) => {
+        //console.log("deleteApi", data)
+        this.loadTrainingType();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
 
-      $("#delete_type").modal("hide");
-      this.toastr.success("Training type deleted sucessfully..!", "Success");
-    });
+        $("#delete_type").modal("hide");
+        this._snackBar.open("Training type deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      });
   }
   // for unsubscribe datatable
   ngOnDestroy(): void {
@@ -169,13 +217,14 @@ export class TrainingTypeComponent implements OnInit, OnDestroy {
 
   updateStatus(val, id) {
     //console.log("agdgasdhgaj", val, id)
-    this.http.patch("http://localhost:8443/admin/training/trainingtype/update" + "/" + id, { status: val }).subscribe((data: any) => {
-      //console.log("updateStatus", data);
-      this.loadTrainingType();
-
-    })
+    this.http
+      .patch(
+        "http://localhost:8443/admin/training/trainingtype/update" + "/" + id,
+        { status: val }
+      )
+      .subscribe((data: any) => {
+        //console.log("updateStatus", data);
+        this.loadTrainingType();
+      });
   }
-
-
-
 }

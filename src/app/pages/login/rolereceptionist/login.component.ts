@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { RoleReceptionistAuthenticationService } from "src/app/core/storage/authentication-rolereceptionist.service";
@@ -11,6 +16,8 @@ import { RoleReceptionistAuthenticationService } from "src/app/core/storage/auth
   styleUrls: ["./login.component.css"],
 })
 export class RoleReceptionistComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -26,6 +33,7 @@ export class RoleReceptionistComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private _snackBar: MatSnackBar,
     private roleAdminAuthenticationService: RoleReceptionistAuthenticationService
   ) {}
 
@@ -83,26 +91,44 @@ export class RoleReceptionistComponent implements OnInit {
             res.role.scheduleTiming[0].read,
             res.role.scheduleTiming[1].write,
             res.role.appliedCandidates[0].read,
-            res.role.appliedCandidates[1].write,
+            res.role.appliedCandidates[1].write
           );
-          console.log(res.role.supportTickets[0].read,"supportTickets Read")
-          console.log(res.role.supportTickets[1].write,"supportTickets Write") 
-          console.log(res.role.Policies[0].read,"Policies Read")
-          console.log(res.role.Policies[1].write,"Policies Write") 
-          console.log(res.role.userDasboard[0].read,"userDasboard Read")
-          console.log(res.role.userDasboard[1].write,"userDasboard Write") 
-          console.log(res.role.jobDashboard[0].read,"jobDashboard Read")
-          console.log(res.role.jobDashboard[1].write,"jobDashboard Write") 
-          console.log(res.role.shortlistedCandidates[0].read,"shortlistedCandidates Read")
-          console.log(res.role.shortlistedCandidates[1].write,"shortlistedCandidates Write") 
-          console.log(res.role.CandidatesList[0].read,"CandidatesList Read")
-          console.log(res.role.CandidatesList[1].write,"CandidatesList Write") 
-          console.log(res.role.scheduleTiming[0].read,"scheduleTiming Read")
-          console.log(res.role.scheduleTiming[1].write,"scheduleTiming Write") 
-          console.log(res.role.appliedCandidates[0].read,"appliedCandidates Read")
-          console.log(res.role.appliedCandidates[1].write,"appliedCandidates Write") 
+          console.log(res.role.supportTickets[0].read, "supportTickets Read");
+          console.log(res.role.supportTickets[1].write, "supportTickets Write");
+          console.log(res.role.Policies[0].read, "Policies Read");
+          console.log(res.role.Policies[1].write, "Policies Write");
+          console.log(res.role.userDasboard[0].read, "userDasboard Read");
+          console.log(res.role.userDasboard[1].write, "userDasboard Write");
+          console.log(res.role.jobDashboard[0].read, "jobDashboard Read");
+          console.log(res.role.jobDashboard[1].write, "jobDashboard Write");
+          console.log(
+            res.role.shortlistedCandidates[0].read,
+            "shortlistedCandidates Read"
+          );
+          console.log(
+            res.role.shortlistedCandidates[1].write,
+            "shortlistedCandidates Write"
+          );
+          console.log(res.role.CandidatesList[0].read, "CandidatesList Read");
+          console.log(res.role.CandidatesList[1].write, "CandidatesList Write");
+          console.log(res.role.scheduleTiming[0].read, "scheduleTiming Read");
+          console.log(res.role.scheduleTiming[1].write, "scheduleTiming Write");
+          console.log(
+            res.role.appliedCandidates[0].read,
+            "appliedCandidates Read"
+          );
+          console.log(
+            res.role.appliedCandidates[1].write,
+            "appliedCandidates Write"
+          );
         } else {
-          alert("wrong Id or pass");
+          this._snackBar.open(" No matching accounts have been found !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         }
 
         // location.replace("http://localhost:4200/layout/dashboard/admin");

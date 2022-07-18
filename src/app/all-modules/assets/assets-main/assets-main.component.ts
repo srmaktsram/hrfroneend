@@ -42,6 +42,9 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
   public pipe = new DatePipe("en-US");
   public editPurchaseDateFormat;
   public editPurchaseToDateFormat;
+  user_type: string;
+  assetsWriteFin: string;
+  assetsWriteMan: string;
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
@@ -49,6 +52,9 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
     private toastr: ToastrService
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.assetsWriteMan = sessionStorage.getItem("assetsWriteMan");
+    this.assetsWriteFin = sessionStorage.getItem("assetsWriteFin");
   }
 
   ngOnInit() {

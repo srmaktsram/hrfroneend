@@ -12,10 +12,7 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_client" (click)="resetForm()" *ngIf="
-                user_type == 'admin' ||
-                (user_type === 'employee' &&
-                  (clientswrite == 'true'))
+                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_client" (click)="resetForm()" *ngIf="user_type == 'admin' ||(user_type === 'employee' && clientswrite == 'true')||(user_type === 'rolemanager' && clientsWriteMan === 'true')
               "><i
                         class="fa fa-plus"></i>
                     Add Client</a>
@@ -68,11 +65,7 @@
                     <a routerLink="/layout/clients/clientsprofile/{{item.id}}" class="avatar"><img alt=""
                             src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"></a>
                 </div>
-                <div class="dropdown profile-action" *ngIf="
-                user_type == 'admin' ||
-                (user_type === 'employee' &&
-                  (clientswrite == 'true'))
-              ">
+                <div class="dropdown profile-action" *ngIf="user_type == 'admin' ||(user_type === 'employee' && clientswrite == 'true')||(user_type === 'rolemanager' && clientsWriteMan === 'true')">
                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
                             class="material-icons">more_vert</i></a>
                     <div class="dropdown-menu dropdown-menu-right">

@@ -6,6 +6,11 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-experience-list",
@@ -13,6 +18,8 @@ declare const $: any;
   styleUrls: ["./experience-list.component.css"],
 })
 export class ExperienceListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -33,11 +40,16 @@ export class ExperienceListComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private http: HttpClient
+
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
+ 
+
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
   }
+
 
   ngOnInit() {
     this.dtOptions = {
@@ -130,7 +142,14 @@ export class ExperienceListComponent implements OnInit, OnDestroy {
           // });
         });
       $("#edit_job").modal("hide");
-      this.toastr.success("Edit experience Updated sucessfully...!", "Success");
+      // this.toastr.success("Edit experience Updated sucessfully...!", "Success");
+      this._snackBar.open("Edit Experience Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -162,7 +181,14 @@ export class ExperienceListComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.LoadExpire();
         $("#delete_job").modal("hide");
-        this.toastr.success("candidate deleted sucessfully..!", "Success");
+        // this.toastr.success("candidate deleted sucessfully..!", "Success");
+        this._snackBar.open("Candidate deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
 

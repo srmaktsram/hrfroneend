@@ -6,6 +6,11 @@ import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-edit-invoice",
@@ -13,6 +18,8 @@ import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespac
   styleUrls: ["./edit-invoice.component.css"],
 })
 export class EditInvoiceComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public id;
   public invoiceDetails;
   public invoices;
@@ -42,7 +49,8 @@ export class EditInvoiceComponent implements OnInit {
     private http: HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     //getting edit id of selected estimate list
 
@@ -53,7 +61,6 @@ export class EditInvoiceComponent implements OnInit {
 
     // this.getInvNo();
   }
-
 
   // getInvNo() {
   //   let id = this.id;
@@ -71,7 +78,14 @@ export class EditInvoiceComponent implements OnInit {
     this.editInvoiceForm = this.formBuilder.group({
       client: ["", [Validators.required]],
       number: ["", [Validators.required]],
-      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
       tax: ["", [Validators.required]],
       client_address: ["", [Validators.required]],
       billing_address: ["", [Validators.required]],
@@ -95,7 +109,11 @@ export class EditInvoiceComponent implements OnInit {
     let id = this.id;
 
     this.http
-      .get("http://localhost:8443/mainadmin/invoiceMainAdmin/getOneInvoices" + "/" + id)
+      .get(
+        "http://localhost:8443/mainadmin/invoiceMainAdmin/getOneInvoices" +
+          "/" +
+          id
+      )
       .subscribe((res: any) => {
         this.invoiceDetails = res.data;
         //passing edit id
@@ -193,12 +211,20 @@ export class EditInvoiceComponent implements OnInit {
       };
       this.http
         .patch(
-          "http://localhost:8443/mainadmin/invoiceMainAdmin/updateInvoices" + "/" + this.id,
+          "http://localhost:8443/mainadmin/invoiceMainAdmin/updateInvoices" +
+            "/" +
+            this.id,
           obj
         )
         .subscribe((res) => {
           this.router.navigate(["/layout/mainadmin/accounts/invoices"]);
-          this.toastr.success("", "Edited successfully!");
+          this._snackBar.open("Invoice Updated sucessfully !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         });
     }
   }

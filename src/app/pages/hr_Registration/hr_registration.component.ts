@@ -135,7 +135,6 @@ export class HrregistrationComponent implements OnInit {
       gender: this.registerForm.value.gender,
       securityQues: this.registerForm.value.securityQues,
       securityAns: this.registerForm.value.securityAns,
-
     };
 
     this.http
@@ -229,7 +228,7 @@ export class HrregistrationComponent implements OnInit {
       ) {
         this.showLogin = false;
         this.changePass = true;
-        this._snackBar.open("Password Changed Successfully", "Close", {
+        this._snackBar.open("Password Changed Successfully !", "", {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
         });

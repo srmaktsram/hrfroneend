@@ -5,6 +5,11 @@ import {
   FormControl,
   Validators,
 } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -13,13 +18,20 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./localization.component.css"],
 })
 export class LocalizationComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public localisation: FormGroup;
   current_location: any;
   date_time: any;
   time_zone: any;
   symbol = "Rs";
   currency_code = "INR";
-  constructor(private formBuilder: FormBuilder, private toastr: ToastrService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
+  ) {
     this.current_location = JSON.parse(
       sessionStorage.getItem("current_location")
     );
@@ -42,7 +54,13 @@ export class LocalizationComponent implements OnInit {
 
   submitLocalisation() {
     if (this.localisation.valid) {
-      this.toastr.success("Localisation is added", "Success");
+      this._snackBar.open("Localisation added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 }

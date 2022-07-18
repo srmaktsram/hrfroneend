@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { MainAdminAuthenticationService } from "src/app/core/storage/authentication-mainadmin.service";
@@ -11,6 +16,9 @@ import { MainAdminAuthenticationService } from "src/app/core/storage/authenticat
   styleUrls: ["./login.component.css"],
 })
 export class AdminLoginComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -26,10 +34,11 @@ export class AdminLoginComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private _snackBar: MatSnackBar,
     private adminAuthenticationService: MainAdminAuthenticationService
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
   sendTo() {
     this.router.navigate(["/login/forgot"]);
   }
@@ -48,7 +57,13 @@ export class AdminLoginComponent implements OnInit {
           this.router.navigate(["/layout/mainadmin"]);
           this.adminAuthenticationService.login();
         } else {
-          alert("wrong Id or pass");
+          this._snackBar.open(" No matching accounts have been found !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         }
       });
   }

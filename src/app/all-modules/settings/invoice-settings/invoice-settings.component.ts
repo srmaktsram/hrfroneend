@@ -6,6 +6,11 @@ import {
   FormControl,
   Validators,
 } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -14,6 +19,9 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./invoice-settings.component.css"],
 })
 export class InvoiceSettingsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public invoiceSettings: FormGroup;
   id: string;
   companyInvoiceLogo: string;
@@ -22,7 +30,8 @@ export class InvoiceSettingsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.id = sessionStorage.getItem("adminId");
     // this.companyInvoiceLogo = sessionStorage.getItem("cinvoice");
@@ -58,15 +67,15 @@ export class InvoiceSettingsComponent implements OnInit {
       params = params.set("id", this.id);
       const formData = new FormData();
       formData.append("file", this.cinvoice);
-      console.log("this is params<><><><>",params);
-      console.log("this is the fpormData<><><><",formData);
+      console.log("this is params<><><><>", params);
+      console.log("this is the fpormData<><><><", formData);
       this.http
         .post(
           "http://localhost:8443/admin/invoicesetting/file?" + params,
           formData
         )
         .subscribe((res: any) => {
-          console.log("this is res <><><><><>",res);
+          console.log("this is res <><><><><>", res);
           if (res.result == 1) {
             sessionStorage.setItem("cinvoice", res.data.cinvoice);
             sessionStorage.setItem("cinvoicepre", res.data.cinvoicepre);
@@ -74,7 +83,13 @@ export class InvoiceSettingsComponent implements OnInit {
           }
         });
 
-      this.toastr.success("Invoice settings is added", "Success");
+      this._snackBar.open("Invoice settings added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 }

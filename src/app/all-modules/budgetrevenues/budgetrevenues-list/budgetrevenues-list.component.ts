@@ -24,6 +24,8 @@ export class BudgetrevenuesListComponent implements OnInit {
   editRevenueForm: FormGroup;
   editId: any;
   editedvalue: any;
+  user_type: string;
+  accountingwriteFin: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +33,8 @@ export class BudgetrevenuesListComponent implements OnInit {
     private toastr: ToastrService,
     private http: HttpClient
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.accountingwriteFin = sessionStorage.getItem("accountingwriteFin");
     this.LoadCategories();
   }
   public LoadCategories() {

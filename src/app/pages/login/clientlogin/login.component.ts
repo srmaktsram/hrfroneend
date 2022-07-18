@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { ClientAuthenticationService } from "src/app/core/storage/authentication-client.service";
@@ -11,6 +16,9 @@ import { ClientAuthenticationService } from "src/app/core/storage/authentication
   styleUrls: ["./login.component.css"],
 })
 export class ClientLoginComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -27,10 +35,11 @@ export class ClientLoginComponent implements OnInit {
     // private storage: WebStorage,
     private http: HttpClient,
     private router: Router,
+    private _snackBar: MatSnackBar,
     private clientAuthenticationService: ClientAuthenticationService
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
   sendTo() {
     this.router.navigate(["/login/forgot"], {
       queryParams: {
@@ -54,7 +63,13 @@ export class ClientLoginComponent implements OnInit {
           this.clientAuthenticationService.login(client.id, client.adminId);
           this.router.navigate(["/layout/client/client-dashboard"]);
         } else {
-          alert("wrong Id or pass");
+          this._snackBar.open(" No matching accounts have been found !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         }
       });
   }
