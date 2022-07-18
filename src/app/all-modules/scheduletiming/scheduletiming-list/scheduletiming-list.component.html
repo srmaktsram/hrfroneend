@@ -107,7 +107,7 @@
                         >{{ fees.status }}</i
                       >
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && scheduletimingwriteRecep === 'true')">
+                    <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && scheduletimingwriteRecep === 'true')|| (user_type === 'rolehr' && jobswriteHr === 'true')">
                       <a
                         class="dropdown-item"
                         (click)="selectStatus('Qualified', fees.id)"
@@ -167,7 +167,7 @@
   <!-- /Page Content -->
 
   <!-- Edit Job Modal -->
-  <div id="edit_job" class="modal custom-modal fade" role="dialog" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && scheduletimingwriteRecep === 'true')">
+  <div id="edit_job" class="modal custom-modal fade" role="dialog" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && scheduletimingwriteRecep === 'true')|| (user_type === 'rolehr' && jobswriteHr === 'true')">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header" >

@@ -69,6 +69,8 @@ export class EmployeeSalaryComponent
   designations: Object;
   disableButton = true;
   deduct: any;
+  user_type: string;
+  payrollswriteHr: string;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -78,6 +80,8 @@ export class EmployeeSalaryComponent
 
     private http: HttpClient
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.payrollswriteHr = sessionStorage.getItem("payrollswriteHr");
     this.getData();
     this.loadEmployee();
     this.getDesignation();

@@ -15,7 +15,12 @@ export class OfferListComponent implements OnInit {
   public dtTrigger: Subject<any> = new Subject();
   public lstFees: any[];
   public url: any = "offer";
-  constructor(private srvModuleService: AllModulesService) { }
+  user_type: string;
+  jobswriteHr: string;
+  constructor(private srvModuleService: AllModulesService) { 
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+  }
 
   ngOnInit() {
   	     this.loadFees();

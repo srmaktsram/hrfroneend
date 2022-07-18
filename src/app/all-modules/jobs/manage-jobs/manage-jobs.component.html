@@ -12,8 +12,10 @@
           <li class="breadcrumb-item active">Jobs</li>
         </ul>
       </div>
-      <div class="col-auto float-end ms-auto">
-        <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_job"
+      <div class="col-auto float-end ms-auto" >
+        <a 
+        *ngIf="user_type === 'admin' ||  (user_type === 'rolehr' && jobswriteHr === 'true')"
+        class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_job"
           ><i class="fa fa-plus"></i> Add Job</a
         >
       </div>
@@ -40,7 +42,7 @@
               <th class="text-center">Job Type</th>
               <th class="text-center">Status</th>
               <th>Applicants</th>
-              <th class="text-end">Actions</th>
+              <th class="text-end" *ngIf="user_type === 'admin' ||  (user_type === 'rolehr' && jobswriteHr === 'true')">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -67,7 +69,7 @@
                     <i class="fa fa-dot-circle-o text-danger"></i
                     >{{ manageJobs.jobType }}
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' ||  (user_type === 'rolehr' && jobswriteHr === 'true')">
                     <a
                       class="dropdown-item"
                       (click)="updateJobType('Full Time', manageJobs.id)"
@@ -109,7 +111,7 @@
                     <i class="fa fa-dot-circle-o text-danger"></i
                     >{{ manageJobs.status }}
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right">
+                  <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' ||  (user_type === 'rolehr' && jobswriteHr === 'true')">
                     <a
                       class="dropdown-item"
                       (click)="updateStatus('Open', manageJobs.id)"
@@ -131,12 +133,13 @@
               </td>
               <td>
                 <a
+                
                   routerLink="/layout/jobs/job-applicants"
-                  class="btn btn-sm btn-primary"
+                  class="btn btn-sm btn-primary "
                   >3 Candidates</a
                 >
               </td>
-              <td class="text-end">
+              <td class="text-end" *ngIf="user_type === 'admin' ||  (user_type === 'rolehr' && jobswriteHr === 'true')">
                 <div class="dropdown dropdown-action">
                   <a
                     class="action-icon dropdown-toggle"

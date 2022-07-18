@@ -27,12 +27,17 @@ export class ExperienceListComponent implements OnInit, OnDestroy {
   public rows = [];
   public srch = [];
   public adminId = sessionStorage.getItem("adminId");
+  user_type: string;
+  jobswriteHr: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient
-  ) {}
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+  }
 
   ngOnInit() {
     this.dtOptions = {
