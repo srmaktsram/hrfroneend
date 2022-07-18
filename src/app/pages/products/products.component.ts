@@ -74,7 +74,6 @@ export class ProductsComponent implements OnInit {
     this.http
       .get("http://localhost:8443/auth/register/get_Details" + "/" + id)
       .subscribe((res: any) => {
-        console.log(res, "logincredential");
         this.http
           .get(
             "http://localhost:8443/mainadmin/packageAuth/getPackageAuthDetails" +
@@ -82,8 +81,6 @@ export class ProductsComponent implements OnInit {
               res.data.packageName
           )
           .subscribe((response: any) => {
-            console.log("getPackage Auth", response);
-
             if (res.result == 1) {
               this.router.navigate(["/layout/dashboard/admin"]);
               console.log("packageName", res.data.packageName);
