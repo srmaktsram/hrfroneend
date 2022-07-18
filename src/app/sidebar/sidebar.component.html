@@ -120,6 +120,21 @@
                 ><i class="la la-users"></i> <span>Sub Admin</span></a
               >
             </li>
+            <li
+              *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (subadminread == 'true' || subadminwrite == 'true'))
+              "
+              [ngClass]="{
+                active:
+                  urlComplete.subUrl === 'packageauthlist'
+              }"
+            >
+              <a routerLink="/layout/mainadmin/packages/packageauthlist"
+                ><i class="la la-users"></i> <span>Packages</span></a
+              >
+            </li>
 
             <li
               *ngIf="
