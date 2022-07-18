@@ -30,12 +30,17 @@ export class ProvidentFundComponent implements OnInit, OnDestroy {
   public editId: any;
   public tempId: any;
   employeeid: any;
+  user_type: string;
+  saleswriteFin: string;
   constructor(
     private allModuleService: AllModulesService,
     private http:HttpClient,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.saleswriteFin = sessionStorage.getItem("saleswriteFin");
+  }
 
   ngOnInit() {
     this.getProvidentfund();

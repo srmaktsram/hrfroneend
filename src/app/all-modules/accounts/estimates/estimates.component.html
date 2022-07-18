@@ -14,7 +14,9 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a routerLink="/layout/accounts/create-estimates" class="btn add-btn"><i class="fa fa-plus"></i> Create Estimate</a>
+                <a
+                *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')"
+                routerLink="/layout/accounts/create-estimates" class="btn add-btn"><i class="fa fa-plus"></i> Create Estimate</a>
             </div>
         </div>
     </div>
@@ -67,7 +69,7 @@
                             <th>Expiry Date</th>
                             <th>Amount</th>
                             <th>Status</th>
-                            <th class="text-end">Action</th>
+                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -84,7 +86,7 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-dot-circle-o " ></i> {{estimate.status}}
                                     </a>
-                                    <div class="dropdown-menu">
+                                    <div class="dropdown-menu" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')">
                                         <a class="dropdown-item" (click)="updateStatus('Accepted',estimate.id)"><i
                                                 class="fa fa-dot-circle-o text-success" ></i> Accepted</a>
                                         <a class="dropdown-item" (click)="updateStatus('Declined',estimate.id)"><i class="fa fa-dot-circle-o text-danger"></i>
@@ -98,7 +100,7 @@
 
 
                             </td>
-                            <td class="text-end">
+                            <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a  class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

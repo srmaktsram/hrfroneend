@@ -34,12 +34,16 @@ export class EstimatesComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
   public dtTrigger: Subject<any> = new Subject();
   adminId: any;
+  user_type: string;
+  saleswriteFin: string;
   constructor(
     
     private router: Router,
     private http:HttpClient,
     private allModulesService: AllModulesService
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.saleswriteFin = sessionStorage.getItem("saleswriteFin");
     this.adminId =sessionStorage.getItem("adminId")
   }
 
