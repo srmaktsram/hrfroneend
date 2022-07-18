@@ -84,7 +84,6 @@ export class ProductsComponent implements OnInit {
     this.http
       .get("http://localhost:8443/auth/register/get_Details" + "/" + id)
       .subscribe((res: any) => {
-
         this.http
           .get(
             "http://localhost:8443/mainadmin/packageAuth/getPackageAuthDetails" +
@@ -113,17 +112,19 @@ export class ProductsComponent implements OnInit {
                 response
               );
             } else {
-               this._snackBar.open(" No matching accounts have been found !", "", {
-            duration: 2000,
-            panelClass: "notif-success",
+              this._snackBar.open(
+                " No matching accounts have been found !",
+                "",
+                {
+                  duration: 2000,
+                  panelClass: "notif-success",
 
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
+                  horizontalPosition: this.horizontalPosition,
+                  verticalPosition: this.verticalPosition,
+                }
+              );
             }
-
           });
-        }
-
       });
   }
 }

@@ -65,36 +65,49 @@ export class LoginComponent implements OnInit {
               res.data.packageName
           )
           .subscribe((response: any) => {
-            if (res.result == 2) {
-              this.router.navigate(["/layout/dashboard/admin"]);
+            this.http
+              .get(
+                "http://localhost:8443/mainadmin/packageAuth/getPackageAuthDetails" +
+                  "/" +
+                  res.data.packageName
+              )
+              .subscribe((response: any) => {
+                if (res.result == 2) {
+                  this.router.navigate(["/layout/dashboard/admin"]);
 
-          this.adminAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.companyEmail,
-            res.data.companyName,
-            res.data.companySite,
-            res.data.pinCode,
-            res.data.companyAddress,
-            res.data.phone,
-            res.data.mobile,
-            res.data.location,
-            res.data.cicon,
-            res.data.cinvoice,
-            res.data.cinvoicepre,
-            res.data.packageName
-          );
-        } else {
-          this._snackBar.open(" No matching accounts have been found !", "", {
-            duration: 2000,
-            panelClass: "notif-success",
+                  this.adminAuthenticationService.login(
+                    res.data.id,
+                    res.data.corporateId,
+                    res.data.companyEmail,
+                    res.data.companyName,
+                    res.data.companySite,
+                    res.data.pinCode,
+                    res.data.companyAddress,
+                    res.data.phone,
+                    res.data.mobile,
+                    res.data.location,
+                    res.data.cicon,
+                    res.data.cinvoice,
+                    res.data.cinvoicepre,
+                    res.data.packageName,
+                    response
+                  );
+                } else {
+                  this._snackBar.open(
+                    " No matching accounts have been found !",
+                    "",
+                    {
+                      duration: 2000,
+                      panelClass: "notif-success",
 
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-          });
-        }
+                      horizontalPosition: this.horizontalPosition,
+                      verticalPosition: this.verticalPosition,
+                    }
+                  );
+                }
 
-            // location.replace("http://localhost:4200/layout/dashboard/admin");
+                // location.replace("http://localhost:4200/layout/dashboard/admin");
+              });
           });
       });
   }
