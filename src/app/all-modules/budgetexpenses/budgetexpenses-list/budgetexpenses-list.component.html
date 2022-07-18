@@ -17,6 +17,7 @@
           </div>
           <div class="col-auto float-end ms-auto">
             <a
+            *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')"
               href="#"
               class="btn add-btn"
               data-bs-toggle="modal"
@@ -40,7 +41,7 @@
                   <th>SubCategory Name</th>
                   <th>Amount</th>
                   <th>Revenue Date</th>
-                  <th class="text-end">Action</th>
+                  <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -51,7 +52,7 @@
                   <td>{{ item.subcategoryname }}</td>
                   <td>{{ item.amount }}</td>
                   <td>{{ item.revenuedate | customDate }}</td>
-                  <td class="text-end">
+                  <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')">
                     <div class="dropdown dropdown-action">
                       <a
                         href="#"

@@ -14,8 +14,13 @@ export class PaymentsComponent implements OnInit, OnDestroy {
   public adminId =sessionStorage.getItem("adminId")
   public allPayments: any = [];
   public dtTrigger: Subject<any> = new Subject();
+  user_type: string;
+  saleswriteFin: string;
   constructor(private allModuleService: AllModulesService,
-    private http:HttpClient) {}
+    private http:HttpClient) {
+      this.user_type = sessionStorage.getItem("user_type");
+      this.saleswriteFin = sessionStorage.getItem("saleswriteFin");
+    }
 
   ngOnInit() {
     //get payments

@@ -192,6 +192,8 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
   public rows = [];
   public srch = [];
   public dtTrigger: Subject<any> = new Subject();
+  usersWriteMan: string;
+  user_type: string;
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
@@ -199,6 +201,8 @@ export class UserMainComponent implements OnInit, OnDestroy, AfterViewInit {
     private toastr: ToastrService
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.usersWriteMan = sessionStorage.getItem("usersWriteMan");
   }
   public initializeArray() {
     this.Holidays = [
