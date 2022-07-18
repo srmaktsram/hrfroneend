@@ -15,6 +15,7 @@
           </ul>
         </div>
         <div class="col-auto float-end ms-auto">
+
           <a
           *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true')"
             href="#"
@@ -33,30 +34,19 @@
     <div class="row filter-row">
       <div class="col-sm-6 col-md-3">
         <div class="form-group form-focus">
-          <input
-            type="text"
-            class="form-control floating"
-            (input)="searchByCandidate($event.target.value)"
-          />
+          <input type="text" class="form-control floating" (input)="searchByCandidate($event.target.value)" />
           <label class="focus-label">Candidate Name</label>
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
         <div class="form-group form-focus">
-          <input
-            type="text"
-            class="form-control floating"
-            (input)="searchByMobile($event.target.value)"
-          />
+          <input type="text" class="form-control floating" (input)="searchByMobile($event.target.value)" />
           <label class="focus-label">Mobile No.</label>
         </div>
       </div>
       <div class="col-sm-6 col-md-3">
         <div class="form-group form-focus select-focus">
-          <select
-            class="form-select floating form-control"
-            (input)="searchStatus($event.target.value)"
-          >
+          <select class="form-select floating form-control" (input)="searchStatus($event.target.value)">
             <option selected>Select Status</option>
             <option value="New">New</option>
             <option value="First Round">First Round</option>
@@ -78,12 +68,8 @@
     <div class="row">
       <div class="col-md-12">
         <div class="table-responsive">
-          <table
-            datatable
-            [dtOptions]="dtOptions"
-            [dtTrigger]="dtTrigger"
-            class="table table-striped custom-table datatable mb-0"
-          >
+          <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            class="table table-striped custom-table datatable mb-0">
             <thead>
               <tr>
                 <th>S.No</th>
@@ -103,11 +89,9 @@
                 <td>{{ i + 1 }}</td>
                 <td>
                   <h2 class="table-avatar">
-                    <a routerLink="/layout/profile/profilelist" class="avatar"
-                      ><img alt="" src="assets/img/profiles/avatar-2.jpg"
-                    /></a>
-                    <a routerLink="/layout/profile/profilelist"
-                      >{{ item.firstName }} {{ item.lastName }}
+                    <a routerLink="/layout/profile/profilelist" class="avatar"><img alt=""
+                        src="assets/img/profiles/avatar-2.jpg" /></a>
+                    <a routerLink="/layout/profile/profilelist">{{ item.firstName }} {{ item.lastName }}
                     </a>
                   </h2>
                 </td>
@@ -117,46 +101,19 @@
 
                 <td class="text-center">
                   <div class="dropdown action-label">
-                    <a
-                      class="btn btn-white btn-sm btn-rounded"
-                      aria-expanded="false"
-                    >
-                      <i
-                        class="fa fa-dot-circle-o text-info"
-                        *ngIf="item.status == 'New'"
-                        >{{ item.status }}</i
-                      >
+                    <a class="btn btn-white btn-sm btn-rounded" aria-expanded="false">
+                      <i class="fa fa-dot-circle-o text-info" *ngIf="item.status == 'New'">{{ item.status }}</i>
 
-                      <i
-                        class="fa fa-dot-circle-o text-sm"
-                        *ngIf="item.status == 'First Round'"
-                        >{{ item.status }}</i
-                      >
-                      <i
-                        class="fa fa-dot-circle-o text-muted"
-                        *ngIf="item.status == 'Second Round'"
-                        >{{ item.status }}</i
-                      >
-                      <i
-                        class="fa fa-dot-circle-o text-warning"
-                        *ngIf="item.status == 'Final Round'"
-                        >{{ item.status }}</i
-                      >
-                      <i
-                        class="fa fa-dot-circle-o text-success"
-                        *ngIf="item.status == 'Qualified'"
-                        >{{ item.status }}</i
-                      >
-                      <i
-                        class="fa fa-dot-circle-o text-danger"
-                        *ngIf="item.status == 'Disqualified'"
-                        >{{ item.status }}</i
-                      >
-                      <i
-                        class="fa fa-dot-circle-o text-danger"
-                        *ngIf="item.status == 'Rejected'"
-                        >{{ item.status }}</i
-                      >
+                      <i class="fa fa-dot-circle-o text-sm" *ngIf="item.status == 'First Round'">{{ item.status }}</i>
+                      <i class="fa fa-dot-circle-o text-muted" *ngIf="item.status == 'Second Round'">{{ item.status
+                        }}</i>
+                      <i class="fa fa-dot-circle-o text-warning" *ngIf="item.status == 'Final Round'">{{ item.status
+                        }}</i>
+                      <i class="fa fa-dot-circle-o text-success" *ngIf="item.status == 'Qualified'">{{ item.status
+                        }}</i>
+                      <i class="fa fa-dot-circle-o text-danger" *ngIf="item.status == 'Disqualified'">{{ item.status
+                        }}</i>
+                      <i class="fa fa-dot-circle-o text-danger" *ngIf="item.status == 'Rejected'">{{ item.status }}</i>
                     </a>
                   </div>
                 </td>
@@ -164,6 +121,7 @@
                 <td>{{ item.gender }}</td>
                 <td>{{ item.createDate }}</td>
                 <td class="text-center">
+
                   <div class="dropdown dropdown-action" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true')">
                     <a
                       href="#"
@@ -172,23 +130,12 @@
                       aria-expanded="false"
                       ><i class="material-icons">more_vert</i></a
                     >
+
                     <div class="dropdown-menu dropdown-menu-right">
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#edit_job"
-                        (click)="edit(item)"
-                        ><i class="fa fa-pencil m-r-5"></i> Edit</a
-                      >
-                      <a
-                        class="dropdown-item"
-                        href="#"
-                        data-bs-toggle="modal"
-                        data-bs-target="#delete_job"
-                        (click)="tempId = item.id"
-                        ><i class="fa fa-trash-o m-r-5"></i> Delete</a
-                      >
+                      <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#edit_job"
+                        (click)="edit(item)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                      <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#delete_job"
+                        (click)="tempId = item.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                     </div>
                   </div>
                 </td>
@@ -206,12 +153,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Add Candidates</h5>
-          <button
-            type="button"
-            class="close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -220,34 +162,37 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >First Name <span class="text-danger">*</span></label
-                  >
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="firstName"
-                  />
+                  <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" formControlName="firstName" maxlength="20" />
+                  <ng-container
+                    *ngIf="addCandidateForm.get('firstName').invalid && addCandidateForm.get('firstName').touched">
+                    <p *ngIf="addCandidateForm.get('firstName').errors.required" class="text-danger">
+                      *FirstName is required</p>
+                    <p *ngIf="addCandidateForm.get('firstName').errors.pattern" class="text-danger">
+                      First Name is must be Valid Name
+                    </p>
+                  </ng-container>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Last Name</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="lastName"
-                  />
+                  <input class="form-control" type="text" formControlName="lastName" maxlength="20" />
+                  <ng-container
+                    *ngIf="addCandidateForm.get('lastName').invalid && addCandidateForm.get('lastName').touched">
+                    <p *ngIf="addCandidateForm.get('lastName').errors.required" class="text-danger">
+                      *LastName is required</p>
+                    <p *ngIf="addCandidateForm.get('lastName').errors.pattern" class="text-danger">
+                      Last Name is must be Valid Name
+                    </p>
+                  </ng-container>
                 </div>
               </div>
               <!-- //////////////////////////////// -->
 
               <div class="col-sm-6">
                 <div class="form-group">
-                  <select
-                    class="form-select form-control"
-                    formControlName="jobTitle"
-                  >
+                  <select class="form-select form-control" formControlName="jobTitle">
                     <option selected>Select Job Title</option>
                     <option *ngFor="let item of allJobs">
                       {{ item.jobTitle }}
@@ -261,82 +206,63 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Gender</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="gender"
-                  />
+                  <input class="form-control" type="text" formControlName="gender" />
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Address</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="address"
-                  />
+                  <input class="form-control" type="text" formControlName="address" />
                 </div>
               </div>
 
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Email <span class="text-danger">*</span></label
-                  >
-                  <input
-                    class="form-control"
-                    type="email"
-                    formControlName="email"
-                  />
+                  <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" formControlName="email" />
+
+                  <ng-container *ngIf="addCandidateForm.get('email').invalid && addCandidateForm.get('email').touched">
+                    <p *ngIf="addCandidateForm.get('email').errors.required" class="text-danger">
+                      Email is Required
+                    </p>
+                    <p *ngIf="addCandidateForm.get('email').errors.email || addCandidateForm.get('email').whitespace"
+                      class="text-danger"> *Invalid Email Address</p>
+                  </ng-container>
                 </div>
               </div>
 
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Created Date <span class="text-danger">*</span></label
-                  >
+                  <label class="col-form-label">Created Date <span class="text-danger">*</span></label>
                   <div class="cal-icon">
-                    <input
-                      class="form-control datetimepicker"
-                      type="text"
-                      bsDatepicker
-                      formControlName="createDate"
-                    />
+                    <input class="form-control datetimepicker" type="text" bsDatepicker formControlName="createDate" />
                   </div>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Mobile </label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="mobile"
-                  />
+                  <input class="form-control" type="text" formControlName="mobile" minlength="10" maxlength="10" />
+                  <ng-container
+                    *ngIf="addCandidateForm.get('mobile').invalid && addCandidateForm.get('mobile').touched">
+                    <p *ngIf="addCandidateForm.get('mobile').errors.required" class="text-danger">
+                      Phone Number is Required
+                    </p>
+                    <p *ngIf="addCandidateForm.get('mobile').errors.pattern" class="text-danger">
+                      *Invalid</p>
+                  </ng-container>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Upload Resume <span class="text-danger">*</span></label
-                  >
-                  <input
-                    type="file"
-                    class="form-control"
-                    formControlName="file"
-                    (change)="selectImage($event)"
-                  />
+                  <label class="col-form-label">Upload Resume <span class="text-danger">*</span></label>
+                  <input type="file" class="form-control" formControlName="file" (change)="selectImage($event)" />
                 </div>
               </div>
             </div>
 
             <div class="submit-section">
-              <button
-                class="btn btn-primary submit-btn"
-                (click)="addCandidate()"
-              >
+              <button class="btn btn-primary submit-btn" (click)="addCandidate()">
                 Submit
               </button>
             </div>
@@ -352,12 +278,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Edit Candidates</h5>
-          <button
-            type="button"
-            class="close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          >
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -366,33 +287,36 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >First Name <span class="text-danger">*</span></label
-                  >
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="firstName"
-                  />
+                  <label class="col-form-label">First Name <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" formControlName="firstName" maxlength="20" />
+                  <ng-container
+                    *ngIf="editCandidateForm.get('firstName').invalid && editCandidateForm.get('firstName').touched">
+                    <p *ngIf="editCandidateForm.get('firstName').errors.required" class="text-danger">
+                      *FirstName is required</p>
+                    <p *ngIf="editCandidateForm.get('firstName').errors.pattern" class="text-danger">
+                      First Name is must be Valid Name
+                    </p>
+                  </ng-container>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Last Name</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="lastName"
-                  />
+                  <input class="form-control" type="text" formControlName="lastName" maxlength="20" />
+                  <ng-container
+                    *ngIf="editCandidateForm.get('lastName').invalid && editCandidateForm.get('lastName').touched">
+                    <p *ngIf="editCandidateForm.get('lastName').errors.required" class="text-danger">
+                      *Last Name is required</p>
+                    <p *ngIf="editCandidateForm.get('lastName').errors.pattern" class="text-danger">
+                      First Name is must be Valid Name
+                    </p>
+                  </ng-container>
                 </div>
               </div>
 
               <div class="col-sm-6">
                 <div class="form-group">
-                  <select
-                    class="form-select form-control"
-                    formControlName="jobTitle"
-                  >
+                  <select class="form-select form-control" formControlName="jobTitle">
                     <option>Select Job Title</option>
                     <option *ngFor="let item of allJobs">
                       {{ item.jobTitle }}
@@ -403,78 +327,62 @@
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Gender </label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="gender"
-                  />
+                  <input class="form-control" type="text" formControlName="gender" />
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Address</label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="address"
-                  />
+                  <input class="form-control" type="text" formControlName="address" />
                 </div>
               </div>
 
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Email <span class="text-danger">*</span></label
-                  >
-                  <input
-                    class="form-control"
-                    type="email"
-                    formControlName="email"
-                  />
+                  <label class="col-form-label">Email <span class="text-danger">*</span></label>
+                  <input class="form-control" type="text" formControlName="email" />
+
+                  <ng-container
+                    *ngIf="editCandidateForm.get('email').invalid && editCandidateForm.get('email').touched">
+                    <p *ngIf="editCandidateForm.get('email').errors.required" class="text-danger">
+                      Email is Required
+                    </p>
+                    <p *ngIf="editCandidateForm.get('email').errors.email || editCandidateForm.get('email').whitespace"
+                      class="text-danger"> *Invalid Email Address</p>
+                  </ng-container>
                 </div>
               </div>
 
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Created Date <span class="text-danger">*</span></label
-                  >
+                  <label class="col-form-label">Created Date <span class="text-danger">*</span></label>
                   <div class="cal-icon">
-                    <input
-                      class="form-control datetimepicker"
-                      type="text"
-                      bsDatepicker
-                      type="text"
-                      [bsConfig]="{
+                    <input class="form-control datetimepicker" type="text" bsDatepicker type="text" [bsConfig]="{
                         dateInputFormat: 'DD-MM-YYYY',
                         returnFocusToInput: true
-                      }"
-                      formControlName="createDate"
-                    />
+                      }" formControlName="createDate" />
                   </div>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
                   <label class="col-form-label">Phone </label>
-                  <input
-                    class="form-control"
-                    type="text"
-                    formControlName="mobile"
-                  />
+                  <input class="form-control" type="text" formControlName="mobile" maxlength="10" minlength="10" />
+                  <ng-container
+                    *ngIf="editCandidateForm.get('mobile').invalid && editCandidateForm.get('mobile').touched">
+                    <p *ngIf="editCandidateForm.get('mobile').errors.required" class="text-danger">
+                      Mobile Number is Required
+                    </p>
+                    <p *ngIf="editCandidateForm.get('mobile').errors.pattern" class="text-danger">
+                      *Invalid
+                    </p>
+                  </ng-container>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-group">
-                  <label class="col-form-label"
-                    >Upload Resume <span class="text-danger">*</span></label
-                  >
-                  <input
-                    type="file"
-                    class="form-control"
-                    formControlName="resume"
-                    (change)="selectImage($event)"
-                  />
+                  <label class="col-form-label">Upload Resume <span class="text-danger">*</span></label>
+                  <input type="file" class="form-control" formControlName="resume" (change)="selectImage($event)" />
                 </div>
               </div>
             </div>
@@ -488,6 +396,7 @@
   </div>
   <!-- /Edit Job Modal -->
 
+
   <!-- Delete Job Modal -->
   <div class="modal custom-modal fade" id="delete_job" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
@@ -500,20 +409,11 @@
           <div class="modal-btn delete-action">
             <div class="row">
               <div class="col-6">
-                <a
-                  href="javascript:void(0);"
-                  class="btn btn-primary continue-btn"
-                  (click)="deleteCandidate()"
-                  >Delete</a
-                >
+                <a href="javascript:void(0);" class="btn btn-primary continue-btn"
+                  (click)="deleteCandidate()">Delete</a>
               </div>
               <div class="col-6">
-                <a
-                  href="javascript:void(0);"
-                  data-bs-dismiss="modal"
-                  class="btn btn-primary cancel-btn"
-                  >Cancel</a
-                >
+                <a href="javascript:void(0);" data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
               </div>
             </div>
           </div>
