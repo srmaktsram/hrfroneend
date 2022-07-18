@@ -30,12 +30,16 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
   public rows = [];
   public srch = [];
   multFile: any;
+  candidateslistwriteRecep: string;
+  user_type: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.candidateslistwriteRecep = sessionStorage.getItem("candidateslistwriteRecep");
     this.jobFunction();
   }
 

@@ -21,12 +21,16 @@ export class ScheduletimingListComponent implements OnInit {
   public interviewerEmail: any;
   interviewerName: string;
   public currentStatus: any;
+  user_type: string;
+  scheduletimingwriteRecep: string;
   // public url: any = "scheduletiming";
 
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.scheduletimingwriteRecep = sessionStorage.getItem("scheduletimingwriteRecep");
     this.selectInterviewer();
   }
 
