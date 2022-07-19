@@ -2188,11 +2188,11 @@
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.role[0].access == true) ||
-                  ((user_type === 'roleadmin'roleDetails.role[0].access == true) &&
+                  ((user_type === 'roleadmin'&&roleDetails.role[0].access == true) &&
                     (usersRead === 'true' || usersWrite === 'true')) ||
-                  ((user_type === 'rolesubadmin'roleDetails.role[0].access == true) &&
+                  ((user_type === 'rolesubadmin'&&roleDetails.role[0].access == true) &&
                     (usersReadSub === 'true' || usersWriteSub === 'true')) ||
-                  ((user_type === 'rolemanager'roleDetails.role[0].access == true) &&
+                  ((user_type === 'rolemanager'&&roleDetails.role[0].access == true) &&
                     (usersReadMan === 'true' || usersWriteMan === 'true'))
                 "
                 [ngClass]="{ active: urlComplete.subUrl === 'user-main' }"
