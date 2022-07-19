@@ -34,6 +34,7 @@ export class EmployeePageContentComponent implements OnInit {
   public designations: any;
   public addEmployeeForm: FormGroup;
   public editEmployeeForm: FormGroup;
+  public email_error = true;
 
   public pipe = new DatePipe("en-US");
   public rows = [];
@@ -258,26 +259,23 @@ export class EmployeePageContentComponent implements OnInit {
     };
     this.http
       .post("http://localhost:8443/admin/allemployees/addemployee", obj)
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         console.log("postApi", data);
-        this.loadEmployee();
-        // $("#datatable").DataTable().clear();
-        // this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        //   dtInstance.destroy();
-        // });
-        // this.dtTrigger.next();
+        if (data.result == 0) {
+          this.loadEmployee();
+          $("#add_employee").modal("hide");
+          this.addEmployeeForm.reset();
+          this._snackBar.open("Employeee added  sucessfully !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        } else if (data.result == 1) {
+          this.email_error = false;
+        }
       });
-
-    $("#add_employee").modal("hide");
-    this.addEmployeeForm.reset();
-
-    this._snackBar.open("Employeee added  sucessfully !", "", {
-      duration: 2000,
-      panelClass: "notif-success",
-
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-    });
   }
 
   // to know the date picker changes
