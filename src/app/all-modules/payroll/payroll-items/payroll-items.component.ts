@@ -11,6 +11,11 @@ import { HttpClient } from "@angular/common/http";
 
 import { Router } from "@angular/router";
 import { id } from "src/assets/all-modules-data/id";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 
@@ -20,6 +25,8 @@ declare const $: any;
   styleUrls: ["./payroll-items.component.css"],
 })
 export class PayrollItemsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   // dtOptions: DataTables.Settings = {};
   public urlAdd: any = "payrollAddition";
   public urlOver: any = "payrollOvertime";
@@ -52,14 +59,16 @@ export class PayrollItemsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private router: Router,
-
+    private _snackBar: MatSnackBar,
     private http: HttpClient
+
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.payrollWrite = sessionStorage.getItem("payrollWrite");
     this.payrollWriteSub = sessionStorage.getItem("payrollWriteSub");
     this.payrollswriteHr = sessionStorage.getItem("payrollswriteHr");
    }
+
 
   ngOnInit() {
     //get add payroll
@@ -74,7 +83,13 @@ export class PayrollItemsComponent implements OnInit {
     // Add payroll Form Validation And Getting Values
 
     this.addPayrollForm = this.formBuilder.group({
-      addPayrollName: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      addPayrollName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       addPayrollCategory: ["", [Validators.required]],
       addPayrollUnit: ["", [Validators.required]],
     });
@@ -82,7 +97,13 @@ export class PayrollItemsComponent implements OnInit {
     // Edit payroll Form Validation And Getting Values
 
     this.editPayrollForm = this.formBuilder.group({
-      editPayrollName: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      editPayrollName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       editPayrollCategory: ["", [Validators.required]],
       editPayrollUnit: ["", [Validators.required]],
     });
@@ -90,7 +111,13 @@ export class PayrollItemsComponent implements OnInit {
     // Add overTime Form Validation And Getting Values
 
     this.addOverForm = this.formBuilder.group({
-      addOverName: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      addOverName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       addOverRateType: ["", [Validators.required]],
       addOverRate: ["", [Validators.required]],
     });
@@ -98,7 +125,13 @@ export class PayrollItemsComponent implements OnInit {
     // Edit overtime Form Validation And Getting Values
 
     this.editOverForm = this.formBuilder.group({
-      editOverName: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      editOverName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       editOverRateType: ["", [Validators.required]],
       editOverRate: ["", [Validators.required]],
     });
@@ -106,14 +139,26 @@ export class PayrollItemsComponent implements OnInit {
     // Add deduction Form Validation And Getting Values
 
     this.addDeductForm = this.formBuilder.group({
-      addDeductName: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      addDeductName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       addDeductUnit: ["", [Validators.required]],
     });
 
     // Edit deduction Form Validation And Getting Values
 
     this.editDeductForm = this.formBuilder.group({
-      editDeductName: ['', [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      editDeductName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       editDeductunit: ["", [Validators.required]],
     });
 
@@ -129,8 +174,8 @@ export class PayrollItemsComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/admin/payrollItems/getAddition" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data) => {
         this.allAddPayroll = data;
@@ -143,8 +188,8 @@ export class PayrollItemsComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/admin/payrollItems/getOvertime" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((res: any) => {
         this.allOverPayroll = res;
@@ -157,8 +202,8 @@ export class PayrollItemsComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/admin/payrollItems/getDeduction" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data: any) => {
         this.allDeductPayroll = data;
@@ -190,11 +235,17 @@ export class PayrollItemsComponent implements OnInit {
       };
       this.http
         .post("http://localhost:8443/admin/payrollItems/createAddition", obj)
-        .subscribe((data1) => { });
+        .subscribe((data1) => {});
       this.getAddPayroll();
       $("#add_addition").modal("hide");
       this.addPayrollForm.reset();
-      this.toastr.success("Payroll added", "Success");
+      this._snackBar.open("Payroll Added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -212,10 +263,16 @@ export class PayrollItemsComponent implements OnInit {
         "http://localhost:8443/admin/payrollItems/updateAddition" + "/" + id,
         obj
       )
-      .subscribe((data1) => { });
+      .subscribe((data1) => {});
     this.getAddPayroll();
     $("#edit_addition").modal("hide");
-    this.toastr.success("Payroll edited", "Success");
+    this._snackBar.open("Payroll updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   editAdd(value) {
@@ -247,7 +304,13 @@ export class PayrollItemsComponent implements OnInit {
         this.getAddPayroll();
         $("#delete_addition").modal("hide");
       });
-    this.toastr.success("Payroll deleted", "Success");
+    this._snackBar.open("Payroll deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // Add overtime Modal Api Call
@@ -269,7 +332,13 @@ export class PayrollItemsComponent implements OnInit {
 
       $("#add_overtime").modal("hide");
       this.addOverForm.reset();
-      this.toastr.success("Overtime added", "Success");
+      this._snackBar.open("Overtime Added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -291,7 +360,13 @@ export class PayrollItemsComponent implements OnInit {
         this.getOverpayroll();
       });
     $("#edit_overtime").modal("hide");
-    this.toastr.success("Overtime edited", "Success");
+    this._snackBar.open("Overtime updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   editOver(value) {
@@ -323,7 +398,13 @@ export class PayrollItemsComponent implements OnInit {
         this.getOverpayroll();
         $("#delete_overtime").modal("hide");
       });
-    this.toastr.success("Overtime deleted", "Success");
+    this._snackBar.open("Overtime Deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // Add deduction Modal Api Call
@@ -337,11 +418,17 @@ export class PayrollItemsComponent implements OnInit {
       };
       this.http
         .post("http://localhost:8443/admin/payrollItems/createDeduction", obj)
-        .subscribe((data) => { });
+        .subscribe((data) => {});
       this.getDeductPayroll();
       $("#add_deduction").modal("hide");
       this.addDeductForm.reset();
-      this.toastr.success("Deduction added", "Success");
+      this._snackBar.open("Deduction Added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -358,10 +445,16 @@ export class PayrollItemsComponent implements OnInit {
         "http://localhost:8443/admin/payrollItems/updateDeduction" + "/" + id,
         obj
       )
-      .subscribe((data1) => { });
+      .subscribe((data1) => {});
     this.getDeductPayroll();
     $("#edit_deduction").modal("hide");
-    this.toastr.success("Deducts edited", "Success");
+    this._snackBar.open("Deducts updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   editDeduct(value) {
     this.editDeductId = value;
@@ -391,6 +484,12 @@ export class PayrollItemsComponent implements OnInit {
         this.getDeductPayroll();
         $("#delete_deduction").modal("hide");
       });
-    this.toastr.success("Deduction deleted", "Success");
+    this._snackBar.open("Deduction updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 }

@@ -18,6 +18,11 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -26,6 +31,9 @@ declare const $: any;
   styleUrls: ["./tickets-content.component.css"],
 })
 export class TicketsContentComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -65,7 +73,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     private router: Router,
     private http: HttpClient,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.ticketsWrite = sessionStorage.getItem("ticketsWrite");
@@ -272,9 +281,21 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
 
       $("#add_ticket").modal("hide");
       this.addTicketForm.reset();
-      this.toastr.success("Tickets added", "Success");
+      this._snackBar.open("Tickets added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
-      this.toastr.warning("Mandatory fields required", "");
+      this._snackBar.open("Mandatory fields required !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -312,7 +333,13 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
 
     $("#edit_ticket").modal("hide");
     this.editTicketForm.reset();
-    this.toastr.success("Ticket updated", "Success");
+    this._snackBar.open("Ticket updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   edit(value) {
@@ -353,7 +380,13 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
         this.getTickets();
       });
     $("#delete_ticket").modal("hide");
-    this.toastr.success("Tickets deleted", "Success");
+    this._snackBar.open("Ticket deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //search by name

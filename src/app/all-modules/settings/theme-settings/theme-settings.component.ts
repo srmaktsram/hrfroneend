@@ -6,6 +6,11 @@ import {
   FormControl,
   Validators,
 } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -14,6 +19,9 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./theme-settings.component.css"],
 })
 export class ThemeSettingsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public themeSettings: FormGroup;
   images: any;
   id: any;
@@ -27,7 +35,8 @@ export class ThemeSettingsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.settingsWrite = sessionStorage.getItem("settingsWrite");
@@ -78,7 +87,13 @@ export class ThemeSettingsComponent implements OnInit {
           }
         });
 
-      this.toastr.success("Theme settings is added", "Success");
+      this._snackBar.open("Theme settings  added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 }

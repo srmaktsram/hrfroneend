@@ -1,5 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
 
@@ -9,6 +14,9 @@ import { AdminAuthenticationService } from "src/app/core/storage/authentication-
   styleUrls: ["./products.component.css"],
 })
 export class ProductsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   AllProductList: any;
   public productDetails: any;
   public corporateId: any;
@@ -22,7 +30,8 @@ export class ProductsComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private adminAuthenticationService: AdminAuthenticationService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.corporateId = sessionStorage.getItem("corporateId");
   }
@@ -49,6 +58,7 @@ export class ProductsComponent implements OnInit {
       )
       .subscribe((res: any) => {
         this.productDetails = res;
+
         this.productDetails.map((item) => {
           let data = this.calculateExpiryDays(item.group[0].to);
           var obj = {
@@ -74,7 +84,6 @@ export class ProductsComponent implements OnInit {
     this.http
       .get("http://localhost:8443/auth/register/get_Details" + "/" + id)
       .subscribe((res: any) => {
-        console.log(res, "logincredential");
         this.http
           .get(
             "http://localhost:8443/mainadmin/packageAuth/getPackageAuthDetails" +
@@ -82,8 +91,6 @@ export class ProductsComponent implements OnInit {
               res.data.packageName
           )
           .subscribe((response: any) => {
-            console.log("getPackage Auth", response);
-
             if (res.result == 1) {
               this.router.navigate(["/layout/dashboard/admin"]);
               console.log("packageName", res.data.packageName);
@@ -105,7 +112,17 @@ export class ProductsComponent implements OnInit {
                 response
               );
             } else {
-              alert("wrong Id or pass");
+              this._snackBar.open(
+                " No matching accounts have been found !",
+                "",
+                {
+                  duration: 2000,
+                  panelClass: "notif-success",
+
+                  horizontalPosition: this.horizontalPosition,
+                  verticalPosition: this.verticalPosition,
+                }
+              );
             }
           });
       });

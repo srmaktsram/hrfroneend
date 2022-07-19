@@ -60,6 +60,11 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
   searchMobile: any;
   searchEmail: any;
   user_type: string;
+  resignation: { id: number; access: boolean }[];
+  termination: { id: number; access: boolean }[];
+  reports: { id: number; access: boolean }[];
+  activities: { id: number; access: boolean }[];
+  leads: { id: number; access: boolean }[];
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
@@ -82,7 +87,13 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
     this.goals = [{ id: 0, access: false }];
     this.training = [{ id: 0, access: false }];
     this.gmail = [{ id: 0, access: false }];
+
     this.payrole = [{ id: 0, access: false }];
+    this.resignation = [{ id: 0, access: false }];
+    this.termination = [{ id: 0, access: false }];
+    this.reports = [{ id: 0, access: false }];
+    this.activities = [{ id: 0, access: false }];
+    this.leads = [{ id: 0, access: false }];
 
     this.dtOptions = {
       pageLength: 10,
@@ -153,6 +164,11 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
     this.training = client[0]?.training;
     this.gmail = client[0]?.gmail;
     this.payrole = client[0]?.payrole;
+    this.resignation = client[0]?.resignation;
+    this.termination = client[0]?.termination;
+    this.reports = client[0]?.reports;
+    this.activities = client[0]?.activities;
+    this.leads = client[0]?.leads;
   }
   //Reset form
   public resetForm() {
@@ -162,10 +178,8 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
   // Save Client
   public onSave() {
     let obj = {
-      userName: this.editClientForm.value.editUserName,
-      password: this.editClientForm.value.editPassword,
-      mobile: this.editClientForm.value.editMobile,
-      email: this.editClientForm.value.editEmail,
+      packageName: this.editClientForm.value.editPackageName,
+
       job: this.job,
       chat: this.chat,
       role: this.role,
@@ -178,7 +192,11 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
       training: this.training,
       gmail: this.gmail,
       payrole: this.payrole,
-      adminId: this.adminId,
+      resignation: this.resignation,
+      termination: this.termination,
+      reports: this.reports,
+      activities: this.activities,
+      leads: this.leads,
     };
     let id = this.editId;
     this.http
@@ -213,7 +231,11 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
       training: this.training,
       gmail: this.gmail,
       payrole: this.payrole,
-      adminId: this.adminId,
+      resignation: this.resignation,
+      termination: this.termination,
+      reports: this.reports,
+      activities: this.activities,
+      leads: this.leads,
     };
     this.http
       .post(
@@ -477,6 +499,61 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
       } else {
         const objIndex = this.gmail.findIndex((obj) => obj.id == val);
         this.gmail[objIndex].access = false;
+      }
+    }
+  }
+  checkCheckBoxvalueResignation(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.resignation.findIndex((obj) => obj.id == val);
+        this.resignation[objIndex].access = true;
+      } else {
+        const objIndex = this.resignation.findIndex((obj) => obj.id == val);
+        this.resignation[objIndex].access = false;
+      }
+    }
+  }
+  checkCheckBoxvalueTermination(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.termination.findIndex((obj) => obj.id == val);
+        this.termination[objIndex].access = true;
+      } else {
+        const objIndex = this.termination.findIndex((obj) => obj.id == val);
+        this.termination[objIndex].access = false;
+      }
+    }
+  }
+  checkCheckBoxvalueReports(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.reports.findIndex((obj) => obj.id == val);
+        this.reports[objIndex].access = true;
+      } else {
+        const objIndex = this.reports.findIndex((obj) => obj.id == val);
+        this.reports[objIndex].access = false;
+      }
+    }
+  }
+  checkCheckBoxvalueActivities(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.activities.findIndex((obj) => obj.id == val);
+        this.activities[objIndex].access = true;
+      } else {
+        const objIndex = this.activities.findIndex((obj) => obj.id == val);
+        this.activities[objIndex].access = false;
+      }
+    }
+  }
+  checkCheckBoxvalueLeads(event, val) {
+    if (val == 0) {
+      if (event.target.checked == true) {
+        const objIndex = this.leads.findIndex((obj) => obj.id == val);
+        this.leads[objIndex].access = true;
+      } else {
+        const objIndex = this.leads.findIndex((obj) => obj.id == val);
+        this.leads[objIndex].access = false;
       }
     }
   }

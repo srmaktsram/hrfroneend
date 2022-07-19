@@ -7,6 +7,11 @@ import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -15,6 +20,8 @@ declare const $: any;
   styleUrls: ["./commission-list.component.css"],
 })
 export class CommissionListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -55,7 +62,8 @@ export class CommissionListComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
@@ -127,8 +135,7 @@ export class CommissionListComponent implements OnInit, OnDestroy {
               }
               if (this.newData == 1) {
                 let object = {
-                  
-                  current_balance: (parseFloat(this.newAmount))
+                  current_balance: parseFloat(this.newAmount),
                 };
                 this.http
                   .patch(
@@ -143,7 +150,14 @@ export class CommissionListComponent implements OnInit, OnDestroy {
         }
       });
     $("#delete_pay").modal("hide");
-    this.toastr.success("Added As Paid", "Success");
+
+    this._snackBar.open("Added As Paid sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   ///////////////////////////
@@ -162,7 +176,14 @@ export class CommissionListComponent implements OnInit, OnDestroy {
         this.getCommisions();
       });
     $("#add_reject").modal("hide");
-    this.toastr.success("Marked As Rejected", "Success");
+
+    this._snackBar.open("Marked As Rejected sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   ngOnDestroy(): void {

@@ -9,6 +9,11 @@ import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { ThemeSettingsComponent } from "src/app/all-modules/settings/theme-settings/theme-settings.component";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-create-invoice",
@@ -16,6 +21,8 @@ import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespac
   styleUrls: ["./create-invoice.component.css"],
 })
 export class CreateInvoiceComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public addInvoiceForm: FormGroup;
   public total;
   public invoices;
@@ -45,16 +52,13 @@ export class CreateInvoiceComponent implements OnInit {
     private http: HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.invoiceNo = sessionStorage.getItem("invoiceNo");
     this.user_type = sessionStorage.getItem("user_type");
     this.invoiceswrite = sessionStorage.getItem("invoiceswrite");
-
-
   }
-
-
 
   ngOnInit() {
     //get id value of invoice list
@@ -63,7 +67,14 @@ export class CreateInvoiceComponent implements OnInit {
     this.addInvoiceForm = this.formBuilder.group({
       client: ["", [Validators.required]],
       number: [this.invoiceNo, [Validators.required]],
-      email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
       tax: ["", [Validators.required]],
       client_address: ["", [Validators.required]],
       billing_address: ["", [Validators.required]],
@@ -103,8 +114,7 @@ export class CreateInvoiceComponent implements OnInit {
   // getting invoice
   getAllInvoices() {
     this.http
-      .get(
-        "http://localhost:8443/mainadmin/invoiceMainAdmin/getInvoices")
+      .get("http://localhost:8443/mainadmin/invoiceMainAdmin/getInvoices")
       .subscribe((res) => {
         this.invoices = res;
       });
@@ -162,11 +172,11 @@ export class CreateInvoiceComponent implements OnInit {
 
   savesend() {
     if (this.addInvoiceForm.invalid) {
-      alert("invailid")
+      alert("invailid");
       this.markFormGroupTouched(this.addInvoiceForm);
       return;
     } else {
-      alert("vailid")
+      alert("vailid");
       let invoiceDateFormat = this.pipe.transform(
         this.addInvoiceForm.value.invoice_date,
         "dd-MM-yyyy"
@@ -197,20 +207,26 @@ export class CreateInvoiceComponent implements OnInit {
         items: getItems,
       };
       this.http
-        .post("http://localhost:8443/mainadmin/invoiceMainAdmin/createInvoices", obj)
+        .post(
+          "http://localhost:8443/mainadmin/invoiceMainAdmin/createInvoices",
+          obj
+        )
         .subscribe((res: any) => {
-
           if (res.result == 0) {
             this.show = true;
             this.buttondisable = false;
             this.invErrorMsg = "Already exist !";
           } else if (res.result == 1) {
             this.buttondisable = false;
-            this.toastr.success("", "Added successfully!");
+
+            this._snackBar.open("Invoice Created sucessfully !", "", {
+              duration: 2000,
+              panelClass: "notif-success",
+
+              horizontalPosition: this.horizontalPosition,
+              verticalPosition: this.verticalPosition,
+            });
             this.router.navigate(["/layout/mainadmin/accounts/invoices"]);
-
-
-
           }
         });
     }

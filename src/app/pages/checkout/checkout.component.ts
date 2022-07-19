@@ -33,6 +33,8 @@ export class CheckoutComponent implements OnInit {
   packageName: any;
   getdata: any;
   applied: boolean = false;
+  email_error = true;
+  companyName_error = true;
   _window(): any {
     return window;
   }
@@ -97,6 +99,7 @@ export class CheckoutComponent implements OnInit {
     this.adminId = this.route.snapshot.queryParams["adminId"];
     this.payAmount = this.totalAmount;
     console.log("this sio the adminId>>>>", this.adminId);
+    this.fillData(this.adminId);
   }
 
   getip() {
@@ -116,6 +119,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   getPayment() {
+    this.email_error = true;
+    this.companyName_error = true;
     this.ngxService.start();
     let corporateId = this.corporateId;
 
@@ -139,16 +144,27 @@ export class CheckoutComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log("this is the create order History   111>>>>", res);
-        if (this.packageName === "Basic(Single-User)") {
-          this.createAdminRegister();
-          this.premium(0);
+        if (res.result == 0) {
+          if (this.packageName === "Basic(Single-User)") {
+            this.createAdminRegister();
+            this.premium(0);
+          } else {
+            this.createOrderId();
+          }
+        } else if (res.result == 1) {
+          this.email_error = false;
+          this.ngxService.stop();
+        } else if (res.result == 2) {
+          this.companyName_error = false;
+          this.ngxService.stop();
         } else {
-          this.createOrderId();
+          this.email_error = false;
+          this.companyName_error = false;
+          this.ngxService.stop();
         }
       });
   }
   createOrderId() {
-
     let amount = this.totalAmount;
 
     this.http
@@ -161,15 +177,14 @@ export class CheckoutComponent implements OnInit {
   completPayment(amount, orderid) {
     let options: any = {
       key: "rzp_test_isZmsi0Pb9wEcU",
-      amount: amount, // amount should be in paise format to display Rs 1255 without decimal point
+      amount: amount,
       currency: "INR",
-      name: "SRMAK TECHNOLOGICAL SYSTEM PRIVATE LIMITED", // company name or product name
-      description: "Premium Package Subscription", // product description
+      name: "SRMAK TECHNOLOGICAL SYSTEM PRIVATE LIMITED",
+      description: "Premium Package Subscription",
       image:
-        "https://pro.socialcashclub.in/assets/images/all_images/myloadernew.png", // company logo or product image
-      order_id: orderid, // order_id created by you in backend
+        "https://pro.socialcashclub.in/assets/images/all_images/myloadernew.png",
+      order_id: orderid,
       modal: {
-        // We should prevent closing of the form when esc key is pressed.
         escape: false,
       },
       theme: {
@@ -225,12 +240,10 @@ export class CheckoutComponent implements OnInit {
       month: this.month,
       companyName: this.checkoutForm.value.companyName,
     };
-    console.log("this si OBJ packageDetails>>>>>>>>>>", obj);
+
     this.http
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
-        console.log("this is the  PreviousDetails>>>>>>333>>>>>", res);
-
         this.saveOrderDetails();
       });
   }
@@ -259,9 +272,7 @@ export class CheckoutComponent implements OnInit {
                 this.corporateId,
               { status: "Free" }
             )
-            .subscribe((data: any) => {
-              console.log("this is the HRUSER UPDATE>>>>>>>", data);
-            });
+            .subscribe((data: any) => {});
         } else {
           alert(res.packageName);
           this.http
@@ -271,13 +282,10 @@ export class CheckoutComponent implements OnInit {
                 this.corporateId,
               { status: "Premium" }
             )
-            .subscribe((data: any) => {
-              console.log("this is the HRUSER UPDATE>>>>>>>", data);
-            });
+            .subscribe((data: any) => {});
         }
-     this.ngxService.stop();
+        this.ngxService.stop();
         window.location.replace("http://localhost:4200/products");
-
       });
   }
   createAdminRegister() {
@@ -299,9 +307,7 @@ export class CheckoutComponent implements OnInit {
 
       this.http
         .post("http://localhost:8443/checkout/create/adminRegister", obj)
-        .subscribe((res: any) => {
-          console.log("this is the adminRegister>>>>>>>222>>>>>>>>>>>>", res);
-        });
+        .subscribe((res: any) => {});
     } else {
       const generateId = Math.random().toString(36).slice(7);
       this.adminId = generateId;
@@ -323,9 +329,7 @@ export class CheckoutComponent implements OnInit {
 
       this.http
         .post("http://localhost:8443/checkout/create/adminRegister", obj)
-        .subscribe((res: any) => {
-          console.log("this is the adminRegister>>>>>>>222>>>>>>>>>>>>", res);
-        });
+        .subscribe((res: any) => {});
     }
   }
 
@@ -338,7 +342,7 @@ export class CheckoutComponent implements OnInit {
       )
       .subscribe((res: any) => {
         this.getdata = res;
-        console.log(",.,.,.,.,.,.<><><><><><", this.getdata);
+
         if (this.getdata) {
           this.checkoutForm.patchValue({
             companyName: this.getdata.companyName,
@@ -356,7 +360,7 @@ export class CheckoutComponent implements OnInit {
 
   getOffer(event) {
     let code = event;
-    console.log("code>>>>>>>>>>>>>>>>>>>", code);
+
     this.http
       .get(
         "http://localhost:8443/mainadmin/promocode/getPromoOffer" + "/" + code
@@ -369,7 +373,6 @@ export class CheckoutComponent implements OnInit {
         } else {
           this.payAmount = this.totalAmount;
         }
-        console.log(data, "dataComesFromApi");
       });
   }
 }

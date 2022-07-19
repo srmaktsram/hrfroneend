@@ -8,6 +8,11 @@ import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { HrUserAuthenticationService } from "src/app/core/storage/authentication-hruser.service";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -16,6 +21,8 @@ declare const $: any;
   styleUrls: ["./visitor-clients-list.component.css"],
 })
 export class VisitorClientsListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -51,7 +58,8 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private hrUserAuthenticationService: HrUserAuthenticationService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
   }
@@ -176,7 +184,14 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
 
     $("#edit_client").modal("hide");
     this.editClientForm.reset();
-    this.toastr.success("Client updated sucessfully...!", "Success");
+
+    this._snackBar.open("Client updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   getStatus(data, id) {

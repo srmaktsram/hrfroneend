@@ -18,12 +18,11 @@ export class AdminAuthenticationService {
     cinvoice: string,
     cinvoicepre: string,
     packageName: string,
-    roleDetails
+    roleDetails: any
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", "admin");
     sessionStorage.setItem("corporateId", corporateId);
-    sessionStorage.setItem("packageName", packageName);
     sessionStorage.setItem("packageName", packageName);
     sessionStorage.setItem("adminId", id);
     sessionStorage.setItem("companyEmail", companyEmail);

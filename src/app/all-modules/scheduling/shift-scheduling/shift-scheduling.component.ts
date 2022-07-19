@@ -6,13 +6,21 @@ import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
-  selector: 'app-shift-scheduling',
-  templateUrl: './shift-scheduling.component.html',
-  styleUrls: ['./shift-scheduling.component.css']
+  selector: "app-shift-scheduling",
+  templateUrl: "./shift-scheduling.component.html",
+  styleUrls: ["./shift-scheduling.component.css"],
 })
 export class ShiftSchedulingComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -35,6 +43,7 @@ export class ShiftSchedulingComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
+    private _snackBar: MatSnackBar,
     private toastr: ToastrService
   ) {
     this.user_type = sessionStorage.getItem("user_type");
@@ -42,13 +51,21 @@ export class ShiftSchedulingComponent implements OnInit, OnDestroy {
     this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
    }
 
+
   ngOnInit() {
     // Floating Label
 
-    if ($('.floating').length > 0) {
-      $('.floating').on('focus blur', function (e) {
-        $(this).parents('.form-focus').toggleClass('focused', (e.type === 'focus' || this.value.length > 0));
-      }).trigger('blur');
+    if ($(".floating").length > 0) {
+      $(".floating")
+        .on("focus blur", function (e) {
+          $(this)
+            .parents(".form-focus")
+            .toggleClass(
+              "focused",
+              e.type === "focus" || this.value.length > 0
+            );
+        })
+        .trigger("blur");
     }
     this.dtOptions = {
       // ... skipped ...
@@ -56,11 +73,10 @@ export class ShiftSchedulingComponent implements OnInit, OnDestroy {
       dom: "lrtip",
     };
 
-    this.adminId = sessionStorage.getItem("adminId")
+    this.adminId = sessionStorage.getItem("adminId");
     this.LoadShedule();
 
     this.addSheduleForm = this.formBuilder.group({
-
       department: ["", [Validators.required]],
       employeeName: ["", [Validators.required]],
       date: ["", [Validators.required]],
@@ -74,11 +90,9 @@ export class ShiftSchedulingComponent implements OnInit, OnDestroy {
       breakTime: ["", [Validators.required]],
       extraHrs: ["", [Validators.required]],
       publish: ["", [Validators.required]],
-
-    })
+    });
 
     this.editSheduleForm = this.formBuilder.group({
-
       department: ["", [Validators.required]],
       employeeName: ["", [Validators.required]],
       date: ["", [Validators.required]],
@@ -100,22 +114,21 @@ export class ShiftSchedulingComponent implements OnInit, OnDestroy {
       friday: ["", [Validators.required]],
       saturday: ["", [Validators.required]],
       sunday: ["", [Validators.required]],
-    })
-
-
-
-
+    });
   }
   // Get department list  Api Call
   LoadShedule() {
-    this.http.get("http://localhost:8443/admin/Schedule/getSchedule" + "/" + this.adminId).subscribe((data) => {
-      console.log("getApi", data)
-      this.lstShedule = data;
-      this.dtTrigger.next();
-      this.rows = this.lstShedule;
-      this.srch = [...this.rows];
-
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/Schedule/getSchedule" + "/" + this.adminId
+      )
+      .subscribe((data) => {
+        console.log("getApi", data);
+        this.lstShedule = data;
+        this.dtTrigger.next();
+        this.rows = this.lstShedule;
+        this.srch = [...this.rows];
+      });
   }
   //search by Department
   employee(val) {
@@ -130,7 +143,6 @@ export class ShiftSchedulingComponent implements OnInit, OnDestroy {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
-
 
   addShedule() {
     let obj = {
@@ -148,18 +160,23 @@ export class ShiftSchedulingComponent implements OnInit, OnDestroy {
       extraHrs: this.addSheduleForm.value.extraHrs,
       publish: this.addSheduleForm.value.publish,
       adminId: this.adminId,
+    };
+    this.http
+      .post("http://localhost:8443/admin/schedule/createSchedule", obj)
+      .subscribe((res) => {
+        console.log("postApi", res);
+        this._snackBar.open("Client updated sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
 
-    }
-    console.log("jdjsdg>>>>>>>>", obj)
-    this.http.post("http://localhost:8443/admin/schedule/createSchedule", obj).subscribe((res) => {
-      console.log("postApi", res)
-    })
-
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      });
   }
   editShedule() {
     //  this.http.patch("url"+"/"+this.editId,obj).subscribe((res)=>{
     //    console.log("updateApi",res)
     //  })
   }
-
 }

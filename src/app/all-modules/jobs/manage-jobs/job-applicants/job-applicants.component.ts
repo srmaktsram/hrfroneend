@@ -10,6 +10,11 @@ import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { AllModulesService } from "src/app/all-modules/all-modules.service";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -18,6 +23,8 @@ declare const $: any;
   styleUrls: ["./job-applicants.component.css"],
 })
 export class JobApplicantsComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -34,7 +41,10 @@ export class JobApplicantsComponent implements OnInit, OnDestroy {
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
-    private fb: FormBuilder
+
+    private fb: FormBuilder,
+    private _snackBar: MatSnackBar
+
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.jobsWrite = sessionStorage.getItem("jobsWrite");
@@ -43,6 +53,7 @@ export class JobApplicantsComponent implements OnInit, OnDestroy {
 
     this.appliedCandidateswriteRecep = sessionStorage.getItem("appliedCandidateswriteRecep");
   }
+
 
   ngOnInit() {
     this.scheduleForm = this.fb.group({
@@ -125,6 +136,13 @@ export class JobApplicantsComponent implements OnInit, OnDestroy {
         console.log(res, "this is the schedule interview");
       });
     $("schedule").modal("hide");
+    this._snackBar.open("Mail Send sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   // for unsubscribe datatable

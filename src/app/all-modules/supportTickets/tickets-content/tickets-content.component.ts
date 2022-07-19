@@ -20,6 +20,11 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
 import { type } from "jquery";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -28,6 +33,9 @@ declare const $: any;
   styleUrls: ["./tickets-content.component.css"],
 })
 export class TicketsContentComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -65,7 +73,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   countPending = 0;
   public multImages = [];
   public totalSize: any;
-  public flag = 0
+  public flag = 0;
   public editFlag = 0;
   public format = 0;
   supportticketswriteRecep: string;
@@ -80,7 +88,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     private router: Router,
     private http: HttpClient,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.supportTicketsWrite = sessionStorage.getItem("supportTicketsWrite");
@@ -131,8 +140,18 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.addTicketForm = this.formBuilder.group({
       addticketSubject: ["", [Validators.required]],
       addPriorityName: ["", [Validators.required]],
-      addReplyPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      addReplyEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      addReplyPhone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
+      addReplyEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
       addDescription: [""],
       // addUploadFiles: [""],
       createdDate: [""],
@@ -144,8 +163,18 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.editTicketForm = this.formBuilder.group({
       editTicketSubject: ["", [Validators.required]],
       editPriorityName: ["", [Validators.required]],
-      editReplyPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      editReplyEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      editReplyPhone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
+      editReplyEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
       editDescription: ["", [Validators.required]],
     });
 
@@ -180,8 +209,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/mainadmin/supportTickets/getTicketsCount" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((res: any) => {
         this.newTickets = res.countNewTicket;
@@ -195,11 +224,11 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/mainadmin/supportTickets/getAdminAllTickets" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data: any) => {
-        console.log(data)
+        console.log(data);
         this.allTickets = data;
         this.rows = this.allTickets;
         this.srch = [...this.rows];
@@ -219,40 +248,36 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     var imgSize = 0;
     if (event.target.files.length > 0) {
       this.multImages = event.target.files;
-      console.log(event.target.files, "first");
-      console.log(typeof (event.target.files), "second>>>>>>>>>")
 
       for (let item of this.multImages) {
-        imgSize = imgSize + parseInt(item.size)
+        imgSize = imgSize + parseInt(item.size);
         if (
           item.type === "image/jpeg" ||
           item.type === "image/png" ||
-          item.type === "image/jpg" || "application/pdf") {
+          item.type === "image/jpg" ||
+          "application/pdf"
+        ) {
           this.format = 1;
-        }
-        else {
+        } else {
           this.format = 0;
         }
       }
 
       if (this.format == 1) {
         if (imgSize < 3145728) {
-          alert("call huaa")
+          alert("call huaa");
           this.addError = true;
           this.editError = true;
         } else {
-          alert("call nhi huaa")
+          alert("call nhi huaa");
           this.addError = false;
           this.editError = false;
         }
       }
-
     }
 
     this.flag = imgSize;
     this.editFlag = imgSize;
-
-
   }
 
   // Add Ticket Modal Api Call
@@ -277,37 +302,46 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       params = params.set("priority", this.addTicketForm.value.addPriorityName);
       params = params.set("replyPhone", this.addTicketForm.value.addReplyPhone);
       params = params.set("replyEmail", this.addTicketForm.value.addReplyEmail);
-      params = params.set("description", this.addTicketForm.value.addDescription);
+      params = params.set(
+        "description",
+        this.addTicketForm.value.addDescription
+      );
       params = params.set("companyName", this.companyName);
 
       this.http
         .post(
           "http://localhost:8443/mainadmin/supportTickets/createTickets?" +
-          params,
+            params,
           fd
         )
         .subscribe((data) => {
-          console.log(data, "hvdvhjgdhjgdhj>>>>>>>>>>>>>>.")
+          console.log(data, "hvdvhjgdhjgdhj>>>>>>>>>>>>>>.");
           this.getTickets();
           this.getTicketsCount();
-
         });
-
-
     }
     $("#add_ticket").modal("hide");
     this.addTicketForm.reset();
-    this.toastr.success("Tickets added", "Success");
+    this._snackBar.open("Tickets added sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
 
-    this.toastr.warning("Mandatory fields required", "");
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+
+    this._snackBar.open("Mandatory fields required !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
-
-
 
   // Edit Ticket Modal Api Call
 
   editTicket() {
-
     if (this.flag < 3145728) {
       var fd = new FormData();
       for (let image of this.multImages) {
@@ -319,9 +353,18 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
         "ticketSubject",
         this.editTicketForm.value.editTicketSubject
       );
-      params = params.set("priority", this.editTicketForm.value.editPriorityName);
-      params = params.set("replyPhone", this.editTicketForm.value.editReplyPhone);
-      params = params.set("replyEmail", this.editTicketForm.value.editReplyEmail);
+      params = params.set(
+        "priority",
+        this.editTicketForm.value.editPriorityName
+      );
+      params = params.set(
+        "replyPhone",
+        this.editTicketForm.value.editReplyPhone
+      );
+      params = params.set(
+        "replyEmail",
+        this.editTicketForm.value.editReplyEmail
+      );
       params = params.set(
         "description",
         this.editTicketForm.value.editDescription
@@ -329,19 +372,22 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       this.http
         .patch(
           "http://localhost:8443/mainadmin/supportTickets/updateSupportTickets?" +
-          params,
+            params,
           fd
         )
         .subscribe((data) => {
-
-
           this.getTickets();
         });
-
     }
     $("#edit_ticket").modal("hide");
     this.editTicketForm.reset();
-    this.toastr.success("Ticket updated", "Success");
+    this._snackBar.open("Ticket updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   edit(id: any) {
@@ -368,16 +414,22 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/supportTickets/deleteTickets" +
-        "/" +
-        id,
+          "/" +
+          id,
         obj
       )
       .subscribe((data) => {
-
         this.getTickets();
       });
     $("#delete_ticket").modal("hide");
-    this.toastr.success("Tickets deleted", "Success");
+
+    this._snackBar.open("Tickets deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //search by name
@@ -461,15 +513,14 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     }
   }
 
-
   getPriority(data, id) {
     const priority = data;
 
     this.http
       .patch(
         "http://localhost:8443/mainadmin/supportTickets/updateTicketPriority" +
-        "/" +
-        id,
+          "/" +
+          id,
         { priority }
       )
       .subscribe((res) => {

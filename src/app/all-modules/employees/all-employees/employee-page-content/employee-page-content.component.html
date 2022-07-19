@@ -142,7 +142,7 @@
                             <div class="form-group">
                                 <label class="col-form-label">Email <span class="text-danger">*</span></label>
                                 <input class="form-control" type="email" formControlName="Email">
-
+                                 <p [hidden]='email_error' class="text-danger">Eamil Already Exist</p>
                                 <ng-container
                                     *ngIf="addEmployeeForm.get('Email').invalid && addEmployeeForm.get('Email').touched">
                                     <p *ngIf="addEmployeeForm.get('Email').errors.required" class="text-danger">

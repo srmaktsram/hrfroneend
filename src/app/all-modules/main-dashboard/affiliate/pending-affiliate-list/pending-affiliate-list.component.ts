@@ -8,6 +8,11 @@ import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { id } from "src/assets/all-modules-data/id";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -16,6 +21,8 @@ declare const $: any;
   styleUrls: ["./pending-affiliate-list.component.css"],
 })
 export class FreeAffiliateListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -52,13 +59,12 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
     this.affiliateswrite = sessionStorage.getItem("affiliateswrite");
-
-
   }
 
   ngOnInit() {
@@ -73,10 +79,30 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
     //Edit Clients Form
     this.editClientForm = this.formBuilder.group({
       editClientCompany: ["", [Validators.required]],
-      editContactPerson: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      editCompanyEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
+      editContactPerson: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
+      editClientEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      editClientPhone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
+      editCompanyEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
     });
   }
 
@@ -134,7 +160,14 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
 
     $("#edit_client").modal("hide");
     this.editClientForm.reset();
-    this.toastr.success("Client updated sucessfully...!", "Success");
+
+    this._snackBar.open("Client updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   deleteAffiliate(deleteId) {
@@ -163,7 +196,8 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
         this.statusData = res.status;
         if (this.statusData == "Approved") {
           let obj = {
-            id, aId
+            id,
+            aId,
           };
           this.http
 
@@ -171,8 +205,7 @@ export class FreeAffiliateListComponent implements OnInit, OnDestroy {
               "http://localhost:8443/affiliates/affiliate/createAffiliateWallet",
               obj
             )
-            .subscribe((res: any) => {
-            });
+            .subscribe((res: any) => {});
         }
       });
   }

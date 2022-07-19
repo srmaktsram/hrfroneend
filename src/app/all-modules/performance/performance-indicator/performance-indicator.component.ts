@@ -6,6 +6,11 @@ import { DatePipe } from "@angular/common";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -14,6 +19,8 @@ declare const $: any;
   styleUrls: ["./performance-indicator.component.css"],
 })
 export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   dtOptions: DataTables.Settings = {};
 
   @ViewChild(DataTableDirective, { static: false })
@@ -23,7 +30,7 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
 
   public tempId: any;
   public editId: any;
-  public id: any
+  public id: any;
   public addIndicatorForm: FormGroup;
   public editIndicatorForm: FormGroup;
   public pipe = new DatePipe("en-US");
@@ -41,12 +48,15 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
+
     this.adminId = sessionStorage.getItem("adminId")
     this.user_type = sessionStorage.getItem("user_type");
     this.performanceWrite = sessionStorage.getItem("performanceWrite");
     this.performanceWriteSub = sessionStorage.getItem("performanceWriteSub");
     this.performancewriteHr = sessionStorage.getItem("performancewriteHr");
+
   }
 
   ngOnInit() {
@@ -103,12 +113,18 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
 
   // Get  trainer Api Call
   loadData() {
-    this.http.get("http://localhost:8443/admin/performance/performance_indicator/getData" + "/" + this.adminId).subscribe((data: any) => {
-      this.lstData = data;
-      this.dtTrigger.next();
-      this.rows = this.lstData;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/performance/performance_indicator/getData" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.lstData = data;
+        this.dtTrigger.next();
+        this.rows = this.lstData;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -123,8 +139,8 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
   // Add  goal type  Modal Api Call
   addIndicator() {
     if (this.addIndicatorForm.invalid) {
-      this.markFormGroupTouched(this.addIndicatorForm)
-      return
+      this.markFormGroupTouched(this.addIndicatorForm);
+      return;
     }
     if (this.addIndicatorForm.valid) {
       let obj = {
@@ -152,23 +168,34 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
         status: this.addIndicatorForm.value.statusName,
       };
       //console.log("obj", obj);
-      this.http.post("http://localhost:8443/admin/performance/performance_indicator/create", obj).subscribe((data: any) => {
-        this.loadData();
-        //console.log(data, "postApi")
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post(
+          "http://localhost:8443/admin/performance/performance_indicator/create",
+          obj
+        )
+        .subscribe((data: any) => {
+          this.loadData();
+          //console.log(data, "postApi")
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
 
       $("#add_indicator").modal("hide");
       this.addIndicatorForm.reset();
-      this.toastr.success("Indicator added sucessfully...!", "Success");
+      this._snackBar.open("Indicator added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
   editIndicator() {
     if (this.editIndicatorForm.valid) {
-      this.id = this.editId
+      this.id = this.editId;
       let obj = {
         designation: this.editIndicatorForm.value.designationName,
         department: "Web Development",
@@ -191,18 +218,30 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
         addedBy: "Mike Litorus",
         createdBy: "28 Feb 2019",
         status: this.editIndicatorForm.value.statusName,
-
       };
-      this.http.patch("http://localhost:8443/admin/performance/performance_indicator/update" + "/" + this.editId, obj).subscribe((data: any) => {
-        //console.log("updateApi", data)
-        this.loadData();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/performance/performance_indicator/update" +
+            "/" +
+            this.editId,
+          obj
+        )
+        .subscribe((data: any) => {
+          //console.log("updateApi", data)
+          this.loadData();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
 
       $("#edit_indicator").modal("hide");
-      this.toastr.success("Indicator Updated sucessfully...!", "Success");
+      this._snackBar.open("Indicator updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -235,16 +274,29 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
   deleteIndicator() {
     let obj = {
       status: 2,
-    }
-    this.http.patch("http://localhost:8443/admin/performance/performance_indicator/delete" + "/" + this.tempId, obj).subscribe((data) => {
-      //console.log("deleteApi", data)
-      this.loadData();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/performance/performance_indicator/delete" +
+          "/" +
+          this.tempId,
+        obj
+      )
+      .subscribe((data) => {
+        //console.log("deleteApi", data)
+        this.loadData();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        $("#delete_indicator").modal("hide");
+        this._snackBar.open("Indicator  deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
-      $("#delete_indicator").modal("hide");
-      this.toastr.success("Indicator  deleted sucessfully..!", "Success");
-    });
   }
 
   //getting the status value
@@ -255,5 +307,4 @@ export class PerformanceIndicatorComponent implements OnInit, OnDestroy {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
-
 }
