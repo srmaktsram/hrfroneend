@@ -2,6 +2,7 @@ import { getLocaleDateFormat } from "@angular/common";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { DatePipe } from "@angular/common";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-attendance-admin",
@@ -25,10 +26,12 @@ export class AttendanceAdminComponent implements OnInit {
   employeewrite: string;
   employeewriteSub: string;
 
+
   constructor(private http: HttpClient) {
     this.user_type = sessionStorage.getItem("user_type");
     this.employeewrite = sessionStorage.getItem("employeewrite");
     this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
+
     this.adminId = sessionStorage.getItem("adminId");
     this.daysInMonth();
   }
@@ -42,12 +45,13 @@ export class AttendanceAdminComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/admin/monthlyAttandance/getData" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((res) => {
         this.lstAttandance = res;
 
+        console.log(this.lstAttandance, ">>>>>>>>>>>>opppppp<<<<<<<<<<<<<<<")
         this.lstAttandance.map((item) => {
           var arr = [];
           for (let i = 0; i < this.day; i++) {
@@ -74,9 +78,13 @@ export class AttendanceAdminComponent implements OnInit {
           var obj = {
             name: item.employeeName,
             attendDate: arr,
+            employeeid: item.employeeid,
+            profileImage: item.profileImage
           };
 
           this.employeeData.push(obj);
+
+          console.log(this.employeeData, "employee")
         });
       });
   }
@@ -91,5 +99,10 @@ export class AttendanceAdminComponent implements OnInit {
     this.day = dayInMonth;
 
     return dayInMonth;
+  }
+
+  getId(id) {
+    sessionStorage.setItem("empid", id);
+    this.router.navigate(["/layout/employees/employeeprofile"]);
   }
 }
