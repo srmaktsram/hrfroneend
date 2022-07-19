@@ -31,7 +31,7 @@ export class RoleFinanceAuthenticationService {
     assetsWriteFin: string,
     supportTicketsReadFin: string,
     supportTicketsWriteFin: string,
-    
+    roleDetails: any
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", user_type);
@@ -50,7 +50,8 @@ export class RoleFinanceAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
-    
+    sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
+
     sessionStorage.setItem("reportsReadFin", reportsReadFin);
     sessionStorage.setItem("reportsWriteFin", reportsWriteFin);
     sessionStorage.setItem("accountingreadFin", accountingreadFin);
@@ -64,7 +65,6 @@ export class RoleFinanceAuthenticationService {
     sessionStorage.setItem("supportTicketsReadFin", supportTicketsReadFin);
     sessionStorage.setItem("supportTicketsWriteFin", supportTicketsWriteFin);
 
-   
     return true;
   }
   logout() {
@@ -81,6 +81,7 @@ export class RoleFinanceAuthenticationService {
     sessionStorage.removeItem("clogo");
     sessionStorage.removeItem("cinvoice");
     sessionStorage.removeItem("cinvoicepre");
+    sessionStorage.removeItem("role_details");
   }
   public get loggedIn(): boolean {
     return sessionStorage.getItem("currentUser") !== null;

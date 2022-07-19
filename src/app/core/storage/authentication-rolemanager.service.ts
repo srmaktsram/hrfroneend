@@ -29,8 +29,7 @@ export class RoleManagerAuthenticationService {
     clientsWriteMan: string,
     assetsReadMan: string,
     assetsWriteMan: string,
-    
-   
+    roleDetails: any
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", user_type);
@@ -49,18 +48,19 @@ export class RoleManagerAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
+    sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
 
-    sessionStorage.setItem("usersReadMan",usersReadMan)
-    sessionStorage.setItem("usersWriteMan",usersWriteMan)
-    sessionStorage.setItem("policiesReadMan",policiesReadMan)
-    sessionStorage.setItem("policiesWriteMan",policiesWriteMan)
-    sessionStorage.setItem("supportTicketsReadMan",supportTicketsReadMan)
-    sessionStorage.setItem("supportTicketsWriteMan",supportTicketsWriteMan)
-    sessionStorage.setItem("clientsReadMan",clientsReadMan)
-    sessionStorage.setItem("clientsWriteMan",clientsWriteMan)
-    sessionStorage.setItem("assetsReadMan",assetsReadMan)
-    sessionStorage.setItem("assetsWriteMan",assetsWriteMan)
-    
+    sessionStorage.setItem("usersReadMan", usersReadMan);
+    sessionStorage.setItem("usersWriteMan", usersWriteMan);
+    sessionStorage.setItem("policiesReadMan", policiesReadMan);
+    sessionStorage.setItem("policiesWriteMan", policiesWriteMan);
+    sessionStorage.setItem("supportTicketsReadMan", supportTicketsReadMan);
+    sessionStorage.setItem("supportTicketsWriteMan", supportTicketsWriteMan);
+    sessionStorage.setItem("clientsReadMan", clientsReadMan);
+    sessionStorage.setItem("clientsWriteMan", clientsWriteMan);
+    sessionStorage.setItem("assetsReadMan", assetsReadMan);
+    sessionStorage.setItem("assetsWriteMan", assetsWriteMan);
+
     return true;
   }
   logout() {
@@ -77,6 +77,7 @@ export class RoleManagerAuthenticationService {
     sessionStorage.removeItem("clogo");
     sessionStorage.removeItem("cinvoice");
     sessionStorage.removeItem("cinvoicepre");
+    sessionStorage.removeItem("role_details");
   }
   public get loggedIn(): boolean {
     return sessionStorage.getItem("currentUser") !== null;

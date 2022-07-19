@@ -69,9 +69,7 @@ export class RoleSubAdminAuthenticationService {
     usersWriteSub: string,
     settingsReadSub: string,
     settingsWriteSub: string,
-    
-
-    
+    roleDetails: any
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", user_type);
@@ -90,8 +88,8 @@ export class RoleSubAdminAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
-    sessionStorage.setItem("dashboardreadSub",dashboardreadSub)
-    sessionStorage.setItem("dashboardwriteSub",dashboardwriteSub)
+    sessionStorage.setItem("dashboardreadSub", dashboardreadSub);
+    sessionStorage.setItem("dashboardwriteSub", dashboardwriteSub);
     sessionStorage.setItem("appsreadSub", appsreadSub);
     sessionStorage.setItem("appswriteSub", appswriteSub);
     sessionStorage.setItem("employeereadSub", employeereadSub);
@@ -140,8 +138,7 @@ export class RoleSubAdminAuthenticationService {
     sessionStorage.setItem("usersWriteSub", usersWriteSub);
     sessionStorage.setItem("settingsReadSub", settingsReadSub);
     sessionStorage.setItem("settingsWriteSub", settingsWriteSub);
-   
-
+    sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
 
     return true;
   }
@@ -159,6 +156,7 @@ export class RoleSubAdminAuthenticationService {
     sessionStorage.removeItem("clogo");
     sessionStorage.removeItem("cinvoice");
     sessionStorage.removeItem("cinvoicepre");
+    sessionStorage.removeItem("role_details");
   }
   public get loggedIn(): boolean {
     return sessionStorage.getItem("currentUser") !== null;

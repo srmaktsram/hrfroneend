@@ -57,50 +57,62 @@ export class RoleFinanceComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
-        console.log(res);
-        if (res.result == 2) {
-          this.router.navigate(["/layout/dashboard/admin"]);
+        this.http
+          .get(
+            "http://localhost:8443/mainadmin/packageAuth/getPackageAuthDetails" +
+              "/" +
+              res.data.packageName
+          )
+          .subscribe((response: any) => {
+            if (res.result == 2) {
+              this.router.navigate(["/layout/dashboard/admin"]);
 
-          this.roleAdminAuthenticationService.login(
-            "rolefinance",
-            res.data.id,
-            res.data.corporateId,
-            res.data.companyEmail,
-            res.data.companyName,
-            res.data.companySite,
-            res.data.pinCode,
-            res.data.companyAddress,
-            res.data.phone,
-            res.data.mobile,
-            res.data.location,
-            res.data.cicon,
-            res.data.cinvoice,
-            res.data.cinvoicepre,
-            res.data.packageName,
-            res.role.Reports[0].read,
-            res.role.Reports[1].write,
-            res.role.Accounting[0].read,
-            res.role.Accounting[1].write,
-            res.role.Sales[0].read,
-            res.role.Sales[1].write,
-            res.role.Policies[0].read,
-            res.role.Policies[1].write,
-            res.role.Assets[0].read,
-            res.role.Assets[1].write,
-            res.role.supportTickets[0].read,
-            res.role.supportTickets[1].write
-          );
-        } else {
-          this._snackBar.open(" No matching accounts have been found !", "", {
-            duration: 2000,
-            panelClass: "notif-success",
+              this.roleAdminAuthenticationService.login(
+                "rolefinance",
+                res.data.id,
+                res.data.corporateId,
+                res.data.companyEmail,
+                res.data.companyName,
+                res.data.companySite,
+                res.data.pinCode,
+                res.data.companyAddress,
+                res.data.phone,
+                res.data.mobile,
+                res.data.location,
+                res.data.cicon,
+                res.data.cinvoice,
+                res.data.cinvoicepre,
+                res.data.packageName,
+                res.role.Reports[0].read,
+                res.role.Reports[1].write,
+                res.role.Accounting[0].read,
+                res.role.Accounting[1].write,
+                res.role.Sales[0].read,
+                res.role.Sales[1].write,
+                res.role.Policies[0].read,
+                res.role.Policies[1].write,
+                res.role.Assets[0].read,
+                res.role.Assets[1].write,
+                res.role.supportTickets[0].read,
+                res.role.supportTickets[1].write,
+                response
+              );
+            } else {
+              this._snackBar.open(
+                " No matching accounts have been found !",
+                "",
+                {
+                  duration: 2000,
+                  panelClass: "notif-success",
 
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
+                  horizontalPosition: this.horizontalPosition,
+                  verticalPosition: this.verticalPosition,
+                }
+              );
+            }
+
+            // location.replace("http://localhost:4200/layout/dashboard/admin");
           });
-        }
-
-        // location.replace("http://localhost:4200/layout/dashboard/admin");
       });
   }
 
