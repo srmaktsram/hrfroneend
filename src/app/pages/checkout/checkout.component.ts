@@ -33,6 +33,8 @@ export class CheckoutComponent implements OnInit {
   packageName: any;
   getdata: any;
   applied: boolean = false;
+  email_error = true;
+  companyName_error = true;
   _window(): any {
     return window;
   }
@@ -97,6 +99,7 @@ export class CheckoutComponent implements OnInit {
     this.adminId = this.route.snapshot.queryParams["adminId"];
     this.payAmount = this.totalAmount;
     console.log("this sio the adminId>>>>", this.adminId);
+    this.fillData(this.adminId);
   }
 
   getip() {
@@ -116,6 +119,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   getPayment() {
+    this.email_error = true;
+    this.companyName_error = true;
     this.ngxService.start();
     let corporateId = this.corporateId;
 
@@ -139,11 +144,23 @@ export class CheckoutComponent implements OnInit {
       )
       .subscribe((res: any) => {
         console.log("this is the create order History   111>>>>", res);
-        if (this.packageName === "Basic(Single-User)") {
-          this.createAdminRegister();
-          this.premium(0);
+        if (res.result == 0) {
+          if (this.packageName === "Basic(Single-User)") {
+            this.createAdminRegister();
+            this.premium(0);
+          } else {
+            this.createOrderId();
+          }
+        } else if (res.result == 1) {
+          this.email_error = false;
+          this.ngxService.stop();
+        } else if (res.result == 2) {
+          this.companyName_error = false;
+          this.ngxService.stop();
         } else {
-          this.createOrderId();
+          this.email_error = false;
+          this.companyName_error = false;
+          this.ngxService.stop();
         }
       });
   }
