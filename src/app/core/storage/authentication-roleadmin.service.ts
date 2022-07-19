@@ -69,6 +69,7 @@ export class RoleAdminAuthenticationService {
     usersWrite: string,
     settingsRead: string,
     settingsWrite: string,
+    roleDetails: any
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", user_type);
@@ -87,9 +88,10 @@ export class RoleAdminAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
+    sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
     sessionStorage.setItem("dashboardRead", dashboardRead);
     sessionStorage.setItem("dashboardWrite", dashboardWrite);
-    
+
     sessionStorage.setItem("appsread", appsread);
     sessionStorage.setItem("appswrite", appswrite);
     sessionStorage.setItem("employeeread", employeeread);
@@ -137,9 +139,7 @@ export class RoleAdminAuthenticationService {
     sessionStorage.setItem("usersRead", usersRead);
     sessionStorage.setItem("usersWrite", usersWrite);
     sessionStorage.setItem("settingsRead", settingsRead);
-    sessionStorage.setItem("settingsWrite", settingsWrite); 
-
-
+    sessionStorage.setItem("settingsWrite", settingsWrite);
 
     return true;
   }
@@ -157,6 +157,7 @@ export class RoleAdminAuthenticationService {
     sessionStorage.removeItem("clogo");
     sessionStorage.removeItem("cinvoice");
     sessionStorage.removeItem("cinvoicepre");
+    sessionStorage.removeItem("role_details");
   }
   public get loggedIn(): boolean {
     return sessionStorage.getItem("currentUser") !== null;

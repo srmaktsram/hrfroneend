@@ -35,7 +35,7 @@ export class RoleReceptionistAuthenticationService {
     scheduletimingwriteRecep: string,
     appliedCandidatesreadRecep: string,
     appliedCandidateswriteRecep: string,
-    
+    roleDetails: any
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", user_type);
@@ -54,25 +54,48 @@ export class RoleReceptionistAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
+    sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
 
     sessionStorage.setItem("supportticketsreadRecep", supportticketsreadRecep);
-    sessionStorage.setItem("supportticketswriteRecep", supportticketswriteRecep);
+    sessionStorage.setItem(
+      "supportticketswriteRecep",
+      supportticketswriteRecep
+    );
     sessionStorage.setItem("policiesreadRecep", policiesreadRecep);
     sessionStorage.setItem("policieswriteRecep", policieswriteRecep);
     sessionStorage.setItem("userdashboardreadRecep", userdashboardreadRecep);
     sessionStorage.setItem("userdashboardwriteRecep", userdashboardwriteRecep);
     sessionStorage.setItem("jobdashboardreadRecep", jobdashboardreadRecep);
     sessionStorage.setItem("jobdashboardwriteRecep", jobdashboardwriteRecep);
-    sessionStorage.setItem("shortlistedcandidatesreadRecep", shortlistedcandidatesreadRecep);
-    sessionStorage.setItem("shortlistedcandidateswriteRecep", shortlistedcandidateswriteRecep);
+    sessionStorage.setItem(
+      "shortlistedcandidatesreadRecep",
+      shortlistedcandidatesreadRecep
+    );
+    sessionStorage.setItem(
+      "shortlistedcandidateswriteRecep",
+      shortlistedcandidateswriteRecep
+    );
     sessionStorage.setItem("candidateslistreadRecep", candidateslistreadRecep);
-    sessionStorage.setItem("candidateslistwriteRecep", candidateslistwriteRecep);
-    sessionStorage.setItem("scheduletimingsreadRecep", scheduletimingsreadRecep);
-    sessionStorage.setItem("scheduletimingwriteRecep", scheduletimingwriteRecep);
-    sessionStorage.setItem("appliedCandidatesreadRecep", appliedCandidatesreadRecep);
-    sessionStorage.setItem("appliedCandidateswriteRecep", appliedCandidateswriteRecep);
-
-   
+    sessionStorage.setItem(
+      "candidateslistwriteRecep",
+      candidateslistwriteRecep
+    );
+    sessionStorage.setItem(
+      "scheduletimingsreadRecep",
+      scheduletimingsreadRecep
+    );
+    sessionStorage.setItem(
+      "scheduletimingwriteRecep",
+      scheduletimingwriteRecep
+    );
+    sessionStorage.setItem(
+      "appliedCandidatesreadRecep",
+      appliedCandidatesreadRecep
+    );
+    sessionStorage.setItem(
+      "appliedCandidateswriteRecep",
+      appliedCandidateswriteRecep
+    );
 
     return true;
   }
@@ -90,6 +113,7 @@ export class RoleReceptionistAuthenticationService {
     sessionStorage.removeItem("clogo");
     sessionStorage.removeItem("cinvoice");
     sessionStorage.removeItem("cinvoicepre");
+    sessionStorage.removeItem("role_details");
   }
   public get loggedIn(): boolean {
     return sessionStorage.getItem("currentUser") !== null;
