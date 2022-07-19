@@ -44,6 +44,8 @@ export class PayrollItemsComponent implements OnInit {
   tempId: any;
   user_type: string;
   payrollswriteHr: string;
+  payrollWrite: string;
+  payrollWriteSub: string;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -54,6 +56,8 @@ export class PayrollItemsComponent implements OnInit {
     private http: HttpClient
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.payrollWrite = sessionStorage.getItem("payrollWrite");
+    this.payrollWriteSub = sessionStorage.getItem("payrollWriteSub");
     this.payrollswriteHr = sessionStorage.getItem("payrollswriteHr");
    }
 

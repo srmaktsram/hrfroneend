@@ -52,10 +52,14 @@ export class ProjectViewComponent implements OnInit {
   path: string;
   client: any;
   projectswrite: string;
+  projectsWrite: string;
+  projectsWriteSub: string;
 
   constructor(private http: HttpClient, private route: ActivatedRoute, private formBuilder: FormBuilder) {
     this.adminId = sessionStorage.getItem("adminId");
     this.projectswrite=sessionStorage.getItem("projectswrite");
+    this.projectsWrite = sessionStorage.getItem("projectsWrite");
+    this.projectsWriteSub = sessionStorage.getItem("projectsWriteSub");
 
     this.getClients();
   }

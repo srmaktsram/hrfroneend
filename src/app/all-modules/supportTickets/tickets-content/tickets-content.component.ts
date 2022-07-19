@@ -72,6 +72,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   supportticketswriteHr: string;
   supportTicketsWriteFin: string;
   supportTicketsWriteMan: string;
+  supportTicketsWrite: string;
+  supportTicketsWriteSub: string;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -81,6 +83,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     private toastr: ToastrService
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.supportTicketsWrite = sessionStorage.getItem("supportTicketsWrite");
+    this.supportTicketsWriteSub = sessionStorage.getItem("supportTicketsWriteSub");
     this.supportTicketsWriteMan = sessionStorage.getItem("supportTicketsWriteMan");
     this.supportTicketsWriteFin = sessionStorage.getItem("supportTicketsWriteFin");
     this.supportticketswriteRecep = sessionStorage.getItem("supportticketswriteRecep");

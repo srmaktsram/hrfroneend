@@ -71,6 +71,8 @@ export class EmployeeSalaryComponent
   deduct: any;
   user_type: string;
   payrollswriteHr: string;
+  payrollWrite: string;
+  payrollWriteSub: string;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -81,6 +83,8 @@ export class EmployeeSalaryComponent
     private http: HttpClient
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.payrollWrite = sessionStorage.getItem("payrollWrite");
+    this.payrollWriteSub = sessionStorage.getItem("payrollWriteSub");
     this.payrollswriteHr = sessionStorage.getItem("payrollswriteHr");
     this.getData();
     this.loadEmployee();

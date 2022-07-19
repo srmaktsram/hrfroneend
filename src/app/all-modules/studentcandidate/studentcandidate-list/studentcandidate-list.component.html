@@ -17,7 +17,7 @@
         <div class="col-auto float-end ms-auto">
 
           <a
-          *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true') ||(user_type === 'rolehr' && jobswriteHr === 'true')"
+          *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true') ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')"
             href="#"
             data-bs-toggle="modal"
             data-bs-target="#add_employee"
@@ -81,7 +81,7 @@
                 <th>Status</th>
                 <th>Gender</th>
                 <th>Create Date</th>
-                <th class="text-center" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true') ||(user_type === 'rolehr' && jobswriteHr === 'true')">Action</th>
+                <th class="text-center" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true') ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -120,7 +120,7 @@
 
                 <td>{{ item.gender }}</td>
                 <td>{{ item.createDate }}</td>
-                <td class="text-center" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true') ||(user_type === 'rolehr' && jobswriteHr === 'true')">
+                <td class="text-center" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && candidateslistwriteRecep === 'true') ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">
                   <div class="dropdown dropdown-action">
 
                     <a

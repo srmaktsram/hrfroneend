@@ -32,12 +32,18 @@ export class TerminationMainComponent implements OnInit {
 
   public addTerminationForm: FormGroup;
   public editTerminationForm: FormGroup;
+  user_type: string;
+  terminationWrite: string;
+  terminationWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private http:HttpClient,
     private toastr: ToastrService
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.terminationWrite = sessionStorage.getItem("terminationWrite");
+    this.terminationWriteSub = sessionStorage.getItem("terminationWriteSub");
     this.adminId=sessionStorage.getItem("adminId")
    }
 

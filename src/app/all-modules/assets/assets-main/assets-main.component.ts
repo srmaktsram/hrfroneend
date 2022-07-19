@@ -45,6 +45,8 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
   user_type: string;
   assetsWriteFin: string;
   assetsWriteMan: string;
+  assetsWrite: string;
+  assetsWriteSub: string;
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
@@ -53,6 +55,8 @@ export class AssetsMainComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
+    this.assetsWrite = sessionStorage.getItem("assetsWrite");
+    this.assetsWriteSub = sessionStorage.getItem("assetsWriteSub");
     this.assetsWriteMan = sessionStorage.getItem("assetsWriteMan");
     this.assetsWriteFin = sessionStorage.getItem("assetsWriteFin");
   }

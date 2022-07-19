@@ -28,12 +28,19 @@ export class ShiftListComponent implements OnInit, OnDestroy {
   public editedvalue;
   public rows = [];
   public srch = [];
+  user_type: string;
+  employeewrite: string;
+  employeewriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
-  ) { }
+  ) { 
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
+  }
 
   ngOnInit() {
     // Floating Label

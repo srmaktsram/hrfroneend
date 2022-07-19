@@ -13,7 +13,7 @@
             </div>
             <div class="col-auto float-end ms-auto">
                 <a
-                *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && assetsWriteFin === 'true')|| (user_type === 'rolemanager' && assetsWriteMan === 'true')"
+                *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && assetsWriteFin === 'true')|| (user_type === 'rolemanager' && assetsWriteMan === 'true')||(user_type === 'roleadmin' && assetsWrite == 'true')||(user_type === 'rolesubadmin' && assetsWriteSub === 'true')"
                 class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_asset"><i class="fa fa-plus"></i>
                     Add Asset</a>
             </div>
@@ -86,7 +86,7 @@
                             <th>Warrenty End</th>
                             <th>Amount</th>
                             <th class="text-center">Status</th>
-                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && assetsWriteFin === 'true')|| (user_type === 'rolemanager' && assetsWriteMan === 'true')">Actions</th>
+                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && assetsWriteFin === 'true')|| (user_type === 'rolemanager' && assetsWriteMan === 'true')||(user_type === 'roleadmin' && assetsWrite == 'true')||(user_type === 'rolesubadmin' && assetsWriteSub === 'true')">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -107,7 +107,7 @@
                                         <i class="fa fa-dot-circle-o text-danger"></i>
                                         {{assets.assetStatus}}
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && assetsWriteFin === 'true')|| (user_type === 'rolemanager' && assetsWriteMan === 'true')">
+                                    <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && assetsWriteFin === 'true')|| (user_type === 'rolemanager' && assetsWriteMan === 'true')||(user_type === 'roleadmin' && assetsWrite == 'true')||(user_type === 'rolesubadmin' && assetsWriteSub === 'true')">
                                         <a class="dropdown-item" (click)="getStatus('Pending',assets.assetId)"><i
                                                 class="fa fa-dot-circle-o text-danger"></i>
                                             Pending</a>
@@ -119,7 +119,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && assetsWriteFin === 'true')|| (user_type === 'rolemanager' && assetsWriteMan === 'true')">
+                            <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && assetsWriteFin === 'true')|| (user_type === 'rolemanager' && assetsWriteMan === 'true')||(user_type === 'roleadmin' && assetsWrite == 'true')||(user_type === 'rolesubadmin' && assetsWriteSub === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

@@ -32,12 +32,18 @@ export class ResignationMainComponent implements OnInit {
   public editResignForm: FormGroup;
   public NoticedDate;
   public ResignDate;
+  user_type: string;
+  resignationWrite: string;
+  resignationWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private http:HttpClient,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.resignationWrite = sessionStorage.getItem("resignationWrite");
+    this.resignationWriteSub = sessionStorage.getItem("resignationWriteSub");
     this.adminId=sessionStorage.getItem("adminId");
   }
 

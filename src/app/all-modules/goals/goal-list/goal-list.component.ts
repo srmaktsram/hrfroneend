@@ -32,12 +32,18 @@ export class GoalListComponent implements OnInit, OnDestroy {
   public editGoalForm: FormGroup;
   public adminId = sessionStorage.getItem("adminId");
   lstGoaltype: Object;
+  user_type: string;
+  goalsWrite: string;
+  goalsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.goalsWrite = sessionStorage.getItem("goalsWrite");
+    this.goalsWriteSub = sessionStorage.getItem("goalsWriteSub");
     this.LoadGoaltype();
   }
   LoadGoaltype() {

@@ -12,7 +12,9 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_overtime"><i class="fa fa-plus"></i>
+                <a
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_overtime"><i class="fa fa-plus"></i>
                     Add
                     Overtime</a>
             </div>
@@ -55,7 +57,7 @@
                     class="table table-striped custom-table mb-0 datatable">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Sr.no.</th>
                             <th>Name</th>
                             <th>OT Date</th>
                             <th class="text-center">OT Hours</th>
@@ -63,7 +65,7 @@
                             <th>Description</th>
                             <th class="text-center">Status</th>
                             <th>Approved by</th>
-                            <th class="text-end">Actions</th>
+                            <th class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -102,7 +104,7 @@
 
                                         </ng-container>
                                     </a>
-                                    <div class="dropdown-menu">
+                                    <div class="dropdown-menu" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
                                         <a (click)="updateStatus('Approved',item.id)" class="dropdown-item"><i
                                                 class="fa fa-dot-circle-o text-success"></i>
                                             Approved</a>
@@ -123,7 +125,7 @@
                                     <a routerLink="/layout/employees/employeeprofile">{{item.approvedBy}}</a>
                                 </h2>
                             </td>
-                            <td class="text-end">
+                            <td class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

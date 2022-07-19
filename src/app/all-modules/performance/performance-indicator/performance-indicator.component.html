@@ -11,7 +11,7 @@
                     <li class="breadcrumb-item active">Performance</li>
                 </ul>
             </div>
-            <div class="col-auto float-end ms-auto" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && performancewriteHr === 'true')">
+            <div class="col-auto float-end ms-auto" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && performancewriteHr === 'true')||(user_type === 'roleadmin' && performanceWrite == 'true')||(user_type === 'rolesubadmin' && performanceWriteSub === 'true')">
                 <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_indicator"><i class="fa fa-plus"></i>
                     Add New</a>
             </div>
@@ -32,7 +32,7 @@
                             <th>Added By</th>
                             <th>Create At</th>
                             <th>Status</th>
-                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && performancewriteHr === 'true')">Action</th>
+                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && performancewriteHr === 'true')||(user_type === 'roleadmin' && performanceWrite == 'true')||(user_type === 'rolesubadmin' && performanceWriteSub === 'true')">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,8 +63,8 @@
                                     </a>
                                 </div>
                             </td>
-                            <td class="text-end">
-                                <div class="dropdown dropdown-action" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && performancewriteHr === 'true')">
+                            <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && performancewriteHr === 'true')||(user_type === 'roleadmin' && performanceWrite == 'true')||(user_type === 'rolesubadmin' && performanceWriteSub === 'true')">
+                                <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">

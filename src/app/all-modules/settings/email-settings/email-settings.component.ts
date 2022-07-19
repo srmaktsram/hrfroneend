@@ -19,11 +19,18 @@ export class EmailSettingsComponent implements OnInit {
 
   public emailSettings: FormGroup;
   emailSett: any;
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private http: HttpClient
-  ) {}
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
+  }
 
   ngOnInit() {
     this.getEmailSettings();

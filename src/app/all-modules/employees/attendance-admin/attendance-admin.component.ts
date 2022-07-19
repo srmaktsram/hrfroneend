@@ -21,8 +21,14 @@ export class AttendanceAdminComponent implements OnInit {
   public pipe = new DatePipe("en-US");
   lstPunch: any;
   public todayDate = new Date();
+  user_type: string;
+  employeewrite: string;
+  employeewriteSub: string;
 
   constructor(private http: HttpClient) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
     this.adminId = sessionStorage.getItem("adminId");
     this.daysInMonth();
   }

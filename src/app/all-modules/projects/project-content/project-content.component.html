@@ -16,11 +16,8 @@
         <a
           class="btn add-btn"
           data-bs-toggle="modal"
-          data-bs-target="#create_project" *ngIf="
-          user_type == 'admin' ||
-          (user_type === 'employee' &&
-            (projectswrite == 'true'))
-        "
+          data-bs-target="#create_project"
+          *ngIf="user_type == 'admin' ||(user_type === 'employee' && projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
           ><i class="fa fa-plus"></i> Create Project</a
         >
         <div class="view-icons">
@@ -86,11 +83,13 @@
     >
       <div class="card">
         <div class="card-body">
-          <div class="dropdown dropdown-action profile-action" *ngIf="
-          user_type == 'admin' ||
-          (user_type === 'employee' &&
-            (projectswrite == 'true'))
-        ">
+          <div
+            class="dropdown dropdown-action profile-action"
+            *ngIf="
+              user_type == 'admin' ||
+              (user_type === 'employee' && projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')
+            "
+          >
             <a
               class="action-icon dropdown-toggle"
               data-bs-toggle="dropdown"
@@ -121,12 +120,12 @@
             >
           </h4>
           <small class="block text-ellipsis m-b-15">
-            <span class="text-xs">{{project.lstTasks.length}}</span>
+            <span class="text-xs">{{ project.lstTasks.length }}</span>
             <span class="text-danger">open tasks, </span>
-            <span class="text-xs">{{project.lstCompleted.length}}</span>
+            <span class="text-xs">{{ project.lstCompleted.length }}</span>
             <span class="text-success">tasks completed</span>
           </small>
-         
+
           <p class="text-muted">{{ project.description }}</p>
           <div class="pro-deadline m-b-15">
             <div class="sub-title">Deadline:</div>
@@ -138,7 +137,7 @@
             <div>Project Leader :</div>
             <ul class="team-members">
               <li>
-                <a data-bs-toggle="tooltip" title="{{project.projectLeader}}"
+                <a data-bs-toggle="tooltip" title="{{ project.projectLeader }}"
                   ><img alt="" src="assets/img/profiles/avatar-9.jpg"
                 /></a>
               </li>
@@ -157,8 +156,8 @@
           <div class="project-members m-b-15">
             <div>Team :</div>
             <ul class="team-members">
-              <li  *ngFor="let team of project.teamMember">
-                <a data-bs-toggle="tooltip" title="{{team}}"
+              <li *ngFor="let team of project.teamMember">
+                <a data-bs-toggle="tooltip" title="{{ team }}"
                   ><img alt="" src="assets/img/profiles/avatar-2.jpg"
                 /></a>
               </li>
@@ -237,15 +236,37 @@
             </ul>
           </div>
           <p class="m-b-5">
-            Progress <span class="text-success float-end">
-              {{ (project.lstCompleted.length/(project.lstTasks.length+ project.lstProgress.length+ project.lstHold.length+project.lstInprogress.length+project.lstReview.length+project.lstCompleted.length))*100 | number: '2.1-2'}} % </span>
+            Progress
+            <span class="text-success float-end">
+              {{
+                (project.lstCompleted.length /
+                  (project.lstTasks.length +
+                    project.lstProgress.length +
+                    project.lstHold.length +
+                    project.lstInprogress.length +
+                    project.lstReview.length +
+                    project.lstCompleted.length)) *
+                  100 | number: "2.1-2"
+              }}
+              %
+            </span>
           </p>
-          <div class="progress progress-xs mb-0">  
+          <div class="progress progress-xs mb-0">
             <div
               class="progress-bar bg-success"
               role="progressbar"
               data-bs-toggle="tooltip"
-              title="40%" [style.width.%]="(project.lstCompleted.length/(project.lstTasks.length+ project.lstProgress.length+ project.lstHold.length+project.lstInprogress.length+project.lstReview.length+project.lstCompleted.length))*100"
+              title="40%"
+              [style.width.%]="
+                (project.lstCompleted.length /
+                  (project.lstTasks.length +
+                    project.lstProgress.length +
+                    project.lstHold.length +
+                    project.lstInprogress.length +
+                    project.lstReview.length +
+                    project.lstCompleted.length)) *
+                100
+              "
             ></div>
           </div>
         </div>
@@ -306,12 +327,17 @@
             <div class="col-sm-6">
               <div class="form-group">
                 <label>Client</label>
-                <select 
+                <select
                   formControlName="client"
                   class="form-select form-control"
                 >
                   <option>Select Client</option>
-                  <option *ngFor="let item of client" value="{{item.id}},{{item.firstName}},{{ item.lastName }}">
+                  <option
+                    *ngFor="let item of client"
+                    value="{{ item.id }},{{ item.firstName }},{{
+                      item.lastName
+                    }}"
+                  >
                     {{ item.firstName }} {{ item.lastName }}
                   </option>
                 </select>
@@ -560,7 +586,6 @@
               class="form-control"
               type="file"
               multiple
-             
               (change)="selectImage($event)"
             />
           </div>

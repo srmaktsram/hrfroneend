@@ -77,6 +77,9 @@ export class EmployeeProfileComponent implements OnInit {
 
   lstEmployee: any;
   public reportsTo: any;
+  user_type: string;
+  employeewriteSub: string;
+  employeewrite: string;
 
   constructor(
     private toastr: ToastrService,
@@ -84,6 +87,9 @@ export class EmployeeProfileComponent implements OnInit {
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
     this.id = sessionStorage.getItem("empid");
     this.adminId = sessionStorage.getItem("adminId");
 

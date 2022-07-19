@@ -221,29 +221,24 @@ export class SidebarComponent implements OnInit {
   userdashboardwriteRecep = sessionStorage.getItem("userdashboardwriteRecep");
   jobdashboardreadRecep = sessionStorage.getItem("jobdashboardreadRecep");
   jobdashboardwriteRecep = sessionStorage.getItem("jobdashboardwriteRecep");
-  shortlistedcandidatesreadRecep = sessionStorage.getItem(
-    "shortlistedcandidatesreadRecep"
-  );
-  shortlistedcandidateswriteRecep = sessionStorage.getItem(
-    "shortlistedcandidateswriteRecep"
-  );
+  shortlistedcandidatesreadRecep = sessionStorage.getItem("shortlistedcandidatesreadRecep");
+  shortlistedcandidateswriteRecep = sessionStorage.getItem("shortlistedcandidateswriteRecep");
   candidateslistreadRecep = sessionStorage.getItem("candidateslistreadRecep");
   candidateslistwriteRecep = sessionStorage.getItem("candidateslistwriteRecep");
   scheduletimingsreadRecep = sessionStorage.getItem("scheduletimingsreadRecep");
   scheduletimingwriteRecep = sessionStorage.getItem("scheduletimingwriteRecep");
-  appliedCandidatesreadRecep = sessionStorage.getItem(
-    "appliedCandidatesreadRecep"
-  );
-  appliedCandidateswriteRecep = sessionStorage.getItem(
-    "appliedCandidateswriteRecep"
-  );
+  appliedCandidatesreadRecep = sessionStorage.getItem("appliedCandidatesreadRecep");
+  appliedCandidateswriteRecep = sessionStorage.getItem("appliedCandidateswriteRecep");
+
+
+
 
   constructor(
     private router: Router,
     private allModulesService: AllModulesService
   ) {
     this.user_type = sessionStorage.getItem("user_type");
-
+    alert(this.user_type);
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         $(".main-wrapper").removeClass("slide-nav");

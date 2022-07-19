@@ -12,7 +12,9 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_designation"><i
+                <a
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_designation"><i
                         class="fa fa-plus"></i> Add Designation</a>
             </div>
         </div>
@@ -26,10 +28,10 @@
                     class="table table-striped custom-table mb-0 datatable">
                     <thead>
                         <tr>
-                            <th style="width: 30px;">#</th>
+                            <th style="width: 30px;">Sr.no</th>
                             <th>Designation </th>
                             <th>Department </th>
-                            <th class="text-end">Action</th>
+                            <th class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +39,7 @@
                             <td>{{i+1}}</td>
                             <td>{{item.designation}}</td>
                             <td>{{item.departmentName}}</td>
-                            <td class="text-end">
+                            <td class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

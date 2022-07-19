@@ -19,7 +19,13 @@ export class LocalizationComponent implements OnInit {
   time_zone: any;
   symbol = "Rs";
   currency_code = "INR";
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
   constructor(private formBuilder: FormBuilder, private toastr: ToastrService) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
     this.current_location = JSON.parse(
       sessionStorage.getItem("current_location")
     );

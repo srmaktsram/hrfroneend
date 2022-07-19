@@ -29,6 +29,8 @@ export class ExperienceListComponent implements OnInit, OnDestroy {
   public adminId = sessionStorage.getItem("adminId");
   user_type: string;
   jobswriteHr: string;
+  jobsWrite: string;
+  jobsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -36,6 +38,8 @@ export class ExperienceListComponent implements OnInit, OnDestroy {
     private http: HttpClient
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.jobsWrite = sessionStorage.getItem("jobsWrite");
+    this.jobsWriteSub = sessionStorage.getItem("jobsWriteSub");
     this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
   }
 

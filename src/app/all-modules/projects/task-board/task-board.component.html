@@ -49,11 +49,7 @@
                   href=""
                   class="avatar-title rounded-circle border border-white"
                   data-bs-toggle="modal"
-                  data-bs-target="#assign_leader" *ngIf="
-                  user_type == 'admin' ||
-                  (user_type === 'employee' &&
-                    (projectswrite == 'true'))
-                "
+                  data-bs-target="#assign_leader" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
                   ><i class="fa fa-plus"></i
                 ></a>
               </div>
@@ -90,11 +86,7 @@
                   href=""
                   class="avatar-title rounded-circle border border-white"
                   data-bs-toggle="modal"
-                  data-bs-target="#assign_user"  *ngIf="
-                  user_type == 'admin' ||
-                  (user_type === 'employee' &&
-                    (projectswrite == 'true'))
-                "
+                  data-bs-target="#assign_user"  *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
                   ><i class="fa fa-plus">T</i></a
                 >
               </div>
@@ -160,11 +152,7 @@
                     ><a>{{ task.taskName }}</a></span
                   >
                   <ng-container *ngIf="user_type !== 'client'">
-                  <ng-container *ngIf="
-                  user_type == 'admin' ||
-                  (user_type === 'employee' &&
-                    (projectswrite == 'true'))
-                ">
+                  <ng-container *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
                     <div class="dropdown kanban-task-action">
                       <a href="" data-bs-toggle="dropdown" >
                         <i class="fa fa-angle-down" ></i>
@@ -194,11 +182,7 @@
                         style="width: 0%"
                         aria-valuenow="20"
                         aria-valuemin="0"
-                        aria-valuemax="100" *ngIf="
-                        user_type == 'admin' ||
-                        (user_type === 'employee' &&
-                          (projectswrite == 'true'))
-                      "
+                        aria-valuemax="100" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
                       ></div>
                     </div>
                     <span>0.0%</span>
@@ -226,11 +210,7 @@
             </div>
           </div>
           <ng-container *ngIf="user_type !== 'client'">
-          <ng-container  *ngIf="
-          user_type == 'admin' ||
-          (user_type === 'employee' &&
-            (projectswrite == 'true'))
-        ">
+          <ng-container  *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
             <div class="add-new-task">
               <a data-bs-toggle="modal" data-bs-target="#add_task_modal"
                 >Add New Task</a

@@ -1827,7 +1827,7 @@
               user_type == 'admin' ||
               (user_type === 'roleadmin' &&
                 (assetsRead === 'true' ||
-                assetsRead === 'true'))||
+                assetsWrite === 'true'))||
                 (user_type === 'rolesubadmin' &&
                   (assetsReadSub === 'true' || assetsWriteSub
                    === 'true'))||
@@ -1947,7 +1947,13 @@
                     userdashboardwriteRecep === 'true'))||
                     (user_type === 'rolehr' &&
                       (jobsreadHr === 'true' || jobswriteHr
-                       === 'true'))
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   
                   routerLink="/layout/userdashboard/user-dashboard">
@@ -1977,7 +1983,13 @@
                     jobdashboardwriteRecep === 'true'))||
                     (user_type === 'rolehr' &&
                       (jobsreadHr === 'true' || jobswriteHr
-                       === 'true'))
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/jobsdashboard/jobs-dashboard">
                     <a
@@ -2028,7 +2040,13 @@
                     shortlistedcandidateswriteRecep === 'true'))||
                     (user_type === 'rolehr' &&
                       (jobsreadHr === 'true' || jobswriteHr
-                       === 'true'))
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/candidate/shortlist-candidates">
                     <a
@@ -2091,7 +2109,13 @@
                     candidateslistwriteRecep === 'true'))||
                     (user_type === 'rolehr' &&
                       (jobsreadHr === 'true' || jobswriteHr
-                       === 'true'))
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/studentcandidate/candidates">
                     <a
@@ -2111,7 +2135,13 @@
                     scheduletimingwriteRecep === 'true'))||
                     (user_type === 'rolehr' &&
                       (jobsreadHr === 'true' || jobswriteHr
-                       === 'true'))
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/scheduletiming/schedule-timing">
                     <a
@@ -2145,7 +2175,13 @@
                     appliedCandidateswriteRecep === 'true'))||
                     (user_type === 'rolehr' &&
                       (jobsreadHr === 'true' || jobswriteHr
-                       === 'true'))
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/jobs/job-applicants">
                     <a

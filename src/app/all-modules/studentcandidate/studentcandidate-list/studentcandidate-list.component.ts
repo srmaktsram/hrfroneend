@@ -33,6 +33,8 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
   candidateslistwriteRecep: string;
   user_type: string;
   jobswriteHr: string;
+  jobsWrite: string;
+  jobsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -40,6 +42,8 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     private http: HttpClient
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.jobsWrite = sessionStorage.getItem("jobsWrite");
+    this.jobsWriteSub = sessionStorage.getItem("jobsWriteSub");
     this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
     this.candidateslistwriteRecep = sessionStorage.getItem("candidateslistwriteRecep");
     this.jobFunction();

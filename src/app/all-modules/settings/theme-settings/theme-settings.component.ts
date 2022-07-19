@@ -21,11 +21,17 @@ export class ThemeSettingsComponent implements OnInit {
   clogo: any;
   companyLogo: string;
   companySite: string;
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private http: HttpClient
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
     this.id = sessionStorage.getItem("adminId");
     this.companyLogo = `http://localhost:8443/${sessionStorage.getItem(
       "clogo"

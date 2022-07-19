@@ -12,7 +12,9 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_employee"><i class="fa fa-plus"></i>
+                <a
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_employee"><i class="fa fa-plus"></i>
                     Add Employee</a>
                 <div class="view-icons">
                     <a routerLink="/layout/employees/employeepage" class="grid-view btn btn-link active"><i
@@ -61,7 +63,7 @@
                     <a (click)="getId(emp.id)" class="avatar"><img src="http://localhost:8443\{{emp.profileImage}}"
                             alt=""></a>
                 </div>
-                <div class="dropdown profile-action">
+                <div class="dropdown profile-action" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
                             class="material-icons">more_vert</i></a>
                     <div class="dropdown-menu dropdown-menu-right">

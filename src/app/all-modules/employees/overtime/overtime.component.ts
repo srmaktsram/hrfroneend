@@ -42,6 +42,9 @@ export class OvertimeComponent implements OnInit {
   public editOvertimeForm: FormGroup;
   lstEmployee: any;
   name: any;
+  user_type: string;
+  employeewriteSub: string;
+  employeewrite: string;
   constructor(
     private formBuilder: FormBuilder,
     // private srvModuleService: AllModulesService,
@@ -50,6 +53,9 @@ export class OvertimeComponent implements OnInit {
     private router: Router,
     private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
     this.getEmployeeData();
   }
 
