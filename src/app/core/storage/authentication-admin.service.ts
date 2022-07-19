@@ -18,11 +18,11 @@ export class AdminAuthenticationService {
     cinvoice: string,
     cinvoicepre: string,
     packageName: string,
+    roleDetails: any
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", "admin");
     sessionStorage.setItem("corporateId", corporateId);
-    sessionStorage.setItem("packageName", packageName);
     sessionStorage.setItem("packageName", packageName);
     sessionStorage.setItem("adminId", id);
     sessionStorage.setItem("companyEmail", companyEmail);
@@ -36,6 +36,7 @@ export class AdminAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
+    sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
     return true;
   }
   logout() {
@@ -49,6 +50,7 @@ export class AdminAuthenticationService {
     sessionStorage.removeItem("pinCode");
     sessionStorage.removeItem("companyAddress");
     sessionStorage.removeItem("current_location");
+    sessionStorage.removeItem("role_details");
     sessionStorage.removeItem("clogo");
     sessionStorage.removeItem("cinvoice");
     sessionStorage.removeItem("cinvoicepre");

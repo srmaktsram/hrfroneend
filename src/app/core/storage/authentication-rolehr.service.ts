@@ -33,7 +33,7 @@ export class RoleHrAuthenticationService {
     payrollswriteHr: string,
     attendancereadHr: string,
     attendancewriteHr: string,
-    
+    roleDetails: any
   ) {
     sessionStorage.setItem("currentUser", "AdminLogin");
     sessionStorage.setItem("user_type", user_type);
@@ -52,6 +52,7 @@ export class RoleHrAuthenticationService {
     sessionStorage.setItem("cinvoice", cinvoice);
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
+    sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
 
     sessionStorage.setItem("jobsreadHr", jobsreadHr);
     sessionStorage.setItem("jobswriteHr", jobswriteHr);
@@ -67,8 +68,6 @@ export class RoleHrAuthenticationService {
     sessionStorage.setItem("payrollswriteHr", payrollswriteHr);
     sessionStorage.setItem("attendancereadHr", attendancereadHr);
     sessionStorage.setItem("attendancewriteHr", attendancewriteHr);
-
-    
 
     return true;
   }
@@ -86,6 +85,7 @@ export class RoleHrAuthenticationService {
     sessionStorage.removeItem("clogo");
     sessionStorage.removeItem("cinvoice");
     sessionStorage.removeItem("cinvoicepre");
+    sessionStorage.removeItem("role_details");
   }
   public get loggedIn(): boolean {
     return sessionStorage.getItem("currentUser") !== null;

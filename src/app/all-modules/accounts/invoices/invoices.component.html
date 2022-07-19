@@ -22,7 +22,9 @@
       </div>
 
       <div class="col-auto float-end ms-auto">
-        <a routerLink="/layout/accounts/create-invoice" class="btn add-btn"
+        <a
+        *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')"
+        routerLink="/layout/accounts/create-invoice" class="btn add-btn"
           ><i class="fa fa-plus"></i> Create Invoice</a
         >
       </div>
@@ -107,7 +109,7 @@
               <th>Due Date</th>
               <th>Amount</th>
               <th>Status</th>
-              <th class="text-end">Action</th>
+              <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -132,7 +134,7 @@
                   >
                     <i class="fa fa-dot-circle-o"></i> {{ invoice.status }}
                   </a>
-                  <div class="dropdown-menu">
+                  <div class="dropdown-menu" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
                     <a
                       class="dropdown-item"
                       (click)="updateStatus('Pending', invoice.id)"
@@ -153,7 +155,7 @@
                   </div>
                 </div>
               </td>
-              <td class="text-end">
+              <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
                 <div class="dropdown dropdown-action">
                   <a
                     class="action-icon dropdown-toggle"

@@ -6,6 +6,11 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -14,6 +19,8 @@ declare const $: any;
   styleUrls: ["./promocodes-list.component.css"],
 })
 export class ClientsListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -47,7 +54,8 @@ export class ClientsListComponent implements OnInit, OnDestroy {
     // private allModulesService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
@@ -164,7 +172,13 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
     $("#edit_client").modal("hide");
     this.editPackageForm.reset();
-    this.toastr.success("Package updated sucessfully...!", "Success");
+    this._snackBar.open("Package updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //Add new client
@@ -197,7 +211,13 @@ export class ClientsListComponent implements OnInit, OnDestroy {
 
     $("#add_client").modal("hide");
     this.addPackageForm.reset();
-    this.toastr.success("Offer Added sucessfully...!", "Success");
+    this._snackBar.open("Offer Added sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //Delete Client
@@ -214,7 +234,13 @@ export class ClientsListComponent implements OnInit, OnDestroy {
       });
 
     $("#delete_client").modal("hide");
-    this.toastr.success("Offer deleted sucessfully...!", "Success");
+    this._snackBar.open("Offer Deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //search by name

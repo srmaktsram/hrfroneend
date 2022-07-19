@@ -1,11 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AllModulesService } from '../../all-modules.service';
-import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
-import { DatePipe } from '@angular/common';
-import { DataTableDirective } from 'angular-datatables';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { AllModulesService } from "../../all-modules.service";
+import { ToastrService } from "ngx-toastr";
+import { Subject } from "rxjs";
+import { DatePipe } from "@angular/common";
+import { DataTableDirective } from "angular-datatables";
+import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -14,6 +19,9 @@ declare const $: any;
   styleUrls: ["./termination-main.component.css"],
 })
 export class TerminationMainComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   lstTermination: any[];
 
   @ViewChild(DataTableDirective, { static: false })
@@ -21,7 +29,7 @@ export class TerminationMainComponent implements OnInit {
   public dtOptions: DataTables.Settings = {};
   public rows = [];
   public srch = [];
-  public adminId:any;
+  public adminId: any;
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
@@ -32,23 +40,30 @@ export class TerminationMainComponent implements OnInit {
 
   public addTerminationForm: FormGroup;
   public editTerminationForm: FormGroup;
+  user_type: string;
+  terminationWrite: string;
+  terminationWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private http:HttpClient,
-    private toastr: ToastrService
+    private http: HttpClient,
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.terminationWrite = sessionStorage.getItem("terminationWrite");
+    this.terminationWriteSub = sessionStorage.getItem("terminationWriteSub");
     this.adminId=sessionStorage.getItem("adminId")
    }
+
 
   ngOnInit() {
     this.loadTermination();
     this.dtOptions = {
-
       // ... skipped ...
       pageLength: 10,
       dom: "lrtip",
-    }
+    };
 
     this.addTerminationForm = this.formBuilder.group({
       EmployeeName: ["", [Validators.required]],
@@ -75,12 +90,18 @@ export class TerminationMainComponent implements OnInit {
 
   // Get  termination Api Call
   loadTermination() {
-    this.http.get("http://localhost:8443/admin/termination/getAdminTermination"+"/"+this.adminId).subscribe((data:any) => {
-      console.log("GETdATA>>>>>>>>>>>>>>>>>",data)
-      this.lstTermination = data;
-      this.rows = this.lstTermination;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/termination/getAdminTermination" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        console.log("GETdATA>>>>>>>>>>>>>>>>>", data);
+        this.lstTermination = data;
+        this.rows = this.lstTermination;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -92,12 +113,11 @@ export class TerminationMainComponent implements OnInit {
     });
   }
 
-
   // Add  termination  Modal Api Call
   addTermination() {
-    if(this.addTerminationForm.invalid){
-      this.markFormGroupTouched(this.addTerminationForm)
-      return
+    if (this.addTerminationForm.invalid) {
+      this.markFormGroupTouched(this.addTerminationForm);
+      return;
     }
     if (this.addTerminationForm.valid) {
       let noticedDate = this.pipe.transform(
@@ -109,32 +129,39 @@ export class TerminationMainComponent implements OnInit {
         "dd-MM-yyyy"
       );
       let obj = {
-        adminId:this.adminId,
+        adminId: this.adminId,
         employee: this.addTerminationForm.value.EmployeeName,
         department: "Web development",
         terminationType: this.addTerminationForm.value.TerminationTyped,
         noticedDate: noticedDate,
         terminationDate: terminationDate,
         reason: this.addTerminationForm.value.ReasonName,
-   
       };
-      this.http.post("http://localhost:8443/admin/termination/createTermination",obj).subscribe((data:any) => {
-        console.log("CREATEDATA>>>>>>>>>>>>>>>>>",data)
-        this.loadTermination();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/termination/createTermination", obj)
+        .subscribe((data: any) => {
+          console.log("CREATEDATA>>>>>>>>>>>>>>>>>", data);
+          this.loadTermination();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
-   
+
       $("#add_termination").modal("hide");
       this.addTerminationForm.reset();
-      this.toastr.success("Termination added sucessfully...!", "Success");
+      this._snackBar.open("Termination added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
-  // update api call 
+  // update api call
   editTermination() {
     if (this.editTerminationForm.valid) {
       // let noticed = this.pipe.transform(
@@ -154,21 +181,33 @@ export class TerminationMainComponent implements OnInit {
         reason: this.editTerminationForm.value.ReasonName,
         id: this.editId,
       };
-      this.http.patch("http://localhost:8443/admin/termination/updateTermination"+"/"+this.editId,obj).subscribe((data:any) => {
-        console.log("UPDATEDATA>>>>>>>>>>>>>>>>>",data)
-        this.loadTermination();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/termination/updateTermination" +
+            "/" +
+            this.editId,
+          obj
+        )
+        .subscribe((data: any) => {
+          console.log("UPDATEDATA>>>>>>>>>>>>>>>>>", data);
+          this.loadTermination();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
-      
+
       $("#edit_termination").modal("hide");
-      this.toastr.success("Termination Updated sucessfully...!", "Success");
+      this._snackBar.open("Termination Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
-
 
   // To Get The termination Edit Id And Set Values To Edit Modal Form
   edit(value) {
@@ -186,25 +225,36 @@ export class TerminationMainComponent implements OnInit {
     });
   }
 
-
   // delete api call
   deleteTermination() {
-    this.http.patch("http://localhost:8443/admin/termination/deleteTermination"+"/"+this.tempId,{status:2}).subscribe((data:any) => {
-      console.log("UPDATEDATA>>>>>>>>>>>>>>>>>",data)
-      this.loadTermination();
-      $("#datatable").DataTable().clear();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    this.http
+      .patch(
+        "http://localhost:8443/admin/termination/deleteTermination" +
+          "/" +
+          this.tempId,
+        { status: 2 }
+      )
+      .subscribe((data: any) => {
+        console.log("UPDATEDATA>>>>>>>>>>>>>>>>>", data);
+        this.loadTermination();
+        $("#datatable").DataTable().clear();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.dtTrigger.next();
       });
-      this.dtTrigger.next();
-    });
-   
+
     $("#delete_termination").modal("hide");
-    this.toastr.success("Termination  deleted sucessfully..!", "Success");
+    this._snackBar.open("Termination deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
-
 }

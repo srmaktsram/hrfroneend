@@ -36,10 +36,9 @@
                     urlComplete.mainUrl === 'dashboard' ? 'block' : 'none'
                 }"
               >
-
-                <li >
-                  <a routerLink="/layout/mainadmin/admindashboard"
-
+                <li>
+                  <a
+                    routerLink="/layout/mainadmin/admindashboard"
                     [ngClass]="{
                       active: urlComplete.subUrl === 'admindashboard'
                     }"
@@ -118,6 +117,20 @@
             >
               <a routerLink="/layout/mainadmin/subadmins/subadminlist"
                 ><i class="la la-users"></i> <span>Sub Admin</span></a
+              >
+            </li>
+            <li
+              *ngIf="
+                user_type == 'mainadmin' ||
+                (user_type === 'subadmin' &&
+                  (subadminread == 'true' || subadminwrite == 'true'))
+              "
+              [ngClass]="{
+                active: urlComplete.subUrl === 'packageauthlist'
+              }"
+            >
+              <a routerLink="/layout/mainadmin/packages/packageauthlist"
+                ><i class="la la-users"></i> <span>Packages</span></a
               >
             </li>
 
@@ -470,12 +483,15 @@
 
             <li
               *ngIf="
-                user_type == 'admin' ||
-                user_type == 'employee' ||
+                (user_type == 'admin' && roleDetails.chat[0].access == true) ||
+                (user_type == 'employee' &&
+                  roleDetails.chat[0].access == true) ||
                 (user_type === 'roleadmin' &&
-                  (appsread === 'true' || appswrite === 'true'))||
-                  (user_type === 'rolesubadmin' &&
-                    (appsreadSub === 'true' || appswriteSub === 'true'))
+                  roleDetails.chat[0].access == true &&
+                  (appsread === 'true' || appswrite === 'true')) ||
+                (user_type === 'rolesubadmin' &&
+                  roleDetails.chat[0].access == true &&
+                  (appsreadSub === 'true' || appswriteSub === 'true'))
               "
               class="submenu"
               [ngClass]="{ active: urlComplete.mainUrl === 'apps' }"
@@ -596,9 +612,9 @@
                 user_type == 'admin' ||
                 user_type == 'employee' ||
                 (user_type === 'roleadmin' &&
-                  (employeeread === 'true' || employeewrite === 'true'))||
-                  (user_type === 'rolesubadmin' &&
-                    (employeereadSub === 'true' || employeewriteSub === 'true'))
+                  (employeeread === 'true' || employeewrite === 'true')) ||
+                (user_type === 'rolesubadmin' &&
+                  (employeereadSub === 'true' || employeewriteSub === 'true'))
               "
               class="submenu"
               [ngClass]="{
@@ -955,24 +971,32 @@
             >
               <li
                 *ngIf="
-                  user_type == 'admin' ||
+                  (user_type == 'admin' &&
+                    roleDetails.supportTicket[0].access == true) ||
                   (user_type === 'roleadmin' &&
+                    roleDetails.supportTicket[0].access == true &&
                     (supportTicketsRead === 'true' ||
-                      supportTicketsWrite === 'true'))||
-                      (user_type === 'rolesubadmin' &&
-                        (supportTicketsReadSub === 'true' || supportTicketsWriteSub === 'true'))||
-                        (user_type === 'rolemanager' &&
-                          (supportTicketsReadMan === 'true' || supportTicketsWriteMan
-                           === 'true'))||
-                           (user_type === 'rolefinance' &&
-                             (supportTicketsReadFin === 'true' || supportTicketsWriteFin
-                              === 'true'))||
-                              (user_type === 'rolehr' &&
-                                (supportticketsreadHr === 'true' || supportticketswriteHr
-                                 === 'true'))||
-                                 (user_type === 'rolereceptionist' &&
-                                   (supportticketsreadRecep === 'true' || supportticketswriteRecep
-                                    === 'true'))
+                      supportTicketsWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.supportTicket[0].access == true &&
+                    (supportTicketsReadSub === 'true' ||
+                      supportTicketsWriteSub === 'true')) ||
+                  (user_type === 'rolemanager' &&
+                    roleDetails.supportTicket[0].access == true &&
+                    (supportTicketsReadMan === 'true' ||
+                      supportTicketsWriteMan === 'true')) ||
+                  (user_type === 'rolefinance' &&
+                    roleDetails.supportTicket[0].access == true &&
+                    (supportTicketsReadFin === 'true' ||
+                      supportTicketsWriteFin === 'true')) ||
+                  (user_type === 'rolehr' &&
+                    roleDetails.supportTicket[0].access == true &&
+                    (supportticketsreadHr === 'true' ||
+                      supportticketswriteHr === 'true')) ||
+                  (user_type === 'rolereceptionist' &&
+                    roleDetails.supportTicket[0].access == true &&
+                    (supportticketsreadRecep === 'true' ||
+                      supportticketswriteRecep === 'true'))
                 "
                 [ngClass]="{
                   active:
@@ -991,13 +1015,11 @@
                 (user_type === 'roleadmin' &&
                   (clientsRead === 'true' || clientsWrite === 'true')) ||
                 (user_type === 'employee' &&
-                  (clientsread === 'true' || clientswrite === 'true'))||
-                  (user_type === 'rolesubadmin' &&
-                    (clientsReadSub === 'true' || clientsWriteSub
-                     === 'true'))||
-                     (user_type === 'rolemanager' &&
-                       (clientsReadMan === 'true' || clientsWriteMan
-                        === 'true'))
+                  (clientsread === 'true' || clientswrite === 'true')) ||
+                (user_type === 'rolesubadmin' &&
+                  (clientsReadSub === 'true' || clientsWriteSub === 'true')) ||
+                (user_type === 'rolemanager' &&
+                  (clientsReadMan === 'true' || clientsWriteMan === 'true'))
               "
               [ngClass]="{
                 active:
@@ -1011,13 +1033,13 @@
             </li>
             <li
               *ngIf="
-                user_type == 'admin' || (user_type === 'employee' &&
+                user_type == 'admin' ||
+                (user_type === 'employee' &&
                   (projectsread === 'true' || projectswrite === 'true')) ||
                 (user_type === 'roleadmin' &&
-                  (projectsRead === 'true' || projectsWrite === 'true'))||
-                  (user_type === 'rolesubadmin' &&
-                    (projectsReadSub === 'true' || projectsWriteSub
-                     === 'true'))
+                  (projectsRead === 'true' || projectsWrite === 'true')) ||
+                (user_type === 'rolesubadmin' &&
+                  (projectsReadSub === 'true' || projectsWriteSub === 'true'))
               "
               [ngClass]="{
                 active:
@@ -1031,31 +1053,32 @@
               >
             </li>
             <li
-            *ngIf="
-                  user_type == 'admin' || user_type === 'employee' ||
-                  (user_type === 'roleadmin' &&
-                    (leadsread === 'true' ||
-                    leadswrite === 'true'))||
-                    (user_type === 'rolesubadmin' &&
-                      (leadsreadSub === 'true' || leadswriteSub
-                       === 'true'))
-                "
-
-             [ngClass]="{ active: urlComplete.subUrl === 'leadscontent' }">
+              *ngIf="
+                (user_type == 'admin' && roleDetails.leads[0].access == true) ||
+                (user_type === 'employee' &&
+                  roleDetails.leads[0].access == true) ||
+                (user_type === 'roleadmin' &&
+                  roleDetails.leads[0].access == true &&
+                  (leadsread === 'true' || leadswrite === 'true')) ||
+                (user_type === 'rolesubadmin' &&
+                  roleDetails.leads[0].access == true &&
+                  (leadsreadSub === 'true' || leadswriteSub === 'true'))
+              "
+              [ngClass]="{ active: urlComplete.subUrl === 'leadscontent' }"
+            >
               <a routerLink="/layout/leads/leadscontent"
                 ><i class="la la-user-secret"></i> <span>Leads</span></a
               >
             </li>
             <li
-            *ngIf="
-            user_type == 'admin' || user_type === 'employee' ||
-            (user_type === 'roleadmin' &&
-              (ticketsRead === 'true' ||
-              ticketsWrite === 'true'))||
-              (user_type === 'rolesubadmin' &&
-                (ticketsReadSub === 'true' || ticketsWriteSub
-                 === 'true'))
-          "
+              *ngIf="
+                user_type == 'admin' ||
+                user_type === 'employee' ||
+                (user_type === 'roleadmin' &&
+                  (ticketsRead === 'true' || ticketsWrite === 'true')) ||
+                (user_type === 'rolesubadmin' &&
+                  (ticketsReadSub === 'true' || ticketsWriteSub === 'true'))
+              "
               [ngClass]="{
                 active:
                   urlComplete.subUrl === 'ticketscontent' ||
@@ -1082,18 +1105,19 @@
               </li>
 
               <li
-              *ngIf="
-            user_type == 'admin' ||
-            (user_type === 'roleadmin' &&
-              (salesread === 'true' ||
-              saleswrite === 'true'))||
-              (user_type === 'rolesubadmin' &&
-                (salesreadSub === 'true' || saleswriteSub
-                 === 'true'))||
-                 (user_type === 'rolefinance' &&
-                   (salesreadFin === 'true' || saleswriteFin
-                    === 'true'))
-          "
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.sales[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.sales[0].access == true &&
+                    (salesread === 'true' || saleswrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.sales[0].access == true &&
+                    (salesreadSub === 'true' || saleswriteSub === 'true')) ||
+                  (user_type === 'rolefinance' &&
+                    roleDetails.sales[0].access == true &&
+                    (salesreadFin === 'true' || saleswriteFin === 'true'))
+                "
                 class="submenu"
                 [ngClass]="{
                   active:
@@ -1181,18 +1205,19 @@
                 </ul>
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (accountingread === 'true' ||
-                accountingwrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (accountingreadSub === 'true' || accountingwriteSub
-                   === 'true'))||
-                   (user_type === 'rolefinance' &&
-                     (accountingreadFin === 'true' || accountingwriteFin
-                      === 'true'))
-            "
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.accounting[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    (accountingread === 'true' ||
+                      accountingwrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    (accountingreadSub === 'true' ||
+                      accountingwriteSub === 'true')) ||
+                  (user_type === 'rolefinance' &&
+                    (accountingreadFin === 'true' ||
+                      accountingwriteFin === 'true'))
+                "
                 class="submenu"
                 [ngClass]="{
                   active:
@@ -1264,18 +1289,20 @@
               </li>
 
               <li
-              *ngIf="
-            user_type == 'admin' ||
-            (user_type === 'roleadmin' &&
-              (payrollRead === 'true' ||
-              payrollWrite === 'true'))||
-              (user_type === 'rolesubadmin' &&
-                (payrollReadSub === 'true' || payrollWriteSub
-                 === 'true'))||
-                 (user_type === 'rolehr' &&
-                   (payrollsreadHr === 'true' || payrollswriteHr
-                    === 'true'))
-          "
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.payrole[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.payrole[0].access == true &&
+                    (payrollRead === 'true' || payrollWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.payrole[0].access == true &&
+                    (payrollReadSub === 'true' ||
+                      payrollWriteSub === 'true')) ||
+                  (user_type === 'rolehr' &&
+                    roleDetails.payrole[0].access == true &&
+                    (payrollsreadHr === 'true' || payrollswriteHr === 'true'))
+                "
                 class="submenu"
                 [ngClass]="{ active: urlComplete.mainUrl === 'payroll' }"
               >
@@ -1325,28 +1352,26 @@
                 </ul>
               </li>
               <li
-              *ngIf="
-            user_type == 'admin' ||
-            (user_type === 'roleadmin' &&
-              (policiesRead === 'true' ||
-              policiesWrite === 'true'))||
-              (user_type === 'rolesubadmin' &&
-                (policiesReadSub === 'true' || policiesWriteSub
-                 === 'true'))||
-                 (user_type === 'rolemanager' &&
-                   (policiesReadMan === 'true' || policiesWriteMan
-                    === 'true'))||
-                    (user_type === 'rolefinance' &&
-                      (policiesReadFin === 'true' || policiesWritefin
-                       === 'true'))
-                       ||
-                   (user_type === 'rolehr' &&
-                     (policiesreadHr === 'true' || policieswriteHr
-                      === 'true'))||
-                      (user_type === 'rolereceptionist' &&
-                        (policiesreadRecep === 'true' || policieswriteRecep
-                         === 'true'))
-          "
+                *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'roleadmin' &&
+                    (policiesRead === 'true' || policiesWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    (policiesReadSub === 'true' ||
+                      policiesWriteSub === 'true')) ||
+                  (user_type === 'rolemanager' &&
+                    (policiesReadMan === 'true' ||
+                      policiesWriteMan === 'true')) ||
+                  (user_type === 'rolefinance' &&
+                    (policiesReadFin === 'true' ||
+                      policiesWritefin === 'true')) ||
+                  (user_type === 'rolehr' &&
+                    (policiesreadHr === 'true' ||
+                      policieswriteHr === 'true')) ||
+                  (user_type === 'rolereceptionist' &&
+                    (policiesreadRecep === 'true' ||
+                      policieswriteRecep === 'true'))
+                "
                 [ngClass]="{ active: urlComplete.subUrl === 'policies-main' }"
               >
                 <a routerLink="/layout/policies/policies-main"
@@ -1354,22 +1379,25 @@
                 >
               </li>
               <li
-              *ngIf="
-            user_type == 'admin' ||
-            (user_type === 'roleadmin' &&
-              (reportsRead === 'true' ||
-              reportsWrite === 'true'))||
-              (user_type === 'rolesubadmin' &&
-                (reportsReadSub === 'true' || reportsWriteSub
-                 === 'true'))||
-                 (user_type === 'rolefinance' &&
-                   (reportsReadFin === 'true' || reportsWriteFin
-                    === 'true'))||
-                    (user_type === 'rolehr' &&
-                      (attendancereadHr === 'true' ||
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.reports[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.reports[0].access == true &&
+                    (reportsRead === 'true' || reportsWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.reports[0].access == true &&
+                    (reportsReadSub === 'true' ||
+                      reportsWriteSub === 'true')) ||
+                  (user_type === 'rolefinance' &&
+                    roleDetails.reports[0].access == true &&
+                    (reportsReadFin === 'true' ||
+                      reportsWriteFin === 'true')) ||
+                  (user_type === 'rolehr' &&
+                    roleDetails.reports[0].access == true &&
+                    (attendancereadHr === 'true' ||
                       attendancewriteHr === 'true'))
-          "
-              
+                "
                 class="submenu"
                 [ngClass]="{
                   active:
@@ -1422,10 +1450,9 @@
                   }"
                 >
                   <li
-                  *ngIf="
-            user_type !='rolehr'
-          "
-                  routerLink="/layout/reports/expense-report">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/reports/expense-report"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1436,10 +1463,9 @@
                     </a>
                   </li>
                   <li
-                  *ngIf="
-            user_type !='rolehr'
-          "
-                  routerLink="/layout/reports/invoice-report">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/reports/invoice-report"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1450,11 +1476,9 @@
                     </a>
                   </li>
                   <li
-                  
-                  *ngIf="
-            user_type !='rolehr'
-          "
-          routerLink="/layout/paymentreports/payments-reports">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/paymentreports/payments-reports"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1465,11 +1489,9 @@
                     </a>
                   </li>
                   <li
-                  
-                  *ngIf="
-            user_type !='rolehr'
-          "
-          routerLink="/layout/projectreports/project-reports">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/projectreports/project-reports"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1480,11 +1502,9 @@
                     </a>
                   </li>
                   <li
-                  
-                  *ngIf="
-            user_type !='rolehr'
-          "
-          routerLink="/layout/taskreports/task-reports">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/taskreports/task-reports"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1495,11 +1515,9 @@
                     </a>
                   </li>
                   <li
-                  
-                  *ngIf="
-            user_type !='rolehr'
-          "
-          routerLink="/layout/userreports/user-reports">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/userreports/user-reports"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1510,11 +1528,9 @@
                     </a>
                   </li>
                   <li
-                  
-                  *ngIf="
-            user_type !='rolehr'
-          "
-          routerLink="/layout/employeereports/employee-reports">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/employeereports/employee-reports"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1525,10 +1541,9 @@
                     </a>
                   </li>
                   <li
-                  
-                  *ngIf="
-            user_type !='rolehr'
-          "routerLink="/layout/payslipreports/payslip-reports">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/payslipreports/payslip-reports"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1539,13 +1554,14 @@
                     </a>
                   </li>
                   <li
-                  *ngIf="
-            user_type == 'admin' ||
-            (user_type === 'rolehr' &&
-              (attendancereadHr === 'true' ||
-              attendancewriteHr === 'true'))
-          "
-                   routerLink="/layout/attendancereports/attendance-reports">
+                    *ngIf="
+                      user_type == 'admin' ||
+                      (user_type === 'rolehr' &&
+                        (attendancereadHr === 'true' ||
+                          attendancewriteHr === 'true'))
+                    "
+                    routerLink="/layout/attendancereports/attendance-reports"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1556,11 +1572,9 @@
                     </a>
                   </li>
                   <li
-                  
-                  *ngIf="
-            user_type !='rolehr'
-          "
-          routerLink="/layout/leavereports/leave-reports">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/leavereports/leave-reports"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1571,10 +1585,9 @@
                     </a>
                   </li>
                   <li
-                  *ngIf="
-            user_type !='rolehr'
-          "
-                  routerLink="/layout/dailyreports/daily-reports">
+                    *ngIf="user_type != 'rolehr'"
+                    routerLink="/layout/dailyreports/daily-reports"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1586,24 +1599,26 @@
                   </li>
                 </ul>
               </li>
-              <li
-              
-              class="menu-title">
+              <li class="menu-title">
                 <span>Performance</span>
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (performanceRead === 'true' ||
-                performanceWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (performanceReadSub === 'true' || performanceWriteSub
-                   === 'true'))||
-                   (user_type === 'rolehr' &&
-                     (performancereadHr === 'true' || performancewriteHr
-                      === 'true'))
-            "
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.performance[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.performance[0].access == true &&
+                    (performanceRead === 'true' ||
+                      performanceWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.performance[0].access == true &&
+                    (performanceReadSub === 'true' ||
+                      performanceWriteSub === 'true')) ||
+                  (user_type === 'rolehr' &&
+                    roleDetails.performance[0].access == true &&
+                    (performancereadHr === 'true' ||
+                      performancewriteHr === 'true'))
+                "
                 class="submenu"
                 [ngClass]="{ active: urlComplete.mainUrl === 'performance' }"
               >
@@ -1653,15 +1668,16 @@
                 </ul>
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (goalsRead === 'true' ||
-                goalsWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (goalsReadSub === 'true' || goalsWriteSub
-                   === 'true'))
-            "
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.goals[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.goals[0].access == true &&
+                    (goalsRead === 'true' || goalsWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.goals[0].access == true &&
+                    (goalsReadSub === 'true' || goalsWriteSub === 'true'))
+                "
                 class="submenu"
                 [ngClass]="{ active: urlComplete.mainUrl === 'goals' }"
               >
@@ -1696,18 +1712,20 @@
                 </ul>
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (trainingsRead === 'true' ||
-                trainingsWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (trainingsReadSub === 'true' || trainingsWriteSub
-                   === 'true'))||
-                   (user_type === 'rolehr' &&
-                     (trainingreadHr === 'true' || trainingwriteHr
-                      === 'true'))
-            "
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.training[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.training[0].access == true &&
+                    (trainingsRead === 'true' || trainingsWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.training[0].access == true &&
+                    (trainingsReadSub === 'true' ||
+                      trainingsWriteSub === 'true')) ||
+                  (user_type === 'rolehr' &&
+                    roleDetails.training[0].access == true &&
+                    (trainingreadHr === 'true' || trainingwriteHr === 'true'))
+                "
                 class="submenu"
                 [ngClass]="{ active: urlComplete.mainUrl === 'training' }"
               >
@@ -1755,15 +1773,14 @@
                 </ul>
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (promotionRead === 'true' ||
-                promotionWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (promotionReadSub === 'true' || promotionWriteSub
-                   === 'true'))
-            "
+                *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'roleadmin' &&
+                    (promotionRead === 'true' || promotionWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    (promotionReadSub === 'true' ||
+                      promotionWriteSub === 'true'))
+                "
                 [ngClass]="{ active: urlComplete.subUrl === 'promotionmain' }"
               >
                 <a routerLink="/layout/promotion/promotionmain"
@@ -1771,15 +1788,18 @@
                 >
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (resignationRead === 'true' ||
-                resignationWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (resignationReadSub === 'true' || resignationWriteSub
-                   === 'true'))
-            "
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.resignation[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.resignation[0].access == true &&
+                    (resignationRead === 'true' ||
+                      resignationWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.resignation[0].access == true &&
+                    (resignationReadSub === 'true' ||
+                      resignationWriteSub === 'true'))
+                "
                 [ngClass]="{ active: urlComplete.subUrl === 'resignationmain' }"
               >
                 <a routerLink="/layout/resignation/resignationmain"
@@ -1788,15 +1808,18 @@
                 >
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (terminationRead === 'true' ||
-                terminationWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (terminationReadSub === 'true' || terminationWriteSub
-                   === 'true'))
-            "
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.termination[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.termination[0].access == true &&
+                    (terminationRead === 'true' ||
+                      terminationWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.termination[0].access == true &&
+                    (terminationReadSub === 'true' ||
+                      terminationWriteSub === 'true'))
+                "
                 [ngClass]="{ active: urlComplete.subUrl === 'terminationmain' }"
               >
                 <a routerLink="/layout/termination/terminationmain"
@@ -1808,47 +1831,56 @@
                 <span>Administration</span>
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (assetsRead === 'true' ||
-                assetsRead === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (assetsReadSub === 'true' || assetsWriteSub
-                   === 'true'))||
-                   (user_type === 'rolemanager' &&
-                     (assetsReadMan === 'true' || assetsWriteMan
-                      === 'true'))||
-                      (user_type === 'rolefinance' &&
-                        (assetsReadFin === 'true' || assetsWriteFin
-                         === 'true'))
-            "
-               [ngClass]="{ active: urlComplete.subUrl === 'assets-main' }">
+
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.assests[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.assests[0].access == true &&
+                    (assetsRead === 'true' || assetsWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.assests[0].access == true &&
+                    (assetsReadSub === 'true' || assetsWriteSub === 'true')) ||
+                  (user_type === 'rolemanager' &&
+                    roleDetails.assests[0].access == true &&
+                    (assetsReadMan === 'true' || assetsWriteMan === 'true')) ||
+                  (user_type === 'rolefinance' &&
+                    roleDetails.assests[0].access == true &&
+                    (assetsReadFin === 'true' || assetsWriteFin === 'true'))
+                "
+                [ngClass]="{ active: urlComplete.subUrl === 'assets-main' }"
+              >
+
                 <a routerLink="/layout/assets/assets-main"
                   ><i class="la la-object-ungroup"></i> <span>Assets</span></a
                 >
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (jobsRead === 'true' ||
-                jobsWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (jobsReadSub === 'true' || jobsWriteSub
-                   === 'true'))||
-                   (user_type === 'rolehr' &&
-                     (jobsreadHr === 'true' || jobswriteHr
-                      === 'true'))||
-                      (user_type === 'rolereceptionist' &&
-                        (userdashboardreadRecep === 'true' || userdashboardwriteRecep
-                         === 'true' || jobdashboardreadRecep === 'true' || jobdashboardwriteRecep
-                         === 'true'|| shortlistedcandidatesreadRecep === 'true' || shortlistedcandidateswriteRecep
-                         === 'true'|| candidateslistreadRecep === 'true' || candidateslistwriteRecep
-                         === 'true'|| scheduletimingsreadRecep === 'true' || scheduletimingwriteRecep
-                         === 'true'|| appliedCandidatesreadRecep === 'true' || appliedCandidateswriteRecep
-                         === 'true'))
-            "
+                *ngIf="
+                  (user_type == 'admin' && roleDetails.job[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    (jobsRead === 'true' || jobsWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.job[0].access == true &&
+                    (jobsReadSub === 'true' || jobsWriteSub === 'true')) ||
+                  (user_type === 'rolehr' &&
+                    roleDetails.job[0].access == true &&
+                    (jobsreadHr === 'true' || jobswriteHr === 'true')) ||
+                  (user_type === 'rolereceptionist' &&
+                    roleDetails.job[0].access == true &&
+                    (userdashboardreadRecep === 'true' ||
+                      userdashboardwriteRecep === 'true' ||
+                      jobdashboardreadRecep === 'true' ||
+                      jobdashboardwriteRecep === 'true' ||
+                      shortlistedcandidatesreadRecep === 'true' ||
+                      shortlistedcandidateswriteRecep === 'true' ||
+                      candidateslistreadRecep === 'true' ||
+                      candidateslistwriteRecep === 'true' ||
+                      scheduletimingsreadRecep === 'true' ||
+                      scheduletimingwriteRecep === 'true' ||
+                      appliedCandidatesreadRecep === 'true' ||
+                      appliedCandidateswriteRecep === 'true'))
+                "
                 class="submenu"
                 [ngClass]="{
                   active:
@@ -1929,10 +1961,20 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (userdashboardreadRecep === 'true' ||
-                    userdashboardwriteRecep === 'true'))
+                    userdashboardwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   
                   routerLink="/layout/userdashboard/user-dashboard">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1956,9 +1998,19 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (jobdashboardreadRecep === 'true' ||
-                    jobdashboardwriteRecep === 'true'))
+                    jobdashboardwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/jobsdashboard/jobs-dashboard">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1970,10 +2022,9 @@
                   </li>
 
                   <li
-                  *ngIf="
-            user_type !='rolereceptionist'
-          "
-           routerLink="/layout/jobs/manage-jobs">
+                    *ngIf="user_type != 'rolereceptionist'"
+                    routerLink="/layout/jobs/manage-jobs"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1986,10 +2037,9 @@
                     </a>
                   </li>
                   <li
-                  *ngIf="
-            user_type !='rolereceptionist'
-          "
-                  routerLink="/layout/manageresume/manage-resumes">
+                    *ngIf="user_type != 'rolereceptionist'"
+                    routerLink="/layout/manageresume/manage-resumes"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2004,9 +2054,19 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (shortlistedcandidatesreadRecep === 'true' ||
-                    shortlistedcandidateswriteRecep === 'true'))
+                    shortlistedcandidateswriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/candidate/shortlist-candidates">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2017,11 +2077,9 @@
                     </a>
                   </li>
                   <li
-                  
-                  *ngIf="
-            user_type !='rolereceptionist'
-          "
-          routerLink="/layout/interview/interview-questions">
+                    *ngIf="user_type != 'rolereceptionist'"
+                    routerLink="/layout/interview/interview-questions"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2032,10 +2090,9 @@
                     </a>
                   </li>
                   <li
-                  *ngIf="
-            user_type !='rolereceptionist'
-          "
-           routerLink="/layout/offer/offer-approvals">
+                    *ngIf="user_type != 'rolereceptionist'"
+                    routerLink="/layout/offer/offer-approvals"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2046,10 +2103,9 @@
                     </a>
                   </li>
                   <li
-                  *ngIf="
-            user_type !='rolereceptionist'
-          "
-                  routerLink="/layout/experience/experience-level">
+                    *ngIf="user_type != 'rolereceptionist'"
+                    routerLink="/layout/experience/experience-level"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2064,9 +2120,19 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (candidateslistreadRecep === 'true' ||
-                    candidateslistwriteRecep === 'true'))
+                    candidateslistwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/studentcandidate/candidates">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2081,9 +2147,19 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (scheduletimingsreadRecep === 'true' ||
-                    scheduletimingwriteRecep === 'true'))
+                    scheduletimingwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/scheduletiming/schedule-timing">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2094,10 +2170,9 @@
                     </a>
                   </li>
                   <li
-                  *ngIf="
-            user_type !='rolereceptionist'
-          "
-           routerLink="/layout/aptitute/aptitute-result">
+                    *ngIf="user_type != 'rolereceptionist'"
+                    routerLink="/layout/aptitute/aptitute-result"
+                  >
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2112,9 +2187,19 @@
                   user_type == 'admin' ||
                   (user_type === 'rolereceptionist' &&
                     (appliedCandidatesreadRecep === 'true' ||
-                    appliedCandidateswriteRecep === 'true'))
+                    appliedCandidateswriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
                 "
                   routerLink="/layout/jobs/job-applicants">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2127,15 +2212,15 @@
                 </ul>
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (konowledgeBaseread === 'true' ||
-                konwledgeBaseWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (konowledgeBasereadSub === 'true' || konwledgeBaseWriteSub
-                   === 'true'))
-            "
+                *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'roleadmin' &&
+                    (konowledgeBaseread === 'true' ||
+                      konwledgeBaseWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    (konowledgeBasereadSub === 'true' ||
+                      konwledgeBaseWriteSub === 'true'))
+                "
                 [ngClass]="{
                   active: urlComplete.subUrl === 'knowledgebase-main'
                 }"
@@ -2145,15 +2230,18 @@
                 >
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (activitiesRead === 'true' ||
-                activitiesWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (activitiesReadSub === 'true' || activitiesWriteSub
-                   === 'true'))
-            "
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.activities[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.activities[0].access == true &&
+                    (activitiesRead === 'true' ||
+                      activitiesWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.activities[0].access == true &&
+                    (activitiesReadSub === 'true' ||
+                      activitiesWriteSub === 'true'))
+                "
                 [ngClass]="{ active: urlComplete.subUrl === 'activities-main' }"
               >
                 <a routerLink="/layout/activities/activities-main"
@@ -2161,33 +2249,33 @@
                 >
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (usersRead === 'true' ||
-                usersWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (usersReadSub === 'true' || usersWriteSub
-                   === 'true'))||
-                   (user_type === 'rolemanager' &&
-                     (usersReadMan === 'true' || usersWriteMan
-                      === 'true'))
-            "
-               [ngClass]="{ active: urlComplete.subUrl === 'user-main' }">
+                *ngIf="
+                  (user_type == 'admin' &&
+                    roleDetails.role[0].access == true) ||
+                  (user_type === 'roleadmin' &&
+                    roleDetails.role[0].access == true &&
+                    (usersRead === 'true' || usersWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    roleDetails.role[0].access == true &&
+                    (usersReadSub === 'true' || usersWriteSub === 'true')) ||
+                  (user_type === 'rolemanager' &&
+                    roleDetails.role[0].access == true &&
+                    (usersReadMan === 'true' || usersWriteMan === 'true'))
+                "
+                [ngClass]="{ active: urlComplete.subUrl === 'user-main' }"
+              >
                 <a routerLink="/layout/users/user-main"
                   ><i class="la la-user-plus"></i> <span>Users</span></a
                 >
               </li>
               <li
-              *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'roleadmin' &&
-                (settingsRead === 'true' ||
-                settingsWrite === 'true'))||
-                (user_type === 'rolesubadmin' &&
-                  (settingsReadSub === 'true' || settingsWriteSub
-                   === 'true'))
-            "
+                *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'roleadmin' &&
+                    (settingsRead === 'true' || settingsWrite === 'true')) ||
+                  (user_type === 'rolesubadmin' &&
+                    (settingsReadSub === 'true' || settingsWriteSub === 'true'))
+                "
                 [ngClass]="{
                   active: urlComplete.subUrl === 'company-settings'
                 }"

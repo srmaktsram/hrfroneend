@@ -17,9 +17,13 @@
                         </ul>
                     </div>
                     <div class="col-auto float-end ms-auto">
-                        <a href="#" class="btn add-btn m-r-5" data-bs-toggle="modal" data-bs-target="#add_shift">Add
+                        <a
+                        *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                        href="#" class="btn add-btn m-r-5" data-bs-toggle="modal" data-bs-target="#add_shift">Add
                             Shifts</a>
-                        <a href="#" class="btn add-btn m-r-5" data-bs-toggle="modal" data-bs-target="#add_schedule">
+                        <a
+                        *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                        href="#" class="btn add-btn m-r-5" data-bs-toggle="modal" data-bs-target="#add_schedule">
                             Assign Shifts</a>
                     </div>
                 </div>
@@ -34,7 +38,7 @@
                             class="table table-striped custom-table datatable mb-0">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>Sr.no</th>
                                     <th>Shift Name</th>
                                     <th>Min Start Time</th>
                                     <th>Start Time</th>
@@ -44,7 +48,7 @@
                                     <th>Max End Time</th>
                                     <th>Break Time</th>
                                     <th class="text-center">Status</th>
-                                    <th class="text-end no-sort">Action</th>
+                                    <th class="text-end no-sort" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,7 +69,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="text-end">
+                                    <td class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
                                         <div class="dropdown dropdown-action">
                                             <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                                 aria-expanded="false"><i class="material-icons">more_vert</i></a>

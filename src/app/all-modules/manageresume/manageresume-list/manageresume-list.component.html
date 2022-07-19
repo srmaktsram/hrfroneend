@@ -35,7 +35,7 @@
 											<th class="text-center">Job Type</th>
 											<th class="text-center">Status</th>
 											<th>Resume</th>
-											<th class="text-end">Actions</th>
+											<th class="text-end"*ngIf="user_type === 'admin' ||  (user_type === 'rolehr' && jobswriteHr === 'true')">Actions</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -71,7 +71,7 @@
 													<a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
 														<i class="fa fa-dot-circle-o text-danger"></i> {{item.status}}
 													</a>
-													<div class="dropdown-menu dropdown-menu-right">
+													<div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' ||  (user_type === 'rolehr' && jobswriteHr === 'true')">
 														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Open</a>
 														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-success"></i> Closed</a>
 														<a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Cancelled</a>
@@ -79,7 +79,7 @@
 												</div>
 											</td>
 											<td><a href="javascript:void(0);" class="btn btn-sm btn-primary"><i class="fa fa-download me-1"></i> {{item.resume}}</a></td>
-											<td class="text-center">
+											<td class="text-center" *ngIf="user_type === 'admin' ||  (user_type === 'rolehr' && jobswriteHr === 'true')">
 												<div class="dropdown dropdown-action">
 													<a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
 													<div class="dropdown-menu dropdown-menu-right">

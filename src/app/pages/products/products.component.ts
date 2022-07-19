@@ -1,5 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit, ViewChild } from "@angular/core";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { AdminAuthenticationService } from "src/app/core/storage/authentication-admin.service";
 
@@ -9,6 +14,9 @@ import { AdminAuthenticationService } from "src/app/core/storage/authentication-
   styleUrls: ["./products.component.css"],
 })
 export class ProductsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   AllProductList: any;
   public productDetails: any;
   public corporateId: any;
@@ -22,36 +30,14 @@ export class ProductsComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private adminAuthenticationService: AdminAuthenticationService,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {
     this.corporateId = sessionStorage.getItem("corporateId");
   }
 
   ngOnInit() {
     this.getAllProduct();
-  }
-  login(id) {
-    this.http
-      .get("http://localhost:8443/auth/login" + "/" + id)
-      .subscribe((res: any) => {
-        this.router.navigate(["/layout/dashboard/admin"]);
-        this.adminAuthenticationService.login(
-          res.data.id,
-          res.data.companyEmail,
-          res.data.companyName,
-          res.data.companySite,
-          res.data.id,
-          res.data.pinCode,
-          res.data.companyAddress,
-          res.data.phone,
-          res.data.mobile,
-          res.data.location,
-          res.data.cicon,
-          res.data.cinvoice,
-          res.data.cinvoicepre,
-          res.data.packageName
-        );
-      });
   }
 
   calculateExpiryDays(expairyDate) {
@@ -72,7 +58,7 @@ export class ProductsComponent implements OnInit {
       )
       .subscribe((res: any) => {
         this.productDetails = res;
-        console.log("<><><><><><>< this.totalRemaining><><><><><><><><><", res);
+
         this.productDetails.map((item) => {
           let data = this.calculateExpiryDays(item.group[0].to);
           var obj = {
@@ -82,10 +68,6 @@ export class ProductsComponent implements OnInit {
           this.totalRemaining.push(obj);
           this.productDetailsGroup.push(item.group[0]);
         });
-        console.log(
-          "<><><><><><>< this.totalRemaining><><><><><><><><><",
-          this.totalRemaining
-        );
       });
   }
 
@@ -99,33 +81,50 @@ export class ProductsComponent implements OnInit {
   }
 
   adminlogin(id) {
-    alert(id);
     this.http
       .get("http://localhost:8443/auth/register/get_Details" + "/" + id)
       .subscribe((res: any) => {
-        console.log(res, "KKKKKKKKKKKKKKKKKK");
-        if (res.result == 1) {
-          this.router.navigate(["/layout/dashboard/admin"]);
+        this.http
+          .get(
+            "http://localhost:8443/mainadmin/packageAuth/getPackageAuthDetails" +
+              "/" +
+              res.data.packageName
+          )
+          .subscribe((response: any) => {
+            if (res.result == 1) {
+              this.router.navigate(["/layout/dashboard/admin"]);
+              console.log("packageName", res.data.packageName);
+              this.adminAuthenticationService.login(
+                res.data.id,
+                res.data.corporateId,
+                res.data.companyEmail,
+                res.data.companyName,
+                res.data.companySite,
+                res.data.pinCode,
+                res.data.companyAddress,
+                res.data.phone,
+                res.data.mobile,
+                res.data.location,
+                res.data.cicon,
+                res.data.cinvoice,
+                res.data.cinvoicepre,
+                res.data.packageName,
+                response
+              );
+            } else {
+              this._snackBar.open(
+                " No matching accounts have been found !",
+                "",
+                {
+                  duration: 2000,
+                  panelClass: "notif-success",
 
-          this.adminAuthenticationService.login(
-            res.data.id,
-            res.data.corporateId,
-            res.data.companyEmail,
-            res.data.companyName,
-            res.data.companySite,
-            res.data.pinCode,
-            res.data.companyAddress,
-            res.data.phone,
-            res.data.mobile,
-            res.data.location,
-            res.data.cicon,
-            res.data.cinvoice,
-            res.data.cinvoicepre,
-            res.data.packageName
-          );
-        } else {
-          alert("wrong Id or pass");
-        }
+                  horizontalPosition: this.horizontalPosition,
+                  verticalPosition: this.verticalPosition,
+                }
+              );
+            }
+          });
       });
   }
 }

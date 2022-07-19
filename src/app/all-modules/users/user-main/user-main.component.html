@@ -16,6 +16,7 @@
         </div>
         <div class="col-auto float-end ms-auto">
           <a
+          *ngIf="user_type === 'admin' ||(user_type === 'rolemanager' && usersWriteMan === 'true')||(user_type === 'roleadmin' && usersWrite == 'true')||(user_type === 'rolesubadmin' && usersWriteSub === 'true')"
             class="btn add-btn"
             data-bs-toggle="modal"
             data-bs-target="#add_user"
@@ -92,7 +93,7 @@
                 <th>Mobile</th>
                 <th>Create Date</th>
                 <th>Role</th>
-                <th class="text-end">Action</th>
+                <th class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'rolemanager' && usersWriteMan === 'true')||(user_type === 'roleadmin' && usersWrite == 'true')||(user_type === 'rolesubadmin' && usersWriteSub === 'true')">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -120,7 +121,7 @@
                 <td>
                   <span class="badge bg-inverse-success">{{ users.role }}</span>
                 </td>
-                <td class="text-end">
+                <td class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'rolemanager' && usersWriteMan === 'true')||(user_type === 'roleadmin' && usersWrite == 'true')||(user_type === 'rolesubadmin' && usersWriteSub === 'true')">
                   <div class="dropdown dropdown-action">
                     <a
                       class="action-icon dropdown-toggle"
@@ -527,7 +528,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>Employees</td>
+                    <td>Employees(Full)</td>
                     <td class="text-center">
                       <input
                         type="checkbox"
@@ -874,7 +875,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>Employees</td>
+                    <td>Employees(Full)</td>
                     <td class="text-center">
                       <input
                         type="checkbox"
@@ -1794,7 +1795,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>Employees</td>
+                    <td>Employees(Full)</td>
                     <td class="text-center">
                       <input
                         type="checkbox"
@@ -2225,7 +2226,7 @@
                     </td>
                   </tr>
                   <tr>
-                    <td>Employees</td>
+                    <td>Employees(Full)</td>
                     <td class="text-center">
                       <input
                         type="checkbox"

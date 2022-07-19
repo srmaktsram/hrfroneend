@@ -18,6 +18,11 @@ import { DatePipe } from "@angular/common";
 import { DataTableDirective } from "angular-datatables";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -26,6 +31,9 @@ declare const $: any;
   styleUrls: ["./tickets-content.component.css"],
 })
 export class TicketsContentComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   dtOptions: DataTables.Settings = {};
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -57,20 +65,25 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   countResolved = 0;
   countOpen = 0;
   countPending = 0;
+  ticketsWrite: string;
+  ticketsWriteSub: string;
 
   constructor(
     private allModuleService: AllModulesService,
     private router: Router,
     private http: HttpClient,
     private formBuilder: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.ticketsWrite = sessionStorage.getItem("ticketsWrite");
+    this.ticketsWriteSub = sessionStorage.getItem("ticketsWriteSub");
     this.adminId = sessionStorage.getItem("adminId");
     this.loadEmployee();
 
     this.employeeid = sessionStorage.getItem("employee_login_id");
-    if (this.user_type == "admin") {
+    if (this.user_type != "employee") {
       this.check = true;
     }
   }
@@ -202,7 +215,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
           this.rows = this.allTickets;
           this.srch = [...this.rows];
         });
-    } else if (this.user_type == "admin") {
+    } else {
       this.http
         .get(
           "http://localhost:8443/admin/tickets/getAdminAllTickets" +
@@ -268,9 +281,21 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
 
       $("#add_ticket").modal("hide");
       this.addTicketForm.reset();
-      this.toastr.success("Tickets added", "Success");
+      this._snackBar.open("Tickets added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     } else {
-      this.toastr.warning("Mandatory fields required", "");
+      this._snackBar.open("Mandatory fields required !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -308,7 +333,13 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
 
     $("#edit_ticket").modal("hide");
     this.editTicketForm.reset();
-    this.toastr.success("Ticket updated", "Success");
+    this._snackBar.open("Ticket updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   edit(value) {
@@ -349,7 +380,13 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
         this.getTickets();
       });
     $("#delete_ticket").modal("hide");
-    this.toastr.success("Tickets deleted", "Success");
+    this._snackBar.open("Ticket deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   //search by name

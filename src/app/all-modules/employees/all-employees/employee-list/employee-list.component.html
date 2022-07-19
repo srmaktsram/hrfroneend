@@ -18,7 +18,9 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a (click)="initializeArray()" class="btn add-btn" data-bs-toggle="modal"
+                <a
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                (click)="initializeArray()" class="btn add-btn" data-bs-toggle="modal"
                     data-bs-target="#add_employee"><i class="fa fa-plus"></i> Add Employee</a>
                 <div class="view-icons">
                     <a routerLink="/layout/employees/employeepage" class="grid-view btn btn-link"><i
@@ -74,7 +76,7 @@
                             <th>Mobile</th>
                             <th class="text-nowrap">Join Date</th>
                             <th>Role</th>
-                            <th class="text-end no-sort">Action</th>
+                            <th class="text-end no-sort" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -104,7 +106,7 @@
                                     </div> -->
                                 </div>
                             </td>
-                            <td class="text-end">
+                            <td class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

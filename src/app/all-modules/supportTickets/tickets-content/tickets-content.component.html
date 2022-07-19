@@ -13,7 +13,7 @@
         </ul>
       </div>
       <div class="col-auto float-end ms-auto">
-        <a *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true')"
+        <a *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')"
        class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_ticket"><i class="fa fa-plus"></i> Add
           Ticket</a>
       </div>
@@ -137,13 +137,13 @@
           class="table table-striped custom-table mb-0 datatable">
           <thead>
             <tr>
-              <th>#</th>
+              <th>Sr.no.</th>
               <th>Ticket Subject</th>
               <th>Reply Phone</th>
               <th>Reply Email</th>
               <th>Priority</th>
               <th class="text-center">Status</th>
-              <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true')">Actions</th>
+              <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -189,7 +189,7 @@
                       {{ tickets.priority }}
                     </a>
                   </ng-container>
-                  <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true')">
+                  <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')">
                     <a class="dropdown-item" (click)="getPriority('High', tickets.id)"><i
                         class="fa fa-dot-circle-o text-danger"></i> High</a>
                     <a class="dropdown-item" (click)="getPriority('Medium', tickets.id)"><i
@@ -223,7 +223,7 @@
                   <span class="text-info">{{ tickets.status }}</span>
                 </ng-container>
               </td>
-              <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true')">
+              <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')">
                 <div class="dropdown dropdown-action">
                   <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
                       class="material-icons">more_vert</i></a>

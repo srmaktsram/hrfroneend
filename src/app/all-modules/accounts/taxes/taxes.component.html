@@ -12,7 +12,9 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_tax"><i class="fa fa-plus"></i>
+                <a
+                *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')"
+                class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_tax"><i class="fa fa-plus"></i>
                     Add Tax</a>
             </div>
         </div>
@@ -29,7 +31,7 @@
                             <th>Tax Name </th>
                             <th>Tax Percentage (%) </th>
                             <th>Status</th>
-                            <th class="text-end">Action</th>
+                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,7 +45,7 @@
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-dot-circle-o text-danger" ></i> {{taxes.status}}
                                     </a>
-                                    <div class="dropdown-menu">
+                                    <div class="dropdown-menu" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
                                         <a class="dropdown-item" (click)="updateStatus('Active',taxes.id)"><i
                                                 class="fa fa-dot-circle-o text-success" ></i> Active</a>
                                         <a class="dropdown-item" (click)="updateStatus('Inactive',taxes.id)"><i class="fa fa-dot-circle-o text-danger"></i>
@@ -51,7 +53,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-end">
+                            <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

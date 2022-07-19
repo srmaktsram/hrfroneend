@@ -6,6 +6,11 @@ import {
   FormControl,
   Validators,
 } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { ToastrService } from "ngx-toastr";
 
 @Component({
@@ -14,16 +19,27 @@ import { ToastrService } from "ngx-toastr";
   styleUrls: ["./email-settings.component.css"],
 })
 export class EmailSettingsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public adminId = sessionStorage.getItem("adminId");
   buttondisable = false;
 
   public emailSettings: FormGroup;
   emailSett: any;
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
+  }
+
 
   ngOnInit() {
     this.getEmailSettings();
@@ -64,7 +80,13 @@ export class EmailSettingsComponent implements OnInit {
           this.getEmailSettings();
           this.buttondisable = false;
         });
-      this.toastr.success("Email settings is added", "Success");
+      this._snackBar.open("Email settings added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
   getEmailSettings() {

@@ -36,6 +36,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: "packages",
+        loadChildren: () =>
+          import("./package-auth/package-auth.module").then(
+            (m) => m.PackageAuthModule
+          ),
+      },
+      {
         path: "subadmins",
         loadChildren: () =>
           import("./sub-admin/sub-admin.module").then((m) => m.SubAdminModule),

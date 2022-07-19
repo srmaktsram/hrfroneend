@@ -21,9 +21,11 @@ export class UserdashboardListComponent implements OnInit {
   };
   user_type: string;
   userdashboardwriteRecep: string;
+  jobswriteHr: string;
   constructor() {
     this.user_type = sessionStorage.getItem("user_type");
     this.userdashboardwriteRecep = sessionStorage.getItem("userdashboardwriteRecep");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
   }
 
   ngOnInit() {

@@ -17,6 +17,7 @@
         </div>
         <div class="col-auto float-end ms-auto">
           <a
+          *ngIf="user_type === 'admin' ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')"
             href="#"
             data-bs-toggle="modal"
             data-bs-target="#add_employee"
@@ -43,7 +44,7 @@
                 <th>Sr.No.</th>
                 <th>Experience</th>
                 <th>Status</th>
-                <th class="text-center">Action</th>
+                <th class="text-center" *ngIf="user_type === 'admin' ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -61,7 +62,7 @@
                     </a>
                   </div>
                 </td>
-                <td class="text-center">
+                <td class="text-center" *ngIf="user_type === 'admin' ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">
                   <div class="dropdown dropdown-action">
                     <a
                       href="#"

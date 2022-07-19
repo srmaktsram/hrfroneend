@@ -37,10 +37,16 @@ export class AdminDashboardComponent implements OnInit {
   public clientCount: any;
   joinDateArray = []
   name = []
+  user_type: string;
+  dashboardWrite: string;
+  dashboardwriteSub: string;
 
   constructor(
     private http: HttpClient,
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.dashboardWrite = sessionStorage.getItem("dashboardWrite");
+    this.dashboardwriteSub = sessionStorage.getItem("dashboardwriteSub");
     this.adminId = sessionStorage.getItem("adminId")
   }
 

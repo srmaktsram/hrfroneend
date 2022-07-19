@@ -7,6 +7,11 @@ import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -15,6 +20,9 @@ declare const $: any;
   styleUrls: ["./trainers.component.css"],
 })
 export class TrainersComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   lstTrainer: any[];
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
@@ -30,13 +38,26 @@ export class TrainersComponent implements OnInit, OnDestroy {
   public adminId = sessionStorage.getItem("adminId");
   public addTrainerForm: FormGroup;
   public editTrainerForm: FormGroup;
+  user_type: string;
+  trainingwriteHr: string;
+  trainingsWrite: string;
+  trainingsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private http: HttpClient,
     private router: Router,
-  ) { }
+
+    private _snackBar: MatSnackBar
+ 
+  ) { 
+    this.user_type = sessionStorage.getItem("user_type");
+    this.trainingsWrite = sessionStorage.getItem("trainingsWrite");
+    this.trainingsWriteSub = sessionStorage.getItem("trainingsWriteSub");
+    this.trainingwriteHr = sessionStorage.getItem("trainingwriteHr");
+  }
+
 
   ngOnInit() {
     this.loadtrainer();
@@ -47,21 +68,65 @@ export class TrainersComponent implements OnInit, OnDestroy {
     };
 
     this.addTrainerForm = this.formBuilder.group({
-      firstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      lastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      firstName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      lastName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       RoleName: ["", [Validators.required]],
-      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      phoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      Email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      phoneNumber: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       Description: ["", [Validators.required]],
       StatusName: ["", [Validators.required]],
     });
 
     this.editTrainerForm = this.formBuilder.group({
-      firstName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
-      lastName: ["", [Validators.required, Validators.pattern('^[A-Za-z][A-Za-z\'\-]+([\ A-Za-z][A-Za-z\'\-]+)*')]],
+      firstName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
+      lastName: [
+        "",
+        [
+          Validators.required,
+          Validators.pattern("^[A-Za-z][A-Za-z'-]+([ A-Za-z][A-Za-z'-]+)*"),
+        ],
+      ],
       RoleName: ["", [Validators.required]],
-      Email: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      phoneNumber: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+      Email: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      phoneNumber: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
       Description: ["", [Validators.required]],
       StatusName: ["", [Validators.required]],
     });
@@ -69,11 +134,17 @@ export class TrainersComponent implements OnInit, OnDestroy {
 
   // Get  trainer Api Call
   loadtrainer() {
-    this.http.get("http://localhost:8443/admin/training/trainers/getData" + "/" + this.adminId).subscribe((data: any) => {
-      this.lstTrainer = data;
-      this.rows = this.lstTrainer;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/training/trainers/getData" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.lstTrainer = data;
+        this.rows = this.lstTrainer;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -88,8 +159,8 @@ export class TrainersComponent implements OnInit, OnDestroy {
   // Add  goal type  Modal Api Call
   addTrainer() {
     if (this.addTrainerForm.invalid) {
-      this.markFormGroupTouched(this.addTrainerForm)
-      return
+      this.markFormGroupTouched(this.addTrainerForm);
+      return;
     }
     if (this.addTrainerForm.valid) {
       let obj = {
@@ -100,26 +171,34 @@ export class TrainersComponent implements OnInit, OnDestroy {
         phone: this.addTrainerForm.value.phoneNumber,
         description: this.addTrainerForm.value.Description,
         status: this.addTrainerForm.value.StatusName,
-        adminId: this.adminId
+        adminId: this.adminId,
       };
       //console.log("obj", obj)
-      this.http.post("http://localhost:8443/admin/training/trainers/create", obj).subscribe((data) => {
-        //console.log(data, "postApi.......")
-        this.loadtrainer();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/training/trainers/create", obj)
+        .subscribe((data: any) => {
+          //console.log(data, "postApi.......")
+          this.loadtrainer();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
 
       $("#add_trainer").modal("hide");
       this.addTrainerForm.reset();
-      this.toastr.success("Trainer added sucessfully...!", "Success");
+      this._snackBar.open("Trainer added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
   editTrainer() {
     if (this.editTrainerForm.valid) {
-      this.id = this.editId
+      this.id = this.editId;
       let obj = {
         firstName: this.editTrainerForm.value.firstName,
         lastName: this.editTrainerForm.value.lastName,
@@ -128,18 +207,30 @@ export class TrainersComponent implements OnInit, OnDestroy {
         phone: this.editTrainerForm.value.phoneNumber,
         description: this.editTrainerForm.value.Description,
         status: this.editTrainerForm.value.StatusName,
-
       };
-      this.http.patch("http://localhost:8443/admin/training/trainers/update" + "/" + this.id, obj).subscribe((data: any) => {
-        //console.log("updateApi", data)
-        this.loadtrainer();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/training/trainers/update" +
+            "/" +
+            this.id,
+          obj
+        )
+        .subscribe((data: any) => {
+          //console.log("updateApi", data)
+          this.loadtrainer();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
         });
-      });
 
       $("#edit_trainer").modal("hide");
-      this.toastr.success("Trainer Updated sucessfully...!", "Success");
+      this._snackBar.open("Trainer updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -164,16 +255,27 @@ export class TrainersComponent implements OnInit, OnDestroy {
     this.id = this.tempId;
     let obj = {
       status: 2,
-    }
-    this.http.patch("http://localhost:8443/admin/training/trainers/delete" + "/" + this.id, obj).subscribe((data: any) => {
-      //console.log("deleteApi", data)
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    };
+    this.http
+      .patch(
+        "http://localhost:8443/admin/training/trainers/delete" + "/" + this.id,
+        obj
+      )
+      .subscribe((data: any) => {
+        //console.log("deleteApi", data)
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.loadtrainer();
+        $("#delete_trainer").modal("hide");
+        this._snackBar.open("Trainer deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
-      this.loadtrainer();
-      $("#delete_trainer").modal("hide");
-      this.toastr.success("Trainer deleted sucessfully..!", "Success");
-    });
   }
   // for unsubscribe datatable
   ngOnDestroy(): void {
@@ -181,10 +283,15 @@ export class TrainersComponent implements OnInit, OnDestroy {
     this.dtTrigger.unsubscribe();
   }
   updateStatus(val, id) {
-    this.http.patch("http://localhost:8443/admin/training/trainers/update" + "/" + id, { status: val }).subscribe((data) => {
-      //console.log("updatestatus", data);
-      this.loadtrainer();
-    })
+    this.http
+      .patch(
+        "http://localhost:8443/admin/training/trainers/update" + "/" + id,
+        { status: val }
+      )
+      .subscribe((data: any) => {
+        //console.log("updatestatus", data);
+        this.loadtrainer();
+      });
   }
 
   // getId(id) {

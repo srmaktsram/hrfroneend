@@ -38,7 +38,7 @@
           <!-- Question Tab -->
           <div class="tab-pane show active" id="tab_question">
             <!-- Add Question Button -->
-            <div class="text-end mb-4 clearfix">
+            <div class="text-end mb-4 clearfix" *ngIf="user_type === 'admin' ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">
               <button class="btn btn-primary add-btn" type="button" data-bs-toggle="modal"
                 data-bs-target="#add_question">
                 <i class="fa fa-plus"></i> Add Question
@@ -60,7 +60,7 @@
                         <th>Option C</th>
                         <th>Option D</th>
                         <th class="text-center">Correct Answer</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center" *ngIf="user_type === 'admin' ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -74,7 +74,7 @@
                         <td>{{ item.option3 }}</td>
                         <td>{{ item.option4 }}</td>
                         <td class="text-center">{{ item.correctanswer }}</td>
-                        <td class="text-center">
+                        <td class="text-center" *ngIf="user_type === 'admin' ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">
                           <div class="dropdown dropdown-action">
                             <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                               aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -98,7 +98,7 @@
           <!-- category Tab -->
           <div class="tab-pane" id="tab_category">
             <!-- Add category Button -->
-            <div class="text-end mb-4 clearfix">
+            <div class="text-end mb-4 clearfix" *ngIf="user_type === 'admin' ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">
               <button class="btn btn-primary add-btn" type="button" data-bs-toggle="modal"
                 data-bs-target="#add_category">
                 <i class="fa fa-plus"></i> Add Category
@@ -115,7 +115,7 @@
                       <tr>
                         <th>Sr.no.</th>
                         <th>Category</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center" *ngIf="user_type === 'admin' ||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -125,7 +125,7 @@
                           {{ item.category }}
                         </td>
 
-                        <td class="text-center">
+                        <td class="text-center" *ngIf="user_type === 'admin' ||(user_type === 'rolehr' && jobswriteHr === 'true'||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true'))">
                           <div class="dropdown dropdown-action">
                             <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                               aria-expanded="false"><i class="material-icons">more_vert</i></a>

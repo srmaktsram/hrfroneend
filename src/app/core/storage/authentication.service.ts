@@ -28,7 +28,10 @@ export class AuthenticationService {
     projectswrite: string,
     holidaysread: string,
     holidayswrite: string,
+    roleDetails: any
+
     profileImage: any,
+
   ) {
     sessionStorage.setItem("currentUser", "EmployeeLogin");
     sessionStorage.setItem("user_type", "employee");
@@ -56,7 +59,7 @@ export class AuthenticationService {
 
 
     sessionStorage.setItem("current_location", JSON.stringify(location));
-    this.router.navigate(["/layout/dashboard/employee"]);
+    sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
     return true;
   }
 

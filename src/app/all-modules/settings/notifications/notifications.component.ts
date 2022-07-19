@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-notifications",
@@ -8,6 +13,9 @@ import { FormBuilder } from "@angular/forms";
   styleUrls: ["./notifications.component.css"],
 })
 export class NotificationsComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   editNotification: any;
   public adminId = sessionStorage.getItem("adminId");
   employee: any;
@@ -17,8 +25,17 @@ export class NotificationsComponent implements OnInit {
   events: any;
   jobs: any;
   chat: any;
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {}
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,    private _snackBar: MatSnackBar
+) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
+  }
+
 
   ngOnInit() {
     this.getNotifications();
@@ -35,6 +52,13 @@ export class NotificationsComponent implements OnInit {
       .subscribe((data: any) => {
         this.getNotifications();
       });
+    this._snackBar.open("Notifications updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   /////
   getNotifications() {

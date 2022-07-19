@@ -5,6 +5,11 @@ import { ToastrService } from "ngx-toastr";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-interview-list",
@@ -12,6 +17,8 @@ declare const $: any;
   styleUrls: ["./interview-list.component.css"],
 })
 export class InterviewListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   public dtOptions: DataTables.Settings = {};
@@ -34,12 +41,21 @@ export class InterviewListComponent implements OnInit, OnDestroy {
   public catData: Object;
   addCategoryForm: FormGroup;
   editCategoryForm: FormGroup;
+  user_type: string;
+  jobswriteHr: string;
+  jobsWrite: string;
+  jobsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.jobsWrite = sessionStorage.getItem("jobsWrite");
+    this.jobsWriteSub = sessionStorage.getItem("jobsWriteSub");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
     this.LoadDepartment();
     this.LoadCategory();
   }
@@ -102,14 +118,14 @@ export class InterviewListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/interviewQuestions/getInterviewQuestions" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data) => {
         this.lstInterview = data;
         this.rows = this.lstInterview;
         this.srch = [...this.rows];
-        console.log(this.lstInterview, "jkhjgjhg''''''''''''''''''")
+        console.log(this.lstInterview, "jkhjgjhg''''''''''''''''''");
       });
   }
 
@@ -145,7 +161,13 @@ export class InterviewListComponent implements OnInit, OnDestroy {
         });
       $("#add_question").modal("hide");
       this.addInterviewForm.reset();
-      this.toastr.success("Questions added sucessfully...!", "Success");
+      this._snackBar.open("Questions added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -169,15 +191,21 @@ export class InterviewListComponent implements OnInit, OnDestroy {
       this.http
         .patch(
           "http://localhost:8443/admin/interviewQuestions/updateInterviewQuestions" +
-          "/" +
-          id,
+            "/" +
+            id,
           obj
         )
         .subscribe((data1) => {
           this.LoadInterview();
         });
       $("#edit_question").modal("hide");
-      this.toastr.success("Edit questions Updated sucessfully...!", "Success");
+      this._snackBar.open("Edit questions Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
   // To Get The department Edit Id And Set Values To Edit Modal Form
@@ -213,22 +241,28 @@ export class InterviewListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/admin/interviewQuestions/deleteInterviewQuestions" +
-        "/" +
-        id,
+          "/" +
+          id,
         obj
       )
       .subscribe((data) => {
         this.LoadInterview();
         $("#delete_question").modal("hide");
-        this.toastr.success("Question is deleted", "Success");
+        this._snackBar.open("Question deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
   LoadCategory() {
     this.http
       .get(
         "http://localhost:8443/admin/interviewQuestionCategory/getInterviewQuestionCategory" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((data) => {
         this.catData = data;
@@ -253,7 +287,13 @@ export class InterviewListComponent implements OnInit, OnDestroy {
         });
       $("#add_category").modal("hide");
       this.addCategoryForm.reset();
-      this.toastr.success("Category added sucessfully...!", "Success");
+      this._snackBar.open("Category added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
   editCategory() {
@@ -265,15 +305,21 @@ export class InterviewListComponent implements OnInit, OnDestroy {
       this.http
         .patch(
           "http://localhost:8443/admin/interviewQuestionCategory/updateInterviewQuestionCategory" +
-          "/" +
-          id,
+            "/" +
+            id,
           obj
         )
         .subscribe((data1) => {
           this.LoadCategory();
         });
       $("#edit_category").modal("hide");
-      this.toastr.success("Edit Category Updated sucessfully...!", "Success");
+      this._snackBar.open("Edit Category Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
   editCat(value) {
@@ -296,14 +342,21 @@ export class InterviewListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/admin/interviewQuestionCategory/deleteInterviewQuestionCategory" +
-        "/" +
-        id,
+          "/" +
+          id,
         obj
       )
       .subscribe((data) => {
         this.LoadCategory();
         $("#delete_category").modal("hide");
-        this.toastr.success("Category is deleted", "Success");
+
+        this._snackBar.open("Category deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
 

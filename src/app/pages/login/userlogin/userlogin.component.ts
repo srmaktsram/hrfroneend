@@ -1,6 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AuthenticationService } from "src/app/core/storage/authentication.service";
@@ -11,6 +16,9 @@ import { AuthenticationService } from "src/app/core/storage/authentication.servi
   styleUrls: ["./userlogin.component.css"],
 })
 export class UserLoginComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public CustomControler;
   public subscription: Subscription;
   public Toggledata = true;
@@ -33,10 +41,11 @@ export class UserLoginComponent implements OnInit {
   constructor(
     private authenticationService: AuthenticationService,
     private http: HttpClient,
-    private router: Router
-  ) { }
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   submit() {
     let userId = this.form.value.email;
@@ -49,41 +58,60 @@ export class UserLoginComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
-        console.log(res, "jhhhgfh>>>>>>>>>>>>>>>>>>>>>>>");
-        console.log(res.data.profileImage
-          , "profileImage>>>>>>>>>>>>>>>>>>>>>>>");
-        if (res.result == 2) {
 
-          this.authenticationService.login(
-            res.data.adminId,
-            res.data.id,
-            res.data.username,
-            res.data.employeeId,
-            res.data.email,
-            res.data.firstName,
-            res.data.lastName,
-            res.data.phone,
-            res.data.location,
-            res.data.Leaves[0].read,
-            res.data.Leaves[1].write,
-            res.data.attendance[0].read,
-            res.data.attendance[1].write,
-            res.data.TimingSheets[0].read,
-            res.data.TimingSheets[1].write,
-            res.data.Clients[0].read,
-            res.data.Clients[1].write,
-            res.data.Projects[0].read,
-            res.data.Projects[1].write,
-            res.data.Holidays[0].read,
-            res.data.Holidays[1].write,
-            res.data.profileImage,
+        console.log(res);
+        console.log("employee Details>>>>>>>>>>>>>", res.data.adminId);
+        this.http
+          .get(
+            "http://localhost:8443/admin/allEmployee/getPackageDetail" +
+              "/" +
+              res.data.adminId
+          )
+          .subscribe((response: any) => {
+            if (res.result == 2) {
+              // location.replace("http://localhost:51245/layout/dashboard/employee");
+              this.router.navigate(["/layout/dashboard/employee"]);
 
-          );
-          console.log(res.data.profileImage, " mmmmmmRead")
+              this.authenticationService.login(
+                res.data.adminId,
+                res.data.id,
+                res.data.username,
+                res.data.employeeId,
+                res.data.email,
+                res.data.firstName,
+                res.data.lastName,
+                res.data.phone,
+                res.data.location,
+                res.data.Leaves[0].read,
+                res.data.Leaves[1].write,
+                res.data.attendance[0].read,
+                res.data.attendance[1].write,
+                res.data.TimingSheets[0].read,
+                res.data.TimingSheets[1].write,
+                res.data.Clients[0].read,
+                res.data.Clients[1].write,
+                res.data.Projects[0].read,
+                res.data.Projects[1].write,
+                res.data.Holidays[0].read,
+                res.data.Holidays[1].write,
+                response,
+                res.data.profileImage,
+              );
+            } else {
+              this._snackBar.open(
+                " No matching accounts have been found !",
+                "",
+                {
+                  duration: 2000,
+                  panelClass: "notif-success",
 
-        } else {
-          alert("wrong Id or pass");
-        }
+
+                  horizontalPosition: this.horizontalPosition,
+                  verticalPosition: this.verticalPosition,
+                }
+              );
+            }
+          });
       });
   }
 

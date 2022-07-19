@@ -47,6 +47,9 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   searchCompany: any;
   user_type: string;
   clientswrite: string;
+  clientsWriteMan: string;
+  clientsWrite: string;
+  clientsWriteSub: string;
   constructor(
     // private allModulesService: AllModulesService,
     private toastr: ToastrService,
@@ -55,6 +58,9 @@ export class ClientsListComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
+    this.clientsWrite = sessionStorage.getItem("clientsWrite");
+    this.clientsWriteSub = sessionStorage.getItem("clientsWriteSub");
+    this.clientsWriteMan = sessionStorage.getItem("clientsWriteMan");
     this.clientswrite = sessionStorage.getItem("clientswrite");
 
     this.invoices = [

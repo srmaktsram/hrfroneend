@@ -5,6 +5,11 @@ import { FormBuilder, FormGroup, Validators, FormArray } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 @Component({
   selector: "app-edit-invoice-report",
@@ -12,6 +17,8 @@ import { HttpClient } from "@angular/common/http";
   styleUrls: ["./edit-invoice-report.component.css"],
 })
 export class EditInvoiceReportComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public id;
   public allInvoices;
   public editInvoiceForm: FormGroup;
@@ -25,17 +32,18 @@ export class EditInvoiceReportComponent implements OnInit {
   public percentageTaxValue;
   public grandTotal;
   public totalTax;
-  public adminId:any;
+  public adminId: any;
   public percentageDiscountValue;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private http:HttpClient,
+    private http: HttpClient,
     private allModulesService: AllModulesService,
     private toastr: ToastrService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
-    this.adminId=sessionStorage.getItem("adminId")
+    this.adminId = sessionStorage.getItem("adminId");
   }
 
   ngOnInit() {
@@ -175,9 +183,16 @@ export class EditInvoiceReportComponent implements OnInit {
         ],
       };
 
-      this.http.patch("http:localhost:8443/admin",obj).subscribe((res) => {
+      this.http.patch("http:localhost:8443/admin", obj).subscribe((res) => {
         this.router.navigate(["/reports/invoice-report"]);
-        this.toastr.success("", "Edited successfully!");
+
+        this._snackBar.open("Invoice Report updated sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
     }
   }

@@ -15,7 +15,14 @@ export class LeadsContentComponent implements OnInit, OnDestroy {
   public dtTrigger: Subject<any> = new Subject();
   public url: any = "leads";
   public allLeads: any = [];
-  constructor(private allModuleService: AllModulesService) {}
+  user_type: string;
+  leadswrite: string;
+  leadswriteSub: string;
+  constructor(private allModuleService: AllModulesService) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.leadswrite = sessionStorage.getItem("leadswrite");
+    this.leadswriteSub = sessionStorage.getItem("leadswriteSub");
+  }
 
   ngOnInit() {
     this.getLeads();

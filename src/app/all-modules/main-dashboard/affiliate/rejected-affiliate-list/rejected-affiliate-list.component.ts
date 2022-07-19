@@ -7,6 +7,11 @@ import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -15,6 +20,8 @@ declare const $: any;
   styleUrls: ["./rejected-affiliate-list.component.css"],
 })
 export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   @ViewChild(DataTableDirective, { static: false })
   public dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
@@ -51,13 +58,12 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
     this.affiliateswrite = sessionStorage.getItem("affiliateswrite");
-
-
   }
 
   ngOnInit() {
@@ -72,11 +78,30 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
 
     this.editClientForm = this.formBuilder.group({
       editClientCompany: ["", [Validators.required]],
-      editContactPerson: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      editClientEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-      editClientPhone: ["", [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
-      editCompanyEmail: ["", [Validators.required, Validators.email, WhiteSpaceValidator.noWhiteSpace]],
-
+      editContactPerson: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
+      editClientEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
+      editClientPhone: [
+        "",
+        [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")],
+      ],
+      editCompanyEmail: [
+        "",
+        [
+          Validators.required,
+          Validators.email,
+          WhiteSpaceValidator.noWhiteSpace,
+        ],
+      ],
     });
   }
 
@@ -89,9 +114,7 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   //Get all Clients data
   public getVisitorAdmins() {
     this.http
-      .get(
-        "http://localhost:8443/mainadmin/affiliate/getRejectedAffiliate"
-      )
+      .get("http://localhost:8443/mainadmin/affiliate/getRejectedAffiliate")
       .subscribe((res: any) => {
         this.data = res;
         this.srch = [...this.data];
@@ -120,7 +143,6 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
       editClientEmail: client[0]?.email,
       editClientPhone: client[0]?.phone,
       editCompanyEmail: client[0]?.last_name,
-
     });
   }
   //Reset form
@@ -136,38 +158,47 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
       email: this.editClientForm.value.editClientEmail,
       phone: this.editClientForm.value.editClientPhone,
       last_name: this.editClientForm.value.editCompanyEmail,
-
     };
     let id = this.editId;
     this.http
-      .patch("http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id, obj)
+      .patch(
+        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
+        obj
+      )
       .subscribe((data: any) => {
         this.getVisitorAdmins();
       });
 
     $("#edit_client").modal("hide");
     this.editClientForm.reset();
-    this.toastr.success("Affiliate updated sucessfully...!", "Success");
-  }
 
+    this._snackBar.open("Affiliate updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
+  }
 
   deleteAffiliate(deleteId) {
     let id = deleteId;
     this.http
       .patch(
-        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" +
-        "/" +
-        id,
+        "http://localhost:8443/mainadmin/affiliate/updateAffiliate" + "/" + id,
         { status: "2" }
       )
       .subscribe((data: any) => {
         this.getVisitorAdmins();
       });
+    this._snackBar.open("Affiliate Deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
 
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
-
-
-
 
   getStatus(data, id) {
     const status = data;
@@ -181,21 +212,17 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
         this.statusData = res.status;
 
         if (this.statusData == "Approve") {
-
           let obj = {
-            id
-
+            id,
           };
           this.http
 
             .post(
-              "http://localhost:8443/affiliates/affiliate/createAffiliateWallet", obj
+              "http://localhost:8443/affiliates/affiliate/createAffiliateWallet",
+              obj
             )
-            .subscribe((res: any) => {
-            });
+            .subscribe((res: any) => {});
         }
-
-
       });
   }
   //search by name
@@ -256,9 +283,6 @@ export class VisitorAffiliateListComponent implements OnInit, OnDestroy {
   //     this.clientsData = [];
   //   }
   // }
-
-
-
 
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

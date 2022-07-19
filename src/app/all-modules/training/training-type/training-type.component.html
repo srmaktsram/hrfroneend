@@ -12,7 +12,7 @@
                         <li class="breadcrumb-item active">Training Type</li>
                     </ul>
                 </div>
-                <div class="col-auto float-end ms-auto">
+                <div class="col-auto float-end ms-auto" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && trainingwriteHr === 'true')||(user_type === 'roleadmin' && trainingsWrite == 'true')||(user_type === 'rolesubadmin' && trainingsWriteSub === 'true')">
                     <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_type"><i class="fa fa-plus"></i>
                         Add Type</a>
                 </div>
@@ -31,7 +31,7 @@
                                 <th>Type </th>
                                 <th>Description </th>
                                 <th>Status</th>
-                                <th class="text-end">Action</th>
+                                <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && trainingwriteHr === 'true')||(user_type === 'roleadmin' && trainingsWrite == 'true')||(user_type === 'rolesubadmin' && trainingsWriteSub === 'true')">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,7 +50,7 @@
                                                 <i class="fa fa-dot-circle-o text-danger"></i> {{item.status}}
                                             </ng-container>
                                         </a>
-                                        <div class="dropdown-menu">
+                                        <div class="dropdown-menu" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && trainingwriteHr === 'true')||(user_type === 'roleadmin' && trainingsWrite == 'true')||(user_type === 'rolesubadmin' && trainingsWriteSub === 'true')">
                                             <a (click)="updateStatus('Active',item.id)" class="dropdown-item"><i
                                                     class="fa fa-dot-circle-o text-success"></i>
                                                 Active</a>
@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="text-end">
+                                <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && trainingwriteHr === 'true')||(user_type === 'roleadmin' && trainingsWrite == 'true')||(user_type === 'rolesubadmin' && trainingsWriteSub === 'true')">
                                     <div class="dropdown dropdown-action">
                                         <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                             aria-expanded="false"><i class="material-icons">more_vert</i></a>

@@ -6,6 +6,11 @@ import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
 import { DatePipe } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -14,6 +19,9 @@ declare const $: any;
   styleUrls: ["./resignation-main.component.css"],
 })
 export class ResignationMainComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   lstResignation: any[];
 
   @ViewChild(DataTableDirective, { static: false })
@@ -24,7 +32,7 @@ export class ResignationMainComponent implements OnInit {
   public editId: any;
   public rows = [];
   public srch = [];
-  public adminId:any;
+  public adminId: any;
   public statusValue;
   public dtTrigger: Subject<any> = new Subject();
   public pipe = new DatePipe("en-US");
@@ -32,13 +40,21 @@ export class ResignationMainComponent implements OnInit {
   public editResignForm: FormGroup;
   public NoticedDate;
   public ResignDate;
+  user_type: string;
+  resignationWrite: string;
+  resignationWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
-    private http:HttpClient,
+    private http: HttpClient,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.resignationWrite = sessionStorage.getItem("resignationWrite");
+    this.resignationWriteSub = sessionStorage.getItem("resignationWriteSub");
     this.adminId=sessionStorage.getItem("adminId");
+
   }
 
   ngOnInit() {
@@ -73,12 +89,18 @@ export class ResignationMainComponent implements OnInit {
 
   // Get  resignation Api Call
   loadResignation() {
-    this.http.get("http://localhost:8443/admin/resignation/getAdminResignation"+"/"+this.adminId).subscribe((data:any) => {
-        console.log("GetData>>>>>>>>>>>>>>>>>>>>>>>",data)
-      this.lstResignation = data;
-      this.rows = this.lstResignation;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/resignation/getAdminResignation" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        console.log("GetData>>>>>>>>>>>>>>>>>>>>>>>", data);
+        this.lstResignation = data;
+        this.rows = this.lstResignation;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -92,9 +114,9 @@ export class ResignationMainComponent implements OnInit {
 
   // Add Resignation  Modal Api Call
   addResignation() {
-    if(this.addResignForm.invalid){
-      this.markFormGroupTouched(this.addResignForm)
-      return
+    if (this.addResignForm.invalid) {
+      this.markFormGroupTouched(this.addResignForm);
+      return;
     }
     if (this.addResignForm.valid) {
       let noticedDate = this.pipe.transform(
@@ -106,28 +128,35 @@ export class ResignationMainComponent implements OnInit {
         "dd-MM-yyyy"
       );
       let obj = {
-        adminId:this.adminId,
+        adminId: this.adminId,
         employee: this.addResignForm.value.EmployeeName,
         department: "Web development",
         noticedDate: noticedDate,
         resignDate: resignationDate,
         reason: this.addResignForm.value.ReasonName,
-       
       };
-      this.http.post("http://localhost:8443/admin/resignation/createResignation",obj).subscribe((data:any) => {
-        console.log("CreateData>>>>>>>>>>>>>>",data)
-        this.loadResignation();
+      this.http
+        .post("http://localhost:8443/admin/resignation/createResignation", obj)
+        .subscribe((data: any) => {
+          this.loadResignation();
 
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
-      
+
       $("#add_resignation").modal("hide");
       this.addResignForm.reset();
-      this.toastr.success("Resignation added sucessfully...!", "Success");
+
+      this._snackBar.open("Resignation added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -150,18 +179,32 @@ export class ResignationMainComponent implements OnInit {
         reason: this.editResignForm.value.ReasonName,
         id: this.editId,
       };
-      this.http.patch("http://localhost:8443/admin/resignation/updateResignation"+"/"+this.editId,obj).subscribe((data:any) => {
-        console.log("updateData>>>>>>>>>>>>>>>",data)
-        this.loadResignation();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/resignation/updateResignation" +
+            "/" +
+            this.editId,
+          obj
+        )
+        .subscribe((data: any) => {
+          console.log("updateData>>>>>>>>>>>>>>>", data);
+          this.loadResignation();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
-      
+
       $("#edit_resignation").modal("hide");
-      this.toastr.success("Resignation Updated sucessfully...!", "Success");
+
+      this._snackBar.open("Resignation updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -182,19 +225,33 @@ export class ResignationMainComponent implements OnInit {
 
   // delete api call
   deleteResignation() {
-    alert(this.tempId)
-    this.http.patch("http://localhost:8443/admin/resignation/updateResignation"+"/"+this.tempId,{status:2}).subscribe((data:any) => {
-      console.log("deleteData>>>>>>>>>>>>>>>",data)
-      this.loadResignation();
-      $("#datatable").DataTable().clear();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    alert(this.tempId);
+    this.http
+      .patch(
+        "http://localhost:8443/admin/resignation/updateResignation" +
+          "/" +
+          this.tempId,
+        { status: 2 }
+      )
+      .subscribe((data: any) => {
+        console.log("deleteData>>>>>>>>>>>>>>>", data);
+        this.loadResignation();
+        $("#datatable").DataTable().clear();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.dtTrigger.next();
       });
-      this.dtTrigger.next();
-    });
-   
+
     $("#delete_resignation").modal("hide");
-    this.toastr.success("Resignation  deleted sucessfully..!", "Success");
+
+    this._snackBar.open("Resignation  deleted sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event

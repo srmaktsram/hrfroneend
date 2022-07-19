@@ -18,6 +18,7 @@
             Employee
             <div class="status-toggle">
               <input
+              *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')"
                 type="checkbox"
                 id="staff_module"
                 class="check"
@@ -31,6 +32,7 @@
             Holidays
             <div class="status-toggle">
               <input
+              *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')"
                 type="checkbox"
                 id="holidays_module"
                 class="check"
@@ -44,6 +46,7 @@
             Leaves
             <div class="status-toggle">
               <input
+              *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')"
                 type="checkbox"
                 id="leave_module"
                 class="check"
@@ -57,6 +60,7 @@
             Events
             <div class="status-toggle">
               <input
+              *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')"
                 type="checkbox"
                 id="events_module"
                 class="check"
@@ -70,6 +74,7 @@
             Chat
             <div class="status-toggle">
               <input
+              *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')"
                 type="checkbox"
                 id="chat_module"
                 class="check"
@@ -83,6 +88,7 @@
             Jobs
             <div class="status-toggle">
               <input
+              *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')"
                 type="checkbox"
                 id="job_module"
                 class="check"

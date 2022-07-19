@@ -35,6 +35,9 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
   public adminId = sessionStorage.getItem("adminId");
 
   DepartmentName: any;
+  user_type: string;
+  employeewrite: string;
+  employeewriteSub: string;
 
   constructor(
     private http: HttpClient,
@@ -42,7 +45,11 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
+  }
 
   ngOnInit() {
     this.dtOptions = {

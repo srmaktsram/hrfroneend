@@ -18,11 +18,16 @@ export class BudgetListComponent implements OnInit {
   public lstRevenue;
   public editedvalue;
   public pipe = new DatePipe("en-US");
+  user_type: string;
+  accountingwriteFin: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.accountingwriteFin = sessionStorage.getItem("accountingwriteFin");
+  }
 
   ngOnInit() {
     // Floating Label

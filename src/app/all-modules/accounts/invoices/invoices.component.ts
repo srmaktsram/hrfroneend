@@ -27,6 +27,10 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   public pipe = new DatePipe("en-US");
   public dtTrigger: Subject<any> = new Subject();
   adminId: string;
+  user_type: string;
+  saleswriteFin: string;
+  saleswrite: string;
+  saleswriteSub: string;
 
   constructor(
     private router: Router,
@@ -35,6 +39,10 @@ export class InvoicesComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     sessionStorage.removeItem("invoiceNo");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.saleswrite = sessionStorage.getItem("saleswrite");
+    this.saleswriteSub = sessionStorage.getItem("saleswriteSub");
+    this.saleswriteFin = sessionStorage.getItem("saleswriteFin");
   }
 
   ngOnInit() {

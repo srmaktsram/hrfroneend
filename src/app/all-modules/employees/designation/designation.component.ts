@@ -34,6 +34,9 @@ export class DesignationComponent implements OnInit, OnDestroy {
   public srch = [];
   public addDesignationForm: FormGroup;
   public editDesignationForm: FormGroup;
+  user_type: string;
+  employeewrite: string;
+  employeewriteSub: string;
 
   constructor(
     private http: HttpClient,
@@ -42,6 +45,9 @@ export class DesignationComponent implements OnInit, OnDestroy {
     private toastr: ToastrService,
     private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
     this.getDepartmentData();
   }
 

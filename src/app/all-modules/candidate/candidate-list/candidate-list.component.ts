@@ -24,6 +24,9 @@ export class CandidateListComponent implements OnInit {
   public joiningForm: FormGroup;
   user_type: string;
   shortlistedcandidateswriteRecep: string;
+  jobswriteHr: string;
+  jobsWrite: string;
+  jobsWriteSub: string;
 
   constructor(
     private srvModuleService: AllModulesService,
@@ -31,6 +34,10 @@ export class CandidateListComponent implements OnInit {
     private http: HttpClient
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.jobsWrite = sessionStorage.getItem("jobsWrite");
+    this.jobsWriteSub = sessionStorage.getItem("jobsWriteSub");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+
     this.shortlistedcandidateswriteRecep = sessionStorage.getItem("shortlistedcandidateswriteRecep");
   }
 

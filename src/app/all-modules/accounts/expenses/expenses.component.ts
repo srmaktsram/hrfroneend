@@ -44,12 +44,21 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   public editPurchaseDateFormat;
   public editPurchaseToDateFormat;
   employeeid: any;
+  user_type: string;
+  saleswriteFin: string;
+  saleswrite: string;
+  saleswriteSub: string;
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private toastr: ToastrService
-  ) { }
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.saleswrite = sessionStorage.getItem("saleswrite");
+    this.saleswriteSub = sessionStorage.getItem("saleswriteSub");
+    this.saleswriteFin = sessionStorage.getItem("saleswriteFin");
+  }
 
   ngOnInit() {
     $(".floating")
@@ -112,13 +121,18 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getExpenses() {
-    this.http.get("http://localhost:8443/admin/expenses/getAllExpenses" + "/" + this.adminId).subscribe((data) => {
-
-      this.allExpenses = data;
-      console.log(this.allExpenses)
-      this.rows = this.allExpenses;
-      this.srch = [...this.rows];
-    });
+    this.http
+      .get(
+        "http://localhost:8443/admin/expenses/getAllExpenses" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data) => {
+        this.allExpenses = data;
+        console.log(this.allExpenses);
+        this.rows = this.allExpenses;
+        this.srch = [...this.rows];
+      });
   }
 
   private markFormGroupTouched(formGroup: FormGroup) {
@@ -130,28 +144,29 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-
   updateStatus(val, id) {
-    this.http.patch("http://localhost:8443/admin/expenses/updateExpenses" + "/" + id, { status: val }).subscribe((data: any) => {
-      console.log(data)
-      this.getExpenses();
-    })
+    this.http
+      .patch("http://localhost:8443/admin/expenses/updateExpenses" + "/" + id, {
+        status: val,
+      })
+      .subscribe((data: any) => {
+        console.log(data);
+        this.getExpenses();
+      });
   }
-
 
   // Add Expenses Modal Api Call
 
   addExpenses() {
     if (this.addExpensesForm.invalid) {
-      this.markFormGroupTouched(this.addExpensesForm)
-      return
+      this.markFormGroupTouched(this.addExpensesForm);
+      return;
     }
     if (this.addExpensesForm.valid) {
       let purchaseToDateFormat = this.pipe.transform(
         this.addExpensesForm.value.purchaseDate,
         "dd-MM-yyyy"
       );
-
 
       let obj = {
         adminId: this.adminId,
@@ -163,15 +178,17 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
         amount: this.addExpensesForm.value.amount,
         paidby: this.addExpensesForm.value.paidBy,
       };
-      this.http.post("http://localhost:8443/admin/expenses/createExpenses", obj).subscribe((data: any) => {
-        // console.log(data)
-        this.getExpenses();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .post("http://localhost:8443/admin/expenses/createExpenses", obj)
+        .subscribe((data: any) => {
+          // console.log(data)
+          this.getExpenses();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
 
       $("#add_expense").modal("hide");
       this.addExpensesForm.reset();
@@ -187,7 +204,6 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.editPurchaseToDateFormat = this.pipe.transform(data, "dd-MM-yyyy");
   }
 
-
   // Edit Expenses Modal Api Call
 
   editExpenses() {
@@ -201,14 +217,21 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
         paidby: this.editExpensesForm.value.paidBy,
         id: this.editId,
       };
-      this.http.patch("http://localhost:8443/admin/expenses/updateExpenses" + "/" + this.editId, obj).subscribe((data1) => {
-        this.getExpenses();
-        $("#datatable").DataTable().clear();
-        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-          dtInstance.destroy();
+      this.http
+        .patch(
+          "http://localhost:8443/admin/expenses/updateExpenses" +
+            "/" +
+            this.editId,
+          obj
+        )
+        .subscribe((data1) => {
+          this.getExpenses();
+          $("#datatable").DataTable().clear();
+          this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+            dtInstance.destroy();
+          });
+          this.dtTrigger.next();
         });
-        this.dtTrigger.next();
-      });
 
       $("#edit_expense").modal("hide");
       this.toastr.success("Expenses edited", "Success");
@@ -236,15 +259,22 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   // Delete Expenses Modal Api Call
 
   deleteTicket() {
-    this.http.patch("http://localhost:8443/admin/expenses/deleteExpenses" + "/" + this.tempId, {}).subscribe((data: any) => {
-      // console.log(data)
-      this.getExpenses();
-      $("#datatable").DataTable().clear();
-      this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-        dtInstance.destroy();
+    this.http
+      .patch(
+        "http://localhost:8443/admin/expenses/deleteExpenses" +
+          "/" +
+          this.tempId,
+        {}
+      )
+      .subscribe((data: any) => {
+        // console.log(data)
+        this.getExpenses();
+        $("#datatable").DataTable().clear();
+        this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+        });
+        this.dtTrigger.next();
       });
-      this.dtTrigger.next();
-    });
 
     $("#delete_expense").modal("hide");
     this.toastr.success("Expenses deleted", "Success");

@@ -92,6 +92,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   profileImage: any;
   profileImagePath = [];
   allEmpData: any;
+  employeewriteSub: string;
+  employeewrite: string;
 
   constructor(
     private srvModuleService: AllModulesService,
@@ -106,9 +108,9 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.corporateId = sessionStorage.getItem("corporateId");
     this.packageName = sessionStorage.getItem("packageName");
     this.companyName = sessionStorage.getItem("companyName");
-    console.log(this.packageName, "packageName");
-    console.log(this.corporateId, "corporateId");
-    console.log(this.companyName, "companyName");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
+    
 
     if (sessionStorage.getItem("current_location") === "undefined") {
       alert("current_location is undefined");

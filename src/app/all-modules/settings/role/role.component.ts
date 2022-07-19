@@ -8,6 +8,11 @@ import {
 } from "@angular/forms";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -16,6 +21,9 @@ declare const $: any;
   styleUrls: ["./role.component.css"],
 })
 export class RoleComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+
   public url: any = "roles";
   roleId;
   public allroles: any = [];
@@ -62,13 +70,23 @@ export class RoleComponent implements OnInit {
     { id: 4, import: false },
     { id: 5, export: false },
   ];
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
 
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
+        private _snackBar: MatSnackBar,
+
     private http: HttpClient
-  ) {}
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
+  }
+
   public initializeArray() {
     this.Employee = [
       { id: 0, read: false },
@@ -158,7 +176,14 @@ export class RoleComponent implements OnInit {
         });
       $("#add_role").modal("hide");
       this.addRoles.reset();
-      this.toastr.success("Roles is added", "Success");
+
+      this._snackBar.open("Roles added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -181,7 +206,14 @@ export class RoleComponent implements OnInit {
         this.getRoles();
       });
     $("#edit_role").modal("hide");
-    this.toastr.success("Roles is edited", "Success");
+
+    this._snackBar.open("Roles updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
 
   edit(value) {
@@ -212,7 +244,14 @@ export class RoleComponent implements OnInit {
       .subscribe((data) => {
         this.getRoles();
         $("#delete_role").modal("hide");
-        this.toastr.success("Roles is deleted", "Success");
+
+        this._snackBar.open("Roles deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
   /////
@@ -229,7 +268,6 @@ export class RoleComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.getNotifications(data.id);
-
       });
   }
   getNotifications(roleId) {
@@ -319,6 +357,13 @@ export class RoleComponent implements OnInit {
       .subscribe((data: any) => {
         this.getNotifications(data.id);
       });
+    this._snackBar.open("Checkbox updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   /////// Holiday
   checkCheckBoxvalueHolidays(event, val) {
@@ -383,8 +428,14 @@ export class RoleComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.getNotifications(data.id);
-
       });
+    this._snackBar.open("Checkbox Holiday updated sucessfully !", "", {
+      duration: 2000,
+      panelClass: "notif-success",
+
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+    });
   }
   ///Leaves
   checkCheckBoxvalueLeaves(event, val) {
@@ -449,7 +500,6 @@ export class RoleComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.getNotifications(data.id);
-
       });
   }
   ///Events
@@ -515,7 +565,6 @@ export class RoleComponent implements OnInit {
       )
       .subscribe((data: any) => {
         this.getNotifications(data.id);
-
       });
   }
 }

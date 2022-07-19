@@ -27,9 +27,12 @@ export class JobsdashboardListComponent implements OnInit {
   srch: any[];
   user_type: string;
   jobdashboardwriteRecep: string;
+  jobswriteHr: string;
   constructor(private http: HttpClient) {
     this.user_type = sessionStorage.getItem("user_type");
     this.jobdashboardwriteRecep = sessionStorage.getItem("jobdashboardwriteRecep");
+    this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
+    
     this.getFullData();
     this.getAppliedCandidates();
     this.getShortListedDetails();
