@@ -22,13 +22,13 @@
 								<div class="form-group">
 									<label>Auto Backup Database <span class="text-danger">*</span></label><br>
 									<label class="switch">
-		                                <input type="hidden" value="off" name="auto_backup_db">
-		                                <input type="checkbox" checked="checked" name="auto_backup_db">
+		                                <input type="hidden" value="off" name="auto_backup_db" >
+		                                <input type="checkbox" checked="checked" name="auto_backup_db" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')">
 		                                <span></span>
 		                            </label>
 								</div>
 								
-								<div class="submit-section">
+								<div class="submit-section" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')">
 									<button class="btn btn-primary submit-btn">Save Changes</button>
 								</div>
 							</form>

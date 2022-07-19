@@ -60,6 +60,8 @@ export class ProjectViewComponent implements OnInit {
   path: string;
   client: any;
   projectswrite: string;
+  projectsWrite: string;
+  projectsWriteSub: string;
 
   constructor(
     private http: HttpClient,
@@ -68,7 +70,10 @@ export class ProjectViewComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
-    this.projectswrite = sessionStorage.getItem("projectswrite");
+    this.projectswrite=sessionStorage.getItem("projectswrite");
+    this.projectsWrite = sessionStorage.getItem("projectsWrite");
+    this.projectsWriteSub = sessionStorage.getItem("projectsWriteSub");
+
 
     this.getClients();
   }

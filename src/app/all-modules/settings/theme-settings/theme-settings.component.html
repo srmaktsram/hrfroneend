@@ -66,7 +66,7 @@
                                 class="img-fluid" width="16" height="16" alt=""></div>
                     </div>
                 </div> -->
-                <div class="submit-section">
+                <div class="submit-section" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')">
                     <button class="btn btn-primary submit-btn">Save</button>
                 </div>
             </form>

@@ -221,16 +221,13 @@ export class SidebarComponent implements OnInit {
   userdashboardwriteRecep = sessionStorage.getItem("userdashboardwriteRecep");
   jobdashboardreadRecep = sessionStorage.getItem("jobdashboardreadRecep");
   jobdashboardwriteRecep = sessionStorage.getItem("jobdashboardwriteRecep");
-  shortlistedcandidatesreadRecep = sessionStorage.getItem(
-    "shortlistedcandidatesreadRecep"
-  );
-  shortlistedcandidateswriteRecep = sessionStorage.getItem(
-    "shortlistedcandidateswriteRecep"
-  );
+  shortlistedcandidatesreadRecep = sessionStorage.getItem("shortlistedcandidatesreadRecep");
+  shortlistedcandidateswriteRecep = sessionStorage.getItem("shortlistedcandidateswriteRecep");
   candidateslistreadRecep = sessionStorage.getItem("candidateslistreadRecep");
   candidateslistwriteRecep = sessionStorage.getItem("candidateslistwriteRecep");
   scheduletimingsreadRecep = sessionStorage.getItem("scheduletimingsreadRecep");
   scheduletimingwriteRecep = sessionStorage.getItem("scheduletimingwriteRecep");
+
   appliedCandidatesreadRecep = sessionStorage.getItem(
     "appliedCandidatesreadRecep"
   );
@@ -246,7 +243,7 @@ export class SidebarComponent implements OnInit {
     private allModulesService: AllModulesService
   ) {
     this.user_type = sessionStorage.getItem("user_type");
-    console.log("roleDetails", this.roleDetails);
+
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         $(".main-wrapper").removeClass("slide-nav");

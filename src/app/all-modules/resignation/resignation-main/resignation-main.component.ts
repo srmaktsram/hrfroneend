@@ -40,6 +40,9 @@ export class ResignationMainComponent implements OnInit {
   public editResignForm: FormGroup;
   public NoticedDate;
   public ResignDate;
+  user_type: string;
+  resignationWrite: string;
+  resignationWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -47,7 +50,11 @@ export class ResignationMainComponent implements OnInit {
     private toastr: ToastrService,
     private _snackBar: MatSnackBar
   ) {
-    this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.resignationWrite = sessionStorage.getItem("resignationWrite");
+    this.resignationWriteSub = sessionStorage.getItem("resignationWriteSub");
+    this.adminId=sessionStorage.getItem("adminId");
+
   }
 
   ngOnInit() {

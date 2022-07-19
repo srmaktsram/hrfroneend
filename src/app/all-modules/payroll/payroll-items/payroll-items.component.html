@@ -41,7 +41,7 @@
     <!-- Additions Tab -->
     <div class="tab-pane show active" id="tab_additions">
       <!-- Add Addition Button -->
-      <div class="text-end mb-4 clearfix" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">
+      <div class="text-end mb-4 clearfix" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">
         <button class="btn btn-primary add-btn" type="button" data-bs-toggle="modal" data-bs-target="#add_addition">
           <i class="fa fa-plus"></i> Add Addition
         </button>
@@ -58,7 +58,7 @@
                 <th>Name</th>
                 <th>Category</th>
                 <th>Default/Unit Amount</th>
-                <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">Action</th>
+                <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -67,8 +67,8 @@
                 <td>{{ addPayroll.name }}</td>
                 <td>{{ addPayroll.category }}</td>
                 <td>{{ addPayroll.unitCost }}</td>
-                <td class="text-end">
-                  <div class="dropdown dropdown-action" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">
+                <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">
+                  <div class="dropdown dropdown-action">
                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
                         class="material-icons">more_vert</i></a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -96,7 +96,7 @@
     <!-- Overtime Tab -->
     <div class="tab-pane" id="tab_overtime">
       <!-- Add Overtime Button -->
-      <div class="text-end mb-4 clearfix" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">
+      <div class="text-end mb-4 clearfix" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">
         <button class="btn btn-primary add-btn" type="button" data-bs-toggle="modal" data-bs-target="#add_overtime">
           <i class="fa fa-plus"></i> Add Overtime
         </button>
@@ -112,7 +112,7 @@
                 <th>Sr.No.</th>
                 <th>Name</th>
                 <th>Rate</th>
-                <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">Action</th>
+                <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -120,8 +120,8 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ overPayroll.name }}</td>
                 <td>{{ overPayroll.rate }}</td>
-                <td class="text-end">
-                  <div class="dropdown dropdown-action" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">
+                <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">
+                  <div class="dropdown dropdown-action">
                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
                         class="material-icons">more_vert</i></a>
                     <div class="dropdown-menu dropdown-menu-right">
@@ -149,7 +149,7 @@
     <!-- Deductions Tab -->
     <div class="tab-pane" id="tab_deductions">
       <!-- Add Deductions Button -->
-      <div class="text-end mb-4 clearfix" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">
+      <div class="text-end mb-4 clearfix" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">
         <button class="btn btn-primary add-btn" type="button" data-bs-toggle="modal" data-bs-target="#add_deduction">
           <i class="fa fa-plus"></i> Add Deduction
         </button>
@@ -165,7 +165,7 @@
                 <th>Sr.No.</th>
                 <th>Name</th>
                 <th>Default/Unit Amount</th>
-                <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">Action</th>
+                <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -173,8 +173,8 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ deductPayroll.name }}</td>
                 <td>{{ deductPayroll.unitCost }}</td>
-                <td class="text-end">
-                  <div class="dropdown dropdown-action" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">
+                <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">
+                  <div class="dropdown dropdown-action">
                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
                         class="material-icons">more_vert</i></a>
                     <div class="dropdown-menu dropdown-menu-right">

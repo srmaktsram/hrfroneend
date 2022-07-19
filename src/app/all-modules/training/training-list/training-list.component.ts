@@ -43,6 +43,8 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   public end;
   user_type: string;
   trainingwriteHr: string;
+  trainingsWrite: string;
+  trainingsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -54,6 +56,8 @@ export class TrainingListComponent implements OnInit, OnDestroy {
   
   ) { 
     this.user_type = sessionStorage.getItem("user_type");
+    this.trainingsWrite = sessionStorage.getItem("trainingsWrite");
+    this.trainingsWriteSub = sessionStorage.getItem("trainingsWriteSub");
     this.trainingwriteHr = sessionStorage.getItem("trainingwriteHr");
   }
 

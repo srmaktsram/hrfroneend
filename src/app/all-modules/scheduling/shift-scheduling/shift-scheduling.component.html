@@ -19,7 +19,9 @@
                     </div>
                     <div class="col-auto float-end ms-auto">
                         <a routerLink="/layout/shift/shift-list" class="btn add-btn m-r-5">Shifts</a>
-                        <a href="#" class="btn add-btn m-r-5" data-bs-toggle="modal" data-bs-target="#add_schedule">
+                        <a
+                        *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                        href="#" class="btn add-btn m-r-5" data-bs-toggle="modal" data-bs-target="#add_schedule">
                             Assign Shifts</a>
                     </div>
                 </div>

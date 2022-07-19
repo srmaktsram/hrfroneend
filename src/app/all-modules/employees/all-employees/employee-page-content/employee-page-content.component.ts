@@ -70,6 +70,9 @@ export class EmployeePageContentComponent implements OnInit {
   adminId: string;
   dtTrigger: any;
   current_location: any;
+  employeewriteSub: string;
+  user_type: string;
+  employeewrite: string;
   constructor(
     private srvModuleService: AllModulesService,
     private http: HttpClient,
@@ -78,6 +81,10 @@ export class EmployeePageContentComponent implements OnInit {
     private formBuilder: FormBuilder,
     public router: Router
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
+
     this.current_location = JSON.parse(
       sessionStorage.getItem("current_location")
     );

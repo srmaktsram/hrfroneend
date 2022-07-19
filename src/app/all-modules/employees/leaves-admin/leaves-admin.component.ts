@@ -42,6 +42,9 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
   adminId: any;
   public id: any;
   router: any;
+  user_type: string;
+  employeewrite: string;
+  employeewriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -50,6 +53,9 @@ export class LeavesAdminComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
   }
 
   ngOnInit() {

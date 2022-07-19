@@ -36,6 +36,8 @@ export class EstimatesComponent implements OnInit, OnDestroy {
   adminId: any;
   user_type: string;
   saleswriteFin: string;
+  saleswrite: string;
+  saleswriteSub: string;
   constructor(
     
     private router: Router,
@@ -43,6 +45,8 @@ export class EstimatesComponent implements OnInit, OnDestroy {
     private allModulesService: AllModulesService
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.saleswrite = sessionStorage.getItem("saleswrite");
+    this.saleswriteSub = sessionStorage.getItem("saleswriteSub");
     this.saleswriteFin = sessionStorage.getItem("saleswriteFin");
     this.adminId =sessionStorage.getItem("adminId")
   }

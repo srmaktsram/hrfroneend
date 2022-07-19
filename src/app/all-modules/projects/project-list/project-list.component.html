@@ -16,11 +16,7 @@
         <a
           class="btn add-btn"
           data-bs-toggle="modal"
-          data-bs-target="#create_project" *ngIf="
-          user_type == 'admin' ||
-          (user_type === 'employee' &&
-            (projectswrite == 'true'))
-        "
+          data-bs-target="#create_project" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
           ><i class="fa fa-plus" ></i> Create Project</a
         >
         <div class="view-icons">
@@ -96,11 +92,7 @@
               <th>Deadline</th>
               <th>Priority</th>
               <th>Status</th>
-              <th class="text-end" *ngIf="
-              user_type == 'admin' ||
-              (user_type === 'employee' &&
-                (projectswrite == 'true'))
-            ">Action</th>
+              <th class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -205,11 +197,7 @@
                     ><i class="fa fa-dot-circle-o text-danger"></i
                     >{{ project.priority }}</a
                   >
-                  <div class="dropdown-menu" *ngIf="
-                  user_type == 'admin' ||
-                  (user_type === 'employee' &&
-                    (projectswrite == 'true'))
-                ">
+                  <div class="dropdown-menu" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
                     <a
                       class="dropdown-item"
                       (click)="priorityStatus('High', project.id)"
@@ -246,11 +234,7 @@
                       </i>
                     </ng-container>
                   </a>
-                  <div class="dropdown-menu" *ngIf="
-                  user_type == 'admin' ||
-                  (user_type === 'employee' &&
-                    (projectswrite == 'true'))
-                ">
+                  <div class="dropdown-menu" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
                     <a
                       class="dropdown-item"
                       (click)="updateStatus('Active', project.projectId)"
@@ -265,12 +249,8 @@
                   </div>
                 </div>
               </td>
-              <td class="text-end">
-                <div class="dropdown dropdown-action" *ngIf="
-                user_type == 'admin' ||
-                (user_type === 'employee' &&
-                  (projectswrite == 'true'))
-              ">
+              <td class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
+                <div class="dropdown dropdown-action">
                   <a
                     class="action-icon dropdown-toggle"
                     data-bs-toggle="dropdown"

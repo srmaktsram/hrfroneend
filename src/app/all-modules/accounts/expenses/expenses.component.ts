@@ -46,6 +46,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   employeeid: any;
   user_type: string;
   saleswriteFin: string;
+  saleswrite: string;
+  saleswriteSub: string;
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
@@ -53,6 +55,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
     private toastr: ToastrService
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.saleswrite = sessionStorage.getItem("saleswrite");
+    this.saleswriteSub = sessionStorage.getItem("saleswriteSub");
     this.saleswriteFin = sessionStorage.getItem("saleswriteFin");
   }
 

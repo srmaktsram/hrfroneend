@@ -14,7 +14,7 @@
       </div>
       <div class="col-auto float-end ms-auto">
         <a
-        *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')"
+        *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')"
           class="btn add-btn"
           data-bs-toggle="modal"
           data-bs-target="#add_salary"
@@ -135,7 +135,7 @@
               <th>Salary</th>
               <th>Payslip</th>
 
-              <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">Action</th>
+              <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -199,8 +199,8 @@
                   >Generate Slip</a
                 >
               </td>
-              <td class="text-end">
-                <div class="dropdown dropdown-action" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')">
+              <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolehr' && payrollswriteHr === 'true')||(user_type === 'roleadmin' && payrollWrite == 'true')||(user_type === 'rolesubadmin' && payrollWriteSub === 'true')">
+                <div class="dropdown dropdown-action">
                   <a
                     class="action-icon dropdown-toggle"
                     data-bs-toggle="dropdown"

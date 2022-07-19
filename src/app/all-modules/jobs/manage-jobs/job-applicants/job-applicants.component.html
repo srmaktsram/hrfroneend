@@ -71,7 +71,7 @@
                       >First Round</i
                     >
                   </a>
-                  <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && appliedCandidateswriteRecep === 'true') || (user_type === 'rolehr' && jobswriteHr === 'true')">
+                  <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && appliedCandidateswriteRecep === 'true') || (user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">
                     <a
                       class="dropdown-item"
                       (click)="selectStatus('New', appliedCandidates.id)"

@@ -27,13 +27,20 @@ export class LeaveSettingsComponent implements OnInit {
   public editCustomPolicy: FormGroup;
   public editId: any;
   public tempId: any;
+  user_type: string;
+  employeewrite: string;
+  employeewriteSub: string;
   constructor(
     private primengConfig: PrimeNGConfig,
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
+  }
 
   ngOnInit() {
     // Leave Settings button show

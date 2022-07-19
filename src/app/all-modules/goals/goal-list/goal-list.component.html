@@ -13,7 +13,9 @@
         </ul>
       </div>
       <div class="col-auto float-end ms-auto">
-        <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_goal"
+        <a
+        *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && goalsWrite == 'true')||(user_type === 'rolesubadmin' && goalsWriteSub === 'true')"
+        class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_goal"
           ><i class="fa fa-plus"></i> Add New</a
         >
       </div>
@@ -41,7 +43,7 @@
               <th>Description</th>
               <th>Status</th>
               <th>Progress</th>
-              <th class="text-end">Action</th>
+              <th class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && goalsWrite == 'true')||(user_type === 'rolesubadmin' && goalsWriteSub === 'true')">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -65,7 +67,7 @@
                     <i class="fa fa-dot-circle-o text-success"></i>
                     {{ item.status || statusValue }}
                   </a>
-                  <div class="dropdown-menu">
+                  <div class="dropdown-menu" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && goalsWrite == 'true')||(user_type === 'rolesubadmin' && goalsWriteSub === 'true')">
                     <a
                       class="dropdown-item"
                       (click)="getStatus('Active', item.id)"
@@ -90,7 +92,7 @@
                 </div>
               </td>
 
-              <td class="text-end">
+              <td class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && goalsWrite == 'true')||(user_type === 'rolesubadmin' && goalsWriteSub === 'true')">
                 <div class="dropdown dropdown-action">
                   <a
                     class="action-icon dropdown-toggle"

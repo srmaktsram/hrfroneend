@@ -59,6 +59,9 @@ export class TaskBoardComponent implements OnInit {
   public teamMember = [];
   public user_type = sessionStorage.getItem("user_type");
   public projectswrite = sessionStorage.getItem("projectswrite");
+  public projectsWrite = sessionStorage.getItem("projectsWrite");
+  public projectsWriteSub = sessionStorage.getItem("projectsWriteSub");
+  
 
   public allTasks = [];
   projectId: any;
@@ -77,7 +80,8 @@ export class TaskBoardComponent implements OnInit {
     private fb: FormBuilder,
     private _snackBar: MatSnackBar
   ) {
-    this.adminId = sessionStorage.getItem("adminId");
+    this.adminId=sessionStorage.getItem("adminId");
+    
 
     this.getInfo();
     this.getLeader();

@@ -39,13 +39,22 @@ export class LeaveTypeComponent implements OnInit, OnDestroy {
   public disableInputField = true;
   public adminId = sessionStorage.getItem("adminId");
   buttondisable = false;
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private http: HttpClient,
-    private _snackBar: MatSnackBar
-  ) {}
+        private _snackBar: MatSnackBar
+
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
+  }
+
 
   ngOnInit() {
     this.getLeaveType();

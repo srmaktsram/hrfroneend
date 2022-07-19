@@ -25,12 +25,17 @@ export class NotificationsComponent implements OnInit {
   events: any;
   jobs: any;
   chat: any;
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private http: HttpClient,
-    private _snackBar: MatSnackBar
-  ) {}
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,    private _snackBar: MatSnackBar
+) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
+  }
+
 
   ngOnInit() {
     this.getNotifications();

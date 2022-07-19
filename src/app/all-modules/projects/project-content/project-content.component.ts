@@ -51,6 +51,8 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   progess: string;
   projectswrite: string;
   user_type: string;
+  projectsWrite: string;
+  projectsWriteSub: string;
   constructor(
     private toastr: ToastrService,
     private _snackBar: MatSnackBar,
@@ -59,8 +61,11 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.employeeId = sessionStorage.getItem("employeeId");
-    this.projectswrite = sessionStorage.getItem("projectswrite");
-    this.user_type = sessionStorage.getItem("user_type");
+    this.projectswrite=sessionStorage.getItem("projectswrite");
+    this.user_type=sessionStorage.getItem("user_type");
+    this.projectsWrite = sessionStorage.getItem("projectsWrite");
+    this.projectsWriteSub = sessionStorage.getItem("projectsWriteSub");
+
 
     this.getDesignation();
 

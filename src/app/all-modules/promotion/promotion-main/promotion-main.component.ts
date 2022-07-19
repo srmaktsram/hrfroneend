@@ -33,6 +33,9 @@ export class PromotionMainComponent implements OnInit {
   public adminId = sessionStorage.getItem("adminId");
   lstDepartment: Object;
   lstDesignation: Object;
+  user_type: string;
+  promotionWrite: string;
+  promotionWriteSub: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -40,12 +43,19 @@ export class PromotionMainComponent implements OnInit {
     private toastr: ToastrService,
     private http: HttpClient
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.promotionWrite = sessionStorage.getItem("promotionWrite");
+    this.promotionWriteSub = sessionStorage.getItem("promotionWriteSub");
     this.LoadDepartment();
     this.LoadDesignation();
   }
   LoadDepartment() {
     this.http
-      .get("http://localhost:8443/admin/department/getData")
+      .get(
+        "http://localhost:8443/admin/department/getAdminData" +
+          "/" +
+          this.adminId
+      )
       .subscribe((data) => {
         this.lstDepartment = data;
         // this.dtTrigger.next();
@@ -55,7 +65,9 @@ export class PromotionMainComponent implements OnInit {
   }
   LoadDesignation() {
     this.http
-      .get("http://localhost:8443/admin/designation/getData")
+      .get(
+        "http://localhost:8443/admin/designation/getData" + "/" + this.adminId
+      )
       .subscribe((data) => {
         this.lstDesignation = data;
         // this.dtTrigger.next();
