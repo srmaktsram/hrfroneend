@@ -7,6 +7,7 @@ import { Subject } from "rxjs";
 import { DatePipe } from "@angular/common";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import { type } from "os";
 declare const $: any;
 @Component({
   selector: "app-studentcandidate-list",
@@ -141,6 +142,7 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
   selectImage(event: any) {
     if (event.target.files.length > 0) {
       this.multFile = event.target.files;
+
     }
   }
   // Add questions  Modal Api Call

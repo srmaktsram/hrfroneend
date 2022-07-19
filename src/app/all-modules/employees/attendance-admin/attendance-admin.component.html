@@ -16,6 +16,7 @@
     <!-- /Page Header -->
 
     <!-- Search Filter -->
+
     <div class="row filter-row">
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus">
@@ -23,6 +24,7 @@
                 <label class="focus-label">Employee Name</label>
             </div>
         </div>
+
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus select-focus">
                 <select class="form-select floating form-control">
@@ -43,6 +45,8 @@
                 <label class="focus-label">Select Month</label>
             </div>
         </div>
+
+
         <div class="col-sm-6 col-md-3">
             <div class="form-group form-focus select-focus">
                 <select class="form-select floating form-control">
@@ -107,23 +111,23 @@
                         <tr *ngFor="let item of employeeData">
                             <td>
                                 <h2 class="table-avatar">
-                                    <a class="avatar avatar-xs" routerLink="/layout/employees/employeeprofile"><img
-                                            alt="" src="assets/img/profiles/avatar-9.jpg"></a>
-                                    <a routerLink="/layout/employees/employeeprofile">{{item.name}} </a>
+                                    <a class="avatar avatar-xs" (click)="getId(item.employeeid)"><img alt=""
+                                            src="http://localhost:8443\{{item.profileImage}}"></a>
+                                    <a (click)="getId(item.employeeid)">{{item.name}} </a>
                                 </h2>
                             </td>
-                            <td *ngFor="let data of item.attendDate " >
-                            <ng-container *ngIf="data =='A'">
-                                <span class="text-danger text-lg"> <b>{{data}}</b></span>
-                            </ng-container>
-                            <ng-container *ngIf="data =='P'">
-                                <span class="text-success text-lg"><b>{{data}}</b></span>
-                            </ng-container>
-                            <ng-container *ngIf="data =='P/2'">
-                                <span class="text-primary text-lg"><b>{{data}}</b></span>
-                            </ng-container>
-                                
-                        </td>
+                            <td *ngFor="let data of item.attendDate ">
+                                <ng-container *ngIf="data =='A'">
+                                    <span class="text-danger text-lg"> <b>{{data}}</b></span>
+                                </ng-container>
+                                <ng-container *ngIf="data =='P'">
+                                    <span class="text-success text-lg"><b>{{data}}</b></span>
+                                </ng-container>
+                                <ng-container *ngIf="data =='P/2'">
+                                    <span class="text-primary text-lg"><b>{{data}}</b></span>
+                                </ng-container>
+
+                            </td>
 
 
                         </tr>

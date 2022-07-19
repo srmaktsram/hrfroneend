@@ -16,11 +16,14 @@ export class AttendanceEmployeeComponent implements OnInit {
   public dtElement: DataTableDirective;
   data: any
   public prod;
+  public sum = 0
   public Production: any;
   public Datetime: any;
   public calMonthData: Number;
+  public TodayProduction: any;
   public employeeAttandance: any;
   public rows: [];
+  public currentMonth: any;
   public hours: any;
   public monthlyData: any;
   public minute: any;
@@ -30,8 +33,12 @@ export class AttendanceEmployeeComponent implements OnInit {
   punchtimeIn: [];
   public totalProduction = []
   storeData: any
+  public weaklyHoursProduction: any;
+  public weaklyMinutesProduction: any;
+
   public adminId
   public employeeid
+  public weaklyProduction = [];
   public dtTrigger: Subject<any> = new Subject();
   punchDetails: any;
   public pipe = new DatePipe("en-US");
@@ -39,33 +46,29 @@ export class AttendanceEmployeeComponent implements OnInit {
   day: any;
   newDay: string;
   public dateDetails: any;
+  public profileImage: any;
   punchlength: any;
   punchused: any;
-  public TotalDay = 0;
-  TotalOneWeakProduction: number;
+  TotalOneWeakProduction: any;
   TotalOneMonthProduction: number;
   punchStatus: any;
   user_type: string;
   attendancewrite: string;
-
   constructor(
     private http: HttpClient
   ) {
     this.adminId = sessionStorage.getItem("adminId")
     this.employeeid = sessionStorage.getItem("employee_login_id")
     this.user_type = sessionStorage.getItem("user_type")
+    this.profileImage = sessionStorage.getItem("profileImage")
+    alert(this.profileImage)
     this.attendancewrite = sessionStorage.getItem("attendancewrite")
-    alert(this.attendancewrite)
     this.getData()
     this.createData()
-
   }
   ngOnInit() {
-
     this.loadData();
-
   }
-
   public punch: any
   getData() {
     let adminId = this.adminId
@@ -75,7 +78,6 @@ export class AttendanceEmployeeComponent implements OnInit {
       this.data = data
       console.log("postApipppppppppp>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", this.data)
       this.punch = this.data.punchStatus
-      alert(this.punch)
       sessionStorage.setItem("id", this.data.id)
     })
   }
@@ -95,48 +97,45 @@ export class AttendanceEmployeeComponent implements OnInit {
 
 
   loadData() {
-
     let queryParams = new HttpParams();
-
     queryParams = queryParams.set("adminId", sessionStorage.getItem("adminId"))
     queryParams = queryParams.set("employeeid", sessionStorage.getItem("employee_login_id"))
 
     this.http.get("http://localhost:8443/employee/attendance/search?" + queryParams, {}).subscribe((data: any) => {
       this.employeeAttandance = data;
+      console.log(this.employeeAttandance, "this is employeeAttandance data")
       this.punchused = this.employeeAttandance[0].punch;
-      this.punchlength = this.punchused.length
-
-
-
+      this.punchlength = this.punchused.length;
       var countmin = 0;
       var counthour = 0;
       this.employeeAttandance.map((item) => {
-
-
         this.punchDetails = item.punch
-        let b = this.calculate()
-        console.log(b, ">>>>>><<<<<<<<<<<")
-
-
+        console.log(item, "kkkkkkkk..................")
+        let b = this.calculate();
+        console.log(b, "calculateProduction")
         let month = item.date.split("-")
-        if (month[1] == "04") {
-          let hh = b.split(":");
-          let min = Number(hh[1]);
-          let hour = Number(hh[0]);
-          countmin = countmin + (min);
-          counthour = counthour + (hour);
-
-          if (countmin > 59) {
-            countmin = countmin - 59;
-            counthour = counthour + 1;
+        var today = new Date();
+        let currentMonth = today.getMonth() + 1;
+        if (month[1] == currentMonth) {
+          let currentDay = today.getDay();
+          console.log(currentDay, "currentDay,,,,,,,,,,,,,,,,,")
+          for (let i = currentDay; i >= currentDay; i--) {
+            let hh = b.split(":");
+            let min = Number(hh[1]);
+            let hour = Number(hh[0]);
+            countmin = countmin + (min);
+            counthour = counthour + (hour);
+            if (countmin > 59) {
+              countmin = countmin - 59;
+              counthour = counthour + 1;
+            }
+            console.log(countmin, "countMinute>>>>>")
+            console.log(counthour, "countHours>>>>>>")
           }
           this.hours = counthour;
           this.minute = countmin;
-        }
-        if (this.TotalDay < 7) {
-          this.TotalOneWeakProduction = this.totalProduction.push(b)
-        } else {
-          this.TotalOneMonthProduction = this.totalProduction.push(b)
+          console.log(this.hours, this.minute, "Ghanta Minute and Seconds>>>>>>>>>>>>>>>>>>")
+
         }
 
       })
@@ -149,8 +148,7 @@ export class AttendanceEmployeeComponent implements OnInit {
     })
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   }
 
@@ -174,35 +172,13 @@ export class AttendanceEmployeeComponent implements OnInit {
       startTime = totalProduction
     }
     this.Production = startTime;
-    // if (p >= '06:00:00') {
-    //   const id = sessionStorage.getItem('id')
-
-    //   this.http.patch("http://localhost:8443/employee/attandance/updateStatus" + "/" + id, { showStatus: 1 }).subscribe((res) => {
-    //     // console.log("updateApi", res)
-    //   })
-    // }
-    // else if (p > '03:00:00' && p < '06:00:00') {
-    //   const id = sessionStorage.getItem('id')
-    //   this.http.patch("http://localhost:8443/employee/attandance/updateStatus" + "/" + id, { showStatus: 3 }).subscribe((res) => {
-    //     // console.log("updateApi2", res)
-    //   })
-
-    // }
-    // else {
-    //   const id = sessionStorage.getItem('id')
-
-    //   this.http.patch("http://localhost:8443/employee/attandance/updateStatus" + "/" + id, { showStatus: 0 }).subscribe((res) => {
-    //     // console.log("updateApi3", res)
-    //   })
-
-    // }
-
+    console.log(this.Production, "calculatefunctionProfduction>>>>>>>>>>>>>>>>")
     return this.Production;
 
   }
 
+
   diff(start, end) {
-    // console.log("satat", start, end)
     start = start.split(":");
     end = end.split(":");
     var startDate = new Date(0, 0, 0, start[0], start[1], 0);
@@ -212,9 +188,6 @@ export class AttendanceEmployeeComponent implements OnInit {
     diff -= hours * 1000 * 60 * 60;
     var minutes = Math.floor(diff / 1000 / 60);
 
-    // diff -= minutes = minutes * 1000 * 60 * 60
-    // var second = Math.floor(diff / 1000)
-    // If using time pickers with 24 hours format, add the below line get exact hours
 
     if (hours < 0)
       hours = hours + 24;
@@ -224,7 +197,6 @@ export class AttendanceEmployeeComponent implements OnInit {
   }
 
   addTimes(startTime, endTime) {
-    // console.log("adTimes", startTime, endTime)
     var times = [0, 0, 0]
     var max = times.length
 
@@ -272,9 +244,6 @@ export class AttendanceEmployeeComponent implements OnInit {
       this.data = res
       this.punchStatus = this.data[0].punchStatus
       this.monthlyid = this.data[0].id
-
-      // sessionStorage.setItem("monthlyid", this.monthlyid)
-
       console.log(this.monthlyid, this.punchStatus, "......................>>>>>>>>")
     })
   }
@@ -282,26 +251,25 @@ export class AttendanceEmployeeComponent implements OnInit {
   updateMonthlyPunch() {
 
     setTimeout(() => {
-      // const id = sessionStorage.getItem('monthlyid')
-      console.log(this.Production, "opopoppokkkkkk")
-      // console.log(id, this.punchStatus, "jndjdppppp........")
       let queryParams = new HttpParams();
       queryParams = queryParams.set("id", this.monthlyid);
-
       if (this.Production < '03:00:00') {
         queryParams = queryParams.set("status", 0)
         queryParams = queryParams.set("production", this.Production)
+        queryParams = queryParams.set("profileImage", this.profileImage)
       }
       else if ('03:00:00' < this.Production && this.Production < '07:00:00') {
 
         queryParams = queryParams.set("status", 1)
         queryParams = queryParams.set("production", this.Production)
+        queryParams = queryParams.set("profileImage", this.profileImage)
       }
-      else {
+      else if (this.Production > '07:00:00') {
         queryParams = queryParams.set("status", 3)
         queryParams = queryParams.set("production", this.Production)
+        queryParams = queryParams.set("profileImage", this.profileImage)
+        console.log("profile iMAGE>>>>>", typeof (this.profileImage))
       }
-      // queryParams = queryParams.set("status", status)
       this.http.patch("http://localhost:8443/admin/monthlyAttandance/update?" + queryParams, {}).subscribe((res: any) => {
         console.log("updateMonthlyeDataApiopppppp-------->", res)
         this.punchStatus = this.data.punchStatus

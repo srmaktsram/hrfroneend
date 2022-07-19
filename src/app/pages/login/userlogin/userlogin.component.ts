@@ -46,14 +46,13 @@ export class UserLoginComponent implements OnInit {
 
       .post("http://localhost:8443/auth/employeelogin/login", {
         userId,
-
         password,
       })
       .subscribe((res: any) => {
-        console.log(res);
-        
+        console.log(res, "jhhhgfh>>>>>>>>>>>>>>>>>>>>>>>");
+        console.log(res.data.profileImage
+          , "profileImage>>>>>>>>>>>>>>>>>>>>>>>");
         if (res.result == 2) {
-          // location.replace("http://localhost:51245/layout/dashboard/employee");
 
           this.authenticationService.login(
             res.data.adminId,
@@ -77,19 +76,16 @@ export class UserLoginComponent implements OnInit {
             res.data.Projects[1].write,
             res.data.Holidays[0].read,
             res.data.Holidays[1].write,
+            res.data.profileImage,
+
           );
-          console.log(res.data.Holidays[0].read,"Holidays Read")
-          console.log(res.data.Holidays[1].write,"Holidays Write")
+          console.log(res.data.profileImage, " mmmmmmRead")
 
         } else {
           alert("wrong Id or pass");
         }
       });
   }
-
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe();
-  // }
 
   iconLogle() {
     this.Toggledata = !this.Toggledata;
