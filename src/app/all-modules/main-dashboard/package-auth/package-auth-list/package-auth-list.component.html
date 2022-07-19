@@ -281,6 +281,46 @@
                   </td>
                  
                 </tr>
+                <tr>
+                  <td>Resignation</td> 
+                  <td class="text-center">
+                    <input type="checkbox"
+                      (click)="checkCheckBoxvalueResignation($event, '0')" />
+                  </td>
+                 
+                </tr>
+                <tr>
+                  <td>Termination</td> 
+                  <td class="text-center">
+                    <input type="checkbox"
+                      (click)="checkCheckBoxvalueTermination($event, '0')" />
+                  </td>
+                 
+                </tr>
+                <tr>
+                  <td>Reports</td> 
+                  <td class="text-center">
+                    <input type="checkbox"
+                      (click)="checkCheckBoxvalueReports($event, '0')" />
+                  </td>
+                 
+                </tr>
+                <tr>
+                  <td>Activities</td> 
+                  <td class="text-center">
+                    <input type="checkbox"
+                      (click)="checkCheckBoxvalueActivities($event, '0')" />
+                  </td>
+                 
+                </tr>
+                <tr>
+                  <td>Leads</td> 
+                  <td class="text-center">
+                    <input type="checkbox"
+                      (click)="checkCheckBoxvalueLeads($event, '0')" />
+                  </td>
+                 
+                </tr>
               </tbody>
             </table>
           </div>
@@ -430,6 +470,46 @@
                   </td>
                  
                 </tr> 
+                <tr>
+                  <td>Resignation</td> 
+                  <td class="text-center">
+                    <input type="checkbox" [checked]="resignation[0].access"
+                      (click)="checkCheckBoxvalueResignation($event, '0')" />
+                  </td>
+                 
+                </tr>
+                <tr>
+                  <td>Termination</td> 
+                  <td class="text-center">
+                    <input type="checkbox" [checked]="termination[0].access"
+                      (click)="checkCheckBoxvalueTermination($event, '0')" />
+                  </td>
+                 
+                </tr>
+                <tr>
+                  <td>Reports</td> 
+                  <td class="text-center">
+                    <input type="checkbox" [checked]="reports[0].access"
+                      (click)="checkCheckBoxvalueReports($event, '0')" />
+                  </td>
+                 
+                </tr>
+                <tr>
+                  <td>Activities</td> 
+                  <td class="text-center">
+                    <input type="checkbox" [checked]="activities[0].access"
+                      (click)="checkCheckBoxvalueActivities($event, '0')" />
+                  </td>
+                 
+                </tr>
+                <tr>
+                  <td>Leads</td> 
+                  <td class="text-center">
+                    <input type="checkbox" [checked]="leads[0].access"
+                      (click)="checkCheckBoxvalueLeads($event, '0')" />
+                  </td>
+                 
+                </tr>
               </tbody>
             </table>
           </div>

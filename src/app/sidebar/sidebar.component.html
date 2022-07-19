@@ -484,10 +484,10 @@
             <li
               *ngIf="
                 (user_type == 'admin' && roleDetails.chat[0].access == true) ||
-                user_type == 'employee' ||
-                (user_type === 'roleadmin' &&
+                (user_type == 'employee'&& roleDetails.chat[0].access == true) ||
+                ((user_type === 'roleadmin'&& roleDetails.chat[0].access == true) &&
                   (appsread === 'true' || appswrite === 'true')) ||
-                (user_type === 'rolesubadmin' &&
+                ((user_type === 'rolesubadmin'&& roleDetails.chat[0].access == true) &&
                   (appsreadSub === 'true' || appswriteSub === 'true'))
               "
               class="submenu"
@@ -970,22 +970,28 @@
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.supportTicket[0].access == true) ||
-                  (user_type === 'roleadmin' &&
+                  ((user_type === 'roleadmin'&&
+                  roleDetails.supportTicket[0].access == true) &&
                     (supportTicketsRead === 'true' ||
                       supportTicketsWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&
+                  roleDetails.supportTicket[0].access == true) &&
                     (supportTicketsReadSub === 'true' ||
                       supportTicketsWriteSub === 'true')) ||
-                  (user_type === 'rolemanager' &&
+                  ((user_type === 'rolemanager'&&
+                  roleDetails.supportTicket[0].access == true) &&
                     (supportTicketsReadMan === 'true' ||
                       supportTicketsWriteMan === 'true')) ||
-                  (user_type === 'rolefinance' &&
+                  ((user_type === 'rolefinance'&&
+                  roleDetails.supportTicket[0].access == true) &&
                     (supportTicketsReadFin === 'true' ||
                       supportTicketsWriteFin === 'true')) ||
-                  (user_type === 'rolehr' &&
+                  ((user_type === 'rolehr'&&
+                  roleDetails.supportTicket[0].access == true) &&
                     (supportticketsreadHr === 'true' ||
                       supportticketswriteHr === 'true')) ||
-                  (user_type === 'rolereceptionist' &&
+                  ((user_type === 'rolereceptionist'&&
+                  roleDetails.supportTicket[0].access == true) &&
                     (supportticketsreadRecep === 'true' ||
                       supportticketswriteRecep === 'true'))
                 "
@@ -1045,11 +1051,11 @@
             </li>
             <li
               *ngIf="
-                user_type == 'admin' ||
-                user_type === 'employee' ||
-                (user_type === 'roleadmin' &&
+                (user_type == 'admin'&&roleDetails.leads[0].access==true) ||
+                (user_type === 'employee'&&roleDetails.leads[0].access==true) ||
+                ((user_type === 'roleadmin'&&roleDetails.leads[0].access==true) &&
                   (leadsread === 'true' || leadswrite === 'true')) ||
-                (user_type === 'rolesubadmin' &&
+                ((user_type === 'rolesubadmin'&&roleDetails.leads[0].access==true) &&
                   (leadsreadSub === 'true' || leadswriteSub === 'true'))
               "
               [ngClass]="{ active: urlComplete.subUrl === 'leadscontent' }"
@@ -1096,11 +1102,14 @@
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.sales[0].access == true) ||
-                  (user_type === 'roleadmin' &&
+                  ((user_type === 'roleadmin'&&
+                  roleDetails.sales[0].access == true) &&
                     (salesread === 'true' || saleswrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&
+                  roleDetails.sales[0].access == true) &&
                     (salesreadSub === 'true' || saleswriteSub === 'true')) ||
-                  (user_type === 'rolefinance' &&
+                  ((user_type === 'rolefinance'&&
+                  roleDetails.sales[0].access == true) &&
                     (salesreadFin === 'true' || saleswriteFin === 'true'))
                 "
                 class="submenu"
@@ -1277,12 +1286,15 @@
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.payrole[0].access == true) ||
-                  (user_type === 'roleadmin' &&
+                  ((user_type === 'roleadmin'&&
+                  roleDetails.payrole[0].access == true) &&
                     (payrollRead === 'true' || payrollWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&
+                  roleDetails.payrole[0].access == true) &&
                     (payrollReadSub === 'true' ||
                       payrollWriteSub === 'true')) ||
-                  (user_type === 'rolehr' &&
+                  ((user_type === 'rolehr'&&
+                  roleDetails.payrole[0].access == true) &&
                     (payrollsreadHr === 'true' || payrollswriteHr === 'true'))
                 "
                 class="submenu"
@@ -1362,16 +1374,21 @@
               </li>
               <li
                 *ngIf="
-                  user_type == 'admin' ||
-                  (user_type === 'roleadmin' &&
+                  (user_type == 'admin'&&
+                  roleDetails.reports[0].access == true) ||
+                  ((user_type === 'roleadmin'&&
+                  roleDetails.reports[0].access == true) &&
                     (reportsRead === 'true' || reportsWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&
+                  roleDetails.reports[0].access == true) &&
                     (reportsReadSub === 'true' ||
                       reportsWriteSub === 'true')) ||
-                  (user_type === 'rolefinance' &&
+                  ((user_type === 'rolefinance'&&
+                  roleDetails.reports[0].access == true) &&
                     (reportsReadFin === 'true' ||
                       reportsWriteFin === 'true')) ||
-                  (user_type === 'rolehr' &&
+                  ((user_type === 'rolehr'&&
+                  roleDetails.reports[0].access == true) &&
                     (attendancereadHr === 'true' ||
                       attendancewriteHr === 'true'))
                 "
@@ -1583,13 +1600,16 @@
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.performance[0].access == true) ||
-                  (user_type === 'roleadmin' &&
+                  ((user_type === 'roleadmin'&&
+                  roleDetails.performance[0].access == true) &&
                     (performanceRead === 'true' ||
                       performanceWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&
+                  roleDetails.performance[0].access == true) &&
                     (performanceReadSub === 'true' ||
                       performanceWriteSub === 'true')) ||
-                  (user_type === 'rolehr' &&
+                  ((user_type === 'rolehr'&&
+                  roleDetails.performance[0].access == true) &&
                     (performancereadHr === 'true' ||
                       performancewriteHr === 'true'))
                 "
@@ -1645,9 +1665,11 @@
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.goals[0].access == true) ||
-                  (user_type === 'roleadmin' &&
+                  ((user_type === 'roleadmin'&&
+                  roleDetails.goals[0].access == true) &&
                     (goalsRead === 'true' || goalsWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&
+                  roleDetails.goals[0].access == true) &&
                     (goalsReadSub === 'true' || goalsWriteSub === 'true'))
                 "
                 class="submenu"
@@ -1687,12 +1709,15 @@
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.training[0].access == true) ||
-                  (user_type === 'roleadmin' &&
+                  ((user_type === 'roleadmin'&&
+                  roleDetails.training[0].access == true) &&
                     (trainingsRead === 'true' || trainingsWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&
+                  roleDetails.training[0].access == true) &&
                     (trainingsReadSub === 'true' ||
                       trainingsWriteSub === 'true')) ||
-                  (user_type === 'rolehr' &&
+                  ((user_type === 'rolehr'&&
+                  roleDetails.training[0].access == true) &&
                     (trainingreadHr === 'true' || trainingwriteHr === 'true'))
                 "
                 class="submenu"
@@ -1758,11 +1783,14 @@
               </li>
               <li
                 *ngIf="
-                  user_type == 'admin' ||
-                  (user_type === 'roleadmin' &&
+                  (user_type == 'admin'&&
+                  roleDetails.resignation[0].access == true) ||
+                  ((user_type === 'roleadmin'&&
+                  roleDetails.resignation[0].access == true) &&
                     (resignationRead === 'true' ||
                       resignationWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&
+                  roleDetails.resignation[0].access == true) &&
                     (resignationReadSub === 'true' ||
                       resignationWriteSub === 'true'))
                 "
@@ -1797,13 +1825,13 @@
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.assests[0].access == true) ||
-                  (user_type === 'roleadmin' &&
+                  ((user_type === 'roleadmin'&&roleDetails.assests[0].access == true) &&
                     (assetsRead === 'true' || assetsRead === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&roleDetails.assests[0].access == true) &&
                     (assetsReadSub === 'true' || assetsWriteSub === 'true')) ||
-                  (user_type === 'rolemanager' &&
+                  ((user_type === 'rolemanager'&&roleDetails.assests[0].access == true) &&
                     (assetsReadMan === 'true' || assetsWriteMan === 'true')) ||
-                  (user_type === 'rolefinance' &&
+                  ((user_type === 'rolefinance'&&roleDetails.assests[0].access == true) &&
                     (assetsReadFin === 'true' || assetsWriteFin === 'true'))
                 "
                 [ngClass]="{ active: urlComplete.subUrl === 'assets-main' }"
@@ -1817,11 +1845,11 @@
                   (user_type == 'admin' && roleDetails.job[0].access == true) ||
                   (user_type === 'roleadmin' &&
                     (jobsRead === 'true' || jobsWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&& roleDetails.job[0].access == true) &&
                     (jobsReadSub === 'true' || jobsWriteSub === 'true')) ||
-                  (user_type === 'rolehr' &&
+                  ((user_type === 'rolehr'&& roleDetails.job[0].access == true) &&
                     (jobsreadHr === 'true' || jobswriteHr === 'true')) ||
-                  (user_type === 'rolereceptionist' &&
+                  ((user_type === 'rolereceptionist'&& roleDetails.job[0].access == true) &&
                     (userdashboardreadRecep === 'true' ||
                       userdashboardwriteRecep === 'true' ||
                       jobdashboardreadRecep === 'true' ||
@@ -2142,11 +2170,11 @@
               </li>
               <li
                 *ngIf="
-                  user_type == 'admin' ||
-                  (user_type === 'roleadmin' &&
+                  (user_type == 'admin'&&roleDetails.activities[0].access==true) ||
+                  ((user_type === 'roleadmin'&&roleDetails.activities[0].access==true) &&
                     (activitiesRead === 'true' ||
                       activitiesWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'&&roleDetails.activities[0].access==true) &&
                     (activitiesReadSub === 'true' ||
                       activitiesWriteSub === 'true'))
                 "
@@ -2160,11 +2188,11 @@
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.role[0].access == true) ||
-                  (user_type === 'roleadmin' &&
+                  ((user_type === 'roleadmin'roleDetails.role[0].access == true) &&
                     (usersRead === 'true' || usersWrite === 'true')) ||
-                  (user_type === 'rolesubadmin' &&
+                  ((user_type === 'rolesubadmin'roleDetails.role[0].access == true) &&
                     (usersReadSub === 'true' || usersWriteSub === 'true')) ||
-                  (user_type === 'rolemanager' &&
+                  ((user_type === 'rolemanager'roleDetails.role[0].access == true) &&
                     (usersReadMan === 'true' || usersWriteMan === 'true'))
                 "
                 [ngClass]="{ active: urlComplete.subUrl === 'user-main' }"
