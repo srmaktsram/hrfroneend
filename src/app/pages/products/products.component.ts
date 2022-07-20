@@ -92,7 +92,8 @@ export class ProductsComponent implements OnInit {
           )
           .subscribe((response: any) => {
             if (res.result == 1) {
-              this.router.navigate(["/layout/dashboard/admin"]);
+              // this.router.navigate(["/layout/dashboard/admin"]);
+
               console.log("packageName", res.data.packageName);
               this.adminAuthenticationService.login(
                 res.data.id,
@@ -111,12 +112,15 @@ export class ProductsComponent implements OnInit {
                 res.data.packageName,
                 response
               );
+              window.open(
+                "http://localhost:4200/layout/dashboard/admin",
+                "_blank"
+              );
             } else {
               this._snackBar.open(
                 " No matching accounts have been found !",
                 "",
                 {
-                  duration: 2000,
                   panelClass: "notif-success",
 
                   horizontalPosition: this.horizontalPosition,

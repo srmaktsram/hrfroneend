@@ -289,6 +289,38 @@
           <a class="dropdown-item" (click)="Logout()">Logout</a>
         </div>
       </ng-container>
+      <ng-container *ngIf="user_type == 'roleadmin'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/layout/settings/company-settings">Settings</a>
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="user_type == 'rolesubadmin'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/layout/settings/company-settings">Settings</a>
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="user_type == 'rolemanager'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="user_type == 'rolehr'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="user_type == 'rolereceptionist'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="user_type == 'rolefinance'">
+        <div class="dropdown-menu">
+          <a class="dropdown-item" (click)="Logout()">Logout</a>
+        </div>
+      </ng-container>
      
       
     </li>

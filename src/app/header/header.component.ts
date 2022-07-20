@@ -221,6 +221,24 @@ export class HeaderComponent implements OnInit {
     } else if (this.user_type == "subadmin") {
       this.router.navigate(["/login/subadminlogin"]);
       this.subAdminAuthenticationService.logout();
+    } else if (this.user_type == "roleadmin") {
+      this.router.navigate(["/login/roleadmin"]);
+      this.subAdminAuthenticationService.logout();
+    } else if (this.user_type == "rolesubadmin") {
+      this.router.navigate(["/login/rolesubadmin"]);
+      this.subAdminAuthenticationService.logout();
+    } else if (this.user_type == "rolemanager") {
+      this.router.navigate(["/login/rolemanager"]);
+      this.subAdminAuthenticationService.logout();
+    } else if (this.user_type == "rolehr") {
+      this.router.navigate(["/login/rolehr"]);
+      this.subAdminAuthenticationService.logout();
+    } else if (this.user_type == "rolefinance") {
+      this.router.navigate(["/login/rolefinance"]);
+      this.subAdminAuthenticationService.logout();
+    } else if (this.user_type == "rolereceptionist") {
+      this.router.navigate(["/login/rolereceptionist"]);
+      this.subAdminAuthenticationService.logout();
     }
   }
 }
