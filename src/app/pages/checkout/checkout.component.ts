@@ -168,7 +168,9 @@ export class CheckoutComponent implements OnInit {
     let amount = this.totalAmount;
 
     this.http
-      .post("http://localhost:8443/checkout/create/OrderId", { amount: amount })
+      .post("http://localhost:8443/checkout/create/OrderId", {
+        amount: amount,
+      })
       .subscribe((res: any) => {
         this.completPayment(res.amount, res.id);
       });
@@ -338,7 +340,9 @@ export class CheckoutComponent implements OnInit {
 
     this.http
       .get(
-        "http://localhost:8443/checkout/orders/getAdminRegister" + "/" + adminId
+        "http://localhost:8443/checkout/orders/getAdminRegister" +
+          "/" +
+          adminId
       )
       .subscribe((res: any) => {
         this.getdata = res;

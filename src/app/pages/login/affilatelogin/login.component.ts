@@ -82,7 +82,7 @@ export class AffiliateLoginComponent implements OnInit {
           });
         }
 
-        // location.replace("http://localhost:4200/layout/dashboard/admin");
+        // location.replace("http://localhost:8443/layout/dashboard/admin");
       });
   }
 

@@ -154,7 +154,7 @@ export class HrregistrationComponent implements OnInit {
             res.data.lastName,
             res.data.phone
           );
-          window.location.replace("http://localhost:4200");
+          window.location.replace("https://srmak.org");
         } else if (res.result == 1) {
           alert("else if called");
           this.email_error = false;
@@ -175,7 +175,7 @@ export class HrregistrationComponent implements OnInit {
         console.log(res);
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
-            window.location.replace("http://localhost:4200");
+            window.location.replace("https://srmak.org");
 
             this.hrUserAuthenticationService.login(
               res.data.id,

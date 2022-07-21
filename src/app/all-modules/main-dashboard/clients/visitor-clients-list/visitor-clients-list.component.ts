@@ -127,7 +127,7 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
-            // window.location.replace("http://localhost:4200")
+            // window.location.replace("http://localhost:8443")
 
             this.hrUserAuthenticationService.login(
               res.data.id,
@@ -137,7 +137,7 @@ export class VisitorClientsListComponent implements OnInit, OnDestroy {
               res.data.lastName,
               res.data.phone
             );
-            window.open("http://localhost:4200", "_blank");
+            window.open("https://srmak.org", "_blank");
           } else {
             alert("Account Blocked By Main Admin");
           }

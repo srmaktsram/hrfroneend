@@ -94,7 +94,6 @@ export class ProductsComponent implements OnInit {
             if (res.result == 1) {
               // this.router.navigate(["/layout/dashboard/admin"]);
 
-              console.log("packageName", res.data.packageName);
               this.adminAuthenticationService.login(
                 res.data.id,
                 res.data.corporateId,
@@ -106,16 +105,13 @@ export class ProductsComponent implements OnInit {
                 res.data.phone,
                 res.data.mobile,
                 res.data.location,
-                res.data.cicon,
+                res.data.clogo,
                 res.data.cinvoice,
                 res.data.cinvoicepre,
                 res.data.packageName,
                 response
               );
-              window.open(
-                "http://localhost:4200/layout/dashboard/admin",
-                "_blank"
-              );
+              window.open("http://localhost:4200/layout", "_blank");
             } else {
               this._snackBar.open(
                 " No matching accounts have been found !",

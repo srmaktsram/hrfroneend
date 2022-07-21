@@ -9,9 +9,7 @@ import { AllModulesComponent } from "./all-modules.component";
 import { HeaderComponent } from "../header/header.component";
 import { SidebarComponent } from "../sidebar/sidebar.component";
 
-
 import {
-
   PerfectScrollbarModule,
   PerfectScrollbarConfigInterface,
   PERFECT_SCROLLBAR_CONFIG,
@@ -19,14 +17,19 @@ import {
 import { HeaderService } from "../header/header.service";
 import { AllModulesService } from "./all-modules.service";
 import { SharingModule } from "../sharing/sharing.module";
+import { SrmakPannelComponent } from "./srmak-pannel/srmak-pannel.component";
 
 // Api All Modules Database
-
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
 
 @NgModule({
-  declarations: [AllModulesComponent, HeaderComponent, SidebarComponent],
+  declarations: [
+    AllModulesComponent,
+    HeaderComponent,
+    SidebarComponent,
+    SrmakPannelComponent,
+  ],
   imports: [
     SharingModule,
     CommonModule,
@@ -46,4 +49,4 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {};
     HeaderService,
   ],
 })
-export class AllModulesModule { }
+export class AllModulesModule {}

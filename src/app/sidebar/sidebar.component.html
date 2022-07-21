@@ -420,8 +420,15 @@
               user_type != 'client'
             "
           >
-            <li class="menu-title">
-              <span>Main</span>
+            <li class="menu-title" >
+              <span *ngIf="user_type == 'admin'">Admin</span>
+              <span *ngIf="user_type == 'employee'">Employee</span>
+              <span *ngIf="user_type == 'roleadmin'">Admin</span>
+              <span *ngIf="user_type == 'rolesubadmin'">Sub Admin</span>
+              <span *ngIf="user_type == 'rolemanager'">Manager</span>
+              <span *ngIf="user_type == 'rolehr'">Hr</span>
+              <span *ngIf="user_type == 'rolefinance'">Finance</span>
+              <span *ngIf="user_type == 'rolereceptionist'">Receptionist</span>
             </li>
             <li
               *ngIf="
@@ -596,7 +603,7 @@
                 </li>
               </ul>
             </li>
-            <li
+            <!-- <li
               *ngIf="
                 user_type == 'admin' ||
                 user_type == 'employee' ||
@@ -606,7 +613,7 @@
               class="menu-title"
             >
               <span>Employees</span>
-            </li>
+            </li> -->
             <li
               *ngIf="
                 user_type == 'admin' ||
@@ -1100,9 +1107,9 @@
                 user_type == 'rolereceptionist'
               "
             >
-              <li class="menu-title">
+              <!-- <li class="menu-title">
                 <span>HR</span>
-              </li>
+              </li> -->
 
               <li
                 *ngIf="
@@ -1599,9 +1606,9 @@
                   </li>
                 </ul>
               </li>
-              <li class="menu-title">
+              <!-- <li class="menu-title">
                 <span>Performance</span>
-              </li>
+              </li> -->
               <li
                 *ngIf="
                   (user_type == 'admin' &&
@@ -1827,9 +1834,9 @@
                   <span>Termination</span></a
                 >
               </li>
-              <li class="menu-title">
+              <!-- <li class="menu-title">
                 <span>Administration</span>
-              </li>
+              </li> -->
               <li
 
                 *ngIf="

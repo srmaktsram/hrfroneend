@@ -1,11 +1,16 @@
 <!-- Header -->
 <div class="header">
   <!-- Logo -->
-  <div class="header-left">
-    <a routerLink="/layout/dashboard/admin" class="logo">
+
+  <div class="header-left" >
+    <a class="logo" *ngIf="user_type!='mainadmin' && user_type!='subadmin'&& user_type!='affiliate'&& user_type!='client'">
       <img src="{{ companyLogo }}" width="40" height="40" alt="" />
     </a>
+    <a class="logo" *ngIf="user_type=='mainadmin' || user_type=='subadmin'||user_type=='affiliate'||user_type=='client'">
+      <img src="https://srmakts.com/assets/logo.png" width="90" height="35" alt="" />
+    </a>
   </div>
+
   <!-- /Logo -->
 
   <a id="toggle_btn">
@@ -18,7 +23,8 @@
 
   <!-- Header Title -->
   <div class="page-title-box">
-    <h3>{{ companyName }}</h3>
+    <h3 *ngIf="user_type!='mainadmin' && user_type!='subadmin'&& user_type!='affiliate'&& user_type!='client'" >{{ companyName }}</h3>
+    <h3 *ngIf="user_type=='mainadmin' || user_type=='subadmin'|| user_type=='affiliate'|| user_type=='client'">SRMAK TECHNOLOGICAL SYSTEM PVT. LTD.</h3>
   </div>
   <!-- /Header Title -->
 
@@ -45,17 +51,9 @@
     <!-- Flag -->
     <li class="nav-item dropdown has-arrow flag-nav">
       <a href="javascript:" class="nav-link">
-        <!-- <img [src]="flag" alt="" height="20" />English<span></span> -->
+        <img [src]="flag" alt="" height="20" />English<span></span>
       </a>
-      <!-- <div class="dropdown-menu dropdown-menu-right" >
-                <div *ngFor="let language of languages">
-
-               
-                <a  class="dropdown-item">
-                    <img  [src]="current_location.location.country_flag" alt="" height="16"> {{language.name}}
-                </a>
-            </div>
-            </div> -->
+     
     </li>
     <!-- /Flag -->
 
@@ -66,7 +64,7 @@
         <ng-container *ngIf="lengthCount >= 1">
           <span class="badge rounded-pill">{{ lengthCount }}</span>
         </ng-container>
-        <ng-container *ngIf="lengthCount <= 0">
+        <ng-container *ngIf="0>=lengthCount">
           <span class="badge rounded-pill">{{ lengthCount }}</span>
         </ng-container>
       </a>
@@ -81,7 +79,7 @@
         <!-- <div class="noti-content d-flex align-items-center justify-content-center"> -->
         <div class="noti-content">
 
-          <p *ngIf="lengthCount < 1">No notifications</p>
+          <p *ngIf="1>lengthCount">No notifications</p>
 
           <ul class="notification-list" *ngFor="let item of dataArray; let i = index">
             <ng-container *ngIf="item.message == 'added a new employee '">
@@ -247,8 +245,29 @@
         <ng-container *ngIf="user_type == 'affiliate'">
           <span>Affiliate</span>
         </ng-container>
-        <ng-container *ngIf="user_type == 'client'">
-          <span>Client</span>
+        <ng-container *ngIf="user_type == 'mainadmin'">
+          <span>Main-Admin</span>
+        </ng-container>
+        <ng-container *ngIf="user_type == 'subadmin'">
+          <span>Sub-Admin</span>
+        </ng-container>
+        <ng-container *ngIf="user_type == 'roleadmin'">
+          <span>Admin</span>
+        </ng-container>
+        <ng-container *ngIf="user_type == 'rolesubadmin'">
+          <span>SubAdmin</span>
+        </ng-container>
+        <ng-container *ngIf="user_type == 'rolemanager'">
+          <span>Manager</span>
+        </ng-container>
+        <ng-container *ngIf="user_type == 'rolefinance'">
+          <span>Finance</span>
+        </ng-container>
+        <ng-container *ngIf="user_type == 'rolehr'">
+          <span>Hr</span>
+        </ng-container>
+        <ng-container *ngIf="user_type == 'rolereceptionist'">
+          <span>Receptionist</span>
         </ng-container>
       </a>
       <ng-container *ngIf="user_type == 'admin'">
@@ -328,7 +347,7 @@
   <!-- /Header Menu -->
 
   <!-- Mobile Menu -->
-  <div class="dropdown mobile-user-menu">
+  <!-- <div class="dropdown mobile-user-menu">
     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
         class="fa fa-ellipsis-v"></i></a>
     <div class="dropdown-menu dropdown-menu-right">
@@ -336,7 +355,7 @@
       <a class="dropdown-item" href="javascript:">Settings</a>
       <a class="dropdown-item" (click)="Logout()">Logout</a>
     </div>
-  </div>
+  </div> -->
   <!-- /Mobile Menu -->
 </div>
 <!-- /Header -->

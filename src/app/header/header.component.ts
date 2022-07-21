@@ -51,15 +51,22 @@ export class HeaderComponent implements OnInit {
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.adminId = sessionStorage.getItem("adminId");
+    if (
+      this.user_type != "mainadmin" &&
+      this.user_type != "subadmin" &&
+      this.user_type != "client" &&
+      this.user_type != "affiliate"
+    ) {
+      this.companyName = sessionStorage.getItem("companyName");
+      this.companyLogo = `http://localhost:8443/${sessionStorage.getItem(
+        "clogo"
+      )}`;
 
-    this.companyName = sessionStorage.getItem("companyName");
-    this.companyLogo = `http://localhost:8443/${sessionStorage.getItem(
-      "clogo"
-    )}`;
-    // this.current_location = JSON.parse(
-    //   sessionStorage.getItem("current_location")
-    // );
-    // this.flag = `https://assets.ipstack.com/flags/${this.current_location.country_code.toLowerCase()}.svg`;
+      this.current_location = JSON.parse(
+        sessionStorage.getItem("current_location")
+      );
+      this.flag = `https://assets.ipstack.com/flags/${this.current_location.country_code.toLowerCase()}.svg`;
+    }
   }
 
   // getNotifications() {

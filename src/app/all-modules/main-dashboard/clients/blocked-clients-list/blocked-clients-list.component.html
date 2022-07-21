@@ -114,11 +114,11 @@
                   <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
                       class="material-icons">more_vert</i></a>
                   <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_client"
+                    <a class="dropdown-item" class="cursor-pointer" data-bs-toggle="modal" data-bs-target="#edit_client"
                       (click)="onEditClient(client.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                   </div>&nbsp;
                   <div class="d-inline p-2 bg-primary text-white">
-                    <a data-bs-toggle="modal" data-bs-target="#login_as_user" (click)="adminlogin(client.id)">
+                    <a data-bs-toggle="modal" class="cursor-pointer" data-bs-target="#login_as_user" (click)="adminlogin(client.id)">
                       Login as User</a>
                   </div>
                 </div>
