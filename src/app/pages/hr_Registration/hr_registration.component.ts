@@ -194,8 +194,10 @@ export class HrregistrationComponent implements OnInit {
 
   sendOtp() {
     let email = this.resetForm.value.verifiedEmail;
+    this.veryfyOtp = false;
+    this.showEmail = true;
     this.http
-      .post("http://localhost:8443/mainadmin/hr_user/sendOtp", { email })
+      .post("http://localhost:8443/mainadmin/hr_user/sendNewMail", { email })
       .subscribe((res: any) => {
         this.otp = res.otp;
         if (this.otp) {
@@ -205,8 +207,6 @@ export class HrregistrationComponent implements OnInit {
           date.setTime(expairyTime);
           this.cookieService.set("otp", this.otp, { expires: date });
           this.cookieService.set("loginEmail", res.email);
-          this.veryfyOtp = false;
-          this.showEmail = true;
         }
       });
   }

@@ -9,7 +9,7 @@ import {
 import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { DataTableDirective } from "angular-datatables";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,
@@ -36,11 +36,13 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   public editId: any;
   public tempId: any;
   public adminId: any;
+  public multFile: any;
   user_type: string;
   policieswriteRecep: string;
   policieswriteHr: string;
   policiesWritefin: string;
   policiesWriteMan: string;
+
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
@@ -106,6 +108,20 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
     });
   }
 
+  ///////////////file load //////////
+  selectImage(event: any) {
+    if (event.target.files.length > 0) {
+      this.multFile = event.target.files;
+    }
+  }
+
+  ///////////////////// download file////////////////////////////
+  savePdf(val) {
+    var url = `http://localhost:8443/${val}`;
+
+    window.open(url);
+  }
+
   // Add Provident Modal Api Call
 
   addPoliciesSubmit() {
@@ -114,14 +130,19 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.addPolicies.valid) {
-      let obj = {
-        adminId: this.adminId,
-        policyName: this.addPolicies.value.addPolicyName,
-        department: this.addPolicies.value.addDepartment,
-        description: this.addPolicies.value.addDescription,
-      };
+      var fd = new FormData();
+      for (let pdfFile of this.multFile) {
+        fd.append("file", pdfFile);
+      }
+
+      let params = new HttpParams();
+      params = params.set("adminId", this.adminId);
+      params = params.set("policyName", this.addPolicies.value.addPolicyName);
+      params = params.set("department", this.addPolicies.value.addDepartment);
+      params = params.set("description", this.addPolicies.value.addDescription);
+
       this.http
-        .post("http://localhost:8443/admin/policies/createPolicy", obj)
+        .post("http://localhost:8443/admin/policies/createPolicy?" + params, fd)
         .subscribe((data: any) => {
           this.allPolicies = data;
           console.log("POST API", this.allPolicies);
