@@ -70,14 +70,23 @@ export class RoleComponent implements OnInit {
     { id: 4, import: false },
     { id: 5, export: false },
   ];
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
 
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
-    private http: HttpClient,
-    private _snackBar: MatSnackBar
-  ) {}
+        private _snackBar: MatSnackBar,
+
+    private http: HttpClient
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
+  }
+
   public initializeArray() {
     this.Employee = [
       { id: 0, read: false },

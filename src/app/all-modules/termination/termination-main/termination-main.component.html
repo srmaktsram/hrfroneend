@@ -12,7 +12,9 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_termination"><i class="fa fa-plus"></i> Add
+                <a
+                *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && terminationWrite == 'true')||(user_type === 'rolesubadmin' && terminationWriteSub === 'true')"
+                class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_termination"><i class="fa fa-plus"></i> Add
                     Termination</a>
             </div>
         </div>
@@ -34,7 +36,7 @@
                             <th>Termination Date </th>
                             <th>Reason</th>
                             <th>Notice Date </th>
-                            <th class="text-end">Action</th>
+                            <th class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && terminationWrite == 'true')||(user_type === 'rolesubadmin' && terminationWriteSub === 'true')">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,7 +54,7 @@
                             <td>{{item.terminationDate | customDate}}</td>
                             <td>{{item.reason}}</td>
                             <td>{{item.noticedDate | customDate}}</td>
-                            <td class="text-end">
+                            <td class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && terminationWrite == 'true')||(user_type === 'rolesubadmin' && terminationWriteSub === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

@@ -36,6 +36,7 @@ export class HrregistrationComponent implements OnInit {
   public messOtp: any;
   val: any;
   isvalidconfirmpassword: boolean;
+  email_error = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -87,7 +88,9 @@ export class HrregistrationComponent implements OnInit {
       securityQues: ["", [Validators.required]],
       securityAns: ["", [Validators.required]],
     });
-
+    this.registerForm.patchValue({
+      securityQues: "Please select your Security Question",
+    });
     this.addloginForm = this.formBuilder.group({
       email: ["", [Validators.required, Validators.email]],
       password: ["", [Validators.required]],
@@ -141,16 +144,22 @@ export class HrregistrationComponent implements OnInit {
       .post("http://localhost:8443/mainadmin/create/registration", obj)
       .subscribe((res: any) => {
         console.log("hr User>>>>>>>>>>", res);
-        window.location.replace("http://localhost:4200");
 
-        this.hrUserAuthenticationService.login(
-          res.id,
-          res.corporateId,
-          res.email,
-          res.firstName,
-          res.lastName,
-          res.phone
-        );
+        if (res.result == 0) {
+          this.hrUserAuthenticationService.login(
+            res.data.id,
+            res.data.corporateId,
+            res.data.email,
+            res.data.firstName,
+            res.data.lastName,
+            res.data.phone
+          );
+          window.location.replace("http://localhost:4200");
+        } else if (res.result == 1) {
+          alert("else if called");
+          this.email_error = false;
+          alert(this.email_error);
+        }
       });
   }
 

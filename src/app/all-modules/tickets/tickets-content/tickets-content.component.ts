@@ -65,6 +65,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
   countResolved = 0;
   countOpen = 0;
   countPending = 0;
+  ticketsWrite: string;
+  ticketsWriteSub: string;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -75,11 +77,13 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.ticketsWrite = sessionStorage.getItem("ticketsWrite");
+    this.ticketsWriteSub = sessionStorage.getItem("ticketsWriteSub");
     this.adminId = sessionStorage.getItem("adminId");
     this.loadEmployee();
 
     this.employeeid = sessionStorage.getItem("employee_login_id");
-    if (this.user_type == "admin") {
+    if (this.user_type != "employee") {
       this.check = true;
     }
   }
@@ -211,7 +215,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
           this.rows = this.allTickets;
           this.srch = [...this.rows];
         });
-    } else if (this.user_type == "admin") {
+    } else {
       this.http
         .get(
           "http://localhost:8443/admin/tickets/getAdminAllTickets" +

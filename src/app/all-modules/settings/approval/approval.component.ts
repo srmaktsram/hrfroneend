@@ -29,12 +29,18 @@ export class ApprovalComponent implements OnInit {
   offerApproval: any;
   addResignationNotice: FormGroup;
   resignationNotice: any;
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private toastr: ToastrService
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
     this.getDesignation();
   }
   public getDesignation() {

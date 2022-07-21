@@ -13,6 +13,7 @@
   <div class="row">
     <div class="col-sm-4 col-md-4 col-lg-4 col-xl-3">
       <a
+      *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')"
         class="btn btn-primary w-100"
         data-bs-toggle="modal"
         data-bs-target="#add_role"
@@ -24,9 +25,10 @@
             [ngClass]="{ active: i === 0 }"
             *ngFor="let roles of allroles; let i = index"
           >
-            <a (click)="getNotifications(roles.id); roleId = roles.id"
+            <a
+             (click)="getNotifications(roles.id); roleId = roles.id"
               >{{ roles.roleName }}
-              <span class="role-action">
+              <span class="role-action" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && settingsWrite == 'true')||(user_type === 'rolesubadmin' && settingsWriteSub === 'true')">
                 <span
                   class="action-circle large"
                   data-bs-toggle="modal"

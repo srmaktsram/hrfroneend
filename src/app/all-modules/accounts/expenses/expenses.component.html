@@ -13,7 +13,7 @@
             </div>
             <div class="col-auto float-end ms-auto">
                 <a
-                *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')"
+                *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')"
                 class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_expense"><i
                         class="fa fa-plus"></i> Add Expense</a>
             </div>
@@ -84,7 +84,7 @@
                             <th>Amount</th>
                             <th>Paid By</th>
                             <th class="text-center">Status</th>
-                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')">Actions</th>
+                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -108,7 +108,7 @@
                                     <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-dot-circle-o text-danger"></i> {{expenses.status}}
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')">
+                                    <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
                                         <a class="dropdown-item" (click)="updateStatus('Pending',expenses.id)"> <i class="fa fa-dot-circle-o text-danger"></i>
                                             Pending</a>
                                         <a class="dropdown-item" (click)="updateStatus('Approved',expenses.id)" > <i
@@ -116,7 +116,7 @@
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')">
+                            <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

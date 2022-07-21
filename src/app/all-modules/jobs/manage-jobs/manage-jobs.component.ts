@@ -45,6 +45,8 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
   jobs: boolean;
   user_type: string;
   jobswriteHr: string;
+  jobsWrite: string;
+  jobsWriteSub: string;
   constructor(
     private allModuleService: AllModulesService,
     private formBuilder: FormBuilder,
@@ -53,6 +55,8 @@ export class ManageJobsComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.jobsWrite = sessionStorage.getItem("jobsWrite");
+    this.jobsWriteSub = sessionStorage.getItem("jobsWriteSub");
     this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
     this.LoadDepartment();
     

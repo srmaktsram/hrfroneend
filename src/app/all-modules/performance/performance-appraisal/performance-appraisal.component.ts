@@ -43,6 +43,8 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
   lstEmployee: any;
   user_type: string;
   performancewriteHr: string;
+  performanceWrite: string;
+  performanceWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -52,6 +54,8 @@ export class PerformanceAppraisalComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
+    this.performanceWrite = sessionStorage.getItem("performanceWrite");
+    this.performanceWriteSub = sessionStorage.getItem("performanceWriteSub");
     this.performancewriteHr = sessionStorage.getItem("performancewriteHr");
   }
 

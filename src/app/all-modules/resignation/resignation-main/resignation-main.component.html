@@ -12,7 +12,9 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_resignation"><i class="fa fa-plus"></i> Add
+                <a
+                *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && resignationWrite == 'true')||(user_type === 'rolesubadmin' && resignationWriteSub === 'true')"
+                class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_resignation"><i class="fa fa-plus"></i> Add
                     Resignation</a>
             </div>
         </div>
@@ -26,13 +28,13 @@
                     class="table table-striped custom-table mb-0 datatable">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Sr.no.</th>
                             <th>Resigning Employee </th>
                             <th>Department </th>
                             <th>Reason </th>
                             <th>Notice Date </th>
                             <th>Resignation Date </th>
-                            <th class="text-end">Action</th>
+                            <th class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && resignationWrite == 'true')||(user_type === 'rolesubadmin' && resignationWriteSub === 'true')">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,7 +51,7 @@
                             <td>{{item.reason}}</td>
                             <td>{{item.noticedDate | customDate}}</td>
                             <td>{{item.resignDate | customDate}}</td>
-                            <td class="text-end">
+                            <td class="text-end" *ngIf="user_type === 'admin' ||(user_type === 'roleadmin' && resignationWrite == 'true')||(user_type === 'rolesubadmin' && resignationWriteSub === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>

@@ -17,7 +17,7 @@
           </div>
           <div class="col-auto float-end ms-auto">
             <a
-            *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')"
+            *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')||(user_type === 'roleadmin' && accountingwrite == 'true')||(user_type === 'rolesubadmin' && accountingwriteSub === 'true')"
               href="#"
               class="btn add-btn"
               data-bs-toggle="modal"
@@ -38,7 +38,7 @@
                   <th>#</th>
                   <th>Category Name</th>
                   <th>Sub-Category Name</th>
-                  <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')">Action</th>
+                  <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')||(user_type === 'roleadmin' && accountingwrite == 'true')||(user_type === 'rolesubadmin' && accountingwriteSub === 'true')">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -46,7 +46,7 @@
                   <td>{{ i + 1 }}</td>
                   <td>{{ item.categoryname }}</td>
                   <td>{{ item.subcategoryname }}</td>
-                  <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')">
+                  <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')||(user_type === 'roleadmin' && accountingwrite == 'true')||(user_type === 'rolesubadmin' && accountingwriteSub === 'true')">
                     <div class="dropdown dropdown-action">
                       <a
                         href="#"

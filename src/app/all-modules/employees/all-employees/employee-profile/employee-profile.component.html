@@ -86,7 +86,7 @@
                 </div>
               </div>
             </div>
-            <div class="pro-edit">
+            <div class="pro-edit" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
               <a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon" (click)="edit()"><i
                   class="fa fa-pencil"></i></a>
             </div>
@@ -121,10 +121,12 @@
       <div class="row">
         <div class="col-md-6 d-flex">
           <div class="card profile-box flex-fill">
-            <div class="card-body">
+            <div class="card-body" >
               <h3 class="card-title">
                 Personal Informations
-                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#personal_info_modal" (click)="edit()"><i
+                <a 
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                class="edit-icon" data-bs-toggle="modal" data-bs-target="#personal_info_modal" (click)="edit()"><i
                     class="fa fa-pencil"></i></a>
               </h3>
               <ul class="personal-info">
@@ -171,7 +173,9 @@
             <div class="card-body">
               <h3 class="card-title">
                 Emergency Contact
-                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"
+                <a
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                class="edit-icon" data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"
                   (click)="edit()"><i class="fa fa-pencil"></i></a>
               </h3>
               <h5 class="section-title">Primary</h5>
@@ -221,7 +225,9 @@
             <div class="card-body">
               <h3 class="card-title">
                 Bank information
-                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#bank_info_modal" (click)="edit()"><i
+                <a
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                class="edit-icon" data-bs-toggle="modal" data-bs-target="#bank_info_modal" (click)="edit()"><i
                     class="fa fa-pencil"></i></a>
               </h3>
               <ul class="personal-info">
@@ -250,7 +256,9 @@
             <div class="card-body">
               <h3 class="card-title">
                 Family Informations
-                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal" (click)="edit()"><i
+                <a
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal" (click)="edit()"><i
                     class="fa fa-pencil" (click)="addItems()"></i></a>
               </h3>
               <div class="table-responsive">
@@ -295,7 +303,9 @@
             <div class="card-body">
               <h3 class="card-title">
                 Education Informations
-                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#education_info"><i
+                <a
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                 class="edit-icon" data-bs-toggle="modal" data-bs-target="#education_info"><i
                     class="fa fa-pencil"></i></a>
               </h3>
               <div class="experience-box">
@@ -338,7 +348,9 @@
             <div class="card-body">
               <h3 class="card-title">
                 Experience
-                <a class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info"><i
+                <a
+                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info"><i
                     class="fa fa-pencil"></i></a>
               </h3>
               <div class="experience-box">
@@ -638,7 +650,7 @@
               </div>
             </div>
 
-            <div class="submit-section">
+            <div class="submit-section" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
               <button class="btn btn-primary submit-btn" type="submit">
                 Save
               </button>

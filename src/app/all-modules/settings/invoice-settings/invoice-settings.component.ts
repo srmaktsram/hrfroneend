@@ -27,12 +27,18 @@ export class InvoiceSettingsComponent implements OnInit {
   companyInvoiceLogo: string;
   cinvoice: any;
   companyInvoicePre: string;
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
     this.id = sessionStorage.getItem("adminId");
     // this.companyInvoiceLogo = sessionStorage.getItem("cinvoice");
     // alert(this.companyInvoiceLogo);

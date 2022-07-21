@@ -36,6 +36,9 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
   public addGoalTypeForm: FormGroup;
   public editGoalTypeForm: FormGroup;
   public adminId = sessionStorage.getItem("adminId");
+  user_type: string;
+  goalsWrite: string;
+  goalsWriteSub: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -44,6 +47,9 @@ export class GoalTypeComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.goalsWrite = sessionStorage.getItem("goalsWrite");
+    this.goalsWriteSub = sessionStorage.getItem("goalsWriteSub");
     this.LoadGoaltype();
   }
 

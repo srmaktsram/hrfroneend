@@ -1831,12 +1831,13 @@
                 <span>Administration</span>
               </li>
               <li
+
                 *ngIf="
                   (user_type == 'admin' &&
                     roleDetails.assests[0].access == true) ||
                   (user_type === 'roleadmin' &&
                     roleDetails.assests[0].access == true &&
-                    (assetsRead === 'true' || assetsRead === 'true')) ||
+                    (assetsRead === 'true' || assetsWrite === 'true')) ||
                   (user_type === 'rolesubadmin' &&
                     roleDetails.assests[0].access == true &&
                     (assetsReadSub === 'true' || assetsWriteSub === 'true')) ||
@@ -1849,6 +1850,7 @@
                 "
                 [ngClass]="{ active: urlComplete.subUrl === 'assets-main' }"
               >
+
                 <a routerLink="/layout/assets/assets-main"
                   ><i class="la la-object-ungroup"></i> <span>Assets</span></a
                 >
@@ -1955,16 +1957,24 @@
                   }"
                 >
                   <li
-                    *ngIf="
-                      user_type == 'admin' ||
-                      (user_type === 'rolereceptionist' &&
-                        (userdashboardreadRecep === 'true' ||
-                          userdashboardwriteRecep === 'true')) ||
-                      (user_type === 'rolehr' &&
-                        (jobsreadHr === 'true' || jobswriteHr === 'true'))
-                    "
-                    routerLink="/layout/userdashboard/user-dashboard"
-                  >
+                  *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'rolereceptionist' &&
+                    (userdashboardreadRecep === 'true' ||
+                    userdashboardwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
+                "
+                  
+                  routerLink="/layout/userdashboard/user-dashboard">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -1984,16 +1994,23 @@
                   </li>
 
                   <li
-                    *ngIf="
-                      user_type == 'admin' ||
-                      (user_type === 'rolereceptionist' &&
-                        (jobdashboardreadRecep === 'true' ||
-                          jobdashboardwriteRecep === 'true')) ||
-                      (user_type === 'rolehr' &&
-                        (jobsreadHr === 'true' || jobswriteHr === 'true'))
-                    "
-                    routerLink="/layout/jobsdashboard/jobs-dashboard"
-                  >
+                  *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'rolereceptionist' &&
+                    (jobdashboardreadRecep === 'true' ||
+                    jobdashboardwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
+                "
+                  routerLink="/layout/jobsdashboard/jobs-dashboard">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2033,16 +2050,23 @@
                     </a>
                   </li>
                   <li
-                    *ngIf="
-                      user_type == 'admin' ||
-                      (user_type === 'rolereceptionist' &&
-                        (shortlistedcandidatesreadRecep === 'true' ||
-                          shortlistedcandidateswriteRecep === 'true')) ||
-                      (user_type === 'rolehr' &&
-                        (jobsreadHr === 'true' || jobswriteHr === 'true'))
-                    "
-                    routerLink="/layout/candidate/shortlist-candidates"
-                  >
+                  *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'rolereceptionist' &&
+                    (shortlistedcandidatesreadRecep === 'true' ||
+                    shortlistedcandidateswriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
+                "
+                  routerLink="/layout/candidate/shortlist-candidates">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2092,16 +2116,23 @@
                     </a>
                   </li>
                   <li
-                    *ngIf="
-                      user_type == 'admin' ||
-                      (user_type === 'rolereceptionist' &&
-                        (candidateslistreadRecep === 'true' ||
-                          candidateslistwriteRecep === 'true')) ||
-                      (user_type === 'rolehr' &&
-                        (jobsreadHr === 'true' || jobswriteHr === 'true'))
-                    "
-                    routerLink="/layout/studentcandidate/candidates"
-                  >
+                  *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'rolereceptionist' &&
+                    (candidateslistreadRecep === 'true' ||
+                    candidateslistwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
+                "
+                  routerLink="/layout/studentcandidate/candidates">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2112,16 +2143,23 @@
                     </a>
                   </li>
                   <li
-                    *ngIf="
-                      user_type == 'admin' ||
-                      (user_type === 'rolereceptionist' &&
-                        (scheduletimingsreadRecep === 'true' ||
-                          scheduletimingwriteRecep === 'true')) ||
-                      (user_type === 'rolehr' &&
-                        (jobsreadHr === 'true' || jobswriteHr === 'true'))
-                    "
-                    routerLink="/layout/scheduletiming/schedule-timing"
-                  >
+                  *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'rolereceptionist' &&
+                    (scheduletimingsreadRecep === 'true' ||
+                    scheduletimingwriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
+                "
+                  routerLink="/layout/scheduletiming/schedule-timing">
+
                     <a
                       href="javascript:"
                       [ngClass]="{
@@ -2145,16 +2183,23 @@
                     </a>
                   </li>
                   <li
-                    *ngIf="
-                      user_type == 'admin' ||
-                      (user_type === 'rolereceptionist' &&
-                        (appliedCandidatesreadRecep === 'true' ||
-                          appliedCandidateswriteRecep === 'true')) ||
-                      (user_type === 'rolehr' &&
-                        (jobsreadHr === 'true' || jobswriteHr === 'true'))
-                    "
-                    routerLink="/layout/jobs/job-applicants"
-                  >
+                  *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'rolereceptionist' &&
+                    (appliedCandidatesreadRecep === 'true' ||
+                    appliedCandidateswriteRecep === 'true'))||
+                    (user_type === 'rolehr' &&
+                      (jobsreadHr === 'true' || jobswriteHr
+                       === 'true'))||
+                       (user_type === 'roleadmin' &&
+                         (jobsRead === 'true' ||
+                         jobsWrite === 'true'))||
+                         (user_type === 'rolesubadmin' &&
+                           (jobsReadSub === 'true' || jobsWriteSub
+                            === 'true'))
+                "
+                  routerLink="/layout/jobs/job-applicants">
+
                     <a
                       href="javascript:"
                       [ngClass]="{

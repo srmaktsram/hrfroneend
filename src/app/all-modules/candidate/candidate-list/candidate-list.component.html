@@ -105,7 +105,7 @@
 
   <!-- model -->
 
-  <div class="modal custom-modal fade" id="send_email" role="dialog" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && shortlistedcandidateswriteRecep === 'true')||(user_type === 'rolehr' && jobswriteHr === 'true')">
+  <div class="modal custom-modal fade" id="send_email" role="dialog" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && shortlistedcandidateswriteRecep === 'true')||(user_type === 'rolehr' && jobswriteHr === 'true')||(user_type === 'roleadmin' && jobsWrite == 'true')||(user_type === 'rolesubadmin' && jobsWriteSub === 'true')">
     <div class="modal-dialog modal-dialog-centered" role="document">  
       <div class="modal-content">
         <div class="modal-header">

@@ -43,6 +43,9 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   policiesWritefin: string;
   policiesWriteMan: string;
 
+  policiesWrite: string;
+  policiesWriteSub: string;
+
   constructor(
     private allModuleService: AllModulesService,
     private http: HttpClient,
@@ -52,6 +55,8 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
+    this.policiesWrite = sessionStorage.getItem("policiesWrite");
+    this.policiesWriteSub = sessionStorage.getItem("policiesWriteSub");
     this.policiesWriteMan = sessionStorage.getItem("policiesWriteMan");
     this.policiesWritefin = sessionStorage.getItem("policiesWritefin");
 

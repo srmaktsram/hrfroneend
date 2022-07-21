@@ -32,12 +32,18 @@ export class CompanySettingsComponent implements OnInit {
   companyAddress: string;
   adminId: string;
   fax: string;
+  user_type: string;
+  settingsWrite: string;
+  settingsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
     private http: HttpClient,
     private _snackBar: MatSnackBar
   ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.settingsWrite = sessionStorage.getItem("settingsWrite");
+    this.settingsWriteSub = sessionStorage.getItem("settingsWriteSub");
     this.current_location = JSON.parse(
       sessionStorage.getItem("current_location")
     );

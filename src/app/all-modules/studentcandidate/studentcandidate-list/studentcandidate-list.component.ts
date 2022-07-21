@@ -14,6 +14,9 @@ import {
 } from "@angular/material/snack-bar";
 
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import { type } from "os";
+
+
 
 declare const $: any;
 @Component({
@@ -44,6 +47,8 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
   candidateslistwriteRecep: string;
   user_type: string;
   jobswriteHr: string;
+  jobsWrite: string;
+  jobsWriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -52,6 +57,8 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
     private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
+    this.jobsWrite = sessionStorage.getItem("jobsWrite");
+    this.jobsWriteSub = sessionStorage.getItem("jobsWriteSub");
     this.jobswriteHr = sessionStorage.getItem("jobswriteHr");
     this.candidateslistwriteRecep = sessionStorage.getItem("candidateslistwriteRecep");
     this.jobFunction();
@@ -155,6 +162,7 @@ export class StudentcandidateListComponent implements OnInit, OnDestroy {
   selectImage(event: any) {
     if (event.target.files.length > 0) {
       this.multFile = event.target.files;
+
     }
   }
   // Add questions  Modal Api Call

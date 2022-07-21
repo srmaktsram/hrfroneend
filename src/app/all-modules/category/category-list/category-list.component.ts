@@ -23,6 +23,8 @@ export class CategoryListComponent implements OnInit {
   data1: any;
   user_type: string;
   accountingwriteFin: string;
+  accountingwrite: string;
+  accountingwriteSub: string;
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
@@ -32,6 +34,8 @@ export class CategoryListComponent implements OnInit {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.user_type = sessionStorage.getItem("user_type");
+    this.accountingwrite = sessionStorage.getItem("accountingwrite");
+    this.accountingwriteSub = sessionStorage.getItem("accountingwriteSub");
     this.accountingwriteFin = sessionStorage.getItem("accountingwriteFin");
   }
 

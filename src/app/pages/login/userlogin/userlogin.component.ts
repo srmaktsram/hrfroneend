@@ -55,10 +55,10 @@ export class UserLoginComponent implements OnInit {
 
       .post("http://localhost:8443/auth/employeelogin/login", {
         userId,
-
         password,
       })
       .subscribe((res: any) => {
+
         console.log(res);
         console.log("employee Details>>>>>>>>>>>>>", res.data.adminId);
         this.http
@@ -94,7 +94,8 @@ export class UserLoginComponent implements OnInit {
                 res.data.Projects[1].write,
                 res.data.Holidays[0].read,
                 res.data.Holidays[1].write,
-                response
+                response,
+                res.data.profileImage,
               );
             } else {
               this._snackBar.open(
@@ -104,6 +105,7 @@ export class UserLoginComponent implements OnInit {
                   duration: 2000,
                   panelClass: "notif-success",
 
+
                   horizontalPosition: this.horizontalPosition,
                   verticalPosition: this.verticalPosition,
                 }
@@ -112,10 +114,6 @@ export class UserLoginComponent implements OnInit {
           });
       });
   }
-
-  // ngOnDestroy() {
-  //   this.subscription.unsubscribe();
-  // }
 
   iconLogle() {
     this.Toggledata = !this.Toggledata;

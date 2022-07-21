@@ -36,13 +36,21 @@ export class ShiftSchedulingComponent implements OnInit, OnDestroy {
 
   public rows = [];
   public srch = [];
+  user_type: string;
+  employeewrite: string;
+  employeewriteSub: string;
   constructor(
     private http: HttpClient,
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
-    private toastr: ToastrService,
-    private _snackBar: MatSnackBar
-  ) {}
+    private _snackBar: MatSnackBar,
+    private toastr: ToastrService
+  ) {
+    this.user_type = sessionStorage.getItem("user_type");
+    this.employeewrite = sessionStorage.getItem("employeewrite");
+    this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
+   }
+
 
   ngOnInit() {
     // Floating Label
