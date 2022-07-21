@@ -17,7 +17,9 @@
           </div>
           <div class="col-auto float-end ms-auto">
             <a
+
             *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')||(user_type === 'roleadmin' && accountingwrite == 'true')||(user_type === 'rolesubadmin' && accountingwriteSub === 'true')"
+
               href="#"
               class="btn add-btn"
               data-bs-toggle="modal"
@@ -41,7 +43,9 @@
                   <th>SubCategory Name</th>
                   <th>Amount</th>
                   <th>Revenue Date</th>
+
                   <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')||(user_type === 'roleadmin' && accountingwrite == 'true')||(user_type === 'rolesubadmin' && accountingwriteSub === 'true')">Action</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -52,7 +56,9 @@
                   <td>{{ item.subcategoryname }}</td>
                   <td>{{ item.amount }}</td>
                   <td>{{ item.revenuedate | customDate }}</td>
+
                   <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && accountingwriteFin === 'true')||(user_type === 'roleadmin' && accountingwrite == 'true')||(user_type === 'rolesubadmin' && accountingwriteSub === 'true')">
+
                     <div class="dropdown dropdown-action">
                       <a
                         href="#"
@@ -62,6 +68,11 @@
                         ><i class="material-icons">more_vert</i></a
                       >
                       <div class="dropdown-menu dropdown-menu-right">
+                        <a
+                          class="dropdown-item"
+                          (click)="savePdf(item.attachFile)"
+                          ><i class="fa fa-download m-r-5"></i> Download</a
+                        >
                         <a
                           class="dropdown-item"
                           href="#"
@@ -264,6 +275,7 @@
                     data-classbutton="btn btn-default"
                     data-classinput="form-control inline input-s"
                     name="receipt"
+                    (change)="selectFile($event)"
                   />
                 </div>
               </div>
@@ -452,6 +464,7 @@
                     data-classbutton="btn btn-default"
                     data-classinput="form-control inline input-s"
                     name="receipt"
+                    (change)="selectFile($event)"
                   />
                 </div>
               </div>
