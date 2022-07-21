@@ -56,10 +56,10 @@
           class="form-control floating"
           (input)="searchByEmpname($event.target.value)"
         />
-        <label class="focus-label">Employee Name</label>
+        <label class="focus-label">Client Name</label>
       </div>
     </div>
-    <div class="col-sm-6 col-md-3">
+    <!-- <div class="col-sm-6 col-md-3">
       <div class="form-group form-focus select-focus">
         <select class="form-select floating form-control">
           <option>Select Role</option>
@@ -69,7 +69,7 @@
         </select>
         <label class="focus-label">Designation</label>
       </div>
-    </div>
+    </div> -->
     <div class="col-sm-6 col-md-3">
       <a class="btn btn-success w-100"> Search </a>
     </div>
@@ -115,103 +115,65 @@
           </div>
           <h4 class="project-title">
             <a
-              routerLink="/layout/projects/projectview/{{ project.projectId }}"
-              >{{ project.name }}</a
+              routerLink="/layout/projects/projectview/{{ project?.projectId }}"
+              >{{ project?.name }}</a
             >
           </h4>
           <small class="block text-ellipsis m-b-15">
-            <span class="text-xs">{{ project.lstTasks.length }}</span>
+            <span class="text-xs">{{ project?.lstTasks.length }}</span>
             <span class="text-danger">open tasks, </span>
-            <span class="text-xs">{{ project.lstCompleted.length }}</span>
+            <span class="text-xs">{{ project?.lstCompleted.length }}</span>
             <span class="text-success">tasks completed</span>
           </small>
 
-          <p class="text-muted">{{ project.description }}</p>
+          <p class="text-muted">{{ project?.description }}</p>
           <div class="pro-deadline m-b-15">
             <div class="sub-title">Deadline:</div>
             <div class="text-muted">
-              {{ project.endDate }}
+              {{ project?.endDate| customDate }}
+            </div>
+          <div class="pro-deadline m-b-15">
+            <div class="sub-title">Client's Name:</div>
+            <div class="text-muted">
+              {{ project?.client }}
             </div>
           </div>
           <div class="project-members m-b-15">
             <div>Project Leader :</div>
             <ul class="team-members">
               <li>
-                <a data-bs-toggle="tooltip" title="{{ project.projectLeader }}"
-                  ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+                <a
+                *ngFor="let items of project.projectLeader"
+                data-bs-toggle="tooltip" title="{{items?.profileImagePath}}"
+                  ><img alt="NoImage" src="http://localhost:8443\{{items.profileImagePath}}"
                 /></a>
               </li>
-              <!-- <li>
-                <a data-bs-toggle="tooltip" title="Jeffery Lalor"
-                  ><img alt="" src="assets/img/profiles/avatar-8.jpg"
-                /></a>
-              </li>
-              <li>
-                <a data-bs-toggle="tooltip" title="Jeffery Lalor"
-                  ><img alt="" src="assets/img/profiles/avatar-7.jpg"
-                /></a>
-              </li> -->
+              
             </ul>
           </div>
           <div class="project-members m-b-15">
             <div>Team :</div>
             <ul class="team-members">
-              <li *ngFor="let team of project.teamMember">
-                <a data-bs-toggle="tooltip" title="{{ team }}"
-                  ><img alt="" src="assets/img/profiles/avatar-2.jpg"
-                /></a>
-              </li>
-              <!-- <li>
-                <a data-bs-toggle="tooltip" title="Richard Miles"
-                  ><img alt="" src="assets/img/profiles/avatar-9.jpg"
-                /></a>
-              </li>
               <li>
-                <a data-bs-toggle="tooltip" title="John Smith"
-                  ><img alt="" src="assets/img/profiles/avatar-8.jpg"
+                <a data-bs-toggle="tooltip" title="{{  project?.teamMember[0]?.profileImagePath }}"
+                  ><img alt="NoImage" src="http://localhost:8443/{{ project?.teamMember[0]?.profileImagePath}}"
                 /></a>
               </li>
-              <li>
-                <a data-bs-toggle="tooltip" title="Mike Litorus"
-                  ><img alt="" src="assets/img/profiles/avatar-5.jpg"
-                /></a>
-              </li> -->
-              <li class="dropdown avatar-dropdown">
-                <a
+              
+              <li class="dropdown avatar-dropdown"
+              *ngIf="project.teamMember.length>1">
+                <a 
                   class="all-users dropdown-toggle"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
-                  >+15</a
+                  >+{{project.teamMember.length-1}}</a
                 >
                 <div class="dropdown-menu dropdown-menu-right">
-                  <div class="avatar-group">
-                    <a class="avatar avatar-xs">
-                      <img alt="" src="assets/img/profiles/avatar-2.jpg" />
+                  <div class="avatar-group" >
+                    <a class="avatar avatar-xs" *ngFor="let team of project?.teamMember">
+                      <img alt="NoImg" src="http://localhost:8443\{{team?.profileImagePath}}" />
                     </a>
-                    <a class="avatar avatar-xs">
-                      <img alt="" src="assets/img/profiles/avatar-9.jpg" />
-                    </a>
-                    <a class="avatar avatar-xs">
-                      <img alt="" src="assets/img/profiles/avatar-8.jpg" />
-                    </a>
-                    <a class="avatar avatar-xs">
-                      <img alt="" src="assets/img/profiles/avatar-5.jpg" />
-                    </a>
-                    <a class="avatar avatar-xs">
-                      <img alt="" src="assets/img/profiles/avatar-6.jpg" />
-                    </a>
-                    <a class="avatar avatar-xs">
-                      <img alt="" src="assets/img/profiles/avatar-7.jpg" />
-                    </a>
-                    <a class="avatar avatar-xs">
-                      <img alt="" src="assets/img/profiles/avatar-9.jpg" />
-                    </a>
-                    <a class="avatar avatar-xs">
-                      <img alt="" src="assets/img/profiles/avatar-1.jpg" />
-                    </a>
-                    <a class="avatar avatar-xs">
-                      <img alt="" src="assets/img/profiles/avatar-5.jpg" />
-                    </a>
+              
                   </div>
                   <div class="avatar-pagination">
                     <ul class="pagination">
@@ -334,11 +296,11 @@
                   <option>Select Client</option>
                   <option
                     *ngFor="let item of client"
-                    value="{{ item.id }},{{ item.firstName }},{{
-                      item.lastName
+                    value="{{ item?.id }},{{ item?.firstName }},{{
+                      item?.lastName
                     }}"
                   >
-                    {{ item.firstName }} {{ item.lastName }}
+                    {{ item?.firstName }} {{ item?.lastName }}
                   </option>
                 </select>
               </div>
@@ -461,96 +423,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Project Leader</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
-                    addProjectForm.get('projectLeader').invalid &&
-                    addProjectForm.get('projectLeader').touched
-                  "
-                  formControlName="projectLeader"
-                />
-                <div
-                  *ngIf="
-                    addProjectForm.get('projectLeader').invalid &&
-                    addProjectForm.get('projectLeader').touched
-                  "
-                >
-                  <small
-                    *ngIf="
-                      addProjectForm.get('projectLeader').invalid &&
-                      addProjectForm.get('projectLeader').touched
-                    "
-                    class="text-danger"
-                  >
-                    *Project Leader is required</small
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Leader</label>
-                <div class="project-members">
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Jeffery Lalor"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-9.jpg" alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Team</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
-                    addProjectForm.get('addTeamMembers').invalid &&
-                    addProjectForm.get('addTeamMembers').touched
-                  "
-                  formControlName="addTeamMembers"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Members</label>
-                <div class="project-members">
-                  <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
-                    <img src="assets/img/profiles/avatar-1.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Richard Miles"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-9.jpg" alt="" />
-                  </a>
-                  <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
-                    <img src="assets/img/profiles/avatar-2.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Mike Litorus"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-5.jpg" alt="" />
-                  </a>
-                  <span class="all-team">+2</span>
-                </div>
-              </div>
-            </div>
-          </div>
+            
           <div class="form-group">
             <label>Description</label>
             <textarea
@@ -657,8 +530,10 @@
                   class="form-select form-control"
                 >
                   <option>Select client</option>
-                  <option *ngFor="let item of client">
-                    {{ item.firstName }} {{ item.lastName }}
+                  <option *ngFor="let item of client" value="{{ item?.id }},{{ item?.firstName }},{{
+                    item?.lastName
+                  }}">
+                    {{ item?.firstName }} {{ item?.lastName }}
                   </option>
                 </select>
               </div>
@@ -782,76 +657,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Project Leader</label>
-                <input
-                  formControlName="projectLeader"
-                  class="form-control"
-                  type="text"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Leader</label>
-                <div class="project-members">
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Jeffery Lalor"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-5.jpg" alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Team</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
-                    editProjectForm.get('editaddTeamMembers').invalid &&
-                    editProjectForm.get('editaddTeamMembers').touched
-                  "
-                  formControlName="editaddTeamMembers"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Members</label>
-                <div class="project-members">
-                  <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
-                    <img src="assets/img/profiles/avatar-8.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Richard Miles"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-9.jpg" alt="" />
-                  </a>
-                  <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
-                    <img src="assets/img/profiles/avatar-5.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Mike Litorus"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-4.jpg" alt="" />
-                  </a>
-                  <span class="all-team">+2</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          
           <div class="form-group">
             <label>Description</label>
             <textarea

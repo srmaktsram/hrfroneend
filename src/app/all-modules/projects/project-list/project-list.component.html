@@ -16,8 +16,14 @@
         <a
           class="btn add-btn"
           data-bs-toggle="modal"
-          data-bs-target="#create_project" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
-          ><i class="fa fa-plus" ></i> Create Project</a
+          data-bs-target="#create_project"
+          *ngIf="
+            user_type == 'admin' ||
+            (user_type === 'employee' && projectswrite == 'true') ||
+            (user_type === 'roleadmin' && projectsWrite == 'true') ||
+            (user_type === 'rolesubadmin' && projectsWriteSub === 'true')
+          "
+          ><i class="fa fa-plus"></i> Create Project</a
         >
         <div class="view-icons">
           <a
@@ -51,11 +57,15 @@
     </div>
     <div class="col-sm-6 col-md-3">
       <div class="form-group form-focus">
-        <input type="text" class="form-control floating" />
-        <label class="focus-label">Employee Name</label>
+        <input
+          type="text"
+          class="form-control floating"
+          (input)="searchByEmpname($event.target.value)"
+        />
+        <label class="focus-label">Client Name</label>
       </div>
     </div>
-    <div class="col-sm-6 col-md-3">
+    <!-- <div class="col-sm-6 col-md-3">
       <div class="form-group form-focus select-focus">
         <select class="form-select floating form-control">
           <option>Select Roll</option>
@@ -66,7 +76,7 @@
         </select>
         <label class="focus-label">Role</label>
       </div>
-    </div>
+    </div> -->
     <div class="col-sm-6 col-md-3">
       <a class="btn btn-success w-100"> Search </a>
     </div>
@@ -87,12 +97,23 @@
             <tr>
               <th>Project</th>
               <th>Project Id</th>
+              <th>Client Name</th>
               <th>Leader</th>
               <th>Team</th>
               <th>Deadline</th>
               <th>Priority</th>
               <th>Status</th>
-              <th class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">Action</th>
+              <th
+                class="text-end"
+                *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'employee' && projectswrite == 'true') ||
+                  (user_type === 'roleadmin' && projectsWrite == 'true') ||
+                  (user_type === 'rolesubadmin' && projectsWriteSub === 'true')
+                "
+              >
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -106,62 +127,59 @@
                 >
               </td>
               <td>{{ project.projectId }}</td>
+              <td>{{ project.client }}</td>
               <td>
                 <ul class="team-members">
-                  <li >
-                    <a data-bs-toggle="tooltip"   title="{{project.projectLeader}}"
+                  <li>
+                    <a
+                      *ngFor="let items of project.projectLeader"
+                      data-bs-toggle="tooltip"
+                      title="{{ items?.profileImagePath }}"
                       ><img
-                        alt=""
-                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
+                        alt="NoImage"
+                        src="http://localhost:8443\{{
+                          items.profileImagePath
+                        }}"
                     /></a>
                   </li>
                 </ul>
               </td>
               <td>
                 <ul class="team-members text-nowrap">
-                  <li  *ngFor="let team of project.teamMember" >
-                    <a title="{{team}}" data-bs-toggle="tooltip"
+                  <li>
+                    <a
+                      title="{{ project?.teamMember[0]?.profileImagePath }}"
+                      data-bs-toggle="tooltip"
                       ><img
-                        alt=""
-                        src="assets/img/profiles/avatar-{{ i + 1 }}.jpg"
+                        alt="NoImage"
+                        src="http://localhost:8443/{{
+                          project?.teamMember[0]?.profileImagePath
+                        }}"
                     /></a>
                   </li>
-                 
-                  <li class="dropdown avatar-dropdown">
+
+                  <li
+                    class="dropdown avatar-dropdown"
+                    *ngIf="project.teamMember.length > 1"
+                  >
                     <a
                       class="all-users dropdown-toggle"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
-                      >+15</a
+                      >+{{ project.teamMember.length - 1 }}</a
                     >
                     <div class="dropdown-menu dropdown-menu-right">
                       <div class="avatar-group">
-                        <a class="avatar avatar-xs">
-                          <img alt="" src="assets/img/profiles/avatar-2.jpg" />
-                        </a>
-                        <a class="avatar avatar-xs">
-                          <img alt="" src="assets/img/profiles/avatar-9.jpg" />
-                        </a>
-                        <a class="avatar avatar-xs">
-                          <img alt="" src="assets/img/profiles/avatar-1.jpg" />
-                        </a>
-                        <a class="avatar avatar-xs">
-                          <img alt="" src="assets/img/profiles/avatar-5.jpg" />
-                        </a>
-                        <a class="avatar avatar-xs">
-                          <img alt="" src="assets/img/profiles/avatar-1.jpg" />
-                        </a>
-                        <a class="avatar avatar-xs">
-                          <img alt="" src="assets/img/profiles/avatar-2.jpg" />
-                        </a>
-                        <a class="avatar avatar-xs">
-                          <img alt="" src="assets/img/profiles/avatar-3.jpg" />
-                        </a>
-                        <a class="avatar avatar-xs">
-                          <img alt="" src="assets/img/profiles/avatar-1.jpg" />
-                        </a>
-                        <a class="avatar avatar-xs">
-                          <img alt="" src="assets/img/profiles/avatar-6.jpg" />
+                        <a
+                          class="avatar avatar-xs"
+                          *ngFor="let team of project?.teamMember"
+                        >
+                          <img
+                            alt="NoImg"
+                            src="http://localhost:8443\{{
+                              team?.profileImagePath
+                            }}"
+                          />
                         </a>
                       </div>
                       <div class="avatar-pagination">
@@ -186,7 +204,7 @@
                   </li>
                 </ul>
               </td>
-              <td>{{ project.startDate | customDate }}</td>
+              <td>{{ project.endDate | customDate }}</td>
               <td>
                 <div class="dropdown action-label">
                   <a
@@ -194,23 +212,40 @@
                     class="btn btn-white btn-sm btn-rounded dropdown-toggle"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
-                    ><i class="fa fa-dot-circle-o text-danger"></i
-                    >{{ project.priority }}</a
+                    >
+                    <ng-container *ngIf="project.priority == 'High'">
+                    <i class="fa fa-dot-circle-o text-danger"></i
+                    >{{ project.priority }} </ng-container>
+                    <ng-container *ngIf="project.priority == 'Medium'">
+                    <i class="fa fa-dot-circle-o text-success"></i
+                    >{{ project.priority }} </ng-container>
+                    <ng-container *ngIf="project.priority == 'Low'">
+                    <i class="fa fa-dot-circle-o text-warning"></i
+                    >{{ project.priority }} </ng-container>
+                    </a>
+                  <div
+                    class="dropdown-menu"
+                    *ngIf="
+                      user_type == 'admin' ||
+                      (user_type === 'employee' && projectswrite == 'true') ||
+                      (user_type === 'roleadmin' && projectsWrite == 'true') ||
+                      (user_type === 'rolesubadmin' &&
+                        projectsWriteSub === 'true')
+                    "
                   >
-                  <div class="dropdown-menu" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
                     <a
                       class="dropdown-item"
-                      (click)="priorityStatus('High', project.id)"
+                      (click)="priorityStatus('High', project.projectId)"
                       ><i class="fa fa-dot-circle-o text-danger"></i> High</a
                     >
                     <a
                       class="dropdown-item"
-                      (click)="priorityStatus('Medium', project.id)"
+                      (click)="priorityStatus('Medium', project.projectId)"
                       ><i class="fa fa-dot-circle-o text-warning"></i> Medium</a
                     >
                     <a
                       class="dropdown-item"
-                      (click)="priorityStatus('Low', project.id)"
+                      (click)="priorityStatus('Low', project.projectId)"
                       ><i class="fa fa-dot-circle-o text-success"></i> Low</a
                     >
                   </div>
@@ -234,7 +269,16 @@
                       </i>
                     </ng-container>
                   </a>
-                  <div class="dropdown-menu" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
+                  <div
+                    class="dropdown-menu"
+                    *ngIf="
+                      user_type == 'admin' ||
+                      (user_type === 'employee' && projectswrite == 'true') ||
+                      (user_type === 'roleadmin' && projectsWrite == 'true') ||
+                      (user_type === 'rolesubadmin' &&
+                        projectsWriteSub === 'true')
+                    "
+                  >
                     <a
                       class="dropdown-item"
                       (click)="updateStatus('Active', project.projectId)"
@@ -249,7 +293,15 @@
                   </div>
                 </div>
               </td>
-              <td class="text-end" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
+              <td
+                class="text-end"
+                *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'employee' && projectswrite == 'true') ||
+                  (user_type === 'roleadmin' && projectsWrite == 'true') ||
+                  (user_type === 'rolesubadmin' && projectsWriteSub === 'true')
+                "
+              >
                 <div class="dropdown dropdown-action">
                   <a
                     class="action-icon dropdown-toggle"
@@ -463,80 +515,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Project Leader</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
-                    addProjectForm.get('projectLeader').invalid &&
-                    addProjectForm.get('projectLeader').touched
-                  "
-                  formControlName="projectLeader"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Leader</label>
-                <div class="project-members">
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Jeffery Lalor"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-6.jpg" alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Team</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
-                    addProjectForm.get('addTeamMembers').invalid &&
-                    addProjectForm.get('addTeamMembers').touched
-                  "
-                  formControlName="addTeamMembers"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Members</label>
-                <div class="project-members">
-                  <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
-                    <img src="assets/img/profiles/avatar-17.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Richard Miles"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-9.jpg" alt="" />
-                  </a>
-                  <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
-                    <img src="assets/img/profiles/avatar-10.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Mike Litorus"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-5.jpg" alt="" />
-                  </a>
-                  <span class="all-team">+2</span>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div class="form-group">
             <label>Description</label>
             <textarea
@@ -568,9 +547,12 @@
           </div>
           <div class="form-group">
             <label>Upload Files</label>
-            <input class="form-control" type="file"  multiple  
-            formControlName="file"
-            (change)="selectImage($event)"
+            <input
+              class="form-control"
+              type="file"
+              multiple
+              formControlName="file"
+              (change)="selectImage($event)"
             />
           </div>
           <div class="submit-section">
@@ -766,76 +748,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Project Leader</label>
-                <input
-                  formControlName="projectLeader"
-                  class="form-control"
-                  type="text"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Leader</label>
-                <div class="project-members">
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Jeffery Lalor"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-16.jpg" alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Team</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
-                    editProjectForm.get('editaddTeamMembers').invalid &&
-                    editProjectForm.get('editaddTeamMembers').touched
-                  "
-                  formControlName="editaddTeamMembers"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Members</label>
-                <div class="project-members">
-                  <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
-                    <img src="assets/img/profiles/avatar-17.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Richard Miles"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-9.jpg" alt="" />
-                  </a>
-                  <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
-                    <img src="assets/img/profiles/avatar-10.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Mike Litorus"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-5.jpg" alt="" />
-                  </a>
-                  <span class="all-team">+2</span>
-                </div>
-              </div>
-            </div>
-          </div>
+
           <div class="form-group">
             <label>Description</label>
             <textarea
@@ -867,11 +780,12 @@
           </div>
           <div class="form-group">
             <label>Upload Files</label>
-            <input class="form-control"
-            type="file"
-            multiple
-            formControlName="file"
-            (change)="selectImage($event)"
+            <input
+              class="form-control"
+              type="file"
+              multiple
+              formControlName="file"
+              (change)="selectImage($event)"
             />
           </div>
           <div class="submit-section">
