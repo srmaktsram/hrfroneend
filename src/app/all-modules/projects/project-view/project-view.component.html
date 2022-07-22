@@ -14,24 +14,27 @@
       </div>
       <ng-container *ngIf="user_type !== 'client'">
         <div class="col-auto float-end ms-auto">
-          
           <a
             class="btn add-btn"
             data-bs-toggle="modal"
             data-bs-target="#edit_project"
-            (click)="editProject()" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
+            (click)="editProject()"
+            *ngIf="
+              user_type == 'admin' ||
+              (user_type === 'employee' && projectswrite == 'true') ||
+              (user_type === 'roleadmin' && projectsWrite == 'true') ||
+              (user_type === 'rolesubadmin' && projectsWriteSub === 'true')
+            "
             ><i class="fa fa-plus"></i> Edit Project</a
           >
-        
 
           <a
-            routerLink="/layout/projects/taskboard/{{ projects.projectId }}"
+            routerLink="/layout/projects/taskboard/{{ projects?.projectId }}"
             class="btn btn-white float-end m-r-10"
             data-bs-toggle="tooltip"
             title="Task Board"
             ><i class="fa fa-bars"></i
           ></a>
-          
         </div>
       </ng-container>
     </div>
@@ -56,7 +59,7 @@
             <small> <span class="text-success">tasks completed</span></small>
           </div>
 
-          <p>{{ projects.description }}</p>
+          <p>{{ projects?.description }}</p>
         </div>
       </div>
 
@@ -78,7 +81,7 @@
                 </div>
                 <a href="http://localhost:8443/{{ image.imagePath }}">
                   <div class="uploaded-img-name">
-                    {{ image.imageName }}
+                    {{ image?.imageName }}
                   </div>
                 </a>
               </div>
@@ -101,7 +104,7 @@
                   </div>
                   <div class="files-info">
                     <span class="file-name text-ellipsis">
-                      {{ file.fileName }}</span
+                      {{ file?.fileName }}</span
                     >
                   </div>
                 </a>
@@ -138,7 +141,6 @@
       <div class="project-task">
         <ul class="nav nav-tabs nav-tabs-top nav-justified mb-0">
           <li class="nav-item">
-
             <a
               class="nav-link active"
               href="#all_tasks"
@@ -149,7 +151,6 @@
             >
           </li>
           <li class="nav-item">
-
             <a
               class="nav-link"
               href="#pending_tasks"
@@ -179,31 +180,50 @@
                           </span>
                         </span>
                         <span class="task-label" contenteditable="true">{{
-                          task.taskName
+                          task?.taskName
                         }}</span>
                         <ng-container *ngIf="user_type !== 'client'">
-                          
-
-                        <span class="task-action-btn task-btn-right">
-                          <span class="action-circle large" title="Assign" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
-                            <i
-                              class="material-icons"
-                              data-bs-toggle="modal"
-                              data-bs-target="#assign_user" 
-                              >person_add</i
+                          <span class="task-action-btn task-btn-right">
+                            <span
+                              class="action-circle large"
+                              title="Assign"
+                              *ngIf="
+                                user_type == 'admin' ||
+                                (user_type === 'employee' &&
+                                  projectswrite == 'true') ||
+                                (user_type === 'roleadmin' &&
+                                  projectsWrite == 'true') ||
+                                (user_type === 'rolesubadmin' &&
+                                  projectsWriteSub === 'true')
+                              "
                             >
-                          </span>
-                          <span
-                            class="action-circle large delete-btn"
-                            title="Delete Task" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
-                          >
-                            <i
-                              class="material-icons"
-                              (click)="deletedTask(task.id)"
-                              >delete</i
+                              <i
+                                class="material-icons"
+                                data-bs-toggle="modal"
+                                data-bs-target="#assign_user"
+                                >person_add</i
+                              >
+                            </span>
+                            <span
+                              class="action-circle large delete-btn"
+                              title="Delete Task"
+                              *ngIf="
+                                user_type == 'admin' ||
+                                (user_type === 'employee' &&
+                                  projectswrite == 'true') ||
+                                (user_type === 'roleadmin' &&
+                                  projectsWrite == 'true') ||
+                                (user_type === 'rolesubadmin' &&
+                                  projectsWriteSub === 'true')
+                              "
                             >
+                              <i
+                                class="material-icons"
+                                (click)="deletedTask(task.id)"
+                                >delete</i
+                              >
+                            </span>
                           </span>
-                        </span>
                         </ng-container>
                       </div>
                     </li>
@@ -243,10 +263,22 @@
                           </span>
                         </span>
                         <span class="task-label" contenteditable="true">{{
-                          task.taskName
+                          task?.taskName
                         }}</span>
                         <span class="task-action-btn task-btn-right">
-                          <span class="action-circle large" title="Assign" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
+                          <span
+                            class="action-circle large"
+                            title="Assign"
+                            *ngIf="
+                              user_type == 'admin' ||
+                              (user_type === 'employee' &&
+                                projectswrite == 'true') ||
+                              (user_type === 'roleadmin' &&
+                                projectsWrite == 'true') ||
+                              (user_type === 'rolesubadmin' &&
+                                projectsWriteSub === 'true')
+                            "
+                          >
                             <i
                               class="material-icons"
                               data-bs-toggle="modal"
@@ -256,7 +288,16 @@
                           </span>
                           <span
                             class="action-circle large delete-btn"
-                            title="Delete Task"*ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
+                            title="Delete Task"
+                            *ngIf="
+                              user_type == 'admin' ||
+                              (user_type === 'employee' &&
+                                projectswrite == 'true') ||
+                              (user_type === 'roleadmin' &&
+                                projectsWrite == 'true') ||
+                              (user_type === 'rolesubadmin' &&
+                                projectsWriteSub === 'true')
+                            "
                           >
                             <i
                               class="material-icons"
@@ -299,44 +340,40 @@
             <tbody>
               <tr>
                 <td>Cost:</td>
-                <td class="text-end">${{ projects.rate }}</td>
-              </tr>
-              <tr>
-                <td>Total Hours:</td>
-                <td class="text-end">100 Hours</td>
+                <td class="text-end">${{ projects?.rate }}</td>
               </tr>
               <tr>
                 <td>Created:</td>
-                <td class="text-end">{{ projectStart }}</td>
+                <td class="text-end">{{ projectStart|customDate}}</td>
               </tr>
               <tr>
                 <td>Deadline:</td>
-                <td class="text-end">{{ projectEnd }}</td>
+                <td class="text-end">{{ projectEnd |customDate }}</td>
               </tr>
               <tr>
                 <td>Priority:</td>
                 <td class="text-end">
-                  <div class="btn-group" >
+                  <div class="btn-group">
                     <li
-                      class="badge badge-danger dropdown-toggle"
-                      data-bs-toggle="dropdown" 
+                      class="badge badge-danger"
+                      data-bs-toggle="dropdown"
                     >
-                      {{ projects.priority }}
+                      {{ projects?.priority }}
                     </li>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td>Created by:</td>
+                <td>Client Name:</td>
                 <td class="text-end">
                   <a routerLink="/layout/profile/profilelist">{{
-                    projects.client
+                    projects?.client
                   }}</a>
                 </td>
               </tr>
               <tr>
                 <td>Status:</td>
-                <td class="text-end">{{ projects.status }}</td>
+                <td class="text-end">{{ projects?.status }}</td>
               </tr>
             </tbody>
           </table>
@@ -359,27 +396,32 @@
           <h6 class="card-title m-b-20">
             Assigned Leader
             <ng-container *ngIf="user_type !== 'client'">
-            <ng-container *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
-
-
-            <button
-              type="button"
-              class="float-end btn btn-primary btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#assign_leader"
-            >
-              <i class="fa fa-plus"></i> Add
-            </button>
-            </ng-container>
+              <ng-container
+                *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'employee' && projectswrite == 'true') ||
+                  (user_type === 'roleadmin' && projectsWrite == 'true') ||
+                  (user_type === 'rolesubadmin' && projectsWriteSub === 'true')
+                "
+              >
+                <button
+                  type="button"
+                  class="float-end btn btn-primary btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#assign_leader"
+                >
+                  <i class="fa fa-plus"></i> Add
+                </button>
+              </ng-container>
             </ng-container>
           </h6>
           <ul class="list-box">
-            <li *ngFor="let item of projects.projectLeader">
+            <li *ngFor="let item of projects?.projectLeader">
               <a routerLink="/layout/employees/employeeprofile">
                 <div class="list-item">
                   <div class="list-left">
                     <span class="avatar"
-                      ><img alt="" src="assets/img/profiles/avatar-11.jpg"
+                      ><img alt="" src="http://localhost:8443\{{item.profileImagePath}}"
                     /></span>
                   </div>
                   <div class="list-body">
@@ -398,26 +440,32 @@
           <h6 class="card-title m-b-20">
             Assigned users
             <ng-container *ngIf="user_type !== 'client'">
-            <ng-container *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
-
-            <button
-              type="button"
-              class="float-end btn btn-primary btn-sm"
-              data-bs-toggle="modal"
-              data-bs-target="#assign_user"
-            >
-              <i class="fa fa-plus"></i> Add
-            </button>
-            </ng-container>
+              <ng-container
+                *ngIf="
+                  user_type == 'admin' ||
+                  (user_type === 'employee' && projectswrite == 'true') ||
+                  (user_type === 'roleadmin' && projectsWrite == 'true') ||
+                  (user_type === 'rolesubadmin' && projectsWriteSub === 'true')
+                "
+              >
+                <button
+                  type="button"
+                  class="float-end btn btn-primary btn-sm"
+                  data-bs-toggle="modal"
+                  data-bs-target="#assign_user"
+                >
+                  <i class="fa fa-plus"></i> Add
+                </button>
+              </ng-container>
             </ng-container>
           </h6>
-          <ul class="list-box" *ngFor="let users of projects.teamMember">
+          <ul class="list-box" *ngFor="let users of projects?.teamMember">
             <li>
               <a routerLink="/layout/employees/employeeprofile">
                 <div class="list-item">
                   <div class="list-left">
                     <span class="avatar"
-                      ><img alt="" src="assets/img/profiles/avatar-2.jpg"
+                      ><img alt=""src="http://localhost:8443\{{users.profileImagePath}}"
                     /></span>
                   </div>
                   <div class="list-body">
@@ -467,14 +515,14 @@
               <a>
                 <div class="media d-flex">
                   <span class="avatar flex-shrink-0"
-                    ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+                    ><img alt="" src="http://localhost:8443\{{user.profileImage}}"
                   /></span>
                   <div
                     class="media-body align-self-center text-nowrap flex-grow-1"
                   >
                     <div
                       (click)="
-                        addLeader(user.firstName, user.lastName, user.id)
+                        addLeader(user.firstName, user.lastName, user.id,user.profileImage)
                       "
                       class="user-name"
                     >
@@ -491,7 +539,7 @@
           <div *ngFor="let name of leader" class="main">
             <div class="child">
               <span class="avatar flex-shrink-0"
-                ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+                ><img alt="NoImg" src="http://localhost:8443\{{name.profileImagePath}}"
               /></span>
               <span class="text-danger">{{ name.name }}</span>
             </div>
@@ -539,13 +587,13 @@
               <a *ngFor="let user of userdata">
                 <div class="media d-flex">
                   <span class="avatar flex-shrink-0"
-                    ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+                    ><img alt="" src="http://localhost:8443\{{user.profileImage}}"
                   /></span>
                   <div
                     class="media-body align-self-center text-nowrap flex-grow-1"
                   >
                     <div
-                      (click)="addUsers(user.firstName, user.lastName, user.id)"
+                      (click)="addUsers(user.firstName, user.lastName, user.id,user.profileImage)"
                       class="user-name"
                     >
                       {{ user.firstName }} {{ user.lastName }}
@@ -561,7 +609,7 @@
           <div *ngFor="let name of userArr" class="main">
             <div class="child">
               <span class="avatar flex-shrink-0"
-                ><img alt="" src="assets/img/profiles/avatar-9.jpg"
+                ><img alt="" src="http://localhost:8443\{{name.profileImagePath}}"
               /></span>
               <span class="text-danger">{{ name.name }}</span>
             </div>
@@ -634,7 +682,9 @@
                   class="form-select form-control"
                 >
                   <option>Select client</option>
-                  <option *ngFor="let item of client">
+                  <option *ngFor="let item of client" value="{{ item.id }},{{ item.firstName }},{{
+                    item.lastName
+                  }}">
                     {{ item.firstName }} {{ item.lastName }}
                   </option>
                 </select>
@@ -759,76 +809,7 @@
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Project Leader</label>
-                <input
-                  formControlName="projectLeader"
-                  class="form-control"
-                  type="text"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Leader</label>
-                <div class="project-members">
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Jeffery Lalor"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-5.jpg" alt="" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Add Team</label>
-                <input
-                  class="form-control"
-                  type="text"
-                  [class.invalid]="
-                    editProjectForm.get('editaddTeamMembers').invalid &&
-                    editProjectForm.get('editaddTeamMembers').touched
-                  "
-                  formControlName="editaddTeamMembers"
-                />
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="form-group">
-                <label>Team Members</label>
-                <div class="project-members">
-                  <a data-bs-toggle="tooltip" title="John Doe" class="avatar">
-                    <img src="assets/img/profiles/avatar-8.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Richard Miles"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-9.jpg" alt="" />
-                  </a>
-                  <a data-bs-toggle="tooltip" title="John Smith" class="avatar">
-                    <img src="assets/img/profiles/avatar-5.jpg" alt="" />
-                  </a>
-                  <a
-                    data-bs-toggle="tooltip"
-                    title="Mike Litorus"
-                    class="avatar"
-                  >
-                    <img src="assets/img/profiles/avatar-4.jpg" alt="" />
-                  </a>
-                  <span class="all-team">+2</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          
           <div class="form-group">
             <label>Description</label>
             <textarea

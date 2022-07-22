@@ -32,6 +32,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   public tempId: any;
   public adminId: any;
   public employeeId: any;
+  public teamMembers=[];
   public rows = [];
   public srch = [];
   public client = [];
@@ -45,14 +46,17 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   public wayData: any;
   public path: any;
   bindTrue = true;
-  clientIdName: any;
-  clientName: any;
-  clientId: any;
+  public clientIdName: any;
+  public clientName: any;
+  public clientId: any;
   progess: string;
   projectswrite: string;
   user_type: string;
   projectsWrite: string;
   projectsWriteSub: string;
+  public dataArray: any;
+  TEAMMEM: any;
+  public newlength: any;
   constructor(
     private toastr: ToastrService,
     private _snackBar: MatSnackBar,
@@ -61,24 +65,15 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
   ) {
     this.adminId = sessionStorage.getItem("adminId");
     this.employeeId = sessionStorage.getItem("employeeId");
-    this.projectswrite=sessionStorage.getItem("projectswrite");
-    this.user_type=sessionStorage.getItem("user_type");
+    this.projectswrite = sessionStorage.getItem("projectswrite");
+    this.user_type = sessionStorage.getItem("user_type");
     this.projectsWrite = sessionStorage.getItem("projectsWrite");
     this.projectsWriteSub = sessionStorage.getItem("projectsWriteSub");
 
 
-    this.getDesignation();
-
     this.getClients();
   }
-  public getDesignation() {
-    this.http
-      .get("http://localhost:8443/admin/designation/getData")
-      .subscribe((data: any) => {
-        this.designations = data;
-      });
-  }
-
+  
   ngOnInit() {
     $(document).ready(function () {
       $('[data-bs-toggle="tooltip"]').tooltip();
@@ -91,9 +86,6 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       projectStartDate: ["", [Validators.required]],
       projectEndDate: ["", [Validators.required]],
       projectPriority: [""],
-      projectLeader: ["", [Validators.required]],
-      addTeamMembers: ["", [Validators.required]],
-      projectId: [""],
       rate: [""],
       client: [""],
     });
@@ -105,9 +97,6 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       editProjectStartDate: [""],
       editProjectEndDate: [""],
       editProjectPriority: [""],
-      editaddTeamMembers: [""],
-      editProjectId: [""],
-      projectLeader: [""],
       rate: [""],
       client: [""],
     });
@@ -122,8 +111,9 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       )
       .subscribe((data: any) => {
         this.projects = data;
+        console.log(this.projects,"All Projects")
+      
 
-        console.log("this is getProjects<><><<><><><><>", this.projects);
         this.dtTrigger.next();
         this.rows = this.projects;
         this.srch = [...this.rows];
@@ -139,6 +129,7 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       )
       .subscribe((data: any) => {
         this.client = data;
+        console.log(this.client, "jhgsadjagdgsjh>>>>>>>>>>>");
       });
   }
 
@@ -178,7 +169,6 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       fd.append("files", image);
     }
     this.clientIdName = this.addProjectForm.value.client.split(",");
-
     this.clientName = this.clientIdName[1] + "" + this.clientIdName[2];
     this.clientId = this.clientIdName[0];
 
@@ -192,14 +182,13 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
     params = params.set("endDate", EndDate);
     params = params.set("startDate", StartDate);
     params = params.set("priority", this.addProjectForm.value.projectPriority);
-    params = params.set(
-      "projectLeader",
-      this.addProjectForm.value.projectLeader
-    );
-    params = params.set("teamMember", this.addProjectForm.value.addTeamMembers);
     params = params.set("rate", this.addProjectForm.value.rate);
     params = params.set("clientName", this.clientName);
     params = params.set("clientId", this.clientId);
+    console.log(
+      this.clientId,
+      "id client>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    );
 
     this.http
       .post("http://localhost:8443/admin/projects/createProject?" + params, fd)
@@ -235,23 +224,26 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       editProjectEndDate: toSetValues.endDate,
       editProjectStartDate: toSetValues.startDate,
       editProjectPriority: toSetValues.priority,
-      editaddTeamMembers: toSetValues.teamMember,
-      editProjectId: toSetValues.projectId,
       rate: toSetValues.rate,
-      client: toSetValues.client,
-      file: toSetValues.file,
-      projectLeader: toSetValues.projectLeader,
+      client:this.editProjectForm.value.client,
+      file: this.editProjectForm.value.file,
     });
+    
+    console.log(toSetValues,"aaaa")
   }
 
   //Save Project
   public saveProject() {
+    console.log(
+      this.editProjectForm.value.editProjectStartDate,
+      this.editProjectForm.value.editProjectEndDate,"date on edit grid"
+    );
     let StartDate = this.pipe.transform(
-      this.editProjectForm.value.projectStartDate,
+      this.editProjectForm.value.editProjectStartDate,
       "dd-MM-yyyy"
     );
     let EndDate = this.pipe.transform(
-      this.editProjectForm.value.projectEndDate,
+      this.editProjectForm.value.editProjectEndDate,
       "dd-MM-yyyy"
     );
 
@@ -259,6 +251,10 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
     for (let image of this.multImages) {
       fd.append("files", image);
     }
+
+    this.clientIdName = this.editProjectForm.value.client.split(",");
+    this.clientName = this.clientIdName[1] + "" + this.clientIdName[2];
+    this.clientId = this.clientIdName[0];
     let params = new HttpParams();
     params = params.set("tempId", this.tempId);
     params = params.set("name", this.editProjectForm.value.editProjectName);
@@ -272,16 +268,9 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
       "priority",
       this.editProjectForm.value.editProjectPriority
     );
-    params = params.set(
-      "teamMember",
-      this.editProjectForm.value.editaddTeamMembers
-    );
-    params = params.set(
-      "projectId",
-      this.editProjectForm.value.editProjectPriority
-    );
     params = params.set("rate", this.editProjectForm.value.rate);
-    params = params.set("client", this.editProjectForm.value.client);
+    params = params.set("clientname", this.clientName);
+    params = params.set("clientId", this.clientId);
 
     this.http
       .patch(
@@ -342,20 +331,20 @@ export class ProjectContentComponent implements OnInit, OnDestroy {
     this.rows.splice(0, this.rows.length);
     let temp = this.srch.filter(function (d) {
       val = val.toLowerCase();
-      return d.teamMember.toLowerCase().indexOf(val) !== -1 || !val;
+      return d.client.toLowerCase().indexOf(val) !== -1 || !val;
     });
     this.rows.push(...temp);
   }
 
   //search by purchase
-  searchByDesignation(val) {
-    this.rows.splice(0, this.rows.length);
-    let temp = this.srch.filter(function (d) {
-      val = val.toLowerCase();
-      return d.designation.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.rows.push(...temp);
-  }
+  // searchByDesignation(val) {
+  //   this.rows.splice(0, this.rows.length);
+  //   let temp = this.srch.filter(function (d) {
+  //     val = val.toLowerCase();
+  //     return d.designation.toLowerCase().indexOf(val) !== -1 || !val;
+  //   });
+  //   this.rows.push(...temp);
+  // }
 
   // for unsubscribe datatable
   ngOnDestroy(): void {

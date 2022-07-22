@@ -42,6 +42,10 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   projectsWrite: string;
   projectsWriteSub: string;
 
+  clientIdName: any;
+  clientName: string;
+  clientId: any;
+ 
 
   constructor(
     private formBuilder: FormBuilder,
@@ -71,9 +75,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       projectStartDate: ["", [Validators.required]],
       projectEndDate: ["", [Validators.required]],
       projectPriority: ["", [Validators.required]],
-      projectLeader: ["", [Validators.required]],
-      addTeamMembers: ["", [Validators.required]],
-      projectId: [""],
       rate: [""],
       client: [""],
     });
@@ -85,10 +86,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       editProjectStartDate: ["", [Validators.required]],
       editProjectEndDate: ["", [Validators.required]],
       editProjectPriority: ["", [Validators.required]],
-      editaddTeamMembers: ["", [Validators.required]],
+
       rate: [""],
-      editclient: [""],
-      projectLeader: [""],
+      client: [""],
     });
   }
 
@@ -185,46 +185,44 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       editProjectEndDate: toSetValues.endDate,
       editProjectStartDate: toSetValues.startDate,
       editProjectPriority: toSetValues.priority,
-      editaddTeamMembers: toSetValues.teamMember,
-      editProjectId: toSetValues.projectId,
       rate: toSetValues.rate,
+
       editclient: toSetValues.client,
-      projectLeader: toSetValues.projectLeader,
+      file: toSetValues.file,
+
     });
   }
 
   //Create New Project
   public addProject() {
-    let StartDate = this.pipe.transform(
-      this.addProjectForm.value.projectStartDate,
-      "dd-MM-yyyy"
-    );
-    let EndDate = this.pipe.transform(
-      this.addProjectForm.value.projectEndDate,
-      "dd-MM-yyyy"
-    );
+    // let StartDate = this.pipe.transform(
+    //   this.addProjectForm.value.projectStartDate,
+    //   "dd-MM-yyyy"
+    // );
+    // let EndDate = this.pipe.transform(
+    //   this.addProjectForm.value.projectEndDate,
+    //   "dd-MM-yyyy"
+    // );
     var fd = new FormData();
     for (let image of this.multImages) {
       fd.append("files", image);
     }
+    this.clientIdName = this.addProjectForm.value.client.split(",");
+
+    this.clientName = this.clientIdName[1] + "" + this.clientIdName[2];
+    this.clientId = this.clientIdName[0];
 
     let params = new HttpParams();
     params = params.set("adminId", this.adminId);
     params = params.set("name", this.addProjectForm.value.projectName);
-    params = params.set(
-      "description",
-      this.addProjectForm.value.projectDescription
-    );
-    params = params.set("endDate", EndDate);
-    params = params.set("startDate", StartDate);
+    params = params.set("description",this.addProjectForm.value.projectDescription);
+    params = params.set("endDate", this.addProjectForm.value.projectEndDate);
+    params = params.set("startDate", this.addProjectForm.value.projectStartDate);
     params = params.set("priority", this.addProjectForm.value.projectPriority);
-    params = params.set(
-      "projectLeader",
-      this.addProjectForm.value.projectLeader
-    );
-    params = params.set("teamMember", this.addProjectForm.value.addTeamMembers);
     params = params.set("rate", this.addProjectForm.value.rate);
     params = params.set("client", this.addProjectForm.value.client);
+    params = params.set("clientId", this.clientId);
+
 
     this.http
       .post("http://localhost:8443/admin/projects/createProject?" + params, fd)
@@ -255,41 +253,31 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       this.editProjectForm.value.editProjectStartDate,
       this.editProjectForm.value.editProjectEndDate
     );
-    let StartDate = this.pipe.transform(
-      this.editProjectForm.value.editProjectStartDate,
-      "dd-MM-yyyy"
-    );
-    let EndDate = this.pipe.transform(
-      this.editProjectForm.value.editProjectEndDate,
-      "dd-MM-yyyy"
-    );
+   
+    // let StartDate = this.pipe.transform(
+    //   this.editProjectForm.value.editProjectStartDate,
+    //   "dd-MM-yyyy"
+    // );
+    // let EndDate = this.pipe.transform(
+    //   this.editProjectForm.value.editProjectEndDate,
+    //   "dd-MM-yyyy"
+    // );
     var fd = new FormData();
     for (let image of this.multImages) {
       fd.append("files", image);
     }
+    
     let params = new HttpParams();
     params = params.set("tempId", this.tempId);
     params = params.set("name", this.editProjectForm.value.editProjectName);
-    params = params.set(
-      "description",
-      this.editProjectForm.value.editProjectDescription
-    );
-    params = params.set("endDate", EndDate);
-    params = params.set("startDate", StartDate);
-    params = params.set(
-      "priority",
-      this.editProjectForm.value.editProjectPriority
-    );
-    params = params.set(
-      "teamMember",
-      this.editProjectForm.value.editaddTeamMembers
-    );
-    params = params.set(
-      "projectId",
-      this.editProjectForm.value.editProjectPriority
-    );
+    params = params.set("description",this.editProjectForm.value.editProjectDescription);
+    params = params.set("startDate", this.editProjectForm.value.editProjectStartDate);
+    params = params.set("endDate", this.editProjectForm.value.editProjectEndDate);
+    params = params.set("priority",this.editProjectForm.value.editProjectPriority);
     params = params.set("rate", this.editProjectForm.value.rate);
     params = params.set("client", this.editProjectForm.value.editclient);
+    params = params.set("clientId", this.clientId);
+
 
     this.http
       .patch(
@@ -356,9 +344,15 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     });
     this.rows.push(...temp);
   }
-  // for unsubscribe datatable
+  searchByEmpname(val) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      val = val.toLowerCase();
+      return d.client.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    this.rows.push(...temp);
+  }
   ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
 }

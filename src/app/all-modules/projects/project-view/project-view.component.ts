@@ -56,6 +56,9 @@ export class ProjectViewComponent implements OnInit {
   public userArr = [];
   public teamLeader: any;
   public user_type = sessionStorage.getItem("user_type");
+  public clientIdName: any;
+  public clientName: any;
+  public clientId: any;
 
   path: string;
   client: any;
@@ -88,9 +91,6 @@ export class ProjectViewComponent implements OnInit {
       editProjectStartDate: [""],
       editProjectEndDate: [""],
       editProjectPriority: [""],
-      editaddTeamMembers: [""],
-      editProjectId: [""],
-      projectLeader: [""],
       rate: [""],
       client: [""],
     });
@@ -116,7 +116,7 @@ export class ProjectViewComponent implements OnInit {
       .subscribe((data: any) => {
         this.projects = data;
 
-        console.log("this is the main<><><>>>>>>>>>>>>>>>>>", this.projects);
+        console.log("Projects", this.projects);
 
         this.projectTitle = this.projects.name;
         this.projectImage = this.projects.images;
@@ -196,12 +196,9 @@ export class ProjectViewComponent implements OnInit {
       editProjectEndDate: toSetValues.endDate,
       editProjectStartDate: toSetValues.startDate,
       editProjectPriority: toSetValues.priority,
-      editaddTeamMembers: toSetValues.teamMember,
-      editProjectId: toSetValues.projectId,
       rate: toSetValues.rate,
       client: toSetValues.client,
       file: toSetValues.file,
-      projectLeader: toSetValues.projectLeader,
     });
   }
 
@@ -213,7 +210,7 @@ export class ProjectViewComponent implements OnInit {
       this.editProjectForm.value.editProjectEndDate
     );
     let StartDate = this.pipe.transform(
-      this.editProjectForm.value.editProjectEndDate,
+      this.editProjectForm.value.editProjectStartDate,
       "dd-MM-yyyy"
     );
     let EndDate = this.pipe.transform(
@@ -225,29 +222,21 @@ export class ProjectViewComponent implements OnInit {
     for (let image of this.multImages) {
       fd.append("files", image);
     }
+    this.clientIdName = this.editProjectForm.value.client.split(",");
+    this.clientName = this.clientIdName[1] + "" + this.clientIdName[2];
+    this.clientId = this.clientIdName[0];
+
     let params = new HttpParams();
     params = params.set("tempId", this.projectId);
     params = params.set("name", this.editProjectForm.value.editProjectName);
-    params = params.set(
-      "description",
-      this.editProjectForm.value.editProjectDescription
-    );
+    params = params.set("description",this.editProjectForm.value.editProjectDescription);
     params = params.set("endDate", EndDate);
     params = params.set("startDate", StartDate);
-    params = params.set(
-      "priority",
-      this.editProjectForm.value.editProjectPriority
-    );
-    params = params.set(
-      "teamMember",
-      this.editProjectForm.value.editaddTeamMembers
-    );
-    params = params.set(
-      "projectId",
-      this.editProjectForm.value.editProjectPriority
-    );
+    params = params.set("priority",this.editProjectForm.value.editProjectPriority);
     params = params.set("rate", this.editProjectForm.value.rate);
     params = params.set("client", this.editProjectForm.value.client);
+    params = params.set("clientname", this.clientName);
+    params = params.set("clientId", this.clientId);
 
     this.http
       .patch(
@@ -255,6 +244,7 @@ export class ProjectViewComponent implements OnInit {
         fd
       )
       .subscribe((res: any) => {
+        console.log("updated",res)
         this.allTasks();
         this.getInfo();
         this.editProjectForm.reset();
@@ -293,12 +283,13 @@ export class ProjectViewComponent implements OnInit {
       });
   }
 
-  addUsers(val1, val2, id) {
+  addUsers(val1, val2, id,profileImagePath) {
     let val = val1 + " " + val2;
 
     var obj = {
       name: val,
       id: id,
+      profileImagePath:profileImagePath
     };
 
     this.userArr.push(obj);
@@ -328,11 +319,12 @@ export class ProjectViewComponent implements OnInit {
       });
   }
 
-  addLeader(val1, val2, id) {
+  addLeader(val1, val2, id,profileImagePath) {
     let val = val1 + " " + val2;
     this.teamLeader = {
       name: val,
       id: id,
+      profileImagePath:profileImagePath
     };
 
     this.leader.push(this.teamLeader);

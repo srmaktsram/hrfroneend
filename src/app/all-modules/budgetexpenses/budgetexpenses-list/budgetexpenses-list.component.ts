@@ -3,7 +3,12 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AllModulesService } from "../../all-modules.service";
 import { DatePipe } from "@angular/common";
 import { ToastrService } from "ngx-toastr";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 declare const $: any;
 @Component({
   selector: "app-budgetexpenses-list",
@@ -11,6 +16,8 @@ declare const $: any;
   styleUrls: ["./budgetexpenses-list.component.css"],
 })
 export class BudgetexpensesListComponent implements OnInit {
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   public url: any = "budgetexpense";
   public pipe = new DatePipe("en-US");
   public tempId: any;
@@ -24,13 +31,18 @@ export class BudgetexpensesListComponent implements OnInit {
   srch: any[];
   user_type: string;
   accountingwriteFin: string;
+
+  multFile: any;
+
   accountingwrite: string;
   accountingwriteSub: string;
+
   constructor(
     private formBuilder: FormBuilder,
     private srvModuleService: AllModulesService,
     private toastr: ToastrService,
-    private http: HttpClient
+    private http: HttpClient,
+    private _snackBar: MatSnackBar
   ) {
     this.user_type = sessionStorage.getItem("user_type");
     this.accountingwrite = sessionStorage.getItem("accountingwrite");
@@ -103,6 +115,20 @@ export class BudgetexpensesListComponent implements OnInit {
       }
     });
   }
+
+  //////////////////////////file select function///////////////////
+  selectFile(event: any) {
+    if (event.target.files.length > 0) {
+      this.multFile = event.target.files;
+    }
+  }
+  ///////////////////// download file////////////////////////////
+  savePdf(val) {
+    var url = `http://localhost:8443/${val}`;
+
+    window.open(url);
+  }
+
   // Add Department  Modal Api Call
   addRevenue() {
     if (this.addRevenueForm.invalid) {
@@ -114,52 +140,92 @@ export class BudgetexpensesListComponent implements OnInit {
         this.addRevenueForm.value.RevenueDate,
         "dd-MM-yyyy"
       );
-      let adminId = this.adminId;
-      let obj = {
-        amount: this.addRevenueForm.value.RevenueName,
-        notes: this.addRevenueForm.value.RevenueNotes,
-        revenuedate: purchaseToDateFormat,
-        subcategoryname: this.addRevenueForm.value.SubCategoryName,
-        categoryname: this.addRevenueForm.value.CategoryName,
-        adminId,
-      };
+
+      var fd = new FormData();
+      for (let pdfFile of this.multFile) {
+        fd.append("file", pdfFile);
+      }
+
+      let params = new HttpParams();
+      params = params.set("amount", this.addRevenueForm.value.RevenueName);
+      params = params.set("notes", this.addRevenueForm.value.RevenueNotes);
+      params = params.set("revenuedate", purchaseToDateFormat);
+      params = params.set(
+        "subcategoryname",
+        this.addRevenueForm.value.SubCategoryName
+      );
+      params = params.set(
+        "categoryname",
+        this.addRevenueForm.value.CategoryName
+      );
+      params = params.set("adminId", this.adminId);
+
       this.http
         .post(
-          "http://localhost:8443/admin/budgetExpenses/createBudgetExpenses",
-          obj
+          "http://localhost:8443/admin/budgetExpenses/createBudgetExpenses?" +
+            params,
+          fd
         )
-        .subscribe((data) => {});
+        .subscribe((data: any) => {
+          console.log(data);
+        });
       $("#add_categories").modal("hide");
       this.LoadRevenue();
       this.addRevenueForm.reset();
-      this.toastr.success("Budget-revenue added sucessfully...!", "Success");
+      this._snackBar.open("Budget-revenue added sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
   editRevenue() {
     if (this.editRevenueForm.valid) {
-      let obj = {
-        amount: this.editRevenueForm.value.RevenueName,
-        notes: this.editRevenueForm.value.RevenueNotes,
-        revenuedate: this.editRevenueForm.value.RevenueDate,
+      var fd = new FormData();
+      for (let pdfFile of this.multFile) {
+        fd.append("file", pdfFile);
+      }
 
-        subcategoryname: this.editRevenueForm.value.SubCategoryName,
-        categoryname: this.editRevenueForm.value.CategoryName,
-      };
-      let id = this.editId;
+      let params = new HttpParams();
+      params = params.set("amount", this.editRevenueForm.value.RevenueName);
+      params = params.set("notes", this.editRevenueForm.value.RevenueNotes);
+      params = params.set(
+        "revenuedate",
+        this.editRevenueForm.value.RevenueDate
+      );
+      params = params.set(
+        "subcategoryname",
+        this.editRevenueForm.value.SubCategoryName
+      );
+      params = params.set(
+        "categoryname",
+        this.editRevenueForm.value.CategoryName
+      );
+      params = params.set("adminId", this.adminId);
+      params = params.set("id", this.editId);
+
       this.http
         .patch(
-          "http://localhost:8443/admin/budgetExpenses/updateBudgetExpenses" +
-            "/" +
-            id,
-          obj
+          "http://localhost:8443/admin/budgetExpenses/updateBudgetExpenses?" +
+            params,
+          fd
         )
-        .subscribe((data1) => {
+        .subscribe((data1: any) => {
+          console.log("update data", data1);
           this.LoadRevenue();
         });
 
       $("#edit_categories").modal("hide");
-      this.toastr.success("Expenses Updated sucessfully...!", "Success");
+      this._snackBar.open("Expenses Updated sucessfully !", "", {
+        duration: 2000,
+        panelClass: "notif-success",
+
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+      });
     }
   }
 
@@ -196,7 +262,14 @@ export class BudgetexpensesListComponent implements OnInit {
       .subscribe((data) => {
         this.LoadRevenue();
         $("#delete").modal("hide");
-        this.toastr.success("Budget-revenue deleted sucessfully..!", "Success");
+
+        this._snackBar.open("Budget-revenue deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
   }
 }
