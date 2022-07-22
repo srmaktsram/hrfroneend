@@ -86,7 +86,8 @@
                 </div>
               </div>
             </div>
-            <div class="pro-edit" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
+            <div class="pro-edit"
+              *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
               <a data-bs-target="#profile_info" data-bs-toggle="modal" class="edit-icon" (click)="edit()"><i
                   class="fa fa-pencil"></i></a>
             </div>
@@ -121,12 +122,11 @@
       <div class="row">
         <div class="col-md-6 d-flex">
           <div class="card profile-box flex-fill">
-            <div class="card-body" >
+            <div class="card-body">
               <h3 class="card-title">
                 Personal Informations
-                <a 
-                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
-                class="edit-icon" data-bs-toggle="modal" data-bs-target="#personal_info_modal" (click)="edit()"><i
+                <a *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                  class="edit-icon" data-bs-toggle="modal" data-bs-target="#personal_info_modal" (click)="edit()"><i
                     class="fa fa-pencil"></i></a>
               </h3>
               <ul class="personal-info">
@@ -173,10 +173,9 @@
             <div class="card-body">
               <h3 class="card-title">
                 Emergency Contact
-                <a
-                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
-                class="edit-icon" data-bs-toggle="modal" data-bs-target="#emergency_contact_modal"
-                  (click)="edit()"><i class="fa fa-pencil"></i></a>
+                <a *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                  class="edit-icon" data-bs-toggle="modal" data-bs-target="#emergency_contact_modal" (click)="edit()"><i
+                    class="fa fa-pencil"></i></a>
               </h3>
               <h5 class="section-title">Primary</h5>
               <ul class="personal-info">
@@ -225,9 +224,8 @@
             <div class="card-body">
               <h3 class="card-title">
                 Bank information
-                <a
-                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
-                class="edit-icon" data-bs-toggle="modal" data-bs-target="#bank_info_modal" (click)="edit()"><i
+                <a *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                  class="edit-icon" data-bs-toggle="modal" data-bs-target="#bank_info_modal" (click)="edit()"><i
                     class="fa fa-pencil"></i></a>
               </h3>
               <ul class="personal-info">
@@ -256,9 +254,8 @@
             <div class="card-body">
               <h3 class="card-title">
                 Family Informations
-                <a
-                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
-                class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal" (click)="edit()"><i
+                <a *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                  class="edit-icon" data-bs-toggle="modal" data-bs-target="#family_info_modal" (click)="edit()"><i
                     class="fa fa-pencil" (click)="addItems()"></i></a>
               </h3>
               <div class="table-responsive">
@@ -303,9 +300,8 @@
             <div class="card-body">
               <h3 class="card-title">
                 Education Informations
-                <a
-                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
-                 class="edit-icon" data-bs-toggle="modal" data-bs-target="#education_info"><i
+                <a *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                  class="edit-icon" data-bs-toggle="modal" data-bs-target="#education_info"><i
                     class="fa fa-pencil"></i></a>
               </h3>
               <div class="experience-box">
@@ -348,9 +344,8 @@
             <div class="card-body">
               <h3 class="card-title">
                 Experience
-                <a
-                *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
-                class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info"><i
+                <a *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')"
+                  class="edit-icon" data-bs-toggle="modal" data-bs-target="#experience_info"><i
                     class="fa fa-pencil"></i></a>
               </h3>
               <div class="experience-box">
@@ -650,7 +645,8 @@
               </div>
             </div>
 
-            <div class="submit-section" *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
+            <div class="submit-section"
+              *ngIf="user_type == 'admin' ||(user_type === 'roleadmin' && employeewrite == 'true')||(user_type === 'rolesubadmin' && employeewriteSub === 'true')">
               <button class="btn btn-primary submit-btn" type="submit">
                 Save
               </button>
@@ -867,7 +863,8 @@
               <input list="brow" class="form-control" formControlName="reportsTo"
                 (input)="getFirstName($event.target.value)">
               <datalist #data id="brow">
-                <option selected *ngFor="let item of lstEmployee" value="{{item.firstName}}">{{item.firstName}}</option>
+                <option selected *ngFor="let item of lstEmployee" value="{{item.firstName}}">
+                </option>
               </datalist>
             </div>
           </div>
@@ -968,7 +965,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label>Religion</label>
-                <div class="cal-icon">
+                <div>
                   <input class="form-control" type="text" formControlName="religion" [class.invalid]="
                       editPersonalForm.get('religion').invalid &&
                       editPersonalForm.get('religion').touched
@@ -1303,7 +1300,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone <span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" formControlName="phone1" />
+                    <input class="form-control" type="text" formControlName="phone1" maxlength="10" minlength="10" />
                     <ng-container
                       *ngIf="editEmergencyForm.get('phone1').invalid && editEmergencyForm.get('phone1').touched">
                       <p *ngIf="editEmergencyForm.get('phone1').errors.required" class="text-danger">
@@ -1318,7 +1315,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone 2</label>
-                    <input class="form-control" type="text" formControlName="phone2" />
+                    <input class="form-control" type="text" formControlName="phone2" maxlength="10" minlength="10" />
                     <ng-container
                       *ngIf="editEmergencyForm.get('phone2').invalid && editEmergencyForm.get('phone2').touched">
                       <p *ngIf="editEmergencyForm.get('phone2').errors.required" class="text-danger">
@@ -1368,7 +1365,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone <span class="text-danger">*</span></label>
-                    <input class="form-control" type="text" formControlName="phone3" />
+                    <input class="form-control" type="text" formControlName="phone3" maxlength="10" minlength="10" />
                     <ng-container
                       *ngIf="editEmergencyForm.get('phone3').invalid && editEmergencyForm.get('phone3').touched">
                       <p *ngIf="editEmergencyForm.get('phone3').errors.required" class="text-danger">
@@ -1378,12 +1375,12 @@
                         *Invalid Phone Number</p>
                     </ng-container>
                   </div>
-
                 </div>
+
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Phone 2</label>
-                    <input class="form-control" type="text" formControlName="phone4" />
+                    <input class="form-control" type="text" formControlName="phone4" maxlength="10" minlength="" />
                     <ng-container
                       *ngIf="editEmergencyForm.get('phone4').invalid && editEmergencyForm.get('phone4').touched">
                       <p *ngIf="editEmergencyForm.get('phone4').errors.required" class="text-danger">

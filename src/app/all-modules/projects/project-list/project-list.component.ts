@@ -41,6 +41,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   projectswrite: string;
   projectsWrite: string;
   projectsWriteSub: string;
+
   clientIdName: any;
   clientName: string;
   clientId: any;
@@ -53,8 +54,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     private allModulesService: AllModulesService,
     private _snackBar: MatSnackBar
   ) {
-    this.adminId=sessionStorage.getItem("adminId");
-    this.projectswrite=sessionStorage.getItem("projectswrite");
+    this.adminId = sessionStorage.getItem("adminId");
+    this.projectswrite = sessionStorage.getItem("projectswrite");
     this.projectsWrite = sessionStorage.getItem("projectsWrite");
     this.projectsWriteSub = sessionStorage.getItem("projectsWriteSub");
 
@@ -85,6 +86,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       editProjectStartDate: ["", [Validators.required]],
       editProjectEndDate: ["", [Validators.required]],
       editProjectPriority: ["", [Validators.required]],
+
       rate: [""],
       client: [""],
     });
@@ -113,11 +115,12 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/admin/projects/getAdminproject" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data: any) => {
         this.projects = data;
+        console.log(this.projects, "hgdfjgkhgfx>>>>>>>>>>>>>>>>M<<<<<<<<<<<<<<<<")
         this.rows = this.projects;
         this.srch = [...this.rows];
       });
@@ -175,6 +178,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       return item.projectId === id;
     });
     let toSetValues = this.projects[index];
+    console.log(toSetValues, "hdhgdhdh><<KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKkk")
     this.editProjectForm.patchValue({
       editProjectName: toSetValues.name,
       editProjectDescription: toSetValues.description,
@@ -182,7 +186,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       editProjectStartDate: toSetValues.startDate,
       editProjectPriority: toSetValues.priority,
       rate: toSetValues.rate,
-      client: toSetValues.client,
+
+      editclient: toSetValues.client,
       file: toSetValues.file,
 
     });
@@ -270,7 +275,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     params = params.set("endDate", this.editProjectForm.value.editProjectEndDate);
     params = params.set("priority",this.editProjectForm.value.editProjectPriority);
     params = params.set("rate", this.editProjectForm.value.rate);
-    params = params.set("client", this.editProjectForm.value.client);
+    params = params.set("client", this.editProjectForm.value.editclient);
     params = params.set("clientId", this.clientId);
 
 
@@ -306,8 +311,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/admin/projects/deleteproject" +
-          "/" +
-          this.tempId,
+        "/" +
+        this.tempId,
         { status: 2 }
       )
       .subscribe((data: any) => {

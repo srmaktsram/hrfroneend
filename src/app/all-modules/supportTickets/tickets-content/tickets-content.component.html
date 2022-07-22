@@ -14,7 +14,7 @@
       </div>
       <div class="col-auto float-end ms-auto">
         <a *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')"
-       class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_ticket"><i class="fa fa-plus"></i> Add
+          class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_ticket"><i class="fa fa-plus"></i> Add
           Ticket</a>
       </div>
     </div>
@@ -143,14 +143,16 @@
               <th>Reply Email</th>
               <th>Priority</th>
               <th class="text-center">Status</th>
-              <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')">Actions</th>
+              <th class="text-end"
+                *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')">
+                Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let tickets of allTickets; let i = index">
               <td>{{ i + 1 }}</td>
 
-              <td>{{ tickets.ticketSubject }}</td>
+              <td (click)="get(tickets.id)">{{ tickets.ticketSubject }}</td>
 
               <td>{{ tickets.replyPhone }}</td>
               <td>{{ tickets.replyEmail }}</td>
@@ -158,38 +160,30 @@
                 <div class="dropdown action-label">
                   <ng-container *ngIf="tickets.priority == 'High'">
 
-                    <a
-                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      ><i class="fa fa-dot-circle-o text-danger"></i>
+                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false"><i class="fa fa-dot-circle-o text-danger"></i>
 
                       {{ tickets.priority }}
                     </a>
                   </ng-container>
                   <ng-container *ngIf="tickets.priority == 'Medium'">
 
-                    <a
-                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      ><i class="fa fa-dot-circle-o text-warning"></i>
+                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false"><i class="fa fa-dot-circle-o text-warning"></i>
 
                       {{ tickets.priority }}
                     </a>
                   </ng-container>
                   <ng-container *ngIf="tickets.priority == 'Low'">
 
-                    <a
-                      class="btn btn-white btn-sm btn-rounded dropdown-toggle"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      ><i class="fa fa-dot-circle-o text-success"></i>
+                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown"
+                      aria-expanded="false"><i class="fa fa-dot-circle-o text-success"></i>
 
                       {{ tickets.priority }}
                     </a>
                   </ng-container>
-                  <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')">
+                  <div class="dropdown-menu dropdown-menu-right"
+                    *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')">
                     <a class="dropdown-item" (click)="getPriority('High', tickets.id)"><i
                         class="fa fa-dot-circle-o text-danger"></i> High</a>
                     <a class="dropdown-item" (click)="getPriority('Medium', tickets.id)"><i
@@ -223,7 +217,8 @@
                   <span class="text-info">{{ tickets.status }}</span>
                 </ng-container>
               </td>
-              <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')">
+              <td class="text-end"
+                *ngIf="user_type === 'admin' || (user_type === 'rolereceptionist' && supportticketswriteRecep === 'true') || (user_type === 'rolehr' && supportticketswriteHr === 'true')|| (user_type === 'rolefinance' && supportTicketsWriteFin === 'true')|| (user_type === 'rolemanager' && supportTicketsWriteMan === 'true')||(user_type === 'roleadmin' && supportTicketsWrite == 'true')||(user_type === 'rolesubadmin' && supportTicketsWriteSub === 'true')">
                 <div class="dropdown dropdown-action">
                   <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i
                       class="material-icons">more_vert</i></a>
