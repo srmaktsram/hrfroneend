@@ -25,6 +25,7 @@ export class AttendanceAdminComponent implements OnInit {
   user_type: string;
   employeewrite: string;
   employeewriteSub: string;
+  router: any;
 
 
   constructor(private http: HttpClient) {
