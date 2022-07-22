@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
   providedIn: "root",
 })
 export class AuthenticationService {
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   login(
     adminId: string,
@@ -28,10 +28,9 @@ export class AuthenticationService {
     projectswrite: string,
     holidaysread: string,
     holidayswrite: string,
-    roleDetails: any
+    roleDetails: any,
 
-    profileImage: any,
-
+    profileImage: any
   ) {
     sessionStorage.setItem("currentUser", "EmployeeLogin");
     sessionStorage.setItem("user_type", "employee");
@@ -57,7 +56,6 @@ export class AuthenticationService {
     sessionStorage.setItem("holidayswrite", holidayswrite);
     sessionStorage.setItem("profileImage", profileImage);
 
-
     sessionStorage.setItem("current_location", JSON.stringify(location));
     sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
     return true;
@@ -74,7 +72,6 @@ export class AuthenticationService {
     sessionStorage.removeItem("lastName");
     sessionStorage.removeItem("phone");
     sessionStorage.removeItem("profileImage");
-
   }
   public get loggedIn(): boolean {
     return sessionStorage.getItem("currentUser") !== null;

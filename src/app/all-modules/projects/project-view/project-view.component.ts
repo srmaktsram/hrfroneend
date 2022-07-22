@@ -27,7 +27,7 @@ export class ProjectViewComponent implements OnInit {
   public lstInprogress = [];
   public lstHold = [];
   public lstReview = [];
-  public multImages = [];
+  public multImages: any;
   public leader = [];
   public completeTask;
   public openTask;
@@ -70,10 +70,9 @@ export class ProjectViewComponent implements OnInit {
     private _snackBar: MatSnackBar
   ) {
     this.adminId = sessionStorage.getItem("adminId");
-    this.projectswrite=sessionStorage.getItem("projectswrite");
+    this.projectswrite = sessionStorage.getItem("projectswrite");
     this.projectsWrite = sessionStorage.getItem("projectsWrite");
     this.projectsWriteSub = sessionStorage.getItem("projectsWriteSub");
-
 
     this.getClients();
   }
@@ -182,8 +181,9 @@ export class ProjectViewComponent implements OnInit {
   download() {}
 
   selectImage(event: any) {
+    console.log("event>>>>>>>>>>>>>", event.target.file);
     if (event.target.files.length > 0) {
-      this.multImages = event.target.files;
+      this.multImages = event.target.file;
     }
   }
 
@@ -222,8 +222,8 @@ export class ProjectViewComponent implements OnInit {
     );
 
     var fd = new FormData();
-    for (let image of this.multImages) {
-      fd.append("files", image);
+    for (let pdf of this.multImages) {
+      fd.append("file", pdf);
     }
     let params = new HttpParams();
     params = params.set("tempId", this.projectId);

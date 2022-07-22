@@ -35,6 +35,8 @@ export class CheckoutComponent implements OnInit {
   applied: boolean = false;
   email_error = true;
   companyName_error = true;
+  globalEmail: any;
+  globalId: any;
   _window(): any {
     return window;
   }
@@ -123,7 +125,7 @@ export class CheckoutComponent implements OnInit {
     this.companyName_error = true;
     this.ngxService.start();
     let corporateId = this.corporateId;
-
+    this.globalEmail = this.checkoutForm.value.email;
     var obj = {
       packageName: this.packageName,
       panNo: this.checkoutForm.value.panNo,
@@ -143,6 +145,8 @@ export class CheckoutComponent implements OnInit {
         obj
       )
       .subscribe((res: any) => {
+        alert(res.data.id);
+        this.globalId = res.data.id;
         console.log("this is the create order History   111>>>>", res);
         if (res.result == 0) {
           if (this.packageName === "Basic(Single-User)") {
@@ -171,6 +175,18 @@ export class CheckoutComponent implements OnInit {
       .post("http://localhost:8443/checkout/create/OrderId", { amount: amount })
       .subscribe((res: any) => {
         this.completPayment(res.amount, res.id);
+        let orderId = res.id;
+        let id = this.globalId;
+        alert(orderId);
+        alert(id);
+        this.http
+          .patch("http://localhost:8443/checkout/order/update/order", {
+            orderId,
+            id,
+          })
+          .subscribe((res: any) => {
+            alert("order");
+          });
       });
   }
 
@@ -210,6 +226,7 @@ export class CheckoutComponent implements OnInit {
   }
   evaluate(razorpay_payment_id, razorpay_order_id, razorpay_signature) {
     var paymentId = razorpay_payment_id;
+
     this.http
       .post("http://localhost:8443/checkout/testpayment", {
         paymentId: razorpay_payment_id,
@@ -244,11 +261,11 @@ export class CheckoutComponent implements OnInit {
     this.http
       .post("http://localhost:8443/checkout/create/packageDetails", obj)
       .subscribe((res: any) => {
-        this.saveOrderDetails();
+        this.saveOrderDetails(paymentId);
       });
   }
 
-  saveOrderDetails() {
+  saveOrderDetails(paymentId) {
     this.http
       .post(
         "http://localhost:8443/checkout/create/Details" +
@@ -256,7 +273,9 @@ export class CheckoutComponent implements OnInit {
           this.corporateId,
         {
           amount: this.payAmount,
+          paymentId: paymentId,
           packageName: this.packageName,
+          email: this.globalEmail,
           status: 1,
           companyName: this.checkoutForm.value.companyName,
         }
@@ -264,7 +283,6 @@ export class CheckoutComponent implements OnInit {
       .subscribe((res: any) => {
         console.log("this is the orderDetails>>>>444>>>>>>", res);
         if (res.packageName === "Basic(Single-User)") {
-          alert(res.packageName);
           this.http
             .patch(
               "http://localhost:8443/mainadmin/hr_user/updateHr_user" +
@@ -274,7 +292,6 @@ export class CheckoutComponent implements OnInit {
             )
             .subscribe((data: any) => {});
         } else {
-          alert(res.packageName);
           this.http
             .patch(
               "http://localhost:8443/mainadmin/hr_user/updateHr_user" +
@@ -352,8 +369,6 @@ export class CheckoutComponent implements OnInit {
             panNo: this.getdata.companyPan,
             gstNo: this.getdata.companyGst,
           });
-        } else {
-          alert("Invalid Admin Id ........");
         }
       });
   }

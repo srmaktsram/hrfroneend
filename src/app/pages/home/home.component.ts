@@ -10,14 +10,14 @@ export class HomeComponent implements OnInit {
   constructor(
     private cookieService: CookieService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   ngOnInit() {
     const aid = this.route.snapshot.queryParamMap.get("aid");
     if (aid) {
       var now = new Date();
       var time = now.getTime();
-      var expireTime = time + 300000;
+      var expireTime = time + 7 * 24 * 60 * 60 * 1000;
       now.setTime(expireTime);
       this.cookieService.set("aid", aid, { expires: now });
     }
