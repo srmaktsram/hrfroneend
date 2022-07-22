@@ -12,10 +12,9 @@
                 </ul>
             </div>
             <div class="col-auto float-end ms-auto">
-                <a
-                *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')"
-                class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_expense"><i
-                        class="fa fa-plus"></i> Add Expense</a>
+                <a *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')"
+                    class="btn add-btn" data-bs-toggle="modal" data-bs-target="#add_expense"><i class="fa fa-plus"></i>
+                    Add Expense</a>
             </div>
         </div>
     </div>
@@ -25,16 +24,17 @@
     <div class="row filter-row">
         <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
             <div class="form-group form-focus">
-                <input type="text" class="form-control floating" (input)="searchName($event.target.value)" (focusout) = "rerender()">
+                <input type="text" class="form-control floating" (input)="searchName($event.target.value)"
+                    (focusout)="rerender()">
                 <label class="focus-label">Item Name</label>
             </div>
         </div>
         <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
             <div class="form-group form-focus select-focus">
                 <select class="form-select form-control" (input)="purchasedBy($event.target.value)">
-                    <option value = ""> -- Select -- </option>
-                    <option value = "Loren Gatlin">Loren Gatlin</option>
-                    <option value = "Tarah Shropshire">Tarah Shropshire</option>
+                    <option value=""> -- Select -- </option>
+                    <option value="Loren Gatlin">Loren Gatlin</option>
+                    <option value="Tarah Shropshire">Tarah Shropshire</option>
                 </select>
                 <label class="focus-label">Purchased By</label>
             </div>
@@ -42,9 +42,9 @@
         <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
             <div class="form-group form-focus select-focus">
                 <select class="form-select form-control" (input)="paidBy($event.target.value)">
-                    <option value = ""> -- Select -- </option>
-                    <option value = "Cash"> Cash </option>
-                    <option value = "Cheque"> Cheque </option>
+                    <option value=""> -- Select -- </option>
+                    <option value="Cash"> Cash </option>
+                    <option value="Cheque"> Cheque </option>
                 </select>
                 <label class="focus-label">Paid By</label>
             </div>
@@ -52,7 +52,9 @@
         <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
             <div class="form-group form-focus">
                 <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" type="text" bsDatepicker type="text"  [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchByFrom($event)">
+                    <input class="form-control floating datetimepicker" type="text" bsDatepicker type="text"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                        (bsValueChange)="searchByFrom($event)">
                 </div>
                 <label class="focus-label">From</label>
             </div>
@@ -60,7 +62,9 @@
         <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
             <div class="form-group form-focus">
                 <div class="cal-icon">
-                    <input class="form-control floating datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" (bsValueChange)="searchByTo($event)">
+                    <input class="form-control floating datetimepicker" bsDatepicker type="text"
+                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                        (bsValueChange)="searchByTo($event)">
                 </div>
                 <label class="focus-label">To</label>
             </div>
@@ -74,7 +78,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="table-responsive">
-                <table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id = "datatable" class="table table-striped custom-table mb-0 datatable">
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="datatable"
+                    class="table table-striped custom-table mb-0 datatable">
                     <thead>
                         <tr>
                             <th>Item</th>
@@ -84,7 +89,9 @@
                             <th>Amount</th>
                             <th>Paid By</th>
                             <th class="text-center">Status</th>
-                            <th class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">Actions</th>
+                            <th class="text-end"
+                                *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
+                                Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,7 +104,7 @@
                             <td>
                                 <h2 class="table-avatar">
                                     <a routerLink="/layout/employees/employeeprofile" class="avatar avatar-xs"><img
-                                            src= "assets/img/profiles/avatar-{{i+ 1}}.jpg" alt=""></a>
+                                            src="assets/img/profiles/avatar-{{i+ 1}}.jpg" alt=""></a>
                                     <a routerLink="/layout/employees/employeeprofile">{{expenses.purchasedBy}}</a>
                                 </h2>
                             </td>
@@ -105,26 +112,31 @@
                             <td>{{expenses.paidby}}</td>
                             <td class="text-center">
                                 <div class="dropdown action-label">
-                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="btn btn-white btn-sm btn-rounded dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa fa-dot-circle-o text-danger"></i> {{expenses.status}}
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
-                                        <a class="dropdown-item" (click)="updateStatus('Pending',expenses.id)"> <i class="fa fa-dot-circle-o text-danger"></i>
+                                    <div class="dropdown-menu dropdown-menu-right"
+                                        *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
+                                        <a class="dropdown-item" (click)="updateStatus('Pending',expenses.id)"> <i
+                                                class="fa fa-dot-circle-o text-danger"></i>
                                             Pending</a>
-                                        <a class="dropdown-item" (click)="updateStatus('Approved',expenses.id)" > <i
+                                        <a class="dropdown-item" (click)="updateStatus('Approved',expenses.id)"> <i
                                                 class="fa fa-dot-circle-o text-success"></i> Approved</a>
                                     </div>
                                 </div>
                             </td>
-                            <td class="text-end" *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
+                            <td class="text-end"
+                                *ngIf="user_type === 'admin' || (user_type === 'rolefinance' && saleswriteFin === 'true')||(user_type === 'roleadmin' && saleswrite == 'true')||(user_type === 'rolesubadmin' && saleswriteSub === 'true')">
                                 <div class="dropdown dropdown-action">
                                     <a class="action-icon dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#edit_expense" (click)="edit(expenses.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                        <a class="dropdown-item" data-bs-toggle="modal"
-                                            data-bs-target="#delete_expense" (click)="tempId = expenses.id"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit_expense"
+                                            (click)="edit(expenses.id)"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#delete_expense"
+                                            (click)="tempId = expenses.id"><i class="fa fa-trash-o m-r-5"></i>
+                                            Delete</a>
                                     </div>
                                 </div>
                             </td>
@@ -133,7 +145,7 @@
                             <td colspan="10">
                                 <h5 style="text-align: center;">No data found</h5>
                             </td>
-                           
+
                         </tr>
                     </tbody>
                 </table>
@@ -159,8 +171,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Item Name</label>
-                                <input class="form-control" type="text" [class.invalid]="addExpensesForm.get('itemName').invalid && addExpensesForm.get('itemName').touched"
-                                formControlName="itemName">
+                                <input class="form-control" type="text"
+                                    [class.invalid]="addExpensesForm.get('itemName').invalid && addExpensesForm.get('itemName').touched"
+                                    formControlName="itemName">
                                 <div
                                     *ngIf="addExpensesForm.get('itemName').invalid && addExpensesForm.get('itemName').touched">
                                     <small
@@ -172,8 +185,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Purchase From</label>
-                                <input class="form-control"  [class.invalid]="addExpensesForm.get('purchaseFrom').invalid && addExpensesForm.get('purchaseFrom').touched"
-                                formControlName="purchaseFrom">
+                                <input class="form-control"
+                                    [class.invalid]="addExpensesForm.get('purchaseFrom').invalid && addExpensesForm.get('purchaseFrom').touched"
+                                    formControlName="purchaseFrom">
                                 <div
                                     *ngIf="addExpensesForm.get('purchaseFrom').invalid && addExpensesForm.get('purchaseFrom').touched">
                                     <small
@@ -187,24 +201,26 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Purchase Date</label>
-                                <div class="cal-icon"><input class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
-                                    [class.invalid]="addExpensesForm.get('purchaseDate').invalid && addExpensesForm.get('purchaseDate').touched"
-                                formControlName="purchaseDate">
-                                <div
-                                    *ngIf="addExpensesForm.get('purchaseDate').invalid && addExpensesForm.get('purchaseDate').touched">
-                                    <small
-                                        *ngIf="addExpensesForm.get('purchaseDate').invalid && addExpensesForm.get('purchaseDate').touched"
-                                        class="text-danger"> *Purchase date is required</small>
+                                <div class="cal-icon"><input class="form-control datetimepicker" bsDatepicker
+                                        type="text"
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                        [class.invalid]="addExpensesForm.get('purchaseDate').invalid && addExpensesForm.get('purchaseDate').touched"
+                                        formControlName="purchaseDate">
+                                    <div
+                                        *ngIf="addExpensesForm.get('purchaseDate').invalid && addExpensesForm.get('purchaseDate').touched">
+                                        <small
+                                            *ngIf="addExpensesForm.get('purchaseDate').invalid && addExpensesForm.get('purchaseDate').touched"
+                                            class="text-danger"> *Purchase date is required</small>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Purchased By </label>
                                 <select class="form-select form-control"
-                                [class.invalid]="addExpensesForm.get('purchasedBy').invalid && addExpensesForm.get('purchasedBy').touched"
-                                formControlName="purchasedBy">
+                                    [class.invalid]="addExpensesForm.get('purchasedBy').invalid && addExpensesForm.get('purchasedBy').touched"
+                                    formControlName="purchasedBy">
                                     <option>Loren Gatlin</option>
                                     <option>Tarah Shropshire</option>
                                 </select>
@@ -221,8 +237,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Amount</label>
-                                <input placeholder="$50" class="form-control" type="text"  [class.invalid]="addExpensesForm.get('amount').invalid && addExpensesForm.get('amount').touched"
-                                formControlName="amount">
+                                <input placeholder="$50" class="form-control" type="text"
+                                    [class.invalid]="addExpensesForm.get('amount').invalid && addExpensesForm.get('amount').touched"
+                                    formControlName="amount">
                                 <div
                                     *ngIf="addExpensesForm.get('amount').invalid && addExpensesForm.get('amount').touched">
                                     <small
@@ -235,8 +252,8 @@
                             <div class="form-group">
                                 <label>Paid By</label>
                                 <select class="form-select form-control"
-                                [class.invalid]="addExpensesForm.get('paidBy').invalid && addExpensesForm.get('paidBy').touched"
-                                formControlName="paidBy">
+                                    [class.invalid]="addExpensesForm.get('paidBy').invalid && addExpensesForm.get('paidBy').touched"
+                                    formControlName="paidBy">
                                     <option>Cash</option>
                                     <option>Cheque</option>
                                 </select>
@@ -304,8 +321,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Item Name</label>
-                                <input class="form-control" value="Dell Laptop" type="text" [class.invalid]="editExpensesForm.get('itemName').invalid && editExpensesForm.get('itemName').touched"
-                                formControlName="itemName">
+                                <input class="form-control" value="Dell Laptop" type="text"
+                                    [class.invalid]="editExpensesForm.get('itemName').invalid && editExpensesForm.get('itemName').touched"
+                                    formControlName="itemName">
                                 <div
                                     *ngIf="editExpensesForm.get('itemName').invalid && editExpensesForm.get('itemName').touched">
                                     <small
@@ -317,8 +335,9 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Purchase From</label>
-                                <input class="form-control" value="Amazon" [class.invalid]="editExpensesForm.get('purchaseFrom').invalid && editExpensesForm.get('purchaseFrom').touched"
-                                formControlName="purchaseFrom">
+                                <input class="form-control" value="Amazon"
+                                    [class.invalid]="editExpensesForm.get('purchaseFrom').invalid && editExpensesForm.get('purchaseFrom').touched"
+                                    formControlName="purchaseFrom">
                                 <div
                                     *ngIf="editExpensesForm.get('purchaseFrom').invalid && editExpensesForm.get('purchaseFrom').touched">
                                     <small
@@ -332,31 +351,35 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Purchase Date</label>
-                                <div class="cal-icon"><input class="form-control datetimepicker" bsDatepicker type="text" [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }" [class.invalid]="editExpensesForm.get('purchaseDate').invalid && editExpensesForm.get('purchaseDate').touched"
-                                    formControlName="purchaseDate" (bsValueChange)="from($event)">
+                                <div class="cal-icon"><input class="form-control datetimepicker" bsDatepicker
+                                        type="text"
+                                        [bsConfig]="{ dateInputFormat: 'DD-MM-YYYY',  returnFocusToInput: true }"
+                                        [class.invalid]="editExpensesForm.get('purchaseDate').invalid && editExpensesForm.get('purchaseDate').touched"
+                                        formControlName="purchaseDate" (bsValueChange)="from($event)">
                                     <div
-                                    *ngIf="editExpensesForm.get('purchaseDate').invalid && editExpensesForm.get('purchaseDate').touched">
-                                    <small
-                                        *ngIf="editExpensesForm.get('purchaseDate').invalid && editExpensesForm.get('purchaseDate').touched"
-                                        class="text-danger"> *Purchase date is required</small>
-                                </div>
+                                        *ngIf="editExpensesForm.get('purchaseDate').invalid && editExpensesForm.get('purchaseDate').touched">
+                                        <small
+                                            *ngIf="editExpensesForm.get('purchaseDate').invalid && editExpensesForm.get('purchaseDate').touched"
+                                            class="text-danger"> *Purchase date is required</small>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Purchased By </label>
-                                <select class="form-select form-control" [class.invalid]="editExpensesForm.get('purchasedBy').invalid && editExpensesForm.get('purchasedBy').touched"
-                                formControlName="purchasedBy">
+                                <select class="form-select form-control"
+                                    [class.invalid]="editExpensesForm.get('purchasedBy').invalid && editExpensesForm.get('purchasedBy').touched"
+                                    formControlName="purchasedBy">
                                     <option>Loren Gatlin</option>
                                     <option>Tarah Shropshire</option>
                                 </select>
                                 <div
-                                *ngIf="editExpensesForm.get('purchasedBy').invalid && editExpensesForm.get('purchasedBy').touched">
-                                <small
-                                    *ngIf="editExpensesForm.get('purchasedBy').invalid && editExpensesForm.get('purchasedBy').touched"
-                                    class="text-danger"> *Purchased by is required</small>
-                            </div>
+                                    *ngIf="editExpensesForm.get('purchasedBy').invalid && editExpensesForm.get('purchasedBy').touched">
+                                    <small
+                                        *ngIf="editExpensesForm.get('purchasedBy').invalid && editExpensesForm.get('purchasedBy').touched"
+                                        class="text-danger"> *Purchased by is required</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -364,30 +387,32 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Amount</label>
-                                <input placeholder="$50" class="form-control" value="$10000" type="text"  [class.invalid]="editExpensesForm.get('amount').invalid && editExpensesForm.get('amount').touched"
-                                formControlName="amount">
+                                <input placeholder="$50" class="form-control" value="$10000" type="text"
+                                    [class.invalid]="editExpensesForm.get('amount').invalid && editExpensesForm.get('amount').touched"
+                                    formControlName="amount">
                                 <div
-                                *ngIf="editExpensesForm.get('amount').invalid && editExpensesForm.get('amount').touched">
-                                <small
-                                    *ngIf="editExpensesForm.get('amount').invalid && editExpensesForm.get('amount').touched"
-                                    class="text-danger"> *Amount is required</small>
-                            </div>
+                                    *ngIf="editExpensesForm.get('amount').invalid && editExpensesForm.get('amount').touched">
+                                    <small
+                                        *ngIf="editExpensesForm.get('amount').invalid && editExpensesForm.get('amount').touched"
+                                        class="text-danger"> *Amount is required</small>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label>Paid By</label>
-                                <select class="form-select form-control" [class.invalid]="editExpensesForm.get('paidBy').invalid && editExpensesForm.get('paidBy').touched"
-                                formControlName="paidBy">
+                                <select class="form-select form-control"
+                                    [class.invalid]="editExpensesForm.get('paidBy').invalid && editExpensesForm.get('paidBy').touched"
+                                    formControlName="paidBy">
                                     <option>Cash</option>
                                     <option>Cheque</option>
                                 </select>
                                 <div
-                                *ngIf="editExpensesForm.get('paidBy').invalid && editExpensesForm.get('paidBy').touched">
-                                <small
-                                    *ngIf="editExpensesForm.get('paidBy').invalid && editExpensesForm.get('paidBy').touched"
-                                    class="text-danger"> *Paid by is required</small>
-                            </div>
+                                    *ngIf="editExpensesForm.get('paidBy').invalid && editExpensesForm.get('paidBy').touched">
+                                    <small
+                                        *ngIf="editExpensesForm.get('paidBy').invalid && editExpensesForm.get('paidBy').touched"
+                                        class="text-danger"> *Paid by is required</small>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -442,11 +467,10 @@
                 <div class="modal-btn delete-action">
                     <div class="row">
                         <div class="col-6">
-                            <a  class="btn btn-primary continue-btn"  (click)="deleteTicket()">Delete</a>
+                            <a class="btn btn-primary continue-btn" (click)="deleteTicket()">Delete</a>
                         </div>
                         <div class="col-6">
-                            <a  data-bs-dismiss="modal"
-                                class="btn btn-primary cancel-btn">Cancel</a>
+                            <a data-bs-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                         </div>
                     </div>
                 </div>

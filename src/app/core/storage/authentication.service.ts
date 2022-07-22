@@ -28,8 +28,7 @@ export class AuthenticationService {
     projectswrite: string,
     holidaysread: string,
     holidayswrite: string,
-    roleDetails: any
-
+    roleDetails: any,
     profileImage: any,
 
   ) {

@@ -124,8 +124,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.http
       .get(
         "http://localhost:8443/admin/expenses/getAllExpenses" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data) => {
         this.allExpenses = data;
@@ -220,8 +220,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
       this.http
         .patch(
           "http://localhost:8443/admin/expenses/updateExpenses" +
-            "/" +
-            this.editId,
+          "/" +
+          this.editId,
           obj
         )
         .subscribe((data1) => {
@@ -262,8 +262,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.http
       .patch(
         "http://localhost:8443/admin/expenses/deleteExpenses" +
-          "/" +
-          this.tempId,
+        "/" +
+        this.tempId,
         {}
       )
       .subscribe((data: any) => {
@@ -313,6 +313,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   //search by from
+
+
   searchByFrom(val) {
     let mySimpleFormat = this.pipe.transform(val, "dd-MM-yyyy");
     this.rows.splice(0, this.rows.length);
@@ -320,6 +322,8 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
       return d.purchaseDate.indexOf(mySimpleFormat) !== -1 || !mySimpleFormat;
     });
     this.rows.push(...temp);
+
+
     // $(".floating")
     //   .on("focus blur", function (e) {
     //     $(this)
@@ -327,6 +331,7 @@ export class ExpensesComponent implements OnInit, OnDestroy, AfterViewInit {
     //       .toggleClass("focused", e.type === "focus" || this.value.length > 0);
     //   })
     //   .trigger("blur");
+
   }
 
   //search by to
