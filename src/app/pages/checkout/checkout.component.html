@@ -174,7 +174,9 @@
                     class="form-control"
                     placeholder="Company Name"
                   />
-                  <p [hidden]='companyName_error' class="text-danger">Company Name Already Exist</p>
+                  <p [hidden]="companyName_error" class="text-danger">
+                    Company Name Already Exist
+                  </p>
 
                   <ng-container
                     *ngIf="
@@ -370,7 +372,9 @@
                     maxlength="100"
                     class="form-control"
                   />
-                  <p [hidden]='email_error' class="text-danger">Company Email Already Exist</p>
+                  <p [hidden]="email_error" class="text-danger">
+                    Company Email Already Exist
+                  </p>
                   <ng-container
                     *ngIf="
                       checkoutForm.get('email').invalid &&

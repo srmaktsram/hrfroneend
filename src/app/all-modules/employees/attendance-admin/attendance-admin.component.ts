@@ -48,11 +48,12 @@ export class AttendanceAdminComponent implements OnInit {
     this.http
       .get(
         "http://localhost:8443/admin/monthlyAttandance/getData" +
-        "/" +
-        this.adminId
+          "/" +
+          this.adminId
       )
       .subscribe((res: any) => {
         this.lstAttandance = res;
+
         this.lstAttandance.map((item) => {
           this.createDateOfMonth = item.createDate.split('-')
 
@@ -80,13 +81,16 @@ export class AttendanceAdminComponent implements OnInit {
             attendDate: arr,
             employeeid: item.employeeid,
             profileImage: item.profileImage,
+
             createDateOfMonth: this.createDateOfMonth[1],
             createDateOfYear: this.createDateOfMonth[2]
+
           };
 
           this.employeeData.push(obj);
           this.rows = this.employeeData
           this.srch = [...this.rows]
+
 
         });
 

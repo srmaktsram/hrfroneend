@@ -45,6 +45,7 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
 
   policiesWrite: string;
   policiesWriteSub: string;
+  multImages: any;
 
   constructor(
     private allModuleService: AllModulesService,
@@ -114,10 +115,10 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
   }
 
   ///////////////file load //////////
+
   selectImage(event: any) {
-    if (event.target.files.length > 0) {
-      this.multFile = event.target.files;
-    }
+    console.log("event-->>", event);
+    this.multFile = event.target.files[0];
   }
 
   ///////////////////// download file////////////////////////////
@@ -136,9 +137,8 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
     }
     if (this.addPolicies.valid) {
       var fd = new FormData();
-      for (let pdfFile of this.multFile) {
-        fd.append("file", pdfFile);
-      }
+
+      fd.append("file", this.multFile);
 
       let params = new HttpParams();
       params = params.set("adminId", this.adminId);
@@ -155,18 +155,17 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
           this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.destroy();
           });
+          this._snackBar.open("Policy Added sucessfully !", "", {
+            duration: 2000,
+            panelClass: "notif-success",
+
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
         });
       // this.getPolicies();
       $("#add_policy").modal("hide");
       this.addPolicies.reset();
-
-      this._snackBar.open("Policy Added sucessfully !", "", {
-        duration: 2000,
-        panelClass: "notif-success",
-
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-      });
     }
   }
 
@@ -190,17 +189,16 @@ export class PoliciesContentComponent implements OnInit, OnDestroy {
           dtInstance.destroy();
         });
         console.log("UPDATE API", data1);
+        this._snackBar.open("Policy updated sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       });
     this.getPolicies();
     $("#edit_policy").modal("hide");
-
-    this._snackBar.open("Policy updated sucessfully !", "", {
-      duration: 2000,
-      panelClass: "notif-success",
-
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-    });
   }
 
   edit(value) {
