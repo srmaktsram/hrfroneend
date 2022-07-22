@@ -61,7 +61,7 @@ export class TaskBoardComponent implements OnInit {
   public projectswrite = sessionStorage.getItem("projectswrite");
   public projectsWrite = sessionStorage.getItem("projectsWrite");
   public projectsWriteSub = sessionStorage.getItem("projectsWriteSub");
-  
+  public EmpDetails: any;
 
   public allTasks = [];
   projectId: any;
@@ -80,8 +80,7 @@ export class TaskBoardComponent implements OnInit {
     private fb: FormBuilder,
     private _snackBar: MatSnackBar
   ) {
-    this.adminId=sessionStorage.getItem("adminId");
-    
+    this.adminId = sessionStorage.getItem("adminId");
 
     this.getInfo();
     this.getLeader();
@@ -104,6 +103,7 @@ export class TaskBoardComponent implements OnInit {
     });
 
     this.loadTask();
+    this.loadEmployee();
 
     this.droppedItems = [
       {
@@ -127,6 +127,20 @@ export class TaskBoardComponent implements OnInit {
       $('[data-bs-toggle="tooltip"]').tooltip();
     }
   }
+  
+
+  loadEmployee() {
+    this.http
+      .get(
+        "http://localhost:8443/admin/allemployees/getallEmployee" +
+          "/" +
+          this.adminId
+      )
+      .subscribe((data: any) => {
+        this.lstEmployee = data;
+        console.log(this.lstEmployee, "Employees list");
+      });
+  }
 
   getInfo() {
     this._Activatedroute.paramMap.subscribe((params) => {
@@ -142,14 +156,18 @@ export class TaskBoardComponent implements OnInit {
         .subscribe((data: any) => {
           this.projects = data;
 
-          // console.log("this is getInfo<><><<",this.projects)
+          console.log("this is getInfo<><><<", this.projects);
         });
     });
   }
 
   addTaskboard() {
     let date = this.addTaskboardForm.value.dueDate;
-    let Date = this.pipe.transform(date, "dd-mm-yyyy");
+    let Date = this.pipe.transform(date, "dd-MM-yyyy");
+
+    let EmpDetails = this.addTaskboardForm.value.followers.split(",");
+    let EmpName = EmpDetails[0] + " " + EmpDetails[1];
+    let EmpImage = EmpDetails[2];
 
     let obj = {
       projectId: this.projectId,
@@ -157,15 +175,13 @@ export class TaskBoardComponent implements OnInit {
       taskName: this.addTaskboardForm.value.taskName,
       taskPriority: this.addTaskboardForm.value.taskPriority,
       dueDate: Date,
-      followers: this.addTaskboardForm.value.followers,
+      followers: EmpName,
+      profileImagePath:EmpImage
     };
-    // console.log("this is OBJ<><><><><><><><><><><><><>",obj)
     this.http
       .post("http://localhost:8443/admin/tasks/createTask", obj)
       .subscribe((data: any) => {
-        //  console.log("this is the AddTask bOard",data.data);
-
-        //  console.log(data);
+        console.log(data, "task add");
         $("#add_task_modal").modal("hide");
         this._snackBar.open("Task Added sucessfully !", "", {
           duration: 2000,
@@ -228,6 +244,7 @@ export class TaskBoardComponent implements OnInit {
           this.projectId
       )
       .subscribe((data: any) => {
+        console.log(data, "get Task");
         this.lstTasks = data.lstTasks;
 
         this.lstProgress = data.lstProgress;
@@ -255,9 +272,7 @@ export class TaskBoardComponent implements OnInit {
     var index = this.lstTasks.findIndex((item) => {
       return item.id === id;
     });
-    // console.log("thisn is INDEX<><><><><><",index)
     let setData = this.lstTasks[index];
-    // console.log("thisn is setData<><><><><><",setData)
     this.editTaskForm.patchValue({
       edittaskName: setData.taskName,
       edittaskPriority: setData.taskPriority,
@@ -268,12 +283,21 @@ export class TaskBoardComponent implements OnInit {
 
   editSaveTask() {
     // alert(this.tempId)
-    console.log("this ois the edit form", this.editTaskForm.value);
+    console.log("this is the edit form", this.editTaskForm.value);
+
+    
+    let EmpDetails = this.editTaskForm.value.editfollowers.split(",");
+    let EmpName = EmpDetails[0] + " " + EmpDetails[1];
+    let EmpImage = EmpDetails[2];
+    
     let obj = {
       taskName: this.editTaskForm.value.edittaskName,
       taskPriority: this.editTaskForm.value.edittaskPriority,
       dueDate: this.editTaskForm.value.editdueDate,
-      followers: this.editTaskForm.value.editfollowers,
+      followers:EmpName,
+      profileImagePath:EmpImage
+
+     
     };
     console.log("this is obj", obj);
     this.http
@@ -354,6 +378,16 @@ export class TaskBoardComponent implements OnInit {
       });
   }
 
+  // addFollower(val1, val2, id,profileImagePath) {
+  //   alert("1")
+  //   let val = profileImagePath
+    
+
+  //   this.newFollowImage.push(val);
+
+  //   console.log("this is IMAGE", this.newFollowImage);
+  // }
+
   filterUser(val) {
     // console.log( "this is the Val<><><<><><><><><",val)
     if (val.trim()) {
@@ -408,4 +442,5 @@ export class TaskBoardComponent implements OnInit {
         this.getInfo();
       });
   }
+  
 }

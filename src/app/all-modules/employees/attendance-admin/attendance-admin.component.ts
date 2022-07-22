@@ -15,6 +15,8 @@ export class AttendanceAdminComponent implements OnInit {
   public employeeData = [];
   public attenArry = [];
   public adminId: any;
+  public rows = [];
+  public srch = [];
   public day: any;
   public month: any;
   public monthlyPunchData: any;
@@ -25,6 +27,8 @@ export class AttendanceAdminComponent implements OnInit {
   user_type: string;
   employeewrite: string;
   employeewriteSub: string;
+  createDateOfMonth: any;
+
 
   constructor(private http: HttpClient, private router: Router) {
     this.user_type = sessionStorage.getItem("user_type");
@@ -47,19 +51,18 @@ export class AttendanceAdminComponent implements OnInit {
           "/" +
           this.adminId
       )
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         this.lstAttandance = res;
 
-        console.log(this.lstAttandance, ">>>>>>>>>>>>opppppp<<<<<<<<<<<<<<<");
         this.lstAttandance.map((item) => {
+          this.createDateOfMonth = item.createDate.split('-')
+
           var arr = [];
           for (let i = 0; i < this.day; i++) {
             arr.push("A");
           }
-
           item.monthlyPunchData.map((data) => {
             var dateDay = data.date.split("-");
-
             var noDay = Number(dateDay[0]);
             var noMonth = Number(dateDay[1]);
 
@@ -73,18 +76,25 @@ export class AttendanceAdminComponent implements OnInit {
               }
             }
           });
-
           var obj = {
-            name: item.employeeName,
+            employeeName: item.employeeName,
             attendDate: arr,
             employeeid: item.employeeid,
             profileImage: item.profileImage,
+
+            createDateOfMonth: this.createDateOfMonth[1],
+            createDateOfYear: this.createDateOfMonth[2]
+
           };
 
           this.employeeData.push(obj);
+          this.rows = this.employeeData
+          this.srch = [...this.rows]
 
-          console.log(this.employeeData, "employee");
+
         });
+
+
       });
   }
 
@@ -104,4 +114,32 @@ export class AttendanceAdminComponent implements OnInit {
     sessionStorage.setItem("empid", id);
     this.router.navigate(["/layout/employees/employeeprofile"]);
   }
+
+  //search by name////////////////////////////////////////////////
+
+  searchName(val) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      val = val.toLowerCase();
+      return d.employeeName.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+    this.rows.push(...temp);
+  }
+
+  searchByMonth(val) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      return d.createDateOfMonth.indexOf(val) !== -1 || !val;
+    });
+    this.rows.push(...temp);
+  }
+
+  searchByYear(val) {
+    this.rows.splice(0, this.rows.length);
+    let temp = this.srch.filter(function (d) {
+      return d.createDateOfYear.indexOf(val) !== -1 || !val;
+    });
+    this.rows.push(...temp);
+  }
+
 }

@@ -4,7 +4,7 @@
   <div class="page-header">
     <div class="row">
       <div class="col-sm-12">
-        <h3 class="page-title">{{ projects.name }}</h3>
+        <h3 class="page-title">{{ projects?.name }}</h3>
         <ul class="breadcrumb">
           <li class="breadcrumb-item">
             <a routerLink="/layout/dashboard/admin">Dashboard</a>
@@ -17,91 +17,11 @@
   <!-- /Page Header -->
 
   <div class="row board-view-header">
-    <div class="col-4">
-      <div class="pro-teams">
-        <div class="pro-team-lead">
-          <h4>Lead</h4>
-          <div class="avatar-group">
-            <div class="avatar">
-              <img
-                class="avatar-img rounded-circle border border-white"
-                alt="User Image"
-                src="assets/img/profiles/avatar-9.jpg"
-              />
-            </div>
-            <div class="avatar">
-              <img
-                class="avatar-img rounded-circle border border-white"
-                alt="User Image"
-                src="assets/img/profiles/avatar-1.jpg"
-              />
-            </div>
-            <div class="avatar">
-              <img
-                class="avatar-img rounded-circle border border-white"
-                alt="User Image"
-                src="assets/img/profiles/avatar-3.jpg"
-              />
-            </div>
-            <ng-container *ngIf="user_type !== 'client'">
-              <div class="avatar">
-                <a
-                  href=""
-                  class="avatar-title rounded-circle border border-white"
-                  data-bs-toggle="modal"
-                  data-bs-target="#assign_leader" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
-                  ><i class="fa fa-plus"></i
-                ></a>
-              </div>
-            </ng-container>
-          </div>
-        </div>
-        <div class="pro-team-members">
-          <h4>Team</h4>
-          <div class="avatar-group">
-            <div class="avatar">
-              <img
-                class="avatar-img rounded-circle border border-white"
-                alt="User Image"
-                src="assets/img/profiles/avatar-2.jpg"
-              />
-            </div>
-            <div class="avatar">
-              <img
-                class="avatar-img rounded-circle border border-white"
-                alt="User Image"
-                src="assets/img/profiles/avatar-9.jpg"
-              />
-            </div>
-            <div class="avatar">
-              <img
-                class="avatar-img rounded-circle border border-white"
-                alt="User Image"
-                src="assets/img/profiles/avatar-5.jpg"
-              />
-            </div>
-            <ng-container *ngIf="user_type !== 'client'">
-              <div class="avatar">
-                <a
-                  href=""
-                  class="avatar-title rounded-circle border border-white"
-                  data-bs-toggle="modal"
-                  data-bs-target="#assign_user"  *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
-                  ><i class="fa fa-plus">T</i></a
-                >
-              </div>
-            </ng-container>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-8 text-end">
-      <!-- <a class="btn btn-white float-end ms-2" data-bs-toggle="modal" data-bs-target="#add_task_board"><i
-                    class="fa fa-plus"></i> Create List</a> -->
+    <div class="col-8 text-end" style="width: 1200px; height: 70px">
       <a
-        routerLink="/layout/projects/projectview/{{ projects.projectId }}"
+        routerLink="/layout/projects/projectview/{{ projects?.projectId }}"
         class="btn btn-white float-end"
-        title="View Board"
+        title="Project View"
         ><i class="fa fa-link"></i
       ></a>
     </div>
@@ -123,12 +43,12 @@
     </div>
   </div>
 
-  <div class="kanban-board card mb-0" >
-    <div class="card-body" >
+  <div class="kanban-board card mb-0">
+    <div class="card-body">
       <div class="kanban-cont">
-        <div class="kanban-list kanban-danger" >
+        <div class="kanban-list kanban-danger">
           <div class="kanban-header">
-            <span class="status-title" >Pending</span>
+            <span class="status-title">Pending</span>
             <!-- <div class="dropdown kanban-action">
                             <a href="" data-bs-toggle="dropdown">
                                 <i class="fa fa-ellipsis-v"></i>
@@ -137,43 +57,52 @@
                         </div> -->
           </div>
 
-          <div 
+          <div
             class="kanban-wrap"
             cdkDropList
             #pendingList="cdkDropList"
             [cdkDropListData]="lstTasks"
             [cdkDropListConnectedTo]="[progressList]"
-            (cdkDropListDropped)="onDrop($event)" 
+            (cdkDropListDropped)="onDrop($event)"
           >
-            <div class="card panel"  *ngFor="let task of lstTasks" cdkDrag >
-              <div class="kanban-box"  [cdkDropListData]="task.id" >
+            <div class="card panel" *ngFor="let task of lstTasks" cdkDrag>
+              <div class="kanban-box" [cdkDropListData]="task.id">
                 <div class="task-board-header">
                   <span class="status-title"
-                    ><a>{{ task.taskName }}</a></span
+                    ><a>{{ task?.taskName }}</a></span
                   >
                   <ng-container *ngIf="user_type !== 'client'">
-                  <ng-container *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
-                    <div class="dropdown kanban-task-action">
-                      <a href="" data-bs-toggle="dropdown" >
-                        <i class="fa fa-angle-down" ></i>
-                      </a>
-                      <div class="dropdown-menu dropdown-menu-right" >
-                        <a
-                          class="dropdown-item"
-                          data-bs-toggle="modal"
-                          data-bs-target="#edit_task_modal"
-                          (click)="editTasks(task.id)"
-                          >Edit</a
-                        >
-                        <a class="dropdown-item" (click)="deleteTask(task.id)"
-                          >Delete</a
-                        >
+                    <ng-container
+                      *ngIf="
+                        user_type == 'admin' ||
+                        (user_type === 'employee' && projectswrite == 'true') ||
+                        (user_type === 'roleadmin' &&
+                          projectsWrite == 'true') ||
+                        (user_type === 'rolesubadmin' &&
+                          projectsWriteSub === 'true')
+                      "
+                    >
+                      <div class="dropdown kanban-task-action">
+                        <a href="" data-bs-toggle="dropdown">
+                          <i class="fa fa-angle-down"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                          <a
+                            class="dropdown-item"
+                            data-bs-toggle="modal"
+                            data-bs-target="#edit_task_modal"
+                            (click)="editTasks(task.id)"
+                            >Edit</a
+                          >
+                          <a class="dropdown-item" (click)="deleteTask(task.id)"
+                            >Delete</a
+                          >
+                        </div>
                       </div>
-                    </div>
-                  </ng-container>
+                    </ng-container>
                   </ng-container>
                 </div>
-                <div class="task-board-body" >
+                <div class="task-board-body">
                   <div class="kanban-info">
                     <div class="progress progress-xs">
                       <div
@@ -182,7 +111,16 @@
                         style="width: 0%"
                         aria-valuenow="20"
                         aria-valuemin="0"
-                        aria-valuemax="100" *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')"
+                        aria-valuemax="100"
+                        *ngIf="
+                          user_type == 'admin' ||
+                          (user_type === 'employee' &&
+                            projectswrite == 'true') ||
+                          (user_type === 'roleadmin' &&
+                            projectsWrite == 'true') ||
+                          (user_type === 'rolesubadmin' &&
+                            projectsWriteSub === 'true')
+                        "
                       ></div>
                     </div>
                     <span>0.0%</span>
@@ -190,15 +128,16 @@
                   <div class="kanban-footer">
                     <span class="task-info-cont">
                       <span class="task-date"
-                        ><i class="fa fa-clock-o"></i>{{ task.dueDate }}</span
+                        ><i class="fa fa-clock-o"></i>{{ task?.dueDate}}</span
                       >
                       <span class="task-priority badge bg-inverse-danger">{{
-                        task.taskPriority
+                        task?.taskPriority
                       }}</span>
                     </span>
-                    <span class="task-users" >
+                    <span class="task-users">
                       <img
-                        src="assets/img/profiles/avatar-9.jpg"
+                        alt="NoIMG"
+                        src="http://localhost:8443\{{ task?.profileImagePath }}"
                         class="task-avatar"
                         width="24"
                         height="24"
@@ -210,13 +149,20 @@
             </div>
           </div>
           <ng-container *ngIf="user_type !== 'client'">
-          <ng-container  *ngIf="user_type == 'admin' ||(user_type === 'employee' &&projectswrite == 'true')||(user_type === 'roleadmin' && projectsWrite == 'true')||(user_type === 'rolesubadmin' && projectsWriteSub === 'true')">
-            <div class="add-new-task">
-              <a data-bs-toggle="modal" data-bs-target="#add_task_modal"
-                >Add New Task</a
-              >
-            </div>
-          </ng-container>
+            <ng-container
+              *ngIf="
+                user_type == 'admin' ||
+                (user_type === 'employee' && projectswrite == 'true') ||
+                (user_type === 'roleadmin' && projectsWrite == 'true') ||
+                (user_type === 'rolesubadmin' && projectsWriteSub === 'true')
+              "
+            >
+              <div class="add-new-task">
+                <a data-bs-toggle="modal" data-bs-target="#add_task_modal"
+                  >Add New Task</a
+                >
+              </div>
+            </ng-container>
           </ng-container>
         </div>
         <div class="kanban-list kanban-info">
@@ -244,7 +190,7 @@
               <div class="kanban-box">
                 <div class="task-board-header">
                   <span class="status-title"
-                    ><a>{{ item.taskName }}</a></span
+                    ><a>{{ item?.taskName }}</a></span
                   >
                   <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
@@ -274,7 +220,7 @@
                   <div class="kanban-footer">
                     <span class="task-info-cont">
                       <span class="task-date"
-                        ><i class="fa fa-clock-o"></i>{{ item.dueDate }}</span
+                        ><i class="fa fa-clock-o"></i>{{ item?.dueDate }}</span
                       >
                       <span class="task-priority badge bg-inverse-warning">{{
                         item.taskPriority
@@ -282,7 +228,8 @@
                     </span>
                     <span class="task-users">
                       <img
-                        src="assets/img/profiles/avatar-5.jpg"
+                      alt="NoIMG"
+                      src="http://localhost:8443\{{ item?.profileImagePath }}"
                         class="task-avatar"
                         width="24"
                         height="24"
@@ -323,7 +270,7 @@
               <div class="kanban-box">
                 <div class="task-board-header">
                   <span class="status-title"
-                    ><a>{{ completed.taskName }}</a></span
+                    ><a>{{ completed?.taskName }}</a></span
                   >
                   <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
@@ -354,15 +301,16 @@
                     <span class="task-info-cont">
                       <span class="task-date"
                         ><i class="fa fa-clock-o"></i
-                        >{{ completed.dueDate }}</span
+                        >{{ completed?.dueDate }}</span
                       >
                       <span class="task-priority badge bg-inverse-success">{{
-                        completed.taskPriority
+                        completed?.taskPriority
                       }}</span>
                     </span>
                     <span class="task-users">
                       <img
-                        src="assets/img/profiles/avatar-7.jpg"
+                      alt="NoIMG"
+                      src="http://localhost:8443\{{ completed?.profileImagePath }}"
                         class="task-avatar"
                         width="24"
                         height="24"
@@ -401,7 +349,7 @@
               <div class="kanban-box">
                 <div class="task-board-header">
                   <span class="status-title"
-                    ><a>{{ data.taskName }}</a></span
+                    ><a>{{ data?.taskName }}</a></span
                   >
                   <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
@@ -431,15 +379,16 @@
                   <div class="kanban-footer">
                     <span class="task-info-cont">
                       <span class="task-date"
-                        ><i class="fa fa-clock-o"></i>{{ data.dueDate }}</span
+                        ><i class="fa fa-clock-o"></i>{{ data?.dueDate }}</span
                       >
                       <span class="task-priority badge bg-inverse-success">{{
-                        data.taskPriority
+                        data?.taskPriority
                       }}</span>
                     </span>
                     <span class="task-users">
                       <img
-                        src="assets/img/profiles/avatar-6.jpg"
+                      alt="NoIMG"
+                      src="http://localhost:8443\{{ data?.profileImagePath }}"
                         class="task-avatar"
                         width="24"
                         height="24"
@@ -482,7 +431,7 @@
               <div class="kanban-box">
                 <div class="task-board-header">
                   <span class="status-title"
-                    ><a>{{ itm.taskName }}</a></span
+                    ><a>{{ itm?.taskName }}</a></span
                   >
                   <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
@@ -512,15 +461,16 @@
                   <div class="kanban-footer">
                     <span class="task-info-cont">
                       <span class="task-date"
-                        ><i class="fa fa-clock-o"></i>{{ itm.dueDate }}</span
+                        ><i class="fa fa-clock-o"></i>{{ itm?.dueDate }}</span
                       >
                       <span class="task-priority badge bg-inverse-success">{{
-                        itm.taskPriority
+                        itm?.taskPriority
                       }}</span>
                     </span>
                     <span class="task-users">
                       <img
-                        src="assets/img/profiles/avatar-9.jpg"
+                      alt="NoIMG"
+                      src="http://localhost:8443\{{ itm?.profileImagePath }}"
                         class="task-avatar"
                         width="24"
                         height="24"
@@ -553,13 +503,13 @@
             #reviewList="cdkDropList"
             [cdkDropListData]="lstReview"
             [cdkDropListConnectedTo]="[completedList, InprogressList, holdList]"
-            (cdkDropListDropped)="onDrop($event)" 
+            (cdkDropListDropped)="onDrop($event)"
           >
             <div class="card panel" *ngFor="let review of lstReview" cdkDrag>
               <div class="kanban-box">
                 <div class="task-board-header">
                   <span class="status-title"
-                    ><a>{{ review.taskName }}</a></span
+                    ><a>{{ review?.taskName }}</a></span
                   >
                   <!-- <div class="dropdown kanban-task-action">
                                         <a href="" data-bs-toggle="dropdown">
@@ -589,15 +539,17 @@
                   <div class="kanban-footer">
                     <span class="task-info-cont">
                       <span class="task-date"
-                        ><i class="fa fa-clock-o"></i>{{ review.dueDate }}</span
+                        ><i class="fa fa-clock-o"></i
+                        >{{ review?.dueDate }}</span
                       >
                       <span class="task-priority badge bg-inverse-success">{{
-                        review.taskPriority
+                        review?.taskPriority
                       }}</span>
                     </span>
                     <span class="task-users">
                       <img
-                        src="assets/img/profiles/avatar-4.jpg"
+                      alt="NoIMG"
+                      src="http://localhost:8443\{{ review?.profileImagePath }}"
                         class="task-avatar"
                         width="24"
                         height="24"
@@ -814,80 +766,6 @@
   </div>
 </div>
 
-<!-- Assign User Modal -->
-<div id="assign_user" class="modal custom-modal fade" role="dialog">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Assign the user to this project</h5>
-        <button
-          type="button"
-          class="close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="input-group m-b-30">
-          <input
-            placeholder="Search a user to assign"
-            class="form-control search-input"
-            type="text"
-            (input)="filterUser($event.target.value)"
-          />
-          <button class="btn btn-primary">Search</button>
-        </div>
-        <div>
-          <ul class="chat-user-list" *ngFor="let item of getAllUser">
-            <li>
-              <a>
-                <div class="media d-flex">
-                  <span class="avatar flex-shrink-0"
-                    ><img alt="" src="assets/img/profiles/avatar-4.jpg"
-                  /></span>
-                  <div
-                    class="media-body align-self-center text-nowrap flex-grow-1"
-                  >
-                    <div
-                      class="user-name"
-                      (click)="team(item.firstName, item.lastName)"
-                    >
-                      {{ item.firstName }} {{ item.lastName }}
-                    </div>
-                    <span class="designation">{{ item.designation }}</span>
-                  </div>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <div>
-            <div *ngFor="let name of teamMember" class="main">
-              <div class="child">
-                <span class="avatar flex-shrink-0"
-                  ><img alt="" src="assets/img/profiles/avatar-9.jpg"
-                /></span>
-                <span class="text-danger">{{ name }}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="submit-section">
-          <button
-            class="btn btn-primary submit-btn"
-            type="button"
-            (click)="onSubmitUser()"
-          >
-            Submit
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /Assign User Modal -->
-
 <!-- Add Task Modal -->
 
 <div id="add_task_modal" class="modal custom-modal fade" role="dialog">
@@ -940,23 +818,21 @@
           <div class="form-group">
             <label>Task Followers</label>
             <input
-              type="text"
-              formControlName="followers"
+              list="brow"
               class="form-control"
-              placeholder="Search to add"
+              formControlName="followers"
             />
-            <div class="task-follower-list">
-              <span data-bs-toggle="tooltip" title="Mike Litorus">
-                <img
-                  src="assets/img/profiles/avatar-4.jpg"
-                  class="avatar"
-                  alt="Mike Litorus"
-                  width="20"
-                  height="20"
-                />
-                <i class="fa fa-times"></i>
-              </span>
-            </div>
+            <datalist #data id="brow">
+              <option
+                selected
+                *ngFor="let item of lstEmployee"
+                value="{{ item.firstName }},{{ item.lastName }},{{
+                  item.profileImage
+                }}"
+              >
+                {{ item.firstName }} {{ item.lastName }}
+              </option>
+            </datalist>
           </div>
           <div class="submit-section text-center">
             <button
@@ -1011,62 +887,36 @@
             <label>Due Date</label>
             <div class="cal-icon">
               <input
-                formControlName="editdueDate"
                 class="form-control datetimepicker"
+                formControlName="editdueDate"
                 type="text"
+                bsDatepicker
+                type="text"
+                [bsConfig]="{
+                  dateInputFormat: 'DD-MM-YYYY',
+                  returnFocusToInput: true
+                }"
               />
             </div>
           </div>
           <div class="form-group">
             <label>Task Followers</label>
             <input
-              formControlName="editfollowers"
-              type="text"
+              list="brow"
               class="form-control"
-              placeholder="Search to add"
+              formControlName="editfollowers"
             />
-            <div class="task-follower-list">
-              <span data-bs-toggle="tooltip" title="John Doe">
-                <img
-                  src="assets/img/profiles/avatar-2.jpg"
-                  class="avatar"
-                  alt="John Doe"
-                  width="20"
-                  height="20"
-                />
-                <i class="fa fa-times"></i>
-              </span>
-              <span data-bs-toggle="tooltip" title="Richard Miles">
-                <img
-                  src="assets/img/profiles/avatar-9.jpg"
-                  class="avatar"
-                  alt="Richard Miles"
-                  width="20"
-                  height="20"
-                />
-                <i class="fa fa-times"></i>
-              </span>
-              <span data-bs-toggle="tooltip" title="John Smith">
-                <img
-                  src="assets/img/profiles/avatar-7.jpg"
-                  class="avatar"
-                  alt="John Smith"
-                  width="20"
-                  height="20"
-                />
-                <i class="fa fa-times"></i>
-              </span>
-              <span data-bs-toggle="tooltip" title="Mike Litorus">
-                <img
-                  src="assets/img/profiles/avatar-5.jpg"
-                  class="avatar"
-                  alt="Mike Litorus"
-                  width="20"
-                  height="20"
-                />
-                <i class="fa fa-times"></i>
-              </span>
-            </div>
+            <datalist #data id="brow">
+              <option
+                selected
+                *ngFor="let item of lstEmployee"
+                value="{{ item.firstName }},{{ item.lastName }},{{
+                  item.profileImage
+                }}"
+              >
+                {{ item.firstName }} {{ item.lastName }}
+              </option>
+            </datalist>
           </div>
           <div class="submit-section text-center">
             <button class="btn btn-primary submit-btn" (click)="editSaveTask()">

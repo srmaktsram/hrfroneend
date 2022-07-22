@@ -139,7 +139,6 @@ export class AdminDashboardComponent implements OnInit {
         this.lstEmployee = data;
         //console.log(this.lstEmployee, "lllllllllllllp")
         this.employeeCount = this.lstEmployee.length
-
         let todayDate = new Date()
         let TodayDate = this.pipe.transform(
           todayDate,

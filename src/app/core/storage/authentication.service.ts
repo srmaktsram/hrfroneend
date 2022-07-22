@@ -30,6 +30,7 @@ export class AuthenticationService {
     holidayswrite: string,
     roleDetails: any,
 
+
     profileImage: any
   ) {
     sessionStorage.setItem("currentUser", "EmployeeLogin");
