@@ -63,7 +63,7 @@ export class ProductsComponent implements OnInit {
           let data = this.calculateExpiryDays(item.group[0].to);
           var obj = {
             remaininigDays: data,
-            packageName: item.packageName,
+            adminId: item.adminId,
           };
           this.totalRemaining.push(obj);
           this.productDetailsGroup.push(item.group[0]);
@@ -93,7 +93,7 @@ export class ProductsComponent implements OnInit {
           .subscribe((response: any) => {
             if (res.result == 1) {
               this.router.navigate(["/layout/dashboard/admin"]);
-              console.log("packageName", res.data.packageName);
+
               this.adminAuthenticationService.login(
                 res.data.id,
                 res.data.corporateId,

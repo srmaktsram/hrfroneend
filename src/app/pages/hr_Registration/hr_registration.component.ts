@@ -47,11 +47,10 @@ export class HrregistrationComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private cookieService: CookieService,
     private hr_registrationS: ShowregisterloginService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.hr_registrationS.hr_registrationSubject.subscribe((data) => {
-      console.log(data, "serviceData");
       if (data == "signIn") {
         this.showLogin = false;
         this.showRegister = true;
@@ -60,7 +59,6 @@ export class HrregistrationComponent implements OnInit {
         this.showRegister = false;
       }
     });
-    // console.log("login NGONINIT", this.showLogin, "registerNGONINIT", this.showRegister)
 
     this.registerForm = this.formBuilder.group({
       firstName: [
@@ -143,8 +141,6 @@ export class HrregistrationComponent implements OnInit {
     this.http
       .post("http://localhost:8443/mainadmin/create/registration", obj)
       .subscribe((res: any) => {
-        console.log("hr User>>>>>>>>>>", res);
-
         if (res.result == 0) {
           this.hrUserAuthenticationService.login(
             res.data.id,
@@ -172,7 +168,6 @@ export class HrregistrationComponent implements OnInit {
         password,
       })
       .subscribe((res: any) => {
-        console.log(res);
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
             window.location.replace("http://localhost:4200");
@@ -220,7 +215,6 @@ export class HrregistrationComponent implements OnInit {
       });
   }
   showVeryfyOtp() {
-
     let OTP = this.cookieService.get("otp");
     let otpInput = this.resetForm.value.otp;
     if (otpInput === OTP) {
@@ -254,7 +248,7 @@ export class HrregistrationComponent implements OnInit {
               email,
               password,
             })
-            .subscribe((res: any) => { });
+            .subscribe((res: any) => {});
         }
       }
     }

@@ -23,11 +23,14 @@
             <h4>Expairy Date</h4>
             <h4>{{ item.group[0].to | customDate }}</h4>
           </div>
-
-          <h4 style="text-align: center; margin-top: 15px">
-            {{ item.group[0].remaininigDays }} Days Remaining
-          </h4>
-
+          <div *ngFor="let data of totalRemaining">
+            <h4
+              style="text-align: center; margin-top: 15px"
+              *ngIf="data.adminId === item.group[0].adminId"
+            >
+              {{ data.remaininigDays }} Days Remaining
+            </h4>
+          </div>
           <div class="raisedButton d-flex">
             <button
               mat-raised-button
@@ -65,11 +68,14 @@
             <h4>Expairy Date</h4>
             <h4>{{ item.group[0].to | customDate }}</h4>
           </div>
-
-          <h4 style="text-align: center; margin-top: 15px">
-            {{ item.group[0].remaininigDays }} Days Remaining
-          </h4>
-
+          <div *ngFor="let data of totalRemaining">
+            <h4
+              style="text-align: center; margin-top: 15px"
+              *ngIf="data.adminId === item.group[0].adminId"
+            >
+              {{ data.remaininigDays }} Days Remaining
+            </h4>
+          </div>
           <div class="raisedButton d-flex">
             <button
               mat-raised-button
@@ -107,10 +113,14 @@
             <h4>Expairy Date</h4>
             <h4>{{ item.group[0].to | customDate }}</h4>
           </div>
-
-          <h4 style="text-align: center; margin-top: 15px">
-            {{ item.group[0].remaininigDays }} Days Remaining
-          </h4>
+          <div *ngFor="let data of totalRemaining">
+            <h4
+              style="text-align: center; margin-top: 15px"
+              *ngIf="data.adminId === item.group[0].adminId"
+            >
+              {{ data.remaininigDays }} Days Remaining
+            </h4>
+          </div>
 
           <div class="raisedButton d-flex">
             <button
@@ -149,9 +159,14 @@
             <h4>{{ item.group[0].to | customDate }}</h4>
           </div>
 
-          <h4 style="text-align: center; margin-top: 15px">
-            {{ item.group[0].remaininigDays }} Days Remaining
-          </h4>
+          <div *ngFor="let data of totalRemaining">
+            <h4
+              style="text-align: center; margin-top: 15px"
+              *ngIf="data.adminId === item.group[0].adminId"
+            >
+              {{ data.remaininigDays }} Days Remaining
+            </h4>
+          </div>
 
           <div class="raisedButton d-flex">
             <button
@@ -190,9 +205,14 @@
             <h4>{{ item.group[0].to | customDate }}</h4>
           </div>
 
-          <h4 style="text-align: center; margin-top: 15px">
-            {{ item.group[0].remaininigDays }} Days Remaining
-          </h4>
+          <div *ngFor="let data of totalRemaining">
+            <h4
+              style="text-align: center; margin-top: 15px"
+              *ngIf="data.adminId === item.group[0].adminId"
+            >
+              {{ data.remaininigDays }} Days Remaining
+            </h4>
+          </div>
 
           <div class="raisedButton d-flex">
             <button

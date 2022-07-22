@@ -100,7 +100,6 @@ export class CheckoutComponent implements OnInit {
     this.month = this.route.snapshot.queryParams["days"] * 30;
     this.adminId = this.route.snapshot.queryParams["adminId"];
     this.payAmount = this.totalAmount;
-    console.log("this sio the adminId>>>>", this.adminId);
     this.fillData(this.adminId);
   }
 
@@ -115,7 +114,6 @@ export class CheckoutComponent implements OnInit {
         })
       )
       .subscribe((data) => {
-        console.log(data);
         this.location = data;
       });
   }
@@ -145,9 +143,7 @@ export class CheckoutComponent implements OnInit {
         obj
       )
       .subscribe((res: any) => {
-        alert(res.data.id);
         this.globalId = res.data.id;
-        console.log("this is the create order History   111>>>>", res);
         if (res.result == 0) {
           if (this.packageName === "Basic(Single-User)") {
             this.createAdminRegister();
@@ -177,16 +173,13 @@ export class CheckoutComponent implements OnInit {
         this.completPayment(res.amount, res.id);
         let orderId = res.id;
         let id = this.globalId;
-        alert(orderId);
-        alert(id);
+
         this.http
           .patch("http://localhost:8443/checkout/order/update/order", {
             orderId,
             id,
           })
-          .subscribe((res: any) => {
-            alert("order");
-          });
+          .subscribe((res: any) => {});
       });
   }
 
@@ -234,7 +227,6 @@ export class CheckoutComponent implements OnInit {
         signature: razorpay_signature,
       })
       .subscribe((responce: any) => {
-        console.log("this is the testPayment>>>>>", responce);
         if (responce.data === "Signature Verified") {
           /////create premium details
           this.createAdminRegister();
@@ -281,7 +273,6 @@ export class CheckoutComponent implements OnInit {
         }
       )
       .subscribe((res: any) => {
-        console.log("this is the orderDetails>>>>444>>>>>>", res);
         if (res.packageName === "Basic(Single-User)") {
           this.http
             .patch(
