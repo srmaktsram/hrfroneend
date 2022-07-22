@@ -209,8 +209,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/mainadmin/supportTickets/getTicketsCount" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((res: any) => {
         this.newTickets = res.countNewTicket;
@@ -224,8 +224,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .get(
         "http://localhost:8443/mainadmin/supportTickets/getAdminAllTickets" +
-          "/" +
-          this.adminId
+        "/" +
+        this.adminId
       )
       .subscribe((data: any) => {
         console.log(data);
@@ -311,7 +311,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       this.http
         .post(
           "http://localhost:8443/mainadmin/supportTickets/createTickets?" +
-            params,
+          params,
           fd
         )
         .subscribe((data) => {
@@ -372,7 +372,7 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
       this.http
         .patch(
           "http://localhost:8443/mainadmin/supportTickets/updateSupportTickets?" +
-            params,
+          params,
           fd
         )
         .subscribe((data) => {
@@ -414,8 +414,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/supportTickets/deleteTickets" +
-          "/" +
-          id,
+        "/" +
+        id,
         obj
       )
       .subscribe((data) => {
@@ -519,8 +519,8 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
     this.http
       .patch(
         "http://localhost:8443/mainadmin/supportTickets/updateTicketPriority" +
-          "/" +
-          id,
+        "/" +
+        id,
         { priority }
       )
       .subscribe((res) => {
@@ -530,5 +530,16 @@ export class TicketsContentComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+  }
+
+  get(val) {
+    let id = val;
+    alert(id)
+    this.router.navigate(["/layout/support/ticketsview"], {
+      queryParams: {
+        id: id
+      },
+      skipLocationChange: true,
+    });
   }
 }

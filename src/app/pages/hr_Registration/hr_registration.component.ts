@@ -47,7 +47,7 @@ export class HrregistrationComponent implements OnInit {
     private _snackBar: MatSnackBar,
     private cookieService: CookieService,
     private hr_registrationS: ShowregisterloginService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.hr_registrationS.hr_registrationSubject.subscribe((data) => {
@@ -220,6 +220,7 @@ export class HrregistrationComponent implements OnInit {
       });
   }
   showVeryfyOtp() {
+
     let OTP = this.cookieService.get("otp");
     let otpInput = this.resetForm.value.otp;
     if (otpInput === OTP) {
@@ -229,6 +230,7 @@ export class HrregistrationComponent implements OnInit {
       this.messOtp = " Invalid Otp......";
     }
   }
+
   openSnackBar() {
     if (this.changePassForm.valid) {
       if (
@@ -252,7 +254,7 @@ export class HrregistrationComponent implements OnInit {
               email,
               password,
             })
-            .subscribe((res: any) => {});
+            .subscribe((res: any) => { });
         }
       }
     }

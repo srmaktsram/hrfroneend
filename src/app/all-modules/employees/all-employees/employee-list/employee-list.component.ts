@@ -110,7 +110,7 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     this.companyName = sessionStorage.getItem("companyName");
     this.employeewrite = sessionStorage.getItem("employeewrite");
     this.employeewriteSub = sessionStorage.getItem("employeewriteSub");
-    
+
 
     if (sessionStorage.getItem("current_location") === "undefined") {
       alert("current_location is undefined");
@@ -301,7 +301,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
 
   // Get Employee  Api Call
   loadEmployee() {
-    // this.srvModuleService.get(this.url).subscribe((data) => {
 
     this.http
       .get(
@@ -379,7 +378,6 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
         phone: this.addEmployeeForm.value.PhoneNumber,
         department: this.addEmployeeForm.value.DepartmentName,
         designation: this.addEmployeeForm.value.Designation,
-        // mobile: this.addEmployeeForm.value.mobile,
         role: this.addEmployeeForm.value.role,
         Holidays: this.Holidays,
         Leaves: this.Leaves,
@@ -564,7 +562,10 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
     });
   }
 
+
   //search by Id
+
+
   searchId(val) {
     if (val) {
       this.rows.splice(0, this.rows.length);
@@ -581,12 +582,12 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
   }
 
   //search by name
+
   searchName(val) {
     if (val) {
       this.rows.splice(0, this.rows.length);
       let temp = this.srch.filter(function (d) {
         val = val.toLowerCase();
-
         return d.firstName.toLowerCase().indexOf(val) !== -1 || !val;
       });
 
@@ -595,6 +596,8 @@ export class EmployeeListComponent implements OnInit, OnDestroy {
       this.loadEmployee();
     }
   }
+
+
   getSearchData(val, val1) {
     if (val && val1) {
       this.rows.splice(0, this.rows.length);
