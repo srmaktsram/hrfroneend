@@ -37,6 +37,7 @@ export class AdminAuthenticationService {
     sessionStorage.setItem("cinvoicepre", cinvoicepre);
     sessionStorage.setItem("current_location", JSON.stringify(location));
     sessionStorage.setItem("role_details", JSON.stringify(roleDetails));
+
     return true;
   }
   logout() {

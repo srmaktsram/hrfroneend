@@ -17,7 +17,7 @@ import { RoleHrComponent } from "./rolehr/login.component";
 import { RoleReceptionistComponent } from "./rolereceptionist/login.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "adminlogin", pathMatch: "full" },
+  { path: "", redirectTo: "roleadmin", pathMatch: "full" },
   { path: "employeelogin", component: UserLoginComponent },
   { path: "clientlogin", component: ClientLoginComponent },
   { path: "affiliatelogin", component: AffiliateLoginComponent },

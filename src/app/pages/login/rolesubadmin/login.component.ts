@@ -65,7 +65,7 @@ export class RoleSubAdminComponent implements OnInit {
           )
           .subscribe((response: any) => {
             if (res.result == 2) {
-              this.router.navigate(["/layout/dashboard/admin"]);
+              this.router.navigate(["/layout"]);
 
               this.roleAdminAuthenticationService.login(
                 "rolesubadmin",
@@ -79,7 +79,7 @@ export class RoleSubAdminComponent implements OnInit {
                 res.data.phone,
                 res.data.mobile,
                 res.data.location,
-                res.data.cicon,
+                res.data.clogo,
                 res.data.cinvoice,
                 res.data.cinvoicepre,
                 res.data.packageName,
@@ -151,7 +151,7 @@ export class RoleSubAdminComponent implements OnInit {
               );
             }
 
-            // location.replace("http://localhost:4200/layout/dashboard/admin");
+            // location.replace("http://localhost:8443/layout/dashboard/admin");
           });
       });
   }

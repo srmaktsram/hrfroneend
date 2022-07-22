@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
               )
               .subscribe((response: any) => {
                 if (res.result == 2) {
-                  this.router.navigate(["/layout/dashboard/admin"]);
+                  this.router.navigate(["/layout/pannel"]);
 
                   this.adminAuthenticationService.login(
                     res.data.id,
@@ -106,7 +106,7 @@ export class LoginComponent implements OnInit {
                   );
                 }
 
-                // location.replace("http://localhost:4200/layout/dashboard/admin");
+                // location.replace("http://localhost:8443/layout/dashboard/admin");
               });
           });
       });

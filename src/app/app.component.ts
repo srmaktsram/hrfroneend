@@ -13,10 +13,6 @@ export class AppComponent implements OnInit {
   title = "smarthr";
   url: string;
   constructor(private router: Router, private ngxService: NgxUiLoaderService) {
-
-
-
-
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         const url = event.url.split("/");
@@ -42,12 +38,11 @@ export class AppComponent implements OnInit {
     });
   }
   ngOnInit() {
-
     this.ngxService.start();
 
     setTimeout(() => {
       this.ngxService.stop();
-    }, 1000);
+    }, 500);
 
     $(document).on("click", "#toggle_btn", () => {
       if ($("body").hasClass("mini-sidebar")) {

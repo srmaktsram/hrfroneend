@@ -7,17 +7,22 @@ import { AuthGuardMainAdmin } from "../core/auth/auth-guard-mainadmin.service";
 import { AuthGuardSubAdmin } from "../core/auth/auth-guard-subadmin.service";
 // import { AuthGuard } from "../core/auth/auth-guard.service";
 import { AllModulesComponent } from "./all-modules.component";
+import { SrmakPannelComponent } from "./srmak-pannel/srmak-pannel.component";
 
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "dashboard",
+    redirectTo: "pannel",
     pathMatch: "full",
   },
   {
     path: "",
     component: AllModulesComponent,
     children: [
+      {
+        path: "pannel",
+        component: SrmakPannelComponent,
+      },
       {
         path: "dashboard",
         loadChildren: () =>

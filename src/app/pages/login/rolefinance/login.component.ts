@@ -65,7 +65,7 @@ export class RoleFinanceComponent implements OnInit {
           )
           .subscribe((response: any) => {
             if (res.result == 2) {
-              this.router.navigate(["/layout/dashboard/admin"]);
+              this.router.navigate(["/layout"]);
 
               this.roleAdminAuthenticationService.login(
                 "rolefinance",
@@ -79,7 +79,7 @@ export class RoleFinanceComponent implements OnInit {
                 res.data.phone,
                 res.data.mobile,
                 res.data.location,
-                res.data.cicon,
+                res.data.clogo,
                 res.data.cinvoice,
                 res.data.cinvoicepre,
                 res.data.packageName,
@@ -111,7 +111,7 @@ export class RoleFinanceComponent implements OnInit {
               );
             }
 
-            // location.replace("http://localhost:4200/layout/dashboard/admin");
+            // location.replace("http://localhost:8443/layout/dashboard/admin");
           });
       });
   }

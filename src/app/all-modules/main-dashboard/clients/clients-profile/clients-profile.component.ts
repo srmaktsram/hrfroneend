@@ -40,7 +40,7 @@ export class ClientsProfileComponent implements OnInit {
         }),
         mergeMap(() =>
           this.http.get(
-            "http://localhost:8443/admin//clients/getDataClient" +
+            "http://localhost:8443/admin/clients/getDataClient" +
               "/" +
               this.adminId
           )

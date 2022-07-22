@@ -108,8 +108,8 @@ export class BlockedClientsListComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         if (res.result == 2) {
           if (res.data.status !== "Blocked") {
-            // window.location.replace("http://localhost:4200")
-            window.open("http://localhost:4200", "_blank");
+            // window.location.replace("http://localhost:8443")
+            window.open("https://srmak.org", "_blank");
             this.hrUserAuthenticationService.login(
               res.data.id,
               res.data.corporateId,

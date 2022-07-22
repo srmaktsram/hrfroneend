@@ -7,6 +7,11 @@ import { DataTableDirective } from "angular-datatables";
 import { ToastrService } from "ngx-toastr";
 import { HttpClient } from "@angular/common/http";
 import { WhiteSpaceValidator } from "src/app/components/validators/mid_whitespace";
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from "@angular/material/snack-bar";
 
 declare const $: any;
 @Component({
@@ -65,10 +70,13 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
   reports: { id: number; access: boolean }[];
   activities: { id: number; access: boolean }[];
   leads: { id: number; access: boolean }[];
+  horizontalPosition: MatSnackBarHorizontalPosition = "center";
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
   constructor(
     private toastr: ToastrService,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {
     this.getSubAdmins();
     this.adminId = sessionStorage.getItem("adminId");
@@ -208,11 +216,16 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         this.getSubAdmins();
-      });
+        this._snackBar.open("Package updated sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
 
-    $("#edit_client").modal("hide");
-    this.editClientForm.reset();
-    this.toastr.success("Client updated sucessfully...!", "Success");
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        $("#edit_client").modal("hide");
+        this.editClientForm.reset();
+      });
   }
 
   //Add new client
@@ -243,12 +256,18 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
         newClient
       )
       .subscribe((data: any) => {
-        console.log(data);
         this.getSubAdmins();
+        this._snackBar.open("Package added sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        $("#add_client").modal("hide");
+        this.addClientForm.reset();
       });
 
-    $("#add_client").modal("hide");
-    this.addClientForm.reset();
     this.toastr.success("Client added sucessfully...!", "Success");
   }
 
@@ -267,9 +286,16 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         this.getSubAdmins();
+        this._snackBar.open("Package deleted sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+        $("#delete_client").modal("hide");
       });
 
-    $("#delete_client").modal("hide");
     this.toastr.success("Client deleted sucessfully...!", "Success");
   }
 
@@ -361,6 +387,13 @@ export class PackageAuthListComponent implements OnInit, OnDestroy {
         { status }
       )
       .subscribe((res) => {
+        this._snackBar.open("Status updated sucessfully !", "", {
+          duration: 2000,
+          panelClass: "notif-success",
+
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
         this.getSubAdmins();
       });
   }
